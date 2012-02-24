@@ -7,27 +7,34 @@
 //
 
 #import "AppDelegate.h"
-
-#import "ViewController.h"
+#import "LocaleUtils.h"
+#import "MainController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
+@synthesize mainController = _mainController;
 
 - (void)dealloc
 {
     [_window release];
-    [_viewController release];
+    [_mainController release];
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
-    self.window.rootViewController = self.viewController;
+    self.mainController = [[[MainController alloc] initWithNibName:@"MainController" bundle:nil] autorelease];
+
+    
+    UINavigationController* navigationController = [[[UINavigationController alloc] initWithRootViewController:self.mainController] autorelease];
+    self.mainController.navigationItem.title = NSLS(@"大拇指旅行");
+    
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }
