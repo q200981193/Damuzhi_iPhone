@@ -1,0 +1,50 @@
+
+package damuzhi;
+
+option java_package = "com.damuzhi.travel";
+option java_outer_classname = "PlaceListProtos";
+
+message Place {
+
+  required string placeId = 1;              // 地点ID，全局唯一
+  optional string cityId = 2;               // 地点所属城市ID，可选
+
+  required int32 categoryId = 3;              // 分类ID，如景点／酒店／...
+  required int32 subCategoryId = 4;           // 子分类ID，不同分类不同，如餐馆有 西餐／自助餐
+  required string name = 5;                 // 地点名字  
+  
+  required int32 rank = 6;                    // 大拇指评级，从1到3
+  repeated string providedServiceId = 7;    // 服务选项ID，多个，不同分类不同，如 室外停车场／免费上网／景观美丽 等
+  
+  required float longitude = 11;             // 地点经度
+  required float latitude = 12;              // 地点纬度        
+  repeated string area = 13;                 // 区域名称，如九龙
+  repeated string subArea = 14;              // 区域下的子区域名称，如旺角
+  
+  optional string price = 21;                // 最低价格，适用于景点／酒店
+  optional string avgPrice = 22;             // 人均价格，适用于餐馆／娱乐
+
+  required string icon = 31;                 // 地点小图标文件名
+  repeated string images = 32;               // 地点图片文件名，多个
+  required string introduction = 33;         // 地点详情
+  optional string transportation = 34;       // 地点交通
+  repeated string telephone = 35;            // 地点联系电话，可以有多个
+  repeated string address = 36;              // 地点地址，可以有多个
+  optional string website = 37;              // 网址
+  
+  optional string priceDescription = 38;     // 价格详细描述
+  optional string openTime = 39;             // 营业时间描述
+  optional string tips = 40;                 // 旅游提示
+  repeated string keywords = 41;             // 关键字，多个
+  repeated string typicalDishes = 42;        // 特色菜式
+
+  optional string hotelStar = 43;            // 酒店专用：酒店星级，显示如 五星级／四星级等
+
+  optional int32 placeFavoriteCount = 60;      // 地点收藏人数，仅用于在线查询  
+  optional int32 hasDiscount = 61;             // 是否有优惠，第二阶段
+}
+
+message PlaceList {
+  repeated Place  list = 1;
+  optional string cityId = 2;
+}

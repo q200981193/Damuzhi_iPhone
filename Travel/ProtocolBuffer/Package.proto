@@ -1,0 +1,18 @@
+
+package damuzhi;
+
+option java_package = "com.damuzhi.travel";
+option java_outer_classname = "PackageProtos";
+
+enum LanguageType{
+  ZH_HANS = 1;          // 简体（Simplified）
+  ZH_HANT = 2;          // 繁体（Tranditional）
+  EN = 3;                  // 英文（未来扩展）
+}
+
+message Package {
+  required string version = 1;                // 数据包格式版本，如1.0
+  required string cityId = 2;                 // 城市ID
+  required string cityName = 3;              // 城市名称
+  required LanguageType language = 4;            // 语言类型
+}

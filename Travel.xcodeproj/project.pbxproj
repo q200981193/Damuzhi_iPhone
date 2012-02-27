@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA238F2814FB27D800114175 /* Place.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2714FB27D800114175 /* Place.proto */; };
+		CA238F2A14FB2D5700114175 /* CityOverview.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2914FB2D5700114175 /* CityOverview.proto */; };
+		CA238F2C14FB2F5C00114175 /* TravelTips.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2B14FB2F5C00114175 /* TravelTips.proto */; };
+		CA238F2E14FB337C00114175 /* App.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2D14FB337C00114175 /* App.proto */; };
+		CA238F3014FB344800114175 /* Package.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2F14FB344800114175 /* Package.proto */; };
+		CA238F3C14FB526C00114175 /* App.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3314FB526C00114175 /* App.pb.m */; };
+		CA238F3D14FB526C00114175 /* CityOverview.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3514FB526C00114175 /* CityOverview.pb.m */; };
+		CA238F3E14FB526C00114175 /* Package.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3714FB526C00114175 /* Package.pb.m */; };
+		CA238F3F14FB526C00114175 /* Place.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3914FB526C00114175 /* Place.pb.m */; };
+		CA238F4014FB526C00114175 /* TravelTips.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3B14FB526C00114175 /* TravelTips.pb.m */; };
+		CA238F9D14FB566800114175 /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA238F9814FB562500114175 /* libProtocolBuffers.a */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -211,7 +222,54 @@
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CA238F9714FB562500114175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7461B52E0F94FAF800A0C422;
+			remoteInfo = ProtocolBuffers;
+		};
+		CA238F9914FB562500114175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7401C1A80F950347006D8281;
+			remoteInfo = UnitTests;
+		};
+		CA238F9B14FB562500114175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 748F14580FD75E3B000858A9;
+			remoteInfo = CommandLineTests;
+		};
+		CA238F9E14FB567100114175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7461B52D0F94FAF800A0C422;
+			remoteInfo = ProtocolBuffers;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		CA238F2714FB27D800114175 /* Place.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Place.proto; sourceTree = "<group>"; };
+		CA238F2914FB2D5700114175 /* CityOverview.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityOverview.proto; sourceTree = "<group>"; };
+		CA238F2B14FB2F5C00114175 /* TravelTips.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TravelTips.proto; sourceTree = "<group>"; };
+		CA238F2D14FB337C00114175 /* App.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = App.proto; sourceTree = "<group>"; };
+		CA238F2F14FB344800114175 /* Package.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Package.proto; sourceTree = "<group>"; };
+		CA238F3214FB526C00114175 /* App.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.pb.h; sourceTree = "<group>"; };
+		CA238F3314FB526C00114175 /* App.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = App.pb.m; sourceTree = "<group>"; };
+		CA238F3414FB526C00114175 /* CityOverview.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverview.pb.h; sourceTree = "<group>"; };
+		CA238F3514FB526C00114175 /* CityOverview.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverview.pb.m; sourceTree = "<group>"; };
+		CA238F3614FB526C00114175 /* Package.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Package.pb.h; sourceTree = "<group>"; };
+		CA238F3714FB526C00114175 /* Package.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Package.pb.m; sourceTree = "<group>"; };
+		CA238F3814FB526C00114175 /* Place.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Place.pb.h; sourceTree = "<group>"; };
+		CA238F3914FB526C00114175 /* Place.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Place.pb.m; sourceTree = "<group>"; };
+		CA238F3A14FB526C00114175 /* TravelTips.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTips.pb.h; sourceTree = "<group>"; };
+		CA238F3B14FB526C00114175 /* TravelTips.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTips.pb.m; sourceTree = "<group>"; };
+		CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/ProtocolBuffers.xcodeproj"; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -603,6 +661,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA238F9D14FB566800114175 /* libProtocolBuffers.a in Frameworks */,
 				CA4560D614F6715400DA085D /* libz.1.1.3.dylib in Frameworks */,
 				CA4560D014F670D200DA085D /* MobileCoreServices.framework in Frameworks */,
 				CA4560CC14F6701F00DA085D /* AVFoundation.framework in Frameworks */,
@@ -623,6 +682,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA238F2514FB27B600114175 /* ProtocolBuffer */ = {
+			isa = PBXGroup;
+			children = (
+				CA238F3114FB526C00114175 /* Gen */,
+				CA238F2714FB27D800114175 /* Place.proto */,
+				CA238F2914FB2D5700114175 /* CityOverview.proto */,
+				CA238F2B14FB2F5C00114175 /* TravelTips.proto */,
+				CA238F2D14FB337C00114175 /* App.proto */,
+				CA238F2F14FB344800114175 /* Package.proto */,
+			);
+			path = ProtocolBuffer;
+			sourceTree = "<group>";
+		};
+		CA238F3114FB526C00114175 /* Gen */ = {
+			isa = PBXGroup;
+			children = (
+				CA238F3214FB526C00114175 /* App.pb.h */,
+				CA238F3314FB526C00114175 /* App.pb.m */,
+				CA238F3414FB526C00114175 /* CityOverview.pb.h */,
+				CA238F3514FB526C00114175 /* CityOverview.pb.m */,
+				CA238F3614FB526C00114175 /* Package.pb.h */,
+				CA238F3714FB526C00114175 /* Package.pb.m */,
+				CA238F3814FB526C00114175 /* Place.pb.h */,
+				CA238F3914FB526C00114175 /* Place.pb.m */,
+				CA238F3A14FB526C00114175 /* TravelTips.pb.h */,
+				CA238F3B14FB526C00114175 /* TravelTips.pb.m */,
+			);
+			path = Gen;
+			sourceTree = "<group>";
+		};
+		CA238F4D14FB537E00114175 /* ProtocolBuffer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ProtocolBuffer;
+			path = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer";
+			sourceTree = "<group>";
+		};
+		CA238F8E14FB562400114175 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA238F9814FB562500114175 /* libProtocolBuffers.a */,
+				CA238F9A14FB562500114175 /* UnitTests.octest */,
+				CA238F9C14FB562500114175 /* CommandLineTests.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CA455E7314F66EDD00DA085D /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -1545,6 +1652,7 @@
 		CA4906E914F5F05B00228C37 = {
 			isa = PBXGroup;
 			children = (
+				CA238F4D14FB537E00114175 /* ProtocolBuffer */,
 				CA455E7314F66EDD00DA085D /* Core */,
 				CA4906FE14F5F05B00228C37 /* Travel */,
 				CA4906F714F5F05B00228C37 /* Frameworks */,
@@ -1563,6 +1671,7 @@
 		CA4906F714F5F05B00228C37 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */,
 				CA4560D514F6715400DA085D /* libz.1.1.3.dylib */,
 				CA4560CF14F670D200DA085D /* MobileCoreServices.framework */,
 				CA4560CB14F6701F00DA085D /* AVFoundation.framework */,
@@ -1584,6 +1693,7 @@
 		CA4906FE14F5F05B00228C37 /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				CA238F2514FB27B600114175 /* ProtocolBuffer */,
 				CA585F8C14F7376300471880 /* Controller */,
 				CA585F9014F7376300471880 /* Data */,
 				CA585F9114F7376300471880 /* Model */,
@@ -1720,6 +1830,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CA238F9F14FB567100114175 /* PBXTargetDependency */,
 			);
 			name = Travel;
 			productName = Travel;
@@ -1749,12 +1860,42 @@
 			mainGroup = CA4906E914F5F05B00228C37;
 			productRefGroup = CA4906F514F5F05B00228C37 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CA238F8E14FB562400114175 /* Products */;
+					ProjectRef = CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CA4906F314F5F05B00228C37 /* Travel */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CA238F9814FB562500114175 /* libProtocolBuffers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libProtocolBuffers.a;
+			remoteRef = CA238F9714FB562500114175 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CA238F9A14FB562500114175 /* UnitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.octest;
+			remoteRef = CA238F9914FB562500114175 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CA238F9C14FB562500114175 /* CommandLineTests.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CommandLineTests.app;
+			remoteRef = CA238F9B14FB562500114175 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CA4906F214F5F05B00228C37 /* Resources */ = {
@@ -1785,6 +1926,11 @@
 				CA585FB214F73BF200471880 /* CityInfoController.xib in Resources */,
 				CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */,
 				CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */,
+				CA238F2814FB27D800114175 /* Place.proto in Resources */,
+				CA238F2A14FB2D5700114175 /* CityOverview.proto in Resources */,
+				CA238F2C14FB2F5C00114175 /* TravelTips.proto in Resources */,
+				CA238F2E14FB337C00114175 /* App.proto in Resources */,
+				CA238F3014FB344800114175 /* Package.proto in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1959,10 +2105,23 @@
 				CA585FB114F73BF200471880 /* CityInfoController.m in Sources */,
 				CA585FB714F73C1100471880 /* CommonInfoController.m in Sources */,
 				CA585FBD14F73C4900471880 /* NearbyController.m in Sources */,
+				CA238F3C14FB526C00114175 /* App.pb.m in Sources */,
+				CA238F3D14FB526C00114175 /* CityOverview.pb.m in Sources */,
+				CA238F3E14FB526C00114175 /* Package.pb.m in Sources */,
+				CA238F3F14FB526C00114175 /* Place.pb.m in Sources */,
+				CA238F4014FB526C00114175 /* TravelTips.pb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CA238F9F14FB567100114175 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ProtocolBuffers;
+			targetProxy = CA238F9E14FB567100114175 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CA455F5014F66EDD00DA085D /* ReviewRequest.strings */ = {
@@ -2025,6 +2184,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/";
 			};
 			name = Debug;
 		};
@@ -2043,6 +2203,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
+				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
