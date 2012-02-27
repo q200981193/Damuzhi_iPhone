@@ -8,6 +8,8 @@
 @class CityList;
 @class CityList_Builder;
 @class City_Builder;
+@class HelpInfo;
+@class HelpInfo_Builder;
 
 @interface AppRoot : NSObject {
 }
@@ -119,6 +121,54 @@
 - (CityList_Builder*) addCityList:(City*) value;
 - (CityList_Builder*) addAllCityList:(NSArray*) values;
 - (CityList_Builder*) clearCityListList;
+@end
+
+@interface HelpInfo : PBGeneratedMessage {
+@private
+  BOOL hasHelpHtml_:1;
+  NSString* helpHtml;
+}
+- (BOOL) hasHelpHtml;
+@property (readonly, retain) NSString* helpHtml;
+
++ (HelpInfo*) defaultInstance;
+- (HelpInfo*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (HelpInfo_Builder*) builder;
++ (HelpInfo_Builder*) builder;
++ (HelpInfo_Builder*) builderWithPrototype:(HelpInfo*) prototype;
+
++ (HelpInfo*) parseFromData:(NSData*) data;
++ (HelpInfo*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (HelpInfo*) parseFromInputStream:(NSInputStream*) input;
++ (HelpInfo*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (HelpInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (HelpInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface HelpInfo_Builder : PBGeneratedMessage_Builder {
+@private
+  HelpInfo* result;
+}
+
+- (HelpInfo*) defaultInstance;
+
+- (HelpInfo_Builder*) clear;
+- (HelpInfo_Builder*) clone;
+
+- (HelpInfo*) build;
+- (HelpInfo*) buildPartial;
+
+- (HelpInfo_Builder*) mergeFrom:(HelpInfo*) other;
+- (HelpInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (HelpInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasHelpHtml;
+- (NSString*) helpHtml;
+- (HelpInfo_Builder*) setHelpHtml:(NSString*) value;
+- (HelpInfo_Builder*) clearHelpHtml;
 @end
 
 @interface App : PBGeneratedMessage {

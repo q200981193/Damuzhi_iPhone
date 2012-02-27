@@ -443,6 +443,184 @@ static CityList* defaultCityListInstance = nil;
 }
 @end
 
+@interface HelpInfo ()
+@property (retain) NSString* helpHtml;
+@end
+
+@implementation HelpInfo
+
+- (BOOL) hasHelpHtml {
+  return !!hasHelpHtml_;
+}
+- (void) setHasHelpHtml:(BOOL) value {
+  hasHelpHtml_ = !!value;
+}
+@synthesize helpHtml;
+- (void) dealloc {
+  self.helpHtml = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.helpHtml = @"";
+  }
+  return self;
+}
+static HelpInfo* defaultHelpInfoInstance = nil;
++ (void) initialize {
+  if (self == [HelpInfo class]) {
+    defaultHelpInfoInstance = [[HelpInfo alloc] init];
+  }
+}
++ (HelpInfo*) defaultInstance {
+  return defaultHelpInfoInstance;
+}
+- (HelpInfo*) defaultInstance {
+  return defaultHelpInfoInstance;
+}
+- (BOOL) isInitialized {
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasHelpHtml) {
+    [output writeString:11 value:self.helpHtml];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasHelpHtml) {
+    size += computeStringSize(11, self.helpHtml);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (HelpInfo*) parseFromData:(NSData*) data {
+  return (HelpInfo*)[[[HelpInfo builder] mergeFromData:data] build];
+}
++ (HelpInfo*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (HelpInfo*)[[[HelpInfo builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (HelpInfo*) parseFromInputStream:(NSInputStream*) input {
+  return (HelpInfo*)[[[HelpInfo builder] mergeFromInputStream:input] build];
+}
++ (HelpInfo*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (HelpInfo*)[[[HelpInfo builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (HelpInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (HelpInfo*)[[[HelpInfo builder] mergeFromCodedInputStream:input] build];
+}
++ (HelpInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (HelpInfo*)[[[HelpInfo builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (HelpInfo_Builder*) builder {
+  return [[[HelpInfo_Builder alloc] init] autorelease];
+}
++ (HelpInfo_Builder*) builderWithPrototype:(HelpInfo*) prototype {
+  return [[HelpInfo builder] mergeFrom:prototype];
+}
+- (HelpInfo_Builder*) builder {
+  return [HelpInfo builder];
+}
+@end
+
+@interface HelpInfo_Builder()
+@property (retain) HelpInfo* result;
+@end
+
+@implementation HelpInfo_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[HelpInfo alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (HelpInfo_Builder*) clear {
+  self.result = [[[HelpInfo alloc] init] autorelease];
+  return self;
+}
+- (HelpInfo_Builder*) clone {
+  return [HelpInfo builderWithPrototype:result];
+}
+- (HelpInfo*) defaultInstance {
+  return [HelpInfo defaultInstance];
+}
+- (HelpInfo*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (HelpInfo*) buildPartial {
+  HelpInfo* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (HelpInfo_Builder*) mergeFrom:(HelpInfo*) other {
+  if (other == [HelpInfo defaultInstance]) {
+    return self;
+  }
+  if (other.hasHelpHtml) {
+    [self setHelpHtml:other.helpHtml];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (HelpInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (HelpInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 90: {
+        [self setHelpHtml:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasHelpHtml {
+  return result.hasHelpHtml;
+}
+- (NSString*) helpHtml {
+  return result.helpHtml;
+}
+- (HelpInfo_Builder*) setHelpHtml:(NSString*) value {
+  result.hasHelpHtml = YES;
+  result.helpHtml = value;
+  return self;
+}
+- (HelpInfo_Builder*) clearHelpHtml {
+  result.hasHelpHtml = NO;
+  result.helpHtml = @"";
+  return self;
+}
+@end
+
 @interface App ()
 @property (retain) NSMutableArray* mutableCityListList;
 @property (retain) NSMutableArray* mutableTestCityListList;

@@ -13,6 +13,10 @@ message CityList{
   repeated City cityList = 1;           // 城市列表
 }
 
+message HelpInfo {
+  optional string helpHtml = 11;         // 帮助说明的HTML文件路径  
+}
+
 message App {
   repeated City cityList = 1;           // 正式启用城市列表
   repeated City testCityList = 2;        // 测试实用测试列表
