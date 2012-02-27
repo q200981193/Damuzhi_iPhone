@@ -9,17 +9,17 @@ message Place {
   required string placeId = 1;              // 地点ID，全局唯一
   optional string cityId = 2;               // 地点所属城市ID，可选
 
-  required int32 categoryId = 3;              // 分类ID，如景点／酒店／...
-  required int32 subCategoryId = 4;           // 子分类ID，不同分类不同，如餐馆有 西餐／自助餐
+  required int32 categoryId = 3;            // 分类ID，如景点／酒店／...（待确定）
+  required int32 subCategoryId = 4;         // 子分类ID，不同分类不同，如餐馆有 西餐／自助餐
   required string name = 5;                 // 地点名字  
   
-  required int32 rank = 6;                    // 大拇指评级，从1到3
+  required int32 rank = 6;                  // 大拇指评级，从1到3
   repeated string providedServiceId = 7;    // 服务选项ID，多个，不同分类不同，如 室外停车场／免费上网／景观美丽 等
   
-  required float longitude = 11;             // 地点经度
-  required float latitude = 12;              // 地点纬度        
-  repeated string area = 13;                 // 区域名称，如九龙
-  repeated string subArea = 14;              // 区域下的子区域名称，如旺角
+  required float longitude = 11;            // 地点经度
+  required float latitude = 12;             // 地点纬度        
+  repeated string areaId = 13;              // 区域名称，如九龙
+  repeated string subAreaId = 14;           // 区域下的子区域名称，如旺角
   
   optional string price = 21;                // 最低价格，适用于景点／酒店
   optional string avgPrice = 22;             // 人均价格，适用于餐馆／娱乐

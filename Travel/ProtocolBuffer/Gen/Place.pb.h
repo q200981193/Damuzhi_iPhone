@@ -58,8 +58,8 @@
   NSMutableArray* mutableImagesList;
   NSMutableArray* mutableTelephoneList;
   NSMutableArray* mutableAddressList;
-  NSMutableArray* mutableSubAreaList;
-  NSMutableArray* mutableAreaList;
+  NSMutableArray* mutableSubAreaIdList;
+  NSMutableArray* mutableAreaIdList;
   NSMutableArray* mutableProvidedServiceIdList;
   NSMutableArray* mutableKeywordsList;
   NSMutableArray* mutableTypicalDishesList;
@@ -106,10 +106,10 @@
 @property (readonly) int32_t hasDiscount;
 - (NSArray*) providedServiceIdList;
 - (NSString*) providedServiceIdAtIndex:(int32_t) index;
-- (NSArray*) areaList;
-- (NSString*) areaAtIndex:(int32_t) index;
-- (NSArray*) subAreaList;
-- (NSString*) subAreaAtIndex:(int32_t) index;
+- (NSArray*) areaIdList;
+- (NSString*) areaIdAtIndex:(int32_t) index;
+- (NSArray*) subAreaIdList;
+- (NSString*) subAreaIdAtIndex:(int32_t) index;
 - (NSArray*) imagesList;
 - (NSString*) imagesAtIndex:(int32_t) index;
 - (NSArray*) telephoneList;
@@ -202,19 +202,19 @@
 - (Place_Builder*) setLatitude:(Float32) value;
 - (Place_Builder*) clearLatitude;
 
-- (NSArray*) areaList;
-- (NSString*) areaAtIndex:(int32_t) index;
-- (Place_Builder*) replaceAreaAtIndex:(int32_t) index with:(NSString*) value;
-- (Place_Builder*) addArea:(NSString*) value;
-- (Place_Builder*) addAllArea:(NSArray*) values;
-- (Place_Builder*) clearAreaList;
+- (NSArray*) areaIdList;
+- (NSString*) areaIdAtIndex:(int32_t) index;
+- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(NSString*) value;
+- (Place_Builder*) addAreaId:(NSString*) value;
+- (Place_Builder*) addAllAreaId:(NSArray*) values;
+- (Place_Builder*) clearAreaIdList;
 
-- (NSArray*) subAreaList;
-- (NSString*) subAreaAtIndex:(int32_t) index;
-- (Place_Builder*) replaceSubAreaAtIndex:(int32_t) index with:(NSString*) value;
-- (Place_Builder*) addSubArea:(NSString*) value;
-- (Place_Builder*) addAllSubArea:(NSArray*) values;
-- (Place_Builder*) clearSubAreaList;
+- (NSArray*) subAreaIdList;
+- (NSString*) subAreaIdAtIndex:(int32_t) index;
+- (Place_Builder*) replaceSubAreaIdAtIndex:(int32_t) index with:(NSString*) value;
+- (Place_Builder*) addSubAreaId:(NSString*) value;
+- (Place_Builder*) addAllSubAreaId:(NSArray*) values;
+- (Place_Builder*) clearSubAreaIdList;
 
 - (BOOL) hasPrice;
 - (NSString*) price;

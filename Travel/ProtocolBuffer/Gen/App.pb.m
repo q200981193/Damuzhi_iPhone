@@ -19,9 +19,579 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @end
 
+@interface NameIdPair ()
+@property (retain) NSString* name;
+@property (retain) NSString* id;
+@end
+
+@implementation NameIdPair
+
+- (BOOL) hasName {
+  return !!hasName_;
+}
+- (void) setHasName:(BOOL) value {
+  hasName_ = !!value;
+}
+@synthesize name;
+- (BOOL) hasId {
+  return !!hasId_;
+}
+- (void) setHasId:(BOOL) value {
+  hasId_ = !!value;
+}
+@synthesize id;
+- (void) dealloc {
+  self.name = nil;
+  self.id = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.name = @"";
+    self.id = @"";
+  }
+  return self;
+}
+static NameIdPair* defaultNameIdPairInstance = nil;
++ (void) initialize {
+  if (self == [NameIdPair class]) {
+    defaultNameIdPairInstance = [[NameIdPair alloc] init];
+  }
+}
++ (NameIdPair*) defaultInstance {
+  return defaultNameIdPairInstance;
+}
+- (NameIdPair*) defaultInstance {
+  return defaultNameIdPairInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasName) {
+    return NO;
+  }
+  if (!self.hasId) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasName) {
+    [output writeString:1 value:self.name];
+  }
+  if (self.hasId) {
+    [output writeString:2 value:self.id];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasName) {
+    size += computeStringSize(1, self.name);
+  }
+  if (self.hasId) {
+    size += computeStringSize(2, self.id);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (NameIdPair*) parseFromData:(NSData*) data {
+  return (NameIdPair*)[[[NameIdPair builder] mergeFromData:data] build];
+}
++ (NameIdPair*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (NameIdPair*)[[[NameIdPair builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (NameIdPair*) parseFromInputStream:(NSInputStream*) input {
+  return (NameIdPair*)[[[NameIdPair builder] mergeFromInputStream:input] build];
+}
++ (NameIdPair*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (NameIdPair*)[[[NameIdPair builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (NameIdPair*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (NameIdPair*)[[[NameIdPair builder] mergeFromCodedInputStream:input] build];
+}
++ (NameIdPair*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (NameIdPair*)[[[NameIdPair builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (NameIdPair_Builder*) builder {
+  return [[[NameIdPair_Builder alloc] init] autorelease];
+}
++ (NameIdPair_Builder*) builderWithPrototype:(NameIdPair*) prototype {
+  return [[NameIdPair builder] mergeFrom:prototype];
+}
+- (NameIdPair_Builder*) builder {
+  return [NameIdPair builder];
+}
+@end
+
+@interface NameIdPair_Builder()
+@property (retain) NameIdPair* result;
+@end
+
+@implementation NameIdPair_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[NameIdPair alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (NameIdPair_Builder*) clear {
+  self.result = [[[NameIdPair alloc] init] autorelease];
+  return self;
+}
+- (NameIdPair_Builder*) clone {
+  return [NameIdPair builderWithPrototype:result];
+}
+- (NameIdPair*) defaultInstance {
+  return [NameIdPair defaultInstance];
+}
+- (NameIdPair*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (NameIdPair*) buildPartial {
+  NameIdPair* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (NameIdPair_Builder*) mergeFrom:(NameIdPair*) other {
+  if (other == [NameIdPair defaultInstance]) {
+    return self;
+  }
+  if (other.hasName) {
+    [self setName:other.name];
+  }
+  if (other.hasId) {
+    [self setId:other.id];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (NameIdPair_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (NameIdPair_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setName:[input readString]];
+        break;
+      }
+      case 18: {
+        [self setId:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasName {
+  return result.hasName;
+}
+- (NSString*) name {
+  return result.name;
+}
+- (NameIdPair_Builder*) setName:(NSString*) value {
+  result.hasName = YES;
+  result.name = value;
+  return self;
+}
+- (NameIdPair_Builder*) clearName {
+  result.hasName = NO;
+  result.name = @"";
+  return self;
+}
+- (BOOL) hasId {
+  return result.hasId;
+}
+- (NSString*) id {
+  return result.id;
+}
+- (NameIdPair_Builder*) setId:(NSString*) value {
+  result.hasId = YES;
+  result.id = value;
+  return self;
+}
+- (NameIdPair_Builder*) clearId {
+  result.hasId = NO;
+  result.id = @"";
+  return self;
+}
+@end
+
+@interface PlaceMeta ()
+@property int32_t categoryId;
+@property (retain) NSString* name;
+@property (retain) NSMutableArray* mutableProvidedServiceListList;
+@property (retain) NSMutableArray* mutableSubCategoryListList;
+@end
+
+@implementation PlaceMeta
+
+- (BOOL) hasCategoryId {
+  return !!hasCategoryId_;
+}
+- (void) setHasCategoryId:(BOOL) value {
+  hasCategoryId_ = !!value;
+}
+@synthesize categoryId;
+- (BOOL) hasName {
+  return !!hasName_;
+}
+- (void) setHasName:(BOOL) value {
+  hasName_ = !!value;
+}
+@synthesize name;
+@synthesize mutableProvidedServiceListList;
+@synthesize mutableSubCategoryListList;
+- (void) dealloc {
+  self.name = nil;
+  self.mutableProvidedServiceListList = nil;
+  self.mutableSubCategoryListList = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.categoryId = 0;
+    self.name = @"";
+  }
+  return self;
+}
+static PlaceMeta* defaultPlaceMetaInstance = nil;
++ (void) initialize {
+  if (self == [PlaceMeta class]) {
+    defaultPlaceMetaInstance = [[PlaceMeta alloc] init];
+  }
+}
++ (PlaceMeta*) defaultInstance {
+  return defaultPlaceMetaInstance;
+}
+- (PlaceMeta*) defaultInstance {
+  return defaultPlaceMetaInstance;
+}
+- (NSArray*) providedServiceListList {
+  return mutableProvidedServiceListList;
+}
+- (NameIdPair*) providedServiceListAtIndex:(int32_t) index {
+  id value = [mutableProvidedServiceListList objectAtIndex:index];
+  return value;
+}
+- (NSArray*) subCategoryListList {
+  return mutableSubCategoryListList;
+}
+- (NameIdPair*) subCategoryListAtIndex:(int32_t) index {
+  id value = [mutableSubCategoryListList objectAtIndex:index];
+  return value;
+}
+- (BOOL) isInitialized {
+  if (!self.hasCategoryId) {
+    return NO;
+  }
+  if (!self.hasName) {
+    return NO;
+  }
+  for (NameIdPair* element in self.providedServiceListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
+  for (NameIdPair* element in self.subCategoryListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasCategoryId) {
+    [output writeInt32:1 value:self.categoryId];
+  }
+  if (self.hasName) {
+    [output writeString:2 value:self.name];
+  }
+  for (NameIdPair* element in self.providedServiceListList) {
+    [output writeMessage:3 value:element];
+  }
+  for (NameIdPair* element in self.subCategoryListList) {
+    [output writeMessage:4 value:element];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasCategoryId) {
+    size += computeInt32Size(1, self.categoryId);
+  }
+  if (self.hasName) {
+    size += computeStringSize(2, self.name);
+  }
+  for (NameIdPair* element in self.providedServiceListList) {
+    size += computeMessageSize(3, element);
+  }
+  for (NameIdPair* element in self.subCategoryListList) {
+    size += computeMessageSize(4, element);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (PlaceMeta*) parseFromData:(NSData*) data {
+  return (PlaceMeta*)[[[PlaceMeta builder] mergeFromData:data] build];
+}
++ (PlaceMeta*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PlaceMeta*)[[[PlaceMeta builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (PlaceMeta*) parseFromInputStream:(NSInputStream*) input {
+  return (PlaceMeta*)[[[PlaceMeta builder] mergeFromInputStream:input] build];
+}
++ (PlaceMeta*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PlaceMeta*)[[[PlaceMeta builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (PlaceMeta*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (PlaceMeta*)[[[PlaceMeta builder] mergeFromCodedInputStream:input] build];
+}
++ (PlaceMeta*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PlaceMeta*)[[[PlaceMeta builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (PlaceMeta_Builder*) builder {
+  return [[[PlaceMeta_Builder alloc] init] autorelease];
+}
++ (PlaceMeta_Builder*) builderWithPrototype:(PlaceMeta*) prototype {
+  return [[PlaceMeta builder] mergeFrom:prototype];
+}
+- (PlaceMeta_Builder*) builder {
+  return [PlaceMeta builder];
+}
+@end
+
+@interface PlaceMeta_Builder()
+@property (retain) PlaceMeta* result;
+@end
+
+@implementation PlaceMeta_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[PlaceMeta alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (PlaceMeta_Builder*) clear {
+  self.result = [[[PlaceMeta alloc] init] autorelease];
+  return self;
+}
+- (PlaceMeta_Builder*) clone {
+  return [PlaceMeta builderWithPrototype:result];
+}
+- (PlaceMeta*) defaultInstance {
+  return [PlaceMeta defaultInstance];
+}
+- (PlaceMeta*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (PlaceMeta*) buildPartial {
+  PlaceMeta* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (PlaceMeta_Builder*) mergeFrom:(PlaceMeta*) other {
+  if (other == [PlaceMeta defaultInstance]) {
+    return self;
+  }
+  if (other.hasCategoryId) {
+    [self setCategoryId:other.categoryId];
+  }
+  if (other.hasName) {
+    [self setName:other.name];
+  }
+  if (other.mutableProvidedServiceListList.count > 0) {
+    if (result.mutableProvidedServiceListList == nil) {
+      result.mutableProvidedServiceListList = [NSMutableArray array];
+    }
+    [result.mutableProvidedServiceListList addObjectsFromArray:other.mutableProvidedServiceListList];
+  }
+  if (other.mutableSubCategoryListList.count > 0) {
+    if (result.mutableSubCategoryListList == nil) {
+      result.mutableSubCategoryListList = [NSMutableArray array];
+    }
+    [result.mutableSubCategoryListList addObjectsFromArray:other.mutableSubCategoryListList];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (PlaceMeta_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (PlaceMeta_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 8: {
+        [self setCategoryId:[input readInt32]];
+        break;
+      }
+      case 18: {
+        [self setName:[input readString]];
+        break;
+      }
+      case 26: {
+        NameIdPair_Builder* subBuilder = [NameIdPair builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addProvidedServiceList:[subBuilder buildPartial]];
+        break;
+      }
+      case 34: {
+        NameIdPair_Builder* subBuilder = [NameIdPair builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addSubCategoryList:[subBuilder buildPartial]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasCategoryId {
+  return result.hasCategoryId;
+}
+- (int32_t) categoryId {
+  return result.categoryId;
+}
+- (PlaceMeta_Builder*) setCategoryId:(int32_t) value {
+  result.hasCategoryId = YES;
+  result.categoryId = value;
+  return self;
+}
+- (PlaceMeta_Builder*) clearCategoryId {
+  result.hasCategoryId = NO;
+  result.categoryId = 0;
+  return self;
+}
+- (BOOL) hasName {
+  return result.hasName;
+}
+- (NSString*) name {
+  return result.name;
+}
+- (PlaceMeta_Builder*) setName:(NSString*) value {
+  result.hasName = YES;
+  result.name = value;
+  return self;
+}
+- (PlaceMeta_Builder*) clearName {
+  result.hasName = NO;
+  result.name = @"";
+  return self;
+}
+- (NSArray*) providedServiceListList {
+  if (result.mutableProvidedServiceListList == nil) { return [NSArray array]; }
+  return result.mutableProvidedServiceListList;
+}
+- (NameIdPair*) providedServiceListAtIndex:(int32_t) index {
+  return [result providedServiceListAtIndex:index];
+}
+- (PlaceMeta_Builder*) replaceProvidedServiceListAtIndex:(int32_t) index with:(NameIdPair*) value {
+  [result.mutableProvidedServiceListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (PlaceMeta_Builder*) addAllProvidedServiceList:(NSArray*) values {
+  if (result.mutableProvidedServiceListList == nil) {
+    result.mutableProvidedServiceListList = [NSMutableArray array];
+  }
+  [result.mutableProvidedServiceListList addObjectsFromArray:values];
+  return self;
+}
+- (PlaceMeta_Builder*) clearProvidedServiceListList {
+  result.mutableProvidedServiceListList = nil;
+  return self;
+}
+- (PlaceMeta_Builder*) addProvidedServiceList:(NameIdPair*) value {
+  if (result.mutableProvidedServiceListList == nil) {
+    result.mutableProvidedServiceListList = [NSMutableArray array];
+  }
+  [result.mutableProvidedServiceListList addObject:value];
+  return self;
+}
+- (NSArray*) subCategoryListList {
+  if (result.mutableSubCategoryListList == nil) { return [NSArray array]; }
+  return result.mutableSubCategoryListList;
+}
+- (NameIdPair*) subCategoryListAtIndex:(int32_t) index {
+  return [result subCategoryListAtIndex:index];
+}
+- (PlaceMeta_Builder*) replaceSubCategoryListAtIndex:(int32_t) index with:(NameIdPair*) value {
+  [result.mutableSubCategoryListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (PlaceMeta_Builder*) addAllSubCategoryList:(NSArray*) values {
+  if (result.mutableSubCategoryListList == nil) {
+    result.mutableSubCategoryListList = [NSMutableArray array];
+  }
+  [result.mutableSubCategoryListList addObjectsFromArray:values];
+  return self;
+}
+- (PlaceMeta_Builder*) clearSubCategoryListList {
+  result.mutableSubCategoryListList = nil;
+  return self;
+}
+- (PlaceMeta_Builder*) addSubCategoryList:(NameIdPair*) value {
+  if (result.mutableSubCategoryListList == nil) {
+    result.mutableSubCategoryListList = [NSMutableArray array];
+  }
+  [result.mutableSubCategoryListList addObject:value];
+  return self;
+}
+@end
+
 @interface City ()
 @property (retain) NSString* cityId;
 @property (retain) NSString* cityName;
+@property (retain) NSString* latestVersion;
 @end
 
 @implementation City
@@ -40,15 +610,24 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasCityName_ = !!value;
 }
 @synthesize cityName;
+- (BOOL) hasLatestVersion {
+  return !!hasLatestVersion_;
+}
+- (void) setHasLatestVersion:(BOOL) value {
+  hasLatestVersion_ = !!value;
+}
+@synthesize latestVersion;
 - (void) dealloc {
   self.cityId = nil;
   self.cityName = nil;
+  self.latestVersion = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
     self.cityId = @"";
     self.cityName = @"";
+    self.latestVersion = @"";
   }
   return self;
 }
@@ -80,6 +659,9 @@ static City* defaultCityInstance = nil;
   if (self.hasCityName) {
     [output writeString:2 value:self.cityName];
   }
+  if (self.hasLatestVersion) {
+    [output writeString:3 value:self.latestVersion];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -94,6 +676,9 @@ static City* defaultCityInstance = nil;
   }
   if (self.hasCityName) {
     size += computeStringSize(2, self.cityName);
+  }
+  if (self.hasLatestVersion) {
+    size += computeStringSize(3, self.latestVersion);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -176,6 +761,9 @@ static City* defaultCityInstance = nil;
   if (other.hasCityName) {
     [self setCityName:other.cityName];
   }
+  if (other.hasLatestVersion) {
+    [self setLatestVersion:other.latestVersion];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -203,6 +791,10 @@ static City* defaultCityInstance = nil;
       }
       case 18: {
         [self setCityName:[input readString]];
+        break;
+      }
+      case 26: {
+        [self setLatestVersion:[input readString]];
         break;
       }
     }
@@ -238,6 +830,22 @@ static City* defaultCityInstance = nil;
 - (City_Builder*) clearCityName {
   result.hasCityName = NO;
   result.cityName = @"";
+  return self;
+}
+- (BOOL) hasLatestVersion {
+  return result.hasLatestVersion;
+}
+- (NSString*) latestVersion {
+  return result.latestVersion;
+}
+- (City_Builder*) setLatestVersion:(NSString*) value {
+  result.hasLatestVersion = YES;
+  result.latestVersion = value;
+  return self;
+}
+- (City_Builder*) clearLatestVersion {
+  result.hasLatestVersion = NO;
+  result.latestVersion = @"";
   return self;
 }
 @end
@@ -624,6 +1232,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @interface App ()
 @property (retain) NSMutableArray* mutableCityListList;
 @property (retain) NSMutableArray* mutableTestCityListList;
+@property (retain) NSMutableArray* mutablePlaceMetaDataListList;
 @property (retain) NSString* helpHtml;
 @end
 
@@ -631,6 +1240,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 
 @synthesize mutableCityListList;
 @synthesize mutableTestCityListList;
+@synthesize mutablePlaceMetaDataListList;
 - (BOOL) hasHelpHtml {
   return !!hasHelpHtml_;
 }
@@ -641,6 +1251,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 - (void) dealloc {
   self.mutableCityListList = nil;
   self.mutableTestCityListList = nil;
+  self.mutablePlaceMetaDataListList = nil;
   self.helpHtml = nil;
   [super dealloc];
 }
@@ -676,6 +1287,13 @@ static App* defaultAppInstance = nil;
   id value = [mutableTestCityListList objectAtIndex:index];
   return value;
 }
+- (NSArray*) placeMetaDataListList {
+  return mutablePlaceMetaDataListList;
+}
+- (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index {
+  id value = [mutablePlaceMetaDataListList objectAtIndex:index];
+  return value;
+}
 - (BOOL) isInitialized {
   for (City* element in self.cityListList) {
     if (!element.isInitialized) {
@@ -683,6 +1301,11 @@ static App* defaultAppInstance = nil;
     }
   }
   for (City* element in self.testCityListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
+  for (PlaceMeta* element in self.placeMetaDataListList) {
     if (!element.isInitialized) {
       return NO;
     }
@@ -695,6 +1318,9 @@ static App* defaultAppInstance = nil;
   }
   for (City* element in self.testCityListList) {
     [output writeMessage:2 value:element];
+  }
+  for (PlaceMeta* element in self.placeMetaDataListList) {
+    [output writeMessage:3 value:element];
   }
   if (self.hasHelpHtml) {
     [output writeString:11 value:self.helpHtml];
@@ -713,6 +1339,9 @@ static App* defaultAppInstance = nil;
   }
   for (City* element in self.testCityListList) {
     size += computeMessageSize(2, element);
+  }
+  for (PlaceMeta* element in self.placeMetaDataListList) {
+    size += computeMessageSize(3, element);
   }
   if (self.hasHelpHtml) {
     size += computeStringSize(11, self.helpHtml);
@@ -804,6 +1433,12 @@ static App* defaultAppInstance = nil;
     }
     [result.mutableTestCityListList addObjectsFromArray:other.mutableTestCityListList];
   }
+  if (other.mutablePlaceMetaDataListList.count > 0) {
+    if (result.mutablePlaceMetaDataListList == nil) {
+      result.mutablePlaceMetaDataListList = [NSMutableArray array];
+    }
+    [result.mutablePlaceMetaDataListList addObjectsFromArray:other.mutablePlaceMetaDataListList];
+  }
   if (other.hasHelpHtml) {
     [self setHelpHtml:other.helpHtml];
   }
@@ -838,6 +1473,12 @@ static App* defaultAppInstance = nil;
         City_Builder* subBuilder = [City builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addTestCityList:[subBuilder buildPartial]];
+        break;
+      }
+      case 26: {
+        PlaceMeta_Builder* subBuilder = [PlaceMeta builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addPlaceMetaDataList:[subBuilder buildPartial]];
         break;
       }
       case 90: {
@@ -903,6 +1544,35 @@ static App* defaultAppInstance = nil;
     result.mutableTestCityListList = [NSMutableArray array];
   }
   [result.mutableTestCityListList addObject:value];
+  return self;
+}
+- (NSArray*) placeMetaDataListList {
+  if (result.mutablePlaceMetaDataListList == nil) { return [NSArray array]; }
+  return result.mutablePlaceMetaDataListList;
+}
+- (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index {
+  return [result placeMetaDataListAtIndex:index];
+}
+- (App_Builder*) replacePlaceMetaDataListAtIndex:(int32_t) index with:(PlaceMeta*) value {
+  [result.mutablePlaceMetaDataListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (App_Builder*) addAllPlaceMetaDataList:(NSArray*) values {
+  if (result.mutablePlaceMetaDataListList == nil) {
+    result.mutablePlaceMetaDataListList = [NSMutableArray array];
+  }
+  [result.mutablePlaceMetaDataListList addObjectsFromArray:values];
+  return self;
+}
+- (App_Builder*) clearPlaceMetaDataListList {
+  result.mutablePlaceMetaDataListList = nil;
+  return self;
+}
+- (App_Builder*) addPlaceMetaDataList:(PlaceMeta*) value {
+  if (result.mutablePlaceMetaDataListList == nil) {
+    result.mutablePlaceMetaDataListList = [NSMutableArray array];
+  }
+  [result.mutablePlaceMetaDataListList addObject:value];
   return self;
 }
 - (BOOL) hasHelpHtml {

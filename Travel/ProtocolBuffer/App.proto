@@ -4,9 +4,23 @@ package damuzhi;
 option java_package = "com.damuzhi.travel";
 option java_outer_classname = "AppProtos";
 
+message NameIdPair {
+  required string name = 1;             // 名称
+  required string id = 2;                // ID
+}
+
+message PlaceMeta {       
+  required int32 categoryId = 1;                    // 地点类型ID，如1代表景点
+  required string name = 2;                       // 地点类型显示名字，如景点
+  repeated NameIdPair providedServiceList = 3;       // 地点下的可用的所有服务选项列表
+  repeated NameIdPair subCategoryList = 4;          // 地点类型下的所有子分类
+}
+
+
 message City {
   required string cityId = 1;
   required string cityName = 2;
+  optional string latestVersion = 3;    // 最新城市数据包版本
 }
 
 message CityList{
@@ -20,6 +34,10 @@ message HelpInfo {
 message App {
   repeated City cityList = 1;           // 正式启用城市列表
   repeated City testCityList = 2;        // 测试实用测试列表
+  repeated PlaceMeta placeMetaDataList = 3;       // 每种地点类型的相关数据
 
   optional string helpHtml = 11;         // 帮助说明的HTML文件路径
 }
+
+
+

@@ -10,6 +10,10 @@
 @class City_Builder;
 @class HelpInfo;
 @class HelpInfo_Builder;
+@class NameIdPair;
+@class NameIdPair_Builder;
+@class PlaceMeta;
+@class PlaceMeta_Builder;
 
 @interface AppRoot : NSObject {
 }
@@ -17,17 +21,155 @@
 + (void) registerAllExtensions:(PBMutableExtensionRegistry*) registry;
 @end
 
+@interface NameIdPair : PBGeneratedMessage {
+@private
+  BOOL hasName_:1;
+  BOOL hasId_:1;
+  NSString* name;
+  NSString* id;
+}
+- (BOOL) hasName;
+- (BOOL) hasId;
+@property (readonly, retain) NSString* name;
+@property (readonly, retain) NSString* id;
+
++ (NameIdPair*) defaultInstance;
+- (NameIdPair*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (NameIdPair_Builder*) builder;
++ (NameIdPair_Builder*) builder;
++ (NameIdPair_Builder*) builderWithPrototype:(NameIdPair*) prototype;
+
++ (NameIdPair*) parseFromData:(NSData*) data;
++ (NameIdPair*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (NameIdPair*) parseFromInputStream:(NSInputStream*) input;
++ (NameIdPair*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (NameIdPair*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (NameIdPair*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface NameIdPair_Builder : PBGeneratedMessage_Builder {
+@private
+  NameIdPair* result;
+}
+
+- (NameIdPair*) defaultInstance;
+
+- (NameIdPair_Builder*) clear;
+- (NameIdPair_Builder*) clone;
+
+- (NameIdPair*) build;
+- (NameIdPair*) buildPartial;
+
+- (NameIdPair_Builder*) mergeFrom:(NameIdPair*) other;
+- (NameIdPair_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (NameIdPair_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasName;
+- (NSString*) name;
+- (NameIdPair_Builder*) setName:(NSString*) value;
+- (NameIdPair_Builder*) clearName;
+
+- (BOOL) hasId;
+- (NSString*) id;
+- (NameIdPair_Builder*) setId:(NSString*) value;
+- (NameIdPair_Builder*) clearId;
+@end
+
+@interface PlaceMeta : PBGeneratedMessage {
+@private
+  BOOL hasCategoryId_:1;
+  BOOL hasName_:1;
+  int32_t categoryId;
+  NSString* name;
+  NSMutableArray* mutableProvidedServiceListList;
+  NSMutableArray* mutableSubCategoryListList;
+}
+- (BOOL) hasCategoryId;
+- (BOOL) hasName;
+@property (readonly) int32_t categoryId;
+@property (readonly, retain) NSString* name;
+- (NSArray*) providedServiceListList;
+- (NameIdPair*) providedServiceListAtIndex:(int32_t) index;
+- (NSArray*) subCategoryListList;
+- (NameIdPair*) subCategoryListAtIndex:(int32_t) index;
+
++ (PlaceMeta*) defaultInstance;
+- (PlaceMeta*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (PlaceMeta_Builder*) builder;
++ (PlaceMeta_Builder*) builder;
++ (PlaceMeta_Builder*) builderWithPrototype:(PlaceMeta*) prototype;
+
++ (PlaceMeta*) parseFromData:(NSData*) data;
++ (PlaceMeta*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (PlaceMeta*) parseFromInputStream:(NSInputStream*) input;
++ (PlaceMeta*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (PlaceMeta*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (PlaceMeta*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface PlaceMeta_Builder : PBGeneratedMessage_Builder {
+@private
+  PlaceMeta* result;
+}
+
+- (PlaceMeta*) defaultInstance;
+
+- (PlaceMeta_Builder*) clear;
+- (PlaceMeta_Builder*) clone;
+
+- (PlaceMeta*) build;
+- (PlaceMeta*) buildPartial;
+
+- (PlaceMeta_Builder*) mergeFrom:(PlaceMeta*) other;
+- (PlaceMeta_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (PlaceMeta_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasCategoryId;
+- (int32_t) categoryId;
+- (PlaceMeta_Builder*) setCategoryId:(int32_t) value;
+- (PlaceMeta_Builder*) clearCategoryId;
+
+- (BOOL) hasName;
+- (NSString*) name;
+- (PlaceMeta_Builder*) setName:(NSString*) value;
+- (PlaceMeta_Builder*) clearName;
+
+- (NSArray*) providedServiceListList;
+- (NameIdPair*) providedServiceListAtIndex:(int32_t) index;
+- (PlaceMeta_Builder*) replaceProvidedServiceListAtIndex:(int32_t) index with:(NameIdPair*) value;
+- (PlaceMeta_Builder*) addProvidedServiceList:(NameIdPair*) value;
+- (PlaceMeta_Builder*) addAllProvidedServiceList:(NSArray*) values;
+- (PlaceMeta_Builder*) clearProvidedServiceListList;
+
+- (NSArray*) subCategoryListList;
+- (NameIdPair*) subCategoryListAtIndex:(int32_t) index;
+- (PlaceMeta_Builder*) replaceSubCategoryListAtIndex:(int32_t) index with:(NameIdPair*) value;
+- (PlaceMeta_Builder*) addSubCategoryList:(NameIdPair*) value;
+- (PlaceMeta_Builder*) addAllSubCategoryList:(NSArray*) values;
+- (PlaceMeta_Builder*) clearSubCategoryListList;
+@end
+
 @interface City : PBGeneratedMessage {
 @private
   BOOL hasCityId_:1;
   BOOL hasCityName_:1;
+  BOOL hasLatestVersion_:1;
   NSString* cityId;
   NSString* cityName;
+  NSString* latestVersion;
 }
 - (BOOL) hasCityId;
 - (BOOL) hasCityName;
+- (BOOL) hasLatestVersion;
 @property (readonly, retain) NSString* cityId;
 @property (readonly, retain) NSString* cityName;
+@property (readonly, retain) NSString* latestVersion;
 
 + (City*) defaultInstance;
 - (City*) defaultInstance;
@@ -72,6 +214,11 @@
 - (NSString*) cityName;
 - (City_Builder*) setCityName:(NSString*) value;
 - (City_Builder*) clearCityName;
+
+- (BOOL) hasLatestVersion;
+- (NSString*) latestVersion;
+- (City_Builder*) setLatestVersion:(NSString*) value;
+- (City_Builder*) clearLatestVersion;
 @end
 
 @interface CityList : PBGeneratedMessage {
@@ -177,6 +324,7 @@
   NSString* helpHtml;
   NSMutableArray* mutableCityListList;
   NSMutableArray* mutableTestCityListList;
+  NSMutableArray* mutablePlaceMetaDataListList;
 }
 - (BOOL) hasHelpHtml;
 @property (readonly, retain) NSString* helpHtml;
@@ -184,6 +332,8 @@
 - (City*) cityListAtIndex:(int32_t) index;
 - (NSArray*) testCityListList;
 - (City*) testCityListAtIndex:(int32_t) index;
+- (NSArray*) placeMetaDataListList;
+- (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
 
 + (App*) defaultInstance;
 - (App*) defaultInstance;
@@ -232,6 +382,13 @@
 - (App_Builder*) addTestCityList:(City*) value;
 - (App_Builder*) addAllTestCityList:(NSArray*) values;
 - (App_Builder*) clearTestCityListList;
+
+- (NSArray*) placeMetaDataListList;
+- (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
+- (App_Builder*) replacePlaceMetaDataListAtIndex:(int32_t) index with:(PlaceMeta*) value;
+- (App_Builder*) addPlaceMetaDataList:(PlaceMeta*) value;
+- (App_Builder*) addAllPlaceMetaDataList:(NSArray*) values;
+- (App_Builder*) clearPlaceMetaDataListList;
 
 - (BOOL) hasHelpHtml;
 - (NSString*) helpHtml;

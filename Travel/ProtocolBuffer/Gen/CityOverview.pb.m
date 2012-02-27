@@ -262,11 +262,520 @@ static CommonOverview* defaultCommonOverviewInstance = nil;
 }
 @end
 
+@interface CitySubArea ()
+@property (retain) NSString* subAreaId;
+@property (retain) NSString* areaName;
+@end
+
+@implementation CitySubArea
+
+- (BOOL) hasSubAreaId {
+  return !!hasSubAreaId_;
+}
+- (void) setHasSubAreaId:(BOOL) value {
+  hasSubAreaId_ = !!value;
+}
+@synthesize subAreaId;
+- (BOOL) hasAreaName {
+  return !!hasAreaName_;
+}
+- (void) setHasAreaName:(BOOL) value {
+  hasAreaName_ = !!value;
+}
+@synthesize areaName;
+- (void) dealloc {
+  self.subAreaId = nil;
+  self.areaName = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.subAreaId = @"";
+    self.areaName = @"";
+  }
+  return self;
+}
+static CitySubArea* defaultCitySubAreaInstance = nil;
++ (void) initialize {
+  if (self == [CitySubArea class]) {
+    defaultCitySubAreaInstance = [[CitySubArea alloc] init];
+  }
+}
++ (CitySubArea*) defaultInstance {
+  return defaultCitySubAreaInstance;
+}
+- (CitySubArea*) defaultInstance {
+  return defaultCitySubAreaInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasSubAreaId) {
+    return NO;
+  }
+  if (!self.hasAreaName) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasSubAreaId) {
+    [output writeString:1 value:self.subAreaId];
+  }
+  if (self.hasAreaName) {
+    [output writeString:2 value:self.areaName];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasSubAreaId) {
+    size += computeStringSize(1, self.subAreaId);
+  }
+  if (self.hasAreaName) {
+    size += computeStringSize(2, self.areaName);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (CitySubArea*) parseFromData:(NSData*) data {
+  return (CitySubArea*)[[[CitySubArea builder] mergeFromData:data] build];
+}
++ (CitySubArea*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CitySubArea*)[[[CitySubArea builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (CitySubArea*) parseFromInputStream:(NSInputStream*) input {
+  return (CitySubArea*)[[[CitySubArea builder] mergeFromInputStream:input] build];
+}
++ (CitySubArea*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CitySubArea*)[[[CitySubArea builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CitySubArea*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CitySubArea*)[[[CitySubArea builder] mergeFromCodedInputStream:input] build];
+}
++ (CitySubArea*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CitySubArea*)[[[CitySubArea builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CitySubArea_Builder*) builder {
+  return [[[CitySubArea_Builder alloc] init] autorelease];
+}
++ (CitySubArea_Builder*) builderWithPrototype:(CitySubArea*) prototype {
+  return [[CitySubArea builder] mergeFrom:prototype];
+}
+- (CitySubArea_Builder*) builder {
+  return [CitySubArea builder];
+}
+@end
+
+@interface CitySubArea_Builder()
+@property (retain) CitySubArea* result;
+@end
+
+@implementation CitySubArea_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[CitySubArea alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (CitySubArea_Builder*) clear {
+  self.result = [[[CitySubArea alloc] init] autorelease];
+  return self;
+}
+- (CitySubArea_Builder*) clone {
+  return [CitySubArea builderWithPrototype:result];
+}
+- (CitySubArea*) defaultInstance {
+  return [CitySubArea defaultInstance];
+}
+- (CitySubArea*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (CitySubArea*) buildPartial {
+  CitySubArea* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (CitySubArea_Builder*) mergeFrom:(CitySubArea*) other {
+  if (other == [CitySubArea defaultInstance]) {
+    return self;
+  }
+  if (other.hasSubAreaId) {
+    [self setSubAreaId:other.subAreaId];
+  }
+  if (other.hasAreaName) {
+    [self setAreaName:other.areaName];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (CitySubArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (CitySubArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setSubAreaId:[input readString]];
+        break;
+      }
+      case 18: {
+        [self setAreaName:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasSubAreaId {
+  return result.hasSubAreaId;
+}
+- (NSString*) subAreaId {
+  return result.subAreaId;
+}
+- (CitySubArea_Builder*) setSubAreaId:(NSString*) value {
+  result.hasSubAreaId = YES;
+  result.subAreaId = value;
+  return self;
+}
+- (CitySubArea_Builder*) clearSubAreaId {
+  result.hasSubAreaId = NO;
+  result.subAreaId = @"";
+  return self;
+}
+- (BOOL) hasAreaName {
+  return result.hasAreaName;
+}
+- (NSString*) areaName {
+  return result.areaName;
+}
+- (CitySubArea_Builder*) setAreaName:(NSString*) value {
+  result.hasAreaName = YES;
+  result.areaName = value;
+  return self;
+}
+- (CitySubArea_Builder*) clearAreaName {
+  result.hasAreaName = NO;
+  result.areaName = @"";
+  return self;
+}
+@end
+
+@interface CityArea ()
+@property (retain) NSString* areaId;
+@property (retain) NSString* areaName;
+@property (retain) NSMutableArray* mutableSubAreaListList;
+@end
+
+@implementation CityArea
+
+- (BOOL) hasAreaId {
+  return !!hasAreaId_;
+}
+- (void) setHasAreaId:(BOOL) value {
+  hasAreaId_ = !!value;
+}
+@synthesize areaId;
+- (BOOL) hasAreaName {
+  return !!hasAreaName_;
+}
+- (void) setHasAreaName:(BOOL) value {
+  hasAreaName_ = !!value;
+}
+@synthesize areaName;
+@synthesize mutableSubAreaListList;
+- (void) dealloc {
+  self.areaId = nil;
+  self.areaName = nil;
+  self.mutableSubAreaListList = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.areaId = @"";
+    self.areaName = @"";
+  }
+  return self;
+}
+static CityArea* defaultCityAreaInstance = nil;
++ (void) initialize {
+  if (self == [CityArea class]) {
+    defaultCityAreaInstance = [[CityArea alloc] init];
+  }
+}
++ (CityArea*) defaultInstance {
+  return defaultCityAreaInstance;
+}
+- (CityArea*) defaultInstance {
+  return defaultCityAreaInstance;
+}
+- (NSArray*) subAreaListList {
+  return mutableSubAreaListList;
+}
+- (NSString*) subAreaListAtIndex:(int32_t) index {
+  id value = [mutableSubAreaListList objectAtIndex:index];
+  return value;
+}
+- (BOOL) isInitialized {
+  if (!self.hasAreaId) {
+    return NO;
+  }
+  if (!self.hasAreaName) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasAreaId) {
+    [output writeString:1 value:self.areaId];
+  }
+  if (self.hasAreaName) {
+    [output writeString:2 value:self.areaName];
+  }
+  for (NSString* element in self.mutableSubAreaListList) {
+    [output writeString:3 value:element];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasAreaId) {
+    size += computeStringSize(1, self.areaId);
+  }
+  if (self.hasAreaName) {
+    size += computeStringSize(2, self.areaName);
+  }
+  {
+    int32_t dataSize = 0;
+    for (NSString* element in self.mutableSubAreaListList) {
+      dataSize += computeStringSizeNoTag(element);
+    }
+    size += dataSize;
+    size += 1 * self.mutableSubAreaListList.count;
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (CityArea*) parseFromData:(NSData*) data {
+  return (CityArea*)[[[CityArea builder] mergeFromData:data] build];
+}
++ (CityArea*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityArea*)[[[CityArea builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (CityArea*) parseFromInputStream:(NSInputStream*) input {
+  return (CityArea*)[[[CityArea builder] mergeFromInputStream:input] build];
+}
++ (CityArea*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityArea*)[[[CityArea builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CityArea*)[[[CityArea builder] mergeFromCodedInputStream:input] build];
+}
++ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityArea*)[[[CityArea builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityArea_Builder*) builder {
+  return [[[CityArea_Builder alloc] init] autorelease];
+}
++ (CityArea_Builder*) builderWithPrototype:(CityArea*) prototype {
+  return [[CityArea builder] mergeFrom:prototype];
+}
+- (CityArea_Builder*) builder {
+  return [CityArea builder];
+}
+@end
+
+@interface CityArea_Builder()
+@property (retain) CityArea* result;
+@end
+
+@implementation CityArea_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[CityArea alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (CityArea_Builder*) clear {
+  self.result = [[[CityArea alloc] init] autorelease];
+  return self;
+}
+- (CityArea_Builder*) clone {
+  return [CityArea builderWithPrototype:result];
+}
+- (CityArea*) defaultInstance {
+  return [CityArea defaultInstance];
+}
+- (CityArea*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (CityArea*) buildPartial {
+  CityArea* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (CityArea_Builder*) mergeFrom:(CityArea*) other {
+  if (other == [CityArea defaultInstance]) {
+    return self;
+  }
+  if (other.hasAreaId) {
+    [self setAreaId:other.areaId];
+  }
+  if (other.hasAreaName) {
+    [self setAreaName:other.areaName];
+  }
+  if (other.mutableSubAreaListList.count > 0) {
+    if (result.mutableSubAreaListList == nil) {
+      result.mutableSubAreaListList = [NSMutableArray array];
+    }
+    [result.mutableSubAreaListList addObjectsFromArray:other.mutableSubAreaListList];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setAreaId:[input readString]];
+        break;
+      }
+      case 18: {
+        [self setAreaName:[input readString]];
+        break;
+      }
+      case 26: {
+        [self addSubAreaList:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasAreaId {
+  return result.hasAreaId;
+}
+- (NSString*) areaId {
+  return result.areaId;
+}
+- (CityArea_Builder*) setAreaId:(NSString*) value {
+  result.hasAreaId = YES;
+  result.areaId = value;
+  return self;
+}
+- (CityArea_Builder*) clearAreaId {
+  result.hasAreaId = NO;
+  result.areaId = @"";
+  return self;
+}
+- (BOOL) hasAreaName {
+  return result.hasAreaName;
+}
+- (NSString*) areaName {
+  return result.areaName;
+}
+- (CityArea_Builder*) setAreaName:(NSString*) value {
+  result.hasAreaName = YES;
+  result.areaName = value;
+  return self;
+}
+- (CityArea_Builder*) clearAreaName {
+  result.hasAreaName = NO;
+  result.areaName = @"";
+  return self;
+}
+- (NSArray*) subAreaListList {
+  if (result.mutableSubAreaListList == nil) {
+    return [NSArray array];
+  }
+  return result.mutableSubAreaListList;
+}
+- (NSString*) subAreaListAtIndex:(int32_t) index {
+  return [result subAreaListAtIndex:index];
+}
+- (CityArea_Builder*) replaceSubAreaListAtIndex:(int32_t) index with:(NSString*) value {
+  [result.mutableSubAreaListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (CityArea_Builder*) addSubAreaList:(NSString*) value {
+  if (result.mutableSubAreaListList == nil) {
+    result.mutableSubAreaListList = [NSMutableArray array];
+  }
+  [result.mutableSubAreaListList addObject:value];
+  return self;
+}
+- (CityArea_Builder*) addAllSubAreaList:(NSArray*) values {
+  if (result.mutableSubAreaListList == nil) {
+    result.mutableSubAreaListList = [NSMutableArray array];
+  }
+  [result.mutableSubAreaListList addObjectsFromArray:values];
+  return self;
+}
+- (CityArea_Builder*) clearSubAreaListList {
+  result.mutableSubAreaListList = nil;
+  return self;
+}
+@end
+
 @interface CityOverview ()
 @property (retain) CommonOverview* cityBasic;
 @property (retain) CommonOverview* travelPrepration;
 @property (retain) CommonOverview* travelUtility;
 @property (retain) CommonOverview* travelTransportation;
+@property (retain) NSMutableArray* mutableAreaListList;
 @end
 
 @implementation CityOverview
@@ -299,11 +808,13 @@ static CommonOverview* defaultCommonOverviewInstance = nil;
   hasTravelTransportation_ = !!value;
 }
 @synthesize travelTransportation;
+@synthesize mutableAreaListList;
 - (void) dealloc {
   self.cityBasic = nil;
   self.travelPrepration = nil;
   self.travelUtility = nil;
   self.travelTransportation = nil;
+  self.mutableAreaListList = nil;
   [super dealloc];
 }
 - (id) init {
@@ -327,6 +838,13 @@ static CityOverview* defaultCityOverviewInstance = nil;
 - (CityOverview*) defaultInstance {
   return defaultCityOverviewInstance;
 }
+- (NSArray*) areaListList {
+  return mutableAreaListList;
+}
+- (CityArea*) areaListAtIndex:(int32_t) index {
+  id value = [mutableAreaListList objectAtIndex:index];
+  return value;
+}
 - (BOOL) isInitialized {
   if (self.hasCityBasic) {
     if (!self.cityBasic.isInitialized) {
@@ -348,6 +866,11 @@ static CityOverview* defaultCityOverviewInstance = nil;
       return NO;
     }
   }
+  for (CityArea* element in self.areaListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
@@ -362,6 +885,9 @@ static CityOverview* defaultCityOverviewInstance = nil;
   }
   if (self.hasTravelTransportation) {
     [output writeMessage:4 value:self.travelTransportation];
+  }
+  for (CityArea* element in self.areaListList) {
+    [output writeMessage:5 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -383,6 +909,9 @@ static CityOverview* defaultCityOverviewInstance = nil;
   }
   if (self.hasTravelTransportation) {
     size += computeMessageSize(4, self.travelTransportation);
+  }
+  for (CityArea* element in self.areaListList) {
+    size += computeMessageSize(5, element);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -471,6 +1000,12 @@ static CityOverview* defaultCityOverviewInstance = nil;
   if (other.hasTravelTransportation) {
     [self mergeTravelTransportation:other.travelTransportation];
   }
+  if (other.mutableAreaListList.count > 0) {
+    if (result.mutableAreaListList == nil) {
+      result.mutableAreaListList = [NSMutableArray array];
+    }
+    [result.mutableAreaListList addObjectsFromArray:other.mutableAreaListList];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -526,6 +1061,12 @@ static CityOverview* defaultCityOverviewInstance = nil;
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self setTravelTransportation:[subBuilder buildPartial]];
+        break;
+      }
+      case 42: {
+        CityArea_Builder* subBuilder = [CityArea builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addAreaList:[subBuilder buildPartial]];
         break;
       }
     }
@@ -649,6 +1190,35 @@ static CityOverview* defaultCityOverviewInstance = nil;
 - (CityOverview_Builder*) clearTravelTransportation {
   result.hasTravelTransportation = NO;
   result.travelTransportation = [CommonOverview defaultInstance];
+  return self;
+}
+- (NSArray*) areaListList {
+  if (result.mutableAreaListList == nil) { return [NSArray array]; }
+  return result.mutableAreaListList;
+}
+- (CityArea*) areaListAtIndex:(int32_t) index {
+  return [result areaListAtIndex:index];
+}
+- (CityOverview_Builder*) replaceAreaListAtIndex:(int32_t) index with:(CityArea*) value {
+  [result.mutableAreaListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (CityOverview_Builder*) addAllAreaList:(NSArray*) values {
+  if (result.mutableAreaListList == nil) {
+    result.mutableAreaListList = [NSMutableArray array];
+  }
+  [result.mutableAreaListList addObjectsFromArray:values];
+  return self;
+}
+- (CityOverview_Builder*) clearAreaListList {
+  result.mutableAreaListList = nil;
+  return self;
+}
+- (CityOverview_Builder*) addAreaList:(CityArea*) value {
+  if (result.mutableAreaListList == nil) {
+    result.mutableAreaListList = [NSMutableArray array];
+  }
+  [result.mutableAreaListList addObject:value];
   return self;
 }
 @end
