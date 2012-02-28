@@ -25,6 +25,8 @@
 		CA238FB714FCDDFC00114175 /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = CA238FB214FCDDFC00114175 /* Documentation.html */; };
 		CA238FB814FCDDFC00114175 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FB414FCDDFC00114175 /* GCDAsyncSocket.m */; };
 		CA238FB914FCDDFC00114175 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FB614FCDDFC00114175 /* GCDAsyncUdpSocket.m */; };
+		CA238FBD14FD219500114175 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FBB14FD219400114175 /* NearbyController.m */; };
+		CA238FBE14FD219500114175 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA238FBC14FD219400114175 /* NearbyController.xib */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -285,6 +287,9 @@
 		CA238FB414FCDDFC00114175 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		CA238FB514FCDDFC00114175 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		CA238FB614FCDDFC00114175 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		CA238FBA14FD219300114175 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
+		CA238FBB14FD219400114175 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
+		CA238FBC14FD219400114175 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -1779,6 +1784,9 @@
 				CA238FA614FCDAC200114175 /* SpotCell.h */,
 				CA238FA714FCDAC300114175 /* SpotCell.m */,
 				CA238FA814FCDAC700114175 /* SpotCell.xib */,
+				CA238FBA14FD219300114175 /* NearbyController.h */,
+				CA238FBB14FD219400114175 /* NearbyController.m */,
+				CA238FBC14FD219400114175 /* NearbyController.xib */,
 			);
 			path = Place;
 			sourceTree = "<group>";
@@ -1954,6 +1962,7 @@
 				CA238F3014FB344800114175 /* Package.proto in Resources */,
 				CA238FAA14FCDAD000114175 /* SpotCell.xib in Resources */,
 				CA238FB714FCDDFC00114175 /* Documentation.html in Resources */,
+				CA238FBE14FD219500114175 /* NearbyController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2136,6 +2145,7 @@
 				CA238FB014FCDB1500114175 /* PlaceManager.m in Sources */,
 				CA238FB814FCDDFC00114175 /* GCDAsyncSocket.m in Sources */,
 				CA238FB914FCDDFC00114175 /* GCDAsyncUdpSocket.m in Sources */,
+				CA238FBD14FD219500114175 /* NearbyController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
