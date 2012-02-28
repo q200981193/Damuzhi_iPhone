@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPTableViewController.h"
 
-@interface CommonPlaceListController : UIViewController
+@interface CommonPlaceListController : PPTableViewController
 
 @end

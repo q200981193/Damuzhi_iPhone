@@ -10,4 +10,15 @@
 
 @implementation PlaceManager
 
+static PlaceManager *_placeDefaultManager;
+
++ (PlaceManager*)defaultManager
+{
+    if (_placeDefaultManager == nil){
+        
+    }
+    
+    return _placeDefaultManager;
+}
+
 @end

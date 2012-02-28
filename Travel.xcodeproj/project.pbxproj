@@ -18,6 +18,13 @@
 		CA238F3F14FB526C00114175 /* Place.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3914FB526C00114175 /* Place.pb.m */; };
 		CA238F4014FB526C00114175 /* TravelTips.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3B14FB526C00114175 /* TravelTips.pb.m */; };
 		CA238F9D14FB566800114175 /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA238F9814FB562500114175 /* libProtocolBuffers.a */; };
+		CA238FA914FCDAD000114175 /* SpotCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FA714FCDAC300114175 /* SpotCell.m */; };
+		CA238FAA14FCDAD000114175 /* SpotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA238FA814FCDAC700114175 /* SpotCell.xib */; };
+		CA238FAD14FCDB0700114175 /* CommonPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FAC14FCDB0700114175 /* CommonPlace.m */; };
+		CA238FB014FCDB1500114175 /* PlaceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FAF14FCDB1500114175 /* PlaceManager.m */; };
+		CA238FB714FCDDFC00114175 /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = CA238FB214FCDDFC00114175 /* Documentation.html */; };
+		CA238FB814FCDDFC00114175 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FB414FCDDFC00114175 /* GCDAsyncSocket.m */; };
+		CA238FB914FCDDFC00114175 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FB614FCDDFC00114175 /* GCDAsyncUdpSocket.m */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -26,10 +33,6 @@
 		CA45601714F66EDD00DA085D /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E8214F66EDD00DA085D /* ASIHTTPRequest.m */; };
 		CA45601814F66EDD00DA085D /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E8614F66EDD00DA085D /* ASIInputStream.m */; };
 		CA45601914F66EDD00DA085D /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E8814F66EDD00DA085D /* ASINetworkQueue.m */; };
-		CA45601A14F66EDD00DA085D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = CA455E8B14F66EDD00DA085D /* .gitignore */; };
-		CA45601B14F66EDD00DA085D /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = CA455E8D14F66EDD00DA085D /* Documentation.html */; };
-		CA45601C14F66EDD00DA085D /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E8F14F66EDD00DA085D /* GCDAsyncSocket.m */; };
-		CA45601D14F66EDD00DA085D /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E9114F66EDD00DA085D /* GCDAsyncUdpSocket.m */; };
 		CA45601E14F66EDD00DA085D /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA455E9514F66EDD00DA085D /* LICENSE.txt */; };
 		CA45601F14F66EDD00DA085D /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = CA455E9614F66EDD00DA085D /* README.txt */; };
 		CA45602014F66EDD00DA085D /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E9914F66EDD00DA085D /* CDataScanner.m */; };
@@ -270,6 +273,18 @@
 		CA238F3A14FB526C00114175 /* TravelTips.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTips.pb.h; sourceTree = "<group>"; };
 		CA238F3B14FB526C00114175 /* TravelTips.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTips.pb.m; sourceTree = "<group>"; };
 		CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/ProtocolBuffers.xcodeproj"; sourceTree = "<group>"; };
+		CA238FA614FCDAC200114175 /* SpotCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotCell.h; sourceTree = "<group>"; };
+		CA238FA714FCDAC300114175 /* SpotCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotCell.m; sourceTree = "<group>"; };
+		CA238FA814FCDAC700114175 /* SpotCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotCell.xib; sourceTree = "<group>"; };
+		CA238FAB14FCDB0700114175 /* CommonPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlace.h; sourceTree = "<group>"; };
+		CA238FAC14FCDB0700114175 /* CommonPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonPlace.m; sourceTree = "<group>"; };
+		CA238FAE14FCDB1500114175 /* PlaceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceManager.h; sourceTree = "<group>"; };
+		CA238FAF14FCDB1500114175 /* PlaceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceManager.m; sourceTree = "<group>"; };
+		CA238FB214FCDDFC00114175 /* Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Documentation.html; sourceTree = "<group>"; };
+		CA238FB314FCDDFC00114175 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		CA238FB414FCDDFC00114175 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		CA238FB514FCDDFC00114175 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		CA238FB614FCDDFC00114175 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -290,12 +305,6 @@
 		CA455E8714F66EDD00DA085D /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
 		CA455E8814F66EDD00DA085D /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
 		CA455E8914F66EDD00DA085D /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
-		CA455E8B14F66EDD00DA085D /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		CA455E8D14F66EDD00DA085D /* Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Documentation.html; sourceTree = "<group>"; };
-		CA455E8E14F66EDD00DA085D /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		CA455E8F14F66EDD00DA085D /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
-		CA455E9014F66EDD00DA085D /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
-		CA455E9114F66EDD00DA085D /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		CA455E9514F66EDD00DA085D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		CA455E9614F66EDD00DA085D /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		CA455E9814F66EDD00DA085D /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
@@ -730,6 +739,36 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CA238FA414FCCDE800114175 /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				CA238FAB14FCDB0700114175 /* CommonPlace.h */,
+				CA238FAC14FCDB0700114175 /* CommonPlace.m */,
+				CA238FAE14FCDB1500114175 /* PlaceManager.h */,
+				CA238FAF14FCDB1500114175 /* PlaceManager.m */,
+			);
+			path = Place;
+			sourceTree = "<group>";
+		};
+		CA238FA514FCCDF200114175 /* Place */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Place;
+			sourceTree = "<group>";
+		};
+		CA238FB114FCDDFC00114175 /* AsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				CA238FB214FCDDFC00114175 /* Documentation.html */,
+				CA238FB314FCDDFC00114175 /* GCDAsyncSocket.h */,
+				CA238FB414FCDDFC00114175 /* GCDAsyncSocket.m */,
+				CA238FB514FCDDFC00114175 /* GCDAsyncUdpSocket.h */,
+				CA238FB614FCDDFC00114175 /* GCDAsyncUdpSocket.m */,
+			);
+			path = AsyncSocket;
+			sourceTree = "<group>";
+		};
 		CA455E7314F66EDD00DA085D /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -753,8 +792,8 @@
 		CA455E7414F66EDD00DA085D /* Core-3PP */ = {
 			isa = PBXGroup;
 			children = (
+				CA238FB114FCDDFC00114175 /* AsyncSocket */,
 				CA455E7514F66EDD00DA085D /* asi-http-request */,
-				CA455E8A14F66EDD00DA085D /* CocoaAsyncSocket */,
 				CA455E9214F66EDD00DA085D /* TapkuLibrary */,
 			);
 			path = "Core-3PP";
@@ -785,27 +824,6 @@
 				CA455E8914F66EDD00DA085D /* ASIProgressDelegate.h */,
 			);
 			path = "asi-http-request";
-			sourceTree = "<group>";
-		};
-		CA455E8A14F66EDD00DA085D /* CocoaAsyncSocket */ = {
-			isa = PBXGroup;
-			children = (
-				CA455E8B14F66EDD00DA085D /* .gitignore */,
-				CA455E8C14F66EDD00DA085D /* GCD */,
-			);
-			path = CocoaAsyncSocket;
-			sourceTree = "<group>";
-		};
-		CA455E8C14F66EDD00DA085D /* GCD */ = {
-			isa = PBXGroup;
-			children = (
-				CA455E8D14F66EDD00DA085D /* Documentation.html */,
-				CA455E8E14F66EDD00DA085D /* GCDAsyncSocket.h */,
-				CA455E8F14F66EDD00DA085D /* GCDAsyncSocket.m */,
-				CA455E9014F66EDD00DA085D /* GCDAsyncUdpSocket.h */,
-				CA455E9114F66EDD00DA085D /* GCDAsyncUdpSocket.m */,
-			);
-			path = GCD;
 			sourceTree = "<group>";
 		};
 		CA455E9214F66EDD00DA085D /* TapkuLibrary */ = {
@@ -1758,6 +1776,9 @@
 				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
 				CA585F9F14F73AF700471880 /* SpotDetailController.m */,
 				CA585FA014F73AF700471880 /* SpotDetailController.xib */,
+				CA238FA614FCDAC200114175 /* SpotCell.h */,
+				CA238FA714FCDAC300114175 /* SpotCell.m */,
+				CA238FA814FCDAC700114175 /* SpotCell.xib */,
 			);
 			path = Place;
 			sourceTree = "<group>";
@@ -1772,6 +1793,7 @@
 		CA585F9114F7376300471880 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CA238FA414FCCDE800114175 /* Place */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1779,6 +1801,7 @@
 		CA585F9214F7376300471880 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CA238FA514FCCDF200114175 /* Place */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1903,8 +1926,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA49070314F5F05B00228C37 /* InfoPlist.strings in Resources */,
-				CA45601A14F66EDD00DA085D /* .gitignore in Resources */,
-				CA45601B14F66EDD00DA085D /* Documentation.html in Resources */,
 				CA45601E14F66EDD00DA085D /* LICENSE.txt in Resources */,
 				CA45601F14F66EDD00DA085D /* README.txt in Resources */,
 				CA45602A14F66EDD00DA085D /* Source.zip in Resources */,
@@ -1931,6 +1952,8 @@
 				CA238F2C14FB2F5C00114175 /* TravelTips.proto in Resources */,
 				CA238F2E14FB337C00114175 /* App.proto in Resources */,
 				CA238F3014FB344800114175 /* Package.proto in Resources */,
+				CA238FAA14FCDAD000114175 /* SpotCell.xib in Resources */,
+				CA238FB714FCDDFC00114175 /* Documentation.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1951,8 +1974,6 @@
 				CA45601714F66EDD00DA085D /* ASIHTTPRequest.m in Sources */,
 				CA45601814F66EDD00DA085D /* ASIInputStream.m in Sources */,
 				CA45601914F66EDD00DA085D /* ASINetworkQueue.m in Sources */,
-				CA45601C14F66EDD00DA085D /* GCDAsyncSocket.m in Sources */,
-				CA45601D14F66EDD00DA085D /* GCDAsyncUdpSocket.m in Sources */,
 				CA45602014F66EDD00DA085D /* CDataScanner.m in Sources */,
 				CA45602114F66EDD00DA085D /* CDataScanner_Extensions.m in Sources */,
 				CA45602214F66EDD00DA085D /* NSCharacterSet_Extensions.m in Sources */,
@@ -2110,6 +2131,11 @@
 				CA238F3E14FB526C00114175 /* Package.pb.m in Sources */,
 				CA238F3F14FB526C00114175 /* Place.pb.m in Sources */,
 				CA238F4014FB526C00114175 /* TravelTips.pb.m in Sources */,
+				CA238FA914FCDAD000114175 /* SpotCell.m in Sources */,
+				CA238FAD14FCDB0700114175 /* CommonPlace.m in Sources */,
+				CA238FB014FCDB1500114175 /* PlaceManager.m in Sources */,
+				CA238FB814FCDDFC00114175 /* GCDAsyncSocket.m in Sources */,
+				CA238FB914FCDDFC00114175 /* GCDAsyncUdpSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

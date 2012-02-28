@@ -10,4 +10,7 @@
 
 @interface PlaceManager : NSObject
 
+
++ (PlaceManager*)defaultManager;
+
 @end
