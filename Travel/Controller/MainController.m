@@ -8,6 +8,7 @@
 
 #import "MainController.h"
 #import "CommonPlaceListController.h"
+#import "SpotListFilter.h"
 
 @implementation MainController
 
@@ -51,7 +52,8 @@
 
 - (IBAction)clickSpotButton:(id)sender {
     
-    CommonPlaceListController* controller = [[CommonPlaceListController alloc] init];
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:
+                                             [SpotListFilter createFilter]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];    
 }

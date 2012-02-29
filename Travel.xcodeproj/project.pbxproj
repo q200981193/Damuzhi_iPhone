@@ -28,6 +28,7 @@
 		CA238FC214FDCAAD00114175 /* PlaceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FC014FDCAAC00114175 /* PlaceListController.m */; };
 		CA238FC314FDCAAD00114175 /* PlaceListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA238FC114FDCAAD00114175 /* PlaceListController.xib */; };
 		CA238FC614FDCB0400114175 /* CommonPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FC514FDCB0400114175 /* CommonPlaceCell.m */; };
+		CA238FCA14FE571500114175 /* SpotListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FC914FE571500114175 /* SpotListFilter.m */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -212,8 +213,6 @@
 		CA49070914F5F05B00228C37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA49070814F5F05B00228C37 /* AppDelegate.m */; };
 		CA585F9714F7377E00471880 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585F9514F7377E00471880 /* MainController.m */; };
 		CA585F9814F7377E00471880 /* MainController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585F9614F7377E00471880 /* MainController.xib */; };
-		CA585F9C14F73AE700471880 /* SpotListController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585F9A14F73AE700471880 /* SpotListController.m */; };
-		CA585F9D14F73AE700471880 /* SpotListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585F9B14F73AE700471880 /* SpotListController.xib */; };
 		CA585FA114F73AF700471880 /* SpotDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585F9F14F73AF700471880 /* SpotDetailController.m */; };
 		CA585FA214F73AF700471880 /* SpotDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FA014F73AF700471880 /* SpotDetailController.xib */; };
 		CA585FA714F73B5800471880 /* CommonPlaceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FA514F73B5800471880 /* CommonPlaceListController.m */; };
@@ -293,6 +292,8 @@
 		CA238FC114FDCAAD00114175 /* PlaceListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceListController.xib; sourceTree = "<group>"; };
 		CA238FC414FDCB0300114175 /* CommonPlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlaceCell.h; sourceTree = "<group>"; };
 		CA238FC514FDCB0400114175 /* CommonPlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonPlaceCell.m; sourceTree = "<group>"; };
+		CA238FC814FE571500114175 /* SpotListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotListFilter.h; sourceTree = "<group>"; };
+		CA238FC914FE571500114175 /* SpotListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotListFilter.m; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -650,9 +651,6 @@
 		CA585F9414F7377E00471880 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		CA585F9514F7377E00471880 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		CA585F9614F7377E00471880 /* MainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainController.xib; sourceTree = "<group>"; };
-		CA585F9914F73AE700471880 /* SpotListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotListController.h; sourceTree = "<group>"; };
-		CA585F9A14F73AE700471880 /* SpotListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotListController.m; sourceTree = "<group>"; };
-		CA585F9B14F73AE700471880 /* SpotListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotListController.xib; sourceTree = "<group>"; };
 		CA585F9E14F73AF700471880 /* SpotDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotDetailController.h; sourceTree = "<group>"; };
 		CA585F9F14F73AF700471880 /* SpotDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailController.m; sourceTree = "<group>"; };
 		CA585FA014F73AF700471880 /* SpotDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotDetailController.xib; sourceTree = "<group>"; };
@@ -767,6 +765,15 @@
 				CA238FB614FCDDFC00114175 /* GCDAsyncUdpSocket.m */,
 			);
 			path = AsyncSocket;
+			sourceTree = "<group>";
+		};
+		CA238FC714FE56F900114175 /* PlaceListFilter */ = {
+			isa = PBXGroup;
+			children = (
+				CA238FC814FE571500114175 /* SpotListFilter.h */,
+				CA238FC914FE571500114175 /* SpotListFilter.m */,
+			);
+			path = PlaceListFilter;
 			sourceTree = "<group>";
 		};
 		CA455E7314F66EDD00DA085D /* Core */ = {
@@ -1768,10 +1775,8 @@
 		CA585F8F14F7376300471880 /* Place */ = {
 			isa = PBXGroup;
 			children = (
+				CA238FC714FE56F900114175 /* PlaceListFilter */,
 				CA585FA314F73B4500471880 /* Common */,
-				CA585F9914F73AE700471880 /* SpotListController.h */,
-				CA585F9A14F73AE700471880 /* SpotListController.m */,
-				CA585F9B14F73AE700471880 /* SpotListController.xib */,
 				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
 				CA585F9F14F73AF700471880 /* SpotDetailController.m */,
 				CA585FA014F73AF700471880 /* SpotDetailController.xib */,
@@ -1944,7 +1949,6 @@
 				CA45608214F66EDD00DA085D /* EGORefresh.strings in Resources */,
 				CA45608314F66EDD00DA085D /* whiteArrow.png in Resources */,
 				CA585F9814F7377E00471880 /* MainController.xib in Resources */,
-				CA585F9D14F73AE700471880 /* SpotListController.xib in Resources */,
 				CA585FA214F73AF700471880 /* SpotDetailController.xib in Resources */,
 				CA585FA814F73B5800471880 /* CommonPlaceListController.xib in Resources */,
 				CA585FAD14F73B6800471880 /* CommonPlaceDetailController.xib in Resources */,
@@ -2124,7 +2128,6 @@
 				CA4560B914F66EDD00DA085D /* UIViewUtils.m in Sources */,
 				CA4560BA14F66EDD00DA085D /* UIWebViewUtil.m in Sources */,
 				CA585F9714F7377E00471880 /* MainController.m in Sources */,
-				CA585F9C14F73AE700471880 /* SpotListController.m in Sources */,
 				CA585FA114F73AF700471880 /* SpotDetailController.m in Sources */,
 				CA585FA714F73B5800471880 /* CommonPlaceListController.m in Sources */,
 				CA585FAC14F73B6800471880 /* CommonPlaceDetailController.m in Sources */,
@@ -2143,6 +2146,7 @@
 				CA238FB914FCDDFC00114175 /* GCDAsyncUdpSocket.m in Sources */,
 				CA238FC214FDCAAD00114175 /* PlaceListController.m in Sources */,
 				CA238FC614FDCB0400114175 /* CommonPlaceCell.m in Sources */,
+				CA238FCA14FE571500114175 /* SpotListFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

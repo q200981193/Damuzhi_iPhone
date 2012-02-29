@@ -15,14 +15,22 @@
 @synthesize buttonHolderView;
 @synthesize placeListHolderView;
 @synthesize placeListController;
+@synthesize filterHandler = _filterHandler;
 
 - (void)dealloc {
+    [_filterHandler release];
     [placeListController release];
     [buttonHolderView release];
     [placeListHolderView release];
     [super dealloc];
 }
 
+- (id)initWithFilterHandler:(NSObject<PlaceListFilterProtocol>*)handler
+{
+    self = [super init];
+    self.filterHandler = handler;
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,8 +55,10 @@
 {
     [super viewDidLoad];
     
+    [_filterHandler createFilterButtons:self.buttonHolderView];
+    
     // Do any additional setup after loading the view from its nib.
-    NSArray* placeList = [[PlaceManager defaultManager] findAllSpots];
+    NSArray* placeList = [_filterHandler findAllPlaces];
     self.placeListController = [PlaceListController createController:placeList superView:placeListHolderView];
 }
 
@@ -65,6 +75,11 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)createFilterButtons
+{
+    
 }
 
 @end
