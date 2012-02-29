@@ -9,6 +9,7 @@
 #import "MainController.h"
 #import "CommonPlaceListController.h"
 #import "SpotListFilter.h"
+#import "CommonInfoController.h"
 
 @implementation MainController
 
@@ -56,6 +57,13 @@
                                              [SpotListFilter createFilter]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];    
+}
+
+- (IBAction)clickCityOverviewButton:(id)sender
+{
+    CommonInfoController* controller = [[CommonInfoController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 @end

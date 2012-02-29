@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPViewController.h"
 
-@interface CommonInfoController : UIViewController
+@protocol CommonInfoProtocol <NSObject>
+
+@end
+
+@interface CommonInfoController : PPViewController
+@property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 
 @end

@@ -7,8 +7,10 @@
 //
 
 #import "CommonInfoController.h"
+#import "SlideImageView.h"
 
 @implementation CommonInfoController
+@synthesize imageHolderView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,10 +35,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    [imageHolderView addSubview:slideImageView];
+    
 }
 
 - (void)viewDidUnload
 {
+    [self setImageHolderView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -48,4 +55,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)dealloc {
+    [imageHolderView release];
+    [super dealloc];
+}
 @end

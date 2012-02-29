@@ -12,4 +12,6 @@
 
 - (IBAction)clickSpotButton:(id)sender;
 
+- (IBAction)clickCityOverviewButton:(id)sender;
+
 @end
