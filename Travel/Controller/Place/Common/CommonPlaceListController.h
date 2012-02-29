@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
 
+@class PlaceListController;
+
 @interface CommonPlaceListController : PPTableViewController
+
+@property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
+@property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
+
+@property (retain, nonatomic) PlaceListController* placeListController;
 
 @end

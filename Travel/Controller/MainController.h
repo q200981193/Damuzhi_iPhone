@@ -10,4 +10,6 @@
 
 @interface MainController : UIViewController
 
+- (IBAction)clickSpotButton:(id)sender;
+
 @end

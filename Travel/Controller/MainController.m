@@ -7,6 +7,7 @@
 //
 
 #import "MainController.h"
+#import "CommonPlaceListController.h"
 
 @implementation MainController
 
@@ -46,6 +47,13 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (IBAction)clickSpotButton:(id)sender {
+    
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];    
 }
 
 @end

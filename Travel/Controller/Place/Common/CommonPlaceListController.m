@@ -7,8 +7,22 @@
 //
 
 #import "CommonPlaceListController.h"
+#import "PlaceListController.h"
+#import "PlaceManager.h"
 
 @implementation CommonPlaceListController
+
+@synthesize buttonHolderView;
+@synthesize placeListHolderView;
+@synthesize placeListController;
+
+- (void)dealloc {
+    [placeListController release];
+    [buttonHolderView release];
+    [placeListHolderView release];
+    [super dealloc];
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,11 +46,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
+    NSArray* placeList = [[PlaceManager defaultManager] findAllSpots];
+    self.placeListController = [PlaceListController createController:placeList superView:placeListHolderView];
 }
 
 - (void)viewDidUnload
 {
+    [self setButtonHolderView:nil];
+    [self setPlaceListHolderView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

@@ -11,4 +11,7 @@
 
 @interface PlaceListController : PPTableViewController
 
+- (void)setAndReloadPlaceList:(NSArray*)list;
++ (PlaceListController*)createController:(NSArray*)list superView:(UIView*)superView;
+
 @end
