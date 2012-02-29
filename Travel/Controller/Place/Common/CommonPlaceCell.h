@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPTableViewCell.h"
 
-@interface CommonPlaceCell : UITableViewCell
+@interface CommonPlaceCell : PPTableViewCell
+
++ (CommonPlaceCell*)createCell:(id)delegate;
++ (NSString*)getCellIdentifier;
++ (CGFloat)getCellHeight;
 
 @end

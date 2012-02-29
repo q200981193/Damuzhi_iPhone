@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonPlaceCell.h"
 
-@interface SpotCell : UIViewController
+@interface SpotCell : CommonPlaceCell
+
++ (SpotCell*)createCell:(id)delegate;
++ (NSString*)getCellIdentifier;
+
+@property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 
 @end

@@ -11,7 +11,7 @@
 
 @class PlaceListController;
 
-@interface CommonPlaceListController : PPTableViewController
+@interface CommonPlaceListController : PPTableViewController 
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;

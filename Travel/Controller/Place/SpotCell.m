@@ -9,43 +9,29 @@
 #import "SpotCell.h"
 
 @implementation SpotCell
+@synthesize nameLabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
++ (SpotCell*)createCell:(id)delegate
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"SpotCell" owner:self options:nil];
+    // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).  
+    if (topLevelObjects == nil || [topLevelObjects count] <= 0){
+        NSLog(@"create <SpotCell> but cannot find cell object from Nib");
+        return nil;
     }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
     
-    // Release any cached data, images, etc that aren't in use.
+    ((SpotCell*)[topLevelObjects objectAtIndex:0]).delegate = delegate;
+    
+    return (SpotCell*)[topLevelObjects objectAtIndex:0];
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
++ (NSString*)getCellIdentifier
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    return @"SpotCell";
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+- (void)dealloc {
+    [nameLabel release];
+    [super dealloc];
 }
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 @end

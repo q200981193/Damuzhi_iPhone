@@ -8,6 +8,8 @@
 
 #import "PlaceListController.h"
 #import "Place.pb.h"
+#import "PlaceManager.h"
+#import "SpotCell.h"
 
 @implementation PlaceListController
 
@@ -91,43 +93,41 @@
 }
 
 
+- (Class)getClassByPlace:(Place*)place
+{
+    if ([place categoryId] == PLACE_TYPE_SPOT){
+        return [SpotCell class];
+    }
+    
+    return nil;
+}
+
+- (NSString*)getCellIdentifierByClass:(Class)class
+{
+    return [class getCellIdentifier];
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
-	UITableViewCell *cell = [theTableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];				
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;		
-		
-		if (cellTextLabelColor != nil)
-			cell.textLabel.textColor = cellTextLabelColor;
-		else
-			cell.textLabel.textColor = [UIColor colorWithRed:0x3e/255.0 green:0x34/255.0 blue:0x53/255.0 alpha:1.0];
-		
-		cell.detailTextLabel.textColor = [UIColor colorWithRed:0x84/255.0 green:0x79/255.0 blue:0x94/255.0 alpha:1.0];			
-	}
-	
-	cell.accessoryView = accessoryView;
-	
-	// set text label
-	int row = [indexPath row];	
+    int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
 		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
-		return cell;
+		return nil;
 	}
     
     Place* place = [dataList objectAtIndex:row];
-    cell.textLabel.text = [place name];
+    Class placeClass = [self getClassByPlace:place];
+    
+    NSString *CellIdentifier = [self getCellIdentifierByClass:placeClass];
+	UITableViewCell *cell = [theTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [placeClass createCell:self];
+	}
 	
-	[self setCellBackground:cell row:row count:count];
-	
-	// NSObject* dataObject = [dataList objectAtIndex:row];
-	// PPContact* contact = (PPContact*)[groupData dataForSection:indexPath.section row:indexPath.row];	
-	
-	return cell;
-	
+    ((SpotCell*)cell).nameLabel.text = [place name];	
+	return cell;	
 }
 
 
