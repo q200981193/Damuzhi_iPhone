@@ -9,10 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "PPTableViewCell.h"
 
+@class Place;
+
 @interface CommonPlaceCell : PPTableViewCell
 
 + (CommonPlaceCell*)createCell:(id)delegate;
 + (NSString*)getCellIdentifier;
 + (CGFloat)getCellHeight;
+
+// this method must be overrided by sub class
+- (void)setCellDataByPlace:(Place*)place;
 
 @end

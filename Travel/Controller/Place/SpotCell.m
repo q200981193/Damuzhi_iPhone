@@ -7,6 +7,7 @@
 //
 
 #import "SpotCell.h"
+#import "Place.pb.h"
 
 @implementation SpotCell
 @synthesize nameLabel;
@@ -28,6 +29,11 @@
 + (NSString*)getCellIdentifier
 {
     return @"SpotCell";
+}
+
+- (void)setCellDataByPlace:(Place*)place
+{
+    self.nameLabel.text = [place name];
 }
 
 - (void)dealloc {

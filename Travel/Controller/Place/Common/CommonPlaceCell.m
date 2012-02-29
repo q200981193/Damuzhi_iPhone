@@ -51,5 +51,10 @@
     return 44.0f;
 }
 
+- (void)setCellDataByPlace:(Place*)place
+{
+    NSLog(@"<setCellDataByPlace> NOT IMPLEMENTED!!!");
+}
+
 
 @end

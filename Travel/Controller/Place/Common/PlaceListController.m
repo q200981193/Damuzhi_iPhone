@@ -126,7 +126,9 @@
 		cell = [placeClass createCell:self];
 	}
 	
-    ((SpotCell*)cell).nameLabel.text = [place name];	
+    CommonPlaceCell* placeCell = (CommonPlaceCell*)cell;
+    [placeCell setCellDataByPlace:place];
+    
 	return cell;	
 }
 
