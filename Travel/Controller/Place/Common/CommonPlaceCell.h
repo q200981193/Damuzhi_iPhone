@@ -1,13 +1,13 @@
 //
-//  NearbyController.h
+//  CommonPlaceCell.h
 //  Travel
 //
-//  Created by  on 12-2-28.
+//  Created by  on 12-2-29.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface NearbyController : UIViewController
+@interface CommonPlaceCell : UITableViewCell
 
 @end

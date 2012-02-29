@@ -7,10 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Place.pb.h"
+
+enum{
+    PLACE_TYPE_SPOT = 1
+    
+};
 
 @interface PlaceManager : NSObject
+{
+    NSString*       _city;
+    NSArray*        _placeList; 
+}
 
+@property (nonatomic, retain) NSString* city;
+@property (nonatomic, retain) NSArray*  placeList;
 
 + (PlaceManager*)defaultManager;
+- (void)switchCity:(NSString*)newCity;
 
 @end

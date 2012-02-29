@@ -1,14 +1,14 @@
 //
-//  NearbyController.m
+//  PlaceListController.m
 //  Travel
 //
-//  Created by  on 12-2-28.
+//  Created by  on 12-2-29.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "NearbyController.h"
+#import "PlaceListController.h"
 
-@implementation NearbyController
+@implementation PlaceListController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

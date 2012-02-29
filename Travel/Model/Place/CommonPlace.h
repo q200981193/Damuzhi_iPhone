@@ -10,4 +10,6 @@
 
 @interface CommonPlace : NSObject
 
+
+
 @end
