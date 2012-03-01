@@ -19,6 +19,9 @@ static PlaceService* _defaultPlaceService;
 
 @synthesize currentCityId = _currentCityId;
 
+#pragma mark - 
+#pragma mark Life Cycle Management
+
 - (void)dealloc
 {
     [_currentCityId release];
@@ -44,6 +47,10 @@ static PlaceService* _defaultPlaceService;
     return self;
 }
 
+
+#pragma mark - 
+#pragma mark Share Methods
+
 typedef NSArray* (^LocalRequestHandler)(int* resultCode);
 typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 
@@ -62,12 +69,16 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", _currentCityId);
-            list = localHandler(&resultCode);
+            if (localHandler != NULL){
+                list = localHandler(&resultCode);
+            }
         }
         else{
             // if local data no exist, try to read data from remote            
             PPDebug(@"No Local Data For City %@, Read Data Remotely", _currentCityId);            
-            list = remoteHandler(&resultCode);
+            if (remoteHandler != NULL){
+                list = remoteHandler(&resultCode);
+            }
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -79,6 +90,9 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     }];
 
 }
+
+#pragma mark - 
+#pragma mark Place Life Cycle Management
 
 - (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController
 {
