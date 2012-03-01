@@ -10,7 +10,22 @@
 #import "SlideImageView.h"
 
 @implementation CommonInfoController
+
 @synthesize imageHolderView;
+@synthesize dataSource;
+
+- (void)dealloc {
+    [dataSource release];
+    [imageHolderView release];
+    [super dealloc];
+}
+
+- (id)initWithDataSource:(NSObject<CommonInfoDataSourceProtocol>*)source
+{
+    self = [super init];
+    self.dataSource = source;
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,8 +52,8 @@
     // Do any additional setup after loading the view from its nib.
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    [imageHolderView addSubview:slideImageView];
-    
+    [imageHolderView addSubview:slideImageView];    
+    [slideImageView setImages:[dataSource getImages]];
 }
 
 - (void)viewDidUnload
@@ -55,8 +70,5 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [imageHolderView release];
-    [super dealloc];
-}
+
 @end

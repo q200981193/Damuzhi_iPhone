@@ -9,11 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
 
-@protocol CommonInfoProtocol <NSObject>
+@protocol CommonInfoDataSourceProtocol <NSObject>
+
+- (NSArray*)getImages;
+- (NSString*)getHtmlFilePath;
++ (NSObject<CommonInfoDataSourceProtocol>*)createDataSource;
 
 @end
 
 @interface CommonInfoController : PPViewController
+
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
+@property (retain, nonatomic) NSObject<CommonInfoDataSourceProtocol> *dataSource;
+
+- (id)initWithDataSource:(NSObject<CommonInfoDataSourceProtocol>*)source;
 
 @end

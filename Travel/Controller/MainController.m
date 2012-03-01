@@ -9,7 +9,9 @@
 #import "MainController.h"
 #import "CommonPlaceListController.h"
 #import "SpotListFilter.h"
+
 #import "CommonInfoController.h"
+#import "CityBasicDataSource.h"
 
 @implementation MainController
 
@@ -61,7 +63,7 @@
 
 - (IBAction)clickCityOverviewButton:(id)sender
 {
-    CommonInfoController* controller = [[CommonInfoController alloc] init];
+    CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[CityBasicDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        
 }
