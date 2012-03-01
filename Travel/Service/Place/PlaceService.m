@@ -44,7 +44,12 @@ static PlaceService* _defaultPlaceService;
     return self;
 }
 
-- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController
+typedef NSArray* (^LocalRequestHandler)(int* resultCode);
+typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
+
+- (void)processLocalRemoteQuery:(PPViewController<PlaceServiceDelegate>*)viewController
+                   localHandler:(LocalRequestHandler)localHandler
+                  remoteHandler:(RemoteRequestHandler)remoteHandler
 {
     [viewController showActivityWithText:NSLS(@"kLoadingData")];
     
@@ -55,17 +60,14 @@ static PlaceService* _defaultPlaceService;
         NSArray* list = nil;
         int resultCode = 0;
         if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
-            
+            // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", _currentCityId);
-            
-            // read local data firstly   
-            [_localPlaceManager switchCity:_currentCityId];
-            list = [_localPlaceManager findAllSpots];
+            list = localHandler(&resultCode);
         }
         else{
-            // if local data no exist, try to read data from remote
-            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", _currentCityId);
+            // if local data no exist, try to read data from remote            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", _currentCityId);            
+            list = remoteHandler(&resultCode);
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -73,43 +75,48 @@ static PlaceService* _defaultPlaceService;
             [viewController findRequestDone:resultCode dataList:list];
         });
         
-    
+        
     }];
+
+}
+
+- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
+        [_localPlaceManager switchCity:_currentCityId];
+        NSArray* list = [_localPlaceManager findAllSpots];   
+        *resultCode = 0;
+        return list;
+    };
     
+    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+        // TODO, send network request here
+        return nil;
+    };
+
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
 }
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    [viewController showActivityWithText:NSLS(@"kLoadingData")];
     
-    NSOperationQueue* queue = [self getOperationQueue:SERACH_WORKING_QUEUE];
-    [queue cancelAllOperations];
+    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
+        [_localPlaceManager switchCity:_currentCityId];
+        NSArray* list = [_localPlaceManager findAllPlaces];   
+        *resultCode = 0;
+        return list;
+    };
     
-    [queue addOperationWithBlock:^{
-        NSArray* list = nil;
-        int resultCode = 0;
-        if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
-            
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", _currentCityId);
-            
-            // read local data firstly   
-            [_localPlaceManager switchCity:_currentCityId];
-            list = [_localPlaceManager findAllPlaces];
-        }
-        else{
-            // if local data no exist, try to read data from remote
-            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", _currentCityId);
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [viewController hideActivity];             
-            [viewController findRequestDone:resultCode dataList:list];
-        });
-        
-        
-    }];
+    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+        // TODO, send network request here
+        return nil;
+    };
     
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];    
 }
 
 
