@@ -11,7 +11,7 @@
 @interface MainController : UIViewController
 
 - (IBAction)clickSpotButton:(id)sender;
-
 - (IBAction)clickCityOverviewButton:(id)sender;
+- (IBAction)clickNearbyButton:(id)sender;
 
 @end

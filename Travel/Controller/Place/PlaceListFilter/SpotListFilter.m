@@ -8,6 +8,7 @@
 
 #import "SpotListFilter.h"
 #import "PlaceManager.h"
+#import "PlaceService.h"
 
 @implementation SpotListFilter
 
@@ -22,9 +23,9 @@
     return filter;
 }
 
-- (NSArray*)findAllPlaces
+- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    return [[PlaceManager defaultManager] findAllSpots];
+    return [[PlaceService defaultService] findAllSpots:viewController];
 }
 
 @end

@@ -13,6 +13,8 @@
 #import "CommonInfoController.h"
 #import "CityBasicDataSource.h"
 
+#import "NearbyController.h"
+
 @implementation MainController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,6 +66,13 @@
 - (IBAction)clickCityOverviewButton:(id)sender
 {
     CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[CityBasicDataSource createDataSource]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
+}
+
+- (IBAction)clickNearbyButton:(id)sender
+{
+    NearbyController* controller = [[NearbyController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        
 }

@@ -32,6 +32,7 @@
 		CA238FCE14FE5EE700114175 /* SlideImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FCD14FE5EE700114175 /* SlideImageView.m */; };
 		CA238FD214FF2AA100114175 /* InfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FD114FF2AA100114175 /* InfoManager.m */; };
 		CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FD414FF321C00114175 /* CityBasicDataSource.m */; };
+		CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FDD14FF4B5300114175 /* PlaceService.m */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -301,6 +302,8 @@
 		CA238FD114FF2AA100114175 /* InfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoManager.m; sourceTree = "<group>"; };
 		CA238FD314FF321C00114175 /* CityBasicDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityBasicDataSource.h; sourceTree = "<group>"; };
 		CA238FD414FF321C00114175 /* CityBasicDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityBasicDataSource.m; sourceTree = "<group>"; };
+		CA238FDD14FF4B5300114175 /* PlaceService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceService.m; sourceTree = "<group>"; };
+		CA238FDE14FF4B5300114175 /* PlaceService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceService.h; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -755,6 +758,8 @@
 		CA238FA514FCCDF200114175 /* Place */ = {
 			isa = PBXGroup;
 			children = (
+				CA238FDD14FF4B5300114175 /* PlaceService.m */,
+				CA238FDE14FF4B5300114175 /* PlaceService.h */,
 			);
 			path = Place;
 			sourceTree = "<group>";
@@ -2171,6 +2176,7 @@
 				CA238FCE14FE5EE700114175 /* SlideImageView.m in Sources */,
 				CA238FD214FF2AA100114175 /* InfoManager.m in Sources */,
 				CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */,
+				CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

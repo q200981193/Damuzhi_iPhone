@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PlaceService.h"
+#import "PPViewController.h"
 
-@interface NearbyController : UIViewController
+@class PlaceListController;
+
+@interface NearbyController : PPViewController<PlaceServiceDelegate>
+
+@property (retain, nonatomic) PlaceListController* placeListController;
+@property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 
 @end
