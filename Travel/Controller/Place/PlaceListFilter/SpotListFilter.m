@@ -14,6 +14,16 @@
 - (void)createFilterButtons:(UIView*)superView
 {
     NSLog(@"createFilterButtons");
+    UIButton *button1 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button1.frame = CGRectMake(5, 5, 50, 40);
+    //button1.backgroundColor = [UIColor redColor];
+    [button1 setTitle:@"分类" forState:UIControlStateNormal];
+    [superView addSubview:button1];
+    
+    UIButton *button2 = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button2.frame = CGRectMake(65, 5, 50, 40);
+    [button2 setTitle:@"排序" forState:UIControlStateNormal];
+    [superView addSubview:button2];
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter
