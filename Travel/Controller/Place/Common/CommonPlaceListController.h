@@ -8,18 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
+#import "PlaceService.h"
 
 @class PlaceListController;
 
 @protocol PlaceListFilterProtocol <NSObject>
 
 - (void)createFilterButtons:(UIView*)superView;
-- (NSArray*)findAllPlaces;
+- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
 + (NSObject<PlaceListFilterProtocol>*)createFilter;
 
 @end
 
-@interface CommonPlaceListController : PPTableViewController 
+@interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;
 }

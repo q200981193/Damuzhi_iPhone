@@ -25,6 +25,10 @@ enum{
 
 + (PlaceManager*)defaultManager;
 - (void)switchCity:(NSString*)newCity;
+
+- (NSArray*)findAllPlaces;
 - (NSArray*)findAllSpots;
+
+- (BOOL)hasLocalCityData:(NSString*)cityId;
 
 @end

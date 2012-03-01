@@ -9,6 +9,7 @@
 #import "CommonPlaceListController.h"
 #import "PlaceListController.h"
 #import "PlaceManager.h"
+#import "PlaceService.h"
 
 @implementation CommonPlaceListController
 
@@ -57,9 +58,8 @@
     
     [_filterHandler createFilterButtons:self.buttonHolderView];
     
-    // Do any additional setup after loading the view from its nib.
-    NSArray* placeList = [_filterHandler findAllPlaces];
-    self.placeListController = [PlaceListController createController:placeList superView:placeListHolderView];
+    // Do any additional setup after loading the view from its nib.        
+    [_filterHandler findAllPlaces:self];
 }
 
 - (void)viewDidUnload
@@ -77,9 +77,9 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)createFilterButtons
+- (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
-    
+    self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
 }
 
 @end

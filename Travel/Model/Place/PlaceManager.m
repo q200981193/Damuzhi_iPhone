@@ -106,4 +106,14 @@ static PlaceManager *_placeDefaultManager;
     return spotList;
 }
 
+- (NSArray*)findAllPlaces
+{
+    return _placeList;
+}
+
+- (BOOL)hasLocalCityData:(NSString*)cityId
+{
+    return YES;
+}
+
 @end
