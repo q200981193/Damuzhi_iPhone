@@ -12,9 +12,15 @@
 #import "SpotCell.h"
 
 @implementation PlaceListController
+@synthesize mapView;
+@synthesize locationLabel;
+@synthesize mapHolderView;
 
 - (void)dealloc
 {
+    [mapView release];
+    [locationLabel release];
+    [mapHolderView release];
     [super dealloc];
 }
 
@@ -40,11 +46,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
+    if (_showMap){
+        mapHolderView.hidden = NO;
+        dataTableView.hidden = YES;
+    }
+    else{
+        mapHolderView.hidden = YES;
+        dataTableView.hidden = NO;
+    }
 }
 
 - (void)viewDidUnload
 {
+    [self setMapView:nil];
+    [self setLocationLabel:nil];
+    [self setMapHolderView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
