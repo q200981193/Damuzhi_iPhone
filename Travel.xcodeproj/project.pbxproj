@@ -38,6 +38,7 @@
 		CA238FE914FF587B00114175 /* image3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE414FF587B00114175 /* image3.jpg */; };
 		CA238FEA14FF587B00114175 /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE514FF587B00114175 /* image4.jpg */; };
 		CA238FEB14FF587B00114175 /* image5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE614FF587B00114175 /* image5.jpg */; };
+		CA238FF314FF6A6C00114175 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FF214FF6A6C00114175 /* UserService.m */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -314,6 +315,8 @@
 		CA238FE414FF587B00114175 /* image3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image3.jpg; sourceTree = "<group>"; };
 		CA238FE514FF587B00114175 /* image4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image4.jpg; sourceTree = "<group>"; };
 		CA238FE614FF587B00114175 /* image5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image5.jpg; sourceTree = "<group>"; };
+		CA238FF114FF6A6C00114175 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
+		CA238FF214FF6A6C00114175 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -831,6 +834,15 @@
 				CA238FE614FF587B00114175 /* image5.jpg */,
 			);
 			path = Test;
+			sourceTree = "<group>";
+		};
+		CA238FF014FF6A5A00114175 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				CA238FF114FF6A6C00114175 /* UserService.h */,
+				CA238FF214FF6A6C00114175 /* UserService.m */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		CA455E7314F66EDD00DA085D /* Core */ = {
@@ -1864,6 +1876,7 @@
 		CA585F9214F7376300471880 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CA238FF014FF6A5A00114175 /* User */,
 				CA238FA514FCCDF200114175 /* Place */,
 			);
 			path = Service;
@@ -2213,6 +2226,7 @@
 				CA238FD214FF2AA100114175 /* InfoManager.m in Sources */,
 				CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */,
 				CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */,
+				CA238FF314FF6A6C00114175 /* UserService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
