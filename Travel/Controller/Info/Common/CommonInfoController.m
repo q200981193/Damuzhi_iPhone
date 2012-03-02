@@ -52,8 +52,20 @@
     // Do any additional setup after loading the view from its nib.
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    [imageHolderView addSubview:slideImageView];    
-    [slideImageView setImages:[dataSource getImages]];
+    [imageHolderView addSubview:slideImageView];  
+    
+    // add image array
+    NSArray* imagePathArray = [dataSource getImages];
+    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
+    for (NSString* imagePath in imagePathArray){
+        [images addObject:[UIImage imageNamed:imagePath]];
+    }
+    [slideImageView setImages:images];
+    
+    [slideImageView setImages:images];
+    
+
+    [slideImageView setImages:images];
 }
 
 - (void)viewDidUnload

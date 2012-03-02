@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface SlideImageView : UIView
+{
+    BOOL currentPage;
+    float currentPosition;
+}
+
+@property (nonatomic, retain)IBOutlet UIScrollView *scrollView;
+
+//-(IBAction)changePage;
 
 - (id)initWithFrame:(CGRect)frame;
 
