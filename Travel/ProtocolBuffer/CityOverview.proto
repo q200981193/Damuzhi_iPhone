@@ -27,4 +27,8 @@ message CityOverview {
   optional CommonOverview travelTransportation = 4;   // 城市交通
   
   repeated CityArea areaList = 5;                      // 城市区域列表，二级列表
+
+    required string currencyDisplay = 6;         // 货币显示符号，如人民币为¥，美元为$
+    required string currencyId = 7;             // 货币ID，用于实时汇率查询，使用国际标准，如人民币为CNY，美元为USD
+    
 }

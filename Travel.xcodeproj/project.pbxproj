@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
+		CA103AF3150339C200F60C03 /* InfoService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF2150339C200F60C03 /* InfoService.m */; };
 		CA238F2814FB27D800114175 /* Place.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2714FB27D800114175 /* Place.proto */; };
 		CA238F2A14FB2D5700114175 /* CityOverview.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2914FB2D5700114175 /* CityOverview.proto */; };
 		CA238F2C14FB2F5C00114175 /* TravelTips.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2B14FB2F5C00114175 /* TravelTips.proto */; };
@@ -267,6 +269,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
+		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
+		CA103AF1150339C200F60C03 /* InfoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoService.h; sourceTree = "<group>"; };
+		CA103AF2150339C200F60C03 /* InfoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoService.m; sourceTree = "<group>"; };
 		CA238F2714FB27D800114175 /* Place.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Place.proto; sourceTree = "<group>"; };
 		CA238F2914FB2D5700114175 /* CityOverview.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityOverview.proto; sourceTree = "<group>"; };
 		CA238F2B14FB2F5C00114175 /* TravelTips.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TravelTips.proto; sourceTree = "<group>"; };
@@ -717,6 +723,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA103AEC1503354A00F60C03 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				CA103AED1503355F00F60C03 /* UserManager.h */,
+				CA103AEE1503355F00F60C03 /* UserManager.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		CA103AF0150339B300F60C03 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				CA103AF1150339C200F60C03 /* InfoService.h */,
+				CA103AF2150339C200F60C03 /* InfoService.m */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 		CA238F2514FB27B600114175 /* ProtocolBuffer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1867,6 +1891,7 @@
 		CA585F9114F7376300471880 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CA103AEC1503354A00F60C03 /* User */,
 				CA238FCF14FF2A3B00114175 /* Info */,
 				CA238FA414FCCDE800114175 /* Place */,
 			);
@@ -1876,6 +1901,7 @@
 		CA585F9214F7376300471880 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CA103AF0150339B300F60C03 /* Info */,
 				CA238FF014FF6A5A00114175 /* User */,
 				CA238FA514FCCDF200114175 /* Place */,
 			);
@@ -2227,6 +2253,8 @@
 				CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */,
 				CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */,
 				CA238FF314FF6A6C00114175 /* UserService.m in Sources */,
+				CA103AEF1503355F00F60C03 /* UserManager.m in Sources */,
+				CA103AF3150339C200F60C03 /* InfoService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,4 +10,10 @@
 
 @implementation UserService
 
++ (UserService*)defaultService
+{
+    // TODO
+    return nil;
+}
+
 @end
