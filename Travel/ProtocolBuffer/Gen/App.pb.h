@@ -5,8 +5,6 @@
 @class App;
 @class App_Builder;
 @class City;
-@class CityList;
-@class CityList_Builder;
 @class City_Builder;
 @class HelpInfo;
 @class HelpInfo_Builder;
@@ -25,13 +23,17 @@
 @private
   BOOL hasName_:1;
   BOOL hasId_:1;
+  BOOL hasImage_:1;
   NSString* name;
   NSString* id;
+  NSString* image;
 }
 - (BOOL) hasName;
 - (BOOL) hasId;
+- (BOOL) hasImage;
 @property (readonly, retain) NSString* name;
 @property (readonly, retain) NSString* id;
+@property (readonly, retain) NSString* image;
 
 + (NameIdPair*) defaultInstance;
 - (NameIdPair*) defaultInstance;
@@ -76,6 +78,11 @@
 - (NSString*) id;
 - (NameIdPair_Builder*) setId:(NSString*) value;
 - (NameIdPair_Builder*) clearId;
+
+- (BOOL) hasImage;
+- (NSString*) image;
+- (NameIdPair_Builder*) setImage:(NSString*) value;
+- (NameIdPair_Builder*) clearImage;
 @end
 
 @interface PlaceMeta : PBGeneratedMessage {
@@ -84,17 +91,17 @@
   BOOL hasName_:1;
   int32_t categoryId;
   NSString* name;
-  NSMutableArray* mutableProvidedServiceListList;
   NSMutableArray* mutableSubCategoryListList;
+  NSMutableArray* mutableProvidedServiceListList;
 }
 - (BOOL) hasCategoryId;
 - (BOOL) hasName;
 @property (readonly) int32_t categoryId;
 @property (readonly, retain) NSString* name;
-- (NSArray*) providedServiceListList;
-- (NameIdPair*) providedServiceListAtIndex:(int32_t) index;
 - (NSArray*) subCategoryListList;
 - (NameIdPair*) subCategoryListAtIndex:(int32_t) index;
+- (NSArray*) providedServiceListList;
+- (NameIdPair*) providedServiceListAtIndex:(int32_t) index;
 
 + (PlaceMeta*) defaultInstance;
 - (PlaceMeta*) defaultInstance;
@@ -140,19 +147,19 @@
 - (PlaceMeta_Builder*) setName:(NSString*) value;
 - (PlaceMeta_Builder*) clearName;
 
-- (NSArray*) providedServiceListList;
-- (NameIdPair*) providedServiceListAtIndex:(int32_t) index;
-- (PlaceMeta_Builder*) replaceProvidedServiceListAtIndex:(int32_t) index with:(NameIdPair*) value;
-- (PlaceMeta_Builder*) addProvidedServiceList:(NameIdPair*) value;
-- (PlaceMeta_Builder*) addAllProvidedServiceList:(NSArray*) values;
-- (PlaceMeta_Builder*) clearProvidedServiceListList;
-
 - (NSArray*) subCategoryListList;
 - (NameIdPair*) subCategoryListAtIndex:(int32_t) index;
 - (PlaceMeta_Builder*) replaceSubCategoryListAtIndex:(int32_t) index with:(NameIdPair*) value;
 - (PlaceMeta_Builder*) addSubCategoryList:(NameIdPair*) value;
 - (PlaceMeta_Builder*) addAllSubCategoryList:(NSArray*) values;
 - (PlaceMeta_Builder*) clearSubCategoryListList;
+
+- (NSArray*) providedServiceListList;
+- (NameIdPair*) providedServiceListAtIndex:(int32_t) index;
+- (PlaceMeta_Builder*) replaceProvidedServiceListAtIndex:(int32_t) index with:(NameIdPair*) value;
+- (PlaceMeta_Builder*) addProvidedServiceList:(NameIdPair*) value;
+- (PlaceMeta_Builder*) addAllProvidedServiceList:(NSArray*) values;
+- (PlaceMeta_Builder*) clearProvidedServiceListList;
 @end
 
 @interface City : PBGeneratedMessage {
@@ -219,55 +226,6 @@
 - (NSString*) latestVersion;
 - (City_Builder*) setLatestVersion:(NSString*) value;
 - (City_Builder*) clearLatestVersion;
-@end
-
-@interface CityList : PBGeneratedMessage {
-@private
-  NSMutableArray* mutableCityListList;
-}
-- (NSArray*) cityListList;
-- (City*) cityListAtIndex:(int32_t) index;
-
-+ (CityList*) defaultInstance;
-- (CityList*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (CityList_Builder*) builder;
-+ (CityList_Builder*) builder;
-+ (CityList_Builder*) builderWithPrototype:(CityList*) prototype;
-
-+ (CityList*) parseFromData:(NSData*) data;
-+ (CityList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CityList*) parseFromInputStream:(NSInputStream*) input;
-+ (CityList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CityList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (CityList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface CityList_Builder : PBGeneratedMessage_Builder {
-@private
-  CityList* result;
-}
-
-- (CityList*) defaultInstance;
-
-- (CityList_Builder*) clear;
-- (CityList_Builder*) clone;
-
-- (CityList*) build;
-- (CityList*) buildPartial;
-
-- (CityList_Builder*) mergeFrom:(CityList*) other;
-- (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (NSArray*) cityListList;
-- (City*) cityListAtIndex:(int32_t) index;
-- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(City*) value;
-- (CityList_Builder*) addCityList:(City*) value;
-- (CityList_Builder*) addAllCityList:(NSArray*) values;
-- (CityList_Builder*) clearCityListList;
 @end
 
 @interface HelpInfo : PBGeneratedMessage {

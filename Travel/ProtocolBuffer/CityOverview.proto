@@ -6,25 +6,30 @@ option java_outer_classname = "CityOverviewProtos";
 
 message CommonOverview {
   repeated string images = 1;      // 图片文件名，相对路径，如 images/a.jpg，在线返回网站绝对的URL路径
-  required string html = 2;         // 对应的HTML文件名，离线返回相对路径，如 html/abc/abc.html，在线返回网站的绝对URL
+  required string html = 2;        // 对应的HTML文件名，离线返回相对路径，如 html/abc/abc.html，在线返回网站的绝对URL
 }
 
-message CitySubArea{            // 子区域
+message CitySubArea{                                  // 区域下的子区域，用于筛选条件查询和显示
   required string subAreaId = 1;
   required string areaName = 2;
 }
 
-message CityArea{               // 城市区域
+message CityArea{                                      // 城市区域，用于筛选条件查询和显示
   required string areaId = 1;
   required string areaName = 2;
   repeated string subAreaList = 3;
 }
 
 message CityOverview {
-  optional CommonOverview cityBasic = 1;            // 城市概况
-  optional CommonOverview travelPrepration = 2;      // 旅行准备
-  optional CommonOverview travelUtility = 3;          // 实用信息
-  optional CommonOverview travelTransportation = 4;   // 城市交通
+  optional CommonOverview cityBasic = 1;               // 城市概况
+  optional CommonOverview travelPrepration = 2;        // 旅行准备
+  optional CommonOverview travelUtility = 3;           // 实用信息
+  optional CommonOverview travelTransportation = 4;    // 城市交通
   
   repeated CityArea areaList = 5;                      // 城市区域列表，二级列表
+
+  required string currencySymbol = 6;                  // 货币显示符号，如人民币为¥，美元为$
+  required string currencyId = 7;                      // 货币ID，用于实时汇率查询，使用国际标准，如人民币为CNY，美元为USD
+  required string currencyName = 8;                    // 货币显示名字，如“人民币”，“美元”，“欧元”
+    
 }

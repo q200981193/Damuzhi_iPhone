@@ -23,7 +23,7 @@ static InfoManager *_infoDefaultManager;
     [super dealloc];
 }
 
-+ (InfoManager*)defaultManager
++ (id)defaultManager
 {
     if (_infoDefaultManager == nil){
         _infoDefaultManager = [[InfoManager alloc] init];

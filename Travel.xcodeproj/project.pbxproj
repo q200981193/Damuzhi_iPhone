@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
+		CA103AF3150339C200F60C03 /* InfoService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF2150339C200F60C03 /* InfoService.m */; };
+		CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF5150467B200F60C03 /* PlaceMapViewController.m */; };
+		CA103AF8150467B200F60C03 /* PlaceMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */; };
+		CA103AFC15046A3300F60C03 /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AFB15046A3300F60C03 /* AppManager.m */; };
 		CA238F2814FB27D800114175 /* Place.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2714FB27D800114175 /* Place.proto */; };
 		CA238F2A14FB2D5700114175 /* CityOverview.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2914FB2D5700114175 /* CityOverview.proto */; };
 		CA238F2C14FB2F5C00114175 /* TravelTips.proto in Resources */ = {isa = PBXBuildFile; fileRef = CA238F2B14FB2F5C00114175 /* TravelTips.proto */; };
@@ -267,6 +272,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
+		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
+		CA103AF1150339C200F60C03 /* InfoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoService.h; sourceTree = "<group>"; };
+		CA103AF2150339C200F60C03 /* InfoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoService.m; sourceTree = "<group>"; };
+		CA103AF4150467B200F60C03 /* PlaceMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapViewController.h; sourceTree = "<group>"; };
+		CA103AF5150467B200F60C03 /* PlaceMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceMapViewController.m; sourceTree = "<group>"; };
+		CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceMapViewController.xib; sourceTree = "<group>"; };
+		CA103AFA15046A3300F60C03 /* AppManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppManager.h; sourceTree = "<group>"; };
+		CA103AFB15046A3300F60C03 /* AppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppManager.m; sourceTree = "<group>"; };
 		CA238F2714FB27D800114175 /* Place.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Place.proto; sourceTree = "<group>"; };
 		CA238F2914FB2D5700114175 /* CityOverview.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityOverview.proto; sourceTree = "<group>"; };
 		CA238F2B14FB2F5C00114175 /* TravelTips.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TravelTips.proto; sourceTree = "<group>"; };
@@ -717,6 +731,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA103AEC1503354A00F60C03 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				CA103AED1503355F00F60C03 /* UserManager.h */,
+				CA103AEE1503355F00F60C03 /* UserManager.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		CA103AF0150339B300F60C03 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				CA103AF1150339C200F60C03 /* InfoService.h */,
+				CA103AF2150339C200F60C03 /* InfoService.m */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		CA103AF91504683100F60C03 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CA103AFA15046A3300F60C03 /* AppManager.h */,
+				CA103AFB15046A3300F60C03 /* AppManager.m */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		CA238F2514FB27B600114175 /* ProtocolBuffer */ = {
 			isa = PBXGroup;
 			children = (
@@ -803,6 +844,9 @@
 			children = (
 				CA238FCC14FE5EE700114175 /* SlideImageView.h */,
 				CA238FCD14FE5EE700114175 /* SlideImageView.m */,
+				CA103AF4150467B200F60C03 /* PlaceMapViewController.h */,
+				CA103AF5150467B200F60C03 /* PlaceMapViewController.m */,
+				CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1867,6 +1911,8 @@
 		CA585F9114F7376300471880 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CA103AF91504683100F60C03 /* App */,
+				CA103AEC1503354A00F60C03 /* User */,
 				CA238FCF14FF2A3B00114175 /* Info */,
 				CA238FA414FCCDE800114175 /* Place */,
 			);
@@ -1876,6 +1922,7 @@
 		CA585F9214F7376300471880 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				CA103AF0150339B300F60C03 /* Info */,
 				CA238FF014FF6A5A00114175 /* User */,
 				CA238FA514FCCDF200114175 /* Place */,
 			);
@@ -2039,6 +2086,7 @@
 				CA238FE914FF587B00114175 /* image3.jpg in Resources */,
 				CA238FEA14FF587B00114175 /* image4.jpg in Resources */,
 				CA238FEB14FF587B00114175 /* image5.jpg in Resources */,
+				CA103AF8150467B200F60C03 /* PlaceMapViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2227,6 +2275,10 @@
 				CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */,
 				CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */,
 				CA238FF314FF6A6C00114175 /* UserService.m in Sources */,
+				CA103AEF1503355F00F60C03 /* UserManager.m in Sources */,
+				CA103AF3150339C200F60C03 /* InfoService.m in Sources */,
+				CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */,
+				CA103AFC15046A3300F60C03 /* AppManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

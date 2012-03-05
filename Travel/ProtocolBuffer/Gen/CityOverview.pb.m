@@ -776,6 +776,9 @@ static CityArea* defaultCityAreaInstance = nil;
 @property (retain) CommonOverview* travelUtility;
 @property (retain) CommonOverview* travelTransportation;
 @property (retain) NSMutableArray* mutableAreaListList;
+@property (retain) NSString* currencySymbol;
+@property (retain) NSString* currencyId;
+@property (retain) NSString* currencyName;
 @end
 
 @implementation CityOverview
@@ -809,12 +812,36 @@ static CityArea* defaultCityAreaInstance = nil;
 }
 @synthesize travelTransportation;
 @synthesize mutableAreaListList;
+- (BOOL) hasCurrencySymbol {
+  return !!hasCurrencySymbol_;
+}
+- (void) setHasCurrencySymbol:(BOOL) value {
+  hasCurrencySymbol_ = !!value;
+}
+@synthesize currencySymbol;
+- (BOOL) hasCurrencyId {
+  return !!hasCurrencyId_;
+}
+- (void) setHasCurrencyId:(BOOL) value {
+  hasCurrencyId_ = !!value;
+}
+@synthesize currencyId;
+- (BOOL) hasCurrencyName {
+  return !!hasCurrencyName_;
+}
+- (void) setHasCurrencyName:(BOOL) value {
+  hasCurrencyName_ = !!value;
+}
+@synthesize currencyName;
 - (void) dealloc {
   self.cityBasic = nil;
   self.travelPrepration = nil;
   self.travelUtility = nil;
   self.travelTransportation = nil;
   self.mutableAreaListList = nil;
+  self.currencySymbol = nil;
+  self.currencyId = nil;
+  self.currencyName = nil;
   [super dealloc];
 }
 - (id) init {
@@ -823,6 +850,9 @@ static CityArea* defaultCityAreaInstance = nil;
     self.travelPrepration = [CommonOverview defaultInstance];
     self.travelUtility = [CommonOverview defaultInstance];
     self.travelTransportation = [CommonOverview defaultInstance];
+    self.currencySymbol = @"";
+    self.currencyId = @"";
+    self.currencyName = @"";
   }
   return self;
 }
@@ -846,6 +876,15 @@ static CityOverview* defaultCityOverviewInstance = nil;
   return value;
 }
 - (BOOL) isInitialized {
+  if (!self.hasCurrencySymbol) {
+    return NO;
+  }
+  if (!self.hasCurrencyId) {
+    return NO;
+  }
+  if (!self.hasCurrencyName) {
+    return NO;
+  }
   if (self.hasCityBasic) {
     if (!self.cityBasic.isInitialized) {
       return NO;
@@ -889,6 +928,15 @@ static CityOverview* defaultCityOverviewInstance = nil;
   for (CityArea* element in self.areaListList) {
     [output writeMessage:5 value:element];
   }
+  if (self.hasCurrencySymbol) {
+    [output writeString:6 value:self.currencySymbol];
+  }
+  if (self.hasCurrencyId) {
+    [output writeString:7 value:self.currencyId];
+  }
+  if (self.hasCurrencyName) {
+    [output writeString:8 value:self.currencyName];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -912,6 +960,15 @@ static CityOverview* defaultCityOverviewInstance = nil;
   }
   for (CityArea* element in self.areaListList) {
     size += computeMessageSize(5, element);
+  }
+  if (self.hasCurrencySymbol) {
+    size += computeStringSize(6, self.currencySymbol);
+  }
+  if (self.hasCurrencyId) {
+    size += computeStringSize(7, self.currencyId);
+  }
+  if (self.hasCurrencyName) {
+    size += computeStringSize(8, self.currencyName);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -1006,6 +1063,15 @@ static CityOverview* defaultCityOverviewInstance = nil;
     }
     [result.mutableAreaListList addObjectsFromArray:other.mutableAreaListList];
   }
+  if (other.hasCurrencySymbol) {
+    [self setCurrencySymbol:other.currencySymbol];
+  }
+  if (other.hasCurrencyId) {
+    [self setCurrencyId:other.currencyId];
+  }
+  if (other.hasCurrencyName) {
+    [self setCurrencyName:other.currencyName];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -1067,6 +1133,18 @@ static CityOverview* defaultCityOverviewInstance = nil;
         CityArea_Builder* subBuilder = [CityArea builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addAreaList:[subBuilder buildPartial]];
+        break;
+      }
+      case 50: {
+        [self setCurrencySymbol:[input readString]];
+        break;
+      }
+      case 58: {
+        [self setCurrencyId:[input readString]];
+        break;
+      }
+      case 66: {
+        [self setCurrencyName:[input readString]];
         break;
       }
     }
@@ -1219,6 +1297,54 @@ static CityOverview* defaultCityOverviewInstance = nil;
     result.mutableAreaListList = [NSMutableArray array];
   }
   [result.mutableAreaListList addObject:value];
+  return self;
+}
+- (BOOL) hasCurrencySymbol {
+  return result.hasCurrencySymbol;
+}
+- (NSString*) currencySymbol {
+  return result.currencySymbol;
+}
+- (CityOverview_Builder*) setCurrencySymbol:(NSString*) value {
+  result.hasCurrencySymbol = YES;
+  result.currencySymbol = value;
+  return self;
+}
+- (CityOverview_Builder*) clearCurrencySymbol {
+  result.hasCurrencySymbol = NO;
+  result.currencySymbol = @"";
+  return self;
+}
+- (BOOL) hasCurrencyId {
+  return result.hasCurrencyId;
+}
+- (NSString*) currencyId {
+  return result.currencyId;
+}
+- (CityOverview_Builder*) setCurrencyId:(NSString*) value {
+  result.hasCurrencyId = YES;
+  result.currencyId = value;
+  return self;
+}
+- (CityOverview_Builder*) clearCurrencyId {
+  result.hasCurrencyId = NO;
+  result.currencyId = @"";
+  return self;
+}
+- (BOOL) hasCurrencyName {
+  return result.hasCurrencyName;
+}
+- (NSString*) currencyName {
+  return result.currencyName;
+}
+- (CityOverview_Builder*) setCurrencyName:(NSString*) value {
+  result.hasCurrencyName = YES;
+  result.currencyName = value;
+  return self;
+}
+- (CityOverview_Builder*) clearCurrencyName {
+  result.hasCurrencyName = NO;
+  result.currencyName = @"";
   return self;
 }
 @end

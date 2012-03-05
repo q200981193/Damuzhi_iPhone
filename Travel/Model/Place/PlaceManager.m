@@ -22,7 +22,7 @@ static PlaceManager *_placeDefaultManager;
     [super dealloc];
 }
 
-+ (PlaceManager*)defaultManager
++ (id)defaultManager
 {
     if (_placeDefaultManager == nil){
         _placeDefaultManager = [[PlaceManager alloc] init];

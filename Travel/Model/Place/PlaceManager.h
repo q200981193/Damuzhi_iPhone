@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CommonService.h"
 #import "Place.pb.h"
 
 enum{
@@ -14,7 +15,7 @@ enum{
     
 };
 
-@interface PlaceManager : NSObject
+@interface PlaceManager : NSObject<CommonManagerProtocol>
 {
     NSString*       _city;
     NSArray*        _placeList; 
@@ -23,7 +24,6 @@ enum{
 @property (nonatomic, retain) NSString* city;
 @property (nonatomic, retain) NSArray*  placeList;
 
-+ (PlaceManager*)defaultManager;
 - (void)switchCity:(NSString*)newCity;
 
 - (NSArray*)findAllPlaces;

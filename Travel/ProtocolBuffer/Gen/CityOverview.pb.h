@@ -201,10 +201,16 @@
 
 @interface CityOverview : PBGeneratedMessage {
 @private
+  BOOL hasCurrencySymbol_:1;
+  BOOL hasCurrencyId_:1;
+  BOOL hasCurrencyName_:1;
   BOOL hasCityBasic_:1;
   BOOL hasTravelPrepration_:1;
   BOOL hasTravelUtility_:1;
   BOOL hasTravelTransportation_:1;
+  NSString* currencySymbol;
+  NSString* currencyId;
+  NSString* currencyName;
   CommonOverview* cityBasic;
   CommonOverview* travelPrepration;
   CommonOverview* travelUtility;
@@ -215,10 +221,16 @@
 - (BOOL) hasTravelPrepration;
 - (BOOL) hasTravelUtility;
 - (BOOL) hasTravelTransportation;
+- (BOOL) hasCurrencySymbol;
+- (BOOL) hasCurrencyId;
+- (BOOL) hasCurrencyName;
 @property (readonly, retain) CommonOverview* cityBasic;
 @property (readonly, retain) CommonOverview* travelPrepration;
 @property (readonly, retain) CommonOverview* travelUtility;
 @property (readonly, retain) CommonOverview* travelTransportation;
+@property (readonly, retain) NSString* currencySymbol;
+@property (readonly, retain) NSString* currencyId;
+@property (readonly, retain) NSString* currencyName;
 - (NSArray*) areaListList;
 - (CityArea*) areaListAtIndex:(int32_t) index;
 
@@ -290,5 +302,20 @@
 - (CityOverview_Builder*) addAreaList:(CityArea*) value;
 - (CityOverview_Builder*) addAllAreaList:(NSArray*) values;
 - (CityOverview_Builder*) clearAreaListList;
+
+- (BOOL) hasCurrencySymbol;
+- (NSString*) currencySymbol;
+- (CityOverview_Builder*) setCurrencySymbol:(NSString*) value;
+- (CityOverview_Builder*) clearCurrencySymbol;
+
+- (BOOL) hasCurrencyId;
+- (NSString*) currencyId;
+- (CityOverview_Builder*) setCurrencyId:(NSString*) value;
+- (CityOverview_Builder*) clearCurrencyId;
+
+- (BOOL) hasCurrencyName;
+- (NSString*) currencyName;
+- (CityOverview_Builder*) setCurrencyName:(NSString*) value;
+- (CityOverview_Builder*) clearCurrencyName;
 @end
 

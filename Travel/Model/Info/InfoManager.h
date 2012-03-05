@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "CityOverview.pb.h"
+#import "CommonService.h"
 
-@interface InfoManager : NSObject
+@interface InfoManager : NSObject<CommonManagerProtocol>
 
 @property (nonatomic, retain) CommonOverview* cityBasic;
 @property (nonatomic, retain) CityOverview* cityOverview;
-
-+ (InfoManager*)defaultManager;
 
 - (CommonOverview*)getCityBasic;
 - (void)readCityOverview:(NSString*)cityId;
