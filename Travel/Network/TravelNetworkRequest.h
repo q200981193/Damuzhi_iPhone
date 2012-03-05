@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PPNetworkRequest.h"
+#import "TravelNetworkConstants.h"
+
+typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData* data, int resultCode);
 
 @interface TravelNetworkRequest : NSObject
+
++ (CommonNetworkOutput*)registerUser:(int)type token:(NSString*)deviceToken;
 
 @end
