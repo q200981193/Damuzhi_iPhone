@@ -16,8 +16,6 @@
 
 @property (nonatomic, retain)IBOutlet UIScrollView *scrollView;
 
-//-(IBAction)changePage;
-
 - (id)initWithFrame:(CGRect)frame;
 
 - (void)setImages:(NSArray*)images;

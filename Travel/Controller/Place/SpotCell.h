@@ -13,7 +13,18 @@
 
 + (SpotCell*)createCell:(id)delegate;
 + (NSString*)getCellIdentifier;
+- (NSString*)getIconByProvidedServiceId:(NSString*)serviceId;
 
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *priceLable;
+@property (retain, nonatomic) IBOutlet UILabel *distanceLable;
+@property (retain, nonatomic) IBOutlet UILabel *areaLable;
+@property (retain, nonatomic) IBOutlet UILabel *categoryLable;
+@property (retain, nonatomic) IBOutlet UIImageView *imageView;
+@property (retain, nonatomic) IBOutlet UIImageView *praise1View;
+@property (retain, nonatomic) IBOutlet UIImageView *praise2View;
+@property (retain, nonatomic) IBOutlet UIImageView *praise3View;
+@property (retain, nonatomic) IBOutlet UIImageView *favoritesView;
+
 
 @end

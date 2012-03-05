@@ -107,7 +107,6 @@
         [imageView release];
     } 
     
-//  scrollView.delegate = self;
     [self addSubview:scrollView];
 
 }
