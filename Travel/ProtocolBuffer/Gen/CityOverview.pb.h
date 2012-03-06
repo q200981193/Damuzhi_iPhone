@@ -6,8 +6,6 @@
 @class CityArea_Builder;
 @class CityOverview;
 @class CityOverview_Builder;
-@class CitySubArea;
-@class CitySubArea_Builder;
 @class CommonOverview;
 @class CommonOverview_Builder;
 
@@ -75,77 +73,17 @@
 - (CommonOverview_Builder*) clearHtml;
 @end
 
-@interface CitySubArea : PBGeneratedMessage {
-@private
-  BOOL hasSubAreaId_:1;
-  BOOL hasAreaName_:1;
-  NSString* subAreaId;
-  NSString* areaName;
-}
-- (BOOL) hasSubAreaId;
-- (BOOL) hasAreaName;
-@property (readonly, retain) NSString* subAreaId;
-@property (readonly, retain) NSString* areaName;
-
-+ (CitySubArea*) defaultInstance;
-- (CitySubArea*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (CitySubArea_Builder*) builder;
-+ (CitySubArea_Builder*) builder;
-+ (CitySubArea_Builder*) builderWithPrototype:(CitySubArea*) prototype;
-
-+ (CitySubArea*) parseFromData:(NSData*) data;
-+ (CitySubArea*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CitySubArea*) parseFromInputStream:(NSInputStream*) input;
-+ (CitySubArea*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CitySubArea*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (CitySubArea*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface CitySubArea_Builder : PBGeneratedMessage_Builder {
-@private
-  CitySubArea* result;
-}
-
-- (CitySubArea*) defaultInstance;
-
-- (CitySubArea_Builder*) clear;
-- (CitySubArea_Builder*) clone;
-
-- (CitySubArea*) build;
-- (CitySubArea*) buildPartial;
-
-- (CitySubArea_Builder*) mergeFrom:(CitySubArea*) other;
-- (CitySubArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (CitySubArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasSubAreaId;
-- (NSString*) subAreaId;
-- (CitySubArea_Builder*) setSubAreaId:(NSString*) value;
-- (CitySubArea_Builder*) clearSubAreaId;
-
-- (BOOL) hasAreaName;
-- (NSString*) areaName;
-- (CitySubArea_Builder*) setAreaName:(NSString*) value;
-- (CitySubArea_Builder*) clearAreaName;
-@end
-
 @interface CityArea : PBGeneratedMessage {
 @private
   BOOL hasAreaId_:1;
   BOOL hasAreaName_:1;
-  NSString* areaId;
+  int32_t areaId;
   NSString* areaName;
-  NSMutableArray* mutableSubAreaListList;
 }
 - (BOOL) hasAreaId;
 - (BOOL) hasAreaName;
-@property (readonly, retain) NSString* areaId;
+@property (readonly) int32_t areaId;
 @property (readonly, retain) NSString* areaName;
-- (NSArray*) subAreaListList;
-- (NSString*) subAreaListAtIndex:(int32_t) index;
 
 + (CityArea*) defaultInstance;
 - (CityArea*) defaultInstance;
@@ -182,25 +120,19 @@
 - (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasAreaId;
-- (NSString*) areaId;
-- (CityArea_Builder*) setAreaId:(NSString*) value;
+- (int32_t) areaId;
+- (CityArea_Builder*) setAreaId:(int32_t) value;
 - (CityArea_Builder*) clearAreaId;
 
 - (BOOL) hasAreaName;
 - (NSString*) areaName;
 - (CityArea_Builder*) setAreaName:(NSString*) value;
 - (CityArea_Builder*) clearAreaName;
-
-- (NSArray*) subAreaListList;
-- (NSString*) subAreaListAtIndex:(int32_t) index;
-- (CityArea_Builder*) replaceSubAreaListAtIndex:(int32_t) index with:(NSString*) value;
-- (CityArea_Builder*) addSubAreaList:(NSString*) value;
-- (CityArea_Builder*) addAllSubAreaList:(NSArray*) values;
-- (CityArea_Builder*) clearSubAreaListList;
 @end
 
 @interface CityOverview : PBGeneratedMessage {
 @private
+  BOOL hasPriceRank_:1;
   BOOL hasCurrencySymbol_:1;
   BOOL hasCurrencyId_:1;
   BOOL hasCurrencyName_:1;
@@ -208,6 +140,7 @@
   BOOL hasTravelPrepration_:1;
   BOOL hasTravelUtility_:1;
   BOOL hasTravelTransportation_:1;
+  int32_t priceRank;
   NSString* currencySymbol;
   NSString* currencyId;
   NSString* currencyName;
@@ -224,6 +157,7 @@
 - (BOOL) hasCurrencySymbol;
 - (BOOL) hasCurrencyId;
 - (BOOL) hasCurrencyName;
+- (BOOL) hasPriceRank;
 @property (readonly, retain) CommonOverview* cityBasic;
 @property (readonly, retain) CommonOverview* travelPrepration;
 @property (readonly, retain) CommonOverview* travelUtility;
@@ -231,6 +165,7 @@
 @property (readonly, retain) NSString* currencySymbol;
 @property (readonly, retain) NSString* currencyId;
 @property (readonly, retain) NSString* currencyName;
+@property (readonly) int32_t priceRank;
 - (NSArray*) areaListList;
 - (CityArea*) areaListAtIndex:(int32_t) index;
 
@@ -317,5 +252,10 @@
 - (NSString*) currencyName;
 - (CityOverview_Builder*) setCurrencyName:(NSString*) value;
 - (CityOverview_Builder*) clearCurrencyName;
+
+- (BOOL) hasPriceRank;
+- (int32_t) priceRank;
+- (CityOverview_Builder*) setPriceRank:(int32_t) value;
+- (CityOverview_Builder*) clearPriceRank;
 @end
 

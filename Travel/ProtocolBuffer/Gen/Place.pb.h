@@ -15,54 +15,55 @@
 
 @interface Place : PBGeneratedMessage {
 @private
-  BOOL hasLongitude_:1;
   BOOL hasLatitude_:1;
+  BOOL hasLongitude_:1;
   BOOL hasHasDiscount_:1;
   BOOL hasPlaceFavoriteCount_:1;
-  BOOL hasCategoryId_:1;
-  BOOL hasSubCategoryId_:1;
-  BOOL hasRank_:1;
   BOOL hasHotelStar_:1;
+  BOOL hasPriceRank_:1;
+  BOOL hasPlaceId_:1;
+  BOOL hasRank_:1;
+  BOOL hasCityId_:1;
+  BOOL hasSubCategoryId_:1;
+  BOOL hasCategoryId_:1;
+  BOOL hasName_:1;
+  BOOL hasPrice_:1;
+  BOOL hasAvgPrice_:1;
+  BOOL hasIcon_:1;
+  BOOL hasIntroduction_:1;
+  BOOL hasTransportation_:1;
   BOOL hasTips_:1;
   BOOL hasOpenTime_:1;
-  BOOL hasPriceDescription_:1;
   BOOL hasWebsite_:1;
-  BOOL hasTransportation_:1;
-  BOOL hasIntroduction_:1;
-  BOOL hasIcon_:1;
-  BOOL hasAvgPrice_:1;
-  BOOL hasPrice_:1;
-  BOOL hasName_:1;
-  BOOL hasCityId_:1;
-  BOOL hasPlaceId_:1;
-  Float32 longitude;
+  BOOL hasPriceDescription_:1;
   Float32 latitude;
+  Float32 longitude;
   int32_t hasDiscount;
   int32_t placeFavoriteCount;
-  int32_t categoryId;
-  int32_t subCategoryId;
+  int32_t hotelStar;
+  int32_t priceRank;
+  int32_t placeId;
   int32_t rank;
-  NSString* hotelStar;
+  int32_t cityId;
+  int32_t subCategoryId;
+  int32_t categoryId;
+  NSString* name;
+  NSString* price;
+  NSString* avgPrice;
+  NSString* icon;
+  NSString* introduction;
+  NSString* transportation;
   NSString* tips;
   NSString* openTime;
-  NSString* priceDescription;
   NSString* website;
-  NSString* transportation;
-  NSString* introduction;
-  NSString* icon;
-  NSString* avgPrice;
-  NSString* price;
-  NSString* name;
-  NSString* cityId;
-  NSString* placeId;
-  NSMutableArray* mutableImagesList;
-  NSMutableArray* mutableTelephoneList;
-  NSMutableArray* mutableAddressList;
-  NSMutableArray* mutableSubAreaIdList;
+  NSString* priceDescription;
   NSMutableArray* mutableAreaIdList;
   NSMutableArray* mutableProvidedServiceIdList;
+  NSMutableArray* mutableAddressList;
+  NSMutableArray* mutableTelephoneList;
   NSMutableArray* mutableKeywordsList;
   NSMutableArray* mutableTypicalDishesList;
+  NSMutableArray* mutableImagesList;
 }
 - (BOOL) hasPlaceId;
 - (BOOL) hasCityId;
@@ -74,6 +75,7 @@
 - (BOOL) hasLatitude;
 - (BOOL) hasPrice;
 - (BOOL) hasAvgPrice;
+- (BOOL) hasPriceRank;
 - (BOOL) hasIcon;
 - (BOOL) hasIntroduction;
 - (BOOL) hasTransportation;
@@ -84,8 +86,8 @@
 - (BOOL) hasHotelStar;
 - (BOOL) hasPlaceFavoriteCount;
 - (BOOL) hasHasDiscount;
-@property (readonly, retain) NSString* placeId;
-@property (readonly, retain) NSString* cityId;
+@property (readonly) int32_t placeId;
+@property (readonly) int32_t cityId;
 @property (readonly) int32_t categoryId;
 @property (readonly) int32_t subCategoryId;
 @property (readonly, retain) NSString* name;
@@ -94,6 +96,7 @@
 @property (readonly) Float32 latitude;
 @property (readonly, retain) NSString* price;
 @property (readonly, retain) NSString* avgPrice;
+@property (readonly) int32_t priceRank;
 @property (readonly, retain) NSString* icon;
 @property (readonly, retain) NSString* introduction;
 @property (readonly, retain) NSString* transportation;
@@ -101,15 +104,13 @@
 @property (readonly, retain) NSString* priceDescription;
 @property (readonly, retain) NSString* openTime;
 @property (readonly, retain) NSString* tips;
-@property (readonly, retain) NSString* hotelStar;
+@property (readonly) int32_t hotelStar;
 @property (readonly) int32_t placeFavoriteCount;
 @property (readonly) int32_t hasDiscount;
 - (NSArray*) providedServiceIdList;
-- (NSString*) providedServiceIdAtIndex:(int32_t) index;
+- (int32_t) providedServiceIdAtIndex:(int32_t) index;
 - (NSArray*) areaIdList;
-- (NSString*) areaIdAtIndex:(int32_t) index;
-- (NSArray*) subAreaIdList;
-- (NSString*) subAreaIdAtIndex:(int32_t) index;
+- (int32_t) areaIdAtIndex:(int32_t) index;
 - (NSArray*) imagesList;
 - (NSString*) imagesAtIndex:(int32_t) index;
 - (NSArray*) telephoneList;
@@ -156,13 +157,13 @@
 - (Place_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasPlaceId;
-- (NSString*) placeId;
-- (Place_Builder*) setPlaceId:(NSString*) value;
+- (int32_t) placeId;
+- (Place_Builder*) setPlaceId:(int32_t) value;
 - (Place_Builder*) clearPlaceId;
 
 - (BOOL) hasCityId;
-- (NSString*) cityId;
-- (Place_Builder*) setCityId:(NSString*) value;
+- (int32_t) cityId;
+- (Place_Builder*) setCityId:(int32_t) value;
 - (Place_Builder*) clearCityId;
 
 - (BOOL) hasCategoryId;
@@ -186,9 +187,9 @@
 - (Place_Builder*) clearRank;
 
 - (NSArray*) providedServiceIdList;
-- (NSString*) providedServiceIdAtIndex:(int32_t) index;
-- (Place_Builder*) replaceProvidedServiceIdAtIndex:(int32_t) index with:(NSString*) value;
-- (Place_Builder*) addProvidedServiceId:(NSString*) value;
+- (int32_t) providedServiceIdAtIndex:(int32_t) index;
+- (Place_Builder*) replaceProvidedServiceIdAtIndex:(int32_t) index with:(int32_t) value;
+- (Place_Builder*) addProvidedServiceId:(int32_t) value;
 - (Place_Builder*) addAllProvidedServiceId:(NSArray*) values;
 - (Place_Builder*) clearProvidedServiceIdList;
 
@@ -203,18 +204,11 @@
 - (Place_Builder*) clearLatitude;
 
 - (NSArray*) areaIdList;
-- (NSString*) areaIdAtIndex:(int32_t) index;
-- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(NSString*) value;
-- (Place_Builder*) addAreaId:(NSString*) value;
+- (int32_t) areaIdAtIndex:(int32_t) index;
+- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(int32_t) value;
+- (Place_Builder*) addAreaId:(int32_t) value;
 - (Place_Builder*) addAllAreaId:(NSArray*) values;
 - (Place_Builder*) clearAreaIdList;
-
-- (NSArray*) subAreaIdList;
-- (NSString*) subAreaIdAtIndex:(int32_t) index;
-- (Place_Builder*) replaceSubAreaIdAtIndex:(int32_t) index with:(NSString*) value;
-- (Place_Builder*) addSubAreaId:(NSString*) value;
-- (Place_Builder*) addAllSubAreaId:(NSArray*) values;
-- (Place_Builder*) clearSubAreaIdList;
 
 - (BOOL) hasPrice;
 - (NSString*) price;
@@ -225,6 +219,11 @@
 - (NSString*) avgPrice;
 - (Place_Builder*) setAvgPrice:(NSString*) value;
 - (Place_Builder*) clearAvgPrice;
+
+- (BOOL) hasPriceRank;
+- (int32_t) priceRank;
+- (Place_Builder*) setPriceRank:(int32_t) value;
+- (Place_Builder*) clearPriceRank;
 
 - (BOOL) hasIcon;
 - (NSString*) icon;
@@ -297,8 +296,8 @@
 - (Place_Builder*) clearTypicalDishesList;
 
 - (BOOL) hasHotelStar;
-- (NSString*) hotelStar;
-- (Place_Builder*) setHotelStar:(NSString*) value;
+- (int32_t) hotelStar;
+- (Place_Builder*) setHotelStar:(int32_t) value;
 - (Place_Builder*) clearHotelStar;
 
 - (BOOL) hasPlaceFavoriteCount;
@@ -315,11 +314,11 @@
 @interface PlaceList : PBGeneratedMessage {
 @private
   BOOL hasCityId_:1;
-  NSString* cityId;
+  int32_t cityId;
   NSMutableArray* mutableListList;
 }
 - (BOOL) hasCityId;
-@property (readonly, retain) NSString* cityId;
+@property (readonly) int32_t cityId;
 - (NSArray*) listList;
 - (Place*) listAtIndex:(int32_t) index;
 
@@ -365,8 +364,8 @@
 - (PlaceList_Builder*) clearListList;
 
 - (BOOL) hasCityId;
-- (NSString*) cityId;
-- (PlaceList_Builder*) setCityId:(NSString*) value;
+- (int32_t) cityId;
+- (PlaceList_Builder*) setCityId:(int32_t) value;
 - (PlaceList_Builder*) clearCityId;
 @end
 

@@ -33,7 +33,7 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value) {
 }
 @interface NameIdPair ()
 @property (retain) NSString* name;
-@property (retain) NSString* id;
+@property int32_t id;
 @property (retain) NSString* image;
 @end
 
@@ -62,14 +62,13 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value) {
 @synthesize image;
 - (void) dealloc {
   self.name = nil;
-  self.id = nil;
   self.image = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
     self.name = @"";
-    self.id = @"";
+    self.id = 0;
     self.image = @"";
   }
   return self;
@@ -100,7 +99,7 @@ static NameIdPair* defaultNameIdPairInstance = nil;
     [output writeString:1 value:self.name];
   }
   if (self.hasId) {
-    [output writeString:2 value:self.id];
+    [output writeInt32:2 value:self.id];
   }
   if (self.hasImage) {
     [output writeString:3 value:self.image];
@@ -118,7 +117,7 @@ static NameIdPair* defaultNameIdPairInstance = nil;
     size += computeStringSize(1, self.name);
   }
   if (self.hasId) {
-    size += computeStringSize(2, self.id);
+    size += computeInt32Size(2, self.id);
   }
   if (self.hasImage) {
     size += computeStringSize(3, self.image);
@@ -232,8 +231,8 @@ static NameIdPair* defaultNameIdPairInstance = nil;
         [self setName:[input readString]];
         break;
       }
-      case 18: {
-        [self setId:[input readString]];
+      case 16: {
+        [self setId:[input readInt32]];
         break;
       }
       case 26: {
@@ -262,17 +261,17 @@ static NameIdPair* defaultNameIdPairInstance = nil;
 - (BOOL) hasId {
   return result.hasId;
 }
-- (NSString*) id {
+- (int32_t) id {
   return result.id;
 }
-- (NameIdPair_Builder*) setId:(NSString*) value {
+- (NameIdPair_Builder*) setId:(int32_t) value {
   result.hasId = YES;
   result.id = value;
   return self;
 }
 - (NameIdPair_Builder*) clearId {
   result.hasId = NO;
-  result.id = @"";
+  result.id = 0;
   return self;
 }
 - (BOOL) hasImage {
@@ -645,7 +644,7 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 @end
 
 @interface City ()
-@property (retain) NSString* cityId;
+@property int32_t cityId;
 @property (retain) NSString* cityName;
 @property (retain) NSString* latestVersion;
 @end
@@ -674,14 +673,13 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 }
 @synthesize latestVersion;
 - (void) dealloc {
-  self.cityId = nil;
   self.cityName = nil;
   self.latestVersion = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
-    self.cityId = @"";
+    self.cityId = 0;
     self.cityName = @"";
     self.latestVersion = @"";
   }
@@ -710,7 +708,7 @@ static City* defaultCityInstance = nil;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
   if (self.hasCityId) {
-    [output writeString:1 value:self.cityId];
+    [output writeInt32:1 value:self.cityId];
   }
   if (self.hasCityName) {
     [output writeString:2 value:self.cityName];
@@ -728,7 +726,7 @@ static City* defaultCityInstance = nil;
 
   size = 0;
   if (self.hasCityId) {
-    size += computeStringSize(1, self.cityId);
+    size += computeInt32Size(1, self.cityId);
   }
   if (self.hasCityName) {
     size += computeStringSize(2, self.cityName);
@@ -841,8 +839,8 @@ static City* defaultCityInstance = nil;
         }
         break;
       }
-      case 10: {
-        [self setCityId:[input readString]];
+      case 8: {
+        [self setCityId:[input readInt32]];
         break;
       }
       case 18: {
@@ -859,17 +857,17 @@ static City* defaultCityInstance = nil;
 - (BOOL) hasCityId {
   return result.hasCityId;
 }
-- (NSString*) cityId {
+- (int32_t) cityId {
   return result.cityId;
 }
-- (City_Builder*) setCityId:(NSString*) value {
+- (City_Builder*) setCityId:(int32_t) value {
   result.hasCityId = YES;
   result.cityId = value;
   return self;
 }
 - (City_Builder*) clearCityId {
   result.hasCityId = NO;
-  result.cityId = @"";
+  result.cityId = 0;
   return self;
 }
 - (BOOL) hasCityName {
@@ -902,6 +900,202 @@ static City* defaultCityInstance = nil;
 - (City_Builder*) clearLatestVersion {
   result.hasLatestVersion = NO;
   result.latestVersion = @"";
+  return self;
+}
+@end
+
+@interface CityList ()
+@property (retain) NSMutableArray* mutableCityListList;
+@end
+
+@implementation CityList
+
+@synthesize mutableCityListList;
+- (void) dealloc {
+  self.mutableCityListList = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+  }
+  return self;
+}
+static CityList* defaultCityListInstance = nil;
++ (void) initialize {
+  if (self == [CityList class]) {
+    defaultCityListInstance = [[CityList alloc] init];
+  }
+}
++ (CityList*) defaultInstance {
+  return defaultCityListInstance;
+}
+- (CityList*) defaultInstance {
+  return defaultCityListInstance;
+}
+- (NSArray*) cityListList {
+  return mutableCityListList;
+}
+- (CityList*) cityListAtIndex:(int32_t) index {
+  id value = [mutableCityListList objectAtIndex:index];
+  return value;
+}
+- (BOOL) isInitialized {
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  for (CityList* element in self.cityListList) {
+    [output writeMessage:1 value:element];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  for (CityList* element in self.cityListList) {
+    size += computeMessageSize(1, element);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (CityList*) parseFromData:(NSData*) data {
+  return (CityList*)[[[CityList builder] mergeFromData:data] build];
+}
++ (CityList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityList*)[[[CityList builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (CityList*) parseFromInputStream:(NSInputStream*) input {
+  return (CityList*)[[[CityList builder] mergeFromInputStream:input] build];
+}
++ (CityList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityList*)[[[CityList builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityList*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CityList*)[[[CityList builder] mergeFromCodedInputStream:input] build];
+}
++ (CityList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityList*)[[[CityList builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityList_Builder*) builder {
+  return [[[CityList_Builder alloc] init] autorelease];
+}
++ (CityList_Builder*) builderWithPrototype:(CityList*) prototype {
+  return [[CityList builder] mergeFrom:prototype];
+}
+- (CityList_Builder*) builder {
+  return [CityList builder];
+}
+@end
+
+@interface CityList_Builder()
+@property (retain) CityList* result;
+@end
+
+@implementation CityList_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[CityList alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (CityList_Builder*) clear {
+  self.result = [[[CityList alloc] init] autorelease];
+  return self;
+}
+- (CityList_Builder*) clone {
+  return [CityList builderWithPrototype:result];
+}
+- (CityList*) defaultInstance {
+  return [CityList defaultInstance];
+}
+- (CityList*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (CityList*) buildPartial {
+  CityList* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (CityList_Builder*) mergeFrom:(CityList*) other {
+  if (other == [CityList defaultInstance]) {
+    return self;
+  }
+  if (other.mutableCityListList.count > 0) {
+    if (result.mutableCityListList == nil) {
+      result.mutableCityListList = [NSMutableArray array];
+    }
+    [result.mutableCityListList addObjectsFromArray:other.mutableCityListList];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        CityList_Builder* subBuilder = [CityList builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addCityList:[subBuilder buildPartial]];
+        break;
+      }
+    }
+  }
+}
+- (NSArray*) cityListList {
+  if (result.mutableCityListList == nil) { return [NSArray array]; }
+  return result.mutableCityListList;
+}
+- (CityList*) cityListAtIndex:(int32_t) index {
+  return [result cityListAtIndex:index];
+}
+- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(CityList*) value {
+  [result.mutableCityListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (CityList_Builder*) addAllCityList:(NSArray*) values {
+  if (result.mutableCityListList == nil) {
+    result.mutableCityListList = [NSMutableArray array];
+  }
+  [result.mutableCityListList addObjectsFromArray:values];
+  return self;
+}
+- (CityList_Builder*) clearCityListList {
+  result.mutableCityListList = nil;
+  return self;
+}
+- (CityList_Builder*) addCityList:(CityList*) value {
+  if (result.mutableCityListList == nil) {
+    result.mutableCityListList = [NSMutableArray array];
+  }
+  [result.mutableCityListList addObject:value];
   return self;
 }
 @end
@@ -1085,6 +1279,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @end
 
 @interface App ()
+@property (retain) NSString* dataVersion;
 @property (retain) NSMutableArray* mutableCityListList;
 @property (retain) NSMutableArray* mutableTestCityListList;
 @property (retain) NSMutableArray* mutablePlaceMetaDataListList;
@@ -1093,6 +1288,13 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 
 @implementation App
 
+- (BOOL) hasDataVersion {
+  return !!hasDataVersion_;
+}
+- (void) setHasDataVersion:(BOOL) value {
+  hasDataVersion_ = !!value;
+}
+@synthesize dataVersion;
 @synthesize mutableCityListList;
 @synthesize mutableTestCityListList;
 @synthesize mutablePlaceMetaDataListList;
@@ -1104,6 +1306,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 }
 @synthesize helpHtml;
 - (void) dealloc {
+  self.dataVersion = nil;
   self.mutableCityListList = nil;
   self.mutableTestCityListList = nil;
   self.mutablePlaceMetaDataListList = nil;
@@ -1112,6 +1315,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
+    self.dataVersion = @"";
     self.helpHtml = @"";
   }
   return self;
@@ -1150,6 +1354,9 @@ static App* defaultAppInstance = nil;
   return value;
 }
 - (BOOL) isInitialized {
+  if (!self.hasDataVersion) {
+    return NO;
+  }
   for (City* element in self.cityListList) {
     if (!element.isInitialized) {
       return NO;
@@ -1168,14 +1375,17 @@ static App* defaultAppInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  for (City* element in self.cityListList) {
-    [output writeMessage:1 value:element];
+  if (self.hasDataVersion) {
+    [output writeString:1 value:self.dataVersion];
   }
-  for (City* element in self.testCityListList) {
+  for (City* element in self.cityListList) {
     [output writeMessage:2 value:element];
   }
-  for (PlaceMeta* element in self.placeMetaDataListList) {
+  for (City* element in self.testCityListList) {
     [output writeMessage:3 value:element];
+  }
+  for (PlaceMeta* element in self.placeMetaDataListList) {
+    [output writeMessage:4 value:element];
   }
   if (self.hasHelpHtml) {
     [output writeString:11 value:self.helpHtml];
@@ -1189,14 +1399,17 @@ static App* defaultAppInstance = nil;
   }
 
   size = 0;
-  for (City* element in self.cityListList) {
-    size += computeMessageSize(1, element);
+  if (self.hasDataVersion) {
+    size += computeStringSize(1, self.dataVersion);
   }
-  for (City* element in self.testCityListList) {
+  for (City* element in self.cityListList) {
     size += computeMessageSize(2, element);
   }
-  for (PlaceMeta* element in self.placeMetaDataListList) {
+  for (City* element in self.testCityListList) {
     size += computeMessageSize(3, element);
+  }
+  for (PlaceMeta* element in self.placeMetaDataListList) {
+    size += computeMessageSize(4, element);
   }
   if (self.hasHelpHtml) {
     size += computeStringSize(11, self.helpHtml);
@@ -1276,6 +1489,9 @@ static App* defaultAppInstance = nil;
   if (other == [App defaultInstance]) {
     return self;
   }
+  if (other.hasDataVersion) {
+    [self setDataVersion:other.dataVersion];
+  }
   if (other.mutableCityListList.count > 0) {
     if (result.mutableCityListList == nil) {
       result.mutableCityListList = [NSMutableArray array];
@@ -1319,18 +1535,22 @@ static App* defaultAppInstance = nil;
         break;
       }
       case 10: {
-        City_Builder* subBuilder = [City builder];
-        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self addCityList:[subBuilder buildPartial]];
+        [self setDataVersion:[input readString]];
         break;
       }
       case 18: {
         City_Builder* subBuilder = [City builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self addTestCityList:[subBuilder buildPartial]];
+        [self addCityList:[subBuilder buildPartial]];
         break;
       }
       case 26: {
+        City_Builder* subBuilder = [City builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addTestCityList:[subBuilder buildPartial]];
+        break;
+      }
+      case 34: {
         PlaceMeta_Builder* subBuilder = [PlaceMeta builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addPlaceMetaDataList:[subBuilder buildPartial]];
@@ -1342,6 +1562,22 @@ static App* defaultAppInstance = nil;
       }
     }
   }
+}
+- (BOOL) hasDataVersion {
+  return result.hasDataVersion;
+}
+- (NSString*) dataVersion {
+  return result.dataVersion;
+}
+- (App_Builder*) setDataVersion:(NSString*) value {
+  result.hasDataVersion = YES;
+  result.dataVersion = value;
+  return self;
+}
+- (App_Builder*) clearDataVersion {
+  result.hasDataVersion = NO;
+  result.dataVersion = @"";
+  return self;
 }
 - (NSArray*) cityListList {
   if (result.mutableCityListList == nil) { return [NSArray array]; }

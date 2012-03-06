@@ -5,8 +5,8 @@ option java_package = "com.damuzhi.travel";
 option java_outer_classname = "TravelTipsProtos";
 
 message CommonTravelGuide {
-  optional string guideId = 1;  
-  optional string cityId = 2;
+  optional int32  guideId = 1;  
+  optional int32  cityId = 2;
   required string name = 3;     // 攻略名称
   optional string html = 4;       //  对应的HTML文件名，相对路径，如 html/abc/abc.html
 }
@@ -14,6 +14,6 @@ message CommonTravelGuide {
 message TravelTips {
   repeated CommonTravelGuide tipsList = 1;            // 所有攻略
   repeated CommonTravelGuide routeList = 2;         // 所有推荐线路  
-  optional string cityId = 3;
+  optional int32 cityId = 3;
 }
 

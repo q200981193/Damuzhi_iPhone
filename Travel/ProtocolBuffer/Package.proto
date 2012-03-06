@@ -1,4 +1,9 @@
 
+import "Place.proto";
+import "CityOverview.proto";
+import "TravelTips.proto";
+import "App.proto";
+
 package damuzhi;
 
 option java_package = "com.damuzhi.travel";
@@ -12,7 +17,18 @@ enum LanguageType{
 
 message Package {
   required string version = 1;                // 数据包格式版本，如1.0
-  required string cityId = 2;                 // 城市ID
+  required int32  cityId = 2;                 // 城市ID
   required string cityName = 3;              // 城市名称
   required LanguageType language = 4;            // 语言类型
+}
+
+message TravelResponse{
+  required int32 result = 1;
+  optional Place place = 2;
+  optional CommonOverview overview = 3;
+  optional CommonTravelGuide travelGuide = 4;
+  optional HelpInfo helpInfo = 5;
+  optional PlaceList placeList = 6;
+  optional CityList cityList = 7;
+  optional App appInfo = 8;   
 }
