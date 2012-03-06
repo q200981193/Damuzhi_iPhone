@@ -12,18 +12,18 @@ option java_outer_classname = "PackageProtos";
 enum LanguageType{
   ZH_HANS = 1;          // 简体（Simplified）
   ZH_HANT = 2;          // 繁体（Tranditional）
-  EN = 3;                  // 英文（未来扩展）
+  EN = 3;               // 英文（未来扩展）
 }
 
 message Package {
-  required string version = 1;                // 数据包格式版本，如1.0
-  required int32  cityId = 2;                 // 城市ID
-  required string cityName = 3;              // 城市名称
-  required LanguageType language = 4;            // 语言类型
+  required string version = 1;                                     // 数据包格式版本，如1.0
+  required int32  cityId = 2;                                      // 城市ID
+  required string cityName = 3;                                    // 城市名称
+  required LanguageType language = 4 [default=ZH_HANS];            // 语言类型
 }
 
 message TravelResponse{
-  required int32 result = 1;
+  required int32 resultCode = 1 [default=0];
   optional Place place = 2;
   optional CommonOverview overview = 3;
   optional CommonTravelGuide travelGuide = 4;

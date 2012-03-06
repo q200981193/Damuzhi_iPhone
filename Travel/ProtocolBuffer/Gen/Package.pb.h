@@ -129,7 +129,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 
 @interface TravelResponse : PBGeneratedMessage {
 @private
-  BOOL hasResult_:1;
+  BOOL hasResultCode_:1;
   BOOL hasPlace_:1;
   BOOL hasOverview_:1;
   BOOL hasTravelGuide_:1;
@@ -137,7 +137,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   BOOL hasPlaceList_:1;
   BOOL hasCityList_:1;
   BOOL hasAppInfo_:1;
-  int32_t result;
+  int32_t resultCode;
   Place* place;
   CommonOverview* overview;
   CommonTravelGuide* travelGuide;
@@ -146,7 +146,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   CityList* cityList;
   App* appInfo;
 }
-- (BOOL) hasResult;
+- (BOOL) hasResultCode;
 - (BOOL) hasPlace;
 - (BOOL) hasOverview;
 - (BOOL) hasTravelGuide;
@@ -154,7 +154,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (BOOL) hasPlaceList;
 - (BOOL) hasCityList;
 - (BOOL) hasAppInfo;
-@property (readonly) int32_t result;
+@property (readonly) int32_t resultCode;
 @property (readonly, retain) Place* place;
 @property (readonly, retain) CommonOverview* overview;
 @property (readonly, retain) CommonTravelGuide* travelGuide;
@@ -197,10 +197,10 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (TravelResponse_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (TravelResponse_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasResult;
-- (int32_t) result;
-- (TravelResponse_Builder*) setResult:(int32_t) value;
-- (TravelResponse_Builder*) clearResult;
+- (BOOL) hasResultCode;
+- (int32_t) resultCode;
+- (TravelResponse_Builder*) setResultCode:(int32_t) value;
+- (TravelResponse_Builder*) clearResultCode;
 
 - (BOOL) hasPlace;
 - (Place*) place;

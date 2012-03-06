@@ -344,7 +344,7 @@ static Package* defaultPackageInstance = nil;
 @end
 
 @interface TravelResponse ()
-@property int32_t result;
+@property int32_t resultCode;
 @property (retain) Place* place;
 @property (retain) CommonOverview* overview;
 @property (retain) CommonTravelGuide* travelGuide;
@@ -356,13 +356,13 @@ static Package* defaultPackageInstance = nil;
 
 @implementation TravelResponse
 
-- (BOOL) hasResult {
-  return !!hasResult_;
+- (BOOL) hasResultCode {
+  return !!hasResultCode_;
 }
-- (void) setHasResult:(BOOL) value {
-  hasResult_ = !!value;
+- (void) setHasResultCode:(BOOL) value {
+  hasResultCode_ = !!value;
 }
-@synthesize result;
+@synthesize resultCode;
 - (BOOL) hasPlace {
   return !!hasPlace_;
 }
@@ -424,7 +424,7 @@ static Package* defaultPackageInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.result = 0;
+    self.resultCode = 0;
     self.place = [Place defaultInstance];
     self.overview = [CommonOverview defaultInstance];
     self.travelGuide = [CommonTravelGuide defaultInstance];
@@ -448,7 +448,7 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   return defaultTravelResponseInstance;
 }
 - (BOOL) isInitialized {
-  if (!self.hasResult) {
+  if (!self.hasResultCode) {
     return NO;
   }
   if (self.hasPlace) {
@@ -479,8 +479,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasResult) {
-    [output writeInt32:1 value:self.result];
+  if (self.hasResultCode) {
+    [output writeInt32:1 value:self.resultCode];
   }
   if (self.hasPlace) {
     [output writeMessage:2 value:self.place];
@@ -512,8 +512,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
 
   size = 0;
-  if (self.hasResult) {
-    size += computeInt32Size(1, self.result);
+  if (self.hasResultCode) {
+    size += computeInt32Size(1, self.resultCode);
   }
   if (self.hasPlace) {
     size += computeMessageSize(2, self.place);
@@ -611,8 +611,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other == [TravelResponse defaultInstance]) {
     return self;
   }
-  if (other.hasResult) {
-    [self setResult:other.result];
+  if (other.hasResultCode) {
+    [self setResultCode:other.resultCode];
   }
   if (other.hasPlace) {
     [self mergePlace:other.place];
@@ -657,7 +657,7 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         break;
       }
       case 8: {
-        [self setResult:[input readInt32]];
+        [self setResultCode:[input readInt32]];
         break;
       }
       case 18: {
@@ -726,20 +726,20 @@ static TravelResponse* defaultTravelResponseInstance = nil;
     }
   }
 }
-- (BOOL) hasResult {
-  return result.hasResult;
+- (BOOL) hasResultCode {
+  return result.hasResultCode;
 }
-- (int32_t) result {
-  return result.result;
+- (int32_t) resultCode {
+  return result.resultCode;
 }
-- (TravelResponse_Builder*) setResult:(int32_t) value {
-  result.hasResult = YES;
-  result.result = value;
+- (TravelResponse_Builder*) setResultCode:(int32_t) value {
+  result.hasResultCode = YES;
+  result.resultCode = value;
   return self;
 }
-- (TravelResponse_Builder*) clearResult {
-  result.hasResult = NO;
-  result.result = 0;
+- (TravelResponse_Builder*) clearResultCode {
+  result.hasResultCode = NO;
+  result.resultCode = 0;
   return self;
 }
 - (BOOL) hasPlace {

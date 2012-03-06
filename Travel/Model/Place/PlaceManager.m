@@ -37,7 +37,7 @@ static PlaceManager *_placeDefaultManager;
 {
     Place_Builder* builder = [[[Place_Builder alloc] init] autorelease];
     
-    [builder setPlaceId:[@"PlaceId" stringByAppendingString:placeTag]];       
+    [builder setPlaceId:[placeTag intValue]];       
     [builder setCategoryId:PLACE_TYPE_SPOT];
     [builder setSubCategoryId:1];
     [builder setRank:1];
