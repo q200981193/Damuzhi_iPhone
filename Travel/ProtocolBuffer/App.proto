@@ -10,9 +10,17 @@ message NameIdPair {
   optional string image = 3;            // 对应数据图片的网络URL地址，用于本地未找到系统内置图片时，从服务器获取
 }
 
+enum PlaceCategoryType{
+  PLACE_SPOT = 1;
+  PLACE_HOTEL = 2;
+  PLACE_RESTRAURANT = 3;
+  PLACE_SHOPPING = 4;
+  PLACE_ENTERTAINMENT = 5;  
+}
+
 message PlaceMeta {       
  
-  required int32 categoryId = 1;                  // 地点分类ID，如1代表景点
+  required PlaceCategoryType categoryId = 1;      // 地点分类ID，如1代表景点
   required string name = 2;                       // 地点分类显示名字，如景点
   
   repeated NameIdPair subCategoryList = 3;        // 地点分类下的所有子分类

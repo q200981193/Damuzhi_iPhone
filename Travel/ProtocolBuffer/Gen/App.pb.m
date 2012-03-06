@@ -19,6 +19,18 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @end
 
+BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value) {
+  switch (value) {
+    case PlaceCategoryTypePlaceSpot:
+    case PlaceCategoryTypePlaceHotel:
+    case PlaceCategoryTypePlaceRestraurant:
+    case PlaceCategoryTypePlaceShopping:
+    case PlaceCategoryTypePlaceEntertainment:
+      return YES;
+    default:
+      return NO;
+  }
+}
 @interface NameIdPair ()
 @property (retain) NSString* name;
 @property (retain) NSString* id;
@@ -282,7 +294,7 @@ static NameIdPair* defaultNameIdPairInstance = nil;
 @end
 
 @interface PlaceMeta ()
-@property int32_t categoryId;
+@property PlaceCategoryType categoryId;
 @property (retain) NSString* name;
 @property (retain) NSMutableArray* mutableSubCategoryListList;
 @property (retain) NSMutableArray* mutableProvidedServiceListList;
@@ -314,7 +326,7 @@ static NameIdPair* defaultNameIdPairInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.categoryId = 0;
+    self.categoryId = PlaceCategoryTypePlaceSpot;
     self.name = @"";
   }
   return self;
@@ -366,7 +378,7 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
   if (self.hasCategoryId) {
-    [output writeInt32:1 value:self.categoryId];
+    [output writeEnum:1 value:self.categoryId];
   }
   if (self.hasName) {
     [output writeString:2 value:self.name];
@@ -387,7 +399,7 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 
   size = 0;
   if (self.hasCategoryId) {
-    size += computeInt32Size(1, self.categoryId);
+    size += computeEnumSize(1, self.categoryId);
   }
   if (self.hasName) {
     size += computeStringSize(2, self.name);
@@ -513,7 +525,12 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
         break;
       }
       case 8: {
-        [self setCategoryId:[input readInt32]];
+        int32_t value = [input readEnum];
+        if (PlaceCategoryTypeIsValidValue(value)) {
+          [self setCategoryId:value];
+        } else {
+          [unknownFields mergeVarintField:1 value:value];
+        }
         break;
       }
       case 18: {
@@ -538,17 +555,17 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 - (BOOL) hasCategoryId {
   return result.hasCategoryId;
 }
-- (int32_t) categoryId {
+- (PlaceCategoryType) categoryId {
   return result.categoryId;
 }
-- (PlaceMeta_Builder*) setCategoryId:(int32_t) value {
+- (PlaceMeta_Builder*) setCategoryId:(PlaceCategoryType) value {
   result.hasCategoryId = YES;
   result.categoryId = value;
   return self;
 }
 - (PlaceMeta_Builder*) clearCategoryId {
   result.hasCategoryId = NO;
-  result.categoryId = 0;
+  result.categoryId = PlaceCategoryTypePlaceSpot;
   return self;
 }
 - (BOOL) hasName {

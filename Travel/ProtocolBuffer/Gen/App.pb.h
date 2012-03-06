@@ -12,6 +12,16 @@
 @class NameIdPair_Builder;
 @class PlaceMeta;
 @class PlaceMeta_Builder;
+typedef enum {
+  PlaceCategoryTypePlaceSpot = 1,
+  PlaceCategoryTypePlaceHotel = 2,
+  PlaceCategoryTypePlaceRestraurant = 3,
+  PlaceCategoryTypePlaceShopping = 4,
+  PlaceCategoryTypePlaceEntertainment = 5,
+} PlaceCategoryType;
+
+BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
+
 
 @interface AppRoot : NSObject {
 }
@@ -87,16 +97,16 @@
 
 @interface PlaceMeta : PBGeneratedMessage {
 @private
-  BOOL hasCategoryId_:1;
   BOOL hasName_:1;
-  int32_t categoryId;
+  BOOL hasCategoryId_:1;
   NSString* name;
+  PlaceCategoryType categoryId;
   NSMutableArray* mutableSubCategoryListList;
   NSMutableArray* mutableProvidedServiceListList;
 }
 - (BOOL) hasCategoryId;
 - (BOOL) hasName;
-@property (readonly) int32_t categoryId;
+@property (readonly) PlaceCategoryType categoryId;
 @property (readonly, retain) NSString* name;
 - (NSArray*) subCategoryListList;
 - (NameIdPair*) subCategoryListAtIndex:(int32_t) index;
@@ -138,8 +148,8 @@
 - (PlaceMeta_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasCategoryId;
-- (int32_t) categoryId;
-- (PlaceMeta_Builder*) setCategoryId:(int32_t) value;
+- (PlaceCategoryType) categoryId;
+- (PlaceMeta_Builder*) setCategoryId:(PlaceCategoryType) value;
 - (PlaceMeta_Builder*) clearCategoryId;
 
 - (BOOL) hasName;
