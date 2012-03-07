@@ -25,6 +25,22 @@ static AppManager* _defaultAppManager = nil;
 {
     App_Builder* app = [[[App_Builder alloc] init] autorelease];
     
+    [app setDataVersion:@"Version 1.0"];
+    
+    City_Builder *cityBuilder1 = [[[City_Builder alloc] init] autorelease];
+    [cityBuilder1 setCityId:1];
+    [cityBuilder1 setCityName:@"香港"];
+    City *city1 = [cityBuilder1 build];
+    [app addCityList:city1];
+    [app addTestCityList:city1];
+    
+    City_Builder *cityBuilder2 = [[[City_Builder alloc] init] autorelease];
+    [cityBuilder2 setCityId:2];
+    [cityBuilder2 setCityName:@"深圳"];
+    City *city2 = [cityBuilder2 build];
+    [app addCityList:city2];
+    [app addTestCityList:city2];
+    
     PlaceMeta_Builder* placeMeta = [[[PlaceMeta_Builder alloc] init] autorelease];
     
     [placeMeta setCategoryId:1];
