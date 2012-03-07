@@ -11,4 +11,8 @@
 
 @interface AppManager : NSObject<CommonManagerProtocol>
 
+- (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(NSString*)subCategoryId;
+- (NSString*)getServiceImage:(int32_t)categoryId providedServiceId:(NSString*)providedServiceId;
+
+
 @end

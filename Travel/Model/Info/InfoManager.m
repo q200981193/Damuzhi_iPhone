@@ -41,14 +41,14 @@ static InfoManager *_infoDefaultManager;
     
     CommonOverview_Builder* dataBuilder = [[[CommonOverview_Builder alloc] init] autorelease];
     [dataBuilder setHtml:@"<html>City Overview</html>"];
-    [dataBuilder addImages:@"image.jpg"];
-    [dataBuilder addImages:@"image2.jpg"];
-    [dataBuilder addImages:@"image3.jpg"];
-    [dataBuilder addImages:@"image4.jpg"];
-    [dataBuilder addImages:@"image5.jpg"];
+    //[dataBuilder addImages:@"image.jpg"];
+    //[dataBuilder addImages:@"image2.jpg"];
+    //[dataBuilder addImages:@"image3.jpg"];
+   // [dataBuilder addImages:@"image4.jpg"];
+  //  [dataBuilder addImages:@"image5.jpg"];
     
     [builder setCityBasic:[dataBuilder build]];
-        
+
     return [[builder build] data];
 }
 

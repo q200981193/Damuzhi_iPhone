@@ -8,6 +8,8 @@
 
 #import "SpotCell.h"
 #import "Place.pb.h"
+#import "AppManager.h"
+#import "StringUtil.h"
 
 @implementation SpotCell
 @synthesize nameLabel;
@@ -76,7 +78,7 @@
 }
 
 
-#define ORINGIN_X_OF_SERVICE_IMAGE 30
+#define ORINGIN_X_OF_SERVICE_IMAGE 40
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 18
 #define WIDTH_OF_SERVICE_IMAGE 15
 #define HEIGHT_OF_SERVICE_IMAGE 15
@@ -109,11 +111,28 @@
     self.imageView.image = [UIImage imageNamed:[place icon]];
     self.priceLable.text = [place price];
     self.areaLable.text = [place areaIdAtIndex:0];
-    self.categoryLable.text = @"景点";
+    NSLog(@"%@", self.categoryLable.text);
+    self.categoryLable.text = [[AppManager defaultManager] 
+                               getSubCategoryName:[place categoryId]                                                                
+                               subCategoryId:[NSString stringWithInt:[place subCategoryId]]];
+    
     [self.favoritesView setImage:[UIImage imageNamed:@"heart.jpg"]];
     
     [self setRankImage:[place rank]];
-    [self setSeviceImage:(NSMutableArray*)[place providedServiceIdList]];
+    
+    NSArray *serviceIdList = [place providedServiceIdList];
+    NSMutableArray *serviceIcons = [[NSMutableArray alloc] init];
+    for(NSString *providedServieceId in serviceIdList)
+    {
+        NSString *serviceIcon = [[NSString alloc] init];
+        serviceIcon = [[AppManager defaultManager]getServiceImage:[place categoryId] providedServiceId:providedServieceId];
+        NSLog(@"%@", serviceIcon);
+        [serviceIcons addObject:serviceIcon];
+    }
+   
+    [self setSeviceImage:serviceIcons];
+    [serviceIcons release];
+    
     
     //self.distanceLable.text = @"100米";
 }

@@ -58,9 +58,7 @@ static PlaceManager *_placeDefaultManager;
     [builder addAddress:@"香港山顶道128号凌霄阁"];
     [builder addAreaId:@"九龙区"];
     [builder setCategoryId:1];
-    [builder addProvidedServiceId:@"office.png"];
-    [builder addProvidedServiceId:@"shopping.png"];
-    [builder addProvidedServiceId:@"meat.png"];
+    [builder addProvidedServiceId:@"3"];
     
     return [builder build];
 }

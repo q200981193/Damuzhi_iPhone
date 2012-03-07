@@ -3,7 +3,7 @@
 //  Travel
 //
 //  Created by  on 12-2-29.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012�?__MyCompanyName__. All rights reserved.
 //
 
 #import "SlideImageView.h"
@@ -73,7 +73,7 @@
         
         scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         scrollView.pagingEnabled = YES;
-        scrollView.showsVerticalScrollIndicator = NO;        
+        scrollView.showsVerticalScrollIndicator = NO;       
     }
     return self;
 }
@@ -93,8 +93,7 @@
     }
     
     int imagesCount = [images count];
-    scrollView.contentSize = CGSizeMake(320*imagesCount, scrollView.frame.size.height);   //禁止scrollView上下滚动。
-    
+    scrollView.contentSize = CGSizeMake(320*imagesCount, scrollView.frame.size.height);   
     for (int i=0; i<imagesCount; i++) {
         CGRect frame;
         frame.origin.x = scrollView.frame.size.width * i;
@@ -108,6 +107,9 @@
     } 
     
     [self addSubview:scrollView];
+    
+    UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:self.bounds];
+    [self addSubview:pageControl];
 
 }
 

@@ -58,14 +58,15 @@
     NSArray* imagePathArray = [dataSource getImages];
     NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
     for (NSString* imagePath in imagePathArray){
+        NSLog(@"%@", imagePath);
         [images addObject:[UIImage imageNamed:imagePath]];
     }
     [slideImageView setImages:images];
     
-    [slideImageView setImages:images];
+    //[slideImageView setImages:images];
     
 
-    [slideImageView setImages:images];
+    //[slideImageView setImages:images];
 }
 
 - (void)viewDidUnload
