@@ -56,9 +56,9 @@ static PlaceManager *_placeDefaultManager;
     [builder setWebsite:@"http://www.madametussauds.com"];
     [builder addTelephone:@"00852-28496966"];
     [builder addAddress:@"香港山顶道128号凌霄阁"];
-    [builder addAreaId:@"九龙区"];
+    [builder addAreaId:11];
     [builder setCategoryId:1];
-    [builder addProvidedServiceId:@"3"];
+    [builder addProvidedServiceId:3];
     
     return [builder build];
 }

@@ -12,68 +12,22 @@
 
 @synthesize scrollView;
 
-/*-(IBAction)changePage
-{
-    CGRect frame;
-    frame.origin.x = self.scrollView.frame.size.width * self.pageControl.currentPage;
-    frame.origin.y = 0;
-    frame.size = self.scrollView.frame.size;
-    [self.scrollView scrollRectToVisible:frame animated:YES];
-    pageControlBeingUsed = YES;
-    
-}
+@synthesize pageControl;
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    pageControlBeingUsed = NO;
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (pageControlBeingUsed) {
-        return;
-    }
-    
-    CGFloat pageWidth = self.scrollView.frame.size.width;
-    int page = floor((self.scrollView.contentOffset.x - pageWidth/2)/pageWidth)+1;
-    self.pageControl.currentPage = page;
-}
-
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    pageControlBeingUsed = NO;
-}
-
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-    NSArray *array = [[NSArray alloc]initWithObjects:NSLocalizedString(@"image.jpg", nil), NSLocalizedString(@"image2.jpg", nil), NSLocalizedString(@"image3.jpg", nil), NSLocalizedString(@"image4.jpg", nil), NSLocalizedString(@"image5.jpg", nil), nil];
-    
-    for (int i=0; i<5; i++) {
-        CGRect frame;
-        frame.origin.x = self.scrollView.frame.size.width*i;
-        frame.origin.y = 0;
-        frame.size = self.scrollView.frame.size;
-        
-        UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:frame];
-        [bgImageView setImage:[UIImage imageNamed:[array objectAtIndex:i]]];
-        [self.scrollView addSubview:bgImageView];
-    }
-    array = nil;
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width*5, self.scrollView.frame.size.height);
-    pageControlBeingUsed = NO;
-}
-*/
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        //self.backgroundColor = [UIColor greenColor];
-        
         scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         scrollView.pagingEnabled = YES;
-        scrollView.showsVerticalScrollIndicator = NO;       
+        scrollView.showsVerticalScrollIndicator = NO; 
+        scrollView.showsHorizontalScrollIndicator = NO;
+        
+        pageControl = [[UICustomPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x/2, self.bounds.size.height-20, self.bounds.size.width, 20)]; 
+        
+        scrollView.delegate = self;
+        [pageControl addTarget:self action:@selector(pageClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -81,6 +35,7 @@
 -(void)dealloc
 {
     [scrollView release];
+    [pageControl release];
     [super dealloc];
 }
 
@@ -93,6 +48,7 @@
     }
     
     int imagesCount = [images count];
+    NSLog(@"imagesCount = %d", imagesCount);
     scrollView.contentSize = CGSizeMake(320*imagesCount, scrollView.frame.size.height);   
     for (int i=0; i<imagesCount; i++) {
         CGRect frame;
@@ -104,13 +60,50 @@
         [imageView setImage:[images objectAtIndex:i]];
         [scrollView addSubview:imageView];
         [imageView release];
-    } 
+    }
+    
+    pageControl.numberOfPages = imagesCount;
+    [pageControl setImagePageStateNormal:[UIImage imageNamed:@"pageStateNormal.jpg"]];
+    [pageControl setImagePageStateHighted:[UIImage imageNamed:@"pageStateHeight.jpg"]];
     
     [self addSubview:scrollView];
-    
-    UIPageControl *pageControl = [[UIPageControl alloc]initWithFrame:self.bounds];
     [self addSubview:pageControl];
+}
 
+#pragma mark -
+#pragma mark UIScrollViewDelegate stuff
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView1
+{
+    if(pageControlIsChangingPage){
+      return;
+    }
+        
+    /* we switch page at %50 across */
+    CGFloat pageWidth = scrollView1.frame.size.width;
+    int page = floor((scrollView1.contentOffset.x - pageWidth/2)/pageWidth +1);
+    NSLog(@"page = %d", page);
+    pageControl.currentPage = page;
+    [pageControl setImagePageStateNormal:[UIImage imageNamed:@"pageStateNormal.jpg"]];
+    [pageControl setImagePageStateHighted:[UIImage imageNamed:@"pageStateHeight.jpg"]];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView1
+{
+    pageControlIsChangingPage = NO;
+}
+
+#pragma mark -
+#pragma mark PageControl stuff
+- (IBAction)pageClick:(id)sender
+{
+    /* Change the scroll view */
+    CGRect frame = scrollView.frame;
+    frame.origin.x  = frame.size.width * pageControl.currentPage;
+    frame.origin.y = 0;
+    
+    [scrollView scrollRectToVisible:frame animated:YES];
+    
+    pageControlIsChangingPage = YES;
 }
 
 @end

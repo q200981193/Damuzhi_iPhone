@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A48782B01507162500A0D91E /* bad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48782A81507162400A0D91E /* bad.jpg */; };
+		A48782B11507162500A0D91E /* great.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48782A91507162400A0D91E /* great.jpg */; };
+		A48782B21507162500A0D91E /* heart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48782AA1507162400A0D91E /* heart.jpg */; };
+		A48782B31507162500A0D91E /* meat.png in Resources */ = {isa = PBXBuildFile; fileRef = A48782AB1507162400A0D91E /* meat.png */; };
+		A48782B41507162500A0D91E /* office.png in Resources */ = {isa = PBXBuildFile; fileRef = A48782AC1507162400A0D91E /* office.png */; };
+		A48782B51507162500A0D91E /* pageStateHeight.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48782AD1507162400A0D91E /* pageStateHeight.jpg */; };
+		A48782B61507162500A0D91E /* pageStateNormal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48782AE1507162400A0D91E /* pageStateNormal.jpg */; };
+		A48782B71507162500A0D91E /* shopping.png in Resources */ = {isa = PBXBuildFile; fileRef = A48782AF1507162400A0D91E /* shopping.png */; };
+		A48782BB1507193900A0D91E /* UICustomPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A48782BA1507193900A0D91E /* UICustomPageControl.m */; };
 		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
 		CA103AF3150339C200F60C03 /* InfoService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF2150339C200F60C03 /* InfoService.m */; };
 		CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF5150467B200F60C03 /* PlaceMapViewController.m */; };
@@ -273,6 +282,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A48782A81507162400A0D91E /* bad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bad.jpg; sourceTree = "<group>"; };
+		A48782A91507162400A0D91E /* great.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = great.jpg; sourceTree = "<group>"; };
+		A48782AA1507162400A0D91E /* heart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = heart.jpg; sourceTree = "<group>"; };
+		A48782AB1507162400A0D91E /* meat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meat.png; sourceTree = "<group>"; };
+		A48782AC1507162400A0D91E /* office.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = office.png; sourceTree = "<group>"; };
+		A48782AD1507162400A0D91E /* pageStateHeight.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pageStateHeight.jpg; sourceTree = "<group>"; };
+		A48782AE1507162400A0D91E /* pageStateNormal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pageStateNormal.jpg; sourceTree = "<group>"; };
+		A48782AF1507162400A0D91E /* shopping.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopping.png; sourceTree = "<group>"; };
+		A48782B91507193900A0D91E /* UICustomPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomPageControl.h; sourceTree = "<group>"; };
+		A48782BA1507193900A0D91E /* UICustomPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomPageControl.m; sourceTree = "<group>"; };
 		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		CA103AF1150339C200F60C03 /* InfoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoService.h; sourceTree = "<group>"; };
@@ -735,6 +754,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A48782B81507193900A0D91E /* PageControl */ = {
+			isa = PBXGroup;
+			children = (
+				A48782B91507193900A0D91E /* UICustomPageControl.h */,
+				A48782BA1507193900A0D91E /* UICustomPageControl.m */,
+			);
+			path = PageControl;
+			sourceTree = "<group>";
+		};
 		CA103AEC1503354A00F60C03 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -885,6 +913,14 @@
 		CA238FE114FF587B00114175 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				A48782A81507162400A0D91E /* bad.jpg */,
+				A48782A91507162400A0D91E /* great.jpg */,
+				A48782AA1507162400A0D91E /* heart.jpg */,
+				A48782AB1507162400A0D91E /* meat.png */,
+				A48782AC1507162400A0D91E /* office.png */,
+				A48782AD1507162400A0D91E /* pageStateHeight.jpg */,
+				A48782AE1507162400A0D91E /* pageStateNormal.jpg */,
+				A48782AF1507162400A0D91E /* shopping.png */,
 				CA238FE214FF587B00114175 /* image.jpg */,
 				CA238FE314FF587B00114175 /* image2.jpg */,
 				CA238FE414FF587B00114175 /* image3.jpg */,
@@ -1695,6 +1731,7 @@
 		CA455FF114F66EDD00DA085D /* Core-Utils-View */ = {
 			isa = PBXGroup;
 			children = (
+				A48782B81507193900A0D91E /* PageControl */,
 				CA455FF214F66EDD00DA085D /* AlertView */,
 				CA455FF514F66EDD00DA085D /* BarButtonItem */,
 				CA455FF814F66EDD00DA085D /* Button */,
@@ -2102,6 +2139,14 @@
 				CA238FEA14FF587B00114175 /* image4.jpg in Resources */,
 				CA238FEB14FF587B00114175 /* image5.jpg in Resources */,
 				CA103AF8150467B200F60C03 /* PlaceMapViewController.xib in Resources */,
+				A48782B01507162500A0D91E /* bad.jpg in Resources */,
+				A48782B11507162500A0D91E /* great.jpg in Resources */,
+				A48782B21507162500A0D91E /* heart.jpg in Resources */,
+				A48782B31507162500A0D91E /* meat.png in Resources */,
+				A48782B41507162500A0D91E /* office.png in Resources */,
+				A48782B51507162500A0D91E /* pageStateHeight.jpg in Resources */,
+				A48782B61507162500A0D91E /* pageStateNormal.jpg in Resources */,
+				A48782B71507162500A0D91E /* shopping.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2295,6 +2340,7 @@
 				CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */,
 				CA103AFC15046A3300F60C03 /* AppManager.m in Sources */,
 				CA103B041504807E00F60C03 /* TravelNetworkRequest.m in Sources */,
+				A48782BB1507193900A0D91E /* UICustomPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

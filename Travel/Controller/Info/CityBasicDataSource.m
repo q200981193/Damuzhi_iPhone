@@ -14,8 +14,8 @@
 - (NSArray*)getImages
 {
     NSLog(@"CityBasicDataSource <getImages>");
-    InfoManager* manager = [InfoManager defaultManager];
-    NSArray* array = [[manager getCityBasic] imagesList];
+//    InfoManager* manager = [InfoManager defaultManager];
+//    NSArray* array = [[manager getCityBasic] imagesList];
     return [[[InfoManager defaultManager] getCityBasic] imagesList];
 }
 

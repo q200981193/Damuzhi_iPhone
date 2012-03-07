@@ -110,11 +110,11 @@
     self.nameLabel.text = [place name];
     self.imageView.image = [UIImage imageNamed:[place icon]];
     self.priceLable.text = [place price];
-    self.areaLable.text = [place areaIdAtIndex:0];
+    self.areaLable.text = [NSString  stringWithInt:[place areaIdAtIndex:0]];
     NSLog(@"%@", self.categoryLable.text);
     self.categoryLable.text = [[AppManager defaultManager] 
                                getSubCategoryName:[place categoryId]                                                                
-                               subCategoryId:[NSString stringWithInt:[place subCategoryId]]];
+                               subCategoryId:[place subCategoryId]];
     
     [self.favoritesView setImage:[UIImage imageNamed:@"heart.jpg"]];
     
@@ -122,10 +122,10 @@
     
     NSArray *serviceIdList = [place providedServiceIdList];
     NSMutableArray *serviceIcons = [[NSMutableArray alloc] init];
-    for(NSString *providedServieceId in serviceIdList)
+    for(NSNumber* providedServieceId in serviceIdList)
     {
         NSString *serviceIcon = [[NSString alloc] init];
-        serviceIcon = [[AppManager defaultManager]getServiceImage:[place categoryId] providedServiceId:providedServieceId];
+        serviceIcon = [[AppManager defaultManager]getServiceImage:[place categoryId] providedServiceId:[providedServieceId intValue]];
         NSLog(@"%@", serviceIcon);
         [serviceIcons addObject:serviceIcon];
     }

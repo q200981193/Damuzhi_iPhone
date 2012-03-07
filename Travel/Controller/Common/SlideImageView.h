@@ -7,17 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UICustomPageControl.h"
 
-@interface SlideImageView : UIView
+@interface SlideImageView : UIView <UIScrollViewDelegate>
 {
-    BOOL currentPage;
-    float currentPosition;
+    BOOL pageControlIsChangingPage;
 }
 
 @property (nonatomic, retain)IBOutlet UIScrollView *scrollView;
 
+@property (nonatomic, retain)IBOutlet UICustomPageControl *pageControl;
+
 - (id)initWithFrame:(CGRect)frame;
 
 - (void)setImages:(NSArray*)images;
+
+//for pageControl
+- (IBAction)pageClick:(id)sender;
 
 @end
