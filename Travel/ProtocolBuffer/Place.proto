@@ -4,25 +4,26 @@ package damuzhi;
 option java_package = "com.damuzhi.travel";
 option java_outer_classname = "PlaceListProtos";
 
+
 message Place {
 
-  required string placeId = 1;              // 地点ID，全局唯一
-  optional string cityId = 2;               // 地点所属城市ID，可选
+  required int32 placeId = 1;              // 地点ID，全局唯一
+  optional int32 cityId = 2;               // 地点所属城市ID，可选
 
-  required int32 categoryId = 3;            // 分类ID，如景点／酒店／...（待确定），参见App.proto
+  required int32 categoryId = 3;            // 分类ID，如景点／酒店／...（待确定），参见App.proto // 1,2,3,4,5
   required int32 subCategoryId = 4;         // 子分类ID，不同分类不同，如餐馆有 西餐／自助餐，参见App.proto定义
   required string name = 5;                 // 地点名字  
   
   required int32 rank = 6;                  // 大拇指评级，取值从1到3
-  repeated string providedServiceId = 7;    // 服务选项ID，多个，不同分类不同，如 室外停车场／免费上网／景观美丽 等
+  repeated int32 providedServiceId = 7;    // 服务选项ID，多个，不同分类不同，如 室外停车场／免费上网／景观美丽 等
   
   required float longitude = 11;            // 地点经度
   required float latitude = 12;             // 地点纬度        
-  repeated string areaId = 13;              // 区域ID
-  repeated string subAreaId = 14;           // 区域下的子区域ID
+  repeated int32 areaId = 13;              // 区域ID
   
   optional string price = 21;                // 最低价格，适用于景点／酒店
   optional string avgPrice = 22;             // 人均价格，适用于餐馆／娱乐
+       optional int32 priceRank = 23;                   // 价格等级，取值 1-4
 
   required string icon = 31;                 // 地点小图标文件名
   repeated string images = 32;               // 地点图片文件名，多个
@@ -38,13 +39,13 @@ message Place {
   repeated string keywords = 41;             // 关键字，多个
   repeated string typicalDishes = 42;        // 特色菜式
 
-  optional string hotelStar = 43;            // 酒店专用：酒店星级，显示如 五星级／四星级等
+  optional int32 hotelStar = 43;            // 酒店专用：酒店星级，显示如 五星级／四星级等，0－7
 
   optional int32 placeFavoriteCount = 60;      // 地点收藏人数，仅用于在线查询  
   optional int32 hasDiscount = 61;             // 是否有优惠，第二阶段
 }
 
 message PlaceList {
-  repeated Place  list = 1;
-  optional string cityId = 2;
+  repeated Place list = 1;
+  optional int32 cityId = 2;
 }

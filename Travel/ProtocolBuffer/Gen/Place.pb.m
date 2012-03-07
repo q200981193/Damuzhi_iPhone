@@ -20,8 +20,8 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @end
 
 @interface Place ()
-@property (retain) NSString* placeId;
-@property (retain) NSString* cityId;
+@property int32_t placeId;
+@property int32_t cityId;
 @property int32_t categoryId;
 @property int32_t subCategoryId;
 @property (retain) NSString* name;
@@ -30,9 +30,9 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property Float32 longitude;
 @property Float32 latitude;
 @property (retain) NSMutableArray* mutableAreaIdList;
-@property (retain) NSMutableArray* mutableSubAreaIdList;
 @property (retain) NSString* price;
 @property (retain) NSString* avgPrice;
+@property int32_t priceRank;
 @property (retain) NSString* icon;
 @property (retain) NSMutableArray* mutableImagesList;
 @property (retain) NSString* introduction;
@@ -45,7 +45,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (retain) NSString* tips;
 @property (retain) NSMutableArray* mutableKeywordsList;
 @property (retain) NSMutableArray* mutableTypicalDishesList;
-@property (retain) NSString* hotelStar;
+@property int32_t hotelStar;
 @property int32_t placeFavoriteCount;
 @property int32_t hasDiscount;
 @end
@@ -110,7 +110,6 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @synthesize latitude;
 @synthesize mutableAreaIdList;
-@synthesize mutableSubAreaIdList;
 - (BOOL) hasPrice {
   return !!hasPrice_;
 }
@@ -125,6 +124,13 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasAvgPrice_ = !!value;
 }
 @synthesize avgPrice;
+- (BOOL) hasPriceRank {
+  return !!hasPriceRank_;
+}
+- (void) setHasPriceRank:(BOOL) value {
+  hasPriceRank_ = !!value;
+}
+@synthesize priceRank;
 - (BOOL) hasIcon {
   return !!hasIcon_;
 }
@@ -201,12 +207,9 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @synthesize hasDiscount;
 - (void) dealloc {
-  self.placeId = nil;
-  self.cityId = nil;
   self.name = nil;
   self.mutableProvidedServiceIdList = nil;
   self.mutableAreaIdList = nil;
-  self.mutableSubAreaIdList = nil;
   self.price = nil;
   self.avgPrice = nil;
   self.icon = nil;
@@ -221,13 +224,12 @@ static PBExtensionRegistry* extensionRegistry = nil;
   self.tips = nil;
   self.mutableKeywordsList = nil;
   self.mutableTypicalDishesList = nil;
-  self.hotelStar = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
-    self.placeId = @"";
-    self.cityId = @"";
+    self.placeId = 0;
+    self.cityId = 0;
     self.categoryId = 0;
     self.subCategoryId = 0;
     self.name = @"";
@@ -236,6 +238,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.latitude = 0;
     self.price = @"";
     self.avgPrice = @"";
+    self.priceRank = 0;
     self.icon = @"";
     self.introduction = @"";
     self.transportation = @"";
@@ -243,7 +246,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.priceDescription = @"";
     self.openTime = @"";
     self.tips = @"";
-    self.hotelStar = @"";
+    self.hotelStar = 0;
     self.placeFavoriteCount = 0;
     self.hasDiscount = 0;
   }
@@ -264,23 +267,16 @@ static Place* defaultPlaceInstance = nil;
 - (NSArray*) providedServiceIdList {
   return mutableProvidedServiceIdList;
 }
-- (NSString*) providedServiceIdAtIndex:(int32_t) index {
+- (int32_t) providedServiceIdAtIndex:(int32_t) index {
   id value = [mutableProvidedServiceIdList objectAtIndex:index];
-  return value;
+  return [value intValue];
 }
 - (NSArray*) areaIdList {
   return mutableAreaIdList;
 }
-- (NSString*) areaIdAtIndex:(int32_t) index {
+- (int32_t) areaIdAtIndex:(int32_t) index {
   id value = [mutableAreaIdList objectAtIndex:index];
-  return value;
-}
-- (NSArray*) subAreaIdList {
-  return mutableSubAreaIdList;
-}
-- (NSString*) subAreaIdAtIndex:(int32_t) index {
-  id value = [mutableSubAreaIdList objectAtIndex:index];
-  return value;
+  return [value intValue];
 }
 - (NSArray*) imagesList {
   return mutableImagesList;
@@ -349,10 +345,10 @@ static Place* defaultPlaceInstance = nil;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
   if (self.hasPlaceId) {
-    [output writeString:1 value:self.placeId];
+    [output writeInt32:1 value:self.placeId];
   }
   if (self.hasCityId) {
-    [output writeString:2 value:self.cityId];
+    [output writeInt32:2 value:self.cityId];
   }
   if (self.hasCategoryId) {
     [output writeInt32:3 value:self.categoryId];
@@ -366,8 +362,8 @@ static Place* defaultPlaceInstance = nil;
   if (self.hasRank) {
     [output writeInt32:6 value:self.rank];
   }
-  for (NSString* element in self.mutableProvidedServiceIdList) {
-    [output writeString:7 value:element];
+  for (NSNumber* value in self.mutableProvidedServiceIdList) {
+    [output writeInt32:7 value:[value intValue]];
   }
   if (self.hasLongitude) {
     [output writeFloat:11 value:self.longitude];
@@ -375,17 +371,17 @@ static Place* defaultPlaceInstance = nil;
   if (self.hasLatitude) {
     [output writeFloat:12 value:self.latitude];
   }
-  for (NSString* element in self.mutableAreaIdList) {
-    [output writeString:13 value:element];
-  }
-  for (NSString* element in self.mutableSubAreaIdList) {
-    [output writeString:14 value:element];
+  for (NSNumber* value in self.mutableAreaIdList) {
+    [output writeInt32:13 value:[value intValue]];
   }
   if (self.hasPrice) {
     [output writeString:21 value:self.price];
   }
   if (self.hasAvgPrice) {
     [output writeString:22 value:self.avgPrice];
+  }
+  if (self.hasPriceRank) {
+    [output writeInt32:23 value:self.priceRank];
   }
   if (self.hasIcon) {
     [output writeString:31 value:self.icon];
@@ -424,7 +420,7 @@ static Place* defaultPlaceInstance = nil;
     [output writeString:42 value:element];
   }
   if (self.hasHotelStar) {
-    [output writeString:43 value:self.hotelStar];
+    [output writeInt32:43 value:self.hotelStar];
   }
   if (self.hasPlaceFavoriteCount) {
     [output writeInt32:60 value:self.placeFavoriteCount];
@@ -442,10 +438,10 @@ static Place* defaultPlaceInstance = nil;
 
   size = 0;
   if (self.hasPlaceId) {
-    size += computeStringSize(1, self.placeId);
+    size += computeInt32Size(1, self.placeId);
   }
   if (self.hasCityId) {
-    size += computeStringSize(2, self.cityId);
+    size += computeInt32Size(2, self.cityId);
   }
   if (self.hasCategoryId) {
     size += computeInt32Size(3, self.categoryId);
@@ -461,8 +457,8 @@ static Place* defaultPlaceInstance = nil;
   }
   {
     int32_t dataSize = 0;
-    for (NSString* element in self.mutableProvidedServiceIdList) {
-      dataSize += computeStringSizeNoTag(element);
+    for (NSNumber* value in self.mutableProvidedServiceIdList) {
+      dataSize += computeInt32SizeNoTag([value intValue]);
     }
     size += dataSize;
     size += 1 * self.mutableProvidedServiceIdList.count;
@@ -475,25 +471,20 @@ static Place* defaultPlaceInstance = nil;
   }
   {
     int32_t dataSize = 0;
-    for (NSString* element in self.mutableAreaIdList) {
-      dataSize += computeStringSizeNoTag(element);
+    for (NSNumber* value in self.mutableAreaIdList) {
+      dataSize += computeInt32SizeNoTag([value intValue]);
     }
     size += dataSize;
     size += 1 * self.mutableAreaIdList.count;
-  }
-  {
-    int32_t dataSize = 0;
-    for (NSString* element in self.mutableSubAreaIdList) {
-      dataSize += computeStringSizeNoTag(element);
-    }
-    size += dataSize;
-    size += 1 * self.mutableSubAreaIdList.count;
   }
   if (self.hasPrice) {
     size += computeStringSize(21, self.price);
   }
   if (self.hasAvgPrice) {
     size += computeStringSize(22, self.avgPrice);
+  }
+  if (self.hasPriceRank) {
+    size += computeInt32Size(23, self.priceRank);
   }
   if (self.hasIcon) {
     size += computeStringSize(31, self.icon);
@@ -557,7 +548,7 @@ static Place* defaultPlaceInstance = nil;
     size += 2 * self.mutableTypicalDishesList.count;
   }
   if (self.hasHotelStar) {
-    size += computeStringSize(43, self.hotelStar);
+    size += computeInt32Size(43, self.hotelStar);
   }
   if (self.hasPlaceFavoriteCount) {
     size += computeInt32Size(60, self.placeFavoriteCount);
@@ -676,17 +667,14 @@ static Place* defaultPlaceInstance = nil;
     }
     [result.mutableAreaIdList addObjectsFromArray:other.mutableAreaIdList];
   }
-  if (other.mutableSubAreaIdList.count > 0) {
-    if (result.mutableSubAreaIdList == nil) {
-      result.mutableSubAreaIdList = [NSMutableArray array];
-    }
-    [result.mutableSubAreaIdList addObjectsFromArray:other.mutableSubAreaIdList];
-  }
   if (other.hasPrice) {
     [self setPrice:other.price];
   }
   if (other.hasAvgPrice) {
     [self setAvgPrice:other.avgPrice];
+  }
+  if (other.hasPriceRank) {
+    [self setPriceRank:other.priceRank];
   }
   if (other.hasIcon) {
     [self setIcon:other.icon];
@@ -769,12 +757,12 @@ static Place* defaultPlaceInstance = nil;
         }
         break;
       }
-      case 10: {
-        [self setPlaceId:[input readString]];
+      case 8: {
+        [self setPlaceId:[input readInt32]];
         break;
       }
-      case 18: {
-        [self setCityId:[input readString]];
+      case 16: {
+        [self setCityId:[input readInt32]];
         break;
       }
       case 24: {
@@ -793,8 +781,8 @@ static Place* defaultPlaceInstance = nil;
         [self setRank:[input readInt32]];
         break;
       }
-      case 58: {
-        [self addProvidedServiceId:[input readString]];
+      case 56: {
+        [self addProvidedServiceId:[input readInt32]];
         break;
       }
       case 93: {
@@ -805,12 +793,8 @@ static Place* defaultPlaceInstance = nil;
         [self setLatitude:[input readFloat]];
         break;
       }
-      case 106: {
-        [self addAreaId:[input readString]];
-        break;
-      }
-      case 114: {
-        [self addSubAreaId:[input readString]];
+      case 104: {
+        [self addAreaId:[input readInt32]];
         break;
       }
       case 170: {
@@ -819,6 +803,10 @@ static Place* defaultPlaceInstance = nil;
       }
       case 178: {
         [self setAvgPrice:[input readString]];
+        break;
+      }
+      case 184: {
+        [self setPriceRank:[input readInt32]];
         break;
       }
       case 250: {
@@ -869,8 +857,8 @@ static Place* defaultPlaceInstance = nil;
         [self addTypicalDishes:[input readString]];
         break;
       }
-      case 346: {
-        [self setHotelStar:[input readString]];
+      case 344: {
+        [self setHotelStar:[input readInt32]];
         break;
       }
       case 480: {
@@ -887,33 +875,33 @@ static Place* defaultPlaceInstance = nil;
 - (BOOL) hasPlaceId {
   return result.hasPlaceId;
 }
-- (NSString*) placeId {
+- (int32_t) placeId {
   return result.placeId;
 }
-- (Place_Builder*) setPlaceId:(NSString*) value {
+- (Place_Builder*) setPlaceId:(int32_t) value {
   result.hasPlaceId = YES;
   result.placeId = value;
   return self;
 }
 - (Place_Builder*) clearPlaceId {
   result.hasPlaceId = NO;
-  result.placeId = @"";
+  result.placeId = 0;
   return self;
 }
 - (BOOL) hasCityId {
   return result.hasCityId;
 }
-- (NSString*) cityId {
+- (int32_t) cityId {
   return result.cityId;
 }
-- (Place_Builder*) setCityId:(NSString*) value {
+- (Place_Builder*) setCityId:(int32_t) value {
   result.hasCityId = YES;
   result.cityId = value;
   return self;
 }
 - (Place_Builder*) clearCityId {
   result.hasCityId = NO;
-  result.cityId = @"";
+  result.cityId = 0;
   return self;
 }
 - (BOOL) hasCategoryId {
@@ -986,18 +974,18 @@ static Place* defaultPlaceInstance = nil;
   }
   return result.mutableProvidedServiceIdList;
 }
-- (NSString*) providedServiceIdAtIndex:(int32_t) index {
+- (int32_t) providedServiceIdAtIndex:(int32_t) index {
   return [result providedServiceIdAtIndex:index];
 }
-- (Place_Builder*) replaceProvidedServiceIdAtIndex:(int32_t) index with:(NSString*) value {
-  [result.mutableProvidedServiceIdList replaceObjectAtIndex:index withObject:value];
+- (Place_Builder*) replaceProvidedServiceIdAtIndex:(int32_t) index with:(int32_t) value {
+  [result.mutableProvidedServiceIdList replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];
   return self;
 }
-- (Place_Builder*) addProvidedServiceId:(NSString*) value {
+- (Place_Builder*) addProvidedServiceId:(int32_t) value {
   if (result.mutableProvidedServiceIdList == nil) {
     result.mutableProvidedServiceIdList = [NSMutableArray array];
   }
-  [result.mutableProvidedServiceIdList addObject:value];
+  [result.mutableProvidedServiceIdList addObject:[NSNumber numberWithInt:value]];
   return self;
 }
 - (Place_Builder*) addAllProvidedServiceId:(NSArray*) values {
@@ -1049,18 +1037,18 @@ static Place* defaultPlaceInstance = nil;
   }
   return result.mutableAreaIdList;
 }
-- (NSString*) areaIdAtIndex:(int32_t) index {
+- (int32_t) areaIdAtIndex:(int32_t) index {
   return [result areaIdAtIndex:index];
 }
-- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(NSString*) value {
-  [result.mutableAreaIdList replaceObjectAtIndex:index withObject:value];
+- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(int32_t) value {
+  [result.mutableAreaIdList replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];
   return self;
 }
-- (Place_Builder*) addAreaId:(NSString*) value {
+- (Place_Builder*) addAreaId:(int32_t) value {
   if (result.mutableAreaIdList == nil) {
     result.mutableAreaIdList = [NSMutableArray array];
   }
-  [result.mutableAreaIdList addObject:value];
+  [result.mutableAreaIdList addObject:[NSNumber numberWithInt:value]];
   return self;
 }
 - (Place_Builder*) addAllAreaId:(NSArray*) values {
@@ -1072,37 +1060,6 @@ static Place* defaultPlaceInstance = nil;
 }
 - (Place_Builder*) clearAreaIdList {
   result.mutableAreaIdList = nil;
-  return self;
-}
-- (NSArray*) subAreaIdList {
-  if (result.mutableSubAreaIdList == nil) {
-    return [NSArray array];
-  }
-  return result.mutableSubAreaIdList;
-}
-- (NSString*) subAreaIdAtIndex:(int32_t) index {
-  return [result subAreaIdAtIndex:index];
-}
-- (Place_Builder*) replaceSubAreaIdAtIndex:(int32_t) index with:(NSString*) value {
-  [result.mutableSubAreaIdList replaceObjectAtIndex:index withObject:value];
-  return self;
-}
-- (Place_Builder*) addSubAreaId:(NSString*) value {
-  if (result.mutableSubAreaIdList == nil) {
-    result.mutableSubAreaIdList = [NSMutableArray array];
-  }
-  [result.mutableSubAreaIdList addObject:value];
-  return self;
-}
-- (Place_Builder*) addAllSubAreaId:(NSArray*) values {
-  if (result.mutableSubAreaIdList == nil) {
-    result.mutableSubAreaIdList = [NSMutableArray array];
-  }
-  [result.mutableSubAreaIdList addObjectsFromArray:values];
-  return self;
-}
-- (Place_Builder*) clearSubAreaIdList {
-  result.mutableSubAreaIdList = nil;
   return self;
 }
 - (BOOL) hasPrice {
@@ -1135,6 +1092,22 @@ static Place* defaultPlaceInstance = nil;
 - (Place_Builder*) clearAvgPrice {
   result.hasAvgPrice = NO;
   result.avgPrice = @"";
+  return self;
+}
+- (BOOL) hasPriceRank {
+  return result.hasPriceRank;
+}
+- (int32_t) priceRank {
+  return result.priceRank;
+}
+- (Place_Builder*) setPriceRank:(int32_t) value {
+  result.hasPriceRank = YES;
+  result.priceRank = value;
+  return self;
+}
+- (Place_Builder*) clearPriceRank {
+  result.hasPriceRank = NO;
+  result.priceRank = 0;
   return self;
 }
 - (BOOL) hasIcon {
@@ -1407,17 +1380,17 @@ static Place* defaultPlaceInstance = nil;
 - (BOOL) hasHotelStar {
   return result.hasHotelStar;
 }
-- (NSString*) hotelStar {
+- (int32_t) hotelStar {
   return result.hotelStar;
 }
-- (Place_Builder*) setHotelStar:(NSString*) value {
+- (Place_Builder*) setHotelStar:(int32_t) value {
   result.hasHotelStar = YES;
   result.hotelStar = value;
   return self;
 }
 - (Place_Builder*) clearHotelStar {
   result.hasHotelStar = NO;
-  result.hotelStar = @"";
+  result.hotelStar = 0;
   return self;
 }
 - (BOOL) hasPlaceFavoriteCount {
@@ -1456,7 +1429,7 @@ static Place* defaultPlaceInstance = nil;
 
 @interface PlaceList ()
 @property (retain) NSMutableArray* mutableListList;
-@property (retain) NSString* cityId;
+@property int32_t cityId;
 @end
 
 @implementation PlaceList
@@ -1471,12 +1444,11 @@ static Place* defaultPlaceInstance = nil;
 @synthesize cityId;
 - (void) dealloc {
   self.mutableListList = nil;
-  self.cityId = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
-    self.cityId = @"";
+    self.cityId = 0;
   }
   return self;
 }
@@ -1512,7 +1484,7 @@ static PlaceList* defaultPlaceListInstance = nil;
     [output writeMessage:1 value:element];
   }
   if (self.hasCityId) {
-    [output writeString:2 value:self.cityId];
+    [output writeInt32:2 value:self.cityId];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -1527,7 +1499,7 @@ static PlaceList* defaultPlaceListInstance = nil;
     size += computeMessageSize(1, element);
   }
   if (self.hasCityId) {
-    size += computeStringSize(2, self.cityId);
+    size += computeInt32Size(2, self.cityId);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -1640,8 +1612,8 @@ static PlaceList* defaultPlaceListInstance = nil;
         [self addList:[subBuilder buildPartial]];
         break;
       }
-      case 18: {
-        [self setCityId:[input readString]];
+      case 16: {
+        [self setCityId:[input readInt32]];
         break;
       }
     }
@@ -1679,17 +1651,17 @@ static PlaceList* defaultPlaceListInstance = nil;
 - (BOOL) hasCityId {
   return result.hasCityId;
 }
-- (NSString*) cityId {
+- (int32_t) cityId {
   return result.cityId;
 }
-- (PlaceList_Builder*) setCityId:(NSString*) value {
+- (PlaceList_Builder*) setCityId:(int32_t) value {
   result.hasCityId = YES;
   result.cityId = value;
   return self;
 }
 - (PlaceList_Builder*) clearCityId {
   result.hasCityId = NO;
-  result.cityId = @"";
+  result.cityId = 0;
   return self;
 }
 @end

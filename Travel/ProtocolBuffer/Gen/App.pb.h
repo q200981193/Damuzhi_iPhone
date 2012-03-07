@@ -5,6 +5,8 @@
 @class App;
 @class App_Builder;
 @class City;
+@class CityList;
+@class CityList_Builder;
 @class City_Builder;
 @class HelpInfo;
 @class HelpInfo_Builder;
@@ -31,18 +33,18 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 
 @interface NameIdPair : PBGeneratedMessage {
 @private
-  BOOL hasName_:1;
   BOOL hasId_:1;
+  BOOL hasName_:1;
   BOOL hasImage_:1;
+  int32_t id;
   NSString* name;
-  NSString* id;
   NSString* image;
 }
 - (BOOL) hasName;
 - (BOOL) hasId;
 - (BOOL) hasImage;
 @property (readonly, retain) NSString* name;
-@property (readonly, retain) NSString* id;
+@property (readonly) int32_t id;
 @property (readonly, retain) NSString* image;
 
 + (NameIdPair*) defaultInstance;
@@ -85,8 +87,8 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (NameIdPair_Builder*) clearName;
 
 - (BOOL) hasId;
-- (NSString*) id;
-- (NameIdPair_Builder*) setId:(NSString*) value;
+- (int32_t) id;
+- (NameIdPair_Builder*) setId:(int32_t) value;
 - (NameIdPair_Builder*) clearId;
 
 - (BOOL) hasImage;
@@ -177,14 +179,14 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   BOOL hasCityId_:1;
   BOOL hasCityName_:1;
   BOOL hasLatestVersion_:1;
-  NSString* cityId;
+  int32_t cityId;
   NSString* cityName;
   NSString* latestVersion;
 }
 - (BOOL) hasCityId;
 - (BOOL) hasCityName;
 - (BOOL) hasLatestVersion;
-@property (readonly, retain) NSString* cityId;
+@property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* cityName;
 @property (readonly, retain) NSString* latestVersion;
 
@@ -223,8 +225,8 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (City_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasCityId;
-- (NSString*) cityId;
-- (City_Builder*) setCityId:(NSString*) value;
+- (int32_t) cityId;
+- (City_Builder*) setCityId:(int32_t) value;
 - (City_Builder*) clearCityId;
 
 - (BOOL) hasCityName;
@@ -236,6 +238,55 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (NSString*) latestVersion;
 - (City_Builder*) setLatestVersion:(NSString*) value;
 - (City_Builder*) clearLatestVersion;
+@end
+
+@interface CityList : PBGeneratedMessage {
+@private
+  NSMutableArray* mutableCityListList;
+}
+- (NSArray*) cityListList;
+- (CityList*) cityListAtIndex:(int32_t) index;
+
++ (CityList*) defaultInstance;
+- (CityList*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (CityList_Builder*) builder;
++ (CityList_Builder*) builder;
++ (CityList_Builder*) builderWithPrototype:(CityList*) prototype;
+
++ (CityList*) parseFromData:(NSData*) data;
++ (CityList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CityList*) parseFromInputStream:(NSInputStream*) input;
++ (CityList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CityList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (CityList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface CityList_Builder : PBGeneratedMessage_Builder {
+@private
+  CityList* result;
+}
+
+- (CityList*) defaultInstance;
+
+- (CityList_Builder*) clear;
+- (CityList_Builder*) clone;
+
+- (CityList*) build;
+- (CityList*) buildPartial;
+
+- (CityList_Builder*) mergeFrom:(CityList*) other;
+- (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (NSArray*) cityListList;
+- (CityList*) cityListAtIndex:(int32_t) index;
+- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(CityList*) value;
+- (CityList_Builder*) addCityList:(CityList*) value;
+- (CityList_Builder*) addAllCityList:(NSArray*) values;
+- (CityList_Builder*) clearCityListList;
 @end
 
 @interface HelpInfo : PBGeneratedMessage {
@@ -288,13 +339,17 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 
 @interface App : PBGeneratedMessage {
 @private
+  BOOL hasDataVersion_:1;
   BOOL hasHelpHtml_:1;
+  NSString* dataVersion;
   NSString* helpHtml;
   NSMutableArray* mutableCityListList;
   NSMutableArray* mutableTestCityListList;
   NSMutableArray* mutablePlaceMetaDataListList;
 }
+- (BOOL) hasDataVersion;
 - (BOOL) hasHelpHtml;
+@property (readonly, retain) NSString* dataVersion;
 @property (readonly, retain) NSString* helpHtml;
 - (NSArray*) cityListList;
 - (City*) cityListAtIndex:(int32_t) index;
@@ -336,6 +391,11 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) mergeFrom:(App*) other;
 - (App_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (App_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasDataVersion;
+- (NSString*) dataVersion;
+- (App_Builder*) setDataVersion:(NSString*) value;
+- (App_Builder*) clearDataVersion;
 
 - (NSArray*) cityListList;
 - (City*) cityListAtIndex:(int32_t) index;

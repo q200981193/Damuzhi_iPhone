@@ -9,15 +9,9 @@ message CommonOverview {
   required string html = 2;        // 对应的HTML文件名，离线返回相对路径，如 html/abc/abc.html，在线返回网站的绝对URL
 }
 
-message CitySubArea{                                  // 区域下的子区域，用于筛选条件查询和显示
-  required string subAreaId = 1;
-  required string areaName = 2;
-}
-
 message CityArea{                                      // 城市区域，用于筛选条件查询和显示
-  required string areaId = 1;
+  required int32 areaId = 1;
   required string areaName = 2;
-  repeated string subAreaList = 3;
 }
 
 message CityOverview {
@@ -31,5 +25,6 @@ message CityOverview {
   required string currencySymbol = 6;                  // 货币显示符号，如人民币为¥，美元为$
   required string currencyId = 7;                      // 货币ID，用于实时汇率查询，使用国际标准，如人民币为CNY，美元为USD
   required string currencyName = 8;                    // 货币显示名字，如“人民币”，“美元”，“欧元”
-    
+
+  optional int32 priceRank = 9 [default=3];            // 城市查询价格等级，默认为3
 }

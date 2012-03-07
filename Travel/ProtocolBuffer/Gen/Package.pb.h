@@ -2,8 +2,41 @@
 
 #import "ProtocolBuffers.h"
 
+#import "Place.pb.h"
+#import "CityOverview.pb.h"
+#import "TravelTips.pb.h"
+#import "App.pb.h"
+
+@class App;
+@class App_Builder;
+@class City;
+@class CityArea;
+@class CityArea_Builder;
+@class CityList;
+@class CityList_Builder;
+@class CityOverview;
+@class CityOverview_Builder;
+@class City_Builder;
+@class CommonOverview;
+@class CommonOverview_Builder;
+@class CommonTravelGuide;
+@class CommonTravelGuide_Builder;
+@class HelpInfo;
+@class HelpInfo_Builder;
+@class NameIdPair;
+@class NameIdPair_Builder;
 @class Package;
 @class Package_Builder;
+@class Place;
+@class PlaceList;
+@class PlaceList_Builder;
+@class PlaceMeta;
+@class PlaceMeta_Builder;
+@class Place_Builder;
+@class TravelResponse;
+@class TravelResponse_Builder;
+@class TravelTips;
+@class TravelTips_Builder;
 typedef enum {
   LanguageTypeZhHans = 1,
   LanguageTypeZhHant = 2,
@@ -21,12 +54,12 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 
 @interface Package : PBGeneratedMessage {
 @private
-  BOOL hasVersion_:1;
   BOOL hasCityId_:1;
+  BOOL hasVersion_:1;
   BOOL hasCityName_:1;
   BOOL hasLanguage_:1;
+  int32_t cityId;
   NSString* version;
-  NSString* cityId;
   NSString* cityName;
   LanguageType language;
 }
@@ -35,7 +68,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (BOOL) hasCityName;
 - (BOOL) hasLanguage;
 @property (readonly, retain) NSString* version;
-@property (readonly, retain) NSString* cityId;
+@property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* cityName;
 @property (readonly) LanguageType language;
 
@@ -79,8 +112,8 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (Package_Builder*) clearVersion;
 
 - (BOOL) hasCityId;
-- (NSString*) cityId;
-- (Package_Builder*) setCityId:(NSString*) value;
+- (int32_t) cityId;
+- (Package_Builder*) setCityId:(int32_t) value;
 - (Package_Builder*) clearCityId;
 
 - (BOOL) hasCityName;
@@ -92,5 +125,130 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (LanguageType) language;
 - (Package_Builder*) setLanguage:(LanguageType) value;
 - (Package_Builder*) clearLanguage;
+@end
+
+@interface TravelResponse : PBGeneratedMessage {
+@private
+  BOOL hasResultCode_:1;
+  BOOL hasPlace_:1;
+  BOOL hasOverview_:1;
+  BOOL hasTravelGuide_:1;
+  BOOL hasHelpInfo_:1;
+  BOOL hasPlaceList_:1;
+  BOOL hasCityList_:1;
+  BOOL hasAppInfo_:1;
+  int32_t resultCode;
+  Place* place;
+  CommonOverview* overview;
+  CommonTravelGuide* travelGuide;
+  HelpInfo* helpInfo;
+  PlaceList* placeList;
+  CityList* cityList;
+  App* appInfo;
+}
+- (BOOL) hasResultCode;
+- (BOOL) hasPlace;
+- (BOOL) hasOverview;
+- (BOOL) hasTravelGuide;
+- (BOOL) hasHelpInfo;
+- (BOOL) hasPlaceList;
+- (BOOL) hasCityList;
+- (BOOL) hasAppInfo;
+@property (readonly) int32_t resultCode;
+@property (readonly, retain) Place* place;
+@property (readonly, retain) CommonOverview* overview;
+@property (readonly, retain) CommonTravelGuide* travelGuide;
+@property (readonly, retain) HelpInfo* helpInfo;
+@property (readonly, retain) PlaceList* placeList;
+@property (readonly, retain) CityList* cityList;
+@property (readonly, retain) App* appInfo;
+
++ (TravelResponse*) defaultInstance;
+- (TravelResponse*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (TravelResponse_Builder*) builder;
++ (TravelResponse_Builder*) builder;
++ (TravelResponse_Builder*) builderWithPrototype:(TravelResponse*) prototype;
+
++ (TravelResponse*) parseFromData:(NSData*) data;
++ (TravelResponse*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TravelResponse*) parseFromInputStream:(NSInputStream*) input;
++ (TravelResponse*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TravelResponse*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TravelResponse*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface TravelResponse_Builder : PBGeneratedMessage_Builder {
+@private
+  TravelResponse* result;
+}
+
+- (TravelResponse*) defaultInstance;
+
+- (TravelResponse_Builder*) clear;
+- (TravelResponse_Builder*) clone;
+
+- (TravelResponse*) build;
+- (TravelResponse*) buildPartial;
+
+- (TravelResponse_Builder*) mergeFrom:(TravelResponse*) other;
+- (TravelResponse_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TravelResponse_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasResultCode;
+- (int32_t) resultCode;
+- (TravelResponse_Builder*) setResultCode:(int32_t) value;
+- (TravelResponse_Builder*) clearResultCode;
+
+- (BOOL) hasPlace;
+- (Place*) place;
+- (TravelResponse_Builder*) setPlace:(Place*) value;
+- (TravelResponse_Builder*) setPlaceBuilder:(Place_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergePlace:(Place*) value;
+- (TravelResponse_Builder*) clearPlace;
+
+- (BOOL) hasOverview;
+- (CommonOverview*) overview;
+- (TravelResponse_Builder*) setOverview:(CommonOverview*) value;
+- (TravelResponse_Builder*) setOverviewBuilder:(CommonOverview_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeOverview:(CommonOverview*) value;
+- (TravelResponse_Builder*) clearOverview;
+
+- (BOOL) hasTravelGuide;
+- (CommonTravelGuide*) travelGuide;
+- (TravelResponse_Builder*) setTravelGuide:(CommonTravelGuide*) value;
+- (TravelResponse_Builder*) setTravelGuideBuilder:(CommonTravelGuide_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeTravelGuide:(CommonTravelGuide*) value;
+- (TravelResponse_Builder*) clearTravelGuide;
+
+- (BOOL) hasHelpInfo;
+- (HelpInfo*) helpInfo;
+- (TravelResponse_Builder*) setHelpInfo:(HelpInfo*) value;
+- (TravelResponse_Builder*) setHelpInfoBuilder:(HelpInfo_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeHelpInfo:(HelpInfo*) value;
+- (TravelResponse_Builder*) clearHelpInfo;
+
+- (BOOL) hasPlaceList;
+- (PlaceList*) placeList;
+- (TravelResponse_Builder*) setPlaceList:(PlaceList*) value;
+- (TravelResponse_Builder*) setPlaceListBuilder:(PlaceList_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergePlaceList:(PlaceList*) value;
+- (TravelResponse_Builder*) clearPlaceList;
+
+- (BOOL) hasCityList;
+- (CityList*) cityList;
+- (TravelResponse_Builder*) setCityList:(CityList*) value;
+- (TravelResponse_Builder*) setCityListBuilder:(CityList_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeCityList:(CityList*) value;
+- (TravelResponse_Builder*) clearCityList;
+
+- (BOOL) hasAppInfo;
+- (App*) appInfo;
+- (TravelResponse_Builder*) setAppInfo:(App*) value;
+- (TravelResponse_Builder*) setAppInfoBuilder:(App_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeAppInfo:(App*) value;
+- (TravelResponse_Builder*) clearAppInfo;
 @end
 
