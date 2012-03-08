@@ -14,6 +14,7 @@
 #import "CityBasicDataSource.h"
 
 #import "NearbyController.h"
+#import "MoreController.h"
 
 @implementation MainController
 
@@ -75,6 +76,13 @@
     NearbyController* controller = [[NearbyController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        
+}
+
+- (IBAction)clickMoreButton:(id)sender
+{
+    MoreController* controller = [[MoreController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 @end

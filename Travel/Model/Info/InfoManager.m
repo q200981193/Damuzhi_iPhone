@@ -48,8 +48,12 @@ static InfoManager *_infoDefaultManager;
     [dataBuilder addImages:@"image5.jpg"];
     
     [builder setCityBasic:[dataBuilder build]];
-        
-    return [[builder build] data];
+    [builder setCurrencyId:@"HKD"];
+    [builder setCurrencyName:@"港币"];
+    [builder setCurrencySymbol:@"$"];
+    CityOverview* overview = [builder build];
+
+    return [overview data];
 }
 
 - (void)readCityOverview:(NSString*)cityId
