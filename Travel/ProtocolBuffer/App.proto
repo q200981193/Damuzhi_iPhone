@@ -35,7 +35,7 @@ message City {
 }
 
 message CityList {
-  repeated CityList cityList = 1;
+  repeated City cityList = 1;
 }
 
 message HelpInfo {

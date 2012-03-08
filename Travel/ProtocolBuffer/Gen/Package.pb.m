@@ -471,6 +471,11 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
+  if (self.hasCityList) {
+    if (!self.cityList.isInitialized) {
+      return NO;
+    }
+  }
   if (self.hasAppInfo) {
     if (!self.appInfo.isInitialized) {
       return NO;

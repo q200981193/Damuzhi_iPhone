@@ -935,15 +935,20 @@ static CityList* defaultCityListInstance = nil;
 - (NSArray*) cityListList {
   return mutableCityListList;
 }
-- (CityList*) cityListAtIndex:(int32_t) index {
+- (City*) cityListAtIndex:(int32_t) index {
   id value = [mutableCityListList objectAtIndex:index];
   return value;
 }
 - (BOOL) isInitialized {
+  for (City* element in self.cityListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  for (CityList* element in self.cityListList) {
+  for (City* element in self.cityListList) {
     [output writeMessage:1 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
@@ -955,7 +960,7 @@ static CityList* defaultCityListInstance = nil;
   }
 
   size = 0;
-  for (CityList* element in self.cityListList) {
+  for (City* element in self.cityListList) {
     size += computeMessageSize(1, element);
   }
   size += self.unknownFields.serializedSize;
@@ -1061,7 +1066,7 @@ static CityList* defaultCityListInstance = nil;
         break;
       }
       case 10: {
-        CityList_Builder* subBuilder = [CityList builder];
+        City_Builder* subBuilder = [City builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addCityList:[subBuilder buildPartial]];
         break;
@@ -1073,10 +1078,10 @@ static CityList* defaultCityListInstance = nil;
   if (result.mutableCityListList == nil) { return [NSArray array]; }
   return result.mutableCityListList;
 }
-- (CityList*) cityListAtIndex:(int32_t) index {
+- (City*) cityListAtIndex:(int32_t) index {
   return [result cityListAtIndex:index];
 }
-- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(CityList*) value {
+- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(City*) value {
   [result.mutableCityListList replaceObjectAtIndex:index withObject:value];
   return self;
 }
@@ -1091,7 +1096,7 @@ static CityList* defaultCityListInstance = nil;
   result.mutableCityListList = nil;
   return self;
 }
-- (CityList_Builder*) addCityList:(CityList*) value {
+- (CityList_Builder*) addCityList:(City*) value {
   if (result.mutableCityListList == nil) {
     result.mutableCityListList = [NSMutableArray array];
   }

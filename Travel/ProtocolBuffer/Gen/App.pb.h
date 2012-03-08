@@ -245,7 +245,7 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   NSMutableArray* mutableCityListList;
 }
 - (NSArray*) cityListList;
-- (CityList*) cityListAtIndex:(int32_t) index;
+- (City*) cityListAtIndex:(int32_t) index;
 
 + (CityList*) defaultInstance;
 - (CityList*) defaultInstance;
@@ -282,9 +282,9 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (NSArray*) cityListList;
-- (CityList*) cityListAtIndex:(int32_t) index;
-- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(CityList*) value;
-- (CityList_Builder*) addCityList:(CityList*) value;
+- (City*) cityListAtIndex:(int32_t) index;
+- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(City*) value;
+- (CityList_Builder*) addCityList:(City*) value;
 - (CityList_Builder*) addAllCityList:(NSArray*) values;
 - (CityList_Builder*) clearCityListList;
 @end
