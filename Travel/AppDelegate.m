@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "LocaleUtils.h"
 #import "MainController.h"
+#import "UINavigationBarExt.h"
+#import "DeviceDetection.h"
 
 @implementation AppDelegate
 
@@ -25,6 +27,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    if ([DeviceDetection isOS5]){
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_live.png"] forBarMetrics:UIBarMetricsDefault];
+    }
+    else{
+        GlobalSetNavBarBackground(@"top_live.png");        
+    }
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.

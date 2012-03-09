@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPViewController.h"
 
-@interface MainController : UIViewController
+@interface MainController : PPViewController
 
 - (IBAction)clickSpotButton:(id)sender;
 - (IBAction)clickCityOverviewButton:(id)sender;
