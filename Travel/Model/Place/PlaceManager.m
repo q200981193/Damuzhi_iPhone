@@ -65,21 +65,22 @@ static PlaceManager *_placeDefaultManager;
 
 - (NSData*)readCityPlaceData:(NSString*)cityId
 {
-    // read from files later
-    
+    // read from files or network later 
     PlaceList_Builder* builder = [[[PlaceList_Builder alloc] init] autorelease];
 
     Place* place1 = [self buildTestPlace:@"1"];    
     Place* place2 = [self buildTestPlace:@"2"];    
     Place* place3 = [self buildTestPlace:@"3"];    
-    
+
     [builder addList:place1];
     [builder addList:place2];
     [builder addList:place3];
-    
+
     PlaceList* placeList = [builder build];
-    
+   
     return [placeList data];
+    
+    return nil;
 }
 
 - (void)switchCity:(NSString*)newCity
@@ -116,7 +117,7 @@ static PlaceManager *_placeDefaultManager;
 
 - (BOOL)hasLocalCityData:(NSString*)cityId
 {
-    return YES;
+    return NO;
 }
 
 @end

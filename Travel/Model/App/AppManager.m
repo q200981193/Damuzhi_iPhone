@@ -151,4 +151,12 @@ static AppManager* _defaultAppManager = nil;
     return servicePair.image;
 }
 
+- (NSArray*)getCityList
+{
+    App *app = [self buildTestPlace];
+    NSArray *cityList = app.cityListList;
+       
+    return cityList;
+}
+
 @end

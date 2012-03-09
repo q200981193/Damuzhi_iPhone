@@ -11,6 +11,7 @@
 #import "ASIHTTPRequest.h"
 #import "JSON.h"
 #import "UIDevice+IdentifierAddition.h"
+//#import "Package.pb.h"
 
 @implementation TravelNetworkRequest
 
@@ -71,7 +72,8 @@
 #endif         
 
         if (outputFormat == FORMAT_TRAVEL_PB){
-            responseHandler(nil, [request responseData], output.resultCode);                   
+            responseHandler(nil, [request responseData], output.resultCode);               
+            output.responseData = [request responseData];
         }
         else{
             NSString *text = [request responseString];
@@ -87,9 +89,6 @@
             responseHandler(jsonDictionary, nil, output.resultCode);       
         }
 
-        
-        
-        
         return output;
         
     }
@@ -116,7 +115,6 @@
     
     TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
         
-        
         return;
     };
     
@@ -124,6 +122,34 @@
                          constructURLHandler:constructURLHandler                         
                              responseHandler:responseHandler         
                                 outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type cityId:(int)cityId lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_CITY_ID intValue:cityId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
                                       output:output];
 }
 

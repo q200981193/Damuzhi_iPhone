@@ -10,6 +10,8 @@
 #import "PlaceManager.h"
 #import "PPViewController.h"
 #import "LogUtil.h"
+#import "TravelNetworkRequest.h"
+#import "Package.pb.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -105,7 +107,21 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        return nil;
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:21 cityId:[_currentCityId intValue] lang:1];            
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
+//        for (Place* place in _onlinePlaceManager.placeList){
+//            NSLog(@"placeId = %d", [place placeId]);
+//            NSLog(@"name = %@", [place name]);
+//            NSLog(@"categoryId = %d", [place categoryId]);
+//            NSLog(@"rank = %d", [place rank]);
+//            NSLog(@"icon = %@", [place icon]);
+//        }
+        
+        NSArray* list = [_onlinePlaceManager findAllSpots];   
+        *resultCode = 0;
+
+        return list;
     };
 
     [self processLocalRemoteQuery:viewController

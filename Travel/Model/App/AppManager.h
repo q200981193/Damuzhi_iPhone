@@ -13,6 +13,7 @@
 
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId;
 - (NSString*)getServiceImage:(int32_t)categoryId providedServiceId:(int32_t)providedServiceId;
+- (NSArray*)getCityList;
 
 
 @end

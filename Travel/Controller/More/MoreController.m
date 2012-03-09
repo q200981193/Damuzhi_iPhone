@@ -8,6 +8,7 @@
 
 #import "MoreController.h"
 #import "LocaleUtils.h"
+#import "CityManagementController.h"
 
 @interface MoreController ()
 
@@ -29,6 +30,12 @@
     self.dataList = [NSArray arrayWithObjects:
                      NSLS(@"已开通城市"), 
                      NSLS(@"浏览记录"),
+                     NSLS(@"意见反馈"),
+                     NSLS(@"版本更新"),
+                     NSLS(@"关于大拇指旅行"),
+                     NSLS(@"给我一个好评吧"),
+                     NSLS(@"列表中显示图片"),
+                     NSLS(@"精彩应用推荐"),
                      nil];
     
     [super viewDidLoad];
@@ -92,9 +99,18 @@
 	}
     
     cell.textLabel.text = [dataList objectAtIndex:row];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.imageView.image = [UIImage imageNamed:@"pageStateNormal.jpg"];
 	
 	return cell;
 	
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CityManagementController* controller = [[CityManagementController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 @end
