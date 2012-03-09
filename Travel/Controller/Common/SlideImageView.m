@@ -92,11 +92,12 @@
     pageControlIsChangingPage = NO;
 }
 
+
 #pragma mark -
 #pragma mark PageControl stuff
 - (IBAction)pageClick:(id)sender
 {
-    /* Change the scroll view */
+    // Change the scroll view 
     CGRect frame = scrollView.frame;
     frame.origin.x  = frame.size.width * pageControl.currentPage;
     frame.origin.y = 0;

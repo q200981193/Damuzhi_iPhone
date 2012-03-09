@@ -37,28 +37,39 @@
 
 #pragma mark - View lifecycle
 
-- (void)createTitleView
+-(void) clickTitle:(id)sender
 {
-#define TITLE_NAME @"大拇指旅行 - 肇庆"
-#define TITLE_VIEW_WIDTH 200
-#define TITLE_VIEW_HEIGHT 30
+    NSLog(@"click title");
+}
+
+- (void)createButtonView
+{
+#define BUTTON_NAME @"大拇指旅行 - 肇庆"
+#define BUTTON_VIEW_WIDTH 200
+#define BUTTON_VIEW_HEIGHT 30
     
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TITLE_VIEW_WIDTH, TITLE_VIEW_HEIGHT)];
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TITLE_VIEW_WIDTH-50, TITLE_VIEW_HEIGHT)];
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT)];
     label.font = [UIFont fontWithName:@"" size:0.1];
-    label.text = @"大拇指旅行 — 肇庆";
+    label.text = @"大拇指旅行 — 湛江";
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
-    label.textAlignment = UITextAlignmentCenter;   
-
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(TITLE_VIEW_WIDTH-50, TITLE_VIEW_HEIGHT/2-3, 14, 7)];
+    label.textAlignment = UITextAlignmentCenter;
+    
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT/2-3, 14, 7)];
     [imageView setImage:[UIImage imageNamed:@"top_arrow.png"]];
-    [view addSubview:label];
-    [view addSubview:imageView];
-
-    self.navigationItem.titleView = view;
-
-    [view release];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH, BUTTON_VIEW_HEIGHT)];
+    
+    [button addSubview:label];
+    [button addSubview:imageView];
+    
+    [button addTarget:self action:@selector(clickTitle:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.titleView = button;
+    
+    [label release];
+    [imageView release];
+    [button release];
 }
 
 - (void)viewDidLoad
@@ -67,11 +78,9 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    [self createTitleView];
+    [self createButtonView];
 //    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"index_bg@2x.png"]];
     
-    
-
 }
 
 - (void)viewDidUnload

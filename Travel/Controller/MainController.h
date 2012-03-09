@@ -15,5 +15,6 @@
 - (IBAction)clickCityOverviewButton:(id)sender;
 - (IBAction)clickNearbyButton:(id)sender;
 - (IBAction)clickMoreButton:(id)sender;
+-(void) clickTitle:(id)sender;
 
 @end
