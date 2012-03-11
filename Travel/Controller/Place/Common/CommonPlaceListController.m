@@ -10,6 +10,7 @@
 #import "PlaceListController.h"
 #import "PlaceManager.h"
 #import "PlaceService.h"
+#import "PlaceMapViewController.h"
 
 @implementation CommonPlaceListController
 
@@ -80,6 +81,13 @@
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
     self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
+}
+
+- (IBAction)clickMapButton:(id)sender
+{
+    PlaceMapViewController* controller = [[PlaceMapViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 @end
