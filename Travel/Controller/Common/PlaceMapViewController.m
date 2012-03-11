@@ -50,7 +50,8 @@
 
 @implementation PlaceMapViewController
 
-@synthesize mapView, mapAnnotations;
+@synthesize mapView;
+@synthesize mapAnnotations;
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
 
@@ -133,12 +134,16 @@
     self.mapView.showsUserLocation = YES;
     self.mapAnnotations = [[NSMutableArray alloc]init];
     
-//    for (Place *place in _placeList) {
-//        PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-//        [self.mapAnnotations addObject:placeAnnotation];
-//        
-//    } 
+    //for real
+//    if (_placeList && _placeList.count > 0) {
+//        for (Place *place in _placeList) {
+//            PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
+//            [self.mapAnnotations addObject:placeAnnotation];
+//            
+//        } 
+//    }
     
+    //for test
     CLLocationCoordinate2D location;
     location.latitude = 37.80000;
     location.longitude = -122.457989;
@@ -183,8 +188,8 @@
 #pragma mark MKMapViewDelegate
 
 //The event handling method
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer {
-    NSLog(@"click event handler here!");
+- (void)notationAction:(UITapGestureRecognizer *)recognizer {
+    NSLog(@"click annotation handler here!");
     //Do stuff here...
 }
 
@@ -222,14 +227,15 @@
             
             UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(25, 2, 70, 17)];
             label.font = [UIFont systemFontOfSize:14];
-            label.text  = placeAnnotation.place.name;
+//            label.text  = placeAnnotation.place.name;
+            label.text = @"旧金山";
             label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
             label.backgroundColor = [UIColor clearColor];
             [customizeView addSubview:label];
             
             [annotationView addSubview:customizeView];
             
-            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleSingleTap:)];
+            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(notationAction:)];
             [customizeView addGestureRecognizer:singleFingerTap];
             [singleFingerTap release];
             [customizeView release];
