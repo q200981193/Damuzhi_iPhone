@@ -8,6 +8,7 @@
 
 #import "AppManager.h"
 #import "App.pb.h"
+#import "ImageName.h"
 
 @implementation AppManager
 
@@ -57,21 +58,21 @@ static AppManager* _defaultAppManager = nil;
     [placeMeta addSubCategoryList:[subCategoryNamePairBuilder2 build]];
     
     NameIdPair_Builder* provideServiceListBuilder1 = [[[NameIdPair_Builder alloc] init] autorelease];    
-    [provideServiceListBuilder1 setName:@"办公"];
+    [provideServiceListBuilder1 setName:@"卧床"];
     [provideServiceListBuilder1 setId:1];
-    [provideServiceListBuilder1 setImage:@"office.png"];
+    [provideServiceListBuilder1 setImage:IMAGE_SLEEP];
     [placeMeta addProvidedServiceList:[provideServiceListBuilder1 build]];
     
     NameIdPair_Builder* provideServiceListBuilder2 = [[[NameIdPair_Builder alloc] init] autorelease];
     [provideServiceListBuilder2 setName:@"就餐"];
     [provideServiceListBuilder2 setId:2];
-    [provideServiceListBuilder2 setImage:@"meat.png"];
+    [provideServiceListBuilder2 setImage:IMAGE_FOOD];
     [placeMeta addProvidedServiceList:[provideServiceListBuilder2 build]];
     
     NameIdPair_Builder* provideServiceListBuilder3 = [[[NameIdPair_Builder alloc] init] autorelease];
     [provideServiceListBuilder3 setName:@"购物"];
     [provideServiceListBuilder3 setId:3];
-    [provideServiceListBuilder3 setImage:@"shopping.png"];
+    [provideServiceListBuilder3 setImage:IMAGE_SHOPPING];
     [placeMeta addProvidedServiceList:[provideServiceListBuilder3 build]];
     
     [app addPlaceMetaDataList:[placeMeta build]];

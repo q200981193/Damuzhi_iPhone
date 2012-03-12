@@ -177,7 +177,7 @@
 							<object class="IBUIImageView" id="243949427">
 								<reference key="NSNextResponder" ref="609629750"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{95, 55}, {17, 26}}</string>
+								<string key="NSFrame">{{96, 57}, {15, 22}}</string>
 								<reference key="NSSuperview" ref="609629750"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -187,7 +187,7 @@
 							<object class="IBUIImageView" id="541970868">
 								<reference key="NSNextResponder" ref="609629750"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{119, 55}, {17, 26}}</string>
+								<string key="NSFrame">{{119, 57}, {15, 22}}</string>
 								<reference key="NSSuperview" ref="609629750"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -197,7 +197,7 @@
 							<object class="IBUIImageView" id="454132331">
 								<reference key="NSNextResponder" ref="609629750"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{143, 55}, {17, 26}}</string>
+								<string key="NSFrame">{{141, 57}, {15, 22}}</string>
 								<reference key="NSSuperview" ref="609629750"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -207,7 +207,7 @@
 							<object class="IBUIImageView" id="864344011">
 								<reference key="NSNextResponder" ref="609629750"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{258, 30}, {35, 22}}</string>
+								<string key="NSFrame">{{264, 36}, {12, 10}}</string>
 								<reference key="NSSuperview" ref="609629750"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -316,19 +316,19 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">praise3View</string>
-						<reference key="source" ref="503030138"/>
-						<reference key="destination" ref="454132331"/>
-					</object>
-					<int key="connectionID">41</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">categoryLable</string>
 						<reference key="source" ref="503030138"/>
 						<reference key="destination" ref="270014830"/>
 					</object>
 					<int key="connectionID">42</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">praise3View</string>
+						<reference key="source" ref="503030138"/>
+						<reference key="destination" ref="454132331"/>
+					</object>
+					<int key="connectionID">41</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -359,11 +359,11 @@
 							<reference ref="270014830"/>
 							<reference ref="1822944"/>
 							<reference ref="892114033"/>
-							<reference ref="243949427"/>
-							<reference ref="541970868"/>
-							<reference ref="454132331"/>
 							<reference ref="864344011"/>
 							<reference ref="400269302"/>
+							<reference ref="454132331"/>
+							<reference ref="541970868"/>
+							<reference ref="243949427"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -413,13 +413,13 @@
 						<reference key="parent" ref="503030138"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">34</int>
-						<reference key="object" ref="454132331"/>
+						<int key="objectID">38</int>
+						<reference key="object" ref="864344011"/>
 						<reference key="parent" ref="503030138"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">38</int>
-						<reference key="object" ref="864344011"/>
+						<int key="objectID">34</int>
+						<reference key="object" ref="454132331"/>
 						<reference key="parent" ref="503030138"/>
 					</object>
 				</array>

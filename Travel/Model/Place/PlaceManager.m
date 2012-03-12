@@ -58,6 +58,8 @@ static PlaceManager *_placeDefaultManager;
     [builder addAddress:@"香港山顶道128号凌霄阁"];
     [builder addAreaId:11];
     [builder setCategoryId:1];
+    [builder addProvidedServiceId:1];
+    [builder addProvidedServiceId:2];
     [builder addProvidedServiceId:3];
     
     return [builder build];
@@ -117,7 +119,7 @@ static PlaceManager *_placeDefaultManager;
 
 - (BOOL)hasLocalCityData:(NSString*)cityId
 {
-    return NO;
+    return YES;
 }
 
 @end

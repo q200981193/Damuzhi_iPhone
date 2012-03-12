@@ -110,13 +110,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:21 cityId:[_currentCityId intValue] lang:1];            
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
-//        for (Place* place in _onlinePlaceManager.placeList){
-//            NSLog(@"placeId = %d", [place placeId]);
-//            NSLog(@"name = %@", [place name]);
-//            NSLog(@"categoryId = %d", [place categoryId]);
-//            NSLog(@"rank = %d", [place rank]);
-//            NSLog(@"icon = %@", [place icon]);
-//        }
         
         NSArray* list = [_onlinePlaceManager findAllSpots];   
         *resultCode = 0;
