@@ -34,4 +34,6 @@
 
 - (id)initWithFilterHandler:(NSObject<PlaceListFilterProtocol>*)handler;
 
+- (IBAction)clickMapButton:(id)sender;
+
 @end
