@@ -16,5 +16,5 @@
 
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
-
+@property (retain, nonatomic) IBOutlet UIImageView *distanceView;
 @end

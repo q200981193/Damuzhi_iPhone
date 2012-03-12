@@ -10,6 +10,7 @@
 #import "Place.pb.h"
 #import "AppManager.h"
 #import "StringUtil.h"
+#import "ImageName.h"
 
 @implementation SpotCell
 @synthesize nameLabel;
@@ -43,31 +44,26 @@
     return @"SpotCell";
 }
 
-- (NSString*)getIconByProvidedServiceId:(NSString*)serviceId
-{   
-    return serviceId;
-}
-
 -(void)setRankImage:(int32_t)rank
 {
-    self.praise1View.image = [UIImage imageNamed:@"bad.jpg"];
-    self.praise2View.image = [UIImage imageNamed:@"bad.jpg"];
-    self.praise3View.image = [UIImage imageNamed:@"bad.jpg"];
+    self.praise1View.image = [UIImage imageNamed:IMAGE_GOOD2];
+    self.praise2View.image = [UIImage imageNamed:IMAGE_GOOD2];
+    self.praise3View.image = [UIImage imageNamed:IMAGE_GOOD2];
 
     switch (rank) {
         case 1:
-            [praise1View setImage:[UIImage imageNamed:@"great.jpg"]];
+            [praise1View setImage:[UIImage imageNamed:IMAGE_GOOD]];
             break;
             
         case 2:
-            [praise1View setImage:[UIImage imageNamed:@"great.jpg"]];
-            [praise2View setImage:[UIImage imageNamed:@"great.jpg"]];
+            [praise1View setImage:[UIImage imageNamed:IMAGE_GOOD]];
+            [praise2View setImage:[UIImage imageNamed:IMAGE_GOOD]];
             break;
             
         case 3:
-            [praise1View setImage:[UIImage imageNamed:@"great.jpg"]];
-            [praise2View setImage:[UIImage imageNamed:@"great.jpg"]];
-            [praise3View setImage:[UIImage imageNamed:@"great.jpg"]];
+            [praise1View setImage:[UIImage imageNamed:IMAGE_GOOD]];
+            [praise2View setImage:[UIImage imageNamed:IMAGE_GOOD]];
+            [praise3View setImage:[UIImage imageNamed:IMAGE_GOOD]];
             break;
             
         default:
@@ -91,13 +87,22 @@
             [view removeFromSuperview];
         }
     }
+
     
     for (int i=0; i<[serviceIdList count]; i++) {
-        CGRect rect = CGRectMake(categoryLable.frame.origin.x+ORINGIN_X_OF_SERVICE_IMAGE+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
-        UIImageView *serviceImageView = [[UIImageView alloc]initWithFrame:rect];
-        NSString *serviceIcon = [self getIconByProvidedServiceId:[serviceIdList objectAtIndex:i]];
-        UIImage *serviceImage = [UIImage imageNamed:serviceIcon];
-        [serviceImageView setImage:serviceImage];    
+        NSString *imageName = [serviceIdList objectAtIndex:i];
+        
+        NSLog(@"imageName = %@", imageName);
+        
+        UIImage *image = [UIImage imageNamed:imageName];
+        
+        NSLog(@"imageSize = %f * %f", image.size.width, image.size.height);
+        
+        CGRect rect = CGRectMake(categoryLable.frame.origin.x+ORINGIN_X_OF_SERVICE_IMAGE+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, image.size.width, image.size.height);
+        
+        UIImageView *serviceImageView = [[UIImageView alloc] initWithFrame:rect];
+        [serviceImageView setImage:image];
+        
         [self.contentView addSubview:serviceImageView];
         [self.contentView viewWithTag:1];
         [serviceImageView release];
@@ -116,7 +121,7 @@
                                getSubCategoryName:[place categoryId]                                                                
                                subCategoryId:[place subCategoryId]];
     
-    [self.favoritesView setImage:[UIImage imageNamed:@"heart.jpg"]];
+    [self.favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
     
     [self setRankImage:[place rank]];
     
@@ -124,17 +129,12 @@
     NSMutableArray *serviceIcons = [[NSMutableArray alloc] init];
     for(NSNumber* providedServieceId in serviceIdList)
     {
-        NSString *serviceIcon = [[NSString alloc] init];
-        serviceIcon = [[AppManager defaultManager]getServiceImage:[place categoryId] providedServiceId:[providedServieceId intValue]];
-        NSLog(@"%@", serviceIcon);
+        NSString *serviceIcon = [[AppManager defaultManager]getServiceImage:[place categoryId] providedServiceId:[providedServieceId intValue]];
         [serviceIcons addObject:serviceIcon];
     }
    
     [self setSeviceImage:serviceIcons];
     [serviceIcons release];
-    
-    
-    //self.distanceLable.text = @"100米";
 }
 
 - (void)dealloc {

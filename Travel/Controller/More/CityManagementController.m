@@ -40,21 +40,54 @@
     return self;
 }
 
+-(void)segmentAction:(id) sender
+{
+    switch([sender selectedSegmentIndex])
+    {
+        case 0:
+            NSLog(@"1");
+            self.dataTableView.hidden = NO;
+            self.downloadTableView.hidden = YES;
+            break;
+        case 1: 
+            NSLog(@"2");
+            self.dataTableView.hidden = YES;
+            self.downloadTableView.hidden = NO;
+            break;
+        default: 
+            break;
+    }
+}
+
 -(void)setTwoButtonsInNavBar
 {
+/*    NSArray *buttonNames = [NSArray arrayWithObjects:@"城市列表", @"下载管理", nil];
+    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:buttonNames];
+    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar; 
+
+    [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
     
-    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 30)];
+    [segmentedControl release];
+    self.navigationItem.rightBarButtonItem= barButton;
+    [barButton release];*/
     
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    leftButton.frame = CGRectMake(0, 0, 100, 30);
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    rightButton.frame = CGRectMake(100, 0, 100, 30);
+    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 30)];
+    
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 80, 30);
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(80, 0, 80, 30);
     
     //[leftButton setBackgroundImage:[UIImage imageNamed:@"refresh"] forState:UIControlStateNormal];
     
     [leftButton setTitle:@"城市列表" forState:UIControlStateNormal];
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    
     [rightButton setTitle:@"下载管理" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
     
     [leftButton addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
@@ -66,8 +99,6 @@
     [buttonView release];
     
     self.navigationItem.rightBarButtonItem= barButton;
-    //self.navigationItem.title = @"hello";
-    
     [barButton release];
 }
 
