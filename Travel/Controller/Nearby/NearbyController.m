@@ -52,9 +52,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *imageRedStart = [UIImage imageNamed:@"red_star.png"];
-    
-    UIImageView *imageRedStartView = [[UIImageView alloc] initWithImage:imageRedStart];
+    imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
     
@@ -88,5 +86,18 @@
 }
 
 - (IBAction)click500M:(id)sender {
+    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+}
+
+- (IBAction)click1K:(id)sender {
+    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
+}
+
+- (IBAction)click5K:(id)sender {
+    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
+}
+
+- (IBAction)click10K:(id)sender {
+    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
 }
 @end

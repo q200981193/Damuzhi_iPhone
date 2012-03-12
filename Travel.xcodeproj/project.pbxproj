@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A4034755150D998200D2B11E /* HotelListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034754150D998200D2B11E /* HotelListFilter.m */; };
+		A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */; };
 		A40D9E07150C9E0200BB2D29 /* bad_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D9E00150C9E0200BB2D29 /* bad_test.jpg */; };
 		A40D9E08150C9E0200BB2D29 /* great_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D9E01150C9E0200BB2D29 /* great_test.jpg */; };
 		A40D9E09150C9E0200BB2D29 /* heart_test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A40D9E02150C9E0200BB2D29 /* heart_test.jpg */; };
@@ -364,6 +365,8 @@
 /* Begin PBXFileReference section */
 		A4034753150D998200D2B11E /* HotelListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelListFilter.h; sourceTree = "<group>"; };
 		A4034754150D998200D2B11E /* HotelListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelListFilter.m; sourceTree = "<group>"; };
+		A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapAnnotation.h; sourceTree = "<group>"; };
+		A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceMapAnnotation.m; sourceTree = "<group>"; };
 		A40D9DFF150C87AB00BB2D29 /* ImageName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageName.h; path = Travel/Resource/ImageName.h; sourceTree = SOURCE_ROOT; };
 		A40D9E00150C9E0200BB2D29 /* bad_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bad_test.jpg; sourceTree = "<group>"; };
 		A40D9E01150C9E0200BB2D29 /* great_test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = great_test.jpg; sourceTree = "<group>"; };
@@ -1182,6 +1185,8 @@
 		CA238FCB14FE5ECE00114175 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */,
+				A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */,
 				CA238FCC14FE5EE700114175 /* SlideImageView.h */,
 				CA238FCD14FE5EE700114175 /* SlideImageView.m */,
 				CA103AF4150467B200F60C03 /* PlaceMapViewController.h */,
@@ -2713,6 +2718,7 @@
 				A48782D71507435B00A0D91E /* DownloadListCell.m in Sources */,
 				A4F01FF31508BB900041726D /* TravelNetworkRequest.m in Sources */,
 				A4034755150D998200D2B11E /* HotelListFilter.m in Sources */,
+				A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
