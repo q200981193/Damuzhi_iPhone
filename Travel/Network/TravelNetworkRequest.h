@@ -15,6 +15,7 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
 @interface TravelNetworkRequest : NSObject
 
 + (CommonNetworkOutput*)registerUser:(int)type token:(NSString*)deviceToken;
-+ (CommonNetworkOutput*)queryList:(int)type cityId:(int)cityId lang:(int)lang;
++ (CommonNetworkOutput*)querySpotList:(int)type cityId:(int)cityId lang:(int)lang;
++ (CommonNetworkOutput*)queryAppData:(int)type lang:(int)lang;
 
 @end

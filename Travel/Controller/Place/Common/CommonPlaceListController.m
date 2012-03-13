@@ -61,9 +61,7 @@
 
 - (void)popSelf
 {
-    NSLog(@"pop self");
-    [self.navigationController popViewControllerAnimated:YES];
-    
+    [self.navigationController popViewControllerAnimated:YES];    
 }
 
 - (void)viewDidLoad
@@ -73,7 +71,6 @@
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"景点";
     
-    //set hel
     UIImage *helpImage = [UIImage imageNamed:@"topmenu_btn_right.png"];
     UIButton *helpButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, helpImage.size.width, helpImage.size.height)];
     [helpButton setBackgroundImage:helpImage forState:UIControlStateNormal];
@@ -99,6 +96,7 @@
     
     [_filterHandler createFilterButtons:self.buttonHolderView];
     [_filterHandler findAllPlaces:self];
+    
 }
 
 - (void)viewDidUnload

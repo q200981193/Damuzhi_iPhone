@@ -97,6 +97,7 @@
 		A489180A1509EB2100CFBC21 /* index_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48918091509EB2100CFBC21 /* index_bg@2x.png */; };
 		A489180D1509EE8200CFBC21 /* top_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A489180B1509EE7F00CFBC21 /* top_arrow@2x.png */; };
 		A489180E1509EE8200CFBC21 /* topmenu_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A489180C1509EE8000CFBC21 /* topmenu_bg@2x.png */; };
+		A4EAFCCD150DB9BB003C35E5 /* AppService.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EAFCCC150DB9BB003C35E5 /* AppService.m */; };
 		A4F01FF31508BB900041726D /* TravelNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F01FF21508BB900041726D /* TravelNetworkRequest.m */; };
 		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
 		CA103AF3150339C200F60C03 /* InfoService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF2150339C200F60C03 /* InfoService.m */; };
@@ -461,6 +462,8 @@
 		A48918091509EB2100CFBC21 /* index_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "index_bg@2x.png"; sourceTree = "<group>"; };
 		A489180B1509EE7F00CFBC21 /* top_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top_arrow@2x.png"; sourceTree = "<group>"; };
 		A489180C1509EE8000CFBC21 /* topmenu_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topmenu_bg@2x.png"; sourceTree = "<group>"; };
+		A4EAFCCB150DB9BB003C35E5 /* AppService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppService.h; sourceTree = "<group>"; };
+		A4EAFCCC150DB9BB003C35E5 /* AppService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppService.m; sourceTree = "<group>"; };
 		A4F01FF21508BB900041726D /* TravelNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNetworkRequest.m; sourceTree = "<group>"; };
 		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
@@ -1060,6 +1063,15 @@
 				A48917E71509E94100CFBC21 /* 欢迎页@2x.jpg */,
 			);
 			path = home;
+			sourceTree = "<group>";
+		};
+		A4EAFCCA150DB9BB003C35E5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A4EAFCCB150DB9BB003C35E5 /* AppService.h */,
+				A4EAFCCC150DB9BB003C35E5 /* AppService.m */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		CA103AEC1503354A00F60C03 /* User */ = {
@@ -2271,6 +2283,7 @@
 		CA585F9214F7376300471880 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				A4EAFCCA150DB9BB003C35E5 /* App */,
 				CA103AF0150339B300F60C03 /* Info */,
 				CA238FF014FF6A5A00114175 /* User */,
 				CA238FA514FCCDF200114175 /* Place */,
@@ -2719,6 +2732,7 @@
 				A4F01FF31508BB900041726D /* TravelNetworkRequest.m in Sources */,
 				A4034755150D998200D2B11E /* HotelListFilter.m in Sources */,
 				A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */,
+				A4EAFCCD150DB9BB003C35E5 /* AppService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

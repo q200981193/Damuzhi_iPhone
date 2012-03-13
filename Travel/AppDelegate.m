@@ -11,6 +11,7 @@
 #import "MainController.h"
 #import "UINavigationBarExt.h"
 #import "DeviceDetection.h"
+#import "AppService.h"
 
 @implementation AppDelegate
 
@@ -33,6 +34,10 @@
     else{
         GlobalSetNavBarBackground(@"top_live.png");        
     }
+    
+    // init app data
+    [[AppService defaultService] updateAppData];
+    
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.

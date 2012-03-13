@@ -8,6 +8,8 @@
 
 #import "PlaceManager.h"
 #import "Place.pb.h"
+#import "LogUtil.h"
+#import "AppManager.h"
 
 @implementation PlaceManager
 
@@ -26,6 +28,7 @@ static PlaceManager *_placeDefaultManager;
 {
     if (_placeDefaultManager == nil){
         _placeDefaultManager = [[PlaceManager alloc] init];
+        [[AppManager defaultManager] getCurrentCityId];
         [_placeDefaultManager switchCity:@""];
     }
     
@@ -119,7 +122,7 @@ static PlaceManager *_placeDefaultManager;
 
 - (BOOL)hasLocalCityData:(NSString*)cityId
 {
-    return YES;
+    return NO;
 }
 
 @end

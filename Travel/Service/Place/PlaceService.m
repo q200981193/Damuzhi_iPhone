@@ -12,12 +12,13 @@
 #import "LogUtil.h"
 #import "TravelNetworkRequest.h"
 #import "Package.pb.h"
+#import "AppManager.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
 @implementation PlaceService
 
-static PlaceService* _defaultPlaceService;
+static PlaceService* _defaultPlaceService = nil;
 
 @synthesize currentCityId = _currentCityId;
 
@@ -46,6 +47,7 @@ static PlaceService* _defaultPlaceService;
     self = [super init];
     _localPlaceManager = [[PlaceManager alloc] init];
     _onlinePlaceManager = [[PlaceManager alloc] init];
+    _currentCityId = [NSString stringWithFormat:@"%d",[[AppManager defaultManager] getCurrentCityId]];
     return self;
 }
 
@@ -87,8 +89,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             [viewController hideActivity];             
             [viewController findRequestDone:resultCode dataList:list];
         });
-        
-        
     }];
 
 }
@@ -107,8 +107,9 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:21 cityId:[_currentCityId intValue] lang:1];            
+        CommonNetworkOutput* output = [TravelNetworkRequest querySpotList:21 cityId:[_currentCityId intValue] lang:1]; 
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        
         _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
         
         NSArray* list = [_onlinePlaceManager findAllSpots];   

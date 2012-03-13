@@ -9,10 +9,12 @@
 #import "AppManager.h"
 #import "App.pb.h"
 #import "ImageName.h"
+#import "LogUtil.h"
 
 @implementation AppManager
 
 static AppManager* _defaultAppManager = nil;
+@synthesize app = _app;
 
 + (id)defaultManager
 {
@@ -22,67 +24,23 @@ static AppManager* _defaultAppManager = nil;
     return _defaultAppManager;
 }
 
-- (App*)buildTestPlace
+- (void)initApp:(App*)appData
 {
-    App_Builder* app = [[[App_Builder alloc] init] autorelease];
-    
-    [app setDataVersion:@"Version 1.0"];
-    
-    City_Builder *cityBuilder1 = [[[City_Builder alloc] init] autorelease];
-    [cityBuilder1 setCityId:1];
-    [cityBuilder1 setCityName:@"香港"];
-    City *city1 = [cityBuilder1 build];
-    [app addCityList:city1];
-    [app addTestCityList:city1];
-    
-    City_Builder *cityBuilder2 = [[[City_Builder alloc] init] autorelease];
-    [cityBuilder2 setCityId:2];
-    [cityBuilder2 setCityName:@"深圳"];
-    City *city2 = [cityBuilder2 build];
-    [app addCityList:city2];
-    [app addTestCityList:city2];
-    
-    PlaceMeta_Builder* placeMeta = [[[PlaceMeta_Builder alloc] init] autorelease];
-    
-    [placeMeta setCategoryId:1];
-    [placeMeta setName:@"景点"];
-
-    NameIdPair_Builder* subCategoryNamePairBuilder1 = [[[NameIdPair_Builder alloc] init] autorelease];
-    [subCategoryNamePairBuilder1 setName:@"九龙区"];
-    [subCategoryNamePairBuilder1 setId:1];
-    [placeMeta addSubCategoryList:[subCategoryNamePairBuilder1 build]];
-    
-    NameIdPair_Builder* subCategoryNamePairBuilder2 = [[[NameIdPair_Builder alloc] init] autorelease];
-    [subCategoryNamePairBuilder2 setName:@"旺角区"];
-    [subCategoryNamePairBuilder2 setId:2];
-    [placeMeta addSubCategoryList:[subCategoryNamePairBuilder2 build]];
-    
-    NameIdPair_Builder* provideServiceListBuilder1 = [[[NameIdPair_Builder alloc] init] autorelease];    
-    [provideServiceListBuilder1 setName:@"卧床"];
-    [provideServiceListBuilder1 setId:1];
-    [provideServiceListBuilder1 setImage:IMAGE_SLEEP];
-    [placeMeta addProvidedServiceList:[provideServiceListBuilder1 build]];
-    
-    NameIdPair_Builder* provideServiceListBuilder2 = [[[NameIdPair_Builder alloc] init] autorelease];
-    [provideServiceListBuilder2 setName:@"就餐"];
-    [provideServiceListBuilder2 setId:2];
-    [provideServiceListBuilder2 setImage:IMAGE_FOOD];
-    [placeMeta addProvidedServiceList:[provideServiceListBuilder2 build]];
-    
-    NameIdPair_Builder* provideServiceListBuilder3 = [[[NameIdPair_Builder alloc] init] autorelease];
-    [provideServiceListBuilder3 setName:@"购物"];
-    [provideServiceListBuilder3 setId:3];
-    [provideServiceListBuilder3 setImage:IMAGE_SHOPPING];
-    [placeMeta addProvidedServiceList:[provideServiceListBuilder3 build]];
-    
-    [app addPlaceMetaDataList:[placeMeta build]];
-        
-    return [app build];
+    self.app = appData;
+    PPDebug(@"dataVersion %@", _app.dataVersion);
+    for (PlaceMeta* placeMeta in self.app.placeMetaDataListList) {
+        for(NameIdPair *pair in placeMeta.providedServiceListList)
+        {
+            PPDebug(@"id = %d", pair.id);
+            PPDebug(@"name = %@", pair.name);
+            PPDebug(@"image = %@", pair.image);
+        }
+    }
 }
 
--(PlaceMeta*)findPlaceMeta:(int32_t)categoryId app:(App*)app
+-(PlaceMeta*)findPlaceMeta:(int32_t)categoryId
 {
-    NSArray *placeMetas = app.placeMetaDataListList;
+    NSArray *placeMetas = _app.placeMetaDataListList;
     PlaceMeta * placeMetafound = nil;
     for(PlaceMeta* placeMeta in placeMetas){
         if (categoryId == placeMeta.categoryId) {
@@ -92,7 +50,6 @@ static AppManager* _defaultAppManager = nil;
     }
     
     return placeMetafound;
-
 }
 
 -(NameIdPair*)findSubCategory:(int32_t)subCategoryId placeMeta:(PlaceMeta*)placeMeta
@@ -121,8 +78,8 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId
 {
-    App* app = [self buildTestPlace];
-    PlaceMeta *placeMeta = [self findPlaceMeta:categoryId app:app];
+    //App* app = [self buildTestPlace];
+    PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];
     if (placeMeta == nil) {
         return @"";
     }
@@ -138,13 +95,13 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getServiceImage:(int32_t)categoryId providedServiceId:(int32_t)providedServiceId
 {
-    App* app = [self buildTestPlace];
-    PlaceMeta *placeMeta = [self findPlaceMeta:categoryId app:app];
+    PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];
     if (placeMeta == nil){
         return @"";
     }
     
     NameIdPair *servicePair = [self findProvidedService:providedServiceId placeMeta:placeMeta];
+    
     if (servicePair == nil) {
         return @"";
     }        
@@ -154,10 +111,39 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSArray*)getCityList
 {
-    App *app = [self buildTestPlace];
-    NSArray *cityList = app.cityListList;
+    NSArray *cityList = _app.cityListList;
+//    for (City* city in cityList) {
+//        PPDebug(@"city name = %@", city.cityName);
+//    }
        
     return cityList;
+}
+
+- (NSString*)getAppVersion
+{
+    return _app.dataVersion;
+}
+
+#define DEFAULT_CITY_ID 1   // 1 for @"香港"
+#define KEY_CURRENT_CITY @"curretn_city"
+
+- (int)getCurrentCityId
+{
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    NSNumber* city = [userDefault objectForKey:KEY_CURRENT_CITY];
+    if (city == nil){
+        return DEFAULT_CITY_ID;
+    }
+    else {
+        return [city intValue];
+    }
+}
+
+- (void)setCurrentCityId:(int)newCityId
+{
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault setObject:[NSNumber numberWithInt:newCityId] forKey:KEY_CURRENT_CITY];
+    [userDefault synchronize];
 }
 
 @end

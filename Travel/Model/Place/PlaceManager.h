@@ -12,7 +12,6 @@
 
 enum{
     PLACE_TYPE_SPOT = 1
-    
 };
 
 @interface PlaceManager : NSObject<CommonManagerProtocol>

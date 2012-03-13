@@ -74,7 +74,6 @@
 }
 
 
-#define ORINGIN_X_OF_SERVICE_IMAGE 40
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 18
 #define WIDTH_OF_SERVICE_IMAGE 15
 #define HEIGHT_OF_SERVICE_IMAGE 15
@@ -91,14 +90,9 @@
     
     for (int i=0; i<[serviceIdList count]; i++) {
         NSString *imageName = [serviceIdList objectAtIndex:i];
-        
-        NSLog(@"imageName = %@", imageName);
-        
         UIImage *image = [UIImage imageNamed:imageName];
         
-        NSLog(@"imageSize = %f * %f", image.size.width, image.size.height);
-        
-        CGRect rect = CGRectMake(categoryLable.frame.origin.x+ORINGIN_X_OF_SERVICE_IMAGE+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, image.size.width, image.size.height);
+        CGRect rect = CGRectMake(categoryLable.frame.origin.x+categoryLable.frame.size.width+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, image.size.width, image.size.height);
         
         UIImageView *serviceImageView = [[UIImageView alloc] initWithFrame:rect];
         [serviceImageView setImage:image];
@@ -116,7 +110,6 @@
     self.imageView.image = [UIImage imageNamed:[place icon]];
     self.priceLable.text = [place price];
     self.areaLable.text = [NSString  stringWithInt:[place areaIdAtIndex:0]];
-    NSLog(@"%@", self.categoryLable.text);
     self.categoryLable.text = [[AppManager defaultManager] 
                                getSubCategoryName:[place categoryId]                                                                
                                subCategoryId:[place subCategoryId]];
