@@ -36,6 +36,9 @@
     }
     
     // init app data
+    [[AppService defaultService] loadAppData]; 
+    
+    // update app data from server
     [[AppService defaultService] updateAppData];
     
     

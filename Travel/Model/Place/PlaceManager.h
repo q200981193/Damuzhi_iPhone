@@ -11,7 +11,8 @@
 #import "Place.pb.h"
 
 enum{
-    PLACE_TYPE_SPOT = 1
+    PLACE_TYPE_SPOT = 1,
+    PLACE_TYPE_HOTEL = 2
 };
 
 @interface PlaceManager : NSObject<CommonManagerProtocol>
@@ -27,6 +28,7 @@ enum{
 
 - (NSArray*)findAllPlaces;
 - (NSArray*)findAllSpots;
+- (NSArray*)findAllHotels;
 
 - (BOOL)hasLocalCityData:(NSString*)cityId;
 

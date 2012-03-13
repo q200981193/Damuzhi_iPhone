@@ -28,6 +28,16 @@
     return button;
 }
 
+- (void)clickCategoryButton
+{
+    
+}
+
+- (void)clickSortButton
+{
+    
+}
+
 - (void)createFilterButtons:(UIView*)superView
 {
     superView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]];
@@ -37,7 +47,10 @@
     
     
     UIButton *buttonCategory = [self createFilterButton:frame1 title:@"分类" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
+    [buttonCategory addTarget:self action:@selector(clickCategoryButton) forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *buttonSort = [self createFilterButton:frame2 title:@"排序" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
+    [buttonCategory addTarget:self action:@selector(clickSortButton) forControlEvents:UIControlEventTouchUpInside];
     
     [superView addSubview:buttonCategory];
     [superView addSubview:buttonSort];

@@ -61,9 +61,9 @@ static PlaceManager *_placeDefaultManager;
     [builder addAddress:@"香港山顶道128号凌霄阁"];
     [builder addAreaId:11];
     [builder setCategoryId:1];
-    [builder addProvidedServiceId:1];
-    [builder addProvidedServiceId:2];
-    [builder addProvidedServiceId:3];
+    [builder addProvidedServiceId:31];
+    [builder addProvidedServiceId:44];
+    [builder addProvidedServiceId:30];
     
     return [builder build];
 }
@@ -113,6 +113,19 @@ static PlaceManager *_placeDefaultManager;
     }
     
     return spotList;
+}
+
+- (NSArray*)findAllHotels
+{
+    NSMutableArray* hotelList = [[[NSMutableArray alloc] init] autorelease];
+    
+    for (Place* place in _placeList){
+        if ([place categoryId] == PLACE_TYPE_HOTEL){
+            [hotelList addObject:place];
+        } 
+    }
+    
+    return hotelList;
 }
 
 - (NSArray*)findAllPlaces

@@ -11,6 +11,9 @@
 #import "LogUtil.h"
 #import "TravelNetworkRequest.h"
 #import "Package.pb.h"
+#import "ASIHTTPRequest.h"
+#import "FileUtil.h"
+#import "TravelNetworkConstants.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -46,30 +49,65 @@ static AppService* _defaultAppService = nil;
 
 - (NSString*)getAppVersion
 {
+    // TODO later
     return @"";
 }
+
+- (void)downloadResource:(NSURL*)url destinationPath:(NSString*)destinationPath
+{
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDownloadDestinationPath:destinationPath];
+    [request startSynchronous];
+}
+
+- (void)loadAppData
+{
+    [[AppManager defaultManager] loadAppData];
+}
+
 
 - (void)updateAppData
 {        
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
-        // TODO, send network request here        
-        CommonNetworkOutput* output = [TravelNetworkRequest queryAppData:10 lang:1];
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+       
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_APP_DATA lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        TravelResponse *travelResponse = nil;
+        if (output.resultCode == ERROR_SUCCESS){
+            travelResponse = [TravelResponse parseFromData:output.responseData];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if(travelResponse.resultCode == 0)
             {
-                [output.responseData writeToFile:@"/iphone/travel/app.dat" atomically:YES];
-                [[AppManager defaultManager] initApp:[travelResponse appInfo]];
+                [[AppManager defaultManager] updateAppData:[travelResponse appInfo]];
             }
-            else {
-                NSData *localData = [NSData dataWithContentsOfFile:@"/iphone/travel/app.dat"];
-                App *app = [App parseFromData:localData];
-                [[AppManager defaultManager] initApp:app];
-            }
+//            else {
+//                [[AppManager defaultManager] loadAppData];
+//            }
             
         });
+        
+        // TODO , performance can be improved by add sperate working queue for download
+        
+        
+        if (output.resultCode == ERROR_SUCCESS){
+            NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
+            for (PlaceMeta *placeMeta in placeMetas) {
+                for (NameIdPair *providedService in [placeMeta providedServiceListList]) {
+                    // download images of each provide service icon
+                    NSURL *url = [NSURL URLWithString:providedService.image];
+                    
+                    [FileUtil createDir:[FileUtil getFileFullPath:IMAGE_DIR_OF_PROVIDED_SERVICE]];
+                    
+                    NSString *destination = [FileUtil getFileFullPath:[NSString stringWithFormat:@"%@/%d.png", IMAGE_DIR_OF_PROVIDED_SERVICE, providedService.id]];
+                    
+                    PPDebug(@"download providedService icon, image = %@, name=%@, save path=%@", 
+                            providedService.image, providedService.name, destination);
+
+                    [self downloadResource:url destinationPath:destination];
+                }
+            }
+        }
     });    
 }
 

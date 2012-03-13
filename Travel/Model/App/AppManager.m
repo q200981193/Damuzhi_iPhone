@@ -10,6 +10,7 @@
 #import "App.pb.h"
 #import "ImageName.h"
 #import "LogUtil.h"
+#import "FileUtil.h"
 
 @implementation AppManager
 
@@ -24,18 +25,22 @@ static AppManager* _defaultAppManager = nil;
     return _defaultAppManager;
 }
 
-- (void)initApp:(App*)appData
+- (void)loadAppData
+{
+    // TODO: copy app data to document dir
+    [FileUtil copyFileFromBundleToAppDir:@"app.dat" appDir:APP_DATA_PATH overwrite:NO];
+    NSData *localData = [NSData dataWithContentsOfFile:[FileUtil getFileFullPath:APP_DATA_PATH]];
+    if(localData != nil)
+    {
+        App *localApp = [App parseFromData:localData];
+        self.app = localApp;
+    }
+}
+
+- (void)updateAppData:(App*)appData
 {
     self.app = appData;
-    PPDebug(@"dataVersion %@", _app.dataVersion);
-    for (PlaceMeta* placeMeta in self.app.placeMetaDataListList) {
-        for(NameIdPair *pair in placeMeta.providedServiceListList)
-        {
-            PPDebug(@"id = %d", pair.id);
-            PPDebug(@"name = %@", pair.name);
-            PPDebug(@"image = %@", pair.image);
-        }
-    }
+    [[appData data] writeToFile:APP_DATA_PATH atomically:YES];
 }
 
 -(PlaceMeta*)findPlaceMeta:(int32_t)categoryId
@@ -89,6 +94,8 @@ static AppManager* _defaultAppManager = nil;
         return @"";
     }
     
+    PPDebug(@"subCategory name = %@", subCateGoryPair.name);
+    
     return subCateGoryPair.name;
 }
 
@@ -100,21 +107,26 @@ static AppManager* _defaultAppManager = nil;
         return @"";
     }
     
+    for (NameIdPair *service in placeMeta.providedServiceListList) {
+        PPDebug(@"service id = %d", service.id);
+        PPDebug(@"service name = %@", service.name);
+        PPDebug(@"service image = %@", service.image);
+    }
+    
     NameIdPair *servicePair = [self findProvidedService:providedServiceId placeMeta:placeMeta];
     
     if (servicePair == nil) {
         return @"";
-    }        
+    }
+        
+    return [FileUtil getFileFullPath:[NSString stringWithFormat:@"/%@/%@", IMAGE_DIR_OF_PROVIDED_SERVICE, [NSString stringWithFormat:@"%d", servicePair.id]]];
     
-    return servicePair.image;
+    //return servicePair.image;
 }
 
 - (NSArray*)getCityList
 {
     NSArray *cityList = _app.cityListList;
-//    for (City* city in cityList) {
-//        PPDebug(@"city name = %@", city.cityName);
-//    }
        
     return cityList;
 }

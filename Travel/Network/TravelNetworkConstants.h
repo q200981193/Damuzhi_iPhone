@@ -9,6 +9,11 @@
 #ifndef Travel_TravelNetworkConstants_h
 #define Travel_TravelNetworkConstants_h
 
+// languag 
+#define LANGUAGE_SIMPLIFIED_CHINESE     1
+#define LANGUAGE_TRADITIONAL_CHINESE    2 
+#define LANGUAGE_ENGLISH                3
+
 // URL
 #define URL_TRAVEL_REGISTER_USER    @"http://damuzhi.com/service/registerUser?"
 //query place list
@@ -30,6 +35,23 @@
 
 #define PARA_TRAVEL_CITY_ID         @"cityId"
 #define PARA_TRAVEL_LANG            @"lang"
+
+// define query object type
+#define OBJECT_TYPE_ALL_PLACE       1
+#define OBJECT_TYPE_SPOT            21
+#define OBJECT_TYPE_HOTEL           22
+#define OBJECT_TYPE_RESTAURANT      23
+#define OBJECT_TYPE_SHOPPING        24
+#define OBJECT_TYPE_ENTERTAINMENT   25
+
+#define OBJECT_TYPE_CITY_OVERVIEW   2
+#define OBJECT_TYPE_CITY_TRAFFIC    3
+#define OBJECT_TYPE_USEFUL_INFO            4
+#define OBJECT_TYPE_TRAVEL_GUIDE    5
+#define OBJECT_TYPE_TOURIST_RECOMMENDED      6
+
+#define OBJECT_TYPE_APP_DATA        10
+
 
 // error codes
 #define ERROR_TRAVEL_SUCCESS        0

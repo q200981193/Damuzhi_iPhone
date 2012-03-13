@@ -125,7 +125,7 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)querySpotList:(int)type cityId:(int)cityId lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type cityId:(int)cityId lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -152,7 +152,7 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryAppData:(int)type lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     

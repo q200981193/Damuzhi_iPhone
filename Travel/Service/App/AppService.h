@@ -12,6 +12,8 @@
 @interface AppService : CommonService
 
 + (AppService*)defaultService;
+
+- (void)loadAppData;
 - (void)updateAppData;
 
 @end
