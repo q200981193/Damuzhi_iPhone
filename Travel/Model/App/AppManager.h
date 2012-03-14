@@ -23,10 +23,13 @@
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;
 
+-(PlaceMeta*)findPlaceMeta:(int32_t)categoryId;
+
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId;
 - (NSString*)getServiceImage:(int32_t)categoryId providedServiceId:(int32_t)providedServiceId;
 - (NSArray*)getCityList;
 - (NSString*)getAppVersion;
+- (NSArray*)getSubCategories:(int32_t)categoryId;
 
 - (int)getCurrentCityId;
 - (void)setCurrentCityId:(int)newCity;

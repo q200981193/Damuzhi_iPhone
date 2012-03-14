@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "CommonPlaceListController.h"
+#import "SelectController.h"
+@interface SpotListFilter : NSObject<PlaceListFilterProtocol,SelectControllerDelegate>
 
-@interface SpotListFilter : NSObject<PlaceListFilterProtocol>
+@property (retain, nonatomic) PPTableViewController *controller;
 
 @end

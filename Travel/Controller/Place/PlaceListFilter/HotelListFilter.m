@@ -60,7 +60,7 @@
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    return [[PlaceService defaultService] findHotels:viewController];
+    //TODO：
     return;
 }
 

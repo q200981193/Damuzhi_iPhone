@@ -39,13 +39,14 @@ static AppManager* _defaultAppManager = nil;
 
 - (void)updateAppData:(App*)appData
 {
-    self.app = appData;
+    self.app = appData;    
+    
     [[appData data] writeToFile:APP_DATA_PATH atomically:YES];
 }
 
 -(PlaceMeta*)findPlaceMeta:(int32_t)categoryId
 {
-    NSArray *placeMetas = _app.placeMetaDataListList;
+    NSArray *placeMetas = self.app.placeMetaDataListList;
     PlaceMeta * placeMetafound = nil;
     for(PlaceMeta* placeMeta in placeMetas){
         if (categoryId == placeMeta.categoryId) {
@@ -56,6 +57,7 @@ static AppManager* _defaultAppManager = nil;
     
     return placeMetafound;
 }
+
 
 -(NameIdPair*)findSubCategory:(int32_t)subCategoryId placeMeta:(PlaceMeta*)placeMeta
 {
@@ -81,14 +83,23 @@ static AppManager* _defaultAppManager = nil;
     return nil;
 }
 
+- (NSArray*)getSubCategories:(int32_t)categoryId
+{
+    PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];
+    if (placeMeta == nil) {
+        return nil;
+    }
+    
+    return[placeMeta subCategoryListList];
+}
+
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId
 {
-    //App* app = [self buildTestPlace];
     PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];
     if (placeMeta == nil) {
         return @"";
     }
-    
+
     NameIdPair *subCateGoryPair = [self findSubCategory:subCategoryId placeMeta:placeMeta];
     if(subCateGoryPair == nil){
         return @"";
@@ -102,39 +113,21 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getServiceImage:(int32_t)categoryId providedServiceId:(int32_t)providedServiceId
 {
-    PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];
-    if (placeMeta == nil){
-        return @"";
-    }
-    
-    for (NameIdPair *service in placeMeta.providedServiceListList) {
-        PPDebug(@"service id = %d", service.id);
-        PPDebug(@"service name = %@", service.name);
-        PPDebug(@"service image = %@", service.image);
-    }
-    
-    NameIdPair *servicePair = [self findProvidedService:providedServiceId placeMeta:placeMeta];
-    
-    if (servicePair == nil) {
-        return @"";
-    }
-        
-    return [FileUtil getFileFullPath:[NSString stringWithFormat:@"/%@/%@", IMAGE_DIR_OF_PROVIDED_SERVICE, [NSString stringWithFormat:@"%d", servicePair.id]]];
-    
-    //return servicePair.image;
+    return [FileUtil getFileFullPath:[NSString stringWithFormat:@"/%@/%@", IMAGE_DIR_OF_PROVIDED_SERVICE, [NSString stringWithFormat:@"%d.png", providedServiceId]]];
 }
 
 - (NSArray*)getCityList
 {
-    NSArray *cityList = _app.cityListList;
+    NSArray *cityList = self.app.cityListList;
        
     return cityList;
 }
 
 - (NSString*)getAppVersion
 {
-    return _app.dataVersion;
+    return self.app.dataVersion;
 }
+
 
 #define DEFAULT_CITY_ID 1   // 1 for @"香港"
 #define KEY_CURRENT_CITY @"curretn_city"

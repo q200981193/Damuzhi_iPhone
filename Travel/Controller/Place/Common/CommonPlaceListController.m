@@ -54,7 +54,7 @@
 #pragma mark - View lifecycle
 
 
-- (void)clickHelp
+- (void)clickHelp:(id)sender
 {
     NSLog(@"click help");
 }
@@ -69,34 +69,16 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"景点";
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
     
-    UIImage *helpImage = [UIImage imageNamed:@"topmenu_btn_right.png"];
-    UIButton *helpButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, helpImage.size.width, helpImage.size.height)];
-    [helpButton setBackgroundImage:helpImage forState:UIControlStateNormal];
-    [helpButton setTitle:@"帮助" forState:UIControlStateNormal];
-    helpButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [helpButton addTarget:self action:@selector(clickHelp) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *helpButtonItem = [[UIBarButtonItem alloc] initWithCustomView:helpButton];
-    self.navigationItem.rightBarButtonItem = helpButtonItem;
-    [helpButton release];
-    [helpButtonItem release];    
+    [self setNavigationRightButton:NSLS(@"帮助") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickHelp:)];
     
-    UIImage *backImage = [UIImage imageNamed:@"back.png"];
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, backImage.size.width, backImage.size.height)];
-    [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
-    backButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [backButton addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
-    [backButton release];
-    [backButtonItem release]; 
-    
-    [_filterHandler createFilterButtons:self.buttonHolderView];
+    [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     [_filterHandler findAllPlaces:self];
-    
 }
 
 - (void)viewDidUnload
