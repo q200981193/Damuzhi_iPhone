@@ -14,7 +14,7 @@
 
 @protocol PlaceListFilterProtocol <NSObject>
 
-- (void)createFilterButtons:(UIView*)superView;
+- (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController*)controller;
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
 + (NSObject<PlaceListFilterProtocol>*)createFilter;
 

@@ -33,6 +33,6 @@
 
 - (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController;
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
-
+- (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController;
 
 @end

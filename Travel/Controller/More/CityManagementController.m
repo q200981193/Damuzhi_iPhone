@@ -45,12 +45,10 @@
     switch([sender selectedSegmentIndex])
     {
         case 0:
-            NSLog(@"1");
             self.dataTableView.hidden = NO;
             self.downloadTableView.hidden = YES;
             break;
         case 1: 
-            NSLog(@"2");
             self.dataTableView.hidden = YES;
             self.downloadTableView.hidden = NO;
             break;
@@ -105,7 +103,7 @@
 - (void)viewDidLoad
 {
     self.dataList = [[AppManager defaultManager] getCityList];
-    self.downloadList = [[AppManager defaultManager] getCityList];
+    //self.downloadList = [[AppManager defaultManager] getCityList];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
@@ -150,7 +148,6 @@
     
     UITableViewCell *cell = nil;
     if (theTableView == self.downloadTableView) {
-  //    if (0) {
         cell = [theTableView dequeueReusableCellWithIdentifier:[DownloadListCell getCellIdentifier]];
         
         if (cell == nil) {
@@ -167,11 +164,7 @@
         }
         DownloadListCell* downloadCell = (DownloadListCell*)cell;
         City *city = [self.downloadList objectAtIndex:row];
-        //cityCell.textLabel.text = city.cityName;
         downloadCell.cityNameLable.text = city.cityName;
-        //downloadCell.downloadProgressView.hidden = YES;
-        //PPDebug(@"cityname = %@", city.cityName);
-        
     }
     else {
         cell = [theTableView dequeueReusableCellWithIdentifier:[CityListCell getCellIdentifier]];
@@ -190,9 +183,7 @@
         }
         CityListCell* cityCell = (CityListCell*)cell;
         City *city = [dataList objectAtIndex:row];
-        //cityCell.textLabel.text = city.cityName;
         cityCell.cityNameLable.text = city.cityName;
-        PPDebug(@"cityname = %@", city.cityName);
     }
 
 	return cell;
@@ -216,14 +207,14 @@
 
     [self showCityList];
     
-    PPDebug(@"click left button");
+    //PPDebug(@"click left button");
 }
 
 - (void)clickRightButton
 {
     [self showDownloadList];
 
-    PPDebug(@"click right button");
+    //PPDebug(@"click right button");
 }
 
 

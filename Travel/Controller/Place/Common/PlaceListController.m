@@ -140,7 +140,7 @@
     
     NSString *CellIdentifier = [self getCellIdentifierByClass:placeClass];
 	UITableViewCell *cell = [theTableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil) {
+	if (cell == nil) { 
 		cell = [placeClass createCell:self];
 	}
 	

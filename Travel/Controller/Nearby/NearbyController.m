@@ -12,7 +12,7 @@
 #import "PPViewController.h"
 
 @implementation NearbyController
-
+@synthesize imageRedStartView;
 @synthesize placeListController;
 @synthesize placeListHolderView;
 @synthesize distanceView;
@@ -52,6 +52,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];

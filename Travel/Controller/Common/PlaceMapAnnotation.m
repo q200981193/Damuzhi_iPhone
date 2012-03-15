@@ -20,7 +20,7 @@
 
 - (id)initWithPlace:(Place *)a_place
 {
-    place = a_place;
+    self.place = a_place;
     coordinate.longitude = place.longitude;
     coordinate.latitude = place.latitude;
     return self;

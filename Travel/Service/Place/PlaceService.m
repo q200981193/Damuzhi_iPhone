@@ -12,12 +12,14 @@
 #import "LogUtil.h"
 #import "TravelNetworkRequest.h"
 #import "Package.pb.h"
+#import "AppManager.h"
+#import "TravelNetworkConstants.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
 @implementation PlaceService
 
-static PlaceService* _defaultPlaceService;
+static PlaceService* _defaultPlaceService = nil;
 
 @synthesize currentCityId = _currentCityId;
 
@@ -46,6 +48,7 @@ static PlaceService* _defaultPlaceService;
     self = [super init];
     _localPlaceManager = [[PlaceManager alloc] init];
     _onlinePlaceManager = [[PlaceManager alloc] init];
+    self.currentCityId = [NSString stringWithFormat:@"%d",[[AppManager defaultManager] getCurrentCityId]];
     return self;
 }
 
@@ -87,8 +90,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             [viewController hideActivity];             
             [viewController findRequestDone:resultCode dataList:list];
         });
-        
-        
     }];
 
 }
@@ -107,16 +108,46 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:21 cityId:[_currentCityId intValue] lang:1];            
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_SPOT cityId:[_currentCityId intValue] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        
         _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
         
         NSArray* list = [_onlinePlaceManager findAllSpots];   
+        
         *resultCode = 0;
 
         return list;
     };
 
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
+}
+
+
+- (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
+        [_localPlaceManager switchCity:_currentCityId];
+        NSArray* list = [_localPlaceManager findAllHotels];   
+        *resultCode = 0;
+        return list;
+    };
+    
+    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+        // TODO, send network request here
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_HOTEL cityId:[_currentCityId intValue] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        
+        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
+        
+        NSArray* list = [_onlinePlaceManager findAllHotels];   
+        *resultCode = 0;
+        
+        return list;
+    };
+    
     [self processLocalRemoteQuery:viewController
                      localHandler:localHandler
                     remoteHandler:remoteHandler];

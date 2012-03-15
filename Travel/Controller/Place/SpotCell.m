@@ -11,6 +11,9 @@
 #import "AppManager.h"
 #import "StringUtil.h"
 #import "ImageName.h"
+#import "LogUtil.h"
+#import "ASIHTTPRequest.h"
+#import "FileUtil.h"
 
 @implementation SpotCell
 @synthesize nameLabel;
@@ -74,7 +77,6 @@
 }
 
 
-#define ORINGIN_X_OF_SERVICE_IMAGE 40
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 18
 #define WIDTH_OF_SERVICE_IMAGE 15
 #define HEIGHT_OF_SERVICE_IMAGE 15
@@ -87,18 +89,16 @@
             [view removeFromSuperview];
         }
     }
-
     
     for (int i=0; i<[serviceIdList count]; i++) {
         NSString *imageName = [serviceIdList objectAtIndex:i];
+       // UIImage *image = [UIImage imageNamed:imageName];
         
-        NSLog(@"imageName = %@", imageName);
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:imageName];
         
-        UIImage *image = [UIImage imageNamed:imageName];
-        
-        NSLog(@"imageSize = %f * %f", image.size.width, image.size.height);
-        
-        CGRect rect = CGRectMake(categoryLable.frame.origin.x+ORINGIN_X_OF_SERVICE_IMAGE+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, image.size.width, image.size.height);
+        PPDebug(@"image = %@", imageName);
+
+        CGRect rect = CGRectMake(categoryLable.frame.origin.x+categoryLable.frame.size.width+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
         
         UIImageView *serviceImageView = [[UIImageView alloc] initWithFrame:rect];
         [serviceImageView setImage:image];
@@ -116,7 +116,6 @@
     self.imageView.image = [UIImage imageNamed:[place icon]];
     self.priceLable.text = [place price];
     self.areaLable.text = [NSString  stringWithInt:[place areaIdAtIndex:0]];
-    NSLog(@"%@", self.categoryLable.text);
     self.categoryLable.text = [[AppManager defaultManager] 
                                getSubCategoryName:[place categoryId]                                                                
                                subCategoryId:[place subCategoryId]];
@@ -130,6 +129,8 @@
     for(NSNumber* providedServieceId in serviceIdList)
     {
         NSString *serviceIcon = [[AppManager defaultManager]getServiceImage:[place categoryId] providedServiceId:[providedServieceId intValue]];
+        PPDebug(@"serviceIcon = %@", serviceIcon);
+        
         [serviceIcons addObject:serviceIcon];
     }
    

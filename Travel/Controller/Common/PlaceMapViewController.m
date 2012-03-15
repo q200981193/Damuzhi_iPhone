@@ -47,6 +47,7 @@
 
 #import "PlaceMapViewController.h"
 #import "PlaceMapAnnotation.h"
+#import "Place.pb.h"
 
 @implementation PlaceMapViewController
 
@@ -124,6 +125,37 @@
     [self.navigationController setToolbarHidden:NO animated:NO];
 }
 
+
+- (Place*)buildTestPlace:(NSString*)placeTag
+{
+    Place_Builder* builder = [[[Place_Builder alloc] init] autorelease];
+    
+    [builder setPlaceId:[placeTag intValue]];       
+    [builder setCategoryId:1];
+    [builder setSubCategoryId:1];
+    [builder setRank:3];
+    [builder setIntroduction:@"简介信息，待完善"];
+    [builder setIcon:@"image.jpg"];
+    [builder setAvgPrice:@"100"];
+    [builder setOpenTime:@"早上10点到晚上10点"];
+    [builder setLatitude:37.80000f];
+    [builder setLongitude:-122.457989f];
+    [builder setName:@"香港太平山"];
+    [builder setPlaceFavoriteCount:12];
+    [builder setPrice:@"$50"];
+    [builder setPriceDescription:@"儿童免票，成人100元"];
+    [builder setTips:@"缆车车费：单程HK$20"];
+    [builder setTransportation:@"乘地铁从上环站到中环站"];
+    [builder setWebsite:@"http://www.madametussauds.com"];
+    [builder addTelephone:@"00852-28496966"];
+    [builder addAddress:@"香港山顶道128号凌霄阁"];
+    [builder addAreaId:11];
+    [builder setCategoryId:1];
+    [builder addProvidedServiceId:3];
+    
+    return [builder build];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -143,12 +175,16 @@
 //        } 
 //    }
     
-    //for test
-    CLLocationCoordinate2D location;
-    location.latitude = 37.80000;
-    location.longitude = -122.457989;
-    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithCoordinate:location];
+    Place *place = [self buildTestPlace:@"1"];
+    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
     [self.mapAnnotations addObject:placeAnnotation];
+
+    //for test
+//    CLLocationCoordinate2D location;
+//    location.latitude = 37.80000;
+//    location.longitude = -122.457989;
+//    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithCoordinate:location];
+//    [self.mapAnnotations addObject:placeAnnotation];
     
     //show all annotationviews
     //remove any annotations that exist
@@ -225,10 +261,9 @@
             [leftIndicatorButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
             [customizeView addSubview:leftIndicatorButton];
             
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(25, 2, 70, 17)];
-            label.font = [UIFont systemFontOfSize:14];
-//            label.text  = placeAnnotation.place.name;
-            label.text = @"旧金山";
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 70, 17)];
+            label.font = [UIFont systemFontOfSize:12];
+            label.text  = [[placeAnnotation place]name];
             label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
             label.backgroundColor = [UIColor clearColor];
             [customizeView addSubview:label];

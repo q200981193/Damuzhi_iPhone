@@ -101,6 +101,7 @@
     
     CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:
                                              [SpotListFilter createFilter]];
+
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];    
 }
@@ -130,23 +131,8 @@
 {
     [super viewWillDisappear:animated];
 
-    //self.title = @"返回";
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBarHidden = NO;
-    
-//    [self.navigationItem.backBarButtonItem setImage:[UIImage imageNamed:@"back.png"]];
-//    
-//    UIImage *backImage = [UIImage imageNamed:@"back.png"];
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, backImage.size.width, backImage.size.height)];
-//    [backButton setBackgroundImage:backImage forState:UIControlStateNormal];
-//    [backButton setTitle:@"返回" forState:UIControlStateNormal];
-//    [backButton addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    self.navigationController.navigationItem.backBarButtonItem = nil;
-//    self.navigationController.navigationItem.leftBarButtonItem = backButtonItem;
-//    [backButton release];
-//    [backButtonItem release]; 
 }
 
 @end
