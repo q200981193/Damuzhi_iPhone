@@ -13,6 +13,8 @@
 
 @implementation SpotListFilter
 
+@synthesize selectedCategoryList = _selectedCategoryList;
+@synthesize selectedSotrList = _selectedSortList;
 @synthesize controller;
 
 - (void)dealloc
@@ -37,17 +39,38 @@
     return button;
 }
 
-- (void)clickCategoryButton
+- (void)clickCategoryButton:(id)sender
 {
-    SelectController* selectController = [SelectController createController:[[AppManager defaultManager] getSubCategories:1]];  
+    //SelectController* selectController = [SelectController createController:[[AppManager defaultManager] getSubCategories:1]];  
+    NSArray *subCategoryNames = [[AppManager defaultManager] getSubCategoryNames:1];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObject:@"全部"];
+    for (NSString *string in subCategoryNames) {
+        [array addObject:string];
+    }
+    
+    SelectController* selectController = [SelectController createController:array selectedList:self.selectedCategoryList multiOptions:YES];
+    
     selectController.navigationItem.title = @"景点分类";
     
     [controller.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
+    
+    
+    NSLog(@"click category button");
 }
 
-- (void)clickSortButton
+- (void)clickSortButton:(id)sender
 {
+//    NSArray *sortList = [[NSArray alloc] init];
+    NSArray *sortList = [NSArray arrayWithObjects:NSLS(@"大拇指推荐"), NSLS(@"距离近至远"), NSLS(@"门票价格高到低"), nil];
+    SelectController* selectController1 = [SelectController createController:sortList selectedList:self.selectedSotrList multiOptions:NO];
+    
+    selectController1.navigationItem.title = @"景点排序";
+    
+    [controller.navigationController pushViewController:selectController1 animated:YES];
+    selectController1.delegate = self;
+    NSLog(@"click sort button");
     
 }
 
@@ -59,10 +82,10 @@
     CGRect frame2 = CGRectMake(58, 0, 58, 36);
     
     UIButton *buttonCategory = [self createFilterButton:frame1 title:@"分类" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-    [buttonCategory addTarget:self action:@selector(clickCategoryButton) forControlEvents:UIControlEventTouchUpInside];
+    [buttonCategory addTarget:self action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *buttonSort = [self createFilterButton:frame2 title:@"排序" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-    [buttonCategory addTarget:self action:@selector(clickSortButton) forControlEvents:UIControlEventTouchUpInside];
+    [buttonSort addTarget:self action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [superView addSubview:buttonCategory];
     [superView addSubview:buttonSort];
@@ -74,8 +97,12 @@
 + (NSObject<PlaceListFilterProtocol>*)createFilter
 {
     SpotListFilter* filter = [[[SpotListFilter alloc] init] autorelease];
+    filter.selectedSotrList = [[[NSMutableArray alloc] init] autorelease];
+    filter.selectedCategoryList = [[[NSMutableArray alloc] init] autorelease];
+
     return filter;
 }
+
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
@@ -84,11 +111,8 @@
 
 - (void)didSelectFinish:(NSArray*)selectedList
 {
-    //TODO, place category
-    for(NameIdPair *pair in selectedList)
-    {
-        NSLog(@"you select: %@", pair.name);
-    }
+    //TODO, spot category    
+    
 }
 
 

@@ -30,6 +30,8 @@
 - (NSArray*)getCityList;
 - (NSString*)getAppVersion;
 - (NSArray*)getSubCategories:(int32_t)categoryId;
+- (NSArray*)getSubCategoryNames:(int32_t)categoryId;
+
 
 - (int)getCurrentCityId;
 - (void)setCurrentCityId:(int)newCity;

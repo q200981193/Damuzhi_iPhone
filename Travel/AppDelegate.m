@@ -35,6 +35,9 @@
         GlobalSetNavBarBackground(@"top_live.png");        
     }
     
+//    NSString *string = @"天啊";
+//    NSLog(@"string length is %d", string.length);
+    
     // init app data
     [[AppService defaultService] loadAppData]; 
     

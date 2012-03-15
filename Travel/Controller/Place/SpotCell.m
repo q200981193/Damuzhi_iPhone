@@ -92,11 +92,13 @@
     
     for (int i=0; i<[serviceIdList count]; i++) {
         NSString *imageName = [serviceIdList objectAtIndex:i];
-        UIImage *image = [UIImage imageNamed:imageName];
+       // UIImage *image = [UIImage imageNamed:imageName];
+        
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:imageName];
         
         PPDebug(@"image = %@", imageName);
 
-        CGRect rect = CGRectMake(categoryLable.frame.origin.x+categoryLable.frame.size.width+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, image.size.width, image.size.height);
+        CGRect rect = CGRectMake(categoryLable.frame.origin.x+categoryLable.frame.size.width+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
         
         UIImageView *serviceImageView = [[UIImageView alloc] initWithFrame:rect];
         [serviceImageView setImage:image];

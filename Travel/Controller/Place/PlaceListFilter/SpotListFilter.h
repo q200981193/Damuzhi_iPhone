@@ -10,7 +10,16 @@
 #import "CommonPlaceListController.h"
 #import "SelectController.h"
 @interface SpotListFilter : NSObject<PlaceListFilterProtocol,SelectControllerDelegate>
+{
+    NSMutableArray *_selectedCategoryList;
+    NSMutableArray *_selectedSortList;
+}
+
+@property (retain, nonatomic) NSMutableArray *selectedCategoryList;
+@property (retain, nonatomic) NSMutableArray *selectedSotrList;
 
 @property (retain, nonatomic) PPTableViewController *controller;
+
+
 
 @end

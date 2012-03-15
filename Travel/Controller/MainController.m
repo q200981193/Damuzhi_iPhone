@@ -101,6 +101,7 @@
     
     CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:
                                              [SpotListFilter createFilter]];
+
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];    
 }

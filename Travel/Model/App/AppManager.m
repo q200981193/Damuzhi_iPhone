@@ -93,6 +93,17 @@ static AppManager* _defaultAppManager = nil;
     return[placeMeta subCategoryListList];
 }
 
+- (NSArray*)getSubCategoryNames:(int32_t)categoryId
+{
+    NSMutableArray *subCategoryNames = [[[NSMutableArray alloc] init] autorelease];
+    for(NameIdPair *subCategory in [self getSubCategories:categoryId])
+    {
+        [subCategoryNames addObject:subCategory.name];
+    }
+    
+    return subCategoryNames;
+}
+
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId
 {
     PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];

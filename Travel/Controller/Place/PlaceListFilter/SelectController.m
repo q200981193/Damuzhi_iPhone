@@ -9,6 +9,7 @@
 #import "SelectController.h"
 #import "PPTableViewCell.h"
 #import "PPDebug.h"
+#import "AppManager.h"
 
 @interface SelectController ()
 
@@ -17,17 +18,19 @@
 @implementation SelectController
 @synthesize tableView;
 @synthesize delegate;
-@synthesize selectedList;
+@synthesize selectedList = _selectedList;
+@synthesize multiOptions = _multiOptinos;
 
-- (void)setSpotList:(NSArray*)list
++ (SelectController*)createController:(NSArray*)list selectedList:(NSMutableArray*)selectedList multiOptions:(BOOL)multiOptions
 {
-    self.dataList = list;
-}
-
-+ (SelectController*)createController:(NSArray*)list
-{
-    SelectController* controller = [[[SelectController alloc] init] autorelease];    
-    [controller setSpotList:list];    
+    SelectController* controller = [[[SelectController alloc] init] autorelease];  
+    
+    controller.dataList = list;
+    
+    controller.selectedList = selectedList;
+    
+    controller.multiOptions = multiOptions;
+    
     [controller viewDidLoad];
     return controller;
 }
@@ -37,7 +40,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        selectedList = [[NSMutableArray alloc] init];  
     }
     return self;
 }
@@ -69,14 +71,14 @@
 
 - (void)dealloc {
     [tableView release];
-    [selectedList release];
+    [_selectedList release];
     [super dealloc];
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 40;
+	return 37.2;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -101,14 +103,12 @@
     
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellForCategory"] autorelease];
     
-    [[cell textLabel] setText:[[self.dataList objectAtIndex:row] name]];
+    [[cell textLabel] setText:[self.dataList objectAtIndex:row]];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     
-//    NSLog(@"subcategoryId = %d, subcategoryName = %@", [[self.dataList objectAtIndex:row] id], [[self.dataList objectAtIndex:row] name]);
-//    
-    
-    if (NSNotFound!=[self.selectedList indexOfObject:indexPath]) {
+    if (NSNotFound!=[self.selectedList indexOfObject:[NSNumber numberWithInt:row]]) {
         //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(80, 10, 16, 16)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(80, 10, 32, 32)];
         [imageView setImage:[UIImage imageNamed:@"select_btn_1"]];
         cell.accessoryView = imageView;
         [imageView release];
@@ -116,32 +116,38 @@
         //cell.accessoryType = UITableViewCellAccessoryNone;
         cell.accessoryView = nil;
     }
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
 }
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(NSNotFound == [self.selectedList indexOfObject:indexPath])
-    {
-        [self.selectedList addObject:indexPath];
+    NSNumber *row = [NSNumber numberWithInt:[indexPath row]];
+    
+    if(self.multiOptions == YES){
+        if(NSNotFound == [self.selectedList indexOfObject:row])
+        {
+            [self.selectedList addObject:row];
+        }
+        else {
+            [self.selectedList removeObject:row];
+        }
+        
+        [tableView1 reloadData];
     }
-    else {
-        [self.selectedList removeObject:indexPath];
+    else{
+        [self.selectedList removeAllObjects];
+        [self.selectedList addObject:row];
+        
+        [tableView1 reloadData];
     }
- 
-    [tableView1 reloadData];
 }
 
 - (void)clickFinish:(id)sender
 {
-    NSMutableArray *list = [[[NSMutableArray alloc] init] autorelease];
     [self.navigationController popViewControllerAnimated:YES];
-    for (NSIndexPath *index in self.selectedList) {
-        [list addObject:[self.dataList objectAtIndex:index.row]];
-    }
-    
-    [delegate didSelectFinish:list];
+    [delegate didSelectFinish:self.selectedList];
 }
 
 @end
