@@ -20,6 +20,8 @@
 @class CommonOverview;
 @class CommonOverview_Builder;
 @class CommonTravelGuide;
+@class CommonTravelGuideList;
+@class CommonTravelGuideList_Builder;
 @class CommonTravelGuide_Builder;
 @class HelpInfo;
 @class HelpInfo_Builder;
@@ -137,6 +139,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   BOOL hasPlaceList_:1;
   BOOL hasCityList_:1;
   BOOL hasAppInfo_:1;
+  BOOL hasTravelGuideList_:1;
   int32_t resultCode;
   Place* place;
   CommonOverview* overview;
@@ -145,6 +148,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   PlaceList* placeList;
   CityList* cityList;
   App* appInfo;
+  CommonTravelGuideList* travelGuideList;
 }
 - (BOOL) hasResultCode;
 - (BOOL) hasPlace;
@@ -154,6 +158,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (BOOL) hasPlaceList;
 - (BOOL) hasCityList;
 - (BOOL) hasAppInfo;
+- (BOOL) hasTravelGuideList;
 @property (readonly) int32_t resultCode;
 @property (readonly, retain) Place* place;
 @property (readonly, retain) CommonOverview* overview;
@@ -162,6 +167,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 @property (readonly, retain) PlaceList* placeList;
 @property (readonly, retain) CityList* cityList;
 @property (readonly, retain) App* appInfo;
+@property (readonly, retain) CommonTravelGuideList* travelGuideList;
 
 + (TravelResponse*) defaultInstance;
 - (TravelResponse*) defaultInstance;
@@ -250,5 +256,12 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (TravelResponse_Builder*) setAppInfoBuilder:(App_Builder*) builderForValue;
 - (TravelResponse_Builder*) mergeAppInfo:(App*) value;
 - (TravelResponse_Builder*) clearAppInfo;
+
+- (BOOL) hasTravelGuideList;
+- (CommonTravelGuideList*) travelGuideList;
+- (TravelResponse_Builder*) setTravelGuideList:(CommonTravelGuideList*) value;
+- (TravelResponse_Builder*) setTravelGuideListBuilder:(CommonTravelGuideList_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeTravelGuideList:(CommonTravelGuideList*) value;
+- (TravelResponse_Builder*) clearTravelGuideList;
 @end
 
