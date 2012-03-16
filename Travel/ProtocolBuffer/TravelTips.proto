@@ -11,6 +11,10 @@ message CommonTravelGuide {
   optional string html = 4;       //  对应的HTML文件名，相对路径，如 html/abc/abc.html
 }
 
+message CommonTravelGuideList{
+  repeated CommonTravelGuide guideList = 1;
+}
+
 message TravelTips {
   repeated CommonTravelGuide tipsList = 1;            // 所有攻略
   repeated CommonTravelGuide routeList = 2;         // 所有推荐线路  

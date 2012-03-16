@@ -31,4 +31,5 @@ message TravelResponse{
   optional PlaceList placeList = 6;
   optional CityList cityList = 7;
   optional App appInfo = 8;   
+  optional CommonTravelGuideList travelGuideList = 9;
 }

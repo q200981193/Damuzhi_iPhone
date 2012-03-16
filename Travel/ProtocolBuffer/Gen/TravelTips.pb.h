@@ -3,6 +3,8 @@
 #import "ProtocolBuffers.h"
 
 @class CommonTravelGuide;
+@class CommonTravelGuideList;
+@class CommonTravelGuideList_Builder;
 @class CommonTravelGuide_Builder;
 @class TravelTips;
 @class TravelTips_Builder;
@@ -19,8 +21,8 @@
   BOOL hasCityId_:1;
   BOOL hasName_:1;
   BOOL hasHtml_:1;
-  NSString* guideId;
-  NSString* cityId;
+  int32_t guideId;
+  int32_t cityId;
   NSString* name;
   NSString* html;
 }
@@ -28,8 +30,8 @@
 - (BOOL) hasCityId;
 - (BOOL) hasName;
 - (BOOL) hasHtml;
-@property (readonly, retain) NSString* guideId;
-@property (readonly, retain) NSString* cityId;
+@property (readonly) int32_t guideId;
+@property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* name;
 @property (readonly, retain) NSString* html;
 
@@ -68,13 +70,13 @@
 - (CommonTravelGuide_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasGuideId;
-- (NSString*) guideId;
-- (CommonTravelGuide_Builder*) setGuideId:(NSString*) value;
+- (int32_t) guideId;
+- (CommonTravelGuide_Builder*) setGuideId:(int32_t) value;
 - (CommonTravelGuide_Builder*) clearGuideId;
 
 - (BOOL) hasCityId;
-- (NSString*) cityId;
-- (CommonTravelGuide_Builder*) setCityId:(NSString*) value;
+- (int32_t) cityId;
+- (CommonTravelGuide_Builder*) setCityId:(int32_t) value;
 - (CommonTravelGuide_Builder*) clearCityId;
 
 - (BOOL) hasName;
@@ -88,15 +90,64 @@
 - (CommonTravelGuide_Builder*) clearHtml;
 @end
 
+@interface CommonTravelGuideList : PBGeneratedMessage {
+@private
+  NSMutableArray* mutableGuideListList;
+}
+- (NSArray*) guideListList;
+- (CommonTravelGuide*) guideListAtIndex:(int32_t) index;
+
++ (CommonTravelGuideList*) defaultInstance;
+- (CommonTravelGuideList*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (CommonTravelGuideList_Builder*) builder;
++ (CommonTravelGuideList_Builder*) builder;
++ (CommonTravelGuideList_Builder*) builderWithPrototype:(CommonTravelGuideList*) prototype;
+
++ (CommonTravelGuideList*) parseFromData:(NSData*) data;
++ (CommonTravelGuideList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelGuideList*) parseFromInputStream:(NSInputStream*) input;
++ (CommonTravelGuideList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelGuideList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (CommonTravelGuideList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface CommonTravelGuideList_Builder : PBGeneratedMessage_Builder {
+@private
+  CommonTravelGuideList* result;
+}
+
+- (CommonTravelGuideList*) defaultInstance;
+
+- (CommonTravelGuideList_Builder*) clear;
+- (CommonTravelGuideList_Builder*) clone;
+
+- (CommonTravelGuideList*) build;
+- (CommonTravelGuideList*) buildPartial;
+
+- (CommonTravelGuideList_Builder*) mergeFrom:(CommonTravelGuideList*) other;
+- (CommonTravelGuideList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (CommonTravelGuideList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (NSArray*) guideListList;
+- (CommonTravelGuide*) guideListAtIndex:(int32_t) index;
+- (CommonTravelGuideList_Builder*) replaceGuideListAtIndex:(int32_t) index with:(CommonTravelGuide*) value;
+- (CommonTravelGuideList_Builder*) addGuideList:(CommonTravelGuide*) value;
+- (CommonTravelGuideList_Builder*) addAllGuideList:(NSArray*) values;
+- (CommonTravelGuideList_Builder*) clearGuideListList;
+@end
+
 @interface TravelTips : PBGeneratedMessage {
 @private
   BOOL hasCityId_:1;
-  NSString* cityId;
+  int32_t cityId;
   NSMutableArray* mutableTipsListList;
   NSMutableArray* mutableRouteListList;
 }
 - (BOOL) hasCityId;
-@property (readonly, retain) NSString* cityId;
+@property (readonly) int32_t cityId;
 - (NSArray*) tipsListList;
 - (CommonTravelGuide*) tipsListAtIndex:(int32_t) index;
 - (NSArray*) routeListList;
@@ -151,8 +202,8 @@
 - (TravelTips_Builder*) clearRouteListList;
 
 - (BOOL) hasCityId;
-- (NSString*) cityId;
-- (TravelTips_Builder*) setCityId:(NSString*) value;
+- (int32_t) cityId;
+- (TravelTips_Builder*) setCityId:(int32_t) value;
 - (TravelTips_Builder*) clearCityId;
 @end
 
