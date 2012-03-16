@@ -15,7 +15,7 @@
 @protocol PlaceServiceDelegate <NSObject>
 
 - (void)findRequestDone:(int)result dataList:(NSArray*)dataList;
-
+- (void)filterAndSort;
 @end
 
 @interface PlaceService : CommonService

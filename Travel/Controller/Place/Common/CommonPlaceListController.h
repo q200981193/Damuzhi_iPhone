@@ -22,32 +22,41 @@
 - (int)getCategoryId;
 - (NSString*)getCategoryName;
 
-- (void)findPlacesByCategory:(NSArray*)categoryList 
-                  priceIndex:(int)priceIndex 
-                    areaList:(NSArray*)areaList 
-         providedServiceList:(NSArray*)providedServiceList
-                 cuisineList:(NSArray*)cuisineList
-                      sortBy:(int)sortBy;
+- (NSArray*)filterAndSotrPlaces:(NSArray*)placeList
+            selectedCategoryIds:(NSArray*)selectedCategoryIds 
+               selectedPriceIds:(NSArray*)selectedPriceIds 
+                selectedAreaIds:(NSArray*)selectedAreaIds 
+             selectedServiceIds:(NSArray*)selectedServiceIds
+             selectedCuisineIds:(NSArray*)selectedCuisineIds
+                         sortBy:(NSNumber*)selectedSortId;
 
 @end
 
 @interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, SelectControllerDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;
-    int _currentFilterAction;
-    NSMutableArray *_selectedCategoryList;
-    NSMutableArray *_selectedSortList;
+    NSMutableArray *_selectedCategoryIds;
+    NSMutableArray *_selectedSortIds;
+    NSMutableArray *_selectedAreaIds;
+    NSMutableArray *_selectedPriceIds;
+    NSMutableArray *_selectedServiceIds;
+    NSMutableArray *_selectedCuisineIds;
+    
 }
 
-@property (assign, nonatomic) int currentFilterAction;
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) NSObject<PlaceListFilterProtocol> *filterHandler;
 
-@property (retain, nonatomic) NSMutableArray *selectedCategoryList;
-@property (retain, nonatomic) NSMutableArray *selectedSortList;
+@property (retain, nonatomic) NSMutableArray *selectedCategoryIds;
+@property (retain, nonatomic) NSMutableArray *selectedSortIds;
+@property (retain, nonatomic) NSMutableArray *selectedAreaIds;
+@property (retain, nonatomic) NSMutableArray *selectedPriceIds;
+@property (retain, nonatomic) NSMutableArray *selectedServiceIds;
+@property (retain, nonatomic) NSMutableArray *selectedCuisineIds;
+
 
 
 - (id)initWithFilterHandler:(NSObject<PlaceListFilterProtocol>*)handler;

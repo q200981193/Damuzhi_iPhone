@@ -10,11 +10,9 @@
 #import "PlaceManager.h"
 #import "PlaceService.h"
 #import "AppManager.h"
+#import "Place.pb.h"
 
 @implementation SpotListFilter
-
-@synthesize selectedCategoryList = _selectedCategoryList;
-@synthesize selectedSotrList = _selectedSortList;
 @synthesize controller;
 
 - (void)dealloc
@@ -39,43 +37,6 @@
     return button;
 }
 
-- (void)clickCategoryButton:(id)sender
-{
-    NameIdPair_Builder* pairBuilder = [[[NameIdPair_Builder alloc] init] autorelease];    
-    [pairBuilder setName:NSLS(@"全部")];
-    [pairBuilder setId:-1];
-    NameIdPair *pair = [pairBuilder build];
-    
-    NSMutableArray *subCategories = [[[NSMutableArray alloc] init] autorelease];
-    [subCategories addObject:pair];
-    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[self getCategoryId]]) {
-        [subCategories addObject:subCategoryPair];
-    }
-    
-    SelectController* selectController = [SelectController createController:subCategories selectedList:self.selectedCategoryList multiOptions:YES];
-    
-    selectController.navigationItem.title = @"景点分类";
-    
-    [controller.navigationController pushViewController:selectController animated:YES];
-    selectController.delegate = self;
-    
-    NSLog(@"click category button");
-}
-
-- (void)clickSortButton:(id)sender
-{
-//    NSArray *sortList = [[NSArray alloc] init];
-    NSArray *sortList = [NSArray arrayWithObjects:NSLS(@"大拇指推荐"), NSLS(@"距离近至远"), NSLS(@"门票价格高到低"), nil];
-    SelectController* selectController1 = [SelectController createController:sortList selectedList:self.selectedSotrList multiOptions:NO];
-    
-    selectController1.navigationItem.title = @"景点排序";
-    
-    [controller.navigationController pushViewController:selectController1 animated:YES];
-    selectController1.delegate = self;
-    NSLog(@"click sort button");
-    
-}
-
 #pragma Protocol Implementations
 
 - (int)getCategoryId
@@ -88,7 +49,7 @@
     return NSLS(@"景点");
 }
 
-- (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController *)filteController
+- (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController *)commonPlaceController
 {
     superView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]];
     
@@ -96,59 +57,122 @@
     CGRect frame2 = CGRectMake(58, 0, 58, 36);
     
     UIButton *buttonCategory = [self createFilterButton:frame1 title:NSLS(@"分类") bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-//    [buttonCategory addTarget:self action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *buttonSort = [self createFilterButton:frame2 title:NSLS(@"排序") bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
     
-    [buttonSort addTarget:filteController
+    [buttonSort addTarget:commonPlaceController
                    action:@selector(clickSortButton:) 
          forControlEvents:UIControlEventTouchUpInside];
     
-    [buttonCategory addTarget:filteController 
+    [buttonCategory addTarget:commonPlaceController 
                        action:@selector(clickCategoryButton:) 
              forControlEvents:UIControlEventTouchUpInside];
     
     [superView addSubview:buttonCategory];
     [superView addSubview:buttonSort];
 
-    self.controller = filteController;
+    self.controller = commonPlaceController;
     
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter
 {
     SpotListFilter* filter = [[[SpotListFilter alloc] init] autorelease];
-    filter.selectedSotrList = [[[NSMutableArray alloc] init] autorelease];
-    filter.selectedCategoryList = [[[NSMutableArray alloc] init] autorelease];
-
     return filter;
 }
-
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
     return [[PlaceService defaultService] findAllSpots:viewController];
 }
 
-- (void)findPlacesByCategory:(NSArray*)categoryList 
-                  priceIndex:(int)priceIndex 
-                    areaList:(NSArray*)areaList 
-         providedServiceList:(NSArray*)providedServiceList
-                 cuisineList:(NSArray*)cuisineList
-                      sortBy:(int)sortBy
+-(NSMutableArray*)filterByCategoryIds:(NSArray*)list selectedCategoryIds:(NSArray*)selectedCategoryIds
 {
-    //TODO
+    NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
     
-    //return [PlaceService defaultService] findAllSpots:<#(PPViewController<PlaceServiceDelegate> *)#>;
+    //filter by selectedCategoryId
+    for (NSNumber *selectedCategoryId in selectedCategoryIds) {
+        if ([selectedCategoryId intValue] == -1) {
+            for (Place *place in list) {
+                [array addObject:place];
+            }
+        }
+        
+        for (Place *place in list) {
+            if ([selectedCategoryId intValue] == [place subCategoryId])
+            {
+                [array addObject:place];
+            }
+        }
+    }
+    
+    return array;
 }
 
-
-
-- (void)didSelectFinish:(NSArray*)selectedList
+-(NSInteger)ComparePlaceByRecommend:(id)place1 place2:(id)place2 context:(void *)context
 {
-    //TODO, spot category    
+    int rank1 = [place1 rank];
+    int rank2 = [place2 rank];
     
+    if (rank1 < rank2)
+        return NSOrderedAscending;
+    else  if (rank1 > rank2)
+        return NSOrderedDescending;
+    else return NSOrderedSame;
 }
 
+-(NSArray*)sortBySelectedSortId:(NSArray*)placeList selectedSortId:(NSNumber*)selectedSortId
+{
+    NSArray *array = nil;
+    switch ([selectedSortId intValue]) {
+        case SORT_BY_RECOMMEND:
+             array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                 int rank1 = [place1 rank];
+                 int rank2 = [place2 rank];
+                 
+                 if (rank1 < rank2)
+                     return NSOrderedDescending;
+                 else  if (rank1 > rank2)
+                     return NSOrderedAscending;
+                 else return NSOrderedSame;
+             }];
+            //TODO: sort and put sorted result into array
+            break;
+            
+        case SORT_BY_DESTANCE_FROM_NEAR_TO_FAR:
+            //TODO: sort and put sorted result into array
+            ;
+            break;
+            
+        case SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP:
+            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                int price1 = [[place1 price] floatValue];
+                int price2 = [[place2 price] floatValue] ;
+                
+                if (price1 < price2)
+                    return NSOrderedDescending;
+                else  if (price1 > price2)
+                    return NSOrderedAscending;
+                else return NSOrderedSame;
+            }];
+            break;
+            
+        default:
+            break;
+    }
+
+    return array;
+}
+
+- (NSArray*)filterAndSotrPlaces:(NSArray*)placeList
+            selectedCategoryIds:(NSArray*)selectedCategoryIds 
+               selectedPriceIds:(NSArray*)selectedPriceIds 
+                selectedAreaIds:(NSArray*)selectedAreaIds 
+             selectedServiceIds:(NSArray*)selectedServiceIds
+             selectedCuisineIds:(NSArray*)selectedCuisineIds
+                         sortBy:(NSNumber*)selectedSortId;
+{
+    return [self sortBySelectedSortId:[self filterByCategoryIds:placeList selectedCategoryIds:selectedCategoryIds]selectedSortId:selectedSortId];
+}
 
 @end

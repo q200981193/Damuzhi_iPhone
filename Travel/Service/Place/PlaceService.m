@@ -85,11 +85,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                 list = remoteHandler(&resultCode);
             }
         }
-        
-        // filter and sort list by conditions
-//        [viewController findRequ
-        
-        
+            
         dispatch_async(dispatch_get_main_queue(), ^{
             [viewController hideActivity];             
             [viewController findRequestDone:resultCode dataList:list];

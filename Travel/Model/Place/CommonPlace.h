@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define ALL_SUBCATEGORY  (-1)
+
 enum{
     PLACE_TYPE_SPOT = 1,
     PLACE_TYPE_HOTEL = 2

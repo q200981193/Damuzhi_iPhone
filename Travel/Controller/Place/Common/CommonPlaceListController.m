@@ -21,18 +21,25 @@
 @synthesize placeListHolderView;
 @synthesize placeListController;
 @synthesize filterHandler = _filterHandler;
-@synthesize currentFilterAction = _currentFilterAction;
 
-@synthesize selectedCategoryList = _selectCategoryList;
-@synthesize selectedSortList = _selectedSortList;
+@synthesize selectedCategoryIds = _selectCategoryIds;
+@synthesize selectedSortIds = _selectedSortIds;
+@synthesize selectedAreaIds = _selectedAreaIds;
+@synthesize selectedPriceIds = _selectedPriceIds;
+@synthesize selectedServiceIds = _selectedServiceIds;
+@synthesize selectedCuisineIds = _selectedCuisineIds;
 
 - (void)dealloc {
     [_filterHandler release];
     [placeListController release];
     [buttonHolderView release];
     [placeListHolderView release];
-    [_selectedSortList release];
-    [_selectedCategoryList release];
+    [_selectedSortIds release];
+    [_selectedCategoryIds release];
+    [_selectedAreaIds release];
+    [_selectedPriceIds release];
+    [_selectedServiceIds release];
+    [_selectedCuisineIds release];
     [super dealloc];
 }
 
@@ -40,8 +47,8 @@
 {
     self = [super init];
     self.filterHandler = handler;
-    self.selectedCategoryList = [[[NSMutableArray alloc] init] autorelease];
-    self.selectedSortList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedCategoryIds = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedSortIds = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -107,9 +114,31 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (NSArray*)filterAndSort:(NSArray*)placeList
+{    
+    placeList = [_filterHandler filterAndSotrPlaces:placeList
+                           selectedCategoryIds:self.selectedCategoryIds
+                              selectedPriceIds:self.selectedPriceIds
+                               selectedAreaIds:self.selectedAreaIds
+                            selectedServiceIds:self.selectedServiceIds
+                            selectedCuisineIds:self.selectedCuisineIds
+                                        sortBy:[self.selectedSortIds objectAtIndex:0]];
+    
+    return placeList;
+}
+
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
-    self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
+    if (self.placeListController == nil){
+        [self.selectedCategoryIds addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
+        [self.selectedSortIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
+        list = [self filterAndSort:list];
+        self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
+    }
+    else{
+        list = [self filterAndSort:list];
+        [self.placeListController setAndReloadPlaceList:list];
+    }    
 }
 
 - (IBAction)clickMapButton:(id)sender
@@ -131,9 +160,8 @@
                                                              forKey:[NSNumber numberWithInt:subCategoryPair.id]]];
     }
     
-    self.currentFilterAction = PLACE_TYPE_SPOT;
     SelectController* selectController = [SelectController createController:subCategories
-                                                               selectedList:self.selectedCategoryList 
+                                                               selectedIds:self.selectedCategoryIds 
                                                                multiOptions:YES];
     
     selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"分类")];
@@ -146,9 +174,8 @@
 
 - (void)clickSortButton:(id)sender
 {
-    self.currentFilterAction = PLACE_TYPE_SPOT;
     SelectController* selectController = [SelectController createController:
-                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedList:self.selectedSortList 
+                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
                                                                multiOptions:NO];
     
     selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"排序")];
@@ -161,22 +188,7 @@
 
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
-//    [_filterHandler findPlacesByCategory:
-//                              priceIndex: 
-//                                areaList:nil
-//                     providedServiceList:nil
-//                             cuisineList:nil
-//                                  sortBy:];
-//    
-    //TODO
-//    switch (currentFilterAction) {
-//        case <#constant#>:
-//            <#statements#>
-//            break;
-//            
-//        default:
-//            break;
-//    }
+    [_filterHandler findAllPlaces:self];
 }
 
 

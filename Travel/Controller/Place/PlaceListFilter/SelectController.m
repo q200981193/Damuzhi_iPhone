@@ -18,16 +18,16 @@
 @implementation SelectController
 @synthesize tableView;
 @synthesize delegate;
-@synthesize selectedList = _selectedList;
+@synthesize selectedIds = _selectedIds;
 @synthesize multiOptions = _multiOptinos;
 
-+ (SelectController*)createController:(NSArray*)list selectedList:(NSMutableArray*)selectedList multiOptions:(BOOL)multiOptions
++ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions
 {
     SelectController* controller = [[[SelectController alloc] init] autorelease];  
     
     controller.dataList = list;
     
-    controller.selectedList = selectedList;
+    controller.selectedIds = selectedIds;
     
     controller.multiOptions = multiOptions;
     
@@ -71,7 +71,7 @@
 
 - (void)dealloc {
     [tableView release];
-    [_selectedList release];
+    [_selectedIds release];
     [super dealloc];
 }
 
@@ -103,16 +103,16 @@
     
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellForCategory"] autorelease];
     
-    NSString *listName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
-    NSNumber *listId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
+    NSString *currentName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
+    NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
     
-    [[cell textLabel] setText:listName];
+    [[cell textLabel] setText:currentName];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     
     BOOL found = NO;
-    for(NSDictionary *dictionary in self.selectedList)
+    for(NSNumber *selectedId in self.selectedIds)
     {
-        if ([listId intValue] == [[[dictionary allKeys] objectAtIndex:0] intValue]) {
+        if ([currentId intValue] == [selectedId intValue]) {
             found = YES;
             break;
         }
@@ -137,20 +137,18 @@
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *selectedDictionary = [self.dataList objectAtIndex:indexPath.row];
-    NSNumber *selectedId = [[selectedDictionary allKeys] objectAtIndex:0];
-    NSString *selectedName = [[selectedDictionary allValues] objectAtIndex:0];
+    NSNumber *currentSelectedId = [[selectedDictionary allKeys] objectAtIndex:0];
+//    NSString *currentSelectedName = [[selectedDictionary allValues] objectAtIndex:0];
 
-    NSLog(@"selectedRow: %d", indexPath.row);
-    NSLog(@"selectedId: %d", [selectedId intValue]);
-    NSLog(@"selectedName: %@", selectedName);
-
-
+//    NSLog(@"selectedRow: %d", indexPath.row);
+//    NSLog(@"selectedId: %d", [selectedId intValue]);
+//    NSLog(@"selectedName: %@", selectedName);
 
     if(self.multiOptions == YES){
         BOOL found = NO;
-        for(NSDictionary *dictionary in self.selectedList)
+        for(NSNumber *selectedId in self.selectedIds)
         {
-            if ([selectedId intValue] == [[[dictionary allKeys] objectAtIndex:0] intValue]) {
+            if ([currentSelectedId intValue] == [selectedId intValue]) {
                 found = YES;
                 break;
             }
@@ -158,17 +156,17 @@
         
         if(!found)
         {
-            [self.selectedList addObject:selectedDictionary];
+            [self.selectedIds addObject:currentSelectedId];
         }
         else {
-            [self.selectedList removeObject:selectedDictionary];
+            [self.selectedIds removeObject:currentSelectedId];
         }
         
         [tableView1 reloadData];
     }
     else{
-        [self.selectedList removeAllObjects];
-        [self.selectedList addObject:selectedDictionary];
+        [self.selectedIds removeAllObjects];
+        [self.selectedIds addObject:currentSelectedId];
         
         [tableView1 reloadData];
     }
@@ -177,11 +175,7 @@
 - (void)clickFinish:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-    [delegate didSelectFinish:self.selectedList];
-    
-//    for (NameIdPair *pair in self.selectedList) {
-//        NSLog(@"you select: %@", pair.name);
-//    }
+    [delegate didSelectFinish:self.selectedIds];
 }
 
 @end

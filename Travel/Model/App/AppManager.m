@@ -164,9 +164,12 @@ static AppManager* _defaultAppManager = nil;
 - (NSArray*)buildSpotSortOptions
 {
     NSMutableArray *spotSortOptions = [[NSMutableArray alloc] init];    
-    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐") forKey:[NSNumber numberWithInt:1]]];
-    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") forKey:[NSNumber numberWithInt:2]]];
-    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"门票价格高到低") forKey:[NSNumber numberWithInt:3]]];
+    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐高至低") 
+                                                           forKey:[NSNumber numberWithInt:SORT_BY_RECOMMEND]]];
+    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") 
+                                                           forKey:[NSNumber numberWithInt:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR]]];
+    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"门票价格高到低") 
+                                                           forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP]]];
 //    NSMutableArray *spotSortOptions = [[[NSMutableArray alloc] init] autorelease];
 //    
 //    NameIdPair_Builder* pairBuilder1 = [[[NameIdPair_Builder alloc] init] autorelease]; 

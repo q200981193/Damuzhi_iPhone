@@ -16,14 +16,14 @@
 
 @interface SelectController : PPTableViewController
 {
-    NSMutableArray* _selectedList;
+    NSMutableArray* _selectedIds;
     BOOL _multiOptions;
 }
 
 @property (assign, nonatomic) BOOL multiOptions;
-@property (retain, nonatomic) NSMutableArray *selectedList;
+@property (retain, nonatomic) NSMutableArray *selectedIds;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) id<SelectControllerDelegate> delegate;
 
-+ (SelectController*)createController:(NSArray*)list selectedList:(NSMutableArray*)selectedList multiOptions:(BOOL)multiOptions;
++ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions;
 @end
