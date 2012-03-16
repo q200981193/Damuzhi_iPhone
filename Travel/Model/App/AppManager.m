@@ -11,6 +11,8 @@
 #import "ImageName.h"
 #import "LogUtil.h"
 #import "FileUtil.h"
+#import "CommonPlace.h"
+#import "LocaleUtils.h"
 
 @implementation AppManager
 
@@ -23,6 +25,12 @@ static AppManager* _defaultAppManager = nil;
         _defaultAppManager = [[AppManager alloc] init];
     }
     return _defaultAppManager;
+}
+
+-(void)dealloc
+{
+    [_app release];
+    [super dealloc];
 }
 
 - (void)loadAppData
@@ -40,7 +48,6 @@ static AppManager* _defaultAppManager = nil;
 - (void)updateAppData:(App*)appData
 {
     self.app = appData;    
-    
     [[appData data] writeToFile:APP_DATA_PATH atomically:YES];
 }
 
@@ -93,16 +100,8 @@ static AppManager* _defaultAppManager = nil;
     return[placeMeta subCategoryListList];
 }
 
-- (NSArray*)getSubCategoryNames:(int32_t)categoryId
-{
-    NSMutableArray *subCategoryNames = [[[NSMutableArray alloc] init] autorelease];
-    for(NameIdPair *subCategory in [self getSubCategories:categoryId])
-    {
-        [subCategoryNames addObject:subCategory.name];
-    }
-    
-    return subCategoryNames;
-}
+
+
 
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId
 {
@@ -161,5 +160,52 @@ static AppManager* _defaultAppManager = nil;
     [userDefault setObject:[NSNumber numberWithInt:newCityId] forKey:KEY_CURRENT_CITY];
     [userDefault synchronize];
 }
+
+- (NSArray*)buildSpotSortOptions
+{
+    NSMutableArray *spotSortOptions = [[NSMutableArray alloc] init];    
+    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐") forKey:[NSNumber numberWithInt:1]]];
+    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") forKey:[NSNumber numberWithInt:2]]];
+    [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"门票价格高到低") forKey:[NSNumber numberWithInt:3]]];
+//    NSMutableArray *spotSortOptions = [[[NSMutableArray alloc] init] autorelease];
+//    
+//    NameIdPair_Builder* pairBuilder1 = [[[NameIdPair_Builder alloc] init] autorelease]; 
+//    [pairBuilder1 setName:NSLS(@"大拇指推荐")];
+//    [pairBuilder1 setId:1];
+//    [spotSortOptions addObject:[pairBuilder1 build]];
+//    
+//    NameIdPair_Builder* pairBuilder2 = [[[NameIdPair_Builder alloc] init] autorelease]; 
+//    [pairBuilder2 setName:NSLS(@"距离近至远")];
+//    [pairBuilder2 setId:2];
+//    [spotSortOptions addObject:[pairBuilder2 build]];
+//
+//    
+//    NameIdPair_Builder* pairBuilder3 = [[[NameIdPair_Builder alloc] init] autorelease]; 
+//    [pairBuilder3 setName: NSLS(@"门票价格高到低")];
+//    [pairBuilder3 setId:3];
+//    [spotSortOptions addObject:[pairBuilder3 build]];
+    
+    return spotSortOptions;
+}
+
+- (NSArray*)getSortOptions:(int32_t)categoryId
+{
+    NSArray *array = nil;
+    switch (categoryId) {
+        case PLACE_TYPE_SPOT:            
+            array = [self buildSpotSortOptions];
+            break;
+            
+        case PLACE_TYPE_HOTEL:
+            break;
+            
+        default:
+            break;
+    }
+    
+    return array;
+}
+
+
 
 @end

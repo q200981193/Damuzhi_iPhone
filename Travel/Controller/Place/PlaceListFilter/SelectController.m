@@ -103,18 +103,31 @@
     
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellForCategory"] autorelease];
     
-    [[cell textLabel] setText:[self.dataList objectAtIndex:row]];
+    NSString *listName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
+    NSNumber *listId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
+    
+    [[cell textLabel] setText:listName];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     
-    if (NSNotFound!=[self.selectedList indexOfObject:[NSNumber numberWithInt:row]]) {
+    BOOL found = NO;
+    for(NSDictionary *dictionary in self.selectedList)
+    {
+        if ([listId intValue] == [[[dictionary allKeys] objectAtIndex:0] intValue]) {
+            found = YES;
+            break;
+        }
+    }
+    
+    //if (NSNotFound==[self.selectedList indexOfObject:pair]) {
+    if (!found) {
+        //cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = nil;
+    }else {
         //cell.accessoryType = UITableViewCellAccessoryCheckmark;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(80, 10, 32, 32)];
         [imageView setImage:[UIImage imageNamed:@"select_btn_1"]];
         cell.accessoryView = imageView;
         [imageView release];
-    }else {
-        //cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accessoryView = nil;
     }
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -123,22 +136,39 @@
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumber *row = [NSNumber numberWithInt:[indexPath row]];
-    
+    NSDictionary *selectedDictionary = [self.dataList objectAtIndex:indexPath.row];
+    NSNumber *selectedId = [[selectedDictionary allKeys] objectAtIndex:0];
+    NSString *selectedName = [[selectedDictionary allValues] objectAtIndex:0];
+
+    NSLog(@"selectedRow: %d", indexPath.row);
+    NSLog(@"selectedId: %d", [selectedId intValue]);
+    NSLog(@"selectedName: %@", selectedName);
+
+
+
     if(self.multiOptions == YES){
-        if(NSNotFound == [self.selectedList indexOfObject:row])
+        BOOL found = NO;
+        for(NSDictionary *dictionary in self.selectedList)
         {
-            [self.selectedList addObject:row];
+            if ([selectedId intValue] == [[[dictionary allKeys] objectAtIndex:0] intValue]) {
+                found = YES;
+                break;
+            }
+        }
+        
+        if(!found)
+        {
+            [self.selectedList addObject:selectedDictionary];
         }
         else {
-            [self.selectedList removeObject:row];
+            [self.selectedList removeObject:selectedDictionary];
         }
         
         [tableView1 reloadData];
     }
     else{
         [self.selectedList removeAllObjects];
-        [self.selectedList addObject:row];
+        [self.selectedList addObject:selectedDictionary];
         
         [tableView1 reloadData];
     }
@@ -148,6 +178,10 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
     [delegate didSelectFinish:self.selectedList];
+    
+//    for (NameIdPair *pair in self.selectedList) {
+//        NSLog(@"you select: %@", pair.name);
+//    }
 }
 
 @end

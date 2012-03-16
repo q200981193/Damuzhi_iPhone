@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
+#import "CommonPlaceListController.h"
 
 @interface MainController : PPViewController
+{
+    CommonPlaceListController *_spotListComtroller;
+}
 
 - (IBAction)clickSpotButton:(id)sender;
 - (IBAction)clickCityOverviewButton:(id)sender;

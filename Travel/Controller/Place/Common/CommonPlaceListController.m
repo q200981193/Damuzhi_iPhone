@@ -11,6 +11,9 @@
 #import "PlaceManager.h"
 #import "PlaceService.h"
 #import "PlaceMapViewController.h"
+#import "SelectController.h"
+#import "AppManager.h"
+#import "CommonPlace.h"
 
 @implementation CommonPlaceListController
 
@@ -18,12 +21,18 @@
 @synthesize placeListHolderView;
 @synthesize placeListController;
 @synthesize filterHandler = _filterHandler;
+@synthesize currentFilterAction = _currentFilterAction;
+
+@synthesize selectedCategoryList = _selectCategoryList;
+@synthesize selectedSortList = _selectedSortList;
 
 - (void)dealloc {
     [_filterHandler release];
     [placeListController release];
     [buttonHolderView release];
     [placeListHolderView release];
+    [_selectedSortList release];
+    [_selectedCategoryList release];
     [super dealloc];
 }
 
@@ -31,6 +40,8 @@
 {
     self = [super init];
     self.filterHandler = handler;
+    self.selectedCategoryList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedSortList = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -109,5 +120,64 @@
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
+
+- (void)clickCategoryButton:(id)sender
+{
+    NSMutableArray *subCategories = [[NSMutableArray alloc] init];    
+    [subCategories addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:-1]]];
+    
+    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[_filterHandler getCategoryId]]) {
+        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategoryPair.name 
+                                                             forKey:[NSNumber numberWithInt:subCategoryPair.id]]];
+    }
+    
+    self.currentFilterAction = PLACE_TYPE_SPOT;
+    SelectController* selectController = [SelectController createController:subCategories
+                                                               selectedList:self.selectedCategoryList 
+                                                               multiOptions:YES];
+    
+    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"分类")];
+    
+    [self.navigationController pushViewController:selectController animated:YES];
+    selectController.delegate = self;
+        
+    NSLog(@"<clickCategoryButton>");
+}
+
+- (void)clickSortButton:(id)sender
+{
+    self.currentFilterAction = PLACE_TYPE_SPOT;
+    SelectController* selectController = [SelectController createController:
+                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedList:self.selectedSortList 
+                                                               multiOptions:NO];
+    
+    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"排序")];
+    
+    [self.navigationController pushViewController:selectController animated:YES];
+    selectController.delegate = self;
+    
+    NSLog(@"<clickSortButton>");
+}
+
+- (void)didSelectFinish:(NSArray*)selectedList
+{ 
+//    [_filterHandler findPlacesByCategory:
+//                              priceIndex: 
+//                                areaList:nil
+//                     providedServiceList:nil
+//                             cuisineList:nil
+//                                  sortBy:];
+//    
+    //TODO
+//    switch (currentFilterAction) {
+//        case <#constant#>:
+//            <#statements#>
+//            break;
+//            
+//        default:
+//            break;
+//    }
+}
+
 
 @end

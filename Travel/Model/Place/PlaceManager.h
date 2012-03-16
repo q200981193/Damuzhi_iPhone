@@ -9,11 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CommonService.h"
 #import "Place.pb.h"
+#import "CommonPlace.h"
 
-enum{
-    PLACE_TYPE_SPOT = 1,
-    PLACE_TYPE_HOTEL = 2
-};
 
 @interface PlaceManager : NSObject<CommonManagerProtocol>
 {

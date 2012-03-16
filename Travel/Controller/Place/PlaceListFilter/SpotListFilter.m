@@ -41,21 +41,23 @@
 
 - (void)clickCategoryButton:(id)sender
 {
-    //SelectController* selectController = [SelectController createController:[[AppManager defaultManager] getSubCategories:1]];  
-    NSArray *subCategoryNames = [[AppManager defaultManager] getSubCategoryNames:1];
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:@"全部"];
-    for (NSString *string in subCategoryNames) {
-        [array addObject:string];
+    NameIdPair_Builder* pairBuilder = [[[NameIdPair_Builder alloc] init] autorelease];    
+    [pairBuilder setName:NSLS(@"全部")];
+    [pairBuilder setId:-1];
+    NameIdPair *pair = [pairBuilder build];
+    
+    NSMutableArray *subCategories = [[[NSMutableArray alloc] init] autorelease];
+    [subCategories addObject:pair];
+    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[self getCategoryId]]) {
+        [subCategories addObject:subCategoryPair];
     }
     
-    SelectController* selectController = [SelectController createController:array selectedList:self.selectedCategoryList multiOptions:YES];
+    SelectController* selectController = [SelectController createController:subCategories selectedList:self.selectedCategoryList multiOptions:YES];
     
     selectController.navigationItem.title = @"景点分类";
     
     [controller.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
-    
     
     NSLog(@"click category button");
 }
@@ -74,6 +76,18 @@
     
 }
 
+#pragma Protocol Implementations
+
+- (int)getCategoryId
+{
+    return PLACE_TYPE_SPOT; // TODO change to constants
+}
+
+- (NSString*)getCategoryName
+{
+    return NSLS(@"景点");
+}
+
 - (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController *)filteController
 {
     superView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]];
@@ -81,11 +95,18 @@
     CGRect frame1 = CGRectMake(0, 0, 58, 36);
     CGRect frame2 = CGRectMake(58, 0, 58, 36);
     
-    UIButton *buttonCategory = [self createFilterButton:frame1 title:@"分类" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-    [buttonCategory addTarget:self action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *buttonCategory = [self createFilterButton:frame1 title:NSLS(@"分类") bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
+//    [buttonCategory addTarget:self action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *buttonSort = [self createFilterButton:frame2 title:@"排序" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-    [buttonSort addTarget:self action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *buttonSort = [self createFilterButton:frame2 title:NSLS(@"排序") bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
+    
+    [buttonSort addTarget:filteController
+                   action:@selector(clickSortButton:) 
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    [buttonCategory addTarget:filteController 
+                       action:@selector(clickCategoryButton:) 
+             forControlEvents:UIControlEventTouchUpInside];
     
     [superView addSubview:buttonCategory];
     [superView addSubview:buttonSort];
@@ -108,6 +129,20 @@
 {
     return [[PlaceService defaultService] findAllSpots:viewController];
 }
+
+- (void)findPlacesByCategory:(NSArray*)categoryList 
+                  priceIndex:(int)priceIndex 
+                    areaList:(NSArray*)areaList 
+         providedServiceList:(NSArray*)providedServiceList
+                 cuisineList:(NSArray*)cuisineList
+                      sortBy:(int)sortBy
+{
+    //TODO
+    
+    //return [PlaceService defaultService] findAllSpots:<#(PPViewController<PlaceServiceDelegate> *)#>;
+}
+
+
 
 - (void)didSelectFinish:(NSArray*)selectedList
 {

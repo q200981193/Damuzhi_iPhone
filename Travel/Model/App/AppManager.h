@@ -15,7 +15,7 @@
 
 @interface AppManager : NSObject<CommonManagerProtocol>
 {
-    App* _app;
+    App* _app;    
 }
 
 @property (retain, nonatomic) App *app;
@@ -30,8 +30,7 @@
 - (NSArray*)getCityList;
 - (NSString*)getAppVersion;
 - (NSArray*)getSubCategories:(int32_t)categoryId;
-- (NSArray*)getSubCategoryNames:(int32_t)categoryId;
-
+- (NSArray*)getSortOptions:(int32_t)categoryId;
 
 - (int)getCurrentCityId;
 - (void)setCurrentCityId:(int)newCity;

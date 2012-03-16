@@ -38,6 +38,15 @@
 //    NSString *string = @"天啊";
 //    NSLog(@"string length is %d", string.length);
     
+    //–insert a delay of 5 seconds before the splash screen disappears–
+    [NSThread sleepForTimeInterval:3.0];
+    
+    //show welcome piture
+    UIImageView *welcomeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"welcome.jpg"]];
+    [self.window addSubview:welcomeView];
+    [welcomeView release];
+
+        
     // init app data
     [[AppService defaultService] loadAppData]; 
     
@@ -48,7 +57,6 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.mainController = [[[MainController alloc] initWithNibName:@"MainController" bundle:nil] autorelease];
-
     
     UINavigationController* navigationController = [[[UINavigationController alloc] initWithRootViewController:self.mainController] autorelease];
     self.mainController.navigationItem.title = NSLS(@"大拇指旅行");

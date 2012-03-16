@@ -27,6 +27,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_spotListComtroller release];
+    [super dealloc];
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -98,12 +104,13 @@
 }
 
 - (IBAction)clickSpotButton:(id)sender {
+    if(_spotListComtroller == nil)
+    {
+        _spotListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
+                                                 [SpotListFilter createFilter]];
+    }
     
-    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                                             [SpotListFilter createFilter]];
-
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];    
+    [self.navigationController pushViewController:_spotListComtroller animated:YES];
 }
 
 - (IBAction)clickCityOverviewButton:(id)sender
