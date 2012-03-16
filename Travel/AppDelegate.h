@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPApplication.h"
 
 @class MainController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : PPApplication <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

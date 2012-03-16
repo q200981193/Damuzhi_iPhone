@@ -14,6 +14,8 @@
 #import "LogUtil.h"
 #import "ASIHTTPRequest.h"
 #import "FileUtil.h"
+#import "PPApplication.h"
+
 
 @implementation SpotCell
 @synthesize nameLabel;
@@ -76,10 +78,10 @@
     return;
 }
 
-
-#define DESTANCE_BETWEEN_SERVICE_IMAGES 18
-#define WIDTH_OF_SERVICE_IMAGE 15
-#define HEIGHT_OF_SERVICE_IMAGE 15
+#define DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL 5
+#define DESTANCE_BETWEEN_SERVICE_IMAGES 15
+#define WIDTH_OF_SERVICE_IMAGE 11
+#define HEIGHT_OF_SERVICE_IMAGE 11
 -(void)setSeviceImage:(NSMutableArray*)serviceIdList
 {
     NSArray* views = self.contentView.subviews;
@@ -98,9 +100,16 @@
         
         PPDebug(@"image = %@", imageName);
 
-        CGRect rect = CGRectMake(categoryLable.frame.origin.x+categoryLable.frame.size.width+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.frame.origin.y, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
+//        CGRect rect = CGRectMake(categoryLable.frame.origin.x+categoryLable.frame.size.width+i*DESTANCE_BETWEEN_SERVICE_IMAGES,
+//                                 categoryLable.frame.origin.y+categoryLable.frame.size.height-HEIGHT_OF_SERVICE_IMAGE, 
+//                                 WIDTH_OF_SERVICE_IMAGE, 
+//                                 HEIGHT_OF_SERVICE_IMAGE);
+        
+        CGRect rect = CGRectMake(0, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
         
         UIImageView *serviceImageView = [[UIImageView alloc] initWithFrame:rect];
+        serviceImageView.center = CGPointMake(categoryLable.center.x+categoryLable.frame.size.width/2+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.center.y); 
+        
         [serviceImageView setImage:image];
         
         [self.contentView addSubview:serviceImageView];
@@ -110,10 +119,37 @@
 
 }
 
+- (void)setPlaceIcon:(Place*)place
+{
+    if ([[place icon] isAbsolutePath]){
+    //if (YES){
+        // local files, read image locally
+        
+    }
+    else{
+        self.imageView.callbackOnSetImage = self;
+        [self.imageView clear];
+        self.imageView.url = [NSURL URLWithString:[place icon]];
+        PPDebug(@"load place image from URL %@", [place icon]);
+        [GlobalGetImageCache() manage:self.imageView];
+    }
+}
+
+- (void) managedImageSet:(HJManagedImageV*)mi
+{
+}
+
+- (void) managedImageCancelled:(HJManagedImageV*)mi
+{
+}
+
 - (void)setCellDataByPlace:(Place*)place
 { 
     self.nameLabel.text = [place name];
-    self.imageView.image = [UIImage imageNamed:[place icon]];
+    
+    
+    [self setPlaceIcon:place];
+    
     self.priceLable.text = [place price];
     self.areaLable.text = [NSString  stringWithInt:[place areaIdAtIndex:0]];
     self.categoryLable.text = [[AppManager defaultManager] 

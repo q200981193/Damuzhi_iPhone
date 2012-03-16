@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonPlaceCell.h"
+#import "HJManagedImageV.h"
 
-@interface SpotCell : CommonPlaceCell
+@interface SpotCell : CommonPlaceCell<HJManagedImageVDelegate>
 
 + (SpotCell*)createCell:(id)delegate;
 + (NSString*)getCellIdentifier;
@@ -20,7 +21,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *distanceLable;
 @property (retain, nonatomic) IBOutlet UILabel *areaLable;
 @property (retain, nonatomic) IBOutlet UILabel *categoryLable;
-@property (retain, nonatomic) IBOutlet UIImageView *imageView;
+@property (retain, nonatomic) IBOutlet HJManagedImageV *imageView;
 @property (retain, nonatomic) IBOutlet UIImageView *praise1View;
 @property (retain, nonatomic) IBOutlet UIImageView *praise2View;
 @property (retain, nonatomic) IBOutlet UIImageView *praise3View;

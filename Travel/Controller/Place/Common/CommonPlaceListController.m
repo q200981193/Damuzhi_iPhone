@@ -145,7 +145,6 @@
 {
     PlaceMapViewController* controller = [[PlaceMapViewController alloc] init];
     //设置Places
-//    [controller setPlaces:nil];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

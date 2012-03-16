@@ -98,7 +98,7 @@
 	// return [self getRowHeight:indexPath.row totalRow:[dataList count]];
 	// return cellImageHeight;
 	
-	return 82;
+	return 76;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -145,6 +145,11 @@
 	}
 	
     CommonPlaceCell* placeCell = (CommonPlaceCell*)cell;
+    
+    //[placeCell setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]]];
+    UIImageView *view = [[UIImageView alloc] init];
+    [view setImage:[UIImage imageNamed:@"li_bg.png"]];
+    [placeCell setBackgroundView:view];
     [placeCell setCellDataByPlace:place];
     
 	return cell;	

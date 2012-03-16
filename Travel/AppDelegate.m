@@ -35,8 +35,7 @@
         GlobalSetNavBarBackground(@"top_live.png");        
     }
     
-//    NSString *string = @"天啊";
-//    NSLog(@"string length is %d", string.length);
+    [self initImageCacheManager];
     
     //–insert a delay of 5 seconds before the splash screen disappears–
     [NSThread sleepForTimeInterval:3.0];
