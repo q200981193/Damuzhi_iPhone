@@ -87,8 +87,6 @@ static AppService* _defaultAppService = nil;
         });
         
         // TODO , performance can be improved by add sperate working queue for download
-        
-        
         if (output.resultCode == ERROR_SUCCESS){
             NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
             for (PlaceMeta *placeMeta in placeMetas) {

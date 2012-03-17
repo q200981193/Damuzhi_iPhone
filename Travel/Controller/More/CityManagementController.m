@@ -102,8 +102,7 @@
 
 - (void)viewDidLoad
 {
-    self.dataList = [[AppManager defaultManager] getCityList];
-    //self.downloadList = [[AppManager defaultManager] getCityList];
+    self.dataList = [[[AppManager defaultManager] app] cityListList];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
