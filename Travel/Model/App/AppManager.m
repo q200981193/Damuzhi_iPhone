@@ -100,9 +100,6 @@ static AppManager* _defaultAppManager = nil;
     return[placeMeta subCategoryListList];
 }
 
-
-
-
 - (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId
 {
     PlaceMeta *placeMeta = [self findPlaceMeta:categoryId];
@@ -170,23 +167,6 @@ static AppManager* _defaultAppManager = nil;
                                                            forKey:[NSNumber numberWithInt:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR]]];
     [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"门票价格高到低") 
                                                            forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP]]];
-//    NSMutableArray *spotSortOptions = [[[NSMutableArray alloc] init] autorelease];
-//    
-//    NameIdPair_Builder* pairBuilder1 = [[[NameIdPair_Builder alloc] init] autorelease]; 
-//    [pairBuilder1 setName:NSLS(@"大拇指推荐")];
-//    [pairBuilder1 setId:1];
-//    [spotSortOptions addObject:[pairBuilder1 build]];
-//    
-//    NameIdPair_Builder* pairBuilder2 = [[[NameIdPair_Builder alloc] init] autorelease]; 
-//    [pairBuilder2 setName:NSLS(@"距离近至远")];
-//    [pairBuilder2 setId:2];
-//    [spotSortOptions addObject:[pairBuilder2 build]];
-//
-//    
-//    NameIdPair_Builder* pairBuilder3 = [[[NameIdPair_Builder alloc] init] autorelease]; 
-//    [pairBuilder3 setName: NSLS(@"门票价格高到低")];
-//    [pairBuilder3 setId:3];
-//    [spotSortOptions addObject:[pairBuilder3 build]];
     
     return spotSortOptions;
 }

@@ -91,7 +91,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             [viewController findRequestDone:resultCode dataList:list];
         });
     }];
-
 }
 
 #pragma mark - 

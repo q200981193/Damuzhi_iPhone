@@ -91,13 +91,13 @@
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="695475942">
+								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">1</int>
-									<double key="pointSize">12</double>
+									<double key="pointSize">11</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="263693224">
+								<object class="NSFont" key="IBUIFont">
 									<string key="NSName">Helvetica</string>
-									<double key="NSSize">12</double>
+									<double key="NSSize">11</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -120,8 +120,15 @@
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">2</int>
-								<reference key="IBUIFontDescription" ref="695475942"/>
-								<reference key="IBUIFont" ref="263693224"/>
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="695475942">
+									<int key="type">1</int>
+									<double key="pointSize">12</double>
+								</object>
+								<object class="NSFont" key="IBUIFont" id="26253176">
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">12</double>
+									<int key="NSfFlags">16</int>
+								</object>
 							</object>
 							<object class="IBUILabel" id="400269302">
 								<reference key="NSNextResponder" ref="609629750"/>
@@ -142,7 +149,7 @@
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">2</int>
 								<reference key="IBUIFontDescription" ref="695475942"/>
-								<reference key="IBUIFont" ref="263693224"/>
+								<reference key="IBUIFont" ref="26253176"/>
 							</object>
 							<object class="IBUILabel" id="892114033">
 								<reference key="NSNextResponder" ref="609629750"/>
@@ -164,7 +171,7 @@
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">2</int>
 								<reference key="IBUIFontDescription" ref="695475942"/>
-								<reference key="IBUIFont" ref="263693224"/>
+								<reference key="IBUIFont" ref="26253176"/>
 							</object>
 							<object class="IBUIImageView" id="243949427">
 								<reference key="NSNextResponder" ref="609629750"/>
@@ -210,7 +217,7 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIView" id="801846993">
+							<object class="IBUIView" id="1022057312">
 								<reference key="NSNextResponder" ref="609629750"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{0, 1}, {100, 75}}</string>
@@ -231,7 +238,7 @@
 						<string key="NSFrameSize">{320, 76}</string>
 						<reference key="NSSuperview" ref="503030138"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="801846993"/>
+						<reference key="NSNextKeyView" ref="1022057312"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
@@ -339,7 +346,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">imageView</string>
 						<reference key="source" ref="503030138"/>
-						<reference key="destination" ref="801846993"/>
+						<reference key="destination" ref="1022057312"/>
 					</object>
 					<int key="connectionID">44</int>
 				</object>
@@ -374,7 +381,7 @@
 							<reference ref="864344011"/>
 							<reference ref="400269302"/>
 							<reference ref="454132331"/>
-							<reference ref="801846993"/>
+							<reference ref="1022057312"/>
 							<reference ref="243949427"/>
 							<reference ref="541970868"/>
 						</array>
@@ -432,7 +439,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">43</int>
-						<reference key="object" ref="801846993"/>
+						<reference key="object" ref="1022057312"/>
 						<reference key="parent" ref="503030138"/>
 					</object>
 				</array>

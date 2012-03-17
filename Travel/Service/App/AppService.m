@@ -69,7 +69,6 @@ static AppService* _defaultAppService = nil;
 - (void)updateAppData
 {        
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-       
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_APP_DATA lang:LANGUAGE_SIMPLIFIED_CHINESE];
         TravelResponse *travelResponse = nil;
         if (output.resultCode == ERROR_SUCCESS){
