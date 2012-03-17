@@ -133,7 +133,9 @@
         [self.selectedCategoryIds addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
         [self.selectedSortIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
         list = [self filterAndSort:list];
-        self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
+        self.placeListController = [PlaceListController createController:list 
+                                                               superView:placeListHolderView
+                                                         superController:self];    
     }
     else{
         list = [self filterAndSort:list];
