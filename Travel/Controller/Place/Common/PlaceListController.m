@@ -11,16 +11,24 @@
 #import "PlaceManager.h"
 #import "SpotCell.h"
 #import "CommonPlaceDetailController.h"
+#import "PlaceMapViewController.h"
+
+@interface PlaceListController () 
+
+- (void)updateViewByMode;
+
+@end
 
 @implementation PlaceListController
-@synthesize mapView = _mapView;
+
 @synthesize locationLabel = _locationLabel;
 @synthesize mapHolderView = _mapHolderView;
 @synthesize superController = _superController;
+@synthesize mapViewController = _mapViewController;
 
 - (void)dealloc
 {
-    [_mapView release];
+    [_mapViewController release];
     [_locationLabel release];
     [_mapHolderView release];
     [super dealloc];
@@ -31,6 +39,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _showMap = NO;
     }
     return self;
 }
@@ -47,22 +56,24 @@
 
 - (void)viewDidLoad
 {
+    // create & add map view
+    self.mapHolderView.hidden = YES;
+    self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
+    self.mapViewController.view.frame = self.mapHolderView.bounds;
+    [self.mapHolderView addSubview:self.mapViewController.view];
+    
+//    NSLog(@"map holder view frame = %@", NSStringFromCGRect(self.mapHolderView.frame));
+//    NSLog(@"map view controller frame = %@", NSStringFromCGRect(self.mapViewController.view.frame));
+    
+    
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    if (_showMap){
-        _mapHolderView.hidden = NO;
-        dataTableView.hidden = YES;
-    }
-    else{
-        _mapHolderView.hidden = YES;
-        dataTableView.hidden = NO;
-    }
+    [self updateViewByMode];
 }
 
 - (void)viewDidUnload
 {
-    [self setMapView:nil];
     [self setLocationLabel:nil];
     [self setMapHolderView:nil];
     [super viewDidUnload];
@@ -81,16 +92,17 @@
                          superController:(UIViewController*)superController
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
+    controller.view.frame = superView.bounds;
     controller.superController = superController;
     [superView addSubview:controller.view];
-    controller.view.frame = superView.bounds;
     [controller setAndReloadPlaceList:list];    
-    [controller viewDidLoad];
     return controller;
 }
 
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
+    [self.mapViewController setPlaces:list];
+    
     self.dataList = list;
     [self.dataTableView reloadData];
 }
@@ -169,6 +181,31 @@
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 
+}
+
+- (void)updateViewByMode
+{    
+    
+    if (_showMap){
+        _mapHolderView.hidden = NO;
+        dataTableView.hidden = YES;
+    }
+    else{
+        _mapHolderView.hidden = YES;
+        dataTableView.hidden = NO;
+    }    
+}
+
+- (void)switchToMapMode
+{
+    _showMap = YES;
+    [self updateViewByMode];
+}
+
+- (void)switchToListMode
+{
+    _showMap = NO;
+    [self updateViewByMode];
 }
 
 

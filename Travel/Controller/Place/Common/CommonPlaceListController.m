@@ -143,12 +143,22 @@
     }    
 }
 
+- (void)updateModeButton
+{
+    // set button text by _showMap flag
+}
+
 - (IBAction)clickMapButton:(id)sender
 {
-    PlaceMapViewController* controller = [[PlaceMapViewController alloc] init];
-    //设置Places
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+    if (_showMap){
+        [self.placeListController switchToListMode];
+    }
+    else{
+        [self.placeListController switchToMapMode];
+    }
+    
+    _showMap = !_showMap;
+    [self updateModeButton];
 }
 
 - (void)clickCategoryButton:(id)sender

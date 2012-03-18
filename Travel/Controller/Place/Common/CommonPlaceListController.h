@@ -43,6 +43,7 @@
     NSMutableArray *_selectedServiceIds;
     NSMutableArray *_selectedCuisineIds;
     
+    BOOL _showMap;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;

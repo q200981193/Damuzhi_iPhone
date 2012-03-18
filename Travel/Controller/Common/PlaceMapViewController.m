@@ -158,13 +158,15 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"map view frame = %@", NSStringFromCGRect(self.view.frame));
+    
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   // also MKMapTypeSatellite or MKMapTypeHybrid
     self.mapView.showsUserLocation = YES;
-    self.mapAnnotations = [[NSMutableArray alloc]init];
+    self.mapAnnotations = [[[NSMutableArray alloc]init] autorelease];
     
     //for real
 //    if (_placeList && _placeList.count > 0) {
