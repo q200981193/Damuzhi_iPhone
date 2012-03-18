@@ -56,19 +56,14 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     // create & add map view
     self.mapHolderView.hidden = YES;
     self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
     self.mapViewController.view.frame = self.mapHolderView.bounds;
     [self.mapHolderView addSubview:self.mapViewController.view];
-    
-//    NSLog(@"map holder view frame = %@", NSStringFromCGRect(self.mapHolderView.frame));
-//    NSLog(@"map view controller frame = %@", NSStringFromCGRect(self.mapViewController.view.frame));
-    
-    
-    [super viewDidLoad];
-    
-    // Do any additional setup after loading the view from its nib.
+        
     [self updateViewByMode];
 }
 
@@ -77,8 +72,6 @@
     [self setLocationLabel:nil];
     [self setMapHolderView:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -102,9 +95,10 @@
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
     [self.mapViewController setPlaces:list];
-    
     self.dataList = list;
+    
     [self.dataTableView reloadData];
+    [self.mapViewController setPlaces:list];
 }
 
 #pragma mark -
@@ -168,7 +162,6 @@
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
     [placeCell setCellDataByPlace:place];
-    
 	return cell;	
 }
 
