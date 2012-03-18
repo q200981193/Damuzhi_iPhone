@@ -34,6 +34,7 @@
 #define PARA_TRAVEL_ID              @"id"
 
 #define PARA_TRAVEL_CITY_ID         @"cityId"
+#define PARA_TRAVEL_ID              @"id"
 #define PARA_TRAVEL_LANG            @"lang"
 
 // define query object type

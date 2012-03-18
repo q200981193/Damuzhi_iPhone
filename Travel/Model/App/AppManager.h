@@ -23,16 +23,30 @@
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;
 
--(PlaceMeta*)findPlaceMeta:(int32_t)categoryId;
+- (NSString*)getAppDataVersion;
+- (NSString*)getHelpHtml;
 
-- (NSString*)getSubCategoryName:(int32_t)categoryId subCategoryId:(int32_t)subCategoryId;
-- (NSString*)getServiceImage:(int32_t)categoryId providedServiceId:(int32_t)providedServiceId;
-- (NSArray*)getCityList;
-- (NSString*)getAppVersion;
-- (NSArray*)getSubCategories:(int32_t)categoryId;
-- (NSArray*)getSortOptions:(int32_t)categoryId;
+- (NSArray*)getCityNameList;
+- (NSArray*)getTestCityNameList;
+
+- (NSString*)getCityName:(int)cityId;
+- (NSString*)getCityLatestVersion:(int)cityId;
+
+- (NSArray*)getPlaceName:(int)categoryId;
+- (NSArray*)getSubCategoryList:(int)categoryId;
+- (NSArray*)getProvidedServiceList:(int)categoryId;
+
+- (NSArray*)getSubCategotyNameList:(int)categoryId;
+- (NSArray*)getProvidedServiceNameList:(int)categoryId;
+- (NSArray*)getProvidedServiceIconList:(int)categoryId;
+
+- (NSString*)getSubCategotyName:(int)categoryId subCategoryId:(int)subCategoryId;
+- (NSString*)getProvidedServiceName:(int)categoryId providedServiceId:(int)providedServiceId;
+- (NSString*)getProvidedServiceIcon:(int)categoryId providedServiceId:(int)providedServiceId;
 
 - (int)getCurrentCityId;
 - (void)setCurrentCityId:(int)newCity;
+
+- (NSArray*)getSortOptionList:(int)categoryId;
 
 @end

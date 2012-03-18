@@ -133,7 +133,9 @@
         [self.selectedCategoryIds addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
         [self.selectedSortIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
         list = [self filterAndSort:list];
-        self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
+        self.placeListController = [PlaceListController createController:list 
+                                                               superView:placeListHolderView
+                                                         superController:self];    
     }
     else{
         list = [self filterAndSort:list];
@@ -154,10 +156,15 @@
     NSMutableArray *subCategories = [[NSMutableArray alloc] init];    
     [subCategories addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:-1]]];
     
-    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[_filterHandler getCategoryId]]) {
-        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategoryPair.name 
-                                                             forKey:[NSNumber numberWithInt:subCategoryPair.id]]];
+    for (NameIdPair *subCategory in [[[AppManager defaultManager] getPlaceMeta:[_filterHandler getCategoryId]] subCategoryListList]) {
+        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategory.name 
+                                                             forKey:[NSNumber numberWithInt:subCategory.id]]];
     }
+    
+//    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[_filterHandler getCategoryId]]) {
+//        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategoryPair.name 
+//                                                             forKey:[NSNumber numberWithInt:subCategoryPair.id]]];
+//    }
     
     SelectController* selectController = [SelectController createController:subCategories
                                                                selectedIds:self.selectedCategoryIds 
@@ -173,9 +180,14 @@
 
 - (void)clickSortButton:(id)sender
 {
+//    SelectController* selectController = [SelectController createController:
+//                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
+//                                                               multiOptions:NO];
+    
     SelectController* selectController = [SelectController createController:
-                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
+                                          [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
                                                                multiOptions:NO];
+
     
     selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"排序")];
     

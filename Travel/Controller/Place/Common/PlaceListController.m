@@ -13,15 +13,16 @@
 #import "CommonPlaceDetailController.h"
 
 @implementation PlaceListController
-@synthesize mapView;
-@synthesize locationLabel;
-@synthesize mapHolderView;
+@synthesize mapView = _mapView;
+@synthesize locationLabel = _locationLabel;
+@synthesize mapHolderView = _mapHolderView;
+@synthesize superController = _superController;
 
 - (void)dealloc
 {
-    [mapView release];
-    [locationLabel release];
-    [mapHolderView release];
+    [_mapView release];
+    [_locationLabel release];
+    [_mapHolderView release];
     [super dealloc];
 }
 
@@ -50,11 +51,11 @@
     
     // Do any additional setup after loading the view from its nib.
     if (_showMap){
-        mapHolderView.hidden = NO;
+        _mapHolderView.hidden = NO;
         dataTableView.hidden = YES;
     }
     else{
-        mapHolderView.hidden = YES;
+        _mapHolderView.hidden = YES;
         dataTableView.hidden = NO;
     }
 }
@@ -75,9 +76,12 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-+ (PlaceListController*)createController:(NSArray*)list superView:(UIView*)superView
++ (PlaceListController*)createController:(NSArray*)list 
+                               superView:(UIView*)superView
+                         superController:(UIViewController*)superController
 {
-    PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];    
+    PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
+    controller.superController = superController;
     [superView addSubview:controller.view];
     controller.view.frame = superView.bounds;
     [controller setAndReloadPlaceList:list];    
@@ -158,10 +162,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
-    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[dataList objectAtIndex:[indexPath row]]];
-    [self.navigationController pushViewController:controller animated:YES];
-
+    CommonPlaceDetailController* controller = [[CommonPlaceDetailController alloc] init];
+    [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
