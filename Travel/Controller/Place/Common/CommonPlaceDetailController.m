@@ -59,26 +59,72 @@
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     [imageHolderView addSubview:slideImageView];  
     
-    // add image array
-    NSArray* imagePathArray = [self.place imagesList];
-    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
-    for (NSString* imagePath in imagePathArray){
-        NSLog(@"%@", imagePath);
-        [images addObject:[UIImage imageNamed:imagePath]];
-    }
-    [slideImageView setImages:images];
+//    // add image array
+//    NSArray* imagePathArray = [self.place imagesList];
+//    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
+//    for (NSString* imagePath in imagePathArray){
+//        NSLog(@"%@", imagePath);
+//        [images addObject:[UIImage imageNamed:imagePath]];
+//    }
+//    [slideImageView setImages:images];
     
+    
+    [dataScrollView setContentSize:CGSizeMake(320, 460)];
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
-    UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 300, 320, 30)];
-//    telephoneLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@""];
-    NSString *tel = [[NSString alloc]initWithFormat:@"电话:"];
-
+    UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 350, 320, 20)];
+    telephoneLabel.font = [UIFont systemFontOfSize:12];
+    telephoneLabel.backgroundColor = [UIColor redColor];
+    NSString *tel = [[[NSString alloc]initWithFormat:@"电话:"] autorelease];
     NSArray *telephoneList = [self.place telephoneList];
-    for (NSString* tel in telephoneList) {
-        [tel stringByAppendingFormat:@" ", tel];
+    for (NSString* telephone in telephoneList) {
+        tel = [tel stringByAppendingFormat:@" ", telephone];
     }
     telephoneLabel.text = tel;
+    
+    [dataScrollView addSubview:telephoneLabel];
+    [telephoneLabel release];
+    
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 370, 320, 20)];
+    addressLabel.font = [UIFont systemFontOfSize:12];
+    addressLabel.backgroundColor = [UIColor greenColor];
+    NSString *addr = [[[NSString alloc]initWithFormat:@"地址:"] autorelease];
+    NSArray *addressList = [self.place addressList];
+    for (NSString* address in addressList) {
+        addr = [addr stringByAppendingFormat:@" ", address];
+    }
+    addressLabel.text = addr;
+    
+    [dataScrollView addSubview:addressLabel];
+    [addressLabel release];
+    
+    UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 390, 320, 20)];
+    websiteLabel.font = [UIFont systemFontOfSize:12];
+    websiteLabel.backgroundColor = [UIColor blueColor];
+    NSString *website = @"网站: ";
+    websiteLabel.text = [website stringByAppendingString:[self.place website]];
+    
+    [dataScrollView addSubview:websiteLabel];
+    [websiteLabel release];
+    
+    UIView *favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, 410, 320, 50)];
+    
+     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 5, 120, 20)];
+    [button setTitle:@"收藏本页" forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:12];
+    button.titleLabel.textColor = [UIColor whiteColor];
+    button.backgroundColor = [UIColor blueColor];
+    [favouritesView addSubview:button];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(120, 30, 100, 10)];
+    label.text = @"已有673人收藏";
+    label.font = [UIFont systemFontOfSize:12];
+    [favouritesView addSubview:label];
+    
+    [dataScrollView addSubview:favouritesView];
+    [label release];
+    [button release];
+    [favouritesView release];
 }
 
 - (void)viewDidUnload

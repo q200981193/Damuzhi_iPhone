@@ -362,6 +362,7 @@
 		CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FB614F73C1100471880 /* CommonInfoController.xib */; };
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
+		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -965,6 +966,7 @@
 		CA585FBA14F73C4900471880 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
 		CA585FBB14F73C4900471880 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
+		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2437,6 +2439,7 @@
 		CA585FA314F73B4500471880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */,
 				CA585FA414F73B5800471880 /* CommonPlaceListController.h */,
 				CA585FA514F73B5800471880 /* CommonPlaceListController.m */,
 				CA585FA614F73B5800471880 /* CommonPlaceListController.xib */,
@@ -2908,6 +2911,7 @@
 				A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */,
 				A48D6E5F1514470200507BDD /* CityOverviewService.m in Sources */,
 				A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */,
+				EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

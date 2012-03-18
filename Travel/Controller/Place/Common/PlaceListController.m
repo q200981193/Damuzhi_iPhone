@@ -162,9 +162,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CommonPlaceDetailController* controller = [[CommonPlaceDetailController alloc] init];
+//    CommonPlaceDetailController* controller = [[CommonPlaceDetailController alloc] init];
+    NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
+
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[dataList objectAtIndex:[indexPath row]]];
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
+
 }
 
 
