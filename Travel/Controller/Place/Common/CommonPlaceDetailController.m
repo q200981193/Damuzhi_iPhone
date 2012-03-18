@@ -12,6 +12,7 @@
 #import "CommonPlace.h"
 
 @implementation CommonPlaceDetailController
+@synthesize buttonHolerView;
 @synthesize imageHolderView;
 @synthesize dataScrollView;
 @synthesize place;
@@ -55,6 +56,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"topmenu_bg2"]];
 
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     [imageHolderView addSubview:slideImageView];  
@@ -69,7 +72,7 @@
 //    [slideImageView setImages:images];
     
     
-    [dataScrollView setContentSize:CGSizeMake(320, 460)];
+    [dataScrollView setContentSize:CGSizeMake(320, 500)];
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
     UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 350, 320, 20)];
@@ -132,6 +135,7 @@
     [self setImageHolderView:nil];
     [self setDataScrollView:nil];
     [self setPlace:nil];
+    [self setButtonHolerView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -147,6 +151,7 @@
     [imageHolderView release];
     [dataScrollView release];
     [place release];
+    [buttonHolerView release];
     [super dealloc];
 }
 @end

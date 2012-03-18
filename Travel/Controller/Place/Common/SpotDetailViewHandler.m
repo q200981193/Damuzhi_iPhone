@@ -64,7 +64,7 @@
     [dataScrollView addSubview:openTimeView];
     [openTimeView release];
     
-    UIView *transportView = [[UIView alloc]initWithFrame:CGRectMake(0, 210, 320, 50)];
+    UIView *transportView = [[UIView alloc]initWithFrame:CGRectMake(0, 210, 320, 70)];
     transportView.backgroundColor = [UIColor blueColor];
     UILabel *transportTitle = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 50, 20)];
     transportTitle.font = [UIFont systemFontOfSize:12];
@@ -81,7 +81,7 @@
     [dataScrollView addSubview:transportView];
     [transportView release];
 
-    UIView *tipsView = [[UIView alloc]initWithFrame:CGRectMake(0, 280, 320, 50)];
+    UIView *tipsView = [[UIView alloc]initWithFrame:CGRectMake(0, 280, 320, 70)];
     tipsView.backgroundColor = [UIColor greenColor];
     UILabel *tipsTitle = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 50, 20)];
     tipsTitle.font = [UIFont systemFontOfSize:12];

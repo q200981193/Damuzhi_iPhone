@@ -23,6 +23,7 @@
 
 @interface CommonPlaceDetailController : UIViewController
 
+@property (retain, nonatomic) IBOutlet UIView *buttonHolerView;
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 @property (retain, nonatomic) IBOutlet UIScrollView *dataScrollView;
 @property (retain, nonatomic) Place *place;
