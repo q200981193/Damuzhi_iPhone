@@ -18,6 +18,21 @@
 
 @interface SpotDetailViewHandler : NSObject<CommonPlaceDetailDataSourceProtocol> 
 
+@end
+
+@interface HotelDetailViewHandler : NSObject<CommonPlaceDetailDataSourceProtocol> 
+
+@end
+
+@interface RestaurantViewHandler : NSObject<CommonPlaceDetailDataSourceProtocol> 
+
+@end
+
+@interface ShoppingDetailViewHandler : NSObject<CommonPlaceDetailDataSourceProtocol> 
+
+@end
+
+@interface EntertainmentDetailViewHandler : NSObject<CommonPlaceDetailDataSourceProtocol> 
 
 @end
 

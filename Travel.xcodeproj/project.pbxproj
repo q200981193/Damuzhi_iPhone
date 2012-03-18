@@ -363,6 +363,10 @@
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
 		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
+		EAFC7E0F1515D15300CE20CF /* HotelDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E0E1515D15200CE20CF /* HotelDetailViewHandler.m */; };
+		EAFC7E121515D1FF00CE20CF /* RestaurantDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */; };
+		EAFC7E151515D22300CE20CF /* ShoppingDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */; };
+		EAFC7E181515D25300CE20CF /* EntertainmentDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -967,6 +971,10 @@
 		CA585FBB14F73C4900471880 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
 		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E0E1515D15200CE20CF /* HotelDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntertainmentDetailViewHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2439,6 +2447,10 @@
 		CA585FA314F73B4500471880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */,
+				EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */,
+				EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */,
+				EAFC7E0E1515D15200CE20CF /* HotelDetailViewHandler.m */,
 				EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */,
 				CA585FA414F73B5800471880 /* CommonPlaceListController.h */,
 				CA585FA514F73B5800471880 /* CommonPlaceListController.m */,
@@ -2912,6 +2924,10 @@
 				A48D6E5F1514470200507BDD /* CityOverviewService.m in Sources */,
 				A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */,
 				EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */,
+				EAFC7E0F1515D15300CE20CF /* HotelDetailViewHandler.m in Sources */,
+				EAFC7E121515D1FF00CE20CF /* RestaurantDetailViewHandler.m in Sources */,
+				EAFC7E151515D22300CE20CF /* ShoppingDetailViewHandler.m in Sources */,
+				EAFC7E181515D25300CE20CF /* EntertainmentDetailViewHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
