@@ -81,6 +81,20 @@
     [self.mapView setRegion:newRegion animated:YES];
 }
 
+- (void)gotoHongKong
+{
+    // start off by default in San Francisco
+    MKCoordinateRegion newRegion;
+    //guangzhou
+    newRegion.center.latitude = 22.30 ;
+    newRegion.center.longitude = 114.17;
+    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.longitudeDelta = 0.109863;
+    [self.mapView setRegion:newRegion animated:YES];
+}
+
+
+
 - (void)gotoPlaceWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
     MKCoordinateRegion newRegion;
@@ -156,30 +170,36 @@
     return [builder build];
 }
 
-- (void)viewDidLoad
+- (void) reloadAllAnnotations
 {
-    NSLog(@"map view frame = %@", NSStringFromCGRect(self.view.frame));
+    if (_placeList && _placeList.count > 0) {
+        for (Place *place in _placeList) {
+            PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place] autorelease];
+            [self.mapAnnotations addObject:placeAnnotation];
+//            NSLog(@"%@",[place latitude]);
+//            NSLog(@"%@",[place longitude]);
+        } 
+    }
+    [self.mapView removeAnnotations:self.mapView.annotations];  
+    [self.mapView addAnnotations:self.mapAnnotations];
     
+}
+
+- (void)viewDidLoad
+{    
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
-    self.mapView.mapType = MKMapTypeStandard;   // also MKMapTypeSatellite or MKMapTypeHybrid
+    self.mapView.mapType = MKMapTypeStandard;   
     self.mapView.showsUserLocation = YES;
     self.mapAnnotations = [[[NSMutableArray alloc]init] autorelease];
     
-    //for real
-//    if (_placeList && _placeList.count > 0) {
-//        for (Place *place in _placeList) {
-//            PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-//            [self.mapAnnotations addObject:placeAnnotation];
-//            
-//        } 
-//    }
+    [self reloadAllAnnotations];
     
-    Place *place = [self buildTestPlace:@"1"];
-    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-    [self.mapAnnotations addObject:placeAnnotation];
+//    Place *place = [self buildTestPlace:@"1"];
+//    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
+//    [self.mapAnnotations addObject:placeAnnotation];
 
     //for test
 //    CLLocationCoordinate2D location;
@@ -190,10 +210,10 @@
     
     //show all annotationviews
     //remove any annotations that exist
-    [self.mapView removeAnnotations:self.mapView.annotations];  
-    [self.mapView addAnnotations:self.mapAnnotations];
+//    [self.mapView removeAnnotations:self.mapView.annotations];  
+//    [self.mapView addAnnotations:self.mapAnnotations];
     
-    [self gotoLocation];
+    [self gotoHongKong];
 
     
 }
@@ -219,7 +239,8 @@
 
 - (void)setPlaces:(NSArray*)placeList
 {
-    
+    self.placeList = placeList;
+    [self reloadAllAnnotations];
 }
 
 #pragma mark -
