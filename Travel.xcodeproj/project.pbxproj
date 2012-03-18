@@ -335,6 +335,7 @@
 		CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FB614F73C1100471880 /* CommonInfoController.xib */; };
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
+		EA6BF21D1514892000612020 /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6BF21C1514891C00612020 /* SpotDetailViewHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -910,6 +911,7 @@
 		CA585FBA14F73C4900471880 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
 		CA585FBB14F73C4900471880 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
+		EA6BF21C1514891C00612020 /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2332,6 +2334,7 @@
 				CA238FC114FDCAAD00114175 /* PlaceListController.xib */,
 				CA238FC414FDCB0300114175 /* CommonPlaceCell.h */,
 				CA238FC514FDCB0400114175 /* CommonPlaceCell.m */,
+				EA6BF21C1514891C00612020 /* SpotDetailViewHandler.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2765,6 +2768,7 @@
 				A4EAFCCD150DB9BB003C35E5 /* AppService.m in Sources */,
 				A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */,
 				A43C31F315107A8E006A7FDD /* CityManager.m in Sources */,
+				EA6BF21D1514892000612020 /* SpotDetailViewHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

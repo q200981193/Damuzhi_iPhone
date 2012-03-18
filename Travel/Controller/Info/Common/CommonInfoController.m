@@ -12,11 +12,13 @@
 @implementation CommonInfoController
 
 @synthesize imageHolderView;
+@synthesize dataWebview;
 @synthesize dataSource;
 
 - (void)dealloc {
     [dataSource release];
     [imageHolderView release];
+    [dataWebview release];
     [super dealloc];
 }
 
@@ -63,15 +65,19 @@
     }
     [slideImageView setImages:images];
     
-    //[slideImageView setImages:images];
-    
+    NSURL *url = [NSURL URLWithString:[dataSource getHtmlFilePath]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSLog(@"load webview url = %@", [request description]);
+    if (request) {
+        [self.dataWebview loadRequest:request];
+    }
 
-    //[slideImageView setImages:images];
 }
 
 - (void)viewDidUnload
 {
     [self setImageHolderView:nil];
+    [self setDataWebview:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

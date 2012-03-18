@@ -30,6 +30,7 @@
              selectedCuisineIds:(NSArray*)selectedCuisineIds
                          sortBy:(NSNumber*)selectedSortId;
 
+
 @end
 
 @interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, SelectControllerDelegate>

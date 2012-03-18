@@ -10,6 +10,7 @@
 #import "Place.pb.h"
 #import "PlaceManager.h"
 #import "SpotCell.h"
+#import "CommonPlaceDetailController.h"
 
 @implementation PlaceListController
 @synthesize mapView;
@@ -157,7 +158,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[dataList objectAtIndex:[indexPath row]]];
+    [self.navigationController pushViewController:controller animated:YES];
+
+    [controller release];
 }
 
 
