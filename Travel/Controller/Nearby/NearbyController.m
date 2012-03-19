@@ -86,7 +86,8 @@
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
     self.placeListController = [PlaceListController createController:list 
-                                                           superView:self.placeListHolderView];
+                                                           superView:self.placeListHolderView
+                                                     superController:self];
 }
 
 - (IBAction)click500M:(id)sender {

@@ -168,6 +168,7 @@
 		CA238FEA14FF587B00114175 /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE514FF587B00114175 /* image4.jpg */; };
 		CA238FEB14FF587B00114175 /* image5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE614FF587B00114175 /* image5.jpg */; };
 		CA238FF314FF6A6C00114175 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FF214FF6A6C00114175 /* UserService.m */; };
+		CA3B573C1516324D00A93137 /* girl2.png in Resources */ = {isa = PBXBuildFile; fileRef = CA3B573B1516324D00A93137 /* girl2.png */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -362,6 +363,11 @@
 		CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FB614F73C1100471880 /* CommonInfoController.xib */; };
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
+		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
+		EAFC7E0F1515D15300CE20CF /* HotelDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E0E1515D15200CE20CF /* HotelDetailViewHandler.m */; };
+		EAFC7E121515D1FF00CE20CF /* RestaurantDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */; };
+		EAFC7E151515D22300CE20CF /* ShoppingDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */; };
+		EAFC7E181515D25300CE20CF /* EntertainmentDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -593,6 +599,7 @@
 		CA238FE614FF587B00114175 /* image5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image5.jpg; sourceTree = "<group>"; };
 		CA238FF114FF6A6C00114175 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
 		CA238FF214FF6A6C00114175 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
+		CA3B573B1516324D00A93137 /* girl2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl2.png; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -965,6 +972,11 @@
 		CA585FBA14F73C4900471880 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
 		CA585FBB14F73C4900471880 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
+		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E0E1515D15200CE20CF /* HotelDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntertainmentDetailViewHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1024,6 +1036,7 @@
 		A48915AF15099C1100CFBC21 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CA3B573B1516324D00A93137 /* girl2.png */,
 				A4D2D3CD1512DAEB00DFE04F /* Default@2x.png */,
 				A48917C61509E94100CFBC21 /* home */,
 				A48915D715099C1100CFBC21 /* nearby */,
@@ -2437,6 +2450,11 @@
 		CA585FA314F73B4500471880 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */,
+				EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */,
+				EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */,
+				EAFC7E0E1515D15200CE20CF /* HotelDetailViewHandler.m */,
+				EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */,
 				CA585FA414F73B5800471880 /* CommonPlaceListController.h */,
 				CA585FA514F73B5800471880 /* CommonPlaceListController.m */,
 				CA585FA614F73B5800471880 /* CommonPlaceListController.xib */,
@@ -2704,6 +2722,7 @@
 				A48D6E981514645000507BDD /* place34.dat in Resources */,
 				A48D6E991514645000507BDD /* tips28.dat in Resources */,
 				A48D6E9A1514645000507BDD /* tips34.dat in Resources */,
+				CA3B573C1516324D00A93137 /* girl2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2908,6 +2927,11 @@
 				A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */,
 				A48D6E5F1514470200507BDD /* CityOverviewService.m in Sources */,
 				A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */,
+				EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */,
+				EAFC7E0F1515D15300CE20CF /* HotelDetailViewHandler.m in Sources */,
+				EAFC7E121515D1FF00CE20CF /* RestaurantDetailViewHandler.m in Sources */,
+				EAFC7E151515D22300CE20CF /* ShoppingDetailViewHandler.m in Sources */,
+				EAFC7E181515D25300CE20CF /* EntertainmentDetailViewHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2966,7 +2990,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2980,7 +3005,9 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PROVISIONING_PROFILE = "081BF019-D2A7-4C28-B770-5EE04A962956";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "081BF019-D2A7-4C28-B770-5EE04A962956";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/";
 			};
@@ -2991,15 +3018,18 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "081BF019-D2A7-4C28-B770-5EE04A962956";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "081BF019-D2A7-4C28-B770-5EE04A962956";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/";
 				VALIDATE_PRODUCT = YES;
@@ -3012,6 +3042,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3023,6 +3054,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

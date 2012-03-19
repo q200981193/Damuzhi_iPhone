@@ -20,6 +20,7 @@
 @interface CommonInfoController : PPViewController
 
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
+@property (retain, nonatomic) IBOutlet UIWebView *dataWebview;
 @property (retain, nonatomic) NSObject<CommonInfoDataSourceProtocol> *dataSource;
 
 - (id)initWithDataSource:(NSObject<CommonInfoDataSourceProtocol>*)source;

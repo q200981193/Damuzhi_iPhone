@@ -132,8 +132,10 @@
     if (self.placeListController == nil){
         [self.selectedCategoryIds addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
         [self.selectedSortIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
-        list = [self filterAndSort:list]; 
-        self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
+        list = [self filterAndSort:list];
+        self.placeListController = [PlaceListController createController:list 
+                                                               superView:placeListHolderView
+                                                         superController:self];    
     }
     else{
         list = [self filterAndSort:list];
@@ -142,12 +144,22 @@
     self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", list.count];
 }
 
+- (void)updateModeButton
+{
+    // set button text by _showMap flag
+}
+
 - (IBAction)clickMapButton:(id)sender
 {
-    PlaceMapViewController* controller = [[PlaceMapViewController alloc] init];
-    //设置Places
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+    if (_showMap){
+        [self.placeListController switchToListMode];
+    }
+    else{
+        [self.placeListController switchToMapMode];
+    }
+    
+    _showMap = !_showMap;
+    [self updateModeButton];
 }
 
 - (void)clickCategoryButton:(id)sender
