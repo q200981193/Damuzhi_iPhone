@@ -172,12 +172,7 @@
         [subCategories addObject:[NSDictionary dictionaryWithObject:subCategory.name 
                                                              forKey:[NSNumber numberWithInt:subCategory.id]]];
     }
-    
-//    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[_filterHandler getCategoryId]]) {
-//        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategoryPair.name 
-//                                                             forKey:[NSNumber numberWithInt:subCategoryPair.id]]];
-//    }
-    
+
     SelectController* selectController = [SelectController createController:subCategories
                                                                selectedIds:self.selectedCategoryIds 
                                                                multiOptions:YES];
@@ -191,11 +186,7 @@
 }
 
 - (void)clickSortButton:(id)sender
-{
-//    SelectController* selectController = [SelectController createController:
-//                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
-//                                                               multiOptions:NO];
-    
+{    
     SelectController* selectController = [SelectController createController:
                                           [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
                                                                multiOptions:NO];
