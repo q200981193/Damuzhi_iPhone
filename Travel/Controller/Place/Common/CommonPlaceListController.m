@@ -94,7 +94,7 @@
     [self setNavigationRightButton:NSLS(@"帮助") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickHelp:)];
-    
+            
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     [_filterHandler findAllPlaces:self];
 }
@@ -132,13 +132,14 @@
     if (self.placeListController == nil){
         [self.selectedCategoryIds addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
         [self.selectedSortIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
-        list = [self filterAndSort:list];
+        list = [self filterAndSort:list]; 
         self.placeListController = [PlaceListController createController:list superView:placeListHolderView];    
     }
     else{
         list = [self filterAndSort:list];
         [self.placeListController setAndReloadPlaceList:list];
     }    
+    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", list.count];
 }
 
 - (IBAction)clickMapButton:(id)sender
@@ -155,6 +156,7 @@
     [subCategories addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:-1]]];
     
     for (NameIdPair *subCategory in [[[AppManager defaultManager] getPlaceMeta:[_filterHandler getCategoryId]] subCategoryListList]) {
+    //for (NameIdPair *subCategory in [AppManager defaultManager] get)
         [subCategories addObject:[NSDictionary dictionaryWithObject:subCategory.name 
                                                              forKey:[NSNumber numberWithInt:subCategory.id]]];
     }
@@ -198,6 +200,7 @@
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
     [_filterHandler findAllPlaces:self];
+    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", selectedList.count]; 
 }
 
 
