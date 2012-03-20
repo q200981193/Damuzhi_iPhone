@@ -47,12 +47,12 @@ static PlaceManager *_placeDefaultManager;
     for (NSString *placeFilePath in [AppUtils getPlaceFilePathList:cityId]) {
         PPDebug(@"placeFilePath = %@", placeFilePath);
         NSData *placeData = [NSData dataWithContentsOfFile:placeFilePath];
-//        PlaceList *places = [PlaceList parseFromData:placeData];
-//        PPDebug(@"%d places read", [[places listList] count]);
-//        [placeList addObjectsFromArray:[places listList]];
-        Place* place = [Place parseFromData:placeData];
-        [placeList addObject:place];
-        PPDebug(@"read place = %@", [place name]);
+        PlaceList *places = [PlaceList parseFromData:placeData];
+        PPDebug(@"%d places read", [[places listList] count]);
+        [placeList addObjectsFromArray:[places listList]];
+//        Place* place = [Place parseFromData:placeData];
+//        [placeList addObject:place];
+//        PPDebug(@"read place = %@", [place name]);
     }
     
     return placeList;

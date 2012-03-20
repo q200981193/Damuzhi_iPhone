@@ -38,6 +38,8 @@
 + (NSString*)getZipFilePath:(int)cityId;
 + (NSString*)getAppFilePath;
 
++ (NSString*)getProvidedServiceImageDir;
+
 + (BOOL)hasLocalCityData:(int)cityId;
 
 

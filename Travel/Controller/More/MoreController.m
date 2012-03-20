@@ -25,17 +25,27 @@
     return self;
 }
 
+#define OPENED_CITY         NSLS(@"已开通城市")
+#define BROWSE_HISTORY      NSLS(@"浏览记录")
+#define FEEDBACK            NSLS(@"意见反馈")
+#define VERSION_UPDATE      NSLS(@"版本更新")
+#define ABOUT_APP           NSLS(@"关于大拇指旅行")
+#define PRAISE              NSLS(@"给我一个好评吧")
+#define SHOW_IMAGE_IN_LIST  NSLS(@"列表中显示图片")
+#define APP_RECOMMENDATION  NSLS(@"精彩应用推荐")
+
+
 - (void)viewDidLoad
 {
     self.dataList = [NSArray arrayWithObjects:
-                     NSLS(@"已开通城市"), 
-                     NSLS(@"浏览记录"),
-                     NSLS(@"意见反馈"),
-                     NSLS(@"版本更新"),
-                     NSLS(@"关于大拇指旅行"),
-                     NSLS(@"给我一个好评吧"),
-                     NSLS(@"列表中显示图片"),
-                     NSLS(@"精彩应用推荐"),
+                     OPENED_CITY, 
+                     BROWSE_HISTORY,
+                     FEEDBACK,
+                     VERSION_UPDATE,
+                     ABOUT_APP,
+                     PRAISE,
+                     SHOW_IMAGE_IN_LIST,
+                     APP_RECOMMENDATION,
                      nil];
     
     [super viewDidLoad];
@@ -85,8 +95,6 @@
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];				
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;		
-		
-
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
 	
@@ -103,14 +111,30 @@
     cell.imageView.image = [UIImage imageNamed:@"pageStateNormal.jpg"];
 	
 	return cell;
-	
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)showCityManagment
 {
     CityManagementController* controller = [[CityManagementController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    switch (row) {
+        case 0:
+            [self showCityManagment];
+            break;
+            
+        default:
+            break;
+    }
+    
+
+}
+
+
 
 @end

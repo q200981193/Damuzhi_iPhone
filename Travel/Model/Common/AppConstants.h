@@ -36,6 +36,8 @@
 #define DIR_OF_PLACE_DATA                   @"data/place"
 #define DIR_OF_TIPS_DATA                    @"data/tips"
 
+#define DIR_OF_PROVIDED_SERVICE_IMAGE       @"app/image/providedService"
+
 
 #define DEFAULT_CITY_ID                     1   // 1 for @"香港"
 #define DEFAULT_CITY_NAME                   NSLS(@"香港")

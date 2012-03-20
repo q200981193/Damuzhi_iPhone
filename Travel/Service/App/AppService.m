@@ -133,17 +133,21 @@ static AppService* _defaultAppService = nil;
             }
         });
         
-        // TODO , performance can be improved by add sperate working queue for download
+        
         if (output.resultCode == ERROR_SUCCESS){
+            //save data to app file
+            [[[travelResponse appInfo] data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
+            
+            // TODO , performance can be improved by add sperate working queue for download
             NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
             for (PlaceMeta *placeMeta in placeMetas) {
                 for (NameIdPair *providedService in [placeMeta providedServiceListList]) {
                     // download images of each provide service icon
                     NSURL *url = [NSURL URLWithString:providedService.image];
                     
-                    [FileUtil createDir:[FileUtil getFileFullPath:IMAGE_DIR_OF_PROVIDED_SERVICE]];
+                    [FileUtil createDir:[AppUtils getProvidedServiceImageDir]];
                     
-                    NSString *destination = [FileUtil getFileFullPath:[NSString stringWithFormat:@"%@/%d.png", IMAGE_DIR_OF_PROVIDED_SERVICE, providedService.id]];
+                    NSString *destination = [[AppUtils getProvidedServiceImageDir] stringByAppendingPathComponent:[[[NSString alloc] initWithFormat:@"%d.png", providedService.id] autorelease]];
                     
                     PPDebug(@"download providedService icon, image = %@, name=%@, save path=%@", providedService.image, providedService.name, destination);
 

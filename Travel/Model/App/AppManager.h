@@ -10,9 +10,6 @@
 #import "CommonService.h"
 #import "App.pb.h"
 
-#define APP_DATA_PATH @"app.dat"
-#define IMAGE_DIR_OF_PROVIDED_SERVICE  @"App/Image/ProvidedService"
-
 @interface AppManager : NSObject<CommonManagerProtocol>
 {
     App* _app;    

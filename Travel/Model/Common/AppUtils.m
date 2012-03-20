@@ -73,7 +73,13 @@
 
 + (NSString*)getAppFilePath
 {
-    return [[AppUtils getAppDir] stringByAppendingFormat:FILENAME_OF_APP_DATA];
+    return [[AppUtils getAppDir] stringByAppendingPathComponent:FILENAME_OF_APP_DATA];
+}
+
+
++ (NSString*)getProvidedServiceImageDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_PROVIDED_SERVICE_IMAGE];
 }
 
 + (BOOL)hasLocalCityData:(int)cityId

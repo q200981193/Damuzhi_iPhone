@@ -29,7 +29,12 @@
 #define     IMAGE_HELP                  @"help.png"
 
 #pragma mark -
-#pragma mark spot_introduce
+#pragma mark city_manager
+
+#define     IMAGE_CITY_LEFT_BTN_OFF     @"citybtn_off.png"
+#define     IMAGE_CITY_LEFT_BTN_ON      @"citybtn_on.png"
+#define     IMAGE_CITY_RIGHT_BTN_OFF    @"citybtn_off2.png"
+#define     IMAGE_CITY_RIGHT_BTN_ON      @"citybtn_on2.png"
 
 
 

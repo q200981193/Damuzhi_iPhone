@@ -12,6 +12,7 @@
 #import "CityListCell.h"
 #import "DownloadListCell.h"
 #import "LogUtil.h"
+#import "ImageName.h"
 
 @interface CityManagementController ()
 
@@ -40,37 +41,8 @@
     return self;
 }
 
--(void)segmentAction:(id) sender
+-(void)setCityManageButtons
 {
-    switch([sender selectedSegmentIndex])
-    {
-        case 0:
-            self.dataTableView.hidden = NO;
-            self.downloadTableView.hidden = YES;
-            break;
-        case 1: 
-            self.dataTableView.hidden = YES;
-            self.downloadTableView.hidden = NO;
-            break;
-        default: 
-            break;
-    }
-}
-
--(void)setTwoButtonsInNavBar
-{
-/*    NSArray *buttonNames = [NSArray arrayWithObjects:@"城市列表", @"下载管理", nil];
-    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:buttonNames];
-    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar; 
-
-    [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
-    
-    [segmentedControl release];
-    self.navigationItem.rightBarButtonItem= barButton;
-    [barButton release];*/
-    
-    
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 30)];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -78,14 +50,18 @@
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(80, 0, 80, 30);
-    
-    //[leftButton setBackgroundImage:[UIImage imageNamed:@"refresh"] forState:UIControlStateNormal];
-    
+        
     [leftButton setTitle:@"城市列表" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    leftButton.tintColor = [UIColor blackColor];
+    [leftButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateHighlighted];
     
     [rightButton setTitle:@"下载管理" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    rightButton.tintColor = [UIColor blackColor];
+    [rightButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
+    [rightButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateHighlighted];
     
     [leftButton addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
@@ -106,7 +82,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self setTwoButtonsInNavBar];
+    [self setCityManageButtons];
     [self showCityList];
     self.dataTableView.backgroundColor = [UIColor whiteColor];
 }
