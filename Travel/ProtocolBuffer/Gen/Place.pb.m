@@ -29,7 +29,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (retain) NSMutableArray* mutableProvidedServiceIdList;
 @property Float32 longitude;
 @property Float32 latitude;
-@property (retain) NSMutableArray* mutableAreaIdList;
+@property int32_t areaId;
 @property (retain) NSString* price;
 @property (retain) NSString* avgPrice;
 @property int32_t priceRank;
@@ -109,7 +109,13 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasLatitude_ = !!value;
 }
 @synthesize latitude;
-@synthesize mutableAreaIdList;
+- (BOOL) hasAreaId {
+  return !!hasAreaId_;
+}
+- (void) setHasAreaId:(BOOL) value {
+  hasAreaId_ = !!value;
+}
+@synthesize areaId;
 - (BOOL) hasPrice {
   return !!hasPrice_;
 }
@@ -209,7 +215,6 @@ static PBExtensionRegistry* extensionRegistry = nil;
 - (void) dealloc {
   self.name = nil;
   self.mutableProvidedServiceIdList = nil;
-  self.mutableAreaIdList = nil;
   self.price = nil;
   self.avgPrice = nil;
   self.icon = nil;
@@ -236,6 +241,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.rank = 0;
     self.longitude = 0;
     self.latitude = 0;
+    self.areaId = 0;
     self.price = @"";
     self.avgPrice = @"";
     self.priceRank = 0;
@@ -269,13 +275,6 @@ static Place* defaultPlaceInstance = nil;
 }
 - (int32_t) providedServiceIdAtIndex:(int32_t) index {
   id value = [mutableProvidedServiceIdList objectAtIndex:index];
-  return [value intValue];
-}
-- (NSArray*) areaIdList {
-  return mutableAreaIdList;
-}
-- (int32_t) areaIdAtIndex:(int32_t) index {
-  id value = [mutableAreaIdList objectAtIndex:index];
   return [value intValue];
 }
 - (NSArray*) imagesList {
@@ -371,8 +370,8 @@ static Place* defaultPlaceInstance = nil;
   if (self.hasLatitude) {
     [output writeFloat:12 value:self.latitude];
   }
-  for (NSNumber* value in self.mutableAreaIdList) {
-    [output writeInt32:13 value:[value intValue]];
+  if (self.hasAreaId) {
+    [output writeInt32:13 value:self.areaId];
   }
   if (self.hasPrice) {
     [output writeString:21 value:self.price];
@@ -469,13 +468,8 @@ static Place* defaultPlaceInstance = nil;
   if (self.hasLatitude) {
     size += computeFloatSize(12, self.latitude);
   }
-  {
-    int32_t dataSize = 0;
-    for (NSNumber* value in self.mutableAreaIdList) {
-      dataSize += computeInt32SizeNoTag([value intValue]);
-    }
-    size += dataSize;
-    size += 1 * self.mutableAreaIdList.count;
+  if (self.hasAreaId) {
+    size += computeInt32Size(13, self.areaId);
   }
   if (self.hasPrice) {
     size += computeStringSize(21, self.price);
@@ -661,11 +655,8 @@ static Place* defaultPlaceInstance = nil;
   if (other.hasLatitude) {
     [self setLatitude:other.latitude];
   }
-  if (other.mutableAreaIdList.count > 0) {
-    if (result.mutableAreaIdList == nil) {
-      result.mutableAreaIdList = [NSMutableArray array];
-    }
-    [result.mutableAreaIdList addObjectsFromArray:other.mutableAreaIdList];
+  if (other.hasAreaId) {
+    [self setAreaId:other.areaId];
   }
   if (other.hasPrice) {
     [self setPrice:other.price];
@@ -794,7 +785,7 @@ static Place* defaultPlaceInstance = nil;
         break;
       }
       case 104: {
-        [self addAreaId:[input readInt32]];
+        [self setAreaId:[input readInt32]];
         break;
       }
       case 170: {
@@ -1031,35 +1022,20 @@ static Place* defaultPlaceInstance = nil;
   result.latitude = 0;
   return self;
 }
-- (NSArray*) areaIdList {
-  if (result.mutableAreaIdList == nil) {
-    return [NSArray array];
-  }
-  return result.mutableAreaIdList;
+- (BOOL) hasAreaId {
+  return result.hasAreaId;
 }
-- (int32_t) areaIdAtIndex:(int32_t) index {
-  return [result areaIdAtIndex:index];
+- (int32_t) areaId {
+  return result.areaId;
 }
-- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(int32_t) value {
-  [result.mutableAreaIdList replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];
+- (Place_Builder*) setAreaId:(int32_t) value {
+  result.hasAreaId = YES;
+  result.areaId = value;
   return self;
 }
-- (Place_Builder*) addAreaId:(int32_t) value {
-  if (result.mutableAreaIdList == nil) {
-    result.mutableAreaIdList = [NSMutableArray array];
-  }
-  [result.mutableAreaIdList addObject:[NSNumber numberWithInt:value]];
-  return self;
-}
-- (Place_Builder*) addAllAreaId:(NSArray*) values {
-  if (result.mutableAreaIdList == nil) {
-    result.mutableAreaIdList = [NSMutableArray array];
-  }
-  [result.mutableAreaIdList addObjectsFromArray:values];
-  return self;
-}
-- (Place_Builder*) clearAreaIdList {
-  result.mutableAreaIdList = nil;
+- (Place_Builder*) clearAreaId {
+  result.hasAreaId = NO;
+  result.areaId = 0;
   return self;
 }
 - (BOOL) hasPrice {

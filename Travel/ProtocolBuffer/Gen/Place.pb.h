@@ -21,10 +21,11 @@
   BOOL hasPlaceFavoriteCount_:1;
   BOOL hasHotelStar_:1;
   BOOL hasPriceRank_:1;
+  BOOL hasAreaId_:1;
   BOOL hasPlaceId_:1;
   BOOL hasRank_:1;
-  BOOL hasCityId_:1;
   BOOL hasSubCategoryId_:1;
+  BOOL hasCityId_:1;
   BOOL hasCategoryId_:1;
   BOOL hasName_:1;
   BOOL hasPrice_:1;
@@ -33,19 +34,20 @@
   BOOL hasIntroduction_:1;
   BOOL hasTransportation_:1;
   BOOL hasTips_:1;
-  BOOL hasOpenTime_:1;
   BOOL hasWebsite_:1;
   BOOL hasPriceDescription_:1;
+  BOOL hasOpenTime_:1;
   Float32 latitude;
   Float32 longitude;
   int32_t hasDiscount;
   int32_t placeFavoriteCount;
   int32_t hotelStar;
   int32_t priceRank;
+  int32_t areaId;
   int32_t placeId;
   int32_t rank;
-  int32_t cityId;
   int32_t subCategoryId;
+  int32_t cityId;
   int32_t categoryId;
   NSString* name;
   NSString* price;
@@ -54,15 +56,14 @@
   NSString* introduction;
   NSString* transportation;
   NSString* tips;
-  NSString* openTime;
   NSString* website;
   NSString* priceDescription;
-  NSMutableArray* mutableAreaIdList;
+  NSString* openTime;
   NSMutableArray* mutableProvidedServiceIdList;
   NSMutableArray* mutableAddressList;
-  NSMutableArray* mutableTelephoneList;
   NSMutableArray* mutableKeywordsList;
   NSMutableArray* mutableTypicalDishesList;
+  NSMutableArray* mutableTelephoneList;
   NSMutableArray* mutableImagesList;
 }
 - (BOOL) hasPlaceId;
@@ -73,6 +74,7 @@
 - (BOOL) hasRank;
 - (BOOL) hasLongitude;
 - (BOOL) hasLatitude;
+- (BOOL) hasAreaId;
 - (BOOL) hasPrice;
 - (BOOL) hasAvgPrice;
 - (BOOL) hasPriceRank;
@@ -94,6 +96,7 @@
 @property (readonly) int32_t rank;
 @property (readonly) Float32 longitude;
 @property (readonly) Float32 latitude;
+@property (readonly) int32_t areaId;
 @property (readonly, retain) NSString* price;
 @property (readonly, retain) NSString* avgPrice;
 @property (readonly) int32_t priceRank;
@@ -109,8 +112,6 @@
 @property (readonly) int32_t hasDiscount;
 - (NSArray*) providedServiceIdList;
 - (int32_t) providedServiceIdAtIndex:(int32_t) index;
-- (NSArray*) areaIdList;
-- (int32_t) areaIdAtIndex:(int32_t) index;
 - (NSArray*) imagesList;
 - (NSString*) imagesAtIndex:(int32_t) index;
 - (NSArray*) telephoneList;
@@ -203,12 +204,10 @@
 - (Place_Builder*) setLatitude:(Float32) value;
 - (Place_Builder*) clearLatitude;
 
-- (NSArray*) areaIdList;
-- (int32_t) areaIdAtIndex:(int32_t) index;
-- (Place_Builder*) replaceAreaIdAtIndex:(int32_t) index with:(int32_t) value;
-- (Place_Builder*) addAreaId:(int32_t) value;
-- (Place_Builder*) addAllAreaId:(NSArray*) values;
-- (Place_Builder*) clearAreaIdList;
+- (BOOL) hasAreaId;
+- (int32_t) areaId;
+- (Place_Builder*) setAreaId:(int32_t) value;
+- (Place_Builder*) clearAreaId;
 
 - (BOOL) hasPrice;
 - (NSString*) price;
