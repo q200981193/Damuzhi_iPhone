@@ -13,6 +13,8 @@
 #import "FileUtil.h"
 #import "CommonPlace.h"
 #import "LocaleUtils.h"
+#import "AppConstants.h"
+#import "AppUtils.h"
 
 @implementation AppManager
 
@@ -36,15 +38,10 @@ static AppManager* _defaultAppManager = nil;
 - (void)loadAppData
 {
     // TODO: check if there is a copy data for app in document dir, if yes, return;
-
-    
-    // copy app data to document dir
-    PPDebug(@"Loading app data......");
-    [FileUtil copyFileFromBundleToAppDir:@"app.dat" appDir:APP_DATA_PATH overwrite:NO];
-    NSData *localData = [NSData dataWithContentsOfFile:[FileUtil getFileFullPath:APP_DATA_PATH]];
-    if(localData != nil)
+    NSData *localAppData = [NSData dataWithContentsOfFile:[AppUtils getAppFilePath]];
+    if(localAppData != nil)
     {
-        App *localApp = [App parseFromData:localData];
+        App *localApp = [App parseFromData:localAppData];
         self.app = localApp;
     }
 }
@@ -53,23 +50,7 @@ static AppManager* _defaultAppManager = nil;
 {
     PPDebug(@"Updating app data......");
     self.app = appData;    
-    [[appData data] writeToFile:APP_DATA_PATH atomically:YES];
-}
-
-// for debug
-- (void)printAppData
-{
-//    message App {
-//        required string dataVersion = 1;                // 数据的版本，如1.0
-//        repeated City cityList = 2;                     // 正式启用城市列表
-//        repeated City testCityList = 3;                 // 测试实用测试列表
-//        repeated PlaceMeta placeMetaDataList = 4;       // 每种地点分类的相关数据
-//        optional string helpHtml = 11;                  // 帮助说明的HTML文件路径
-//    }
-    
-    PPDebug(@"dataVersion = %@", _app.dataVersion);
-    
-
+    [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
 
 - (City*)getCity:(int)cityId
@@ -245,9 +226,6 @@ static AppManager* _defaultAppManager = nil;
     return providedServiceIcon;
 }
 
-#define DEFAULT_CITY_ID 1   // 1 for @"香港"
-#define KEY_CURRENT_CITY @"curretn_city"
-
 - (int)getCurrentCityId
 {
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
@@ -260,6 +238,11 @@ static AppManager* _defaultAppManager = nil;
     }
 }
 
+- (NSString*)getCurrentCityName
+{
+    return DEFAULT_CITY_NAME;
+}
+
 - (void)setCurrentCityId:(int)newCityId
 {
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
@@ -269,7 +252,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSArray*)buildSpotSortOptionList
 {
-    NSMutableArray *spotSortOptions = [[NSMutableArray alloc] init];    
+    NSMutableArray *spotSortOptions = [[[NSMutableArray alloc] init] autorelease];    
     [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐高至低") 
                                                            forKey:[NSNumber numberWithInt:SORT_BY_RECOMMEND]]];
     [spotSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") 
@@ -278,6 +261,22 @@ static AppManager* _defaultAppManager = nil;
                                                            forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP]]];
     
     return spotSortOptions;
+}
+
+- (NSArray*)getSubCategoryList:(int)categoryId
+{
+    NSMutableArray *subCategoryList = [[[NSMutableArray alloc] init] autorelease];    
+    [subCategoryList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:ALL_SUBCATEGORY]]];
+    
+    PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
+    if (placeMeta !=nil) {
+        for (NameIdPair *subCategory in [placeMeta subCategoryListList]) {
+            [subCategoryList addObject:[NSDictionary dictionaryWithObject:subCategory.name 
+                                                                   forKey:[NSNumber numberWithInt:subCategory.id]]];
+        }
+    }
+    
+    return subCategoryList;
 }
 
 - (NSArray*)getSortOptionList:(int32_t)categoryId

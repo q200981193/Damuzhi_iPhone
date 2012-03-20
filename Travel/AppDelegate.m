@@ -38,13 +38,7 @@
     [self initImageCacheManager];
     
     //–insert a delay of 5 seconds before the splash screen disappears–
-    [NSThread sleepForTimeInterval:3.0];
-    
-    //show welcome piture
-    UIImageView *welcomeView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"welcome.jpg"]];
-    [self.window addSubview:welcomeView];
-    [welcomeView release];
-
+    [NSThread sleepForTimeInterval:1.0];
         
     // init app data
     [[AppService defaultService] loadAppData]; 

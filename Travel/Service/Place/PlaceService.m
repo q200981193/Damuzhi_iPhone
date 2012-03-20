@@ -14,6 +14,7 @@
 #import "Package.pb.h"
 #import "AppManager.h"
 #import "TravelNetworkConstants.h"
+#import "AppUtils.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -28,7 +29,6 @@ static PlaceService* _defaultPlaceService = nil;
 
 - (void)dealloc
 {
-    [_currentCityId release];
     [_localPlaceManager release];
     [_onlinePlaceManager release];
     [super dealloc];
@@ -48,7 +48,7 @@ static PlaceService* _defaultPlaceService = nil;
     self = [super init];
     _localPlaceManager = [[PlaceManager alloc] init];
     _onlinePlaceManager = [[PlaceManager alloc] init];
-    self.currentCityId = [NSString stringWithFormat:@"%d",[[AppManager defaultManager] getCurrentCityId]];
+    self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     return self;
 }
 
@@ -71,16 +71,17 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     [queue addOperationWithBlock:^{
         NSArray* list = nil;
         int resultCode = 0;
-        if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
+        //if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
+        if ([AppUtils hasLocalCityData:_currentCityId] == YES){
             // read local data firstly               
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", _currentCityId);
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
             if (localHandler != NULL){
                 list = localHandler(&resultCode);
             }
         }
         else{
             // if local data no exist, try to read data from remote            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", _currentCityId);            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:_currentCityId]);            
             if (remoteHandler != NULL){
                 list = remoteHandler(&resultCode);
             }
@@ -107,7 +108,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_SPOT cityId:[_currentCityId intValue] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_SPOT cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
         _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
@@ -136,7 +137,9 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_HOTEL cityId:[_currentCityId intValue] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_HOTEL 
+                                                               cityId:_currentCityId
+                                                                 lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
         _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   

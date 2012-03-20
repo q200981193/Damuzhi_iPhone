@@ -22,12 +22,12 @@
 - (int)getCategoryId;
 - (NSString*)getCategoryName;
 
-- (NSArray*)filterAndSotrPlaces:(NSArray*)placeList
-            selectedCategoryIds:(NSArray*)selectedCategoryIds 
-               selectedPriceIds:(NSArray*)selectedPriceIds 
-                selectedAreaIds:(NSArray*)selectedAreaIds 
-             selectedServiceIds:(NSArray*)selectedServiceIds
-             selectedCuisineIds:(NSArray*)selectedCuisineIds
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
+            selectedCategoryIdList:(NSArray*)selectedCategoryIdList 
+               selectedPriceIdList:(NSArray*)selectedPriceIdList 
+                selectedAreaIdList:(NSArray*)selectedAreaIdList 
+             selectedServiceIdList:(NSArray*)selectedServiceIdList
+             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
                          sortBy:(NSNumber*)selectedSortId;
 
 
@@ -36,12 +36,12 @@
 @interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, SelectControllerDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;
-    NSMutableArray *_selectedCategoryIds;
-    NSMutableArray *_selectedSortIds;
-    NSMutableArray *_selectedAreaIds;
-    NSMutableArray *_selectedPriceIds;
-    NSMutableArray *_selectedServiceIds;
-    NSMutableArray *_selectedCuisineIds;
+    NSMutableArray *_selectedCategoryIdList;
+    NSMutableArray *_selectedSortIdList;
+    NSMutableArray *_selectedAreaIdList;
+    NSMutableArray *_selectedPriceIdList;
+    NSMutableArray *_selectedServiceIdList;
+    NSMutableArray *_selectedCuisineIdList;
     
     BOOL _showMap;
 }
@@ -52,12 +52,12 @@
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) NSObject<PlaceListFilterProtocol> *filterHandler;
 
-@property (retain, nonatomic) NSMutableArray *selectedCategoryIds;
-@property (retain, nonatomic) NSMutableArray *selectedSortIds;
-@property (retain, nonatomic) NSMutableArray *selectedAreaIds;
-@property (retain, nonatomic) NSMutableArray *selectedPriceIds;
-@property (retain, nonatomic) NSMutableArray *selectedServiceIds;
-@property (retain, nonatomic) NSMutableArray *selectedCuisineIds;
+@property (retain, nonatomic) NSMutableArray *selectedCategoryIdList;
+@property (retain, nonatomic) NSMutableArray *selectedSortIdList;
+@property (retain, nonatomic) NSMutableArray *selectedAreaIdList;
+@property (retain, nonatomic) NSMutableArray *selectedPriceIdList;
+@property (retain, nonatomic) NSMutableArray *selectedServiceIdList;
+@property (retain, nonatomic) NSMutableArray *selectedCuisineIdList;
 
 
 

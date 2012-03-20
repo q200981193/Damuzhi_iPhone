@@ -12,33 +12,27 @@
 
 @interface CityOverViewManager : NSObject <CommonManagerProtocol>
 {
-    NSString        *_city;
+    int             _cityId;
     CityOverview    *cityOverView;
 }
 
-@property (retain, nonatomic) NSString *city;
+@property (assign, nonatomic) int          cityId;
 @property (retain, nonatomic) CityOverview *cityOverView;
 
+- (NSArray*)getCityBasicImageList;
+- (NSString*)getCityBasicHtml;
 
-//message CityOverview {
-//    optional CommonOverview cityBasic = 1;               // 城市概况
-//    optional CommonOverview travelPrepration = 2;        // 旅行准备
-//    optional CommonOverview travelUtility = 3;           // 实用信息
-//    optional CommonOverview travelTransportation = 4;    // 城市交通
-//    
-//    repeated CityArea areaList = 5;                      // 城市区域列表，二级列表
-//    
-//    required string currencySymbol = 6;                  // 货币显示符号，如人民币为¥，美元为$
-//    required string currencyId = 7;                      // 货币ID，用于实时汇率查询，使用国际标准，如人民币为CNY，美元为USD
-//    required string currencyName = 8;                    // 货币显示名字，如“人民币”，“美元”，“欧元”
-//    
-//    optional int32 priceRank = 9 [default=3];            // 城市查询价格等级，默认为3
-//}
+- (NSString*)getTravelPreprationHtml;
+- (NSString*)getTravelUtilityHtml;
+- (NSString*)getTravelTransportationHtml;
 
+- (NSArray*)getAreaList;
+- (NSString*)getAreaName:(int)areaId;
 - (NSString*)getCurrencySymbol;
-- (NSArray*)getCityArea;
+- (NSString*)getCurrencyId;
+- (NSString*)getCurrencyName;
+- (int)getPriceRank;
 
-- (BOOL)hasLocalCityData:(NSString*)cityId;
-- (void)switchCity:(NSString*)newCity;
+- (void)switchCity:(int)newCity;
 
 @end

@@ -11,26 +11,21 @@
 #import "Place.pb.h"
 #import "CommonPlace.h"
 
-//message PlaceList {
-//    repeated Place list = 1;
-//    optional int32 cityId = 2;
-//}
-
 @interface PlaceManager : NSObject<CommonManagerProtocol>
 {
-    NSString*       _city;
+    int             _cityId;
     NSArray*        _placeList; 
 }
 
-@property (nonatomic, retain) NSString* city;
+@property (nonatomic, assign) int       cityId;
 @property (nonatomic, retain) NSArray*  placeList;
 
-- (void)switchCity:(NSString*)newCity;
+- (void)switchCity:(int)newCityId;
 
 - (NSArray*)findAllPlaces;
 - (NSArray*)findAllSpots;
 - (NSArray*)findAllHotels;
 
-- (BOOL)hasLocalCityData:(NSString*)cityId;
+//- (BOOL)hasLocalCityData:(int)cityId;
 
 @end

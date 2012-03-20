@@ -10,7 +10,7 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>girl2.png</string>
+		<string>dmzlogo.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
 	<string>com.damuzhi.travel</string>

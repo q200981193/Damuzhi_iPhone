@@ -45,6 +45,7 @@
 - (NSString*)getProvidedServiceIcon:(int)categoryId providedServiceId:(int)providedServiceId;
 
 - (int)getCurrentCityId;
+- (NSString*)getCurrentCityName;
 - (void)setCurrentCityId:(int)newCity;
 
 - (NSArray*)getSortOptionList:(int)categoryId;
