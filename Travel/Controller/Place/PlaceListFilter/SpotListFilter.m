@@ -86,16 +86,14 @@
     return [[PlaceService defaultService] findAllSpots:viewController];
 }
 
--(NSMutableArray*)filterByCategoryIds:(NSArray*)list selectedCategoryIds:(NSArray*)selectedCategoryIds
+-(NSArray*)filterByCategoryIds:(NSArray*)list selectedCategoryIds:(NSArray*)selectedCategoryIds
 {
     NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
     
     //filter by selectedCategoryId
     for (NSNumber *selectedCategoryId in selectedCategoryIds) {
         if ([selectedCategoryId intValue] == -1) {
-            for (Place *place in list) {
-                [array addObject:place];
-            }
+            return list;
         }
         
         for (Place *place in list) {

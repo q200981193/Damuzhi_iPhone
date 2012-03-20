@@ -11,6 +11,10 @@
 #import "Place.pb.h"
 #import "CommonPlace.h"
 
+//message PlaceList {
+//    repeated Place list = 1;
+//    optional int32 cityId = 2;
+//}
 
 @interface PlaceManager : NSObject<CommonManagerProtocol>
 {

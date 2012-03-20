@@ -108,6 +108,7 @@
     {
         _spotListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
                                                  [SpotListFilter createFilter]];
+//        _spotListComtroller.navigationItem.title = @"fuck";
     }
     
     [self.navigationController pushViewController:_spotListComtroller animated:YES];
