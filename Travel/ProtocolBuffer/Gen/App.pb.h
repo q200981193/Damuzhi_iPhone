@@ -177,18 +177,30 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 @interface City : PBGeneratedMessage {
 @private
   BOOL hasCityId_:1;
+  BOOL hasDataSize_:1;
   BOOL hasCityName_:1;
   BOOL hasLatestVersion_:1;
+  BOOL hasCountryName_:1;
+  BOOL hasDownloadUrl_:1;
   int32_t cityId;
+  int32_t dataSize;
   NSString* cityName;
   NSString* latestVersion;
+  NSString* countryName;
+  NSString* downloadUrl;
 }
 - (BOOL) hasCityId;
 - (BOOL) hasCityName;
 - (BOOL) hasLatestVersion;
+- (BOOL) hasCountryName;
+- (BOOL) hasDataSize;
+- (BOOL) hasDownloadUrl;
 @property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* cityName;
 @property (readonly, retain) NSString* latestVersion;
+@property (readonly, retain) NSString* countryName;
+@property (readonly) int32_t dataSize;
+@property (readonly, retain) NSString* downloadUrl;
 
 + (City*) defaultInstance;
 - (City*) defaultInstance;
@@ -238,6 +250,21 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (NSString*) latestVersion;
 - (City_Builder*) setLatestVersion:(NSString*) value;
 - (City_Builder*) clearLatestVersion;
+
+- (BOOL) hasCountryName;
+- (NSString*) countryName;
+- (City_Builder*) setCountryName:(NSString*) value;
+- (City_Builder*) clearCountryName;
+
+- (BOOL) hasDataSize;
+- (int32_t) dataSize;
+- (City_Builder*) setDataSize:(int32_t) value;
+- (City_Builder*) clearDataSize;
+
+- (BOOL) hasDownloadUrl;
+- (NSString*) downloadUrl;
+- (City_Builder*) setDownloadUrl:(NSString*) value;
+- (City_Builder*) clearDownloadUrl;
 @end
 
 @interface CityList : PBGeneratedMessage {
