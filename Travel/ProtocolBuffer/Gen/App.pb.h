@@ -269,10 +269,10 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 
 @interface CityList : PBGeneratedMessage {
 @private
-  NSMutableArray* mutableCityListList;
+  NSMutableArray* mutableCitiesList;
 }
-- (NSArray*) cityListList;
-- (City*) cityListAtIndex:(int32_t) index;
+- (NSArray*) citiesList;
+- (City*) citiesAtIndex:(int32_t) index;
 
 + (CityList*) defaultInstance;
 - (CityList*) defaultInstance;
@@ -308,12 +308,12 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (CityList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (NSArray*) cityListList;
-- (City*) cityListAtIndex:(int32_t) index;
-- (CityList_Builder*) replaceCityListAtIndex:(int32_t) index with:(City*) value;
-- (CityList_Builder*) addCityList:(City*) value;
-- (CityList_Builder*) addAllCityList:(NSArray*) values;
-- (CityList_Builder*) clearCityListList;
+- (NSArray*) citiesList;
+- (City*) citiesAtIndex:(int32_t) index;
+- (CityList_Builder*) replaceCitiesAtIndex:(int32_t) index with:(City*) value;
+- (CityList_Builder*) addCities:(City*) value;
+- (CityList_Builder*) addAllCities:(NSArray*) values;
+- (CityList_Builder*) clearCitiesList;
 @end
 
 @interface HelpInfo : PBGeneratedMessage {
@@ -370,18 +370,18 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   BOOL hasHelpHtml_:1;
   NSString* dataVersion;
   NSString* helpHtml;
-  NSMutableArray* mutableCityListList;
-  NSMutableArray* mutableTestCityListList;
+  NSMutableArray* mutableCitiesList;
+  NSMutableArray* mutableTestCitiesList;
   NSMutableArray* mutablePlaceMetaDataListList;
 }
 - (BOOL) hasDataVersion;
 - (BOOL) hasHelpHtml;
 @property (readonly, retain) NSString* dataVersion;
 @property (readonly, retain) NSString* helpHtml;
-- (NSArray*) cityListList;
-- (City*) cityListAtIndex:(int32_t) index;
-- (NSArray*) testCityListList;
-- (City*) testCityListAtIndex:(int32_t) index;
+- (NSArray*) citiesList;
+- (City*) citiesAtIndex:(int32_t) index;
+- (NSArray*) testCitiesList;
+- (City*) testCitiesAtIndex:(int32_t) index;
 - (NSArray*) placeMetaDataListList;
 - (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
 
@@ -424,19 +424,19 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) setDataVersion:(NSString*) value;
 - (App_Builder*) clearDataVersion;
 
-- (NSArray*) cityListList;
-- (City*) cityListAtIndex:(int32_t) index;
-- (App_Builder*) replaceCityListAtIndex:(int32_t) index with:(City*) value;
-- (App_Builder*) addCityList:(City*) value;
-- (App_Builder*) addAllCityList:(NSArray*) values;
-- (App_Builder*) clearCityListList;
+- (NSArray*) citiesList;
+- (City*) citiesAtIndex:(int32_t) index;
+- (App_Builder*) replaceCitiesAtIndex:(int32_t) index with:(City*) value;
+- (App_Builder*) addCities:(City*) value;
+- (App_Builder*) addAllCities:(NSArray*) values;
+- (App_Builder*) clearCitiesList;
 
-- (NSArray*) testCityListList;
-- (City*) testCityListAtIndex:(int32_t) index;
-- (App_Builder*) replaceTestCityListAtIndex:(int32_t) index with:(City*) value;
-- (App_Builder*) addTestCityList:(City*) value;
-- (App_Builder*) addAllTestCityList:(NSArray*) values;
-- (App_Builder*) clearTestCityListList;
+- (NSArray*) testCitiesList;
+- (City*) testCitiesAtIndex:(int32_t) index;
+- (App_Builder*) replaceTestCitiesAtIndex:(int32_t) index with:(City*) value;
+- (App_Builder*) addTestCities:(City*) value;
+- (App_Builder*) addAllTestCities:(NSArray*) values;
+- (App_Builder*) clearTestCitiesList;
 
 - (NSArray*) placeMetaDataListList;
 - (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
