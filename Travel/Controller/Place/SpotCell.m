@@ -15,6 +15,7 @@
 #import "ASIHTTPRequest.h"
 #import "FileUtil.h"
 #import "PPApplication.h"
+#import "CityOverviewManager.h"
 
 
 @implementation SpotCell
@@ -97,7 +98,7 @@
     int i = 0;
     for (NSString *providedServiceIcon in providedServiceIcons) {
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:providedServiceIcon];
-        PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
+        //PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
         
         serviceIconView.center = CGPointMake(categoryLable.center.x+categoryLable.frame.size.width/2+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+(i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 
                                              categoryLable.center.y); 
@@ -110,25 +111,6 @@
     }
     
     [serviceIconView release];
-//    
-//    
-//    for (int i=0; i<[serviceIdList count]; i++) {
-//        NSString *imageName = [serviceIdList objectAtIndex:i];
-//        UIImage *image = [[UIImage alloc] initWithContentsOfFile:imageName];
-//        
-//        PPDebug(@"image = %@", imageName);
-//        
-//        CGRect rect = CGRectMake(0, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
-//        UIImageView *serviceImageView = [[UIImageView alloc] initWithFrame:rect];
-//        serviceImageView.center = CGPointMake(categoryLable.center.x+categoryLable.frame.size.width/2+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+i*DESTANCE_BETWEEN_SERVICE_IMAGES, categoryLable.center.y); 
-//        
-//        [serviceImageView setImage:image];
-//        
-//        [self.contentView addSubview:serviceImageView];
-//        [self.contentView viewWithTag:1];
-//        [serviceImageView release];
-//    }   
-
 }
 
 - (void)setPlaceIcon:(Place*)place
@@ -162,9 +144,11 @@
     
     [self setPlaceIcon:place];
     
-    self.priceLable.text = [place price];
+    //self.priceLable.text = [place price];
+    self.priceLable.text = [[[CityOverViewManager defaultManager] getCurrencySymbol] stringByAppendingString:[place price]];
     
-    self.areaLable.text = [NSString  stringWithInt:[place areaIdAtIndex:0]];
+    self.areaLable.text = [[CityOverViewManager defaultManager] getAreaName:[[place.areaIdList objectAtIndex:1] intValue]];
+//    NSLog(@"place areaId = %d", [[place.areaIdList objectAtIndex:0] intValue]);
     
     self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                 subCategoryId:[place subCategoryId]];
@@ -181,6 +165,7 @@
     }
     
     [self setServiceIcons:providedServiceIcons];
+
 }
 
 - (void)dealloc {

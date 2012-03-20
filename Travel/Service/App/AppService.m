@@ -14,6 +14,10 @@
 #import "ASIHTTPRequest.h"
 #import "FileUtil.h"
 #import "TravelNetworkConstants.h"
+#import "SSZipArchive.h"
+#import "AppUtils.h"
+#import "AppConstants.h"
+
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -58,10 +62,57 @@ static AppService* _defaultAppService = nil;
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDownloadDestinationPath:destinationPath];
     [request startSynchronous];
+}  
+
+- (BOOL)hasUnzipCityData:(int)cityId
+{
+    return [[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]];
+}
+
+- (void)copyDefaultAppDataFormBundle
+{    
+    // create City Dir
+    [FileUtil createDir:[AppUtils getAppDir]];
+    
+    // copy file from bundle to zip dir
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getAppFilePath]]) {
+        PPDebug(@"copy defalut app.dat from bundle to app dir");
+        [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_APP_DATA
+                                      appDir:[AppUtils getAppDir] 
+                                   overwrite:YES];
+    }
+}
+
+- (void)copyDefaultCityZipFromBundleAndRelease
+{    
+    // create City Dir
+    [FileUtil createDir:[AppUtils getZipDir]];
+    [FileUtil createDir:[AppUtils getCityDir:DEFAULT_CITY_ID]];
+    
+    // copy file from bundle to zip dir
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]]) {
+        PPDebug(@"copy defalut zip from bundle to zip dir");
+        [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
+                                      appDir:[AppUtils getZipDir] 
+                                   overwrite:YES];
+    }
+    
+    // if there has no unzip city data, unzip
+    if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
+        PPDebug(@"unzip defalut zip");
+        if ([SSZipArchive unzipFileAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]
+                            toDestination:[AppUtils getCityDir:DEFAULT_CITY_ID]]) {
+            [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:DEFAULT_CITY_ID]
+                                                    contents:nil
+                                                  attributes:nil];
+        }
+    }
 }
 
 - (void)loadAppData
 {
+    [self copyDefaultAppDataFormBundle];
+    [self copyDefaultCityZipFromBundleAndRelease];
     [[AppManager defaultManager] loadAppData];
 }
 
@@ -80,10 +131,6 @@ static AppService* _defaultAppService = nil;
             {
                 [[AppManager defaultManager] updateAppData:[travelResponse appInfo]];
             }
-//            else {
-//                [[AppManager defaultManager] loadAppData];
-//            }
-            
         });
         
         // TODO , performance can be improved by add sperate working queue for download
@@ -98,8 +145,7 @@ static AppService* _defaultAppService = nil;
                     
                     NSString *destination = [FileUtil getFileFullPath:[NSString stringWithFormat:@"%@/%d.png", IMAGE_DIR_OF_PROVIDED_SERVICE, providedService.id]];
                     
-                    PPDebug(@"download providedService icon, image = %@, name=%@, save path=%@", 
-                            providedService.image, providedService.name, destination);
+                    PPDebug(@"download providedService icon, image = %@, name=%@, save path=%@", providedService.image, providedService.name, destination);
 
                     [self downloadResource:url destinationPath:destination];
                 }
