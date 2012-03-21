@@ -28,8 +28,7 @@ static PlaceManager *_placeDefaultManager;
 {
     if (_placeDefaultManager == nil){
         _placeDefaultManager = [[PlaceManager alloc] init];
-        _placeDefaultManager.cityId = [[AppManager defaultManager] getCurrentCityId];
-        [_placeDefaultManager switchCity:_placeDefaultManager.cityId];
+        [_placeDefaultManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
     }
     
     return _placeDefaultManager;

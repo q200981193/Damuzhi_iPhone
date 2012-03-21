@@ -19,6 +19,7 @@
 //                            ------2--------data--------
 
 #import <Foundation/Foundation.h>
+#import "ASIHTTPRequest.h"
 
 @interface AppUtils
 
@@ -28,9 +29,12 @@
 + (NSString*)getZipDir;
 + (NSString*)getCityDir:(int)cityId;
 
-//interface for ...
+//interface for file path
 + (NSString*)getCityoverViewFilePath:(int)cityId;
++ (NSString*)getPackageFilePath:(int)cityId;
 + (NSArray*)getPlaceFilePathList:(int)cityId;
+
+
 
 //interface for ...
 + (NSString*)getUnzipFlag:(int)cityId;
@@ -42,6 +46,8 @@
 
 + (BOOL)hasLocalCityData:(int)cityId;
 
+//+ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName;
 
++ (void)unzipCityZip:(int)cityId;
 
 @end

@@ -8,16 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewCell.h"
+#import "App.pb.h"
 
 @interface DownloadListCell : PPTableViewCell<PPTableViewCellProtocol>
+{
+    City *_city;
+    NSNumber *_downloading;
+}
 
+@property (retain, nonatomic) City *city;
+@property (retain, nonatomic) NSNumber *downloading;
 
 @property (retain, nonatomic) IBOutlet UIButton *downloadFlagButton;
+@property (retain, nonatomic) IBOutlet UILabel *dataSizeLabel;
 @property (retain, nonatomic) IBOutlet UIProgressView *downloadProgressView;
-@property (retain, nonatomic) IBOutlet UILabel *downloadPersentLable;
+@property (retain, nonatomic) IBOutlet UILabel *downloadPersentLabel;
 @property (retain, nonatomic) IBOutlet UIButton *downloadButton;
 @property (retain, nonatomic) IBOutlet UIButton *onlineButton;
-@property (retain, nonatomic) IBOutlet UILabel *cityNameLable;
+@property (retain, nonatomic) IBOutlet UILabel *cityNameLabel;
 
+- (void)setCellData:(City*)city downloading:(NSNumber*)downloading;
 
 @end

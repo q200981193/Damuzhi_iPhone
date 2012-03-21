@@ -24,10 +24,10 @@
 
 #define DIR_OF_APP                          @"app"
 #define DIR_OF_ZIP                          @"zip"   
-#define DIR_OF_CITY                         @"data"
+#define DIR_OF_CITY                         @"cities"
 #define DIR_OF_DOWNLOAD                     @"download"
 
-#define DEFAULT_CITY_ZIP                    @"001_ZhHans_1.0.zip"     //in bundle
+#define DEFAULT_CITY_ZIP                    @"1.zip"     //in bundle
 #define FLAG_OF_UNZIP_SUCCESS               @"unzip_success" 
     
 #define FILENAME_OF_CITY_OVERVIEW_DATA      @"data/overview.dat"

@@ -9,6 +9,8 @@
 #import "AppUtils.h"
 #import "AppConstants.h"
 #import "FileUtil.h"
+#import "SSZipArchive.h"
+#import "PPDebug.h"
 
 @implementation AppUtils
 
@@ -35,6 +37,11 @@
 + (NSString*)getCityoverViewFilePath:(int)cityId
 {
     return [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:FILENAME_OF_CITY_OVERVIEW_DATA]; 
+}
+
++ (NSString*)getPackageFilePath:(int)cityId
+{
+    return [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:FILENAME_OF_PACKAGE_DATA];
 }
 
 + (NSArray*)getPlaceFilePathList:(int)cityId
@@ -64,11 +71,9 @@
 + (NSString*)getZipFilePath:(int)cityId
 {
     //TODO, consturct a zip file path and return 
-    if (cityId == DEFAULT_CITY_ID) {
-        return [[AppUtils getZipDir] stringByAppendingPathComponent:DEFAULT_CITY_ZIP];
-    }
-    
-    return @"";
+    NSString *zipName = [[NSString alloc] initWithFormat:@"%d.zip", cityId];
+    return [[AppUtils getZipDir] stringByAppendingPathComponent:zipName];
+    [zipName release];
 }
 
 + (NSString*)getAppFilePath
@@ -92,6 +97,31 @@
     return hasData;
 }
 
+//+ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName
+//{
+//    [FileUtil createDir:destinationDir];
+//    NSString *destinationPath = [destinationDir stringByAppendingPathComponent:fileName];
+//    
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setDownloadDestinationPath:destinationPath];
+//    
+//    //PPDebug(@"download url: %@ to destination: %@", url, destinationPath);
+//    
+//    [request startSynchronous];
+//}  
 
++ (void)unzipCityZip:(int)cityId
+{
+    [FileUtil createDir:[AppUtils getCityDir:cityId]];
+    
+    if ([SSZipArchive unzipFileAtPath:[AppUtils getZipFilePath:cityId]
+                        toDestination:[AppUtils getCityDir:cityId]]) {
+        [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:cityId]
+                                                contents:nil
+                                              attributes:nil];
+    }
+    
+    return;
+}
 
 @end

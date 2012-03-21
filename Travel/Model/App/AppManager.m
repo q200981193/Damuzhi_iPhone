@@ -39,6 +39,7 @@ static AppManager* _defaultAppManager = nil;
 {
     // TODO: check if there is a copy data for app in document dir, if yes, return;
     NSData *localAppData = [NSData dataWithContentsOfFile:[AppUtils getAppFilePath]];
+    PPDebug(@"app data file path = %@", [AppUtils getAppFilePath]);
     if(localAppData != nil)
     {
         App *localApp = [App parseFromData:localAppData];
@@ -55,7 +56,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (City*)getCity:(int)cityId
 {
-    for (City *city in _app.cityListList) {
+    for (City *city in _app.citiesList) {
         if(city.cityId == cityId)
         {
             return city;
@@ -67,7 +68,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (City*)getTestCity:(int)cityId
 {
-    for (City *testCity in _app.testCityListList) {
+    for (City *testCity in _app.testCitiesList) {
         if(testCity.cityId == cityId)
         {
             return testCity;
@@ -87,10 +88,26 @@ static AppManager* _defaultAppManager = nil;
     return _app.helpHtml;
 }
 
+- (NSArray*)getCityList
+{
+    return _app.citiesList;
+}
+
+- (NSArray*)getCityIdList
+{
+    NSMutableArray *cityIdList = [[[NSMutableArray alloc] init] autorelease];
+    for (City *city in _app.citiesList) {
+        NSNumber *cityId = [[[NSNumber alloc] initWithInt:city.cityId] autorelease];
+        [cityIdList addObject:cityId]; 
+    }
+    
+    return cityIdList;
+}
+
 - (NSArray*)getCityNameList
 {
     NSMutableArray *cityNameList = [[[NSMutableArray alloc] init] autorelease];
-    for (City *city in _app.cityListList) {
+    for (City *city in _app.citiesList) {
         [cityNameList addObject:city.cityName]; 
     }
     
@@ -100,7 +117,7 @@ static AppManager* _defaultAppManager = nil;
 - (NSArray*)getTestCityNameList
 {
     NSMutableArray *cityNameList = [[[NSMutableArray alloc] init] autorelease];
-    for (City *city in _app.testCityListList) {
+    for (City *city in _app.testCitiesList) {
         [cityNameList addObject:city.cityName]; 
     }
     
@@ -110,7 +127,7 @@ static AppManager* _defaultAppManager = nil;
 - (NSString*)getCityName:(int)cityId
 {
     NSString *cityName = @"";
-    for (City *city in _app.cityListList) {
+    for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             cityName = cityName;
         }   
@@ -122,13 +139,49 @@ static AppManager* _defaultAppManager = nil;
 - (NSString*)getCityLatestVersion:(int)cityId
 {
     NSString *cityName = @"";
-    for (City *city in _app.testCityListList) {
+    for (City *city in _app.testCitiesList) {
         if (city.cityId == cityId) {
             cityName = cityName;
         }   
     }
     
     return cityName;
+}
+
+- (NSString*)getCountryName:(int)cityId
+{
+    NSString *countryName = @"";
+    for (City *city in _app.testCitiesList) {
+        if (city.cityId == cityId) {
+            countryName = city.countryName;
+        }   
+    }
+    
+    return countryName;
+}
+
+- (int)getCityDataSize:(int)cityId
+{
+    int dataSize = 0;
+    for (City *city in _app.testCitiesList) {
+        if (city.cityId == cityId) {
+            dataSize = city.dataSize;
+        }   
+    }
+    
+    return dataSize;
+}
+
+- (NSString*)getCItyDownloadUrl:(int)cityId
+{
+    NSString *url = @"";
+    for (City *city in _app.testCitiesList) {
+        if (city.cityId == cityId) {
+            url = city.downloadUrl;
+        }   
+    }
+    
+    return url;
 }
 
 - (PlaceMeta*)getPlaceMeta:(int)categoryId

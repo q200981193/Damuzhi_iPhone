@@ -34,7 +34,12 @@
 #define     IMAGE_CITY_LEFT_BTN_OFF     @"citybtn_off.png"
 #define     IMAGE_CITY_LEFT_BTN_ON      @"citybtn_on.png"
 #define     IMAGE_CITY_RIGHT_BTN_OFF    @"citybtn_off2.png"
-#define     IMAGE_CITY_RIGHT_BTN_ON      @"citybtn_on2.png"
+#define     IMAGE_CITY_RIGHT_BTN_ON     @"citybtn_on2.png"
+#define     IMAGE_CITY_MAIN_BOTTOM      @"main_bottom.png"
+
+#define     IMAGE_CITY_DEFAULT_BTN      @"default_btn.png"
+#define     IMAGE_CITY_DEL_BTN          @"del.png"
+#define     IMAGE_CITY_REFRESH_BTN      @"refresh_btn.png"
 
 
 

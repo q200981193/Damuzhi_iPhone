@@ -8,13 +8,14 @@
 
 #import "MoreController.h"
 #import "LocaleUtils.h"
-#import "CityManagementController.h"
 
 @interface MoreController ()
 
 @end
 
 @implementation MoreController
+
+@synthesize cityManagementController = _cityManagementController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,6 +62,12 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)dealloc
+{
+    [_cityManagementController release];
+    [super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -115,9 +122,11 @@
 
 - (void)showCityManagment
 {
-    CityManagementController* controller = [[CityManagementController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+    if (_cityManagementController == nil) {
+        _cityManagementController = [[CityManagementController alloc] init];
+    }
+    
+    [self.navigationController pushViewController:_cityManagementController animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

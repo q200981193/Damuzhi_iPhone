@@ -20,14 +20,22 @@
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;
 
+- (City*)getCity:(int)cityId;
+- (City*)getTestCity:(int)cityId;
+
 - (NSString*)getAppDataVersion;
 - (NSString*)getHelpHtml;
 
+- (NSArray*)getCityList;
+- (NSArray*)getCityIdList;
 - (NSArray*)getCityNameList;
 - (NSArray*)getTestCityNameList;
 
 - (NSString*)getCityName:(int)cityId;
 - (NSString*)getCityLatestVersion:(int)cityId;
+- (NSString*)getCountryName:(int)cityId;
+- (int)getCityDataSize:(int)cityId;
+- (NSString*)getCItyDownloadUrl:(int)cityId;
 
 - (NSArray*)getPlaceName:(int)categoryId;
 - (NSArray*)getSubCategoryList:(int)categoryId;

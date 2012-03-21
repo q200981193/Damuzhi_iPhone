@@ -7,18 +7,25 @@
 //
 
 #import "DownloadListCell.h"
+#import "AppUtils.h"
+#import "AppService.h"
 
 @interface DownloadListCell ()
 
 @end
 
 @implementation DownloadListCell
+
+@synthesize city = _city;
+@synthesize downloading = _downloading;
+
 @synthesize downloadFlagButton;
+@synthesize dataSizeLabel;
 @synthesize downloadProgressView;
-@synthesize downloadPersentLable;
+@synthesize downloadPersentLabel;
 @synthesize downloadButton;
 @synthesize onlineButton;
-@synthesize cityNameLable;
+@synthesize cityNameLabel;
 
 + (NSString*)getCellIdentifier
 {
@@ -30,14 +37,56 @@
     return 44.0f;
 }
 
+- (void)setCellData:(City*)city downloading:(NSNumber*)downloading
+{
+    self.city = city;
+    self.downloading = downloading;
+    
+    
+    self.cityNameLabel.text = _city.cityName;
+    
+    if (![_downloading boolValue]) {
+        self.dataSizeLabel.hidden = NO;
+        self.downloadPersentLabel.hidden = YES;
+        self.downloadProgressView.hidden = YES;
+        
+        float dataSize = city.dataSize/1024.0/1024.0;
+        self.dataSizeLabel.text = [[NSString alloc] initWithFormat:@"%0.1fM", dataSize];
+    }
+    else {
+        self.dataSizeLabel.hidden = YES;
+        self.downloadPersentLabel.hidden = NO;
+        self.downloadProgressView.hidden = NO;
+    }
+    
+    return;
+}
+
 - (void)dealloc {
+    [_city release];
+    [_downloading release];
     [downloadFlagButton release];
     [downloadProgressView release];
-    [downloadPersentLable release];
+    [downloadPersentLabel release];
     [downloadButton release];
     [onlineButton release];
-    [cityNameLable release];
+    [cityNameLabel release];
+    [dataSizeLabel release];
+    [cityNameLabel release];
+    [dataSizeLabel release];
+    [downloadPersentLabel release];
     [super dealloc];
+}
+
+- (IBAction)clickDownload:(id)sender {
+    [self.downloading initWithBool:YES];
+    self.dataSizeLabel.hidden = YES;
+    self.downloadPersentLabel.hidden = NO;
+    self.downloadProgressView.hidden = NO;
+    
+    NSLog(@"cityDataURL = %@", _city.downloadUrl);
+    
+    [[AppService defaultService] downloadCity:_city];
 }
 
 @end

@@ -57,13 +57,6 @@ static AppService* _defaultAppService = nil;
     return @"";
 }
 
-- (void)downloadResource:(NSURL*)url destinationPath:(NSString*)destinationPath
-{
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    [request setDownloadDestinationPath:destinationPath];
-    [request startSynchronous];
-}  
-
 - (BOOL)hasUnzipCityData:(int)cityId
 {
     return [[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]];
@@ -87,7 +80,6 @@ static AppService* _defaultAppService = nil;
 {    
     // create City Dir
     [FileUtil createDir:[AppUtils getZipDir]];
-    [FileUtil createDir:[AppUtils getCityDir:DEFAULT_CITY_ID]];
     
     // copy file from bundle to zip dir
     if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]]) {
@@ -99,13 +91,7 @@ static AppService* _defaultAppService = nil;
     
     // if there has no unzip city data, unzip
     if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
-        PPDebug(@"unzip defalut zip");
-        if ([SSZipArchive unzipFileAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]
-                            toDestination:[AppUtils getCityDir:DEFAULT_CITY_ID]]) {
-            [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:DEFAULT_CITY_ID]
-                                                    contents:nil
-                                                  attributes:nil];
-        }
+        [AppUtils unzipCityZip:DEFAULT_CITY_ID];
     }
 }
 
@@ -136,7 +122,8 @@ static AppService* _defaultAppService = nil;
         
         if (output.resultCode == ERROR_SUCCESS){
             //save data to app file
-            [[[travelResponse appInfo] data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
+            //[[[travelResponse appInfo] data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
+            [output.responseData writeToFile:[AppUtils getAppFilePath] atomically:YES];
             
             // TODO , performance can be improved by add sperate working queue for download
             NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
@@ -145,17 +132,33 @@ static AppService* _defaultAppService = nil;
                     // download images of each provide service icon
                     NSURL *url = [NSURL URLWithString:providedService.image];
                     
-                    [FileUtil createDir:[AppUtils getProvidedServiceImageDir]];
+                    NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
+                    NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", providedService.id]; 
                     
-                    NSString *destination = [[AppUtils getProvidedServiceImageDir] stringByAppendingPathComponent:[[[NSString alloc] initWithFormat:@"%d.png", providedService.id] autorelease]];
-                    
-                    PPDebug(@"download providedService icon, image = %@, name=%@, save path=%@", providedService.image, providedService.name, destination);
-
-                    [self downloadResource:url destinationPath:destination];
+                    [self downloadResource:url destinationDir:destinationDir fileName:fileName];
+                    [fileName release];
                 }
             }
         }
     });    
+}
+
+- (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName
+{
+    [FileUtil createDir:destinationDir];
+    NSString *destinationPath = [destinationDir stringByAppendingPathComponent:fileName];
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDownloadDestinationPath:destinationPath];
+    
+    //PPDebug(@"download url: %@ to destination: %@", url, destinationPath);
+    
+    [request startSynchronous];
+}  
+
+- (void)downloadCity:(City *)city
+{
+    
 }
 
 @end

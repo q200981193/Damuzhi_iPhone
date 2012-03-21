@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
 #import "CommonPlaceListController.h"
+#import "MoreController.h"
 
 @interface MainController : PPViewController
 {
     CommonPlaceListController *_spotListComtroller;
+    MoreController *_moreController;
 }
 
 - (IBAction)clickSpotButton:(id)sender;

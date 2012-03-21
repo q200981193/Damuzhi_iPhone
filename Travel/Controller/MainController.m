@@ -14,7 +14,6 @@
 #import "CityBasicDataSource.h"
 
 #import "NearbyController.h"
-#import "MoreController.h"
 #import "AppManager.h"
 
 @implementation MainController
@@ -30,6 +29,7 @@
 
 - (void)dealloc
 {
+    [_moreController release];
     [_spotListComtroller release];
     [super dealloc];
 }
@@ -128,9 +128,11 @@
 
 - (IBAction)clickMoreButton:(id)sender
 {
-    MoreController* controller = [[MoreController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+    if (_moreController == nil) {
+        _moreController = [[MoreController alloc] init];
+    }
+    
+    [self.navigationController pushViewController:_moreController animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
