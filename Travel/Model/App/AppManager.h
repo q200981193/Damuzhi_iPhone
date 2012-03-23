@@ -10,9 +10,6 @@
 #import "CommonService.h"
 #import "App.pb.h"
 
-#define APP_DATA_PATH @"app.dat"
-#define IMAGE_DIR_OF_PROVIDED_SERVICE  @"App/Image/ProvidedService"
-
 @interface AppManager : NSObject<CommonManagerProtocol>
 {
     App* _app;    
@@ -23,14 +20,22 @@
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;
 
+- (City*)getCity:(int)cityId;
+- (City*)getTestCity:(int)cityId;
+
 - (NSString*)getAppDataVersion;
 - (NSString*)getHelpHtml;
 
+- (NSArray*)getCityList;
+- (NSArray*)getCityIdList;
 - (NSArray*)getCityNameList;
 - (NSArray*)getTestCityNameList;
 
 - (NSString*)getCityName:(int)cityId;
 - (NSString*)getCityLatestVersion:(int)cityId;
+- (NSString*)getCountryName:(int)cityId;
+- (int)getCityDataSize:(int)cityId;
+- (NSString*)getCItyDownloadUrl:(int)cityId;
 
 - (NSArray*)getPlaceName:(int)categoryId;
 - (NSArray*)getSubCategoryList:(int)categoryId;
@@ -45,6 +50,7 @@
 - (NSString*)getProvidedServiceIcon:(int)categoryId providedServiceId:(int)providedServiceId;
 
 - (int)getCurrentCityId;
+- (NSString*)getCurrentCityName;
 - (void)setCurrentCityId:(int)newCity;
 
 - (NSArray*)getSortOptionList:(int)categoryId;

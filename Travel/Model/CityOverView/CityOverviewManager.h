@@ -12,17 +12,27 @@
 
 @interface CityOverViewManager : NSObject <CommonManagerProtocol>
 {
-    NSString        *_city;
+    int             _cityId;
     CityOverview    *cityOverView;
 }
 
-@property (retain, nonatomic) NSString *city;
+@property (assign, nonatomic) int          cityId;
 @property (retain, nonatomic) CityOverview *cityOverView;
 
-- (NSString*)getCurrencySymbol;
-- (NSArray*)getCityArea;
+- (NSArray*)getCityBasicImageList;
+- (NSString*)getCityBasicHtml;
 
-- (BOOL)hasLocalCityData:(NSString*)cityId;
-- (void)switchCity:(NSString*)newCity;
+- (NSString*)getTravelPreprationHtml;
+- (NSString*)getTravelUtilityHtml;
+- (NSString*)getTravelTransportationHtml;
+
+- (NSArray*)getAreaList;
+- (NSString*)getAreaName:(int)areaId;
+- (NSString*)getCurrencySymbol;
+- (NSString*)getCurrencyId;
+- (NSString*)getCurrencyName;
+- (int)getPriceRank;
+
+- (void)switchCity:(int)newCity;
 
 @end

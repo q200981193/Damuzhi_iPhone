@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewCell.h"
+#import "App.pb.h"
 
 @interface CityListCell : PPTableViewCell<PPTableViewCellProtocol>
-@property (retain, nonatomic) IBOutlet UILabel *cityNameLable;
 
+@property (retain, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (retain, nonatomic) IBOutlet UIButton *updateButton;
 @property (retain, nonatomic) IBOutlet UIButton *deleteButton;
-@property (retain, nonatomic) IBOutlet UILabel *sizeOfDataLabel;
+@property (retain, nonatomic) IBOutlet UILabel *dataSizeLabel;
+
+- (void)setCellData:(City*)city;
+- (void)initCellData;
 
 @end

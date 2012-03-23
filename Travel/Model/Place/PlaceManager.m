@@ -10,16 +10,16 @@
 #import "Place.pb.h"
 #import "LogUtil.h"
 #import "AppManager.h"
+#import "AppUtils.h"
 
 @implementation PlaceManager
 
 static PlaceManager *_placeDefaultManager;
-@synthesize city = _city;
+@synthesize cityId = _cityId;
 @synthesize placeList = _placeList;
 
 - (void)dealloc
 {
-    [_city release];
     [_placeList release];
     [super dealloc];
 }
@@ -28,78 +28,45 @@ static PlaceManager *_placeDefaultManager;
 {
     if (_placeDefaultManager == nil){
         _placeDefaultManager = [[PlaceManager alloc] init];
-        [[AppManager defaultManager] getCurrentCityId];
-        [_placeDefaultManager switchCity:@""];
+        [_placeDefaultManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
     }
     
     return _placeDefaultManager;
 }
 
-
-- (Place*)buildTestPlace:(NSString*)placeTag
+- (NSArray*)readCityPlaceData:(int)cityId
 {
-    Place_Builder* builder = [[[Place_Builder alloc] init] autorelease];
+    // if there has no local city data
+    //if (![self hasLocalCityData:cityId]) {
+    if (![AppUtils hasLocalCityData:cityId]) {
+        return nil;
+    }
     
-    [builder setPlaceId:[placeTag intValue]];       
-    [builder setCategoryId:PLACE_TYPE_SPOT];
-    [builder setSubCategoryId:1];
-    [builder setRank:3];
-    [builder setIntroduction:@"简介信息，待完善"];
-    [builder setIcon:@"image.jpg"];
-    [builder setAvgPrice:@"100"];
-    [builder setOpenTime:@"早上10点到晚上10点"];
-    [builder setLatitude:233.0f];
-    [builder setLongitude:119.0f];
-    [builder setName:@"香港太平山"];
-    [builder setPlaceFavoriteCount:12];
-    [builder setPrice:@"$50"];
-    [builder setPriceDescription:@"儿童免票，成人100元"];
-    [builder setTips:@"缆车车费：单程HK$20"];
-    [builder setTransportation:@"乘地铁从上环站到中环站"];
-    [builder setWebsite:@"http://www.madametussauds.com"];
-    [builder addTelephone:@"00852-28496966"];
-    [builder addAddress:@"香港山顶道128号凌霄阁"];
-    [builder addAreaId:11];
-    [builder setCategoryId:1];
-    [builder addProvidedServiceId:31];
-    [builder addProvidedServiceId:44];
-    [builder addProvidedServiceId:30];
+    NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
+    for (NSString *placeFilePath in [AppUtils getPlaceFilePathList:cityId]) {
+        PPDebug(@"placeFilePath = %@", placeFilePath);
+        NSData *placeData = [NSData dataWithContentsOfFile:placeFilePath];
+        PlaceList *places = [PlaceList parseFromData:placeData];
+        PPDebug(@"%d places read", [[places listList] count]);
+        [placeList addObjectsFromArray:[places listList]];
+//        Place* place = [Place parseFromData:placeData];
+//        [placeList addObject:place];
+//        PPDebug(@"read place = %@", [place name]);
+    }
     
-    return [builder build];
+    return placeList;
 }
 
-- (NSData*)readCityPlaceData:(NSString*)cityId
+- (void)switchCity:(int)newCityId
 {
-    // read from files or network later 
-    PlaceList_Builder* builder = [[[PlaceList_Builder alloc] init] autorelease];
-
-    Place* place1 = [self buildTestPlace:@"1"];    
-    Place* place2 = [self buildTestPlace:@"2"];    
-    Place* place3 = [self buildTestPlace:@"3"];    
-
-    [builder addList:place1];
-    [builder addList:place2];
-    [builder addList:place3];
-
-    PlaceList* placeList = [builder build];
-   
-    return [placeList data];
-    
-    return nil;
-}
-
-- (void)switchCity:(NSString*)newCity
-{
-    if ([_city isEqualToString:newCity]){
+    if (newCityId == _cityId){
         return;
     }
     
     // set city and read data by new city
-    self.city = newCity;
+    self.cityId = newCityId;
     
-    NSData* data = [self readCityPlaceData:newCity];
-    
-    self.placeList = [[PlaceList parseFromData:data] listList];        
+    self.placeList = [self readCityPlaceData:newCityId];
 }
 
 - (NSArray*)findAllSpots
@@ -133,9 +100,14 @@ static PlaceManager *_placeDefaultManager;
     return _placeList;
 }
 
-- (BOOL)hasLocalCityData:(NSString*)cityId
-{
-    return NO;
-}
+//- (BOOL)hasLocalCityData:(int)cityId
+//{
+//    BOOL hasData = NO;
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]]) {
+//        hasData = YES;
+//    }
+//    
+//    return hasData;
+//}
 
 @end

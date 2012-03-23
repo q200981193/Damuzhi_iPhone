@@ -12,6 +12,8 @@
 #import "CityListCell.h"
 #import "DownloadListCell.h"
 #import "LogUtil.h"
+#import "ImageName.h"
+#import "PackageManager.h"
 
 @interface CityManagementController ()
 
@@ -21,12 +23,18 @@
 
 @implementation CityManagementController
 
+@synthesize downloadingList = _downloadingList;
 @synthesize downloadList = _downloadList;
+
+@synthesize promptLabel = _promptLabel;
 @synthesize downloadTableView = _downloadTableView;
 
 - (void)dealloc {
     [_downloadTableView release];
     [_downloadList release];
+    [_downloadingList release];
+    [_tipsLabel release];
+    [_promptLabel release];
     [super dealloc];
 }
 
@@ -40,37 +48,8 @@
     return self;
 }
 
--(void)segmentAction:(id) sender
+-(void)setCityManageButtons
 {
-    switch([sender selectedSegmentIndex])
-    {
-        case 0:
-            self.dataTableView.hidden = NO;
-            self.downloadTableView.hidden = YES;
-            break;
-        case 1: 
-            self.dataTableView.hidden = YES;
-            self.downloadTableView.hidden = NO;
-            break;
-        default: 
-            break;
-    }
-}
-
--(void)setTwoButtonsInNavBar
-{
-/*    NSArray *buttonNames = [NSArray arrayWithObjects:@"城市列表", @"下载管理", nil];
-    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems:buttonNames];
-    segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar; 
-
-    [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
-    
-    [segmentedControl release];
-    self.navigationItem.rightBarButtonItem= barButton;
-    [barButton release];*/
-    
-    
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 30)];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -78,14 +57,23 @@
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(80, 0, 80, 30);
-    
-    //[leftButton setBackgroundImage:[UIImage imageNamed:@"refresh"] forState:UIControlStateNormal];
+       
     
     [leftButton setTitle:@"城市列表" forState:UIControlStateNormal];
     leftButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [leftButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
+    [leftButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateHighlighted];
+    
+
     [rightButton setTitle:@"下载管理" forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [rightButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [rightButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
+    [rightButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateHighlighted];
     
     [leftButton addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchUpInside];
     [rightButton addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
@@ -96,25 +84,40 @@
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
     [buttonView release];
     
-    self.navigationItem.rightBarButtonItem= barButton;
+    self.navigationItem.rightBarButtonItem = barButton;
     [barButton release];
 }
 
 - (void)viewDidLoad
 {
-    self.dataList = [[[AppManager defaultManager] app] cityListList];
+    //self.dataList = [[AppManager defaultManager] getCityList];
+    self.dataList = [[PackageManager defaultManager] getLocalCityList];
+    self.downloadList = [[PackageManager defaultManager] getOnlineCityList];
+    if (_downloadingList == nil) {
+        for (int i=0; i<[self.downloadingList count]; i++) {
+            NSNumber *number = [[NSNumber alloc] initWithBool:NO];
+            [self.downloadingList addObject:number];
+            [number release];
+        }
+    }
+
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
     
-    [self setTwoButtonsInNavBar];
+    [self.promptLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_MAIN_BOTTOM]]];
+    
+    [self setCityManageButtons];
     [self showCityList];
     self.dataTableView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidUnload
 {
+    [self setTipsLabel:nil];
+    [self setPromptLabel:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
+    // Release any retained subviews of the main view
     // e.g. self.myOutlet = nil;
 }
 
@@ -138,7 +141,12 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [dataList count];			// default implementation
+    if (tableView == self.downloadTableView) {
+        return [_downloadList count];
+    }
+    else{
+        return [dataList count];			// default implementation
+    }
 }
 
 
@@ -151,26 +159,26 @@
         
         if (cell == nil) {
             cell = [DownloadListCell createCell:self];				
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;				        
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;	
         }
         
         // set text label
         int row = [indexPath row];	
-        int count = [dataList count];
+        int count = [_downloadList count];
         if (row >= count){
             PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
             return cell;
         }
         DownloadListCell* downloadCell = (DownloadListCell*)cell;
-        City *city = [self.downloadList objectAtIndex:row];
-        downloadCell.cityNameLable.text = city.cityName;
+        [downloadCell setCellData:[self.downloadList objectAtIndex:row] downloading:[_downloadingList objectAtIndex:row]];
+        downloadCell.indexPath = indexPath;
     }
     else {
         cell = [theTableView dequeueReusableCellWithIdentifier:[CityListCell getCellIdentifier]];
         
         if (cell == nil) {
             cell = [CityListCell createCell:self];				
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;				        
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;	
         }
         
         // set text label
@@ -181,8 +189,7 @@
             return cell;
         }
         CityListCell* cityCell = (CityListCell*)cell;
-        City *city = [dataList objectAtIndex:row];
-        cityCell.cityNameLable.text = city.cityName;
+        [cityCell setCellData:[self.dataList objectAtIndex:row]];
     }
 
 	return cell;

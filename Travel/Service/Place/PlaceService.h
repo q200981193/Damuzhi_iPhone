@@ -24,10 +24,10 @@
     PlaceManager    *_localPlaceManager;
     PlaceManager    *_onlinePlaceManager;
     
-    NSString        *_currentCityId;
+    int             _currentCityId;
 }
 
-@property (nonatomic, retain) NSString *currentCityId;
+@property (nonatomic, assign) int currentCityId;
 
 + (PlaceService*)defaultService;
 

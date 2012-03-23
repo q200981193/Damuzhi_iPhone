@@ -32,10 +32,13 @@ message City {
   required int32 cityId = 1;           // 城市ID
   required string cityName = 2;         // 城市显示名称，如香港
   optional string latestVersion = 3;    // 最新城市数据包版本，格式如1.0
+  optional string countryName = 4;
+  optional int32  dataSize = 5;         // 数据包大小
+  optional string downloadURL = 6;      // 数据包下载地址
 }
 
 message CityList {
-  repeated City cityList = 1;
+  repeated City cities = 1;
 }
 
 message HelpInfo {
@@ -45,8 +48,8 @@ message HelpInfo {
 // 应用相关的基础数据，和城市无关
 message App {
   required string dataVersion = 1;                // 数据的版本，如1.0
-  repeated City cityList = 2;                     // 正式启用城市列表
-  repeated City testCityList = 3;                 // 测试实用测试列表
+  repeated City cities = 2;                     // 正式启用城市列表
+  repeated City testCities = 3;                 // 测试实用测试列表
   repeated PlaceMeta placeMetaDataList = 4;       // 每种地点分类的相关数据
   optional string helpHtml = 11;                  // 帮助说明的HTML文件路径
 }

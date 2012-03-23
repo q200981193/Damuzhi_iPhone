@@ -16,4 +16,9 @@
 - (void)loadAppData;
 - (void)updateAppData;
 
+- (void)downloadCity:(City*)city;
+- (void)getCityDownloadProgress:(int)cityId;
+
++ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName;
+
 @end

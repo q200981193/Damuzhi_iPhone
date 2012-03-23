@@ -14,7 +14,7 @@
 #import "CityBasicDataSource.h"
 
 #import "NearbyController.h"
-#import "MoreController.h"
+#import "AppManager.h"
 
 @implementation MainController
 
@@ -29,6 +29,7 @@
 
 - (void)dealloc
 {
+    [_moreController release];
     [_spotListComtroller release];
     [super dealloc];
 }
@@ -48,15 +49,15 @@
     NSLog(@"click title");
 }
 
-- (void)createButtonView
-{
-#define BUTTON_NAME @"大拇指旅行 - 肇庆"
+
+#define APP_TITLE @"大拇指旅行 - "
 #define BUTTON_VIEW_WIDTH 200
 #define BUTTON_VIEW_HEIGHT 30
-    
+- (void)createButtonView
+{
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT)];
     label.font = [UIFont fontWithName:@"" size:0.1];
-    label.text = @"大拇指旅行 — 湛江";
+    label.text = [[NSString alloc] initWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     label.textAlignment = UITextAlignmentCenter;
@@ -86,8 +87,6 @@
     
     // Do any additional setup after loading the view from its nib.
     [self createButtonView];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"index_bg@2x.png"]];
-    
 }
 
 - (void)viewDidUnload
@@ -129,9 +128,11 @@
 
 - (IBAction)clickMoreButton:(id)sender
 {
-    MoreController* controller = [[MoreController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+    if (_moreController == nil) {
+        _moreController = [[MoreController alloc] init];
+    }
+    
+    [self.navigationController pushViewController:_moreController animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

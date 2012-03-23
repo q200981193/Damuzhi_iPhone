@@ -22,24 +22,24 @@
 @synthesize placeListController;
 @synthesize filterHandler = _filterHandler;
 
-@synthesize selectedCategoryIds = _selectCategoryIds;
-@synthesize selectedSortIds = _selectedSortIds;
-@synthesize selectedAreaIds = _selectedAreaIds;
-@synthesize selectedPriceIds = _selectedPriceIds;
-@synthesize selectedServiceIds = _selectedServiceIds;
-@synthesize selectedCuisineIds = _selectedCuisineIds;
+@synthesize selectedCategoryIdList = _selectCategoryIdList;
+@synthesize selectedSortIdList = _selectedSortIdList;
+@synthesize selectedAreaIdList = _selectedAreaIdList;
+@synthesize selectedPriceIdList = _selectedPriceIdList;
+@synthesize selectedServiceIdList = _selectedServiceIdList;
+@synthesize selectedCuisineIdList = _selectedCuisineIdList;
 
 - (void)dealloc {
     [_filterHandler release];
     [placeListController release];
     [buttonHolderView release];
     [placeListHolderView release];
-    [_selectedSortIds release];
-    [_selectedCategoryIds release];
-    [_selectedAreaIds release];
-    [_selectedPriceIds release];
-    [_selectedServiceIds release];
-    [_selectedCuisineIds release];
+    [_selectedSortIdList release];
+    [_selectedCategoryIdList release];
+    [_selectedAreaIdList release];
+    [_selectedPriceIdList release];
+    [_selectedServiceIdList release];
+    [_selectedCuisineIdList release];
     [super dealloc];
 }
 
@@ -47,8 +47,8 @@
 {
     self = [super init];
     self.filterHandler = handler;
-    self.selectedCategoryIds = [[[NSMutableArray alloc] init] autorelease];
-    self.selectedSortIds = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedCategoryIdList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedSortIdList = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -94,7 +94,7 @@
     [self setNavigationRightButton:NSLS(@"帮助") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickHelp:)];
-    
+            
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     [_filterHandler findAllPlaces:self];
 }
@@ -116,13 +116,13 @@
 
 - (NSArray*)filterAndSort:(NSArray*)placeList
 {    
-    placeList = [_filterHandler filterAndSotrPlaces:placeList
-                           selectedCategoryIds:self.selectedCategoryIds
-                              selectedPriceIds:self.selectedPriceIds
-                               selectedAreaIds:self.selectedAreaIds
-                            selectedServiceIds:self.selectedServiceIds
-                            selectedCuisineIds:self.selectedCuisineIds
-                                        sortBy:[self.selectedSortIds objectAtIndex:0]];
+    placeList = [_filterHandler filterAndSotrPlaceList:placeList
+                                selectedCategoryIdList:self.selectedCategoryIdList
+                                   selectedPriceIdList:self.selectedPriceIdList
+                                    selectedAreaIdList:self.selectedAreaIdList
+                                 selectedServiceIdList:self.selectedServiceIdList
+                                 selectedCuisineIdList:self.selectedCuisineIdList
+                                                sortBy:[self.selectedSortIdList objectAtIndex:0]];
     
     return placeList;
 }
@@ -130,8 +130,8 @@
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
     if (self.placeListController == nil){
-        [self.selectedCategoryIds addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
-        [self.selectedSortIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
+        [self.selectedCategoryIdList addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
+        [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
         list = [self filterAndSort:list];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView
@@ -141,6 +141,7 @@
         list = [self filterAndSort:list];
         [self.placeListController setAndReloadPlaceList:list];
     }    
+    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", list.count];
 }
 
 - (void)updateModeButton
@@ -163,21 +164,9 @@
 
 - (void)clickCategoryButton:(id)sender
 {
-    NSMutableArray *subCategories = [[NSMutableArray alloc] init];    
-    [subCategories addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:-1]]];
-    
-    for (NameIdPair *subCategory in [[[AppManager defaultManager] getPlaceMeta:[_filterHandler getCategoryId]] subCategoryListList]) {
-        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategory.name 
-                                                             forKey:[NSNumber numberWithInt:subCategory.id]]];
-    }
-    
-//    for (NameIdPair* subCategoryPair in [[AppManager defaultManager] getSubCategories:[_filterHandler getCategoryId]]) {
-//        [subCategories addObject:[NSDictionary dictionaryWithObject:subCategoryPair.name 
-//                                                             forKey:[NSNumber numberWithInt:subCategoryPair.id]]];
-//    }
-    
-    SelectController* selectController = [SelectController createController:subCategories
-                                                               selectedIds:self.selectedCategoryIds 
+    NSArray *subCategoryList = [[AppManager defaultManager] getSubCategoryList:[_filterHandler getCategoryId]];
+    SelectController* selectController = [SelectController createController:subCategoryList                                                           
+                                                                selectedIds:self.selectedCategoryIdList 
                                                                multiOptions:YES];
     
     selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"分类")];
@@ -189,13 +178,10 @@
 }
 
 - (void)clickSortButton:(id)sender
-{
-//    SelectController* selectController = [SelectController createController:
-//                                          [[AppManager defaultManager] getSortOptions:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
-//                                                               multiOptions:NO];
-    
-    SelectController* selectController = [SelectController createController:
-                                          [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]]selectedIds:self.selectedSortIds 
+{    
+    NSArray *sortOptionList = [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]];
+    SelectController* selectController = [SelectController createController:sortOptionList
+                                                                selectedIds:self.selectedSortIdList 
                                                                multiOptions:NO];
 
     
@@ -210,6 +196,7 @@
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
     [_filterHandler findAllPlaces:self];
+    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", selectedList.count]; 
 }
 
 

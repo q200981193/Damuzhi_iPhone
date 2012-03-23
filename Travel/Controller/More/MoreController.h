@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
+#import "CityManagementController.h"
 
 @interface MoreController : PPTableViewController
+{
+    CityManagementController *_cityManagementController;
+}
+
+@property (retain, nonatomic) CityManagementController *cityManagementController;
 
 @end

@@ -86,16 +86,14 @@
     return [[PlaceService defaultService] findAllSpots:viewController];
 }
 
--(NSMutableArray*)filterByCategoryIds:(NSArray*)list selectedCategoryIds:(NSArray*)selectedCategoryIds
+-(NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList
 {
     NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
     
     //filter by selectedCategoryId
-    for (NSNumber *selectedCategoryId in selectedCategoryIds) {
+    for (NSNumber *selectedCategoryId in selectedCategoryIdList) {
         if ([selectedCategoryId intValue] == -1) {
-            for (Place *place in list) {
-                [array addObject:place];
-            }
+            return list;
         }
         
         for (Place *place in list) {
@@ -107,18 +105,6 @@
     }
     
     return array;
-}
-
--(NSInteger)ComparePlaceByRecommend:(id)place1 place2:(id)place2 context:(void *)context
-{
-    int rank1 = [place1 rank];
-    int rank2 = [place2 rank];
-    
-    if (rank1 < rank2)
-        return NSOrderedAscending;
-    else  if (rank1 > rank2)
-        return NSOrderedDescending;
-    else return NSOrderedSame;
 }
 
 -(NSArray*)sortBySelectedSortId:(NSArray*)placeList selectedSortId:(NSNumber*)selectedSortId
@@ -164,15 +150,15 @@
     return array;
 }
 
-- (NSArray*)filterAndSotrPlaces:(NSArray*)placeList
-            selectedCategoryIds:(NSArray*)selectedCategoryIds 
-               selectedPriceIds:(NSArray*)selectedPriceIds 
-                selectedAreaIds:(NSArray*)selectedAreaIds 
-             selectedServiceIds:(NSArray*)selectedServiceIds
-             selectedCuisineIds:(NSArray*)selectedCuisineIds
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
+            selectedCategoryIdList:(NSArray*)selectedCategoryIdList 
+               selectedPriceIdList:(NSArray*)selectedPriceIdList 
+                selectedAreaIdList:(NSArray*)selectedAreaIdList 
+             selectedServiceIdList:(NSArray*)selectedServiceIdList
+             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
                          sortBy:(NSNumber*)selectedSortId;
 {
-    return [self sortBySelectedSortId:[self filterByCategoryIds:placeList selectedCategoryIds:selectedCategoryIds]selectedSortId:selectedSortId];
+    return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId];
 }
 
 @end

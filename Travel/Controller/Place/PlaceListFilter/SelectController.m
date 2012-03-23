@@ -138,11 +138,6 @@
 {
     NSDictionary *selectedDictionary = [self.dataList objectAtIndex:indexPath.row];
     NSNumber *currentSelectedId = [[selectedDictionary allKeys] objectAtIndex:0];
-//    NSString *currentSelectedName = [[selectedDictionary allValues] objectAtIndex:0];
-
-//    NSLog(@"selectedRow: %d", indexPath.row);
-//    NSLog(@"selectedId: %d", [selectedId intValue]);
-//    NSLog(@"selectedName: %@", selectedName);
 
     if(self.multiOptions == YES){
         BOOL found = NO;
@@ -156,6 +151,16 @@
         
         if(!found)
         {
+            if([currentSelectedId intValue] == -1)
+            {
+                [self.selectedIds removeAllObjects];
+            }
+            for (NSNumber *selectedId in self.selectedIds) {
+                if ([selectedId intValue]== -1) {
+                    [self.selectedIds removeObject:selectedId];
+                }
+            }
+            
             [self.selectedIds addObject:currentSelectedId];
         }
         else {
@@ -174,8 +179,17 @@
 
 - (void)clickFinish:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    [delegate didSelectFinish:self.selectedIds];
+    if ([self.selectedIds count] == 0) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"温馨提示") message:NSLS(@"亲，您还没有选择哦！") delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+    }
+    else{
+        [self.navigationController popViewControllerAnimated:YES];
+        [delegate didSelectFinish:self.selectedIds];
+    }
 }
 
 @end
