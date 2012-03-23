@@ -94,9 +94,7 @@
 
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
-    [self.mapViewController setPlaces:list];
     self.dataList = list;
-    
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
 }

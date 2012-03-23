@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPViewController.h"
 
 @class Place;
 
 @protocol CommonPlaceDetailDataSourceProtocol <NSObject>
 
+@property (assign, nonatomic) float detailHeight;
 - (void)addDetailViews:(UIView*)superView WithPlace:(Place*)place;
 
 @end
@@ -36,12 +38,17 @@
 
 @end
 
-@interface CommonPlaceDetailController : UIViewController
+@interface CommonPlaceDetailController : PPViewController
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolerView;
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 @property (retain, nonatomic) IBOutlet UIScrollView *dataScrollView;
 @property (retain, nonatomic) Place *place;
+@property (retain, nonatomic) IBOutlet UIImageView *helpIcon;
+@property (retain, nonatomic) IBOutlet UIImageView *praiseIcon1;
+@property (retain, nonatomic) IBOutlet UIImageView *praiseIcon2;
+@property (retain, nonatomic) IBOutlet UIImageView *praiseIcon3;
+
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
 
 - (id)initWithPlace:(Place*)onePlace;
