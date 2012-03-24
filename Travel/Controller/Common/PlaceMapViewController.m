@@ -65,8 +65,8 @@
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
+    newRegion.span.latitudeDelta = 0.05;
+    newRegion.span.longitudeDelta = 0.05;
 
     [self.mapView setRegion:newRegion animated:YES];
 }
@@ -182,7 +182,9 @@
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     NSLog(@"didAddAnnotationViews");
-    [self gotoLocation:[_placeList objectAtIndex:1]];
+    if ([_placeList count] >= 2){
+        [self gotoLocation:[_placeList objectAtIndex:1]];
+    }
 }
 
 - (void)viewDidUnload
@@ -237,7 +239,7 @@
             UIView *customizeView = [[UIView alloc] initWithFrame:CGRectMake(0,0,102,27)];
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"map_annotation_bg"];
+            UIImage *image = [UIImage imageNamed:@"map_button"];
             annotationView.image = image;            
             
             UIButton *leftIndicatorButton = [UIButton buttonWithType:UIButtonTypeCustom];

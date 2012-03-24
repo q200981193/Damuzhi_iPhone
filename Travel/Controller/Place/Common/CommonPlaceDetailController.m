@@ -144,7 +144,7 @@
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
     float detailHeight = [self.handler detailHeight];
-    dataScrollView.backgroundColor = [UIColor clearColor];
+    dataScrollView.backgroundColor = [UIColor whiteColor];
     [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 266)];
 
     //电话
