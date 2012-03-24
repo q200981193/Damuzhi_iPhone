@@ -40,6 +40,8 @@
 #define     IMAGE_CITY_DEFAULT_BTN      @"default_btn.png"
 #define     IMAGE_CITY_DEL_BTN          @"del.png"
 #define     IMAGE_CITY_REFRESH_BTN      @"refresh_btn.png"
+#define     IMAGE_CITY_DOWNLOADED_NO    @"no_s.png"
+#define     IMAGE_CITY_DOWNLOADED_YES   @"yes_s.png"
 
 
 

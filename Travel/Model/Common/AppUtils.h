@@ -25,6 +25,7 @@
 
 //interface for create dir
 + (NSString*)getDownloadDir;
++ (NSString*)getDownloadPath:(int)cityId;
 + (NSString*)getAppDir;
 + (NSString*)getZipDir;
 + (NSString*)getCityDir:(int)cityId;

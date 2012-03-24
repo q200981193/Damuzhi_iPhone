@@ -19,6 +19,11 @@
     return [FileUtil getFileFullPath:DIR_OF_DOWNLOAD];
 }
 
++ (NSString*)getDownloadPath:(int)cityId
+{
+    return [[AppUtils getDownloadDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.zip", cityId]];
+}
+
 + (NSString*)getAppDir
 {
     return [FileUtil getFileFullPath:DIR_OF_APP];

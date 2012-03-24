@@ -23,7 +23,6 @@
 
 @implementation CityManagementController
 
-@synthesize downloadingList = _downloadingList;
 @synthesize downloadList = _downloadList;
 
 @synthesize promptLabel = _promptLabel;
@@ -32,7 +31,6 @@
 - (void)dealloc {
     [_downloadTableView release];
     [_downloadList release];
-    [_downloadingList release];
     [_tipsLabel release];
     [_promptLabel release];
     [super dealloc];
@@ -93,13 +91,6 @@
     //self.dataList = [[AppManager defaultManager] getCityList];
     self.dataList = [[PackageManager defaultManager] getLocalCityList];
     self.downloadList = [[PackageManager defaultManager] getOnlineCityList];
-    if (_downloadingList == nil) {
-        for (int i=0; i<[self.downloadingList count]; i++) {
-            NSNumber *number = [[NSNumber alloc] initWithBool:NO];
-            [self.downloadingList addObject:number];
-            [number release];
-        }
-    }
 
     [super viewDidLoad];
     
@@ -110,6 +101,8 @@
     [self setCityManageButtons];
     [self showCityList];
     self.dataTableView.backgroundColor = [UIColor whiteColor];
+    
+    // start timer to update progress, timer 
 }
 
 - (void)viewDidUnload
@@ -132,7 +125,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 61;
+	return 54;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -160,6 +153,8 @@
         if (cell == nil) {
             cell = [DownloadListCell createCell:self];				
             cell.selectionStyle = UITableViewCellSelectionStyleNone;	
+            
+            
         }
         
         // set text label
@@ -170,7 +165,7 @@
             return cell;
         }
         DownloadListCell* downloadCell = (DownloadListCell*)cell;
-        [downloadCell setCellData:[self.downloadList objectAtIndex:row] downloading:[_downloadingList objectAtIndex:row]];
+        [downloadCell setCellData:[self.downloadList objectAtIndex:row]];
         downloadCell.indexPath = indexPath;
     }
     else {
@@ -178,7 +173,7 @@
         
         if (cell == nil) {
             cell = [CityListCell createCell:self];				
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;	
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
         // set text label
