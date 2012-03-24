@@ -14,10 +14,12 @@
 @interface MainController : PPViewController
 {
     CommonPlaceListController *_spotListComtroller;
+    CommonPlaceListController *_hotelListComtroller;
     MoreController *_moreController;
 }
 
 - (IBAction)clickSpotButton:(id)sender;
+- (IBAction)clickHotelButton:(id)sender;
 - (IBAction)clickCityOverviewButton:(id)sender;
 - (IBAction)clickNearbyButton:(id)sender;
 - (IBAction)clickMoreButton:(id)sender;
