@@ -100,20 +100,7 @@
     }
     
     return hasData;
-}
-
-//+ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName
-//{
-//    [FileUtil createDir:destinationDir];
-//    NSString *destinationPath = [destinationDir stringByAppendingPathComponent:fileName];
-//    
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    [request setDownloadDestinationPath:destinationPath];
-//    
-//    //PPDebug(@"download url: %@ to destination: %@", url, destinationPath);
-//    
-//    [request startSynchronous];
-//}  
+} 
 
 + (void)unzipCityZip:(int)cityId
 {

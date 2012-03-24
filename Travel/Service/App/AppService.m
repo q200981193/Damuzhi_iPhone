@@ -17,6 +17,7 @@
 #import "AppUtils.h"
 #import "AppConstants.h"
 #import "ASIHTTPRequest.h"
+#import "LocalCityManager.h"
 
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
@@ -25,7 +26,6 @@
 
 @synthesize downloadRequestList = _downloadRequestList;
 @synthesize queue = _queue;
-@synthesize downloadDelegate = _downloadDelegate;
 
 static AppService* _defaultAppService = nil;
 
@@ -168,6 +168,8 @@ static AppService* _defaultAppService = nil;
     });    
 }
 
+#define KEY_CITY_ID @"KEY_CITY_ID"
+
 - (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName
 {
     [FileUtil createDir:destinationDir];
@@ -203,25 +205,25 @@ static AppService* _defaultAppService = nil;
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url]; 
     
     [request setTemporaryFileDownloadPath:tempPath];
-    [request setAllowResumeForFileDownloads:YES];
     [request setDownloadDestinationPath:destinationPath];
+    [request setAllowResumeForFileDownloads:YES];
     
     PPDebug(@"Download to %@ (%@)", destinationPath, tempPath);
     
     [request setDelegate:self];
-    [request setDownloadProgressDelegate:self];
-//    self.downloadDelegate = self;
-    [request setShowAccurateProgress:YES];
-    [request totalBytesRead];
+    [request setDownloadProgressDelegate:[[LocalCityManager defaultManager] createLocalCity:city.cityId]];
+//    [request setShowAccurateProgress:YES];
     
     [self.queue addOperation:request];
     
     //set request info, user defined
-    NSDictionary *dic = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:0.0]
-                                                    forKey:[NSNumber numberWithInt:city.cityId]]; 
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:city.cityId]
+                                                    forKey:KEY_LOCAL_CITY_ID]; 
     
     [request setUserInfo:dic];
     [self.downloadRequestList addObject:request];
+    
+    
 }
 
 - (void)cancelDownloadCity:(City*)city
@@ -229,6 +231,7 @@ static AppService* _defaultAppService = nil;
     [self pauseDownloadCity:city];
     [[NSFileManager defaultManager] removeItemAtPath:[AppUtils getDownloadPath:city.cityId]
                                                error:nil];
+    [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
 }
 
 - (void)pauseDownloadCity:(City*)city
@@ -243,6 +246,7 @@ static AppService* _defaultAppService = nil;
             
             [request cancel];
             [self.downloadRequestList removeObject:request];
+            [[LocalCityManager defaultManager] updateLocalCity:city.cityId downloadingFlag:NO];
             return;
         }
     }
@@ -257,45 +261,24 @@ static AppService* _defaultAppService = nil;
 //    
 //    // Use when fetching binary data
 //    NSData *responseData = [request responseData];
+    
+    int cityId = [[request.userInfo objectForKey:KEY_CITY_ID] intValue];
         
     NSLog(@"requestFinished");
     [_downloadRequestList removeObject:request];
-    if (self.downloadDelegate && [self.downloadDelegate respondsToSelector:@selector(didFinishedDownload)]) {
-        [self.downloadDelegate didFinishedDownload];
-    }
+    [[LocalCityManager defaultManager] updateLocalCity:cityId downloadingFlag:NO];
 }
 
 
-//- (void)requestFailed:(ASIHTTPRequest *)request
-//{
-////    NSError *error = [request error];
-//    NSLog(@"requestFailed");
-//    [_downloadRequestList removeObject:request];
-//    if (self.downloadDelegate && [self.downloadDelegate respondsToSelector:@selector(didFailedDownload)]) {
-//        [self.downloadDelegate didFailedDownload];
-//    }
-//}
-
-- (float)getCityDownloadProgress:(City*)city
+- (void)requestFailed:(ASIHTTPRequest *)request
 {
-//    ASIHTTPRequest *request = [_downloadingDic objectForKey:city];
-    for (ASIHTTPRequest *request in _downloadRequestList) {
-        NSNumber *progress = [request.userInfo objectForKey:[NSNumber numberWithInt:city.cityId]];
-        if(progress != nil)
-        {
-            return [progress floatValue];
-        }
-    }
-    
-    return 0.0;
+//    NSError *error = [request error];
+    int cityId = [[request.userInfo objectForKey:KEY_CITY_ID] intValue];
+
+    NSLog(@"requestFailed");
+    [_downloadRequestList removeObject:request];
+    [[LocalCityManager defaultManager] removeLocalCity:cityId];
 }
 
-- (void)setProgress:(float)newProgress
-{
-    NSLog(@"progress = %f", newProgress);
-    if (self.downloadDelegate && [self.downloadDelegate respondsToSelector:@selector(setDownloadProgress:)]) {
-        [self.downloadDelegate setDownloadProgress:newProgress];
-    }
-}
 
 @end

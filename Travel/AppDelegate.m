@@ -44,7 +44,7 @@
     [[AppService defaultService] loadAppData]; 
     
     // update app data from server
-    [[AppService defaultService] updateAppData];
+    //[[AppService defaultService] updateAppData];
     
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];

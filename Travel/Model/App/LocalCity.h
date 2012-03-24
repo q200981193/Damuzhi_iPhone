@@ -9,16 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "App.pb.h"
 
-#define NO_DOWNLOAD 0;
-#define DOWNLOADING 1;
-#define DOWNLOAD_DONE 2;
+#define KEY_LOCAL_CITY_ID @"localCityId"
+#define KEY_DOWNLOAD_PROGRESS @"downloadProgress"
+#define KEY_DOWNLOADING_FLAG @"downloadingFlag"
+#define KEY_DOWNLOAD_DONE_FLAG @"downloadDoneFlag"
+
 
 @interface LocalCity : NSObject <NSCoding>
 
 @property (assign, nonatomic) int cityId;
 @property (assign, nonatomic) float downloadProgress;
-@property (assign, nonatomic) int downloadFlag;
+@property (assign, nonatomic) bool downloadingFlag;
+@property (assign, nonatomic) bool downloadDoneFlag;
 
-+ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadFlag:(int) downloadFlag;
-
++ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadingFlag:(bool)downloadingFlag downloadDoneFlag:(bool)downloadDoneFlag;
 @end

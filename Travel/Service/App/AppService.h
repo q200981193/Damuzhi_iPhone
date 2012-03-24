@@ -10,21 +10,10 @@
 #import "AppManager.h"
 #import "ASINetworkQueue.h"
 
-@protocol DownloadServiceDelegate <NSObject>
-@optional   
-- (void)didFinishedDownload:(int)cityId;
-- (void)didFailedDownload:(int)cityId;
-- (void)setDownloadProgress:(float)newProgress;
-@end
-
 @interface AppService : CommonService
-{
-    id<DownloadServiceDelegate> _downloadDelegate;
-}
 
 @property (retain, nonatomic) NSMutableArray *downloadRequestList;
 @property (retain, nonatomic) NSOperationQueue *queue;
-@property (assign, nonatomic) id<DownloadServiceDelegate> downloadDelegate;
 
 + (AppService*)defaultService;
 

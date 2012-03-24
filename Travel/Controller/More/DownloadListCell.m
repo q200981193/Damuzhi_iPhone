@@ -10,8 +10,9 @@
 #import "AppUtils.h"
 #import "PPDebug.h"
 #import "ImageName.h"
+#import "LocalCityManager.h"
 
-#define NODOWNLOAD 0
+#define NO_DOWNLOAD 0
 #define DOWNLOADING 1
 #define FINISH_DOWNLOAD 2
 
@@ -48,16 +49,10 @@
 - (void)setCellData:(City*)city
 {
     self.city = city;
-    
     self.cityNameLabel.text = _city.cityName;
-
     float dataSize = city.dataSize/1024.0/1024.0;
     self.dataSizeLabel.text = [[NSString alloc] initWithFormat:@"%0.1fM", dataSize];
-    
-    
-//    self.progress.value = [[LocalCityManager defaultManager] findLocalCityById:city.cid].progress;
-    
-    [self setCellAppearance:NODOWNLOAD];
+    [self setCellAppearance];
 
     return;
 }
@@ -65,11 +60,7 @@
 - (IBAction)clickDownload:(id)sender {
     NSLog(@"download city = %d", _city.cityId);
     [[AppService defaultService] downloadCity:_city];
-    
     self.pauseDownloadBtn.selected = NO;
-
-    [self setCellAppearance:DOWNLOADING];
-    [[AppService defaultService] setDownloadDelegate:self];
 }
 
 - (IBAction)clickPauseBtn:(id)sender {
@@ -84,33 +75,6 @@
         [[AppService defaultService] downloadCity:_city];
     }
 }
-
-- (void)setDownloadProgress:(float)newProgress
-{
-    NSLog(@"progress = %f", newProgress);
-    
-    [self setCellAppearance:DOWNLOADING];
-    
-    self.downloadProgressView.progress = newProgress;
-    int persent = newProgress*100;
-    self.downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent]; 
-    
-}
-
-//- (void)requestFinished:(ASIHTTPRequest *)request
-//{
-//    [self setCellAppearance:FINISH_DOWNLOAD];
-//    
-//    NSLog(@"requestFinished");
-//}
-//
-//
-//- (void)requestFailed:(ASIHTTPRequest *)request
-//{
-//    [self setCellAppearance:NODOWNLOAD];
-//    
-//    NSLog(@"requestFailed");
-//}
 
 - (void)dealloc {
     [_city release];
@@ -131,12 +95,28 @@
     [super dealloc];
 }
 
+- (IBAction)clickCancel:(id)sender {
+    [[AppService defaultService] cancelDownloadCity:_city];
+}
 
-
-- (void)setCellAppearance:(int)downloadStatus
+- (void)setCellAppearance
 {
+    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
+    if(localCity == nil)
+    {
+        [self setCellAppearance:NO_DOWNLOAD downloadProgress:0.0];
+    }
+    else {
+        if (localCity.downloadingFlag == NO && localCity.downloadProgress) {
+            
+        }
+    }
+}
+
+- (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress
+{ 
     switch (downloadStatus) {
-        case NODOWNLOAD:
+        case NO_DOWNLOAD:
             [self.downloadFlagButton setImage:[UIImage imageNamed:IMAGE_CITY_DOWNLOADED_NO] forState:UIControlStateNormal];   
             [self.cityNameLabel setTextColor:[UIColor darkGrayColor]];
             self.dataSizeLabel.hidden = NO;
@@ -166,6 +146,8 @@
             
             self.downloadDoneLabel.hidden = YES;
             self.moreDetailBtn.hidden = YES;
+            
+            self.downloadProgressView.progress = downloadProgress;
             break;
             
         case FINISH_DOWNLOAD:
@@ -190,21 +172,5 @@
     
 }
 
-- (void)didFinishedDownload
-{
-    NSLog(@"didFinishedDownload");
-    [self setCellAppearance:FINISH_DOWNLOAD];
-}
-
-- (void)didFailedDownload
-{
-    NSLog(@"didFailedDownload");
-    [self setCellAppearance:NODOWNLOAD];
-}
-
-- (IBAction)clickCancel:(id)sender {
-    [self setCellAppearance:NODOWNLOAD];
-    [[AppService defaultService] cancelDownloadCity:_city];
-}
 
 @end

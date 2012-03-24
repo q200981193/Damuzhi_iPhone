@@ -12,7 +12,7 @@
 #import "AppService.h"
 
 
-@interface DownloadListCell : PPTableViewCell<PPTableViewCellProtocol, DownloadServiceDelegate>
+@interface DownloadListCell : PPTableViewCell<PPTableViewCellProtocol>
 {
     City *_city;
 }

@@ -12,39 +12,51 @@
 
 @synthesize cityId= _cityId;
 @synthesize downloadProgress = _downloadProgress;
-@synthesize downloadFlag = _downloadFlag;
+@synthesize downloadingFlag = _downloadingFlag;
+@synthesize downloadDoneFlag = _downloadDoneFlag;
 
-+ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadFlag:(int)downloadFlag
++ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadingFlag:(bool)downloadingFlag downloadDoneFlag:(bool)downloadDoneFlag
 {
     LocalCity *localCity = [[[LocalCity alloc] init] autorelease];
     localCity.cityId = cityId;
     localCity.downloadProgress = downloadProgress;
+    localCity.downloadingFlag = downloadingFlag; 
+    localCity.downloadDoneFlag = downloadDoneFlag;
     return localCity;
 }
 
 - (NSString*)description
 {
-    NSString *description = [NSString stringWithFormat:@"cityId:%d downloadProgress:%0.1f downloadFlag:%d", _cityId, _downloadProgress, _downloadFlag];
+    NSString *description = [NSString stringWithFormat:@"cityId:%d downloadProgress:%0.1f downloadingFlag:%d downloadDoneFlag", _cityId, _downloadProgress, _downloadingFlag, _downloadDoneFlag];
 
     return description;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeInt:self.cityId forKey:@"cityId"];
-    [aCoder encodeFloat:self.downloadProgress forKey:@"downloadProgress"];
-    [aCoder encodeInt:self.downloadFlag forKey:@"downloadFlag"];
+    [aCoder encodeInt:self.cityId forKey:KEY_LOCAL_CITY_ID];
+    [aCoder encodeFloat:self.downloadProgress forKey:KEY_DOWNLOAD_PROGRESS];
+    [aCoder encodeInt:self.downloadingFlag forKey:KEY_DOWNLOADING_FLAG];
+    [aCoder encodeInt:self.downloadingFlag forKey:KEY_DOWNLOAD_DONE_FLAG];
+
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super init]) {
-        self.cityId = [aDecoder decodeIntForKey:@"cityId"];
-        self.downloadProgress = [aDecoder decodeFloatForKey:@"downloadProgress"];
-        self.downloadFlag = [aDecoder decodeIntForKey:@"downloadFlag"];
+        self.cityId = [aDecoder decodeIntForKey:KEY_LOCAL_CITY_ID];
+        self.downloadProgress = [aDecoder decodeFloatForKey:KEY_DOWNLOAD_PROGRESS];
+        self.downloadingFlag = [aDecoder decodeIntForKey:KEY_DOWNLOADING_FLAG];
+        self.downloadingFlag = [aDecoder decodeIntForKey:KEY_DOWNLOAD_DONE_FLAG];
     }
     
     return self;
+}
+
+- (void)setProgress:(float)newProgress
+{
+    NSLog(@"progress = %f", newProgress);
+    self.downloadProgress = newProgress;
 }
 
 @end

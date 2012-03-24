@@ -16,6 +16,7 @@
 #import "FileUtil.h"
 #import "PPApplication.h"
 #import "CityOverviewManager.h"
+#import "AppUtils.h"
 
 
 @implementation SpotCell
@@ -93,14 +94,14 @@
         }
     }
     
-    CGRect rect = CGRectMake(0, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
-    UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:rect];
     int i = 0;
+    CGRect rect = CGRectMake(0, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE);
     for (NSString *providedServiceIcon in providedServiceIcons) {
+        UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:rect];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:providedServiceIcon];
-        //PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
+        PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
         
-        serviceIconView.center = CGPointMake(categoryLable.center.x+categoryLable.frame.size.width/2+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+(i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 
+        serviceIconView.center = CGPointMake(categoryLable.frame.origin.x + categoryLable.frame.size.width+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+(i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 
                                              categoryLable.center.y); 
         
         [serviceIconView setImage:icon];
@@ -108,9 +109,8 @@
         [self.contentView viewWithTag:1];
         
         [icon release];
+        [serviceIconView release];
     }
-    
-    [serviceIconView release];
 }
 
 - (void)setPlaceIcon:(Place*)place
@@ -159,9 +159,13 @@
     
     NSMutableArray *providedServiceIcons = [[[NSMutableArray alloc] init] autorelease];
     for (NSNumber *providedServiceId in [place providedServiceIdList]) {
-        NSString *providedServiceIcon = [[AppManager defaultManager] getProvidedServiceIcon:[place categoryId]
-                                                                          providedServiceId:[providedServiceId intValue]];
-        [providedServiceIcons addObject:providedServiceIcon];
+//        NSString *providedServiceIcon = [[AppManager defaultManager] getProvidedServiceIcon:[place categoryId]
+//                                                                          providedServiceId:[providedServiceId intValue]];
+        
+        NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
+        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
+        NSLog(@"path ＝ %@", [destinationDir stringByAppendingPathComponent:fileName]);
+        [providedServiceIcons addObject:[destinationDir stringByAppendingPathComponent:fileName]];
     }
     
     [self setServiceIcons:providedServiceIcons];

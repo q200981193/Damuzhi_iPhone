@@ -47,8 +47,6 @@
 
 + (BOOL)hasLocalCityData:(int)cityId;
 
-//+ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName;
-
 + (void)unzipCityZip:(int)cityId;
 
 @end

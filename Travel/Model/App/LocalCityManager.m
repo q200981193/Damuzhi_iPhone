@@ -7,11 +7,24 @@
 //
 
 #import "LocalCityManager.h"
-#import "LocalCity.h"
 
 @implementation LocalCityManager
 
 @synthesize localCities;
+
+#pragma mark -
+#pragma mark: default manager implementation
+static LocalCityManager *_defaultManager = nil;
+
++ (id)defaultManager
+{
+    if (_defaultManager == nil) {
+        _defaultManager = [[LocalCityManager alloc] init];
+        _defaultManager.localCities = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _defaultManager;
+}
 
 - (void)dealloc
 {
@@ -19,47 +32,92 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark: load and save localcities
 - (void)loadLocalCities
 {
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSData* data = [userDefault objectForKey:KEY_LOCAL_CITY];
     
-//    self.localCities = 
+    if (data != nil){
+        //TODO: parase data to localcities
+    }    
 }
 
-- (LocalCity*)findLocalCity:(int)cityId
+
+- (void)save
 {
-    
-    return nil;
+    //TODO: save localcities
+    //NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
 }
 
-- (void)createOrUpdateLocalCity:(int)cityId downloadProgress:(float)downloadProgress downloadFlag:(int)downloadFlag
+#pragma mark -
+#pragma mark: for entire localcity access
+- (LocalCity*)getLocalCity:(int)cityId
+{
+    return [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
+}
+
+- (LocalCity*)createLocalCity:(int)cityId
 {
     LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
     if (localCity == nil) {
-        //TODO: create a localcity
-        localCity = [LocalCity localCityWith:cityId downloadProgress:downloadProgress downloadFlag:downloadFlag];
+        //TODO: if localCity not exist, create a localCity        
+        localCity = [LocalCity localCityWith:cityId downloadProgress:0.0 downloaddingFlag:YES];
         [self.localCities setObject:localCity forKey:[NSNumber numberWithInt:cityId]];
-            }
+    }
     else {
-        //TODO: update a localcity
-        localCity.downloadProgress = downloadProgress;
-        localCity.downloadFlag = localCity.downloadFlag;
+        //TODO: if localCity exist, set downloadingFlag
+        localCity.downloadingFlag = YES;
+    }
+    
+    return localCity;
+}
+
+- (void)removeLocalCity:(int)cityId
+{
+    [self.localCities removeObjectForKey:[NSNumber numberWithInt:cityId]];
+    [self save];
+}
+
+
+
+#pragma mark -
+#pragma mark: for localcity property access
+- (void)updateLocalCity:(int)cityId downloadingFlag:(bool)downloadingFlag
+{
+    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
+    if (localCity != nil) {
+        //TODO: create a localcity        
+        localCity.downloadingFlag = downloadingFlag;
+        [self save];
     }
     
     return;
 }
 
-- (void)saveLocalCity:(LocalCity*)city
+- (void)updateLocalCity:(int)cityId downloadDoneFlag:(bool)downloadDoneFlag
 {
-    NSNumber *cityId = [NSNumber numberWithInt:city.cityId];
+//    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
+//    if (localCity != nil) {
+//        //TODO: create a localcity        
+//        localCity.downloadingFlag = downloadingFlag;
+//        [self save];
+//    }
     
-    if ([self.localCities objectForKey:cityId] == nil) {
-        //TODO: add city to localcities
-        
-    }
-    
+    return;
 }
 
+- (void)updateLocalCity:(int)cityId downloadProgress:(float)downloadProgress
+{
+    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
+    if (localCity != nil) {
+        //TODO: create a localcity        
+        localCity.downloadProgress = downloadProgress;
+        [self save];
+    }
+    
+    return;
+}
 
 @end
