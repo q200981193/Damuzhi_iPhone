@@ -12,6 +12,7 @@
 #import "SpotCell.h"
 #import "CommonPlaceDetailController.h"
 #import "PlaceMapViewController.h"
+#import "LogUtil.h"
 
 @interface PlaceListController () 
 
@@ -89,6 +90,19 @@
     controller.superController = superController;
     [superView addSubview:controller.view];
     [controller setAndReloadPlaceList:list];    
+    
+    for (Place *place in list) {
+        PPDebug(@"<PlaceListController>");
+        PPDebug(@"最低价格:%@",place.price);
+        PPDebug(@"区域id:%d",place.areaId);
+        for (NSNumber *number in place.providedServiceIdList) {
+            PPDebug(@"服务选项ID:%d",number.intValue);
+        }
+        PPDebug(@"大拇指评级:%d",place.rank);
+        PPDebug(@"酒店星级:%d",place.hotelStar);
+        PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
+    }
+    
     return controller;
 }
 
