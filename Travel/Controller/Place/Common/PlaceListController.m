@@ -125,7 +125,9 @@
     if ([place categoryId] == PLACE_TYPE_SPOT){
         return [SpotCell class];
     }
-    
+    if ([place categoryId] == PLACE_TYPE_HOTEL){
+        return [SpotCell class];
+    }
     return nil;
 }
 

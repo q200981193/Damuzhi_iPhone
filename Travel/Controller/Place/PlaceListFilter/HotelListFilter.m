@@ -11,7 +11,13 @@
 #import "PlaceService.h"
 
 @implementation HotelListFilter
+@synthesize controller;
 
+- (void)dealloc
+{
+    [controller release];
+    [super dealloc];
+}
 
 - (UIButton*)createFilterButton:(CGRect)frame title:(NSString*)title bgImageForNormalState:(NSString*)bgImageForNormalState bgImageForHeightlightState:(NSString*)bgImageForHeightlightState 
 {
@@ -29,9 +35,76 @@
     return button;
 }
 
+-(NSArray*)sortBySelectedSortId:(NSArray*)placeList selectedSortId:(NSNumber*)selectedSortId
+{
+    NSArray *array = nil;
+    switch ([selectedSortId intValue]) {
+        case SORT_BY_RECOMMEND:
+            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                int rank1 = [place1 rank];
+                int rank2 = [place2 rank];
+                
+                if (rank1 < rank2)
+                    return NSOrderedDescending;
+                else  if (rank1 > rank2)
+                    return NSOrderedAscending;
+                else return NSOrderedSame;
+            }];
+            //TODO: sort and put sorted result into array
+            break;
+            
+        case SORT_BY_DESTANCE_FROM_NEAR_TO_FAR:
+            //TODO: sort and put sorted result into array
+            ;
+            break;
+            
+        case SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP:
+            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                int price1 = [[place1 price] floatValue];
+                int price2 = [[place2 price] floatValue] ;
+                
+                if (price1 < price2)
+                    return NSOrderedDescending;
+                else  if (price1 > price2)
+                    return NSOrderedAscending;
+                else return NSOrderedSame;
+            }];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return array;
+}
+
+-(NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList
+{
+    NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
+    
+    //filter by selectedCategoryId
+    for (NSNumber *selectedCategoryId in selectedCategoryIdList) {
+        if ([selectedCategoryId intValue] == -1) {
+            return list;
+        }
+        
+        for (Place *place in list) {
+            if ([selectedCategoryId intValue] == [place subCategoryId])
+            {
+                [array addObject:place];
+            }
+        }
+    }
+    
+    return array;
+}
+
+
+#pragma Protocol Implementations
+
 #define FILTER_BUTTON_WIDTH 58
 #define FILTER_BUTTON_HEIGHT 36
-- (void)createFilterButtons:(UIView*)superView
+- (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController *)commonPlaceController
 {
     superView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]];
     
@@ -50,6 +123,13 @@
     [superView addSubview:buttonArea];
     [superView addSubview:buttonService];
     [superView addSubview:buttonSort];
+    
+    self.controller = commonPlaceController;
+}
+
+- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    return [[PlaceService defaultService] findAllHotels:viewController];
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter
@@ -58,10 +138,25 @@
     return filter;
 }
 
-- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
+- (int)getCategoryId
 {
-    //TODO：
-    return;
+    return PLACE_TYPE_HOTEL; 
+}
+
+- (NSString*)getCategoryName
+{
+    return NSLS(@"酒店");
+}
+
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
+            selectedCategoryIdList:(NSArray*)selectedCategoryIdList 
+               selectedPriceIdList:(NSArray*)selectedPriceIdList 
+                selectedAreaIdList:(NSArray*)selectedAreaIdList 
+             selectedServiceIdList:(NSArray*)selectedServiceIdList
+             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
+                            sortBy:(NSNumber*)selectedSortId
+{
+    return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId];
 }
 
 @end

@@ -11,4 +11,6 @@
 
 @interface HotelListFilter : NSObject<PlaceListFilterProtocol>
 
+@property (retain, nonatomic) PPTableViewController *controller;
+
 @end
