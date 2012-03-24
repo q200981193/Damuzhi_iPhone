@@ -152,6 +152,7 @@
         for (Place *place in _placeList) {
             PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place] autorelease];
             [self.mapAnnotations addObject:placeAnnotation];
+            NSLog(@"******%f,%f",[place latitude],[place longitude]);
         } 
     }
     [self.mapView removeAnnotations:self.mapView.annotations];  
@@ -166,7 +167,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-    self.mapView.showsUserLocation = YES;
+//    self.mapView.showsUserLocation = YES;
     self.mapAnnotations = [[[NSMutableArray alloc]init] autorelease];
     
     [self loadAllAnnotations];
@@ -175,12 +176,6 @@
 //    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
 //    [self.mapAnnotations addObject:placeAnnotation];
 
-    //for test
-//    CLLocationCoordinate2D location;
-//    location.latitude = 37.80000;
-//    location.longitude = -122.457989;
-//    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithCoordinate:location];
-//    [self.mapAnnotations addObject:placeAnnotation];
     
 }
 
@@ -246,6 +241,11 @@
             annotationView.image = image;            
             
             UIButton *leftIndicatorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+//            NSString *imageNamed = @"";
+//            switch ([[placeAnnotation place] categoryId]) {
+//            }
+//            
             [leftIndicatorButton setBackgroundImage:[UIImage imageNamed:@"map_food"] forState:UIControlStateNormal];
             [leftIndicatorButton setFrame:CGRectMake(5, 1.5, 13, 17)];
             [leftIndicatorButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];

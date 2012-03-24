@@ -45,9 +45,9 @@
     
     BOOL _showMap;
 }
-
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
+@property (retain, nonatomic) IBOutlet UIButton *modeButton;
 
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) NSObject<PlaceListFilterProtocol> *filterHandler;
