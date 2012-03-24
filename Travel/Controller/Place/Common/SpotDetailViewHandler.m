@@ -12,9 +12,9 @@
 @implementation SpotDetailViewHandler
 @synthesize detailHeight;
  
-#define TITLE_VIEW_HEIGHT 30
+#define TITLE_VIEW_HEIGHT 35
 #define MIDDLE_LINE_HEIGHT 2
-#define CGRECT_TITLE CGRectMake(5, 3, 100, 20)
+#define CGRECT_TITLE CGRectMake(10, 3, 100, 20)
 #define TITLE_COLOR [UIColor colorWithRed:37/255.0 green:66/255.0 blue:80/255.0 alpha:1.0]
 #define DESCRIPTION_COLOR [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0]
 #define INTRODUCTION_BG_COLOR [UIColor colorWithRed:222/255.0 green:239/255.0 blue:247/255.0 alpha:1.0]
@@ -46,7 +46,7 @@
     [introductionView addSubview:lineView];
     [lineView release];
     
-    UILabel *introductionDescription = [[UILabel alloc]initWithFrame:CGRectMake(5, 26, 320, size.height)];
+    UILabel *introductionDescription = [[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, size.height)];
     introductionDescription.lineBreakMode = UILineBreakModeWordWrap;
     introductionDescription.numberOfLines = 0;
     introductionDescription.backgroundColor = [UIColor clearColor];
@@ -80,7 +80,7 @@
     [priceView addSubview:priceTitle];
     [priceTitle release];
     
-    UILabel *priceDescription = [[UILabel alloc]initWithFrame:CGRectMake(5, 25, 320, size2.height)];
+    UILabel *priceDescription = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 300, size2.height)];
     priceDescription.lineBreakMode = UILineBreakModeWordWrap;
     priceDescription.numberOfLines = 0;
     priceDescription.backgroundColor = [UIColor clearColor];
@@ -111,7 +111,7 @@
     [openTimeView addSubview:openTimeTitle];
     [openTimeTitle release];
     
-    UILabel *openTimeDescription = [[UILabel alloc]initWithFrame:CGRectMake(5, 25, 320, size3.height)];
+    UILabel *openTimeDescription = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 300, size3.height)];
     openTimeDescription.lineBreakMode = UILineBreakModeWordWrap;
     openTimeDescription.numberOfLines = 0;
     openTimeDescription.backgroundColor = [UIColor clearColor];
@@ -144,7 +144,7 @@
     [transportView addSubview:transportTitle];
     [transportTitle release];
     
-    UILabel *transportDescription = [[UILabel alloc]initWithFrame:CGRectMake(5, 25, 320, size4.height)];
+    UILabel *transportDescription = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 300, size4.height)];
     transportDescription.lineBreakMode = UILineBreakModeWordWrap;
     transportDescription.numberOfLines = 0;
     transportDescription.backgroundColor = [UIColor clearColor];
@@ -176,7 +176,7 @@
     [tipsView addSubview:tipsTitle];
     [tipsTitle release];
     
-    UILabel *tipsDescription = [[UILabel alloc]initWithFrame:CGRectMake(5, 25, 320, size5.height)];
+    UILabel *tipsDescription = [[UILabel alloc]initWithFrame:CGRectMake(10, 25, 300, size5.height)];
     tipsDescription.lineBreakMode = UILineBreakModeWordWrap;
     tipsDescription.numberOfLines = 0;
     tipsDescription.backgroundColor = [UIColor clearColor];

@@ -13,11 +13,9 @@
 {
     UITableView *_downloadTableView;
     NSArray *_downloadList;
-    NSMutableArray *_downloadingList;
 }
 
 @property (nonatomic, retain) NSArray *downloadList;
-@property (nonatomic, retain) NSMutableArray *downloadingList; 
 
 @property (nonatomic, retain) IBOutlet UITableView *downloadTableView;
 @property (retain, nonatomic) IBOutlet UILabel *promptLabel;

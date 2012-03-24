@@ -9,13 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "CommonService.h"
 #import "App.pb.h"
+#import "LocalCity.h"
 
 @interface AppManager : NSObject<CommonManagerProtocol>
 {
     App* _app;    
+    NSArray *_cityList;
 }
 
 @property (retain, nonatomic) App *app;
+@property (retain, nonatomic) NSArray *cityList;
 
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;

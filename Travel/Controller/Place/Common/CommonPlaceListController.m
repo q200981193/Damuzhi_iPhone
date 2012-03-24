@@ -17,6 +17,7 @@
 
 @implementation CommonPlaceListController
 
+@synthesize modeButton;
 @synthesize buttonHolderView;
 @synthesize placeListHolderView;
 @synthesize placeListController;
@@ -40,6 +41,7 @@
     [_selectedPriceIdList release];
     [_selectedServiceIdList release];
     [_selectedCuisineIdList release];
+    [modeButton release];
     [super dealloc];
 }
 
@@ -103,6 +105,7 @@
 {
     [self setButtonHolderView:nil];
     [self setPlaceListHolderView:nil];
+    [self setModeButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -147,10 +150,23 @@
 - (void)updateModeButton
 {
     // set button text by _showMap flag
+    if (_showMap) {
+        [self.modeButton setTitle:@"列表" forState:UIControlStateNormal];
+    } else {
+        [self.modeButton setTitle:@"地图" forState:UIControlStateNormal];
+
+    }
 }
 
 - (IBAction)clickMapButton:(id)sender
 {
+    CATransition *animation=[CATransition animation];
+    [animation setDelegate:self];
+    [animation setDuration:1.0f];
+    animation.timingFunction=UIViewAnimationCurveEaseInOut;
+    animation.type=@"rippleEffect";
+    [self.view.layer addAnimation:animation forKey:@"animation"];
+
     if (_showMap){
         [self.placeListController switchToListMode];
     }

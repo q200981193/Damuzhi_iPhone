@@ -65,8 +65,8 @@
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
+    newRegion.span.latitudeDelta = 0.05;
+    newRegion.span.longitudeDelta = 0.05;
 
     [self.mapView setRegion:newRegion animated:YES];
 }
@@ -152,6 +152,7 @@
         for (Place *place in _placeList) {
             PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place] autorelease];
             [self.mapAnnotations addObject:placeAnnotation];
+            NSLog(@"******%f,%f",[place latitude],[place longitude]);
         } 
     }
     [self.mapView removeAnnotations:self.mapView.annotations];  
@@ -166,7 +167,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-    self.mapView.showsUserLocation = YES;
+//    self.mapView.showsUserLocation = YES;
     self.mapAnnotations = [[[NSMutableArray alloc]init] autorelease];
     
     [self loadAllAnnotations];
@@ -175,19 +176,15 @@
 //    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
 //    [self.mapAnnotations addObject:placeAnnotation];
 
-    //for test
-//    CLLocationCoordinate2D location;
-//    location.latitude = 37.80000;
-//    location.longitude = -122.457989;
-//    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithCoordinate:location];
-//    [self.mapAnnotations addObject:placeAnnotation];
     
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     NSLog(@"didAddAnnotationViews");
-    [self gotoLocation:[_placeList objectAtIndex:1]];
+    if ([_placeList count] >= 2){
+        [self gotoLocation:[_placeList objectAtIndex:1]];
+    }
 }
 
 - (void)viewDidUnload
@@ -242,10 +239,15 @@
             UIView *customizeView = [[UIView alloc] initWithFrame:CGRectMake(0,0,102,27)];
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"map_annotation_bg"];
+            UIImage *image = [UIImage imageNamed:@"map_button"];
             annotationView.image = image;            
             
             UIButton *leftIndicatorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+//            NSString *imageNamed = @"";
+//            switch ([[placeAnnotation place] categoryId]) {
+//            }
+//            
             [leftIndicatorButton setBackgroundImage:[UIImage imageNamed:@"map_food"] forState:UIControlStateNormal];
             [leftIndicatorButton setFrame:CGRectMake(5, 1.5, 13, 17)];
             [leftIndicatorButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
