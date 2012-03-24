@@ -13,16 +13,20 @@
 #import "ImageName.h"
 #import "UIImageUtil.h"
 #import "PlaceMapViewController.h"
+#import "UIUtils.h"
+#import "AppUtils.h"
+#import "AppManager.h"
 
 @implementation CommonPlaceDetailController
+@synthesize helpButton;
 @synthesize buttonHolerView;
 @synthesize imageHolderView;
 @synthesize dataScrollView;
 @synthesize place;
-@synthesize helpIcon;
 @synthesize praiseIcon1;
 @synthesize praiseIcon2;
 @synthesize praiseIcon3;
+@synthesize serviceHolder;
 @synthesize handler;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -59,7 +63,7 @@
 }
 
 #pragma mark - View lifecycle
--(void)setRankImage:(int32_t)rank
+- (void)setRankImage:(int32_t)rank
 {
     self.praiseIcon1.image = [UIImage imageNamed:IMAGE_GOOD2];
     self.praiseIcon2.image = [UIImage imageNamed:IMAGE_GOOD2];
@@ -88,6 +92,11 @@
     return;
 }
 
+- (void)clickHelpButton:(id)sender
+{
+    NSLog(@"click help");
+}
+
 - (void)clickMap:(id)sender
 {
     NSLog(@"click map");
@@ -99,12 +108,42 @@
 
 - (void)clickTelephone:(id)sender
 {
-    NSLog(@"click telephone");
+    NSLog(@"make call number");
+    NSString* phone = [[self.place telephoneList]objectAtIndex:0];
+    [UIUtils makeCall:phone];
 }
 
 - (void)clickFavourite:(id)sender
 {
     NSLog(@"click favourite");
+}
+
+#define DESTANCE_BETWEEN_SERVICE_IMAGES 25
+#define WIDTH_OF_SERVICE_IMAGE 21
+#define HEIGHT_OF_SERVICE_IMAGE 21
+
+-(void)setServiceIcons
+{
+    self.serviceHolder.backgroundColor = [UIColor clearColor];
+    int i = 0;
+
+    for (NSNumber *providedServiceId in [place providedServiceIdList]) {
+        NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
+        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
+        
+        UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:CGRectMake((i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE)];
+        UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+        
+//        UIImage *icon = [UIImage imageNamed:@"map_food"];
+        NSLog(@"providedServiceIcon = %@", [destinationDir stringByAppendingPathComponent:fileName]);
+        [serviceIconView setImage:icon];
+        
+        [serviceHolder addSubview:serviceIconView];
+        [icon release];
+        [serviceIconView release];
+        
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -118,11 +157,12 @@
     [self setNavigationRightButton:NSLS(@"") 
                          imageName:@"map_po.png" 
                             action:@selector(clickMap:)];
+    [self setTitle:[self.place name]];
     
     buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"topmenu_bg2"]];
     
     [self setRankImage:[self.place rank]];
-    
+    [self setServiceIcons];
 
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     [imageHolderView addSubview:slideImageView];  
@@ -240,10 +280,11 @@
     [self setDataScrollView:nil];
     [self setPlace:nil];
     [self setButtonHolerView:nil];
-    [self setHelpIcon:nil];
     [self setPraiseIcon1:nil];
     [self setPraiseIcon2:nil];
     [self setPraiseIcon3:nil];
+    [self setHelpButton:nil];
+    [self setServiceHolder:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -260,10 +301,11 @@
     [dataScrollView release];
     [place release];
     [buttonHolerView release];
-    [helpIcon release];
     [praiseIcon1 release];
     [praiseIcon2 release];
     [praiseIcon3 release];
+    [helpButton release];
+    [serviceHolder release];
     [super dealloc];
 }
 @end

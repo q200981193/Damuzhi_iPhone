@@ -162,9 +162,11 @@
 {
     CATransition *animation=[CATransition animation];
     [animation setDelegate:self];
-    [animation setDuration:1.0f];
-    animation.timingFunction=UIViewAnimationCurveEaseInOut;
-    animation.type=@"rippleEffect";
+    [animation setDuration:0.5];
+//    animation.timingFunction=UIViewAnimationCurveEaseInOut;
+//    animation.type=@"rippleEffect";
+    animation.type = @"pageCurl"; //动画样式
+    animation.subtype = kCATransitionFromLeft; //方向
     [self.view.layer addAnimation:animation forKey:@"animation"];
 
     if (_showMap){
