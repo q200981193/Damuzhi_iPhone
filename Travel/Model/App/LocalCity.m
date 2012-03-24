@@ -22,6 +22,13 @@
     return localCity;
 }
 
+- (NSString*)description
+{
+    NSString *description = [NSString stringWithFormat:@"cityId:%d downloadProgress:%0.1f downloadFlag:%d", _cityId, _downloadProgress, _downloadFlag];
+
+    return description;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeInt:self.cityId forKey:@"cityId"];

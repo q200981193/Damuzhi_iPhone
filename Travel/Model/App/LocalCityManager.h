@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#define  KEY_LOCAL_CITY @"KEY_LOCAL_CITY"
+
 @interface LocalCityManager : NSObject 
 
-@property (nonatomic, retain) NSDictionary *localCityList;
+@property (nonatomic, retain) NSMutableDictionary *localCities;
 
 @end

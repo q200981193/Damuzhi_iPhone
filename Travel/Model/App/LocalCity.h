@@ -14,11 +14,11 @@
 #define DOWNLOAD_DONE 2;
 
 @interface LocalCity : NSObject <NSCoding>
+
 @property (assign, nonatomic) int cityId;
 @property (assign, nonatomic) float downloadProgress;
 @property (assign, nonatomic) int downloadFlag;
 
-
-+ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress;
++ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadFlag:(int) downloadFlag;
 
 @end

@@ -11,26 +11,53 @@
 
 @implementation LocalCityManager
 
-@synthesize localCityList;
+@synthesize localCities;
+
+- (void)dealloc
+{
+    [localCities release];
+    [super dealloc];
+}
 
 - (void)loadLocalCities
 {
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    NSData* data = [userDefault objectForKey:KEY_LOCAL_CITY];
     
+//    self.localCities = 
 }
 
-- (LocalCity*)findLocalCityById:(int)cityId
+- (LocalCity*)findLocalCity:(int)cityId
 {
+    
     return nil;
 }
 
-- (LocalCity*)createOrUpdateLocalCity:(City*)city
+- (void)createOrUpdateLocalCity:(int)cityId downloadProgress:(float)downloadProgress downloadFlag:(int)downloadFlag
 {
-    return nil;
+    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
+    if (localCity == nil) {
+        //TODO: create a localcity
+        localCity = [LocalCity localCityWith:cityId downloadProgress:downloadProgress downloadFlag:downloadFlag];
+        [self.localCities setObject:localCity forKey:[NSNumber numberWithInt:cityId]];
+            }
+    else {
+        //TODO: update a localcity
+        localCity.downloadProgress = downloadProgress;
+        localCity.downloadFlag = localCity.downloadFlag;
+    }
+    
+    return;
 }
 
 - (void)saveLocalCity:(LocalCity*)city
 {
+    NSNumber *cityId = [NSNumber numberWithInt:city.cityId];
     
+    if ([self.localCities objectForKey:cityId] == nil) {
+        //TODO: add city to localcities
+        
+    }
     
 }
 
