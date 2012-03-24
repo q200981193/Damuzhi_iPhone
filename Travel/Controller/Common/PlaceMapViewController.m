@@ -56,44 +56,20 @@
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
 
-- (void)gotoLocation
+- (void)gotoLocation:(Place*)place
 {
-    // start off by default in San Francisco
     MKCoordinateRegion newRegion;
-    newRegion.center.latitude = 37.786996;
-    newRegion.center.longitude = -122.440100;
+    // start off by default in San Francisco
+//    newRegion.center.latitude = 37.786996;
+//    newRegion.center.longitude = -122.440100;
+    newRegion.center.latitude = [place latitude];
+    newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
+    newRegion.span.latitudeDelta = 0.05;
+    newRegion.span.longitudeDelta = 0.05;
 
     [self.mapView setRegion:newRegion animated:YES];
 }
-
-- (void)gotoGuangzhou
-{
-    // start off by default in San Francisco
-    MKCoordinateRegion newRegion;
-    //guangzhou
-    newRegion.center.latitude = 23.166667 ;
-    newRegion.center.longitude = 113.233333;
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-    [self.mapView setRegion:newRegion animated:YES];
-}
-
-- (void)gotoHongKong
-{
-    // start off by default in San Francisco
-    MKCoordinateRegion newRegion;
-    //guangzhou
-    newRegion.center.latitude = 22.30 ;
-    newRegion.center.longitude = 114.17;
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-    [self.mapView setRegion:newRegion animated:YES];
-}
-
-
 
 - (void)gotoPlaceWithCoordinate:(CLLocationCoordinate2D)coordinate
 {
@@ -170,14 +146,13 @@
     return [builder build];
 }
 
-- (void) reloadAllAnnotations
+- (void) loadAllAnnotations
 {
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
             PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place] autorelease];
             [self.mapAnnotations addObject:placeAnnotation];
-//            NSLog(@"%@",[place latitude]);
-//            NSLog(@"%@",[place longitude]);
+            NSLog(@"******%f,%f",[place latitude],[place longitude]);
         } 
     }
     [self.mapView removeAnnotations:self.mapView.annotations];  
@@ -192,28 +167,14 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-    self.mapView.showsUserLocation = YES;
+//    self.mapView.showsUserLocation = YES;
     self.mapAnnotations = [[[NSMutableArray alloc]init] autorelease];
     
-    [self reloadAllAnnotations];
+    [self loadAllAnnotations];
     
 //    Place *place = [self buildTestPlace:@"1"];
 //    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
 //    [self.mapAnnotations addObject:placeAnnotation];
-
-    //for test
-//    CLLocationCoordinate2D location;
-//    location.latitude = 37.80000;
-//    location.longitude = -122.457989;
-//    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithCoordinate:location];
-//    [self.mapAnnotations addObject:placeAnnotation];
-    
-    //show all annotationviews
-    //remove any annotations that exist
-//    [self.mapView removeAnnotations:self.mapView.annotations];  
-//    [self.mapView addAnnotations:self.mapAnnotations];
-    
-    [self gotoHongKong];
 
     
 }
@@ -221,6 +182,9 @@
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     NSLog(@"didAddAnnotationViews");
+    if ([_placeList count] >= 2){
+        [self gotoLocation:[_placeList objectAtIndex:1]];
+    }
 }
 
 - (void)viewDidUnload
@@ -240,7 +204,7 @@
 - (void)setPlaces:(NSArray*)placeList
 {
     self.placeList = placeList;
-    [self reloadAllAnnotations];
+    [self loadAllAnnotations];
 }
 
 #pragma mark -
@@ -275,10 +239,15 @@
             UIView *customizeView = [[UIView alloc] initWithFrame:CGRectMake(0,0,102,27)];
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"map_annotation_bg"];
+            UIImage *image = [UIImage imageNamed:@"map_button"];
             annotationView.image = image;            
             
             UIButton *leftIndicatorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+//            NSString *imageNamed = @"";
+//            switch ([[placeAnnotation place] categoryId]) {
+//            }
+//            
             [leftIndicatorButton setBackgroundImage:[UIImage imageNamed:@"map_food"] forState:UIControlStateNormal];
             [leftIndicatorButton setFrame:CGRectMake(5, 1.5, 13, 17)];
             [leftIndicatorButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];

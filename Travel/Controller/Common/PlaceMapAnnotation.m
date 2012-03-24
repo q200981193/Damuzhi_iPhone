@@ -33,13 +33,13 @@
     return self;
 }
 
-- (CLLocationCoordinate2D)coordinate;
-{
-    CLLocationCoordinate2D theCoordinate;
-    theCoordinate.latitude = 37.810000;
-    theCoordinate.longitude = -122.477989;
-    return theCoordinate; 
-}
+//- (CLLocationCoordinate2D)coordinate;
+//{
+//    CLLocationCoordinate2D theCoordinate;
+//    theCoordinate.latitude = 37.810000;
+//    theCoordinate.longitude = -122.477989;
+//    return theCoordinate; 
+//}
 
 
 @end

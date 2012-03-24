@@ -49,6 +49,7 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
+@class Place;
 
 @interface PlaceMapViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
 {
@@ -64,5 +65,6 @@
 @property (nonatomic, retain) NSArray* placeList;
 
 - (void)setPlaces:(NSArray*)placeList;
+- (void)gotoLocation:(Place*)place;
 
 @end
