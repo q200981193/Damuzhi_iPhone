@@ -112,8 +112,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    // bring back the toolbar
-    [self.navigationController setToolbarHidden:NO animated:NO];
+    [super viewDidAppear:animated];
 }
 
 

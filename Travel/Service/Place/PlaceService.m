@@ -175,5 +175,33 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];    
 }
 
+- (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    
+}
+
+- (void)findHistoryPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    
+}
+
+- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
+                       place:(Place*)place
+{
+    // TODO send request to server, and save data locally
+}
+
+- (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
+                      placeId:(int)placeId
+{
+    int count = 108; // test
+    
+    
+    if ([viewController respondsToSelector:@selector(didGetPlaceData:count:)]){
+        // Test
+        PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, count);
+        [viewController didGetPlaceData:placeId count:count];
+    }
+}
 
 @end
