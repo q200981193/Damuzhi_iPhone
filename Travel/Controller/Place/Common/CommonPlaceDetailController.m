@@ -99,8 +99,8 @@
 
 - (void)clickMap:(id)sender
 {
-    NSLog(@"click map");
     PlaceMapViewController* controller = [[[PlaceMapViewController alloc]init]autorelease];
+    controller.superController = self;
     [self.navigationController pushViewController:controller animated:YES];
     [controller gotoLocation:self.place];
     
@@ -221,9 +221,11 @@
     telephoneLabel.backgroundColor = [UIColor clearColor];
     telephoneLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     telephoneLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *tel = [self.place.telephoneList componentsJoinedByString:@" "];
-   
-    telephoneLabel.text = [[NSString stringWithString:@"电话: "] stringByAppendingString:tel];
+    NSString *telephoneString = @"";
+    if ([self.place.telephoneList count] > 0) {
+         telephoneString = [self.place.telephoneList componentsJoinedByString:@" "];
+    }
+    telephoneLabel.text = [[NSString stringWithString:@"电话: "] stringByAppendingString:telephoneString];
     [telephoneView addSubview:telephoneLabel];
     [telephoneLabel release];
     

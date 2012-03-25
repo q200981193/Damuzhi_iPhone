@@ -57,6 +57,7 @@
 @synthesize placeList = _placeList;
 @synthesize mapAnnotations;
 @synthesize indexOfSelectedPlace;
+@synthesize superController;
 
 - (void)gotoLocation:(Place*)place
 {
@@ -116,36 +117,6 @@
 }
 
 
-- (Place*)buildTestPlace:(NSString*)placeTag
-{
-    Place_Builder* builder = [[[Place_Builder alloc] init] autorelease];
-    
-    [builder setPlaceId:[placeTag intValue]];       
-    [builder setCategoryId:1];
-    [builder setSubCategoryId:1];
-    [builder setRank:3];
-    [builder setIntroduction:@"简介信息，待完善"];
-    [builder setIcon:@"image.jpg"];
-    [builder setAvgPrice:@"100"];
-    [builder setOpenTime:@"早上10点到晚上10点"];
-    [builder setLatitude:37.80000f];
-    [builder setLongitude:-122.457989f];
-    [builder setName:@"香港太平山"];
-    [builder setPlaceFavoriteCount:12];
-    [builder setPrice:@"$50"];
-    [builder setPriceDescription:@"儿童免票，成人100元"];
-    [builder setTips:@"缆车车费：单程HK$20"];
-    [builder setTransportation:@"乘地铁从上环站到中环站"];
-    [builder setWebsite:@"http://www.madametussauds.com"];
-    [builder addTelephone:@"00852-28496966"];
-    [builder addAddress:@"香港山顶道128号凌霄阁"];
-    [builder addAreaId:11];
-    [builder setCategoryId:1];
-    [builder addProvidedServiceId:3];
-    
-    return [builder build];
-}
-
 - (void) loadAllAnnotations
 {    
     [self.mapAnnotations removeAllObjects];
@@ -173,19 +144,16 @@
     self.mapAnnotations = [[NSMutableArray alloc]init];
     [self loadAllAnnotations];
     
-//    Place *place = [self buildTestPlace:@"1"];
-//    PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-//    [self.mapAnnotations addObject:placeAnnotation];
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
 
-    
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     NSLog(@"didAddAnnotationViews");
-//    if ([_placeList count] >= 2){
-        [self gotoLocation:[_placeList objectAtIndex:0]];
-//    }
+    [self gotoLocation:[_placeList objectAtIndex:0]];
 }
 
 - (void)viewDidUnload
@@ -216,8 +184,7 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[_placeList objectAtIndex:index]];
-    [self.navigationController pushViewController:controller animated:YES];
-    
+    [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
@@ -260,12 +227,8 @@
             [customizeView addSubview:label];
             [label release];
             
-//            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(notationAction:)];
-//            [customizeView addGestureRecognizer:singleFingerTap];
             customizeView.tag = value;
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
-//            [singleFingerTap release];
-            
+            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];            
             
             [annotationView addSubview:customizeView];
             [customizeView release];

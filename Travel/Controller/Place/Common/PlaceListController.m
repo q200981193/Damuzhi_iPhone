@@ -88,6 +88,8 @@
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
     controller.view.frame = superView.bounds;
     controller.superController = superController;
+    controller.mapViewController.superController = superController;
+
     [superView addSubview:controller.view];
     [controller setAndReloadPlaceList:list];    
     
