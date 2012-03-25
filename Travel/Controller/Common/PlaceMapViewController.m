@@ -48,6 +48,7 @@
 #import "PlaceMapViewController.h"
 #import "PlaceMapAnnotation.h"
 #import "Place.pb.h"
+#import "CommonPlaceDetailController.h"
 
 @implementation PlaceMapViewController
 
@@ -55,6 +56,7 @@
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
 @synthesize mapAnnotations;
+@synthesize indexOfSelectedPlace;
 
 - (void)gotoLocation:(Place*)place
 {
@@ -210,9 +212,14 @@
 #pragma mark MKMapViewDelegate
 
 //The event handling method
-- (void)notationAction:(UITapGestureRecognizer *)recognizer {
-    NSLog(@"click annotation handler here!");
-    //Do stuff here...
+- (void)notationAction:(id)sender
+{        
+    UIButton *button = sender;
+    NSInteger index = button.tag;
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[_placeList objectAtIndex:index]];
+    [self.navigationController pushViewController:controller animated:YES];
+    
+    [controller release];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -232,7 +239,7 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-            UIView *customizeView = [[UIView alloc] initWithFrame:CGRectMake(0,0,102,27)];
+            UIButton *customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
             UIImage *image = [UIImage imageNamed:@"map_button"];
@@ -248,13 +255,18 @@
             UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
             label.font = [UIFont systemFontOfSize:12];
             label.text  = [placeAnnotation.place name];
+            NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
             label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
             label.backgroundColor = [UIColor clearColor];
             [customizeView addSubview:label];
             [label release];
             
-            UITapGestureRecognizer *singleFingerTap = [[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(notationAction:)]autorelease];
-            [customizeView addGestureRecognizer:singleFingerTap];
+//            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(notationAction:)];
+//            [customizeView addGestureRecognizer:singleFingerTap];
+            customizeView.tag = value;
+            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+//            [singleFingerTap release];
+            
             
             [annotationView addSubview:customizeView];
             [customizeView release];
