@@ -54,16 +54,14 @@
 @interface PlaceMapViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
 {
     MKMapView *mapView;
-    NSMutableArray *mapAnnotations;
     NSArray* _placeList;
     CLLocationManager* _locationManager;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) NSMutableArray *mapAnnotations;
 @property (nonatomic, retain) CLLocationManager* locationManager;
 @property (nonatomic, retain) NSArray* placeList;
-
+@property (nonatomic, retain) NSMutableArray* mapAnnotations;
 - (void)setPlaces:(NSArray*)placeList;
 - (void)gotoLocation:(Place*)place;
 

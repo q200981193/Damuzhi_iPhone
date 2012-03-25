@@ -160,14 +160,20 @@
 
 - (IBAction)clickMapButton:(id)sender
 {
-    CATransition *animation=[CATransition animation];
-    [animation setDelegate:self];
-    [animation setDuration:0.5];
-//    animation.timingFunction=UIViewAnimationCurveEaseInOut;
-//    animation.type=@"rippleEffect";
-    animation.type = @"pageCurl"; //动画样式
-    animation.subtype = kCATransitionFromLeft; //方向
-    [self.view.layer addAnimation:animation forKey:@"animation"];
+//    CATransition *animation=[CATransition animation];
+//    [animation setDelegate:self];
+//    [animation setDuration:0.5];
+//    animation.type = @"pageCurl"; //动画样式
+//    animation.subtype = kCATransitionFromLeft; //方向
+//    [self.view.layer addAnimation:animation forKey:@"animation"];
+    
+    [UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:0.5];
+	
+	[UIView setAnimationTransition:(_showMap ?
+									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
+						   forView:self.view cache:YES];
+    [UIView commitAnimations];
 
     if (_showMap){
         [self.placeListController switchToListMode];

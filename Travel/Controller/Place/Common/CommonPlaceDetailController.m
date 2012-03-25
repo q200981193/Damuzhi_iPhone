@@ -100,10 +100,14 @@
 - (void)clickMap:(id)sender
 {
     NSLog(@"click map");
-    PlaceMapViewController* controller = [[PlaceMapViewController alloc]init];
+    PlaceMapViewController* controller = [[[PlaceMapViewController alloc]init]autorelease];
     [self.navigationController pushViewController:controller animated:YES];
     [controller gotoLocation:self.place];
-    [controller release];
+    
+    NSArray *placeList = [[NSArray alloc]initWithObjects:self.place, nil];
+    [controller setPlaces:placeList];
+    
+    [placeList release];
 }
 
 - (void)clickTelephone:(id)sender
@@ -135,7 +139,7 @@
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
         
 //        UIImage *icon = [UIImage imageNamed:@"map_food"];
-        NSLog(@"providedServiceIcon = %@", [destinationDir stringByAppendingPathComponent:fileName]);
+//        NSLog(@"providedServiceIcon = %@", [destinationDir stringByAppendingPathComponent:fileName]);
         [serviceIconView setImage:icon];
         
         [serviceHolder addSubview:serviceIconView];

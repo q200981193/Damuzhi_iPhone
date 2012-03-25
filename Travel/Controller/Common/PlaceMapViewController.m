@@ -52,21 +52,20 @@
 @implementation PlaceMapViewController
 
 @synthesize mapView;
-@synthesize mapAnnotations;
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
+@synthesize mapAnnotations;
 
 - (void)gotoLocation:(Place*)place
 {
     MKCoordinateRegion newRegion;
-    // start off by default in San Francisco
-//    newRegion.center.latitude = 37.786996;
-//    newRegion.center.longitude = -122.440100;
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.05;
-    newRegion.span.longitudeDelta = 0.05;
+//    newRegion.span.latitudeDelta = 0.05;
+//    newRegion.span.longitudeDelta = 0.05;
+    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.longitudeDelta = 0.109863;
 
     [self.mapView setRegion:newRegion animated:YES];
 }
@@ -147,15 +146,17 @@
 }
 
 - (void) loadAllAnnotations
-{
+{    
+    [self.mapAnnotations removeAllObjects];
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
-            PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place] autorelease];
+            PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
             [self.mapAnnotations addObject:placeAnnotation];
-            NSLog(@"******%f,%f",[place latitude],[place longitude]);
+//            NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
         } 
     }
-    [self.mapView removeAnnotations:self.mapView.annotations];  
+    
+    [self.mapView removeAnnotations:self.mapView.annotations];
     [self.mapView addAnnotations:self.mapAnnotations];
     
 }
@@ -168,8 +169,7 @@
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
 //    self.mapView.showsUserLocation = YES;
-    self.mapAnnotations = [[[NSMutableArray alloc]init] autorelease];
-    
+    self.mapAnnotations = [[NSMutableArray alloc]init];
     [self loadAllAnnotations];
     
 //    Place *place = [self buildTestPlace:@"1"];
@@ -182,22 +182,21 @@
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
     NSLog(@"didAddAnnotationViews");
-    if ([_placeList count] >= 2){
-        [self gotoLocation:[_placeList objectAtIndex:1]];
-    }
+//    if ([_placeList count] >= 2){
+        [self gotoLocation:[_placeList objectAtIndex:0]];
+//    }
 }
 
 - (void)viewDidUnload
 {
-    self.mapAnnotations = nil;
     self.mapView = nil;
+    self.mapAnnotations = nil;
 }
 
 - (void)dealloc 
 {
     [mapView release];
     [mapAnnotations release];
-    
     [super dealloc];
 }
 
@@ -227,51 +226,44 @@
     {
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"mapAnnotationIdentifier";
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)
-        [mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
-        if (!pinView)
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[[mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]]autorelease];
+        if (pinView == nil)
         {
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
-            
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-            
             UIView *customizeView = [[UIView alloc] initWithFrame:CGRectMake(0,0,102,27)];
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
             UIImage *image = [UIImage imageNamed:@"map_button"];
             annotationView.image = image;            
             
-            UIButton *leftIndicatorButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            
-//            NSString *imageNamed = @"";
-//            switch ([[placeAnnotation place] categoryId]) {
-//            }
-//            
+            UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
+   
             [leftIndicatorButton setBackgroundImage:[UIImage imageNamed:@"map_food"] forState:UIControlStateNormal];
-            [leftIndicatorButton setFrame:CGRectMake(5, 1.5, 13, 17)];
             [leftIndicatorButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
             [customizeView addSubview:leftIndicatorButton];
+            [leftIndicatorButton release];
             
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 70, 17)];
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
             label.font = [UIFont systemFontOfSize:12];
-            label.text  = [[placeAnnotation place]name];
+            label.text  = [placeAnnotation.place name];
             label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
             label.backgroundColor = [UIColor clearColor];
             [customizeView addSubview:label];
+            [label release];
+            
+            UITapGestureRecognizer *singleFingerTap = [[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(notationAction:)]autorelease];
+            [customizeView addGestureRecognizer:singleFingerTap];
             
             [annotationView addSubview:customizeView];
-            
-            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(notationAction:)];
-            [customizeView addGestureRecognizer:singleFingerTap];
-            [singleFingerTap release];
             [customizeView release];
-            
             return annotationView;
         }
         else
         {
             pinView.annotation = annotation;
+            
         }
         return pinView;
 
