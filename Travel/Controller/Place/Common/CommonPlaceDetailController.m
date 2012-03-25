@@ -16,6 +16,7 @@
 #import "UIUtils.h"
 #import "AppUtils.h"
 #import "AppManager.h"
+#import "PlaceService.h"
 
 @implementation CommonPlaceDetailController
 @synthesize helpButton;
@@ -28,6 +29,7 @@
 @synthesize praiseIcon3;
 @synthesize serviceHolder;
 @synthesize handler;
+@synthesize favoriteCountLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -112,12 +114,12 @@
 
 - (void)clickTelephone:(id)sender
 {
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"是否拨打以下电话" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     
     for(NSString* title in self.place.telephoneList){
         [actionSheet addButtonWithTitle:title];
     }
-    [actionSheet addButtonWithTitle:@"返回"];
+    [actionSheet addButtonWithTitle:NSLS(@"返回")];
     [actionSheet setCancelButtonIndex:[self.place.telephoneList count]];
     [actionSheet showInView:self.view];
     [actionSheet release];
@@ -142,7 +144,13 @@
 
 - (void)clickFavourite:(id)sender
 {
-    NSLog(@"click favourite");
+    PlaceService* placeService = [PlaceService defaultService];
+    [placeService addPlaceIntoFavorite:self place:self.place];
+}
+
+- (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
+{
+    self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"(已有%d人收藏)"),placeFavoriteCount];
 }
 
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 25
@@ -225,7 +233,7 @@
     if ([self.place.telephoneList count] > 0) {
          telephoneString = [self.place.telephoneList componentsJoinedByString:@" "];
     }
-    telephoneLabel.text = [[NSString stringWithString:@"电话: "] stringByAppendingString:telephoneString];
+    telephoneLabel.text = [[NSString stringWithString:NSLS(@"电话: ")] stringByAppendingString:telephoneString];
     [telephoneView addSubview:telephoneLabel];
     [telephoneLabel release];
     
@@ -247,7 +255,7 @@
     addressLabel.backgroundColor = [UIColor clearColor];
     addressLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     addressLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *addr = [[[NSString alloc]initWithFormat:@"地址:"] autorelease];
+    NSString *addr = [[[NSString alloc]initWithFormat:NSLS(@"地址:")] autorelease];
     NSArray *addressList = [self.place addressList];
     for (NSString* address in addressList) {
         addr = [addr stringByAppendingFormat:@" ", address];
@@ -272,7 +280,7 @@
     websiteLabel.backgroundColor = [UIColor clearColor];
     websiteLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     websiteLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *website = @"网站: ";
+    NSString *website = NSLS(@"网站: ");
     websiteLabel.text = [website stringByAppendingString:[self.place website]];
     [websiteView addSubview:websiteLabel];
     [websiteLabel release];
@@ -288,15 +296,15 @@
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"fov"]];
     [favouritesView addSubview:favButton];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(120, 40, 120, 15)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
-    label.text = @"(已有673人收藏)";
-    label.font = [UIFont boldSystemFontOfSize:13];
-    [favouritesView addSubview:label];
+    self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 40, 120, 15)];
+    self.favoriteCountLabel.backgroundColor = [UIColor clearColor];
+    self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
+    [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
+    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:13];
+    [favouritesView addSubview:self.favoriteCountLabel];
     
     [dataScrollView addSubview:favouritesView];
-    [label release];
+    [self.favoriteCountLabel release];
     [favButton release];
     [favouritesView release];
 }
