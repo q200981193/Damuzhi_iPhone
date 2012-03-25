@@ -49,6 +49,7 @@
 #import "PlaceMapAnnotation.h"
 #import "Place.pb.h"
 #import "CommonPlaceDetailController.h"
+#import "AppUtils.h"
 
 @implementation PlaceMapViewController
 
@@ -213,10 +214,15 @@
             
             UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
    
-            [leftIndicatorButton setBackgroundImage:[UIImage imageNamed:@"map_food"] forState:UIControlStateNormal];
-            [leftIndicatorButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
+            NSString *destinationDir = [AppUtils getCategoryImageDir];
+            NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png",placeAnnotation.place.categoryId];
+            UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+            
+            [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
+            [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
             [customizeView addSubview:leftIndicatorButton];
             [leftIndicatorButton release];
+            [icon release];
             
             UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
             label.font = [UIFont systemFontOfSize:12];

@@ -44,6 +44,7 @@
 + (NSString*)getAppFilePath;
 
 + (NSString*)getProvidedServiceImageDir;
++ (NSString*)getCategoryImageDir;
 
 + (BOOL)hasLocalCityData:(int)cityId;
 
