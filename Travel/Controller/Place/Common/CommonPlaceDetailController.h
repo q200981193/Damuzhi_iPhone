@@ -50,8 +50,14 @@
 @property (retain, nonatomic) IBOutlet UIImageView *praiseIcon3;
 @property (retain, nonatomic) IBOutlet UIView *serviceHolder;
 @property (retain, nonatomic) Place *place;
-@property (retain, nonatomic) UILabel *favoriteCountLabel;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
+
+@property (assign, nonatomic) float detailHeight;
+@property (retain, nonatomic) UILabel *favoriteCountLabel;
+@property (retain, nonatomic) UIView *telephoneView;
+@property (retain, nonatomic) UIView *addressView;
+@property (retain, nonatomic) UIView *websiteView;
+@property (retain, nonatomic) UIView *favouritesView;
 
 - (IBAction)clickHelpButton:(id)sender;
 - (id)initWithPlace:(Place*)onePlace;

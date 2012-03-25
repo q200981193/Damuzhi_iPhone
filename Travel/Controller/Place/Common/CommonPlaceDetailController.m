@@ -30,6 +30,11 @@
 @synthesize serviceHolder;
 @synthesize handler;
 @synthesize favoriteCountLabel;
+@synthesize telephoneView;
+@synthesize addressView;
+@synthesize websiteView;
+@synthesize detailHeight;
+@synthesize favouritesView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -181,49 +186,17 @@
     
 }
 
-- (void)viewDidLoad
+- (void)addPaddingVew
 {
-    [super viewDidLoad];
-    
-    [self setNavigationLeftButton:NSLS(@"返回") 
-                        imageName:@"back.png"
-                           action:@selector(clickBack:)];
-    
-    [self setNavigationRightButton:NSLS(@"") 
-                         imageName:@"map_po.png" 
-                            action:@selector(clickMap:)];
-    [self setTitle:[self.place name]];
-    
-    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"topmenu_bg2"]];
-    
-    [self setRankImage:[self.place rank]];
-    [self setServiceIcons];
-
-    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    [imageHolderView addSubview:slideImageView];  
-    
-//    // add image array
-//    NSArray* imagePathArray = [self.place imagesList];
-//    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
-//    for (NSString* imagePath in imagePathArray){
-//        NSLog(@"%@", imagePath);
-//        [images addObject:[UIImage imageNamed:imagePath]];
-//    }
-//    [slideImageView setImages:images];
-        
     UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 3)];
     paddingView.backgroundColor = [UIColor colorWithRed:40/255.0 green:123/255.0 blue:181/255.0 alpha:1.0];
     [dataScrollView addSubview:paddingView];
     [paddingView release];
-    
-    [self.handler addDetailViews:dataScrollView WithPlace:self.place];
-    
-    float detailHeight = [self.handler detailHeight];
-    dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 266)];
+}
 
-    //电话
-    UIView *telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, detailHeight, 320, 32)];
+- (void)addTelephoneView
+{
+    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, detailHeight, 320, 32)];
     telephoneView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
     UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 4, 250, 20)];
     telephoneLabel.backgroundColor = [UIColor clearColor];
@@ -231,7 +204,7 @@
     telephoneLabel.font = [UIFont boldSystemFontOfSize:12];
     NSString *telephoneString = @"";
     if ([self.place.telephoneList count] > 0) {
-         telephoneString = [self.place.telephoneList componentsJoinedByString:@" "];
+        telephoneString = [self.place.telephoneList componentsJoinedByString:@" "];
     }
     telephoneLabel.text = [[NSString stringWithString:NSLS(@"电话: ")] stringByAppendingString:telephoneString];
     [telephoneView addSubview:telephoneLabel];
@@ -247,9 +220,12 @@
     
     [dataScrollView addSubview:telephoneView];
     [telephoneView release];
-    
-    //地址
-    UIView *addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 32)];
+
+}
+
+- (void)addAddressView
+{
+    addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 32)];
     addressView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
     UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 4, 250, 20)];
     addressLabel.backgroundColor = [UIColor clearColor];
@@ -272,10 +248,13 @@
     
     [dataScrollView addSubview:addressView];
     [addressView release];
-    
-    //网站
-    UIView *websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, addressView.frame.origin.y + addressView.frame.size.height, 320, 32)];
-        websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
+
+}
+
+- (void)addWebsiteView
+{
+     websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, addressView.frame.origin.y + addressView.frame.size.height, 320, 32)];
+    websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
     UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 4, 250, 20)];
     websiteLabel.backgroundColor = [UIColor clearColor];
     websiteLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
@@ -287,8 +266,12 @@
     
     [dataScrollView addSubview:websiteView];
     [websiteView release];
-    
-    UIView *favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
+
+}
+
+- (void)addBottomView
+{
+     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg"]];
     
     UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(100, 10, 130, 27)];
@@ -307,6 +290,66 @@
     [self.favoriteCountLabel release];
     [favButton release];
     [favouritesView release];
+
+}
+
+- (void)addHeaderView
+{
+    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"topmenu_bg2"]];
+    
+    [self setRankImage:[self.place rank]];
+    [self setServiceIcons];
+}
+
+- (void)addSlideImageView
+{
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    [imageHolderView addSubview:slideImageView];  
+    
+    //    // add image array
+    //    NSArray* imagePathArray = [self.place imagesList];
+    //    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
+    //    for (NSString* imagePath in imagePathArray){
+    //        NSLog(@"%@", imagePath);
+    //        [images addObject:[UIImage imageNamed:imagePath]];
+    //    }
+    //    [slideImageView setImages:images];
+
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
+    [self setNavigationRightButton:NSLS(@"") 
+                         imageName:@"map_po.png" 
+                            action:@selector(clickMap:)];
+    [self setTitle:[self.place name]];
+    
+    [self addHeaderView];
+   
+    [self addSlideImageView];
+           
+    [self addPaddingVew];
+    
+    [self.handler addDetailViews:dataScrollView WithPlace:self.place];
+    detailHeight = [self.handler detailHeight];
+    dataScrollView.backgroundColor = [UIColor whiteColor];
+    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 266)];
+
+    [self addTelephoneView];
+    
+    [self addAddressView];
+    
+    [self addWebsiteView];
+        
+    [self addBottomView];
+    
+    
 }
 
 - (void)viewDidUnload
