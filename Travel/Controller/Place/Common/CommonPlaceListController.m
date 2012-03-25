@@ -168,7 +168,7 @@
 //    [self.view.layer addAnimation:animation forKey:@"animation"];
     
     [UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:0.5];
+	[UIView setAnimationDuration:0.75];
 	
 	[UIView setAnimationTransition:(_showMap ?
 									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)

@@ -38,7 +38,7 @@
 
 @end
 
-@interface CommonPlaceDetailController : PPViewController
+@interface CommonPlaceDetailController : PPViewController<UIActionSheetDelegate>
 @property (retain, nonatomic) IBOutlet UIButton *helpButton;
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolerView;
