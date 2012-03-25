@@ -27,8 +27,10 @@
     UIFont *boldFont = [UIFont boldSystemFontOfSize:13];
     CGSize withinSize = CGSizeMake(300, 100000);
     
-     NSString *intruduction = [NSString stringWithString: @"香港迪斯尼乐园是一个位于香港迪斯尼度假区的主题乐园，它是迪士尼第五座迪士尼乐园。香港地铁设有专用铁路迪斯尼线来往欣澳站及迪斯尼站，为全世界第二条来往迪士尼的铁路专线。香港迪士尼乐园主题曲「让奇妙飞翔」由香港迪士尼名誉大使张学友主唱。而乐园的官方沟通语言为英文及中文"];
-//    NSString *intruduction = [place introduction];
+   NSString *intruduction = [place introduction];
+    if ([intruduction length] == 0) {
+        intruduction = @"暂无";
+    }
     CGSize size = [intruduction sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *introductionView = [[UIView alloc]initWithFrame:CGRectMake(0, 3, 320, size.height + TITLE_VIEW_HEIGHT)];
@@ -66,8 +68,11 @@
     [middleLineView1 release];
     
     
-    NSString *price = [NSString stringWithString: @"成人:港币287元。小童3至11岁200港币，长者65岁以上170港币"];
-//    NSString *price = [place price];
+//    NSString *price = [NSString stringWithString: @"成人:港币287元。小童3至11岁200港币，长者65岁以上170港币"];
+    NSString *price = [place price];
+    if ([price length] == 0) {
+        price = @"暂无";
+    }
     CGSize size2 = [price sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *priceView = [[UIView alloc]initWithFrame:CGRectMake(0, middleLineView1.frame.origin.y+middleLineView1.frame.size.height, 320, size2.height + TITLE_VIEW_HEIGHT)];
@@ -98,8 +103,10 @@
     [dataScrollView addSubview:middleLineView2];
     [middleLineView2 release];
 
-    NSString *openTime = [NSString stringWithString: @"开放时间描述"];
-//    NSString *openTime = [place openTime];
+    NSString *openTime = [place openTime];
+    if ([openTime length] == 0) {
+        openTime = @"暂无";
+    }
     CGSize size3 = [openTime sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     UIView *openTimeView = [[UIView alloc]initWithFrame:CGRectMake(0, middleLineView2.frame.origin.y + middleLineView2.frame.size.height, 320, size3.height + TITLE_VIEW_HEIGHT)];
     openTimeView.backgroundColor = PRICE_BG_COLOR;
@@ -130,8 +137,10 @@
     [middleLineView3 release];
     
     
-    NSString *transport = [NSString stringWithString: @"交通信息描述"];
-    //    NSString *transport = [place transport];
+    NSString *transport = [place transportation];
+    if ([transport length] == 0) {
+        transport = @"暂无";
+    }
     CGSize size4 = [transport sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *transportView = [[UIView alloc]initWithFrame:CGRectMake(0, middleLineView3.frame.origin.y + middleLineView3.frame.size.height, 320, size4.height + TITLE_VIEW_HEIGHT)];
@@ -162,8 +171,10 @@
     [dataScrollView addSubview:middleLineView4];
     [middleLineView4 release];
 
-    NSString *tips = [NSString stringWithString: @"游览贴士描述"];
-//    NSString *tips = [place tips];
+    NSString *tips = [place tips];
+    if ([tips length] == 0) {
+        tips = @"暂无";
+    }
     CGSize size5 = [tips sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *tipsView = [[UIView alloc]initWithFrame:CGRectMake(0, middleLineView4.frame.origin.y + middleLineView4.frame.size.height, 320, size5.height + TITLE_VIEW_HEIGHT)];

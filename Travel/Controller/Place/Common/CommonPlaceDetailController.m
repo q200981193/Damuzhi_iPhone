@@ -112,10 +112,33 @@
 
 - (void)clickTelephone:(id)sender
 {
-    NSLog(@"make call number");
-    NSString* phone = [[self.place telephoneList]objectAtIndex:0];
-    [UIUtils makeCall:phone];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"是否拨打以下电话" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    
+    for(NSString* title in self.place.telephoneList){
+        [actionSheet addButtonWithTitle:title];
+    }
+    [actionSheet addButtonWithTitle:@"返回"];
+    [actionSheet setCancelButtonIndex:[self.place.telephoneList count]];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+    
 }
+
+- (void)makeCall:(NSString*) phone
+{
+    [UIUtils makeCall:phone];
+
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        return;
+    }
+    NSLog(@"make call number:%@",[self.place.telephoneList objectAtIndex:buttonIndex]);
+    [self performSelector:@selector(makeCall:) withObject:[self.place.telephoneList objectAtIndex:buttonIndex]];
+}
+
 
 - (void)clickFavourite:(id)sender
 {
@@ -198,21 +221,19 @@
     telephoneLabel.backgroundColor = [UIColor clearColor];
     telephoneLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     telephoneLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *tel = [[[NSString alloc]initWithFormat:@"电话:"] autorelease];
-    NSArray *telephoneList = [self.place telephoneList];
-    for (NSString* telephone in telephoneList) {
-        tel = [tel stringByAppendingFormat:@" ", telephone];
-    }
-    telephoneLabel.text = tel;
+    NSString *tel = [self.place.telephoneList componentsJoinedByString:@" "];
+   
+    telephoneLabel.text = [[NSString stringWithString:@"电话: "] stringByAppendingString:tel];
     [telephoneView addSubview:telephoneLabel];
     [telephoneLabel release];
     
-    UIButton *telButton = [[UIButton alloc]initWithFrame:CGRectMake(290, 4, 24, 24)];
-	[telButton setImage:[UIImage imageNamed:@"t_phone"] forState:UIControlStateNormal];     
-    [telButton addTarget:self action:@selector(clickTelephone:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [telephoneView addSubview:telButton];
-    [telButton release];
+    if ([self.place.telephoneList count] != 0) {
+        UIButton *telButton = [[UIButton alloc]initWithFrame:CGRectMake(290, 4, 24, 24)];
+        [telButton setImage:[UIImage imageNamed:@"t_phone"] forState:UIControlStateNormal];     
+        [telButton addTarget:self action:@selector(clickTelephone:) forControlEvents:UIControlEventTouchUpInside];
+        [telephoneView addSubview:telButton];
+        [telButton release];
+    }
     
     [dataScrollView addSubview:telephoneView];
     [telephoneView release];
