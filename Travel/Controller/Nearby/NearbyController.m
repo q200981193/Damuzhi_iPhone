@@ -13,6 +13,12 @@
 
 @implementation NearbyController
 @synthesize imageRedStartView;
+@synthesize findAllPlaceButton;
+@synthesize findSpotButton;
+@synthesize findHotelButton;
+@synthesize findShoppingButton;
+@synthesize findEntertainmentButton;
+@synthesize findRestaurantButton;
 @synthesize placeListController;
 @synthesize placeListHolderView;
 @synthesize distanceView;
@@ -22,6 +28,12 @@
     [placeListController release];
     [placeListHolderView release];
     [distanceView release];
+    [findAllPlaceButton release];
+    [findSpotButton release];
+    [findHotelButton release];
+    [findShoppingButton release];
+    [findEntertainmentButton release];
+    [findRestaurantButton release];
     [super dealloc];
 }
 
@@ -56,11 +68,29 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
+    [self.navigationItem setTitle:NSLS(@"我的附近")];
+    
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+
+//    //add guest reconize for imageRedStartView
+//    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
+//    [imageRedStartView addGestureRecognizer:panRecognizer];
+//    panRecognizer.maximumNumberOfTouches = 1;
+//    panRecognizer.delegate = self;
+//    [panRecognizer release];
     
     [distanceView addSubview:imageRedStartView];
+    
+    [findAllPlaceButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    [findSpotButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    [findHotelButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    [findShoppingButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    [findEntertainmentButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    [findRestaurantButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    
+    
     
     
     // Do any additional setup after loading the view from its nib.
@@ -72,6 +102,12 @@
 {
     [self setPlaceListHolderView:nil];
     [self setDistanceView:nil];
+    [self setFindAllPlaceButton:nil];
+    [self setFindSpotButton:nil];
+    [self setFindHotelButton:nil];
+    [self setFindShoppingButton:nil];
+    [self setFindEntertainmentButton:nil];
+    [self setFindRestaurantButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -95,20 +131,40 @@
     }    
 }
 
+- (void)moveImageView:(UIImageView *)imageView toCenter:(CGPoint)center needAnimation:(BOOL)need
+{
+    if (need) {
+        [UIImageView beginAnimations:nil context:nil];
+        [UIImageView setAnimationDuration:1];
+        [imageView setCenter:center];
+        [UIImageView commitAnimations];        
+    }else{
+        [imageView setCenter:center];        
+    }
+}
+
 - (IBAction)click500M:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+//    [UIImageView beginAnimations:nil context:nil];
+//    [UIImageView setAnimationDuration:1];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+//    [UIImageView commitAnimations];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
 }
 
 - (IBAction)click1K:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
+
 }
 
 - (IBAction)click5K:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
 }
 
 - (IBAction)click10K:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
 }
 
 

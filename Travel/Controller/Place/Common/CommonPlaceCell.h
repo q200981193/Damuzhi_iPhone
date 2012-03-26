@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewCell.h"
+#import <CoreLocation/CoreLocation.h>
 
 @class Place;
 
@@ -18,6 +19,6 @@
 + (CGFloat)getCellHeight;
 
 // this method must be overrided by sub class
-- (void)setCellDataByPlace:(Place*)place;
+- (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation*)currentLocation;
 
 @end

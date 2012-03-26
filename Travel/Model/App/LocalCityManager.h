@@ -10,7 +10,7 @@
 #import "CommonService.h"
 #import "LocalCity.h"
 
-#define  KEY_LOCAL_CITY @"KEY_LOCAL_CITY"
+#define  KEY_LOCAL_CITIES @"KEY_LOCAL_CITIES"
 
 @interface LocalCityManager : NSObject <CommonManagerProtocol>
 
@@ -21,7 +21,8 @@
 - (LocalCity*)createLocalCity:(int)cityId;
 
 - (void)updateLocalCity:(int)cityId downloadProgress:(float)downloadProgress;
-- (void)updateLocalCity:(int)cityId downloadingFlag:(bool)downloadingFlag;
-- (void)updateLocalCity:(int)cityId downloadDoneFlag:(bool)downloadDoneFlag;
+- (void)updateLocalCity:(int)cityId downloadingFlag:(float)downloadingFlag;
+- (void)updateLocalCity:(int)cityId downloadDoneFlag:(float)downloadDoneFlag;
+
 
 @end

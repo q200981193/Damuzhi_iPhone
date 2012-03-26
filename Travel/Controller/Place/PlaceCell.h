@@ -1,5 +1,5 @@
 //
-//  SpotCell.h
+//  PlaceCell.h
 //  Travel
 //
 //  Created by  on 12-2-28.
@@ -10,10 +10,7 @@
 #import "CommonPlaceCell.h"
 #import "HJManagedImageV.h"
 
-@interface SpotCell : CommonPlaceCell<HJManagedImageVDelegate>
-
-+ (SpotCell*)createCell:(id)delegate;
-+ (NSString*)getCellIdentifier;
+@interface PlaceCell : CommonPlaceCell<HJManagedImageVDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *priceLable;
@@ -26,5 +23,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *praise3View;
 @property (retain, nonatomic) IBOutlet UIImageView *favoritesView;
 
++ (PlaceCell*)createCell:(id)delegate;
++ (NSString*)getCellIdentifier;
 
 @end

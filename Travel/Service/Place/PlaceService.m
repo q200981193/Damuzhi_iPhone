@@ -72,7 +72,8 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         NSArray* list = nil;
         int resultCode = 0;
         //if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
-        if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+        //if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+        if (NO){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
             if (localHandler != NULL){
@@ -167,7 +168,14 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        return nil;
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_ALL_PLACE cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];
+        
+        NSArray* list = [_onlinePlaceManager findAllPlaces];
+        *resultCode = 0;
+        
+        return list;
     };
     
     [self processLocalRemoteQuery:viewController

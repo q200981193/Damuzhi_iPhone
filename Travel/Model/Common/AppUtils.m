@@ -92,6 +92,11 @@
     return [FileUtil getFileFullPath:DIR_OF_PROVIDED_SERVICE_IMAGE];
 }
 
++ (NSString*)getCategoryImageDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_CATEGORY_IMAGE];
+}
+
 + (BOOL)hasLocalCityData:(int)cityId
 {
     BOOL hasData = NO;

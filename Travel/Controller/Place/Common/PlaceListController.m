@@ -9,10 +9,10 @@
 #import "PlaceListController.h"
 #import "Place.pb.h"
 #import "PlaceManager.h"
-#import "SpotCell.h"
 #import "CommonPlaceDetailController.h"
 #import "PlaceMapViewController.h"
 #import "LogUtil.h"
+#import "PlaceCell.h"
 
 @interface PlaceListController () 
 
@@ -66,7 +66,52 @@
     [self.mapHolderView addSubview:self.mapViewController.view];
         
     [self updateViewByMode];
+    
+    [self initLocationManager] ;
+
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self startUpdatingLocation];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
+    [super viewDidDisappear:animated];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+	
+    // save to current location
+    self.currentLocation = newLocation;
+	NSLog(@"Current location is %@, horizontalAccuracy=%f, timestamp=%@", [self.currentLocation description], [self.currentLocation horizontalAccuracy], [[currentLocation timestamp] description]);
+	
+	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
+	
+	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
+	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
+	
+    NSLog(@"currentLocation: latitude=%f, longitude=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+	// translate location to address
+	// [self reverseGeocodeCurrentLocation:self.currentLocation];
+    
+    [self.dataTableView reloadData];
+}
+
+//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+//	
+//    // The location "unknown" error simply means the manager is currently unable to get the location.
+//    // We can ignore this error for the scenario of getting a single location fix, because we already have a 
+//    // timeout that will stop the location manager to save power.
+//    if ([error code] != kCLErrorLocationUnknown) {
+//        [self stopUpdatingLocation:NSLocalizedString(@"Error", @"Error")];
+//    }	
+//}
+
 
 - (void)viewDidUnload
 {
@@ -88,20 +133,22 @@
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
     controller.view.frame = superView.bounds;
     controller.superController = superController;
+    controller.mapViewController.superController = superController;
+
     [superView addSubview:controller.view];
     [controller setAndReloadPlaceList:list];    
-    
-    for (Place *place in list) {
-        PPDebug(@"<PlaceListController>");
-        PPDebug(@"最低价格:%@",place.price);
-        PPDebug(@"区域id:%d",place.areaId);
-        for (NSNumber *number in place.providedServiceIdList) {
-            PPDebug(@"服务选项ID:%d",number.intValue);
-        }
-        PPDebug(@"大拇指评级:%d",place.rank);
-        PPDebug(@"酒店星级:%d",place.hotelStar);
-        PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
-    }
+//    
+//    for (Place *place in list) {
+//        PPDebug(@"<PlaceListController>");
+//        PPDebug(@"最低价格:%@",place.price);
+//        PPDebug(@"区域id:%d",place.areaId);
+//        for (NSNumber *number in place.providedServiceIdList) {
+//            PPDebug(@"服务选项ID:%d",number.intValue);
+//        }
+//        PPDebug(@"大拇指评级:%d",place.rank);
+//        PPDebug(@"酒店星级:%d",place.hotelStar);
+//        PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
+//    }
     
     return controller;
 }
@@ -136,11 +183,8 @@
 
 - (Class)getClassByPlace:(Place*)place
 {
-    if ([place categoryId] == PLACE_TYPE_SPOT){
-        return [SpotCell class];
-    }
-    if ([place categoryId] == PLACE_TYPE_HOTEL){
-        return [SpotCell class];
+    if ([place categoryId] == PLACE_TYPE_SPOT || [place categoryId] == PLACE_TYPE_HOTEL){
+        return [PlaceCell class];
     }
     return nil;
 }
@@ -175,7 +219,7 @@
     UIImageView *view = [[UIImageView alloc] init];
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
-    [placeCell setCellDataByPlace:place];
+    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation];
 	return cell;	
 }
 
