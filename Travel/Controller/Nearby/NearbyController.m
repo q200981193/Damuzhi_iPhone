@@ -121,9 +121,14 @@
 
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
-    self.placeListController = [PlaceListController createController:list 
-                                                           superView:self.placeListHolderView
-                                                     superController:self];
+    if (self.placeListController == nil){
+        self.placeListController = [PlaceListController createController:list 
+                                                               superView:placeListHolderView
+                                                         superController:self];    
+    }
+    else{
+        [self.placeListController setAndReloadPlaceList:list];
+    }    
 }
 
 - (void)moveImageView:(UIImageView *)imageView toCenter:(CGPoint)center needAnimation:(BOOL)need
@@ -161,4 +166,6 @@
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
 }
+
+
 @end

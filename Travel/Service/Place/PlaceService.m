@@ -212,4 +212,9 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     }
 }
 
+- (BOOL)isPlaceInFavorite:(int)placeId
+{    
+    return rand() % 2 == 0;
+}
+
 @end

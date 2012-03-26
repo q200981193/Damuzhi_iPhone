@@ -18,6 +18,8 @@
 
 @interface DownloadListCell ()
 
+- (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress;
+
 @end
 
 @implementation DownloadListCell
@@ -114,6 +116,7 @@
 
 - (IBAction)clickCancel:(id)sender {
     [[AppService defaultService] cancelDownloadCity:_city];
+    self.pauseDownloadBtn.selected = NO;
 }
 
 - (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress
@@ -151,8 +154,8 @@
             self.moreDetailBtn.hidden = YES;
             
             self.downloadProgressView.progress = downloadProgress;
-            int persent = downloadProgress*100;
-            self.downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
+            float persent = downloadProgress*100;
+            self.downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
             
             break;
             
