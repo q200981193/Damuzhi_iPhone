@@ -149,9 +149,12 @@
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     [placeLocation release];
     
-   
-        self.distanceLable.text = [[NSString stringWithFormat:@"%lf", distance] stringByAppendingString:NSLS(@"米")];
-
+    if (distance <1000.0) {
+        self.distanceLable.text = [[NSString stringWithFormat:@"%d", distance] stringByAppendingString:NSLS(@"米")];
+    }
+    else {
+        self.distanceLable.text = [[NSString stringWithFormat:@"%0.1lf", distance/1000] stringByAppendingString:NSLS(@"公里")];
+    }
     
     [self setPlaceIcon:place];
 
