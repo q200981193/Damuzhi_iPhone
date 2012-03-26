@@ -15,13 +15,10 @@
 @synthesize downloadingFlag = _downloadingFlag;
 @synthesize downloadDoneFlag = _downloadDoneFlag;
 
-+ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadingFlag:(bool)downloadingFlag downloadDoneFlag:(bool)downloadDoneFlag
++ (LocalCity*)localCityWith:(int)cityId
 {
     LocalCity *localCity = [[[LocalCity alloc] init] autorelease];
     localCity.cityId = cityId;
-    localCity.downloadProgress = downloadProgress;
-    localCity.downloadingFlag = downloadingFlag; 
-    localCity.downloadDoneFlag = downloadDoneFlag;
     return localCity;
 }
 

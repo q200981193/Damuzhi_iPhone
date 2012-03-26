@@ -31,6 +31,6 @@
 @property (retain, nonatomic) IBOutlet UILabel *downloadDoneLabel;
 @property (retain, nonatomic) IBOutlet UIButton *moreDetailBtn;
 
-- (void)setCellData:(City*)city downloading:(NSNumber*)downloading;
+- (void)setCellData:(City*)city;
 
 @end

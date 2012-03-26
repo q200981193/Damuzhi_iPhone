@@ -35,6 +35,24 @@
 @synthesize downloadDoneLabel;
 @synthesize moreDetailBtn;
 
+- (void)setCellAppearance
+{
+    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
+        
+    if(localCity == nil)
+    {
+        [self setCellAppearance:NO_DOWNLOAD downloadProgress:0.0];
+    }
+    else {
+        if (localCity.downloadDoneFlag == NO) {
+            [self setCellAppearance:DOWNLOADING downloadProgress:localCity.downloadProgress];
+        }
+        else {
+            [self setCellAppearance:FINISH_DOWNLOAD downloadProgress:localCity.downloadProgress];
+        }
+    }
+}
+
 
 + (NSString*)getCellIdentifier
 {
@@ -60,7 +78,6 @@
 - (IBAction)clickDownload:(id)sender {
     NSLog(@"download city = %d", _city.cityId);
     [[AppService defaultService] downloadCity:_city];
-    self.pauseDownloadBtn.selected = NO;
 }
 
 - (IBAction)clickPauseBtn:(id)sender {
@@ -99,20 +116,6 @@
     [[AppService defaultService] cancelDownloadCity:_city];
 }
 
-- (void)setCellAppearance
-{
-    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
-    if(localCity == nil)
-    {
-        [self setCellAppearance:NO_DOWNLOAD downloadProgress:0.0];
-    }
-    else {
-        if (localCity.downloadingFlag == NO && localCity.downloadProgress) {
-            
-        }
-    }
-}
-
 - (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress
 { 
     switch (downloadStatus) {
@@ -148,6 +151,9 @@
             self.moreDetailBtn.hidden = YES;
             
             self.downloadProgressView.progress = downloadProgress;
+            int persent = downloadProgress*100;
+            self.downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
+            
             break;
             
         case FINISH_DOWNLOAD:
@@ -172,5 +178,7 @@
     
 }
 
+- (IBAction)clickOnlineBtn:(id)sender {
+}
 
 @end

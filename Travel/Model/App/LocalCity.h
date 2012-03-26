@@ -22,5 +22,5 @@
 @property (assign, nonatomic) bool downloadingFlag;
 @property (assign, nonatomic) bool downloadDoneFlag;
 
-+ (LocalCity*)localCityWith:(int)cityId downloadProgress:(float)downloadProgress downloadingFlag:(bool)downloadingFlag downloadDoneFlag:(bool)downloadDoneFlag;
++ (LocalCity*)localCityWith:(int)cityId;
 @end
