@@ -98,7 +98,7 @@
     for (NSString *providedServiceIcon in providedServiceIcons) {
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:rect];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:providedServiceIcon];
-        PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
+        //PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
         
         serviceIconView.center = CGPointMake(categoryLable.frame.origin.x + categoryLable.frame.size.width+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+(i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 
                                              categoryLable.center.y); 
@@ -123,7 +123,7 @@
         self.imageView.callbackOnSetImage = self;
         [self.imageView clear];
         self.imageView.url = [NSURL URLWithString:[place icon]];
-        PPDebug(@"load place image from URL %@", [place icon]);
+        //PPDebug(@"load place image from URL %@", [place icon]);
         [GlobalGetImageCache() manage:self.imageView];
     }
 }
@@ -136,20 +136,30 @@
 {
 }
 
-- (void)setCellDataByPlace:(Place*)place
+- (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
     self.nameLabel.text = [place name];
+//    NSLog(@"place: %@", [place name]);
+//    PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
+    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
+    NSLog(@"place: %@", [place name]);
+
+    PPDebug(@"当前经纬度:%lf,%lf", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
+    PPDebug(@"地点经纬度:%lf,%lf",place.longitude ,place.latitude);
+    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+    [placeLocation release];
     
+   
+        self.distanceLable.text = [[NSString stringWithFormat:@"%lf", distance] stringByAppendingString:NSLS(@"米")];
+
     
     [self setPlaceIcon:place];
-    
+
     //self.priceLable.text = [place price];
     self.priceLable.text = [[[CityOverViewManager defaultManager] getCurrencySymbol] stringByAppendingString:[place price]];
     
     self.areaLable.text = [[CityOverViewManager defaultManager] getAreaName:[place areaId]];
 //    NSLog(@"place areaId = %d", [[place.areaIdList objectAtIndex:0] intValue]);
-    
-    
     self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                 subCategoryId:[place subCategoryId]];
     
@@ -164,7 +174,7 @@
         
         NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
         NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
-        NSLog(@"path ＝ %@", [destinationDir stringByAppendingPathComponent:fileName]);
+        //NSLog(@"path ＝ %@", [destinationDir stringByAppendingPathComponent:fileName]);
         [providedServiceIcons addObject:[destinationDir stringByAppendingPathComponent:fileName]];
     }
     
