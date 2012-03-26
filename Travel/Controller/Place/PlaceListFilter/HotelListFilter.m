@@ -9,6 +9,7 @@
 #import "HotelListFilter.h"
 #import "PlaceManager.h"
 #import "PlaceService.h"
+#import "LogUtil.h"
 
 @implementation HotelListFilter
 @synthesize controller;
@@ -119,6 +120,12 @@
     UIButton *buttonService = [self createFilterButton:frame3 title:@"服务" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
     UIButton *buttonSort = [self createFilterButton:frame4 title:@"排序" bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
     
+    [buttonPrice addTarget:commonPlaceController
+                   action:@selector(clickPrice:) 
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
     [superView addSubview:buttonPrice];
     [superView addSubview:buttonArea];
     [superView addSubview:buttonService];
@@ -148,6 +155,51 @@
     return NSLS(@"酒店");
 }
 
+- (BOOL)hasNumberInArrary:(NSArray *)array NumberIntValue:(int)keyInt
+{
+    for (NSNumber *number in array) {
+        if ([number intValue] == keyInt) {
+            return YES;
+        }
+    }
+     
+    return NO;
+}
+
+-(NSArray*)filterByPriceList:(NSArray*)placeList selectedPriceList:(NSArray*)selectedPriceList
+{
+    NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
+
+    
+    for (NSNumber *selectedPriceId in selectedPriceList)
+    {
+        PPDebug(@"selectedPriceList:%d",[selectedPriceId intValue]);
+        if ([selectedPriceId intValue] == PRICE_ALL) {
+            return placeList;
+        }
+    }
+
+    for (Place *place in placeList) {
+        if ([place.price intValue] < 500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_BELOW_500]) {
+            [array addObject:place];
+        }
+        
+        else if ([place.price intValue] >= 500 && [place.price intValue] < 1000 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_500_1000]){
+            [array addObject:place];
+        }
+        
+        else if ([place.price intValue] >= 1000 && [place.price intValue] < 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_1000_1500]){
+            [array addObject:place];
+        }
+        
+        else if ([place.price intValue] >= 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_MORE_THAN_1500]){
+            [array addObject:place];
+        }
+    }
+    
+    return array;
+}
+
 - (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
             selectedCategoryIdList:(NSArray*)selectedCategoryIdList 
                selectedPriceIdList:(NSArray*)selectedPriceIdList 
@@ -156,7 +208,9 @@
              selectedCuisineIdList:(NSArray*)selectedCuisineIdList
                             sortBy:(NSNumber*)selectedSortId
 {
-    return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId];
+    //return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId];
+    
+    return [self sortBySelectedSortId:[self filterByPriceList:placeList selectedPriceList:selectedPriceIdList] selectedSortId:selectedSortId];
 }
 
 @end

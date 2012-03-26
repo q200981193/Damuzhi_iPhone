@@ -14,6 +14,7 @@
 #import "SelectController.h"
 #import "AppManager.h"
 #import "CommonPlace.h"
+#import "CityOverviewManager.h"
 
 @implementation CommonPlaceListController
 
@@ -51,6 +52,7 @@
     self.filterHandler = handler;
     self.selectedCategoryIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedSortIdList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedPriceIdList = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -135,6 +137,7 @@
     if (self.placeListController == nil){
         [self.selectedCategoryIdList addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
         [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
+        [self.selectedPriceIdList addObject:[NSNumber numberWithInt:PRICE_ALL]];
         list = [self filterAndSort:list];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView
@@ -217,11 +220,30 @@
     NSLog(@"<clickSortButton>");
 }
 
+- (void)clickPrice:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    NSString *title = button.titleLabel.text;
+    
+    NSArray *hotelPriceList = [[AppManager defaultManager] getHotelPriceList];
+    SelectController* selectController = [SelectController createController:hotelPriceList
+                                                                selectedIds:self.selectedPriceIdList
+                                                               multiOptions:YES];
+    NSLog(@"%@",[[_filterHandler getCategoryName] stringByAppendingString:@"价格"]);
+    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
+    [self.navigationController pushViewController:selectController animated:YES];
+    selectController.delegate = self;
+}
+
+- (void)clickArea:(id)sender
+{
+    //NSArray *areaList = [[CityOverviewManager defaultManager] getAreaList];
+}
+
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
     [_filterHandler findAllPlaces:self];
     self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", selectedList.count]; 
 }
-
 
 @end

@@ -57,5 +57,6 @@
 - (void)setCurrentCityId:(int)newCity;
 
 - (NSArray*)getSortOptionList:(int)categoryId;
+- (NSArray*)getHotelPriceList;
 
 @end
