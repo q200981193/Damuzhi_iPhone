@@ -107,7 +107,7 @@
     return array;
 }
 
--(NSArray*)sortBySelectedSortId:(NSArray*)placeList selectedSortId:(NSNumber*)selectedSortId
+-(NSArray*)sortBySelectedSortId:(NSArray*)placeList selectedSortId:(NSNumber*)selectedSortId currentLocation:(CLLocation*)currentLocation
 {
     NSArray *array = nil;
     switch ([selectedSortId intValue]) {
@@ -127,7 +127,20 @@
             
         case SORT_BY_DESTANCE_FROM_NEAR_TO_FAR:
             //TODO: sort and put sorted result into array
-            ;
+            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                CLLocation *place1Location = [[CLLocation alloc] initWithLatitude:[place1 latitude] longitude:[place1 longitude]];
+                CLLocation *place2Location = [[CLLocation alloc] initWithLatitude:[place2 latitude] longitude:[place2 longitude]];
+                CLLocationDistance distance1 = [currentLocation distanceFromLocation:place1Location];
+                CLLocationDistance distance2 = [currentLocation distanceFromLocation:place2Location];
+                [place1Location release];
+                [place2Location release];
+                
+                if (distance1 < distance2)
+                    return NSOrderedDescending;
+                else  if (distance1 > distance2)
+                    return NSOrderedAscending;
+                else return NSOrderedSame;
+            }];
             break;
             
         case SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP:
@@ -156,9 +169,10 @@
                 selectedAreaIdList:(NSArray*)selectedAreaIdList 
              selectedServiceIdList:(NSArray*)selectedServiceIdList
              selectedCuisineIdList:(NSArray*)selectedCuisineIdList
-                         sortBy:(NSNumber*)selectedSortId;
+                            sortBy:(NSNumber*)selectedSortId
+                   currentLocation:(CLLocation*)currentLocation
 {
-    return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId];
+    return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId currentLocation:currentLocation];
 }
 
 @end

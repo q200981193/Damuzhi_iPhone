@@ -53,23 +53,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    // create & add map view
-    self.mapHolderView.hidden = YES;
-    self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
-    self.mapViewController.view.frame = self.mapHolderView.bounds;
-    [self.mapHolderView addSubview:self.mapViewController.view];
-        
-    [self updateViewByMode];
-    
-    [self initLocationManager] ;
-
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -100,6 +83,24 @@
 	// [self reverseGeocodeCurrentLocation:self.currentLocation];
     
     [self.dataTableView reloadData];
+}
+
+
+#pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    // create & add map view
+    self.mapHolderView.hidden = YES;
+    self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
+    self.mapViewController.view.frame = self.mapHolderView.bounds;
+    [self.mapHolderView addSubview:self.mapViewController.view];
+        
+    [self updateViewByMode];
+    
+    [self initLocationManager] ;
 }
 
 //- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

@@ -125,7 +125,8 @@
                                     selectedAreaIdList:self.selectedAreaIdList
                                  selectedServiceIdList:self.selectedServiceIdList
                                  selectedCuisineIdList:self.selectedCuisineIdList
-                                                sortBy:[self.selectedSortIdList objectAtIndex:0]];
+                                                sortBy:[self.selectedSortIdList objectAtIndex:0]
+                                       currentLocation:self.placeListController.currentLocation];
     
     return placeList;
 }

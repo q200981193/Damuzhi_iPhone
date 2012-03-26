@@ -172,13 +172,10 @@
     
     NSMutableArray *providedServiceIcons = [[[NSMutableArray alloc] init] autorelease];
     for (NSNumber *providedServiceId in [place providedServiceIdList]) {
-//        NSString *providedServiceIcon = [[AppManager defaultManager] getProvidedServiceIcon:[place categoryId]
-//                                                                          providedServiceId:[providedServiceId intValue]];
-        
         NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
         NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
-        //NSLog(@"path ＝ %@", [destinationDir stringByAppendingPathComponent:fileName]);
         [providedServiceIcons addObject:[destinationDir stringByAppendingPathComponent:fileName]];
+        [fileName release];
     }
     
     [self setServiceIcons:providedServiceIcons];
