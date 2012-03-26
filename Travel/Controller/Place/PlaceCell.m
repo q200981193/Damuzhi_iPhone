@@ -1,12 +1,12 @@
 //
-//  SpotCell.m
+//  PlaceCell.m
 //  Travel
 //
 //  Created by  on 12-2-28.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "SpotCell.h"
+#import "PlaceCell.h"
 #import "Place.pb.h"
 #import "AppManager.h"
 #import "StringUtil.h"
@@ -17,9 +17,9 @@
 #import "PPApplication.h"
 #import "CityOverviewManager.h"
 #import "AppUtils.h"
+#import "CommonPlace.h"
 
-
-@implementation SpotCell
+@implementation PlaceCell
 @synthesize nameLabel;
 @synthesize priceLable;
 @synthesize distanceLable;
@@ -31,24 +31,23 @@
 @synthesize praise3View;
 @synthesize favoritesView;
 
-
-+ (SpotCell*)createCell:(id)delegate
++ (PlaceCell*)createCell:(id)delegate
 {
-    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"SpotCell" owner:self options:nil];
+    NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PlaceCell" owner:self options:nil];
     // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).  
     if (topLevelObjects == nil || [topLevelObjects count] <= 0){
-        NSLog(@"create <SpotCell> but cannot find cell object from Nib");
+        NSLog(@"create <PlaceCell> but cannot find cell object from Nib");
         return nil;
     }
     
-    ((SpotCell*)[topLevelObjects objectAtIndex:0]).delegate = delegate;
+    ((PlaceCell*)[topLevelObjects objectAtIndex:0]).delegate = delegate;
     
-    return (SpotCell*)[topLevelObjects objectAtIndex:0];
+    return (PlaceCell*)[topLevelObjects objectAtIndex:0];
 }
 
 + (NSString*)getCellIdentifier
 {
-    return @"SpotCell";
+    return @"PlaceCell";
 }
 
 -(void)setRankImage:(int32_t)rank
@@ -139,17 +138,6 @@
 
 - (void)setCellDataByPlace:(Place*)place
 { 
-    PPDebug(@"<PlaceListController>");
-    PPDebug(@"最低价格:%@",place.price);
-    PPDebug(@"区域id:%d",place.areaId);
-    for (NSNumber *number in place.providedServiceIdList) {
-        PPDebug(@"服务选项ID:%d",number.intValue);
-    }
-    PPDebug(@"大拇指评级:%d",place.rank);
-    PPDebug(@"酒店星级:%d",place.hotelStar);
-    PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
-    
-    
     self.nameLabel.text = [place name];
     
     
@@ -158,13 +146,9 @@
     //self.priceLable.text = [place price];
     self.priceLable.text = [[[CityOverViewManager defaultManager] getCurrencySymbol] stringByAppendingString:[place price]];
     
-    NSLog(@"%@",[[CityOverViewManager defaultManager] cityOverView]);
-    NSLog(@"%@",[[CityOverViewManager defaultManager] getCurrencySymbol]);
-    NSLog(@"%@",[place price]);
-    
-    
     self.areaLable.text = [[CityOverViewManager defaultManager] getAreaName:[place areaId]];
 //    NSLog(@"place areaId = %d", [[place.areaIdList objectAtIndex:0] intValue]);
+    
     
     self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                 subCategoryId:[place subCategoryId]];

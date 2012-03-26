@@ -9,10 +9,10 @@
 #import "PlaceListController.h"
 #import "Place.pb.h"
 #import "PlaceManager.h"
-#import "SpotCell.h"
 #import "CommonPlaceDetailController.h"
 #import "PlaceMapViewController.h"
 #import "LogUtil.h"
+#import "PlaceCell.h"
 
 @interface PlaceListController () 
 
@@ -138,11 +138,8 @@
 
 - (Class)getClassByPlace:(Place*)place
 {
-    if ([place categoryId] == PLACE_TYPE_SPOT){
-        return [SpotCell class];
-    }
-    if ([place categoryId] == PLACE_TYPE_HOTEL){
-        return [SpotCell class];
+    if ([place categoryId] == PLACE_TYPE_SPOT || [place categoryId] == PLACE_TYPE_HOTEL){
+        return [PlaceCell class];
     }
     return nil;
 }
