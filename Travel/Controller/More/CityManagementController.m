@@ -232,6 +232,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {    
+    if (self.timer != nil){
+        [self.timer invalidate];
+    }
+    
     self.timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
                                              target: self
                                            selector: @selector(handleTimer)
@@ -243,6 +247,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [timer invalidate];
+    self.timer = nil;
+    
     [super viewDidDisappear:animated];
 }
 

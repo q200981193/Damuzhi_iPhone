@@ -159,7 +159,9 @@
     [self setPlaceIcon:place];
 
     //self.priceLable.text = [place price];
-    self.priceLable.text = [[[CityOverViewManager defaultManager] getCurrencySymbol] stringByAppendingString:[place price]];
+    self.priceLable.text = [NSString stringWithFormat:@"%@%@",
+                            [[CityOverViewManager defaultManager] getCurrencySymbol],
+                            [place price]];
     
     self.areaLable.text = [[CityOverViewManager defaultManager] getAreaName:[place areaId]];
 //    NSLog(@"place areaId = %d", [[place.areaIdList objectAtIndex:0] intValue]);
