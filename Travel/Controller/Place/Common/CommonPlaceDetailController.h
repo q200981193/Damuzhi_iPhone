@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
+#import "PlaceService.h"
 
 @class Place;
 
@@ -38,18 +39,26 @@
 
 @end
 
-@interface CommonPlaceDetailController : PPViewController
+@interface CommonPlaceDetailController : PPViewController<UIActionSheetDelegate,PlaceServiceDelegate>
+@property (retain, nonatomic) IBOutlet UIButton *helpButton;
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolerView;
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 @property (retain, nonatomic) IBOutlet UIScrollView *dataScrollView;
-@property (retain, nonatomic) Place *place;
-@property (retain, nonatomic) IBOutlet UIImageView *helpIcon;
 @property (retain, nonatomic) IBOutlet UIImageView *praiseIcon1;
 @property (retain, nonatomic) IBOutlet UIImageView *praiseIcon2;
 @property (retain, nonatomic) IBOutlet UIImageView *praiseIcon3;
-
+@property (retain, nonatomic) IBOutlet UIView *serviceHolder;
+@property (retain, nonatomic) Place *place;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
 
+@property (assign, nonatomic) float detailHeight;
+@property (retain, nonatomic) UILabel *favoriteCountLabel;
+@property (retain, nonatomic) UIView *telephoneView;
+@property (retain, nonatomic) UIView *addressView;
+@property (retain, nonatomic) UIView *websiteView;
+@property (retain, nonatomic) UIView *favouritesView;
+
+- (IBAction)clickHelpButton:(id)sender;
 - (id)initWithPlace:(Place*)onePlace;
 @end

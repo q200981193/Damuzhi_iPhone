@@ -14,7 +14,7 @@
 
 @property (nonatomic, retain) Place *place;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-
+@property (nonatomic, retain) NSString* title;
 - (id)initWithPlace:(Place*)a_place;
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coord;
 

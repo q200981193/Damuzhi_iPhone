@@ -48,21 +48,23 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "PPViewController.h"
 
 @class Place;
 
-@interface PlaceMapViewController : UIViewController <MKMapViewDelegate,CLLocationManagerDelegate>
+@interface PlaceMapViewController : PPViewController <MKMapViewDelegate,CLLocationManagerDelegate>
 {
     MKMapView *mapView;
-    NSMutableArray *mapAnnotations;
     NSArray* _placeList;
     CLLocationManager* _locationManager;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) NSMutableArray *mapAnnotations;
 @property (nonatomic, retain) CLLocationManager* locationManager;
 @property (nonatomic, retain) NSArray* placeList;
+@property (nonatomic, assign) NSInteger indexOfSelectedPlace;
+@property (nonatomic, retain) NSMutableArray* mapAnnotations;
+@property (nonatomic, retain) UIViewController* superController;
 
 - (void)setPlaces:(NSArray*)placeList;
 - (void)gotoLocation:(Place*)place;

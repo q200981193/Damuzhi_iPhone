@@ -167,7 +167,14 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        return nil;
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_ALL_PLACE cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];
+        
+        NSArray* list = [_onlinePlaceManager findAllPlaces];
+        *resultCode = 0;
+        
+        return list;
     };
     
     [self processLocalRemoteQuery:viewController
@@ -175,5 +182,33 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];    
 }
 
+- (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    
+}
+
+- (void)findHistoryPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    
+}
+
+- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
+                       place:(Place*)place
+{
+    // TODO send request to server, and save data locally
+}
+
+- (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
+                      placeId:(int)placeId
+{
+    int count = 108; // test
+    
+    
+    if ([viewController respondsToSelector:@selector(didGetPlaceData:count:)]){
+        // Test
+        PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, count);
+        [viewController didGetPlaceData:placeId count:count];
+    }
+}
 
 @end

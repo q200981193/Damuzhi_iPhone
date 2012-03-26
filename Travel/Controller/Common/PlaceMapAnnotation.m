@@ -12,7 +12,7 @@
 
 @synthesize place;
 @synthesize coordinate;
-
+@synthesize title;
 - (void)dealloc
 {
     [super dealloc];
@@ -21,8 +21,9 @@
 - (id)initWithPlace:(Place *)a_place
 {
     self.place = a_place;
-    coordinate.longitude = place.longitude;
-    coordinate.latitude = place.latitude;
+    coordinate.longitude = a_place.longitude;
+    coordinate.latitude = a_place.latitude;
+    title = a_place.name;
     return self;
 }
 

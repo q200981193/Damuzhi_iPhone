@@ -11,11 +11,15 @@
 
 @class PlaceManager;
 @class PPViewController;
+@class Place;
 
 @protocol PlaceServiceDelegate <NSObject>
 
+@optional
 - (void)findRequestDone:(int)result dataList:(NSArray*)dataList;
 - (void)filterAndSort;
+- (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
+
 @end
 
 @interface PlaceService : CommonService
@@ -34,5 +38,16 @@
 - (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController;
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
 - (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController;
+
+
+- (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
+- (void)findHistoryPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
+
+
+- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
+                       place:(Place*)place;
+
+- (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
+                      placeId:(int)placeId;
 
 @end
