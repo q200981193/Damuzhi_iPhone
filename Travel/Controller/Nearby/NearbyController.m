@@ -85,9 +85,14 @@
 
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
-    self.placeListController = [PlaceListController createController:list 
-                                                           superView:self.placeListHolderView
-                                                     superController:self];
+    if (self.placeListController == nil){
+        self.placeListController = [PlaceListController createController:list 
+                                                               superView:placeListHolderView
+                                                         superController:self];    
+    }
+    else{
+        [self.placeListController setAndReloadPlaceList:list];
+    }    
 }
 
 - (IBAction)click500M:(id)sender {
@@ -105,4 +110,6 @@
 - (IBAction)click10K:(id)sender {
     [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
 }
+
+
 @end
