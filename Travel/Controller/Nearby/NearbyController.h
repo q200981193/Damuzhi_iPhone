@@ -12,7 +12,7 @@
 
 @class PlaceListController;
 
-@interface NearbyController : PPViewController<PlaceServiceDelegate>
+@interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate>
 
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
