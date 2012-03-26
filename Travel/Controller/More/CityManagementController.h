@@ -13,11 +13,16 @@
 {
     UITableView *_downloadTableView;
     NSArray *_downloadList;
+    NSTimer *_timer;
 }
 
 @property (nonatomic, retain) NSArray *downloadList;
 
 @property (nonatomic, retain) IBOutlet UITableView *downloadTableView;
 @property (retain, nonatomic) IBOutlet UILabel *promptLabel;
+@property (retain, nonatomic) UIButton *cityListBtn;
+@property (retain, nonatomic) UIButton *downloadListBtn;
+
+@property (retain, nonatomic)  NSTimer *timer;
 
 @end

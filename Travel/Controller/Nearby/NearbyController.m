@@ -73,6 +73,13 @@
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+
+//    //add guest reconize for imageRedStartView
+//    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
+//    [imageRedStartView addGestureRecognizer:panRecognizer];
+//    panRecognizer.maximumNumberOfTouches = 1;
+//    panRecognizer.delegate = self;
+//    [panRecognizer release];
     
     [distanceView addSubview:imageRedStartView];
     
@@ -82,6 +89,8 @@
     [findShoppingButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
     [findEntertainmentButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
     [findRestaurantButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
+    
+    
     
     
     // Do any additional setup after loading the view from its nib.
@@ -112,24 +121,51 @@
 
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
-    self.placeListController = [PlaceListController createController:list 
-                                                           superView:self.placeListHolderView
-                                                     superController:self];
+    if (self.placeListController == nil){
+        self.placeListController = [PlaceListController createController:list 
+                                                               superView:placeListHolderView
+                                                         superController:self];    
+    }
+    else{
+        [self.placeListController setAndReloadPlaceList:list];
+    }    
+}
+
+- (void)moveImageView:(UIImageView *)imageView toCenter:(CGPoint)center needAnimation:(BOOL)need
+{
+    if (need) {
+        [UIImageView beginAnimations:nil context:nil];
+        [UIImageView setAnimationDuration:1];
+        [imageView setCenter:center];
+        [UIImageView commitAnimations];        
+    }else{
+        [imageView setCenter:center];        
+    }
 }
 
 - (IBAction)click500M:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+//    [UIImageView beginAnimations:nil context:nil];
+//    [UIImageView setAnimationDuration:1];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+//    [UIImageView commitAnimations];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
 }
 
 - (IBAction)click1K:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
+
 }
 
 - (IBAction)click5K:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
 }
 
 - (IBAction)click10K:(id)sender {
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
+//    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
+    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
 }
+
+
 @end

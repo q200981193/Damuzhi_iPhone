@@ -14,7 +14,6 @@
 
 + (SpotCell*)createCell:(id)delegate;
 + (NSString*)getCellIdentifier;
-- (NSString*)getIconByProvidedServiceId:(NSString*)serviceId;
 
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *priceLable;

@@ -27,6 +27,9 @@
 
 @synthesize promptLabel = _promptLabel;
 @synthesize downloadTableView = _downloadTableView;
+@synthesize timer = _timer;
+@synthesize cityListBtn = _cityListBtn;
+@synthesize downloadListBtn = _downloadListBtn;
 
 - (void)dealloc {
     [_downloadTableView release];
@@ -50,34 +53,34 @@
 {
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 30)];
     
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 80, 30);
+    self.cityListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _cityListBtn.frame = CGRectMake(0, 0, 80, 30);
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightButton.frame = CGRectMake(80, 0, 80, 30);
+    self.downloadListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _downloadListBtn.frame = CGRectMake(80, 0, 80, 30);
        
     
-    [leftButton setTitle:@"城市列表" forState:UIControlStateNormal];
-    leftButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [leftButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [_cityListBtn setTitle:@"城市列表" forState:UIControlStateNormal];
+    _cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [_cityListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     
-    [leftButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
-    [leftButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateHighlighted];
+    [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
+    [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
     
 
-    [rightButton setTitle:@"下载管理" forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
-    [rightButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
-    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    [rightButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
-    [rightButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateHighlighted];
+    [_downloadListBtn setTitle:@"下载管理" forState:UIControlStateNormal];
+    _downloadListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_downloadListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [_downloadListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
+    [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
     
-    [leftButton addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
+    [_cityListBtn addTarget:self action:@selector(clickCityListButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_downloadListBtn addTarget:self action:@selector(clickDownloadButton:) forControlEvents:UIControlEventTouchUpInside];
     
-    [buttonView addSubview:rightButton];
-    [buttonView addSubview:leftButton];
+    [buttonView addSubview:_cityListBtn];
+    [buttonView addSubview:_downloadListBtn];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
     [buttonView release];
@@ -203,19 +206,50 @@
     
 }
 
-- (void)clickLeftButton
+- (void)clickCityListButton:(id)sender
 {
-
     [self showCityList];
+    _downloadListBtn.selected = NO;
+    _cityListBtn.selected = YES;
+    
     
     //PPDebug(@"click left button");
 }
 
-- (void)clickRightButton
+- (void)clickDownloadButton:(id)sender
 {
     [self showDownloadList];
+    _downloadListBtn.selected = YES;
+    _cityListBtn.selected = NO;
 
     //PPDebug(@"click right button");
+}
+
+- (void)handleTimer
+{
+    [self.downloadTableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{    
+    if (self.timer != nil){
+        [self.timer invalidate];
+    }
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
+                                             target: self
+                                           selector: @selector(handleTimer)
+                                           userInfo: nil
+                                            repeats: YES];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [timer invalidate];
+    self.timer = nil;
+    
+    [super viewDidDisappear:animated];
 }
 
 

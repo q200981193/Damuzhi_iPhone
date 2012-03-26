@@ -72,7 +72,8 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         NSArray* list = nil;
         int resultCode = 0;
         //if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
-        if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+        //if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+        if (NO){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
             if (localHandler != NULL){
@@ -209,6 +210,11 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, count);
         [viewController didGetPlaceData:placeId count:count];
     }
+}
+
+- (BOOL)isPlaceInFavorite:(int)placeId
+{    
+    return rand() % 2 == 0;
 }
 
 @end

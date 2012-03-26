@@ -50,4 +50,6 @@
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
                       placeId:(int)placeId;
 
+- (BOOL)isPlaceInFavorite:(int)placeId;
+
 @end

@@ -28,7 +28,8 @@
                 selectedAreaIdList:(NSArray*)selectedAreaIdList 
              selectedServiceIdList:(NSArray*)selectedServiceIdList
              selectedCuisineIdList:(NSArray*)selectedCuisineIdList
-                         sortBy:(NSNumber*)selectedSortId;
+                            sortBy:(NSNumber*)selectedSortId
+                   currentLocation:(CLLocation*)currentLocation;
 
 
 @end

@@ -344,6 +344,7 @@ static AppManager* _defaultAppManager = nil;
             break;
             
         case PLACE_TYPE_HOTEL:
+            
             break;
             
         default:
