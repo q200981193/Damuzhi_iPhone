@@ -11,6 +11,8 @@
 #import "PPDebug.h"
 #import "AppManager.h"
 #import "PPDebug.h"
+#import "LocaleUtils.h"
+#import "CommonPlace.h"
 
 @implementation CityOverViewManager
 
@@ -134,5 +136,20 @@ static CityOverViewManager *_defaultInstance = nil;
         NSLog(@"areaId = %d, areaName = %@", area.areaId, area.areaName);
     }
 }
+
+- (NSArray *)getWillSelectAreaList
+{
+    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
+    [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
+                    forKey:[NSNumber numberWithInt:ALL_AREA]]];
+    
+    NSArray *area = [self getAreaList];
+    for (CityArea* cityArea in area) {
+        [resultArray addObject:[NSDictionary dictionaryWithObject:cityArea.areaName
+                                                           forKey:[NSNumber numberWithInt:cityArea.areaId]]];
+    }
+    return resultArray;
+}
+
 @end
 

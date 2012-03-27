@@ -53,6 +53,7 @@
     self.selectedCategoryIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedSortIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedPriceIdList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedAreaIdList = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -139,6 +140,7 @@
         [self.selectedCategoryIdList addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
         [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
         [self.selectedPriceIdList addObject:[NSNumber numberWithInt:PRICE_ALL]];
+        [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_AREA]];
         list = [self filterAndSort:list];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView
@@ -238,7 +240,17 @@
 
 - (void)clickArea:(id)sender
 {
-    //NSArray *areaList = [[CityOverviewManager defaultManager] getAreaList];
+    UIButton *button = (UIButton *)sender;
+    NSString *title = button.titleLabel.text;
+
+    
+    NSArray *areaList = [[CityOverViewManager defaultManager] getWillSelectAreaList];
+    SelectController* selectController = [SelectController createController:areaList
+                                                                selectedIds:self.selectedAreaIdList
+                                                               multiOptions:YES];
+    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
+    [self.navigationController pushViewController:selectController animated:YES];
+    selectController.delegate = self;
 }
 
 - (void)didSelectFinish:(NSArray*)selectedList

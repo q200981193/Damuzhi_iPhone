@@ -31,6 +31,8 @@ enum{
     PRICE_MORE_THAN_1500 = 5
 };
 
+#define ALL_AREA  (-1)
+
 @interface CommonPlace : NSObject
 
 
