@@ -19,6 +19,8 @@
 #import "PlaceService.h"
 #import "LogUtil.h"
 
+#define NO_DETAIL_DATA NSLS(@"暂无")
+
 @implementation CommonPlaceDetailController
 @synthesize helpButton;
 @synthesize buttonHolerView;
@@ -50,6 +52,10 @@
 {
     if ([onePlace categoryId] == PLACE_TYPE_SPOT){
         return [[[SpotDetailViewHandler alloc] init] autorelease];
+    }
+    else if ([onePlace categoryId] == PLACE_TYPE_HOTEL)
+    {
+        return [[[HotelDetailViewHandler alloc] init] autorelease];
     }
     return nil;
 }
@@ -196,6 +202,71 @@
     }
     
 }
+
++ (UILabel*)createTitleView:(NSString*)title
+{
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
+    UILabel *label = [[[UILabel alloc]initWithFrame:CGRECT_TITLE]autorelease];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = TITLE_COLOR;
+    label.font = boldFont;
+    label.text  = title;
+    return label;
+}
+
++ (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height
+{
+    UIFont *font = [UIFont systemFontOfSize:12];
+    UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, height)] autorelease];
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.numberOfLines = 0;
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = DESCRIPTION_COLOR;
+    label.font = font;
+    label.text = description; 
+    return label;
+}
+
++ (UIView*)createMiddleLineView:(CGFloat)y
+{
+    
+    UIView *middleLineView = [[[UIView alloc]initWithFrame:CGRectMake(0, y, 320, MIDDLE_LINE_HEIGHT)] autorelease];
+    middleLineView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"middle_line"]];
+    return middleLineView;
+}
+
+-(void)addSegmentViewTo:(NSString*)titleString description:(NSString*)descriptionString
+{
+    UIFont *font = [UIFont systemFontOfSize:12];
+    CGSize withinSize = CGSizeMake(300, 100000);
+    
+    NSString *description = descriptionString;
+    if ([description length] == 0) {
+        description = NO_DETAIL_DATA;
+    }
+    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
+    segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
+    
+    UILabel *title = [CommonPlaceDetailController createTitleView:titleString];
+    [segmentView addSubview:title];
+    
+    //    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(5, 24, 310, 1)];
+    //    lineView.backgroundColor = PRICE_BG_COLOR;
+    //    [segmentView addSubview:lineView];
+    //    [lineView release];
+    
+    UILabel *introductionDescription = [CommonPlaceDetailController createDescriptionView:description height:size.height];    
+    [segmentView addSubview:introductionDescription];
+    [dataScrollView addSubview:segmentView];    
+    
+    UIView *middleLineView = [CommonPlaceDetailController createMiddleLineView: self.detailHeight + segmentView.frame.size.height];
+    [dataScrollView addSubview:middleLineView];
+    
+    self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
+}
+
 
 - (void)addPaddingVew
 {
