@@ -20,4 +20,14 @@ static UserManager* _defaultUserManager = nil;
     return _defaultUserManager;
 }
 
+- (NSString*)userId
+{
+    return nil;
+}
+
+- (void)saveUserId:(NSString*)userId
+{
+    
+}
+
 @end

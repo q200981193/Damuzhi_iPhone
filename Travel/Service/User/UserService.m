@@ -16,4 +16,10 @@
     return nil;
 }
 
+- (void)autoRegisterUser
+{
+    // if user exists locally then return, else send a registration to server
+    
+}
+
 @end

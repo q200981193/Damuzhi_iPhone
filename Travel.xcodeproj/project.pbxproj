@@ -167,6 +167,7 @@
 		CA238FEA14FF587B00114175 /* image4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE514FF587B00114175 /* image4.jpg */; };
 		CA238FEB14FF587B00114175 /* image5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE614FF587B00114175 /* image5.jpg */; };
 		CA238FF314FF6A6C00114175 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FF214FF6A6C00114175 /* UserService.m */; };
+		CA42160B15219CE100FAA008 /* PlaceStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = CA42160A15219CE100FAA008 /* PlaceStorage.m */; };
 		CA45601214F66EDD00DA085D /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */; };
 		CA45601314F66EDD00DA085D /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7A14F66EDD00DA085D /* ASIDataCompressor.m */; };
 		CA45601414F66EDD00DA085D /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = CA455E7C14F66EDD00DA085D /* ASIDataDecompressor.m */; };
@@ -607,6 +608,8 @@
 		CA238FE614FF587B00114175 /* image5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image5.jpg; sourceTree = "<group>"; };
 		CA238FF114FF6A6C00114175 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
 		CA238FF214FF6A6C00114175 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
+		CA42160915219CE100FAA008 /* PlaceStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceStorage.h; sourceTree = "<group>"; };
+		CA42160A15219CE100FAA008 /* PlaceStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceStorage.m; sourceTree = "<group>"; };
 		CA455E7614F66EDD00DA085D /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		CA455E7714F66EDD00DA085D /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		CA455E7814F66EDD00DA085D /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -1345,6 +1348,8 @@
 				CA238FAC14FCDB0700114175 /* CommonPlace.m */,
 				CA238FAE14FCDB1500114175 /* PlaceManager.h */,
 				CA238FAF14FCDB1500114175 /* PlaceManager.m */,
+				CA42160915219CE100FAA008 /* PlaceStorage.h */,
+				CA42160A15219CE100FAA008 /* PlaceStorage.m */,
 			);
 			path = Place;
 			sourceTree = "<group>";
@@ -2962,6 +2967,7 @@
 				A48E87A6151C5FC0007954D3 /* LocalCity.m in Sources */,
 				A48E87A9151C6A3D007954D3 /* LocalCityManager.m in Sources */,
 				A3DED49E152044040076E5CD /* PlaceCell.m in Sources */,
+				CA42160B15219CE100FAA008 /* PlaceStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

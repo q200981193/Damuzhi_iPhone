@@ -15,6 +15,8 @@
 #import "AppManager.h"
 #import "TravelNetworkConstants.h"
 #import "AppUtils.h"
+#import "UserManager.h"
+#import "JSON.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -194,15 +196,22 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 }
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
-                      userId:(NSString *)userId
                        place:(Place*)place
 {
-    // TODO send request to server, and save data locally
+    NSString* userId = [[UserManager defaultManager] userId];    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]  longitude:[NSString stringWithFormat:@"%f",place.longitude] latitude:[NSString stringWithFormat:@"%f",place.latitude]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"<addPlaceIntoFavorite> return:%@",output.textData);
+            NSLog(@"<addPlaceIntoFavorite> return:%@",output.textData);       
+            
+            
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            if ([jsonDict objectForKey:@"resultCode"]){
+                
+            }
+            
+            
         });
     }); 
     

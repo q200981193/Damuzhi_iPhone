@@ -13,4 +13,6 @@
 
 + (UserService*)defaultService;
 
+- (void)autoRegisterUser;
+
 @end
