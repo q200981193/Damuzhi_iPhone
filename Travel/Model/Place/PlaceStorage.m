@@ -8,13 +8,22 @@
 
 #import "PlaceStorage.h"
 #import "Place.pb.h"
+#import "LogUtil.h"
+
+#define FAVORITE_PLACE_FILE  @"favorite_place.dat"
+#define HISTORY_PLACE_FILE   @"history_place.dat"
+
+static PlaceStorage* _favoriteManager = nil;
+static PlaceStorage* _historyManager = nil;
 
 @implementation PlaceStorage
 
+@synthesize fileName = _fileName;
 @synthesize placeList = _placeList;
 
 - (void)dealloc
 {
+    [_fileName release];
     [_placeList release];
     [super dealloc];
 }
@@ -22,9 +31,27 @@
 - (id)initWithFileName:(NSString*)fileName
 {
     self = [super init];
+    if (self) {
+        self.fileName = fileName;
+    }
     return self;
 }
 
++ (PlaceStorage*)favoriteManager
+{
+    if (_favoriteManager == nil) {
+        _favoriteManager = [[PlaceStorage alloc] initWithFileName:FAVORITE_PLACE_FILE];
+    }
+    return _favoriteManager;
+}
+
++ (PlaceStorage*)historyManager
+{
+    if (_historyManager == nil) {
+        _historyManager = [[PlaceStorage alloc] initWithFileName:HISTORY_PLACE_FILE];
+    }
+    return _historyManager;
+}
 
 - (NSArray*)allPlaces
 {
@@ -33,7 +60,7 @@
 
 - (NSArray*)loadPlaceList
 {
-    NSData* data = [NSData dataWithContentsOfFile:@""];
+    NSData* data = [NSData dataWithContentsOfFile:_fileName];
     self.placeList = [PlaceList parseFromData:data];
     return [_placeList listList];
 }
@@ -51,7 +78,9 @@
     PlaceList* newPlaceList = [builder build];
 
     // save to files
-    [[newPlaceList data] writeToFile:@"" atomically:YES];    
+    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:_fileName];
+    PPDebug(@"<loadPlaceList> filePath is :%@",filePath);
+    [[newPlaceList data] writeToFile:filePath  atomically:YES];    
     [builder release];
     
     // update current list data

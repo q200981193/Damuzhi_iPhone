@@ -13,6 +13,6 @@
 
 + (UserService*)defaultService;
 
-- (void)autoRegisterUser;
+- (void)autoRegisterUser:(NSString*)deviceToken;
 
 @end

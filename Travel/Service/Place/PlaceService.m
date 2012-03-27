@@ -17,6 +17,7 @@
 #import "AppUtils.h"
 #import "UserManager.h"
 #import "JSON.h"
+#import "PlaceStorage.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -203,14 +204,24 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]  longitude:[NSString stringWithFormat:@"%f",place.longitude] latitude:[NSString stringWithFormat:@"%f",place.latitude]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"<addPlaceIntoFavorite> return:%@",output.textData);       
             
-            
-            NSDictionary* jsonDict = [output.textData JSONValue];
-            if ([jsonDict objectForKey:@"resultCode"]){
-                
+            if (output.textData != nil) {
+                NSDictionary* jsonDict = [output.textData JSONValue];
+                NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+                if (0 == result.intValue){
+                    //NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+                }else {
+                    PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
+                }
+            }else {
+                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild");
             }
             
+            [[PlaceStorage favoriteManager] addPlace:place];
+            
+            //if (viewController && [viewController respondsToSelector:@selector()]) {
+            //    [viewController ];
+            //}
             
         });
     }); 

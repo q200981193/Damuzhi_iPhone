@@ -13,10 +13,11 @@
 
 @interface PlaceStorage : NSObject
 
+@property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) PlaceList* placeList;
 
 + (PlaceStorage*)favoriteManager;
-//+ (PlaceStorage*)historyManager;
++ (PlaceStorage*)historyManager;
 
 - (id)initWithFileName:(NSString*)fileName;
 - (NSArray*)loadPlaceList;

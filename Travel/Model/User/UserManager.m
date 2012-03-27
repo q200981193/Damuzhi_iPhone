@@ -8,6 +8,8 @@
 
 #import "UserManager.h"
 
+#define KEY_USER_ID   @"KEY_USER_ID"
+
 @implementation UserManager
 
 static UserManager* _defaultUserManager = nil;
@@ -22,11 +24,13 @@ static UserManager* _defaultUserManager = nil;
 
 - (NSString*)userId
 {
-    return nil;
+    return [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_ID];
 }
 
 - (void)saveUserId:(NSString*)userId
 {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:userId forKey:KEY_USER_ID];
     
 }
 

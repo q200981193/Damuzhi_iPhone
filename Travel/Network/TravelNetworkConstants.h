@@ -44,6 +44,8 @@
 #define PARA_TRAVEL_LONGITUDE       @"longitude"
 #define PARA_TRAVEL_LATITUDE        @"latitude"
 
+#define PARA_TRAVEL_PLACE_FAVORITE_COUNT  @"placeFavoriteCount"
+
 // define query object type
 #define OBJECT_TYPE_ALL_PLACE       1
 #define OBJECT_TYPE_SPOT            21
