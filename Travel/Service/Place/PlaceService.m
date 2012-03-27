@@ -205,28 +205,22 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            if (output.textData != nil) {
-                NSDictionary* jsonDict = [output.textData JSONValue];
-                NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
-                if (0 == result.intValue){
-                    //NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
-                }else {
-                    PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
-                }
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+            if (0 == result.intValue){
+                    //[[PlaceStorage favoriteManager] addPlace:place];
             }else {
-                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild");
+                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
             }
-            
             [[PlaceStorage favoriteManager] addPlace:place];
             
-            //if (viewController && [viewController respondsToSelector:@selector()]) {
-            //    [viewController ];
-            //}
+            if ([viewController respondsToSelector:@selector(finishAddFavourite:count:)]){
+                [viewController finishAddFavourite:result count:placeFavoriteCount.intValue];
+            }
             
         });
     }); 
-    
-    
 }
 
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
@@ -243,8 +237,14 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 }
 
 - (BOOL)isPlaceInFavorite:(int)placeId
-{    
-    return rand() % 2 == 0;
+{ 
+    NSArray *favoriteList = [[PlaceStorage favoriteManager] loadPlaceList];
+    for (Place *place in favoriteList) {
+        if (place.placeId == placeId) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

@@ -18,6 +18,7 @@
 #import "CityOverviewManager.h"
 #import "AppUtils.h"
 #import "CommonPlace.h"
+#import "PlaceService.h"
 
 @implementation PlaceCell
 @synthesize nameLabel;
@@ -168,7 +169,10 @@
     self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                 subCategoryId:[place subCategoryId]];
     
-    [self.favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
+    if ([[PlaceService defaultService] isPlaceInFavorite:place.placeId]) {
+        [self.favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
+    }
+    
     
     [self setRankImage:[place rank]];
     

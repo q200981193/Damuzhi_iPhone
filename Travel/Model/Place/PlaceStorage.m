@@ -60,7 +60,7 @@ static PlaceStorage* _historyManager = nil;
 
 - (NSArray*)loadPlaceList
 {
-    NSData* data = [NSData dataWithContentsOfFile:_fileName];
+    NSData* data = [NSData dataWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:_fileName]];
     self.placeList = [PlaceList parseFromData:data];
     return [_placeList listList];
 }
@@ -80,7 +80,9 @@ static PlaceStorage* _historyManager = nil;
     // save to files
     NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:_fileName];
     PPDebug(@"<loadPlaceList> filePath is :%@",filePath);
-    [[newPlaceList data] writeToFile:filePath  atomically:YES];    
+    if (![[newPlaceList data] writeToFile:filePath  atomically:YES]) {
+        PPDebug(@"<loadPlaceList> wirteToFile error");
+    } 
     [builder release];
     
     // update current list data

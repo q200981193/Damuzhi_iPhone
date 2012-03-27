@@ -17,6 +17,7 @@
 #import "AppUtils.h"
 #import "AppManager.h"
 #import "PlaceService.h"
+#import "LogUtil.h"
 
 @implementation CommonPlaceDetailController
 @synthesize helpButton;
@@ -151,6 +152,16 @@
 {
     PlaceService* placeService = [PlaceService defaultService];
     [placeService addPlaceIntoFavorite:self place:self.place];
+}
+
+- (void)finishAddFavourite:(NSNumber*)resultCode count:(int)count
+{
+    if (resultCode != nil) {
+        PPDebug(@"add Favourite successfully");
+    }
+    else {
+        PPDebug(@"add Favourite failed");
+    }
 }
 
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;

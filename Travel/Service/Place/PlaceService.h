@@ -18,6 +18,8 @@
 @optional
 - (void)findRequestDone:(int)result dataList:(NSArray*)dataList;
 - (void)filterAndSort;
+
+- (void)finishAddFavourite:(NSNumber*)resultCode count:(int)count;
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
 
 @end
