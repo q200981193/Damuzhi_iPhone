@@ -207,6 +207,7 @@
              selectedServiceIdList:(NSArray*)selectedServiceIdList
              selectedCuisineIdList:(NSArray*)selectedCuisineIdList
                             sortBy:(NSNumber*)selectedSortId
+                   currentLocation:(CLLocation*)currentLocation
 {
     //return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId];
     
