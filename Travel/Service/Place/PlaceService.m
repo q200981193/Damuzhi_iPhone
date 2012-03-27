@@ -193,10 +193,20 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
 }
 
-- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
+- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
+                      userId:(NSString *)userId
                        place:(Place*)place
 {
     // TODO send request to server, and save data locally
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+        CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]  longitude:[NSString stringWithFormat:@"%f",place.longitude] latitude:[NSString stringWithFormat:@"%f",place.latitude]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"<addPlaceIntoFavorite> return:%@",output.textData);
+        });
+    }); 
+    
+    
 }
 
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
