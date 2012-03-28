@@ -128,7 +128,6 @@ static AppService* _defaultAppService = nil;
                 //save data to app file
                 //[[[travelResponse appInfo] data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
                 [output.responseData writeToFile:[AppUtils getAppFilePath] atomically:YES];
-                
             }
             
             @catch (NSException *exception){

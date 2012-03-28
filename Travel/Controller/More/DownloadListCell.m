@@ -116,6 +116,7 @@
 
 - (IBAction)clickCancel:(id)sender {
     [[AppService defaultService] cancelDownloadCity:_city];
+    self.pauseDownloadBtn.selected = NO;
 }
 
 - (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress

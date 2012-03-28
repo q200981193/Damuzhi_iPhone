@@ -57,9 +57,6 @@
         
         [self.updateButton addSubview:view];
     }
-    
-    
-    
 }
 
 

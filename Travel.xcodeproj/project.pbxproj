@@ -967,7 +967,7 @@
 		CA585F9414F7377E00471880 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		CA585F9514F7377E00471880 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		CA585F9614F7377E00471880 /* MainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainController.xib; sourceTree = "<group>"; };
-		CA585F9E14F73AF700471880 /* SpotDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotDetailController.h; sourceTree = "<group>"; };
+		CA585F9E14F73AF700471880 /* SpotDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpotDetailController.h; path = Place/SpotDetailController.h; sourceTree = "<group>"; };
 		CA585F9F14F73AF700471880 /* SpotDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailController.m; sourceTree = "<group>"; };
 		CA585FA014F73AF700471880 /* SpotDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotDetailController.xib; sourceTree = "<group>"; };
 		CA585FA414F73B5800471880 /* CommonPlaceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlaceListController.h; sourceTree = "<group>"; };
@@ -2427,6 +2427,7 @@
 				CA585F8D14F7376300471880 /* Info */,
 				CA585F8F14F7376300471880 /* Place */,
 				CA585F9414F7377E00471880 /* MainController.h */,
+				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
 				CA585F9514F7377E00471880 /* MainController.m */,
 				CA585F9614F7377E00471880 /* MainController.xib */,
 			);
@@ -2448,7 +2449,6 @@
 			children = (
 				CA238FC714FE56F900114175 /* PlaceListFilter */,
 				CA585FA314F73B4500471880 /* Common */,
-				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
 				CA585F9F14F73AF700471880 /* SpotDetailController.m */,
 				CA585FA014F73AF700471880 /* SpotDetailController.xib */,
 				A3DED49B152044040076E5CD /* PlaceCell.h */,
