@@ -48,15 +48,16 @@
     return self;
 }
 
-- (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace
+- (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace superController:(CommonPlaceDetailController *)controller
 {
     if ([onePlace categoryId] == PLACE_TYPE_SPOT){
-        return [[[SpotDetailViewHandler alloc] init] autorelease];
+        return [[[SpotDetailViewHandler alloc] initWith:controller] autorelease];
     }
     else if ([onePlace categoryId] == PLACE_TYPE_HOTEL)
     {
-        return [[[HotelDetailViewHandler alloc] init] autorelease];
+        return [[[HotelDetailViewHandler alloc] initWith:controller] autorelease];
     }
+    
     return nil;
 }
 
@@ -64,7 +65,7 @@
 {
     self = [super init];
     self.place = onePlace;    
-    self.handler = [self createPlaceHandler:onePlace];     
+    self.handler = [self createPlaceHandler:onePlace superController:self];     
     return self;
 }
 
@@ -207,7 +208,7 @@
     
 }
 
-+ (UILabel*)createTitleView:(NSString*)title
+- (UILabel*)createTitleView:(NSString*)title
 {
     UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRECT_TITLE]autorelease];
@@ -218,7 +219,7 @@
     return label;
 }
 
-+ (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height
+- (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height
 {
     UIFont *font = [UIFont systemFontOfSize:12];
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, height)] autorelease];
@@ -231,7 +232,7 @@
     return label;
 }
 
-+ (UIView*)createMiddleLineView:(CGFloat)y
+- (UIView*)createMiddleLineView:(CGFloat)y
 {
     
     UIView *middleLineView = [[[UIView alloc]initWithFrame:CGRectMake(0, y, 320, MIDDLE_LINE_HEIGHT)] autorelease];
@@ -239,7 +240,7 @@
     return middleLineView;
 }
 
--(void)addSegmentViewTo:(NSString*)titleString description:(NSString*)descriptionString
+-(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
     UIFont *font = [UIFont systemFontOfSize:12];
     CGSize withinSize = CGSizeMake(300, 100000);
@@ -253,7 +254,7 @@
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
     segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
     
-    UILabel *title = [CommonPlaceDetailController createTitleView:titleString];
+    UILabel *title = [self createTitleView:titleString];
     [segmentView addSubview:title];
     
     //    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(5, 24, 310, 1)];
@@ -261,11 +262,11 @@
     //    [segmentView addSubview:lineView];
     //    [lineView release];
     
-    UILabel *introductionDescription = [CommonPlaceDetailController createDescriptionView:description height:size.height];    
+    UILabel *introductionDescription = [self createDescriptionView:description height:size.height];    
     [segmentView addSubview:introductionDescription];
     [dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [CommonPlaceDetailController createMiddleLineView: self.detailHeight + segmentView.frame.size.height];
+    UIView *middleLineView = [self createMiddleLineView: self.detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
     
     self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
@@ -392,14 +393,14 @@
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     [imageHolderView addSubview:slideImageView];  
     
-    //    // add image array
-    //    NSArray* imagePathArray = [self.place imagesList];
-    //    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
-    //    for (NSString* imagePath in imagePathArray){
-    //        NSLog(@"%@", imagePath);
-    //        [images addObject:[UIImage imageNamed:imagePath]];
-    //    }
-    //    [slideImageView setImages:images];
+//    // add image array
+//    NSArray* imagePathArray = [self.place imagesList];
+//    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
+//    for (NSString* imagePath in imagePathArray){
+//        NSLog(@"%@", imagePath);
+//        [images addObject:[UIImage imageNamed:imagePath]];
+//    }
+//   [slideImageView setImages:images];
 
 }
 
@@ -422,8 +423,10 @@
            
     [self addPaddingVew];
     
+    self.detailHeight = 3;
+    
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
-    detailHeight = [self.handler detailHeight];
+    
     dataScrollView.backgroundColor = [UIColor whiteColor];
     [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 266)];
 

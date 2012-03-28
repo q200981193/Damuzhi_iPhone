@@ -11,6 +11,8 @@
 #import "PlaceService.h"
 
 @class Place;
+@class CommonPlaceDetailController;
+
 #define TITLE_VIEW_HEIGHT 35
 #define MIDDLE_LINE_HEIGHT 2
 #define CGRECT_TITLE CGRectMake(10, 3, 100, 20)
@@ -21,8 +23,10 @@
 
 @protocol CommonPlaceDetailDataSourceProtocol <NSObject>
 
-@property (assign, nonatomic) float detailHeight;
+@property (retain, nonatomic) CommonPlaceDetailController* commonController;
+
 - (void)addDetailViews:(UIView*)superView WithPlace:(Place*)place;
+- (id)initWith:(CommonPlaceDetailController*)controller;
 
 @end
 
@@ -69,7 +73,5 @@
 - (IBAction)clickHelpButton:(id)sender;
 - (id)initWithPlace:(Place*)onePlace;
 
-+ (UILabel*)createTitleView:(NSString*)title;
-+ (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height;
-+ (UIView*)createMiddleLineView:(CGFloat)y;
+-(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 @end
