@@ -24,5 +24,6 @@
 - (NSArray*)allPlaces;
 - (void)addPlace:(Place*)place;
 - (void)deletePlace:(Place*)place;
+- (BOOL)isPlaceInFavorite:(int)placeId;
 
 @end

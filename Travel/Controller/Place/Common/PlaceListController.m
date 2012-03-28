@@ -16,6 +16,8 @@
 
 @interface PlaceListController () 
 
+@property (assign, nonatomic) BOOL canDelete;
+
 - (void)updateViewByMode;
 
 @end
@@ -26,6 +28,8 @@
 @synthesize mapHolderView = _mapHolderView;
 @synthesize superController = _superController;
 @synthesize mapViewController = _mapViewController;
+@synthesize canDelete;
+@synthesize deletePlaceDelegate;
 
 - (void)dealloc
 {
@@ -101,6 +105,16 @@
     [self updateViewByMode];
     
     [self initLocationManager] ;
+    
+    
+}
+
+- (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
+{
+    self.canDelete = isCan;
+    [self.dataTableView setEditing:isCan];
+    self.deletePlaceDelegate = delegateValue;
+    [self.dataTableView reloadData];
 }
 
 //- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -214,13 +228,28 @@
 		cell = [placeClass createCell:self];
 	}
 	
-    CommonPlaceCell* placeCell = (CommonPlaceCell*)cell;
+    CommonPlaceCell* commonPlaceCell = (CommonPlaceCell*)cell;
     
     //[placeCell setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]]];
     UIImageView *view = [[UIImageView alloc] init];
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
-    [placeCell setBackgroundView:view];
-    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation];
+    [commonPlaceCell setBackgroundView:view];
+    [commonPlaceCell setCellDataByPlace:place currentLocation:self.currentLocation ];
+    
+    if (canDelete) {
+        PlaceCell *placeCell = (PlaceCell*)cell;
+        placeCell.priceLable.hidden = YES;
+        placeCell.favoritesView.hidden = YES;
+        placeCell.areaLable.hidden= YES;
+        placeCell.distanceLable.hidden = YES;
+    }else {
+        PlaceCell *placeCell = (PlaceCell*)cell;
+        placeCell.priceLable.hidden = NO;
+        placeCell.favoritesView.hidden = NO;
+        placeCell.areaLable.hidden= NO;
+        placeCell.distanceLable.hidden = NO;
+    }
+    
 	return cell;	
 }
 
@@ -233,6 +262,19 @@
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
+        [deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
+    }
+    
+    NSMutableArray *mutableDataList = [NSMutableArray arrayWithArray:dataList];
+    [mutableDataList removeObjectAtIndex:indexPath.row];
+    self.dataList = mutableDataList;
+    
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)updateViewByMode

@@ -9,9 +9,11 @@
 #import "PlaceStorage.h"
 #import "Place.pb.h"
 #import "LogUtil.h"
+#import "FileUtil.h"
 
-#define FAVORITE_PLACE_FILE  @"favorite_place.dat"
-#define HISTORY_PLACE_FILE   @"history_place.dat"
+#define FAVORITE_PLACE_FILE         @"favorite_place.dat"
+#define HISTORY_PLACE_FILE          @"history_place.dat"
+#define PLACE_STORAGE_DEFAULT_DIR   @"save_place_data"
 
 static PlaceStorage* _favoriteManager = nil;
 static PlaceStorage* _historyManager = nil;
@@ -32,6 +34,7 @@ static PlaceStorage* _historyManager = nil;
 {
     self = [super init];
     if (self) {
+        [FileUtil createDir:[FileUtil getFileFullPath:PLACE_STORAGE_DEFAULT_DIR]];
         self.fileName = fileName;
     }
     return self;
@@ -53,35 +56,39 @@ static PlaceStorage* _historyManager = nil;
     return _historyManager;
 }
 
-- (NSArray*)allPlaces
+- (NSString*)getFilePath
 {
-    return [self.placeList listList];
+    NSString* fileWithDir = [NSString stringWithFormat:@"%@/%@", PLACE_STORAGE_DEFAULT_DIR, _fileName];
+    NSString *filePath = [FileUtil getFileFullPath:fileWithDir];
+    return filePath;
 }
 
 - (NSArray*)loadPlaceList
 {
-    NSData* data = [NSData dataWithContentsOfFile:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:_fileName]];
+    NSData* data = [NSData dataWithContentsOfFile:[self getFilePath]];
     self.placeList = [PlaceList parseFromData:data];
     return [_placeList listList];
 }
 
-- (void)addPlace:(Place*)place
-{    
-    // generate new list by adding place into existing place list
-    NSMutableArray* newList = [NSMutableArray arrayWithArray:[self allPlaces]];
-    [newList addObject:place];    
+- (NSArray*)allPlaces
+{
+    if ([self.placeList listList] == nil) {
+        [self loadPlaceList];
+    }
+    return [self.placeList listList];
+}
 
-    // build data again
+- (void)writeToFileWithList:(NSArray*)newList
+{
     PlaceList_Builder* builder = [[PlaceList_Builder alloc] init];    
     [builder setCityId:0];    
     [builder addAllList:newList];
     PlaceList* newPlaceList = [builder build];
-
-    // save to files
-    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:_fileName];
-    PPDebug(@"<loadPlaceList> filePath is :%@",filePath);
-    if (![[newPlaceList data] writeToFile:filePath  atomically:YES]) {
-        PPDebug(@"<loadPlaceList> wirteToFile error");
+    
+    // save to files        
+    PPDebug(@"<writeToFileWithList> filePath is :%@",[self getFilePath]);
+    if (![[newPlaceList data] writeToFile:[self getFilePath]  atomically:YES]) {
+        PPDebug(@"<writeToFileWithList> wirteToFile error");
     } 
     [builder release];
     
@@ -89,10 +96,44 @@ static PlaceStorage* _historyManager = nil;
     self.placeList = newPlaceList;
 }
 
-- (void)deletePlace:(Place*)place
+- (void)addPlace:(Place*)place
 {
+    [self deletePlace:place];
     
+    // generate new list by adding place into existing place list
+    NSMutableArray* newList = [NSMutableArray arrayWithArray:[self allPlaces]];
+    [newList addObject:place];    
+    
+    [self writeToFileWithList:newList];
 }
 
+- (void)deletePlace:(Place*)place
+{
+    BOOL found = NO;
+    NSMutableArray* newList = [NSMutableArray arrayWithArray:[self allPlaces]];
+    for (Place *placeTemp in newList) {
+        if (placeTemp.placeId == place.placeId) {
+            [newList removeObject:placeTemp];
+            found = YES;
+            break;
+        }
+    }
+    
+    if (found) {
+        [self writeToFileWithList:newList];
+    }
+}
+
+- (BOOL)isPlaceInFavorite:(int)placeId
+{
+    [self loadPlaceList];
+    NSArray *arrary = [self allPlaces];
+    for (Place *place in arrary) {
+        if (place.placeId == placeId) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end

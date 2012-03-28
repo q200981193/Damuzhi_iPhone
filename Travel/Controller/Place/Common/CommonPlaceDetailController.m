@@ -164,6 +164,10 @@
 {
     if (resultCode != nil) {
         PPDebug(@"add Favourite successfully");
+        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"(已有%d人收藏)"),count];
+        
+        //add sucess view
+        
     }
     else {
         PPDebug(@"add Favourite failed");

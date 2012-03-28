@@ -15,13 +15,17 @@
 #define LANGUAGE_ENGLISH                3
 
 // URL
-#define URL_TRAVEL_REGISTER_USER    @"http://damuzhi.com/service/registerUser?"
+//#define URL_TRAVEL_REGISTER_USER    @"http://damuzhi.com/service/registerUser?"
+#define URL_TRAVEL_REGISTER_USER    @"http://59.34.17.68:8012/service/RegisterUser.aspx?"
+
+
 //query place list
 #define URL_TRAVEL_QUERY_LIST       @"http://59.34.17.68:8012/service/queryList.aspx?"
 #define URL_TRAVEL_QUERY_OBJECT     @"http://59.34.17.68:8012/service/queryObject.aspx?"
 
 //add favorite
-#define URL_TRAVEL_ADD_FAVORITE     @"http://damuzhi.com/service/addFavorite?"
+//#define URL_TRAVEL_ADD_FAVORITE     @"http://damuzhi.com/service/addFavorite?"
+#define URL_TRAVEL_ADD_FAVORITE     @"http://59.34.17.68:8012/service/addFavorite.aspx?"
 
 // Output Format
 #define FORMAT_TRAVEL_JSON          1

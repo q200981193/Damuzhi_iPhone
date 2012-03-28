@@ -19,6 +19,7 @@
 #import "AppUtils.h"
 #import "CommonPlace.h"
 #import "PlaceService.h"
+#import "PlaceStorage.h"
 
 @implementation PlaceCell
 @synthesize nameLabel;
@@ -169,7 +170,7 @@
     self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                 subCategoryId:[place subCategoryId]];
     
-    if ([[PlaceService defaultService] isPlaceInFavorite:place.placeId]) {
+    if ([[PlaceStorage favoriteManager] isPlaceInFavorite:place.placeId]) {
         [self.favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
     }
     
