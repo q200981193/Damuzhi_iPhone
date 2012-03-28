@@ -15,6 +15,9 @@
 #import "AppManager.h"
 #import "TravelNetworkConstants.h"
 #import "AppUtils.h"
+#import "UserManager.h"
+#import "JSON.h"
+#import "PlaceStorage.h"
 
 #define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
 
@@ -193,10 +196,31 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
 }
 
-- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
+- (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
                        place:(Place*)place
 {
-    // TODO send request to server, and save data locally
+    NSString* userId = [[UserManager defaultManager] userId];    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+        CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]  longitude:[NSString stringWithFormat:@"%f",place.longitude] latitude:[NSString stringWithFormat:@"%f",place.latitude]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+            if (0 == result.intValue){
+                    //[[PlaceStorage favoriteManager] addPlace:place];
+            }else {
+                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
+            }
+            [[PlaceStorage favoriteManager] addPlace:place];
+            
+            if ([viewController respondsToSelector:@selector(finishAddFavourite:count:)]){
+                [viewController finishAddFavourite:result count:placeFavoriteCount.intValue];
+            }
+            
+        });
+    }); 
 }
 
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
@@ -213,8 +237,14 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 }
 
 - (BOOL)isPlaceInFavorite:(int)placeId
-{    
-    return rand() % 2 == 0;
+{ 
+    NSArray *favoriteList = [[PlaceStorage favoriteManager] loadPlaceList];
+    for (Place *place in favoriteList) {
+        if (place.placeId == placeId) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end

@@ -20,6 +20,9 @@
 #define URL_TRAVEL_QUERY_LIST       @"http://59.34.17.68:8012/service/queryList.aspx?"
 #define URL_TRAVEL_QUERY_OBJECT     @"http://59.34.17.68:8012/service/queryObject.aspx?"
 
+//add favorite
+#define URL_TRAVEL_ADD_FAVORITE     @"http://damuzhi.com/service/addFavorite?"
+
 // Output Format
 #define FORMAT_TRAVEL_JSON          1
 #define FORMAT_TRAVEL_PB            2   // protocol buffer
@@ -36,6 +39,12 @@
 #define PARA_TRAVEL_CITY_ID         @"cityId"
 #define PARA_TRAVEL_ID              @"id"
 #define PARA_TRAVEL_LANG            @"lang"
+
+#define PARA_TRAVEL_PLACEID         @"placeId"
+#define PARA_TRAVEL_LONGITUDE       @"longitude"
+#define PARA_TRAVEL_LATITUDE        @"latitude"
+
+#define PARA_TRAVEL_PLACE_FAVORITE_COUNT  @"placeFavoriteCount"
 
 // define query object type
 #define OBJECT_TYPE_ALL_PLACE       1

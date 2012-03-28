@@ -24,8 +24,14 @@ enum{
 };
 
 enum{
-    SELECT_ALL_PRICE = 0,
+    PRICE_ALL = 1,
+    PRICE_BELOW_500 = 2,
+    PRICE_500_1000 = 3,
+    PRICE_1000_1500 = 4,
+    PRICE_MORE_THAN_1500 = 5
 };
+
+#define ALL_AREA  (-1)
 
 @interface CommonPlace : NSObject
 

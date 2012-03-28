@@ -12,6 +12,7 @@
 #import "UINavigationBarExt.h"
 #import "DeviceDetection.h"
 #import "AppService.h"
+#import "UserService.h"
 
 @implementation AppDelegate
 
@@ -46,6 +47,8 @@
     // update app data from server
     [[AppService defaultService] updateAppData];
     
+    //register user
+    [[UserService defaultService] autoRegisterUser:[self getDeviceToken]];
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.

@@ -354,4 +354,25 @@ static AppManager* _defaultAppManager = nil;
     return array;
 }
 
+- (NSArray*)getHotelPriceList;
+{
+    NSMutableArray *hotelPriceList = [[[NSMutableArray alloc] init] autorelease];    
+    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") 
+                                                           forKey:[NSNumber numberWithInt:PRICE_ALL]]];
+    
+    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"500以下") 
+                                                          forKey:[NSNumber numberWithInt:PRICE_BELOW_500]]];
+    
+    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"500-1000") 
+                                                          forKey:[NSNumber numberWithInt:PRICE_500_1000]]];
+    
+    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"1000-1500") 
+                                                          forKey:[NSNumber numberWithInt:PRICE_1000_1500]]];
+    
+    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"1500以上") 
+                                                          forKey:[NSNumber numberWithInt:PRICE_MORE_THAN_1500]]];
+    
+    return hotelPriceList;
+}
+
 @end
