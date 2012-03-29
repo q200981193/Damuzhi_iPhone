@@ -49,9 +49,6 @@ static PlaceManager *_placeDefaultManager;
         PlaceList *places = [PlaceList parseFromData:placeData];
         //PPDebug(@"%d places read", [[places listList] count]);
         [placeList addObjectsFromArray:[places listList]];
-//        Place* place = [Place parseFromData:placeData];
-//        [placeList addObject:place];
-//        PPDebug(@"read place = %@", [place name]);
     }
     
     return placeList;
@@ -69,45 +66,51 @@ static PlaceManager *_placeDefaultManager;
     self.placeList = [self readCityPlaceData:newCityId];
 }
 
-- (NSArray*)findAllSpots
+- (NSArray*)findPlacesByCategory:(int)categoryId
 {
-    NSMutableArray* spotList = [[[NSMutableArray alloc] init] autorelease];
+    if (categoryId == PLACE_TYPE_ALL) {
+        return _placeList;
+    }
     
+    NSMutableArray* placeList = [[[NSMutableArray alloc] init] autorelease];
     for (Place* place in _placeList){
-        if ([place categoryId] == PLACE_TYPE_SPOT){
-            [spotList addObject:place];
+        if ([place categoryId] == categoryId){
+            [placeList addObject:place];
         }
     }
-    
-    return spotList;
+
+    return placeList;
 }
 
-- (NSArray*)findAllHotels
-{
-    NSMutableArray* hotelList = [[[NSMutableArray alloc] init] autorelease];
-    
-    for (Place* place in _placeList){
-        if ([place categoryId] == PLACE_TYPE_HOTEL){
-            [hotelList addObject:place];
-        } 
-    }
-    
-    return hotelList;
-}
-
-- (NSArray*)findAllPlaces
-{
-    return _placeList;
-}
-
-//- (BOOL)hasLocalCityData:(int)cityId
+//- (NSArray*)findAllSpots
 //{
-//    BOOL hasData = NO;
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]]) {
-//        hasData = YES;
+//    NSMutableArray* spotList = [[[NSMutableArray alloc] init] autorelease];
+//    
+//    for (Place* place in _placeList){
+//        if ([place categoryId] == PLACE_TYPE_SPOT){
+//            [spotList addObject:place];
+//        }
 //    }
 //    
-//    return hasData;
+//    return spotList;
+//}
+//
+//- (NSArray*)findAllHotels
+//{
+//    NSMutableArray* hotelList = [[[NSMutableArray alloc] init] autorelease];
+//    
+//    for (Place* place in _placeList){
+//        if ([place categoryId] == PLACE_TYPE_HOTEL){
+//            [hotelList addObject:place];
+//        } 
+//    }
+//    
+//    return hotelList;
+//}
+//
+//- (NSArray*)findAllPlaces
+//{
+//    return _placeList;
 //}
 
 @end

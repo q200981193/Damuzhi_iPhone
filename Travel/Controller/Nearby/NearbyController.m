@@ -11,6 +11,7 @@
 #import "PlaceService.h"
 #import "PPViewController.h"
 #import "CommonPlace.h"
+#import "Place.pb.h"
 
 @implementation NearbyController
 @synthesize imageRedStartView;
@@ -23,8 +24,19 @@
 @synthesize placeListController;
 @synthesize placeListHolderView;
 @synthesize distanceView;
+@synthesize distance=_distance;
+@synthesize categoryId = _categoryId;
 
-@synthesize placeType = _placeType;
+
+#define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
+#define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
+#define POINT_OF_DISTANCE_5KM   CGPointMake(164, 18)
+#define POINT_OF_DISTANCE_10KM   CGPointMake(287, 18)
+
+#define DISTANCE_500M 500
+#define DISTANCE_1KM 1000
+#define DISTANCE_5KM 5000
+#define DISTANCE_10KM 10000
 
 - (void)dealloc
 {
@@ -58,12 +70,36 @@
 
 }
 
-#pragma mark - View lifecycle
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self startUpdatingLocation];
+    [super viewDidAppear:animated];
+}
 
-#define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
-#define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
-#define POINT_OF_DISTANCE_5KM   CGPointMake(164, 18)
-#define POINT_OF_DISTANCE_10KM   CGPointMake(287, 18)
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
+    [super viewDidDisappear:animated];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+	
+    // save to current location
+    self.currentLocation = newLocation;
+	//NSLog(@"Current location is %@, horizontalAccuracy=%f, timestamp=%@", [self.currentLocation description], [self.currentLocation horizontalAccuracy], [[currentLocation timestamp] description]);
+	
+	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
+	
+	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
+	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
+	
+    NSLog(@"currentLocation: latitude=%f, longitude=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+    
+    [self.placeListController.dataTableView reloadData];
+}
+
+#pragma mark - View lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,9 +123,12 @@
     [findRestaurantButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
     
     // Do any additional setup after loading the view from its nib.
+    self.distance = DISTANCE_500M;
+    self.categoryId = PLACE_TYPE_ALL;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];
     
-    self.placeType = PLACE_TYPE_ALL;
-    [[PlaceService defaultService] findAllPlaces:self];    
+//    [[PlaceService defaultService] findAllPlaces:self];  
+    [self initLocationManager] ;
 }
 
 - (void)viewDidUnload
@@ -113,9 +152,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
+{
+    NSMutableArray *placeList = [[NSMutableArray alloc] init];
+    for (Place *place in list) {
+        CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
+        CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+        [placeLocation release];
+        
+        if (distance <= self.distance) {
+            [placeList addObject:place];
+        }
+        
+        [placeList addObject:place];
+    }
+    
+    return nil;
+}
+
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
     if (self.placeListController == nil){
+        list = [self filterByDistance:list distance:self.distance];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView
                                                          superController:self];    
@@ -139,23 +197,35 @@
 
 - (IBAction)click500M:(id)sender {
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
+    self.distance = DISTANCE_500M;
 }
 
 - (IBAction)click1K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
-
+    self.distance = DISTANCE_1KM;
 }
 
 - (IBAction)click5K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
+    self.distance = DISTANCE_5KM;
 }
 
 - (IBAction)click10K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
+    self.distance = DISTANCE_10KM;
 }
 
+- (IBAction)clickSpotBtn:(id)sender {
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:PLACE_TYPE_SPOT];    
+}
 
+- (IBAction)clickHotelBtn:(id)sender {
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:PLACE_TYPE_HOTEL];    
+}
+- (IBAction)clickAllBtn:(id)sender {
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:PLACE_TYPE_ALL];    
+}
 @end
