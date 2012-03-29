@@ -11,8 +11,32 @@
 
 @implementation EntertainmentDetailViewHandler
 
+@synthesize commonController;
+
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
+    
+    [self.commonController addSegmentViewWith: NSLS(@"商家简介") description:[place introduction]];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"营业时间") description: [place openTime]];
+    
+    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[place avgPrice]];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"关键词评价") description:[place.keywordsList componentsJoinedByString:@" "]];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"玩乐贴士") description:[place tips]];
+    
+    
 }
+
+- (id)initWith:(CommonPlaceDetailController *)controller
+{
+    [super init];
+    self.commonController = controller;
+    return  self;
+}
+
 
 @end
