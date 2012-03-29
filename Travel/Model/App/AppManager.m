@@ -338,7 +338,7 @@ static AppManager* _defaultAppManager = nil;
 - (NSArray*)getSubCategoryList:(int)categoryId
 {
     NSMutableArray *subCategoryList = [[[NSMutableArray alloc] init] autorelease];    
-    [subCategoryList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:ALL_SUBCATEGORY]]];
+    [subCategoryList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if (placeMeta !=nil) {
@@ -355,7 +355,7 @@ static AppManager* _defaultAppManager = nil;
 {
     NSMutableArray *providedServiceList = [[[NSMutableArray alloc] init] autorelease];
     [providedServiceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
-                                                               forKey:[NSNumber numberWithInt:SERVICE_ALL]]];
+                                                               forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if (placeMeta !=nil) {
@@ -391,7 +391,7 @@ static AppManager* _defaultAppManager = nil;
 {
     NSMutableArray *hotelPriceList = [[[NSMutableArray alloc] init] autorelease];    
     [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") 
-                                                           forKey:[NSNumber numberWithInt:PRICE_ALL]]];
+                                                           forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
     [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"500以下") 
                                                           forKey:[NSNumber numberWithInt:PRICE_BELOW_500]]];

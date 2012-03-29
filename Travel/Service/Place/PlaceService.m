@@ -236,9 +236,9 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     }
 }
 
-- (BOOL)isPlaceInFavorite:(int)placeId
-{ 
-    return NO;
-}
+//- (BOOL)isPlaceInFavorite:(int)placeId
+//{ 
+//    return NO;
+//}
 
 @end

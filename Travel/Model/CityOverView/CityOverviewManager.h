@@ -36,5 +36,6 @@
 - (void)switchCity:(int)newCity;
 
 - (NSArray *)getWillSelectAreaList;
+- (NSArray *)getWillSelectPriceList;
 
 @end

@@ -143,11 +143,11 @@
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
 {
     if (self.placeListController == nil){
-        [self.selectedCategoryIdList addObject:[NSNumber numberWithInt:ALL_SUBCATEGORY]];
+        [self.selectedCategoryIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
-        [self.selectedPriceIdList addObject:[NSNumber numberWithInt:PRICE_ALL]];
-        [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_AREA]];
-        [self.selectedServiceIdList addObject:[NSNumber numberWithInt:SERVICE_ALL]];
+        [self.selectedPriceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedServiceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         list = [self filterAndSort:list];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView
@@ -235,11 +235,11 @@
     UIButton *button = (UIButton *)sender;
     NSString *title = button.titleLabel.text;
     
-    NSArray *hotelPriceList = [[AppManager defaultManager] getHotelPriceList];
+    //NSArray *hotelPriceList = [[AppManager defaultManager] getHotelPriceList];
+    NSArray *hotelPriceList = [[CityOverViewManager defaultManager] getWillSelectPriceList];
     SelectController* selectController = [SelectController createController:hotelPriceList
                                                                 selectedIds:self.selectedPriceIdList
                                                                multiOptions:YES];
-    NSLog(@"%@",[[_filterHandler getCategoryName] stringByAppendingString:@"价格"]);
     selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;

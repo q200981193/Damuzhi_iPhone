@@ -13,6 +13,7 @@
 #import "PlaceMapViewController.h"
 #import "LogUtil.h"
 #import "PlaceCell.h"
+#import "PlaceStorage.h"
 
 @interface PlaceListController () 
 
@@ -152,9 +153,11 @@
 
     [superView addSubview:controller.view];
     [controller setAndReloadPlaceList:list];    
-//    
+    
 //    for (Place *place in list) {
 //        PPDebug(@"<PlaceListController>");
+//        PPDebug(@"名称:%@",place.name);
+//        PPDebug(@"id:%d",place.placeId);
 //        PPDebug(@"最低价格:%@",place.price);
 //        PPDebug(@"区域id:%d",place.areaId);
 //        for (NSNumber *number in place.providedServiceIdList) {
@@ -225,22 +228,20 @@
 		cell = [placeClass createCell:self];
 	}
 	
-    CommonPlaceCell* commonPlaceCell = (CommonPlaceCell*)cell;
+    //CommonPlaceCell* commonPlaceCell = (CommonPlaceCell*)cell;
+    PlaceCell *placeCell = (PlaceCell*)cell;
     
-    //[placeCell setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]]];
     UIImageView *view = [[UIImageView alloc] init];
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
-    [commonPlaceCell setBackgroundView:view];
-    [commonPlaceCell setCellDataByPlace:place currentLocation:self.currentLocation ];
+    [placeCell setBackgroundView:view];
+    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation ];
     
     if (canDelete) {
-        PlaceCell *placeCell = (PlaceCell*)cell;
         placeCell.priceLable.hidden = YES;
         placeCell.favoritesView.hidden = YES;
         placeCell.areaLable.hidden= YES;
         placeCell.distanceLable.hidden = YES;
     }else {
-        PlaceCell *placeCell = (PlaceCell*)cell;
         placeCell.priceLable.hidden = NO;
         placeCell.favoritesView.hidden = NO;
         placeCell.areaLable.hidden= NO;
@@ -263,7 +264,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
+    if (deletePlaceDelegate && [deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
         [deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
     }
     
@@ -272,6 +273,16 @@
     self.dataList = mutableDataList;
     
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (canDelete) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    else {
+        return UITableViewCellEditingStyleNone;
+    }
 }
 
 - (void)updateViewByMode

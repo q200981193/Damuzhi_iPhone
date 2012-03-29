@@ -224,28 +224,38 @@
     for (NSNumber *selectedPriceId in selectedPriceList)
     {
         PPDebug(@"selectedPriceList:%d",[selectedPriceId intValue]);
-        if ([selectedPriceId intValue] == PRICE_ALL) {
+        if ([selectedPriceId intValue] == ALL_CATEGORY) {
             return placeList;
         }
     }
-
+    
     for (Place *place in placeList) {
-        if ([place.price intValue] < 500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_BELOW_500]) {
-            [array addObject:place];
-        }
-        
-        else if ([place.price intValue] >= 500 && [place.price intValue] < 1000 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_500_1000]){
-            [array addObject:place];
-        }
-        
-        else if ([place.price intValue] >= 1000 && [place.price intValue] < 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_1000_1500]){
-            [array addObject:place];
-        }
-        
-        else if ([place.price intValue] >= 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_MORE_THAN_1500]){
-            [array addObject:place];
+        PPDebug(@"place priceRank:%d",place.priceRank);
+        for (NSNumber *number in selectedPriceList) {
+            if (place.priceRank == number.intValue) {
+                [array addObject:place];
+                break;
+            }
         }
     }
+
+//    for (Place *place in placeList) {
+//        if ([place.price intValue] < 500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_BELOW_500]) {
+//            [array addObject:place];
+//        }
+//        
+//        else if ([place.price intValue] >= 500 && [place.price intValue] < 1000 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_500_1000]){
+//            [array addObject:place];
+//        }
+//        
+//        else if ([place.price intValue] >= 1000 && [place.price intValue] < 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_1000_1500]){
+//            [array addObject:place];
+//        }
+//        
+//        else if ([place.price intValue] >= 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_MORE_THAN_1500]){
+//            [array addObject:place];
+//        }
+//    }
     
     return array;
 }
@@ -254,7 +264,7 @@
 {
     for (NSNumber *selectedAreaId in selectedAreaIdList)
     {
-        if ([selectedAreaId intValue] == ALL_AREA) {
+        if ([selectedAreaId intValue] == ALL_CATEGORY) {
             return placeList;
         }
     }
@@ -275,7 +285,7 @@
 {
     for (NSNumber *selectedServiceId in selectedServiceIdList)
     {
-        if ([selectedServiceId intValue] == SERVICE_ALL) {
+        if ([selectedServiceId intValue] == ALL_CATEGORY) {
             return placeList;
         }
     }

@@ -85,13 +85,18 @@
 #define BUTTON_HIGHT                30
 #define DELETE_BUTTON_WIDTH          40
 
+#define TAG_MY_FAVORITE_BUTTON   210
+#define TAG_TOP_FAVORITE_BUTTON  211
+#define TAG_DELETE_BUTTON        222
+
 - (void)createRightBarButton
 {
     UIView *rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RIGHT_BUTTON_VIEW_WIDTH, RIGHT_BUTTON_VIEW_HIGHT)];
     //test backgroundcolor
-    rightButtonView.backgroundColor = [UIColor blueColor];
+    //rightButtonView.backgroundColor = [UIColor blueColor];
     
     UIButton *myFavoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
+    myFavoriteButton.tag = TAG_MY_FAVORITE_BUTTON;
     //test backgroundcolor
     myFavoriteButton.backgroundColor = [UIColor grayColor];
     myFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -101,6 +106,7 @@
     [myFavoriteButton release];
     
     UIButton *topFavoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
+    topFavoriteButton.tag = TAG_TOP_FAVORITE_BUTTON;
     //test backgroundcolor
     topFavoriteButton.backgroundColor = [UIColor greenColor];
     topFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -110,6 +116,7 @@
     [topFavoriteButton release];
     
     UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 0, DELETE_BUTTON_WIDTH, BUTTON_HIGHT)];
+    deleteButton.tag = TAG_DELETE_BUTTON;
     //test backgroundcolor
     deleteButton.backgroundColor = [UIColor grayColor];
     deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -137,8 +144,15 @@
 
 - (void)clickDelete:(id)sender
 {
+    UIButton *button = (UIButton*)sender;
     canDelete = !canDelete;
     [self.placeListController canDeletePlace:canDelete delegate:self];
+    if (canDelete) {
+        [button setTitle:NSLS(@"完成") forState:UIControlStateNormal];
+    }
+    else {
+        [button setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - deletePlaceDelegate 

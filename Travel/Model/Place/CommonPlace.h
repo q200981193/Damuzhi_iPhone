@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define ALL_SUBCATEGORY  (-1)
+#define ALL_CATEGORY   (-1)
 
 enum{
     PLACE_TYPE_SPOT = 1,
@@ -24,25 +24,12 @@ enum{
     SORT_BY_STARTS = 6
 };
 
-//enum{
-//    HOTEL_SORT_BY_RECOMMEND = 1,
-//    HOTEL_SORT_BY_STAR = 2,
-//    HOTEL_SORT_BY_
-//    HOTEL_SORT_BY_
-//    HOTEL_SORT_BY_
-//  
-//};
-
 enum{
-    PRICE_ALL = 1,
-    PRICE_BELOW_500 = 2,
-    PRICE_500_1000 = 3,
-    PRICE_1000_1500 = 4,
-    PRICE_MORE_THAN_1500 = 5
+    PRICE_BELOW_500 = 1,
+    PRICE_500_1000 = 2,
+    PRICE_1000_1500 = 3,
+    PRICE_MORE_THAN_1500 = 4
 };
-
-#define ALL_AREA  (-1)
-#define SERVICE_ALL (-1)
 
 
 @interface CommonPlace : NSObject
