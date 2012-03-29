@@ -54,6 +54,7 @@
     self.selectedSortIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedPriceIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedAreaIdList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedServiceIdList = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -146,6 +147,7 @@
         [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
         [self.selectedPriceIdList addObject:[NSNumber numberWithInt:PRICE_ALL]];
         [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_AREA]];
+        [self.selectedServiceIdList addObject:[NSNumber numberWithInt:SERVICE_ALL]];
         list = [self filterAndSort:list];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView
@@ -247,11 +249,23 @@
 {
     UIButton *button = (UIButton *)sender;
     NSString *title = button.titleLabel.text;
-
     
     NSArray *areaList = [[CityOverViewManager defaultManager] getWillSelectAreaList];
     SelectController* selectController = [SelectController createController:areaList
                                                                 selectedIds:self.selectedAreaIdList
+                                                               multiOptions:YES];
+    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
+    [self.navigationController pushViewController:selectController animated:YES];
+    selectController.delegate = self;
+}
+
+- (void)clickService:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    NSString *title = button.titleLabel.text;
+    NSArray *serverList = [[AppManager defaultManager] getProvidedServiceList:[_filterHandler getCategoryId]];
+    SelectController* selectController = [SelectController createController:serverList
+                                                                selectedIds:self.selectedServiceIdList 
                                                                multiOptions:YES];
     selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
     [self.navigationController pushViewController:selectController animated:YES];
@@ -263,5 +277,6 @@
     [_filterHandler findAllPlaces:self];
     self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", selectedList.count]; 
 }
+
 
 @end

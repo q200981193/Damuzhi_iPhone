@@ -20,8 +20,18 @@ enum{
     SORT_BY_DESTANCE_FROM_NEAR_TO_FAR = 2,
     SORT_BY_DESTANCE_FROM_FAR_TO_NEAR = 3,
     SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP = 4,
-    SORT_BY_STARTS = 5
+    SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE = 5,
+    SORT_BY_STARTS = 6
 };
+
+//enum{
+//    HOTEL_SORT_BY_RECOMMEND = 1,
+//    HOTEL_SORT_BY_STAR = 2,
+//    HOTEL_SORT_BY_
+//    HOTEL_SORT_BY_
+//    HOTEL_SORT_BY_
+//  
+//};
 
 enum{
     PRICE_ALL = 1,
@@ -32,6 +42,8 @@ enum{
 };
 
 #define ALL_AREA  (-1)
+#define SERVICE_ALL (-1)
+
 
 @interface CommonPlace : NSObject
 
