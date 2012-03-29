@@ -100,64 +100,60 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 
 #pragma mark - 
 #pragma mark Place Life Cycle Management
+- (void)findPlaces:(PPViewController<PlaceServiceDelegate>*)viewController categoryId:(int)categoryId  queryType:(int)quertType
+{
+    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
+        [_localPlaceManager switchCity:_currentCityId];
+        NSArray* list = [_localPlaceManager findPlacesByCategoryId:categoryId];   
+        *resultCode = 0;
+        return list;
+    };
+    
+    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+        // TODO, send network request here
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:quertType cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+        
+        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
+        
+        NSArray* list = [_onlinePlaceManager findPlacesByCategoryId:categoryId];   
+        
+        *resultCode = 0;
+        
+        return list;
+    };
+    
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
+}
+
 
 - (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localPlaceManager switchCity:_currentCityId];
-        NSArray* list = [_localPlaceManager findAllSpots];   
-        *resultCode = 0;
-        return list;
-    };
-    
-    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-        // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_SPOT cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-        
-        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
-        
-        NSArray* list = [_onlinePlaceManager findAllSpots];   
-        
-        *resultCode = 0;
-
-        return list;
-    };
-
-    [self processLocalRemoteQuery:viewController
-                     localHandler:localHandler
-                    remoteHandler:remoteHandler];
+    [self findPlaces:viewController categoryId:PLACE_TYPE_SPOT queryType:OBJECT_TYPE_SPOT];
 }
-
 
 - (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localPlaceManager switchCity:_currentCityId];
-        NSArray* list = [_localPlaceManager findAllHotels];   
-        *resultCode = 0;
-        return list;
-    };
-    
-    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-        // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_HOTEL 
-                                                               cityId:_currentCityId
-                                                                 lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-        
-        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
-        
-        NSArray* list = [_onlinePlaceManager findAllHotels];   
-        *resultCode = 0;
-        
-        return list;
-    };
-    
-    [self processLocalRemoteQuery:viewController
-                     localHandler:localHandler
-                    remoteHandler:remoteHandler];
+    [self findPlaces:viewController categoryId:PLACE_TYPE_HOTEL queryType:OBJECT_TYPE_HOTEL];
 }
+
+- (void)findAllRestaurants:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    [self findPlaces:viewController categoryId:PLACE_TYPE_RESTAURANT queryType:OBJECT_TYPE_RESTAURANT];
+}
+
+- (void)findAllShoppings:(PPViewController<PlaceServiceDelegate> *)viewController
+{
+    [self findPlaces:viewController categoryId:PLACE_TYPE_SHOPPING queryType:OBJECT_TYPE_SHOPPING];
+}
+
+- (void)findAllEntertainments:(PPViewController<PlaceServiceDelegate> *)viewController
+{
+    [self findPlaces:viewController categoryId:PLACE_TYPE_ENTERTAINMENT queryType:OBJECT_TYPE_ENTERTAINMENT];
+}
+
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {

@@ -69,31 +69,19 @@ static PlaceManager *_placeDefaultManager;
     self.placeList = [self readCityPlaceData:newCityId];
 }
 
-- (NSArray*)findAllSpots
+- (NSArray*)findPlacesByCategoryId:(int)categoryId
 {
-    NSMutableArray* spotList = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* resultList = [[[NSMutableArray alloc] init] autorelease];
     
     for (Place* place in _placeList){
-        if ([place categoryId] == PLACE_TYPE_SPOT){
-            [spotList addObject:place];
+        if ([place categoryId] == categoryId){
+            [resultList addObject:place];
         }
     }
     
-    return spotList;
+    return resultList;
 }
 
-- (NSArray*)findAllHotels
-{
-    NSMutableArray* hotelList = [[[NSMutableArray alloc] init] autorelease];
-    
-    for (Place* place in _placeList){
-        if ([place categoryId] == PLACE_TYPE_HOTEL){
-            [hotelList addObject:place];
-        } 
-    }
-    
-    return hotelList;
-}
 
 - (NSArray*)findAllPlaces
 {

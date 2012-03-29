@@ -37,9 +37,13 @@
 
 + (PlaceService*)defaultService;
 
-- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController;
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
+
+- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController;
 - (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController;
+- (void)findAllRestaurants:(PPViewController<PlaceServiceDelegate>*)viewController;
+- (void)findAllShoppings:(PPViewController<PlaceServiceDelegate> *)viewController;
+- (void)findAllEntertainments:(PPViewController<PlaceServiceDelegate> *)viewController;
 
 
 - (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
