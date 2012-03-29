@@ -104,6 +104,10 @@
     [self setCityManageButtons];
     [self showCityList];
     self.dataTableView.backgroundColor = [UIColor whiteColor];
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+
     
     // start timer to update progress, timer 
 }

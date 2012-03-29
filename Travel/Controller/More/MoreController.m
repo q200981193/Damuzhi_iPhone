@@ -52,9 +52,9 @@
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-
-    
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
     self.dataTableView.backgroundColor = [UIColor whiteColor];
 }
 

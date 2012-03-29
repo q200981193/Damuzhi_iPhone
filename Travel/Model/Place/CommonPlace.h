@@ -11,6 +11,7 @@
 #define ALL_CATEGORY   (-1)
 
 enum{
+    PLACE_TYPE_ALL = 0,
     PLACE_TYPE_SPOT = 1,
     PLACE_TYPE_HOTEL = 2
 };
