@@ -199,6 +199,7 @@
     [self updateModeButton];
 }
 
+
 - (void)clickCategoryButton:(id)sender
 {
     NSArray *subCategoryList = [[AppManager defaultManager] getSubCategoryList:[_filterHandler getCategoryId]];

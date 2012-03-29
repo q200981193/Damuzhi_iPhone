@@ -12,6 +12,7 @@
 #import "PPViewController.h"
 #import "CommonPlace.h"
 #import "Place.pb.h"
+#import "ImageName.h"
 
 @implementation NearbyController
 @synthesize imageRedStartView;
@@ -26,6 +27,7 @@
 @synthesize distanceView;
 @synthesize distance=_distance;
 @synthesize categoryId = _categoryId;
+@synthesize showMap = _showMap;
 
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
@@ -107,11 +109,20 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
-    [self.navigationItem setTitle:NSLS(@"我的附近")];
+    self.title = NSLS(@"我的附近");
     
+    UIButton *mapBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    [mapBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [mapBtn setTitle:NSLS(@"地图") forState:UIControlStateNormal];
+    [mapBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [mapBtn setBackgroundImage:[UIImage imageNamed:IMAGE_NEARBY_MAP_BTN] forState:UIControlStateNormal];
+    [mapBtn addTarget:self action:@selector(clickMapBtn:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self setNavigationRightButton:@"地图" imageName:@"" action:@selector(clickMap:)];
-    //[self setNavigationRightButton:@"地图" action:@selector(clickMap:)];
+    UIBarButtonItem *mapBarBtn = [[UIBarButtonItem alloc] initWithCustomView:mapBtn];
+    [self.navigationItem setRightBarButtonItem:mapBarBtn];
+    [mapBtn release];
+    [mapBarBtn release];
+    
     
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
@@ -188,6 +199,42 @@
         list = [self filterByDistance:list distance:self.distance];
         [self.placeListController setAndReloadPlaceList:list];
     }    
+}
+
+- (void )clickMapBtn:(id)sender
+{
+    NSLog(@"clickMapBtn");
+    [UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:0.75];
+	
+	[UIView setAnimationTransition:(_showMap ?
+									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
+						   forView:self.view cache:YES];
+    [UIView commitAnimations];
+    
+    if (_showMap){
+        [self.placeListController switchToListMode];
+    }
+    else{
+        [self.placeListController switchToMapMode];
+    }
+    
+    _showMap = !_showMap;
+    [self updateModeButton];
+}
+
+
+- (void)updateModeButton
+{
+    // set button text by _showMap flag
+    if (_showMap) {
+        UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
+        [mapBtn setTitle:@"列表" forState:UIControlStateNormal];
+    } else {
+        UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
+        [mapBtn setTitle:@"地图" forState:UIControlStateNormal];
+
+    }
 }
 
 - (void)moveImageView:(UIImageView *)imageView toCenter:(CGPoint)center needAnimation:(BOOL)need

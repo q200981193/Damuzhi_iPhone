@@ -43,6 +43,10 @@
 #define     IMAGE_CITY_DOWNLOADED_NO    @"no_s.png"
 #define     IMAGE_CITY_DOWNLOADED_YES   @"yes_s.png"
 
+#define     IMAGE_NEARBY_MAP_BTN        @"map_btn.png"
+#define     IMAGE_NEARBY_MAP_BTNON      @"map_btnon.png"
+
+
 
 
 #endif
