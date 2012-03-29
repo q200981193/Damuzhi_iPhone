@@ -33,10 +33,10 @@
 #define POINT_OF_DISTANCE_5KM   CGPointMake(164, 18)
 #define POINT_OF_DISTANCE_10KM   CGPointMake(287, 18)
 
-#define DISTANCE_500M 500
-#define DISTANCE_1KM 1000
-#define DISTANCE_5KM 5000
-#define DISTANCE_10KM 10000
+#define DISTANCE_500M 6000000
+#define DISTANCE_1KM  8000000
+#define DISTANCE_5KM 12000000
+#define DISTANCE_10KM 15000000
 
 - (void)dealloc
 {
@@ -157,17 +157,17 @@
     NSMutableArray *placeList = [[NSMutableArray alloc] init];
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-        CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+        CLLocationDistance distance = [self.currentLocation distanceFromLocation:placeLocation];
         [placeLocation release];
+        
+        NSLog(@"distance = %lf", distance);
         
         if (distance <= self.distance) {
             [placeList addObject:place];
         }
-        
-        [placeList addObject:place];
     }
     
-    return nil;
+    return placeList;
 }
 
 - (void)findRequestDone:(int)result dataList:(NSArray*)list
@@ -179,6 +179,7 @@
                                                          superController:self];    
     }
     else{
+        list = [self filterByDistance:list distance:self.distance];
         [self.placeListController setAndReloadPlaceList:list];
     }    
 }
@@ -198,34 +199,42 @@
 - (IBAction)click500M:(id)sender {
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
     self.distance = DISTANCE_500M;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
 }
 
 - (IBAction)click1K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
     self.distance = DISTANCE_1KM;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
 }
 
 - (IBAction)click5K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
     self.distance = DISTANCE_5KM;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
 }
 
 - (IBAction)click10K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
     self.distance = DISTANCE_10KM;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
 }
 
 - (IBAction)clickSpotBtn:(id)sender {
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:PLACE_TYPE_SPOT];    
+    self.categoryId = PLACE_TYPE_SPOT;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
 }
 
 - (IBAction)clickHotelBtn:(id)sender {
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:PLACE_TYPE_HOTEL];    
+    self.categoryId = PLACE_TYPE_HOTEL;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];
 }
+
 - (IBAction)clickAllBtn:(id)sender {
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:PLACE_TYPE_ALL];    
+    self.categoryId = PLACE_TYPE_ALL;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
 }
 @end
