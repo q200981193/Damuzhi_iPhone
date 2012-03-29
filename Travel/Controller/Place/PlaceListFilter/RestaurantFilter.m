@@ -80,7 +80,8 @@
 }
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    return [[PlaceService defaultService] findAllRestaurants:viewController];
+    return [[PlaceService defaultService] findPlacesByCategoryId:viewController categoryId:[self getCategoryId]];
+    //return [[PlaceService defaultService] findAllRestaurants:viewController];
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter
