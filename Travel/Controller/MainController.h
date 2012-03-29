@@ -24,5 +24,6 @@
 - (IBAction)clickNearbyButton:(id)sender;
 - (IBAction)clickMoreButton:(id)sender;
 -(void) clickTitle:(id)sender;
+- (IBAction)clickFavorite:(id)sender;
 
 @end

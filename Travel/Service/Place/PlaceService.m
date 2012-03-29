@@ -236,15 +236,9 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     }
 }
 
-- (BOOL)isPlaceInFavorite:(int)placeId
-{ 
-    NSArray *favoriteList = [[PlaceStorage favoriteManager] loadPlaceList];
-    for (Place *place in favoriteList) {
-        if (place.placeId == placeId) {
-            return YES;
-        }
-    }
-    return NO;
-}
+//- (BOOL)isPlaceInFavorite:(int)placeId
+//{ 
+//    return NO;
+//}
 
 @end

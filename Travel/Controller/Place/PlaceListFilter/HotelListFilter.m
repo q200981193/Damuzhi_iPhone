@@ -54,19 +54,14 @@
             //TODO: sort and put sorted result into array
             break;
             
-        case SORT_BY_DESTANCE_FROM_NEAR_TO_FAR:
-            //TODO: sort and put sorted result into array
+        case SORT_BY_STARTS:
             array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
-                CLLocation *place1Location = [[CLLocation alloc] initWithLatitude:[place1 latitude] longitude:[place1 longitude]];
-                CLLocation *place2Location = [[CLLocation alloc] initWithLatitude:[place2 latitude] longitude:[place2 longitude]];
-                CLLocationDistance distance1 = [currentLocation distanceFromLocation:place1Location];
-                CLLocationDistance distance2 = [currentLocation distanceFromLocation:place2Location];
-                [place1Location release];
-                [place2Location release];
+                int rank1 = [place1 hotelStar];
+                int rank2 = [place2 hotelStar];
                 
-                if (distance1 < distance2)
+                if (rank1 < rank2)
                     return NSOrderedDescending;
-                else  if (distance1 > distance2)
+                else  if (rank1 > rank2)
                     return NSOrderedAscending;
                 else return NSOrderedSame;
             }];
@@ -80,6 +75,37 @@
                 if (price1 < price2)
                     return NSOrderedDescending;
                 else  if (price1 > price2)
+                    return NSOrderedAscending;
+                else return NSOrderedSame;
+            }];
+            break;
+            
+        case SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE:
+            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                int price1 = [[place1 price] floatValue];
+                int price2 = [[place2 price] floatValue] ;
+                
+                if (price1 < price2)
+                    return NSOrderedAscending;
+                else  if (price1 > price2)
+                    return NSOrderedDescending;
+                else return NSOrderedSame;
+            }];
+            break;
+            
+        case SORT_BY_DESTANCE_FROM_NEAR_TO_FAR:
+            //TODO: sort and put sorted result into array
+            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+                CLLocation *place1Location = [[CLLocation alloc] initWithLatitude:[place1 latitude] longitude:[place1 longitude]];
+                CLLocation *place2Location = [[CLLocation alloc] initWithLatitude:[place2 latitude] longitude:[place2 longitude]];
+                CLLocationDistance distance1 = [currentLocation distanceFromLocation:place1Location];
+                CLLocationDistance distance2 = [currentLocation distanceFromLocation:place2Location];
+                [place1Location release];
+                [place2Location release];
+                
+                if (distance1 < distance2)
+                    return NSOrderedDescending;
+                else  if (distance1 > distance2)
                     return NSOrderedAscending;
                 else return NSOrderedSame;
             }];
@@ -141,6 +167,14 @@
                     action:@selector(clickArea:) 
           forControlEvents:UIControlEventTouchUpInside];
     
+    [buttonService addTarget:commonPlaceController
+                   action:@selector(clickService:) 
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    [buttonSort addTarget:commonPlaceController
+                      action:@selector(clickSortButton:) 
+            forControlEvents:UIControlEventTouchUpInside];
+    
     
     [superView addSubview:buttonPrice];
     [superView addSubview:buttonArea];
@@ -190,28 +224,38 @@
     for (NSNumber *selectedPriceId in selectedPriceList)
     {
         PPDebug(@"selectedPriceList:%d",[selectedPriceId intValue]);
-        if ([selectedPriceId intValue] == PRICE_ALL) {
+        if ([selectedPriceId intValue] == ALL_CATEGORY) {
             return placeList;
         }
     }
-
+    
     for (Place *place in placeList) {
-        if ([place.price intValue] < 500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_BELOW_500]) {
-            [array addObject:place];
-        }
-        
-        else if ([place.price intValue] >= 500 && [place.price intValue] < 1000 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_500_1000]){
-            [array addObject:place];
-        }
-        
-        else if ([place.price intValue] >= 1000 && [place.price intValue] < 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_1000_1500]){
-            [array addObject:place];
-        }
-        
-        else if ([place.price intValue] >= 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_MORE_THAN_1500]){
-            [array addObject:place];
+        PPDebug(@"place priceRank:%d",place.priceRank);
+        for (NSNumber *number in selectedPriceList) {
+            if (place.priceRank == number.intValue) {
+                [array addObject:place];
+                break;
+            }
         }
     }
+
+//    for (Place *place in placeList) {
+//        if ([place.price intValue] < 500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_BELOW_500]) {
+//            [array addObject:place];
+//        }
+//        
+//        else if ([place.price intValue] >= 500 && [place.price intValue] < 1000 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_500_1000]){
+//            [array addObject:place];
+//        }
+//        
+//        else if ([place.price intValue] >= 1000 && [place.price intValue] < 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_1000_1500]){
+//            [array addObject:place];
+//        }
+//        
+//        else if ([place.price intValue] >= 1500 && [self hasNumberInArrary:selectedPriceList NumberIntValue:PRICE_MORE_THAN_1500]){
+//            [array addObject:place];
+//        }
+//    }
     
     return array;
 }
@@ -220,7 +264,7 @@
 {
     for (NSNumber *selectedAreaId in selectedAreaIdList)
     {
-        if ([selectedAreaId intValue] == ALL_AREA) {
+        if ([selectedAreaId intValue] == ALL_CATEGORY) {
             return placeList;
         }
     }
@@ -230,9 +274,38 @@
         for (NSNumber *number in selectedAreaIdList) {
             if (number.intValue == place.areaId) {
                 [array addObject:place];
+                break;
             }
         }
     }
+    return array;
+}
+
+-(NSArray*)filterByServiceList:(NSArray*)placeList selectedServiceIdList:(NSArray*)selectedServiceIdList
+{
+    for (NSNumber *selectedServiceId in selectedServiceIdList)
+    {
+        if ([selectedServiceId intValue] == ALL_CATEGORY) {
+            return placeList;
+        }
+    }
+    NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];
+    BOOL found = NO;
+    for (Place *place in placeList) {
+        for (NSNumber *selectedNumber in selectedServiceIdList) {
+            for (NSNumber *placeServiceId in place.providedServiceIdList) {
+                if (selectedNumber.intValue == placeServiceId.intValue) {
+                    [array addObject:place];
+                    found = YES;
+                    break;
+                }
+            }
+            if (found) {
+                break;
+            }
+        }
+    }
+    
     return array;
 }
 
@@ -245,9 +318,10 @@
                             sortBy:(NSNumber*)selectedSortId
                    currentLocation:(CLLocation*)currentLocation
 {
-    NSArray *AfterPriceFilter = [self filterByPriceList:placeList selectedPriceList:selectedPriceIdList];
-    NSArray *AfterAreaFilter = [self filterByAreaList:AfterPriceFilter selectedPriceList:selectedAreaIdList];
-    NSArray *resultList =  [self sortBySelectedSortId:AfterAreaFilter selectedSortId:selectedSortId currentLocation:currentLocation];
+    NSArray *afterPriceFilter = [self filterByPriceList:placeList selectedPriceList:selectedPriceIdList];
+    NSArray *afterAreaFilter = [self filterByAreaList:afterPriceFilter selectedPriceList:selectedAreaIdList];
+    NSArray *afterServiceFilter = [self filterByServiceList:afterAreaFilter selectedServiceIdList:selectedServiceIdList];
+    NSArray *resultList = [self sortBySelectedSortId:afterServiceFilter selectedSortId:selectedSortId currentLocation:currentLocation];
     return resultList;
 }
 

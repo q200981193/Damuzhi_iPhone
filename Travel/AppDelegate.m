@@ -48,6 +48,7 @@
     [[AppService defaultService] updateAppData];
     
     //register user
+    //[[UserService defaultService] autoRegisterUser:@"123"];
     [[UserService defaultService] autoRegisterUser:[self getDeviceToken]];
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];

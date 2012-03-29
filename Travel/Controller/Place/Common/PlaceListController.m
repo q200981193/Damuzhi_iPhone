@@ -13,8 +13,11 @@
 #import "PlaceMapViewController.h"
 #import "LogUtil.h"
 #import "PlaceCell.h"
+#import "PlaceStorage.h"
 
 @interface PlaceListController () 
+
+@property (assign, nonatomic) BOOL canDelete;
 
 - (void)updateViewByMode;
 
@@ -26,6 +29,8 @@
 @synthesize mapHolderView = _mapHolderView;
 @synthesize superController = _superController;
 @synthesize mapViewController = _mapViewController;
+@synthesize canDelete;
+@synthesize deletePlaceDelegate;
 
 - (void)dealloc
 {
@@ -101,6 +106,16 @@
     [self updateViewByMode];
     
     [self initLocationManager] ;
+    
+    
+}
+
+- (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
+{
+    self.canDelete = isCan;
+    [self.dataTableView setEditing:isCan];
+    self.deletePlaceDelegate = delegateValue;
+    [self.dataTableView reloadData];
 }
 
 //- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -138,9 +153,11 @@
 
     [superView addSubview:controller.view];
     [controller setAndReloadPlaceList:list];    
-//    
+    
 //    for (Place *place in list) {
 //        PPDebug(@"<PlaceListController>");
+//        PPDebug(@"名称:%@",place.name);
+//        PPDebug(@"id:%d",place.placeId);
 //        PPDebug(@"最低价格:%@",place.price);
 //        PPDebug(@"区域id:%d",place.areaId);
 //        for (NSNumber *number in place.providedServiceIdList) {
@@ -183,11 +200,8 @@
 
 
 - (Class)getClassByPlace:(Place*)place
-{
-    if ([place categoryId] == PLACE_TYPE_SPOT || [place categoryId] == PLACE_TYPE_HOTEL){
-        return [PlaceCell class];
-    }
-    return nil;
+{    
+    return [PlaceCell class];
 }
 
 - (NSString*)getCellIdentifierByClass:(Class)class
@@ -214,13 +228,26 @@
 		cell = [placeClass createCell:self];
 	}
 	
-    CommonPlaceCell* placeCell = (CommonPlaceCell*)cell;
+    //CommonPlaceCell* commonPlaceCell = (CommonPlaceCell*)cell;
+    PlaceCell *placeCell = (PlaceCell*)cell;
     
-    //[placeCell setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]]];
     UIImageView *view = [[UIImageView alloc] init];
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
-    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation];
+    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation ];
+    
+    if (canDelete) {
+        placeCell.priceLable.hidden = YES;
+        placeCell.favoritesView.hidden = YES;
+        placeCell.areaLable.hidden= YES;
+        placeCell.distanceLable.hidden = YES;
+    }else {
+        placeCell.priceLable.hidden = NO;
+        placeCell.favoritesView.hidden = NO;
+        placeCell.areaLable.hidden= NO;
+        placeCell.distanceLable.hidden = NO;
+    }
+    
 	return cell;	
 }
 
@@ -233,6 +260,29 @@
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (deletePlaceDelegate && [deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
+        [deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
+    }
+    
+    NSMutableArray *mutableDataList = [NSMutableArray arrayWithArray:dataList];
+    [mutableDataList removeObjectAtIndex:indexPath.row];
+    self.dataList = mutableDataList;
+    
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (canDelete) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    else {
+        return UITableViewCellEditingStyleNone;
+    }
 }
 
 - (void)updateViewByMode

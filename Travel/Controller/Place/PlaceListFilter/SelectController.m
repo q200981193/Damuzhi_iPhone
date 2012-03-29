@@ -10,6 +10,7 @@
 #import "PPTableViewCell.h"
 #import "PPDebug.h"
 #import "AppManager.h"
+#import "CommonPlace.h"
 
 @interface SelectController ()
 
@@ -151,12 +152,12 @@
         
         if(!found)
         {
-            if([currentSelectedId intValue] == -1)
+            if([currentSelectedId intValue] == ALL_CATEGORY)
             {
                 [self.selectedIds removeAllObjects];
             }
             for (NSNumber *selectedId in self.selectedIds) {
-                if ([selectedId intValue]== -1) {
+                if ([selectedId intValue]== ALL_CATEGORY) {
                     [self.selectedIds removeObject:selectedId];
                 }
             }

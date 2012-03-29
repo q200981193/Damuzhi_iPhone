@@ -319,10 +319,26 @@ static AppManager* _defaultAppManager = nil;
     return spotSortOptions;
 }
 
+- (NSArray*)buildHotelSortOptionList
+{
+    NSMutableArray *hotelSortOptions = [[[NSMutableArray alloc] init] autorelease];    
+    [hotelSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐高至低") 
+                                                           forKey:[NSNumber numberWithInt:SORT_BY_RECOMMEND]]];
+    [hotelSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"星级高至低") 
+                                                           forKey:[NSNumber numberWithInt:SORT_BY_STARTS]]];
+    [hotelSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"价格高至低") 
+                                                           forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP]]];
+    [hotelSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"价格低至高") 
+                                                            forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE]]];
+    [hotelSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") 
+                                                            forKey:[NSNumber numberWithInt:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR]]];
+    return hotelSortOptions;
+}
+
 - (NSArray*)getSubCategoryList:(int)categoryId
 {
     NSMutableArray *subCategoryList = [[[NSMutableArray alloc] init] autorelease];    
-    [subCategoryList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:ALL_SUBCATEGORY]]];
+    [subCategoryList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if (placeMeta !=nil) {
@@ -335,6 +351,23 @@ static AppManager* _defaultAppManager = nil;
     return subCategoryList;
 }
 
+- (NSArray*)getProvidedServiceList:(int)categoryId
+{
+    NSMutableArray *providedServiceList = [[[NSMutableArray alloc] init] autorelease];
+    [providedServiceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
+                                                               forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
+    
+    PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
+    if (placeMeta !=nil) {
+        for (NameIdPair *providedService in [placeMeta providedServiceListList]) {
+            [providedServiceList addObject:[NSDictionary dictionaryWithObject:providedService.name 
+                                                                   forKey:[NSNumber numberWithInt:providedService.id]]];
+        }
+    }
+    
+    return providedServiceList;
+}
+
 - (NSArray*)getSortOptionList:(int32_t)categoryId
 {
     NSArray *array = nil;
@@ -344,7 +377,7 @@ static AppManager* _defaultAppManager = nil;
             break;
             
         case PLACE_TYPE_HOTEL:
-            
+            array = [self buildHotelSortOptionList];
             break;
             
         default:
@@ -358,7 +391,7 @@ static AppManager* _defaultAppManager = nil;
 {
     NSMutableArray *hotelPriceList = [[[NSMutableArray alloc] init] autorelease];    
     [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") 
-                                                           forKey:[NSNumber numberWithInt:PRICE_ALL]]];
+                                                           forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
     [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"500以下") 
                                                           forKey:[NSNumber numberWithInt:PRICE_BELOW_500]]];

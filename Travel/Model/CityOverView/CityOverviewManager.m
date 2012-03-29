@@ -141,13 +141,45 @@ static CityOverViewManager *_defaultInstance = nil;
 {
     NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
     [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
-                    forKey:[NSNumber numberWithInt:ALL_AREA]]];
+                    forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
     NSArray *area = [self getAreaList];
     for (CityArea* cityArea in area) {
         [resultArray addObject:[NSDictionary dictionaryWithObject:cityArea.areaName
                                                            forKey:[NSNumber numberWithInt:cityArea.areaId]]];
     }
+    return resultArray;
+}
+
+- (NSArray *)getWillSelectPriceList
+{
+    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
+    [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
+                                                       forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
+    
+    for (int rank = 1; rank <= [_cityOverView priceRank]; rank ++) {
+        NSString *rankString = nil;
+        switch (rank) {
+            case 1:
+                rankString = @"$";
+                break;
+            case 2:
+                rankString = @"$$";
+                break;
+            case 3:
+                rankString = @"$$$";
+                break;
+            case 4:
+                rankString = @"$$$$";
+                break;
+                
+            default:
+                break;
+        }
+        [resultArray addObject:[NSDictionary dictionaryWithObject:rankString
+                                                           forKey:[NSNumber numberWithInt:rank]]];
+    }
+    
     return resultArray;
 }
 

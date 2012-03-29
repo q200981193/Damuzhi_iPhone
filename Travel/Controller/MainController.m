@@ -10,7 +10,7 @@
 #import "CommonPlaceListController.h"
 #import "SpotListFilter.h"
 #import "HotelListFilter.h"
-
+#import "FavoriteController.h"
 #import "CommonInfoController.h"
 #import "CityBasicDataSource.h"
 
@@ -154,6 +154,13 @@
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBarHidden = NO;
+}
+
+- (IBAction)clickFavorite:(id)sender
+{
+    FavoriteController *fc = [[FavoriteController alloc] init];
+    [self.navigationController pushViewController:fc animated:YES];
+    [fc release];
 }
 
 @end
