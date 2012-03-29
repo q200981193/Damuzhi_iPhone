@@ -12,6 +12,7 @@
 #import "LogUtil.h"
 #import "Place.pb.h"
 #import "CommonPlace.h"
+#import "ImageName.h"
 
 @interface FavoriteController ()
 
@@ -98,9 +99,13 @@
     UIButton *myFavoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
     myFavoriteButton.tag = TAG_MY_FAVORITE_BUTTON;
     //test backgroundcolor
-    myFavoriteButton.backgroundColor = [UIColor grayColor];
+    //myFavoriteButton.backgroundColor = [UIColor grayColor];
     myFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [myFavoriteButton setTitle:NSLS(@"我的收藏") forState:UIControlStateNormal];
+    [myFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [myFavoriteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [myFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
+    [myFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
     [myFavoriteButton addTarget:self action:@selector(clickMyFavorite:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:myFavoriteButton];
     [myFavoriteButton release];
@@ -108,9 +113,13 @@
     UIButton *topFavoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
     topFavoriteButton.tag = TAG_TOP_FAVORITE_BUTTON;
     //test backgroundcolor
-    topFavoriteButton.backgroundColor = [UIColor greenColor];
+    //topFavoriteButton.backgroundColor = [UIColor greenColor];
     topFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [topFavoriteButton setTitle:NSLS(@"收藏排行") forState:UIControlStateNormal];
+    [topFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [topFavoriteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [topFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
+    [topFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
     [topFavoriteButton addTarget:self action:@selector(clickTopFavorite:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:topFavoriteButton];
     [topFavoriteButton release];
@@ -118,8 +127,9 @@
     UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 0, DELETE_BUTTON_WIDTH, BUTTON_HIGHT)];
     deleteButton.tag = TAG_DELETE_BUTTON;
     //test backgroundcolor
-    deleteButton.backgroundColor = [UIColor grayColor];
+    //deleteButton.backgroundColor = [UIColor grayColor];
     deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [deleteButton setBackgroundImage:[UIImage imageNamed:@"topmenu_btn_right.png"] forState:UIControlStateNormal];
     [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
     [deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:deleteButton];
@@ -134,12 +144,22 @@
 
 - (void)clickMyFavorite:(id)sender
 {
+    UIButton *myFavoriteButton = (UIButton*)sender;
+    UIButton *topFavoriteButton = (UIButton*)[self.navigationItem.rightBarButtonItem.customView viewWithTag:TAG_TOP_FAVORITE_BUTTON];
+    myFavoriteButton.selected = YES;
+    topFavoriteButton.selected = NO;
     
+    //show my favorite
 }
 
 - (void)clickTopFavorite:(id)sender
 {
+    UIButton *myFavoriteButton = (UIButton*)[self.navigationItem.rightBarButtonItem.customView viewWithTag:TAG_MY_FAVORITE_BUTTON];
+    UIButton *topFavoriteButton = (UIButton*)sender;
+    myFavoriteButton.selected = NO;
+    topFavoriteButton.selected = YES;
     
+    //show top favorite
 }
 
 - (void)clickDelete:(id)sender
