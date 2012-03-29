@@ -18,6 +18,7 @@
 #import "AppManager.h"
 #import "PlaceService.h"
 #import "LogUtil.h"
+#import "PlaceStorage.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -438,7 +439,7 @@
         
     [self addBottomView];
     
-    
+    [[PlaceStorage historyManager] addPlace:self.place];
 }
 
 - (void)viewDidUnload

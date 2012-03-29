@@ -8,6 +8,7 @@
 
 #import "MoreController.h"
 #import "LocaleUtils.h"
+#import "HistoryController.h"
 
 @interface MoreController ()
 
@@ -129,12 +130,23 @@
     [self.navigationController pushViewController:_cityManagementController animated:YES];
 }
 
+- (void)showHistory
+{
+    HistoryController *hc = [[HistoryController alloc] init];
+    hc.navigationItem.title = BROWSE_HISTORY;
+    [self.navigationController pushViewController:hc animated:YES];
+    [hc release];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
     switch (row) {
         case 0:
             [self showCityManagment];
+            break;
+        case 1:
+            [self showHistory];
             break;
             
         default:
