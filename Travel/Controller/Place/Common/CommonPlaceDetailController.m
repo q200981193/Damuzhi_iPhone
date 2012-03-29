@@ -58,7 +58,18 @@
     {
         return [[[HotelDetailViewHandler alloc] initWith:controller] autorelease];
     }
-    
+    else if ([onePlace categoryId] == PLACE_TYPE_RESTAURANT)
+    {
+        return [[[RestaurantViewHandler alloc] initWith:controller] autorelease];
+    }
+    else if ([onePlace categoryId] == PLACE_TYPE_SHOPPING)
+    {
+        return [[[ShoppingDetailViewHandler alloc] initWith:controller] autorelease];
+    }
+    else if ([onePlace categoryId] == PLACE_TYPE_ENTERTAINMENT)
+    {
+        return [[[EntertainmentDetailViewHandler alloc] initWith:controller] autorelease];
+    }
     return nil;
 }
 

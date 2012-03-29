@@ -10,6 +10,7 @@
 #import "CommonPlaceListController.h"
 #import "SpotListFilter.h"
 #import "HotelListFilter.h"
+#import "RestaurantFilter.h"
 #import "FavoriteController.h"
 #import "CommonInfoController.h"
 #import "CityBasicDataSource.h"
@@ -33,6 +34,7 @@
     [_moreController release];
     [_spotListComtroller release];
     [_hotelListComtroller release];
+    [_restaurantListComtroller release];
     [super dealloc];
 }
 
@@ -123,6 +125,18 @@
     }
     
     [self.navigationController pushViewController:_hotelListComtroller animated:YES];
+}
+
+- (IBAction)clickRestaurant:(id)sender
+{
+    if(_restaurantListComtroller == nil)
+    {
+        _restaurantListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
+                                [RestaurantFilter createFilter]];
+    }
+    
+    [self.navigationController pushViewController:_restaurantListComtroller animated:YES];
+    
 }
 
 - (IBAction)clickCityOverviewButton:(id)sender

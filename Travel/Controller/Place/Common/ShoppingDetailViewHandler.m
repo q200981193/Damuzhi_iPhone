@@ -11,8 +11,30 @@
 
 @implementation ShoppingDetailViewHandler
 
+@synthesize commonController;
+
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
+    
+    [self.commonController addSegmentViewWith: NSLS(@"商家简介") description:[place introduction]];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"营业时间") description: [place openTime]];
+    
+    [self.commonController addSegmentViewWith:NSLS(@"停车指南") description:@""];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];
+    
+    [self.commonController addSegmentViewWith: NSLS(@"购物贴士") description:[place tips]];
+    
+    
 }
+
+- (id)initWith:(CommonPlaceDetailController *)controller
+{
+    [super init];
+    self.commonController = controller;
+    return  self;
+}
+
 
 @end
