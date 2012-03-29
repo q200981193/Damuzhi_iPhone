@@ -109,11 +109,17 @@
     
     [self.navigationItem setTitle:NSLS(@"我的附近")];
     
+    
+    [self setNavigationRightButton:@"地图" imageName:@"" action:@selector(clickMap:)];
+    //[self setNavigationRightButton:@"地图" action:@selector(clickMap:)];
+    
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
 
     [distanceView addSubview:imageRedStartView];
+    
+    
     
     [findAllPlaceButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
     [findSpotButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
