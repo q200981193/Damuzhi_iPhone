@@ -197,11 +197,8 @@
 
 
 - (Class)getClassByPlace:(Place*)place
-{
-    if ([place categoryId] == PLACE_TYPE_SPOT || [place categoryId] == PLACE_TYPE_HOTEL){
-        return [PlaceCell class];
-    }
-    return nil;
+{    
+    return [PlaceCell class];
 }
 
 - (NSString*)getCellIdentifierByClass:(Class)class
