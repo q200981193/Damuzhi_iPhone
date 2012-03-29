@@ -186,7 +186,8 @@
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    return [[PlaceService defaultService] findAllHotels:viewController];
+    return [[PlaceService defaultService] findPlacesByCategoryId:viewController categoryId:[self getCategoryId]];
+    //return [[PlaceService defaultService] findAllHotels:viewController];
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter

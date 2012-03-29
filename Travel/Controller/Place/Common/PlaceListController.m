@@ -75,7 +75,7 @@
 	
     // save to current location
     self.currentLocation = newLocation;
-	NSLog(@"Current location is %@, horizontalAccuracy=%f, timestamp=%@", [self.currentLocation description], [self.currentLocation horizontalAccuracy], [[currentLocation timestamp] description]);
+	//NSLog(@"Current location is %@, horizontalAccuracy=%f, timestamp=%@", [self.currentLocation description], [self.currentLocation horizontalAccuracy], [[currentLocation timestamp] description]);
 	
 	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
@@ -106,8 +106,6 @@
     [self updateViewByMode];
     
     [self initLocationManager] ;
-    
-    
 }
 
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
@@ -117,17 +115,6 @@
     self.deletePlaceDelegate = delegateValue;
     [self.dataTableView reloadData];
 }
-
-//- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-//	
-//    // The location "unknown" error simply means the manager is currently unable to get the location.
-//    // We can ignore this error for the scenario of getting a single location fix, because we already have a 
-//    // timeout that will stop the location manager to save power.
-//    if ([error code] != kCLErrorLocationUnknown) {
-//        [self stopUpdatingLocation:NSLocalizedString(@"Error", @"Error")];
-//    }	
-//}
-
 
 - (void)viewDidUnload
 {
@@ -153,20 +140,6 @@
 
     [superView addSubview:controller.view];
     [controller setAndReloadPlaceList:list];    
-    
-//    for (Place *place in list) {
-//        PPDebug(@"<PlaceListController>");
-//        PPDebug(@"名称:%@",place.name);
-//        PPDebug(@"id:%d",place.placeId);
-//        PPDebug(@"最低价格:%@",place.price);
-//        PPDebug(@"区域id:%d",place.areaId);
-//        for (NSNumber *number in place.providedServiceIdList) {
-//            PPDebug(@"服务选项ID:%d",number.intValue);
-//        }
-//        PPDebug(@"大拇指评级:%d",place.rank);
-//        PPDebug(@"酒店星级:%d",place.hotelStar);
-//        PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
-//    }
     
     return controller;
 }

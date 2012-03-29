@@ -14,8 +14,8 @@
 
 @interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate>
 
-@property (assign, nonatomic) int placeType;
-
+@property (assign, nonatomic) int distance;
+@property (assign, nonatomic) int categoryId;
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 @property (retain, nonatomic) IBOutlet UIImageView *distanceView;

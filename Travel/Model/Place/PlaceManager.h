@@ -22,8 +22,8 @@
 
 - (void)switchCity:(int)newCityId;
 
-- (NSArray*)findAllPlaces;
-- (NSArray*)findPlacesByCategoryId:(int)categoryId;
+- (NSArray*)findPlacesByCategory:(int)categoryId;
+//- (NSArray*)findAllPlaces;
 //- (NSArray*)findAllSpots;
 //- (NSArray*)findAllHotels;
 

@@ -37,14 +37,10 @@
 
 + (PlaceService*)defaultService;
 
-- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
-
-- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController;
-- (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController;
-- (void)findAllRestaurants:(PPViewController<PlaceServiceDelegate>*)viewController;
-- (void)findAllShoppings:(PPViewController<PlaceServiceDelegate> *)viewController;
-- (void)findAllEntertainments:(PPViewController<PlaceServiceDelegate> *)viewController;
-
+- (void)findPlacesByCategoryId:(PPViewController<PlaceServiceDelegate>*)viewController categoryId:(int)categoryId;
+//- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController;
+//- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
+//- (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController;
 
 - (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
 - (void)findHistoryPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
