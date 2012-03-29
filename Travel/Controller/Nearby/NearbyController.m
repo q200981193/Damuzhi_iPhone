@@ -10,6 +10,7 @@
 #import "PlaceListController.h"
 #import "PlaceService.h"
 #import "PPViewController.h"
+#import "CommonPlace.h"
 
 @implementation NearbyController
 @synthesize imageRedStartView;
@@ -22,6 +23,8 @@
 @synthesize placeListController;
 @synthesize placeListHolderView;
 @synthesize distanceView;
+
+@synthesize placeType = _placeType;
 
 - (void)dealloc
 {
@@ -74,13 +77,6 @@
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
 
-//    //add guest reconize for imageRedStartView
-//    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanFrom:)];
-//    [imageRedStartView addGestureRecognizer:panRecognizer];
-//    panRecognizer.maximumNumberOfTouches = 1;
-//    panRecognizer.delegate = self;
-//    [panRecognizer release];
-    
     [distanceView addSubview:imageRedStartView];
     
     [findAllPlaceButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
@@ -90,11 +86,9 @@
     [findEntertainmentButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
     [findRestaurantButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
     
-    
-    
-    
     // Do any additional setup after loading the view from its nib.
     
+    self.placeType = PLACE_TYPE_ALL;
     [[PlaceService defaultService] findAllPlaces:self];    
 }
 
@@ -144,10 +138,6 @@
 }
 
 - (IBAction)click500M:(id)sender {
-//    [UIImageView beginAnimations:nil context:nil];
-//    [UIImageView setAnimationDuration:1];
-//    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
-//    [UIImageView commitAnimations];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
 }
 
