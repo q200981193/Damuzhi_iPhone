@@ -10,13 +10,17 @@
 #import "CommonPlaceListController.h"
 #import "SpotListFilter.h"
 #import "HotelListFilter.h"
-#import "RestaurantFilter.h"
+#import "RestaurantListFilter.h"
+#import "ShoppingListFilter.h"
+#import "EntertainmentListFilter.h"
 #import "FavoriteController.h"
 #import "CommonInfoController.h"
 #import "CityBasicDataSource.h"
+#import "CommonPlace.h"
 
 #import "NearbyController.h"
 #import "AppManager.h"
+
 
 @implementation MainController
 
@@ -35,6 +39,8 @@
     [_spotListComtroller release];
     [_hotelListComtroller release];
     [_restaurantListComtroller release];
+    [_shoppingListComtroller release];
+    [_entertainmentListComtroller release];
     [super dealloc];
 }
 
@@ -110,7 +116,7 @@
     if(_spotListComtroller == nil)
     {
         _spotListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                                                 [SpotListFilter createFilter]];
+                               [SpotListFilter createFilter]];
     }
     
     [self.navigationController pushViewController:_spotListComtroller animated:YES];
@@ -132,11 +138,32 @@
     if(_restaurantListComtroller == nil)
     {
         _restaurantListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                                [RestaurantFilter createFilter]];
+                                     [RestaurantListFilter createFilter]];
     }
     
     [self.navigationController pushViewController:_restaurantListComtroller animated:YES];
+}
+
+- (IBAction)clickShopping:(id)sender
+{
+    if(_shoppingListComtroller == nil)
+    {
+        _shoppingListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
+                                     [ShoppingListFilter createFilter]];
+    }
     
+    [self.navigationController pushViewController:_shoppingListComtroller animated:YES];
+}
+
+- (IBAction)clickEntertainment:(id)sender
+{
+    if(_entertainmentListComtroller == nil)
+    {
+        _entertainmentListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
+                                     [EntertainmentListFilter createFilter]];
+    }
+    
+    [self.navigationController pushViewController:_entertainmentListComtroller animated:YES];
 }
 
 - (IBAction)clickCityOverviewButton:(id)sender

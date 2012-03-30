@@ -205,6 +205,7 @@
 - (void)clickCategoryButton:(id)sender
 {
     NSArray *subCategoryList = [[AppManager defaultManager] getSubCategoryList:[_filterHandler getCategoryId]];
+    
     SelectController* selectController = [SelectController createController:subCategoryList                                                           
                                                                 selectedIds:self.selectedCategoryIdList 
                                                                multiOptions:YES];
