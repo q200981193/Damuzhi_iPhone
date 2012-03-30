@@ -60,8 +60,21 @@
 @synthesize indexOfSelectedPlace;
 @synthesize superController;
 
+- (BOOL)isRightLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude
+{
+    if (-180.0 <= latitude && latitude <= 180.0 &&  -90 <= longitude && longitude <= 90){
+        return  YES;
+    }else {
+        return NO;
+    }
+}
+
 - (void)gotoLocation:(Place*)place
 {
+    if (![self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
+        return;
+    }
+    
     MKCoordinateRegion newRegion;
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
