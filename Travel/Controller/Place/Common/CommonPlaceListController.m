@@ -55,6 +55,7 @@
     self.selectedPriceIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedAreaIdList = [[[NSMutableArray alloc] init] autorelease];
     self.selectedServiceIdList = [[[NSMutableArray alloc] init] autorelease];
+    self.selectedCuisineIdList = [[[NSMutableArray alloc] init] autorelease];
     return self;
 }
 
@@ -148,6 +149,7 @@
         [self.selectedPriceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.selectedServiceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedCuisineIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         list = [self filterAndSort:list];
         self.placeListController = [PlaceListController createController:list 
                                                                superView:placeListHolderView

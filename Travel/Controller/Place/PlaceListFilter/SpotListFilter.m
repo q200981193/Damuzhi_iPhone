@@ -93,7 +93,7 @@
     
     //filter by selectedCategoryId
     for (NSNumber *selectedCategoryId in selectedCategoryIdList) {
-        if ([selectedCategoryId intValue] == -1) {
+        if ([selectedCategoryId intValue] == ALL_CATEGORY) {
             return list;
         }
         
