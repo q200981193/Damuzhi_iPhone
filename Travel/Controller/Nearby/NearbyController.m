@@ -290,4 +290,20 @@
     self.categoryId = PLACE_TYPE_ALL;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
 }
+
+- (IBAction)clickRestaurantBtn:(id)sender {
+    self.categoryId = PLACE_TYPE_RESTAURANT;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+}
+
+- (IBAction)clickShoppingBtn:(id)sender {
+    self.categoryId = PLACE_TYPE_SHOPPING;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+}
+
+- (IBAction)clickEntertainmentBtn:(id)sender {
+    self.categoryId = PLACE_TYPE_ENTERTAINMENT;
+    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+}
+
 @end
