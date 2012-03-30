@@ -28,6 +28,7 @@
 @synthesize distance=_distance;
 @synthesize categoryId = _categoryId;
 @synthesize showMap = _showMap;
+@synthesize btnArray = _btnArray;
 
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
@@ -51,6 +52,7 @@
     [findShoppingButton release];
     [findEntertainmentButton release];
     [findRestaurantButton release];
+    [_btnArray release];
     [super dealloc];
 }
 
@@ -130,15 +132,6 @@
 
     [distanceView addSubview:imageRedStartView];
     
-    
-    
-    [findAllPlaceButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
-    [findSpotButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
-    [findHotelButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
-    [findShoppingButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
-    [findEntertainmentButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
-    [findRestaurantButton setBackgroundImage:[UIImage imageNamed:@"pbtn_on"] forState:UIControlStateSelected];
-    
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PLACE_TYPE_ALL;
@@ -146,6 +139,32 @@
     
 //    [[PlaceService defaultService] findAllPlaces:self];  
     [self initLocationManager] ;
+    
+    
+    findAllPlaceButton.tag = PLACE_TYPE_ALL;
+    findSpotButton.tag = PLACE_TYPE_SPOT;
+    findHotelButton.tag = PLACE_TYPE_HOTEL;
+    findRestaurantButton.tag = PLACE_TYPE_RESTAURANT;
+    findEntertainmentButton.tag = PLACE_TYPE_ENTERTAINMENT;
+    findShoppingButton.tag = PLACE_TYPE_SHOPPING;
+    self.btnArray = [NSArray arrayWithObjects:findAllPlaceButton, findSpotButton, findHotelButton, findRestaurantButton, findShoppingButton, findEntertainmentButton, nil];
+    
+    
+    [self setSelectedBtn:_categoryId];
+}
+
+- (void)setSelectedBtn:(int)categoryId
+{
+    for (UIButton *button in _btnArray) {
+        if(button.tag == categoryId)
+        {
+            button.selected = YES;
+        }
+        else
+        {
+            button.selected = NO;
+        }
+    }
 }
 
 - (void)viewDidUnload
@@ -279,31 +298,37 @@
 - (IBAction)clickSpotBtn:(id)sender {
     self.categoryId = PLACE_TYPE_SPOT;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
+    [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickHotelBtn:(id)sender {
     self.categoryId = PLACE_TYPE_HOTEL;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];
+    [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickAllBtn:(id)sender {
     self.categoryId = PLACE_TYPE_ALL;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickRestaurantBtn:(id)sender {
     self.categoryId = PLACE_TYPE_RESTAURANT;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickShoppingBtn:(id)sender {
     self.categoryId = PLACE_TYPE_SHOPPING;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickEntertainmentBtn:(id)sender {
     self.categoryId = PLACE_TYPE_ENTERTAINMENT;
     [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [self setSelectedBtn:_categoryId];
 }
 
 @end
