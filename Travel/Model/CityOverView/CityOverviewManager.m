@@ -82,10 +82,11 @@ static CityOverViewManager *_defaultInstance = nil;
 
 - (NSString*)getCurrencySymbol
 {
-    if (_cityOverView.currencySymbol){
+    if (!_cityOverView.currencySymbol){
         PPDebug(@"Warning, <getCurrencySymbol> but currencty symbol is null?");
         return @"";
     }
+//    NSLog(@"currencySymbol = %@", _cityOverView.currencySymbol);
     
     return _cityOverView.currencySymbol;
 }
