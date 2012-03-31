@@ -11,6 +11,8 @@
 		A327DEEF15231A31003DEE8C /* FavoriteController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A327DEED15231A31003DEE8C /* FavoriteController.xib */; };
 		A3ACE1121524459F00C9B3DD /* HistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ACE1101524459F00C9B3DD /* HistoryController.m */; };
 		A3ACE1131524459F00C9B3DD /* HistoryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ACE1111524459F00C9B3DD /* HistoryController.xib */; };
+		A3D5CC7A1526D10800F445F6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3D5CC781526D10800F445F6 /* Localizable.strings */; };
+		A3D5CC7C1526D11500F445F6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3D5CC781526D10800F445F6 /* Localizable.strings */; };
 		A3DED49E152044040076E5CD /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DED49C152044040076E5CD /* PlaceCell.m */; };
 		A3DED49F152044040076E5CD /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3DED49D152044040076E5CD /* PlaceCell.xib */; };
 		A3F621721525E2DA0099319C /* CommonListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F6216B1525E2DA0099319C /* CommonListFilter.m */; };
@@ -415,6 +417,8 @@
 		A3ACE10F1524459F00C9B3DD /* HistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryController.h; sourceTree = "<group>"; };
 		A3ACE1101524459F00C9B3DD /* HistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryController.m; sourceTree = "<group>"; };
 		A3ACE1111524459F00C9B3DD /* HistoryController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryController.xib; sourceTree = "<group>"; };
+		A3D5CC791526D10800F445F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A3D5CC7B1526D11500F445F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A3DED49B152044040076E5CD /* PlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceCell.h; sourceTree = "<group>"; };
 		A3DED49C152044040076E5CD /* PlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceCell.m; sourceTree = "<group>"; };
 		A3DED49D152044040076E5CD /* PlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
@@ -2456,6 +2460,7 @@
 				CA49070114F5F05B00228C37 /* InfoPlist.strings */,
 				CA49070414F5F05B00228C37 /* main.m */,
 				CA49070614F5F05B00228C37 /* Travel-Prefix.pch */,
+				A3D5CC781526D10800F445F6 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2795,6 +2800,8 @@
 				A3DED49F152044040076E5CD /* PlaceCell.xib in Resources */,
 				A327DEEF15231A31003DEE8C /* FavoriteController.xib in Resources */,
 				A3ACE1131524459F00C9B3DD /* HistoryController.xib in Resources */,
+				A3D5CC7A1526D10800F445F6 /* Localizable.strings in Resources */,
+				A3D5CC7C1526D11500F445F6 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3034,6 +3041,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A3D5CC781526D10800F445F6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A3D5CC791526D10800F445F6 /* en */,
+				A3D5CC7B1526D11500F445F6 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		CA455F5014F66EDD00DA085D /* ReviewRequest.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
