@@ -170,7 +170,12 @@
         case 1:
             [self showHistory];
             break;
+        case 2:
             
+            break;
+        case 3:
+            [self queryVersion];
+            break;
         default:
             break;
     }
