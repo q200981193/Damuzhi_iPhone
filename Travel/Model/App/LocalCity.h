@@ -23,4 +23,5 @@
 @property (assign, nonatomic) bool downloadDoneFlag;
 
 + (LocalCity*)localCityWith:(int)cityId;
+- (NSString*)description;
 @end

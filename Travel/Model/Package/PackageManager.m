@@ -60,9 +60,11 @@ static PackageManager *_instance = nil;
 {
     NSMutableArray * packageList = [[[NSMutableArray alloc] init] autorelease];
     NSArray *cityIdList = [[AppManager defaultManager] getCityIdList];
+    
+    //for all city, loop
     for (NSNumber *cityId in cityIdList) {
-        NSLog(@"cityId = %d", [cityId intValue]);
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:[cityId intValue]]]) {
+        //a city is exist when a unzip flag and the city packagefile both exist;
+        if ([AppUtils hasLocalCityData:[cityId intValue]]) {
             NSString *packageFilePath = [AppUtils getPackageFilePath:[cityId intValue]];
             
             NSLog(@"path = %@", packageFilePath);
@@ -91,19 +93,18 @@ static PackageManager *_instance = nil;
     return cityList;
 }
 
-- (NSArray*)getOnlineCityList
-{
-    NSMutableArray *onlineCityList = [[[NSMutableArray alloc] init] autorelease];
-    NSArray *cityList = [[AppManager defaultManager] getCityList];
-    NSArray *localCityList = [self getLocalCityList];
-    for (City *city in cityList) {
-        if (NSNotFound == [localCityList indexOfObject:city]) {
-            [onlineCityList addObject:city];
-//            NSLog(@"cityName = %@", city.cityName);
-        }
-    }
-    
-    return onlineCityList;
-}
+//- (NSArray*)getOnlineCityList
+//{
+//    NSMutableArray *onlineCityList = [[[NSMutableArray alloc] init] autorelease];
+//    NSArray *cityList = [[AppManager defaultManager] getCityList];
+//    NSArray *localCityList = [self getLocalCityList];
+//    for (City *city in cityList) {
+//        if (NSNotFound == [localCityList indexOfObject:city]) {
+//            [onlineCityList addObject:city];
+//        }
+//    }
+//    
+//    return onlineCityList;
+//}
 
 @end

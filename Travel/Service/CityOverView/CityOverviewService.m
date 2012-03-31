@@ -6,15 +6,16 @@
 //  Copyright (c) 2012年 甘橙软件. All rights reserved.
 //
 
-#import "CityOverViewService.h"
-
+#import "CityOverviewService.h"
 #import "PPViewController.h"
 #import "LogUtil.h"
 #import "TravelNetworkRequest.h"
+#import "CityOverview.pb.h"
 #import "Package.pb.h"
 #import "CityOverViewManager.h"
 #import "TravelNetworkConstants.h"
 #import "AppManager.h"
+#import "AppUtils.h"
 
 #define SERACH_WORKING_QUEUE1    @"SERACH_WORKING_QUEUE1"
 
@@ -38,7 +39,7 @@ static CityOverViewService *_cityOverViewService = nil;
     self = [super init];
     _localCityOverViewManager = [[CityOverViewManager alloc] init];
     _onlineCityOverViewManager = [[CityOverViewManager alloc] init];
-    self.currentCityId = [NSString stringWithFormat:@"%d",[[AppManager defaultManager] getCurrentCityId]];
+    self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     return self;
 }
 
@@ -49,6 +50,75 @@ static CityOverViewService *_cityOverViewService = nil;
     [super dealloc];
 }
 
+typedef CityOverview* (^LocalRequestHandler)(int* resultCode);
+typedef CityOverview* (^RemoteRequestHandler)(int* resultCode);
+
+- (void)processLocalRemoteQuery:(PPViewController<CommonOverViewServiceDelegate>*)viewController
+                   localHandler:(LocalRequestHandler)localHandler
+                  remoteHandler:(RemoteRequestHandler)remoteHandler
+{
+    [viewController showActivityWithText:NSLS(@"kLoadingData")];
+    
+    NSOperationQueue* queue = [self getOperationQueue:SERACH_WORKING_QUEUE1];
+    [queue cancelAllOperations];
+    
+    [queue addOperationWithBlock:^{
+        CityOverview* cityOverView = nil;
+        int resultCode = 0;
+        if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+            // read local data firstly               
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
+            if (localHandler != NULL){
+                cityOverView = localHandler(&resultCode);
+            }
+        }
+        else{
+            // if local data no exist, try to read data from remote            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:_currentCityId]);            
+            if (remoteHandler != NULL){
+                cityOverView = remoteHandler(&resultCode);
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [viewController hideActivity];             
+            [viewController findRequestDone:resultCode data:cityOverView];
+        });
+    }];
+}
+
+- (void)findCityOverViewByCityId:(PPViewController<CommonOverViewServiceDelegate>*)viewController cityId:(int)cityId
+{
+    LocalRequestHandler localHandler = ^CityOverview *(int* resultCode) {
+        [_localCityOverViewManager switchCity:cityId];
+        *resultCode = 0;
+        return _localCityOverViewManager.cityOverView;
+    };
+    
+    LocalRequestHandler remoteHandler = ^CityOverview *(int* resultCode) {
+        // TODO, send network request here
+               
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:2 objId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+
+        CommonOverview *commonOverView = [travelResponse overview];
+        
+        CityOverview_Builder* builder = [[[CityOverview_Builder alloc] init] autorelease];
+        [builder setCityBasic:commonOverView];
+        CityOverview *cityOverView = [builder build];
+        
+        _onlineCityOverViewManager.cityOverView = cityOverView;
+
+        *resultCode = 0;
+        
+        return cityOverView;
+    };
+    
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
+}
 
 
 @end

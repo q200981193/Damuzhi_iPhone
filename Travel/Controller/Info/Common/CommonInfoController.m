@@ -74,6 +74,28 @@
 
 }
 
+- (void)findRequestDone:(int)result data:(CityOverview*)cityOverView
+{
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    [imageHolderView addSubview:slideImageView];  
+    
+    // add image array
+    NSArray* imagePathArray = [cityOverView.cityBasic imagesList];
+    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
+    for (NSString* imagePath in imagePathArray){
+        NSLog(@"%@", imagePath);
+        [images addObject:[UIImage imageNamed:imagePath]];
+    }
+    [slideImageView setImages:images];
+    
+    NSURL *url = [NSURL URLWithString:[cityOverView.cityBasic html]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSLog(@"load webview url = %@", [request description]);
+    if (request) {
+        [self.dataWebview loadRequest:request];
+    } 
+}
+
 - (void)viewDidUnload
 {
     [self setImageHolderView:nil];

@@ -9,11 +9,12 @@
 #import "CityManagementController.h"
 #import "AppManager.h"
 #import "App.pb.h"
-#import "CityListCell.h"
 #import "DownloadListCell.h"
 #import "LogUtil.h"
 #import "ImageName.h"
 #import "PackageManager.h"
+#import "AppUtils.h"
+#import "LocalCityManager.h"
 
 @interface CityManagementController ()
 
@@ -21,7 +22,7 @@
 
 @end
 
-@implementation CityManagementController
+@implementation CityManagementController 
 
 @synthesize downloadList = _downloadList;
 
@@ -59,7 +60,6 @@
     self.downloadListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _downloadListBtn.frame = CGRectMake(80, 0, 80, 30);
        
-    
     [_cityListBtn setTitle:@"城市列表" forState:UIControlStateNormal];
     _cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -68,7 +68,6 @@
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
     
-
     [_downloadListBtn setTitle:@"下载管理" forState:UIControlStateNormal];
     _downloadListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_downloadListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
@@ -77,7 +76,7 @@
     [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
     
     [_cityListBtn addTarget:self action:@selector(clickCityListButton:) forControlEvents:UIControlEventTouchUpInside];
-    [_downloadListBtn addTarget:self action:@selector(clickDownloadButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_downloadListBtn addTarget:self action:@selector(clickDownloadListButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [buttonView addSubview:_cityListBtn];
     [buttonView addSubview:_downloadListBtn];
@@ -91,25 +90,25 @@
 
 - (void)viewDidLoad
 {
-    //self.dataList = [[AppManager defaultManager] getCityList];
     self.dataList = [[PackageManager defaultManager] getLocalCityList];
-    self.downloadList = [[PackageManager defaultManager] getOnlineCityList];
+    //self.downloadList = [[PackageManager defaultManager] getOnlineCityList];
+    self.downloadList = [[AppManager defaultManager] getCityList];
+    
+    [self setBackgroundImageName:IMAGE_CITY_MAIN_BOTTOM];
 
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
     
-    [self.promptLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_MAIN_BOTTOM]]];
+    UIColor *color = [[UIColor alloc] initWithRed:121.0/255.0 green:164.0/255.0 blue:180.0/255.0 alpha:1]; 
+    [self.promptLabel setBackgroundColor:color];
+    [color release];
     
     [self setCityManageButtons];
     [self showCityList];
-    self.dataTableView.backgroundColor = [UIColor whiteColor];
     [self setNavigationLeftButton:NSLS(@"返回") 
-                        imageName:@"back.png"
+                        imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
-
-    
-    // start timer to update progress, timer 
 }
 
 - (void)viewDidUnload
@@ -159,9 +158,12 @@
         
         if (cell == nil) {
             cell = [DownloadListCell createCell:self];				
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;	
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            
+            UIImageView *view = [[UIImageView alloc] init];
+            [view setImage:[UIImage imageNamed:IMAGE_CITY_CELL_BG]];
+            [cell setBackgroundView:view];
+            [view release];
         }
         
         // set text label
@@ -181,6 +183,11 @@
         if (cell == nil) {
             cell = [CityListCell createCell:self];				
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UIImageView *view = [[UIImageView alloc] init];
+            [view setImage:[UIImage imageNamed:IMAGE_CITY_CELL_BG]];
+            [cell setBackgroundView:view];
+            [view release];
         }
         
         // set text label
@@ -192,9 +199,19 @@
         }
         CityListCell* cityCell = (CityListCell*)cell;
         [cityCell setCellData:[self.dataList objectAtIndex:row]];
+        cityCell.cityCellDelegate = self;
     }
 
 	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView1 == self.dataTableView) {
+        NSLog(@"touch row %d", indexPath.row);
+        City *city = [dataList objectAtIndex:indexPath.row];
+        [[AppManager defaultManager] setCurrentCityId:city.cityId];
+    }
 }
 
 - (void)showCityList
@@ -207,7 +224,6 @@
 {
     self.dataTableView.hidden = YES;
     self.downloadTableView.hidden = NO;
-    
 }
 
 - (void)clickCityListButton:(id)sender
@@ -216,11 +232,11 @@
     _downloadListBtn.selected = NO;
     _cityListBtn.selected = YES;
     
-    
-    //PPDebug(@"click left button");
+    self.dataList = [[PackageManager defaultManager] getLocalCityList];
+    [self.dataTableView reloadData];
 }
 
-- (void)clickDownloadButton:(id)sender
+- (void)clickDownloadListButton:(id)sender
 {
     [self showDownloadList];
     _downloadListBtn.selected = YES;
@@ -256,5 +272,13 @@
     [super viewDidDisappear:animated];
 }
 
+- (void)deleteCity:(City*)city
+{
+    PPDebug(@"delete City: %d", city.cityId);
+    [AppUtils deleteCityData:city.cityId];
+    [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
+    self.dataList = [[PackageManager defaultManager] getLocalCityList];
+    [self.dataTableView reloadData];
+}
 
 @end

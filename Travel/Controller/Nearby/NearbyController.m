@@ -147,6 +147,7 @@
     findRestaurantButton.tag = PLACE_TYPE_RESTAURANT;
     findEntertainmentButton.tag = PLACE_TYPE_ENTERTAINMENT;
     findShoppingButton.tag = PLACE_TYPE_SHOPPING;
+    
     self.btnArray = [NSArray arrayWithObjects:findAllPlaceButton, findSpotButton, findHotelButton, findRestaurantButton, findShoppingButton, findEntertainmentButton, nil];
     
     

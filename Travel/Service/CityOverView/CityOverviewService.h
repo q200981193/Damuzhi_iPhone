@@ -9,16 +9,24 @@
 #import "CommonService.h"
 #import "CityOverViewManager.h"
 #import "PPViewController.h"
+#import "CityOverview.pb.h"
+
+@protocol CommonOverViewServiceDelegate <NSObject>
+
+@optional
+- (void)findRequestDone:(int)result data:(CityOverview*)cityOverView;
+
+@end
 
 @interface CityOverViewService : CommonService
 {
-    NSString        *_currentCityId;
+    int        _currentCityId;
 
     CityOverViewManager *_localCityOverViewManager;
     CityOverViewManager *_onlineCityOverViewManager;
 }
 
-@property (retain, nonatomic) NSString *currentCityId;
+@property (nonatomic, assign) int currentCityId;
 
 + (CityOverViewService*)defaultService;
 
@@ -26,5 +34,7 @@
 //- (void)findTravelPrepration:(PPViewController*)viewController;
 //- (void)findTravelUtility:(PPViewController*)viewController;
 //- (void)findTravelTransportation:(PPViewController*)viewController;
+
+- (void)findCityOverViewByCityId:(PPViewController<CommonOverViewServiceDelegate>*)viewController cityId:(int)cityId;
 
 @end
