@@ -37,14 +37,13 @@ static PlaceManager *_placeDefaultManager;
 - (NSArray*)readCityPlaceData:(int)cityId
 {
     // if there has no local city data
-    //if (![self hasLocalCityData:cityId]) {
     if (![AppUtils hasLocalCityData:cityId]) {
         return nil;
     }
     
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
     for (NSString *placeFilePath in [AppUtils getPlaceFilePathList:cityId]) {
-        //PPDebug(@"placeFilePath = %@", placeFilePath);
+        PPDebug(@"placeFilePath = %@", placeFilePath);
         NSData *placeData = [NSData dataWithContentsOfFile:placeFilePath];
         PlaceList *places = [PlaceList parseFromData:placeData];
         //PPDebug(@"%d places read", [[places listList] count]);
@@ -62,7 +61,6 @@ static PlaceManager *_placeDefaultManager;
     
     // set city and read data by new city
     self.cityId = newCityId;
-    
     self.placeList = [self readCityPlaceData:newCityId];
 }
 

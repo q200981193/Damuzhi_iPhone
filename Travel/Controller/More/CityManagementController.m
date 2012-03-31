@@ -64,6 +64,7 @@
     _cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_cityListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    _cityListBtn.selected = YES;
     
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
@@ -74,6 +75,7 @@
     [_downloadListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
     [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
+    _downloadListBtn.selected = NO;
     
     [_cityListBtn addTarget:self action:@selector(clickCityListButton:) forControlEvents:UIControlEventTouchUpInside];
     [_downloadListBtn addTarget:self action:@selector(clickDownloadListButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -211,6 +213,7 @@
         NSLog(@"touch row %d", indexPath.row);
         City *city = [dataList objectAtIndex:indexPath.row];
         [[AppManager defaultManager] setCurrentCityId:city.cityId];
+        [tableView1 reloadData];
     }
 }
 

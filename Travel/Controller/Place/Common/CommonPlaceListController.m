@@ -102,8 +102,15 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickHelp:)];
             
+//    [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
+//    [_filterHandler findAllPlaces:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     [_filterHandler findAllPlaces:self];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload
@@ -114,11 +121,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [self.placeListController.dataTableView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

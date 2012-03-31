@@ -100,7 +100,13 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
+    //[self createButtonView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     [self createButtonView];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidUnload
@@ -117,10 +123,10 @@
 }
 
 - (IBAction)clickSpotButton:(id)sender {
+    
     if(_spotListComtroller == nil)
     {
-        _spotListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                               [SpotListFilter createFilter]];
+        _spotListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:[SpotListFilter createFilter]];
     }
     
     [self.navigationController pushViewController:_spotListComtroller animated:YES];
