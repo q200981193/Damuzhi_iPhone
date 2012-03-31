@@ -14,7 +14,27 @@
 
 - (NSString*)starToString:(int32_t)star
 {
-    return @"五星级";
+    switch (star) {
+        case 1:
+            return NSLS(@"一星级");
+            break;
+        case 2:
+            return NSLS(@"二星级");
+            break;
+        case 3:
+            return NSLS(@"三星级");
+            break;
+        case 4:
+            return NSLS(@"四星级");
+            break;
+        case 5:
+            return NSLS(@"五星级");
+            break;
+            
+        default:
+            break;
+    }
+    return nil;
 }
 
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place

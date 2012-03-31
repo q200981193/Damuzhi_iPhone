@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
+#import "CityOverviewService.h"
 
 @protocol CommonInfoDataSourceProtocol <NSObject>
 
@@ -17,7 +18,7 @@
 
 @end
 
-@interface CommonInfoController : PPViewController
+@interface CommonInfoController : PPViewController <CommonOverViewServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebview;
