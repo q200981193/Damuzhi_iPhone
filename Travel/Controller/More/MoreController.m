@@ -138,6 +138,28 @@
     [hc release];
 }
 
+- (void)queryVersion
+{
+    [[UserService defaultService] queryVersion:self];
+}
+
+#pragma -mark UserServiceDelegate
+- (void)queryVersionFinish:(NSString *)version dataVersion:(NSString *)dataVersion
+{
+    if (version && dataVersion) {
+        NSString *localVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        if ([version isEqual:localVersion]) {
+            [self popupHappyMessage:NSLS(@"已经是最新版本") title:nil];
+        }else {
+            //[UIUtils openApp:kAppId];
+        }
+    }
+    else {
+        [self popupUnhappyMessage:NSLS(@"查询版本失败") title:nil];
+    }
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;

@@ -234,4 +234,24 @@
                                       output:output];
 }
 
++ (CommonNetworkOutput*)queryVersion
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        NSString* str = [NSString stringWithString:baseURL];        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_VERSION
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
 @end

@@ -798,6 +798,24 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">clickEntertainment:</string>
+						<reference key="source" ref="749825871"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">38</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">clickShopping:</string>
+						<reference key="source" ref="616363137"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">37</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">clickMoreButton:</string>
 						<reference key="source" ref="676765706"/>
 						<reference key="destination" ref="372490531"/>
@@ -1052,7 +1070,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">36</int>
+			<int key="maxID">38</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1061,16 +1079,22 @@
 					<string key="superclassName">PPViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="clickCityOverviewButton:">id</string>
+						<string key="clickEntertainment:">id</string>
 						<string key="clickFavorite:">id</string>
 						<string key="clickHotelButton:">id</string>
 						<string key="clickMoreButton:">id</string>
 						<string key="clickNearbyButton:">id</string>
 						<string key="clickRestaurant:">id</string>
+						<string key="clickShopping:">id</string>
 						<string key="clickSpotButton:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="clickCityOverviewButton:">
 							<string key="name">clickCityOverviewButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="clickEntertainment:">
+							<string key="name">clickEntertainment:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="clickFavorite:">
@@ -1091,6 +1115,10 @@
 						</object>
 						<object class="IBActionInfo" key="clickRestaurant:">
 							<string key="name">clickRestaurant:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="clickShopping:">
+							<string key="name">clickShopping:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="clickSpotButton:">

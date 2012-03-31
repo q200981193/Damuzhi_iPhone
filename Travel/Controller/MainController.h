@@ -16,13 +16,16 @@
     CommonPlaceListController *_spotListComtroller;
     CommonPlaceListController *_hotelListComtroller;
     CommonPlaceListController *_restaurantListComtroller;
+    CommonPlaceListController *_shoppingListComtroller;
+    CommonPlaceListController *_entertainmentListComtroller;
     MoreController *_moreController;
 }
 
 - (IBAction)clickSpotButton:(id)sender;
 - (IBAction)clickHotelButton:(id)sender;
 - (IBAction)clickRestaurant:(id)sender;
-
+- (IBAction)clickShopping:(id)sender;
+- (IBAction)clickEntertainment:(id)sender;
 
 - (IBAction)clickCityOverviewButton:(id)sender;
 - (IBAction)clickNearbyButton:(id)sender;

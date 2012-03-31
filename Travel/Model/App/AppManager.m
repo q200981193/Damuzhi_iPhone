@@ -350,6 +350,30 @@ static AppManager* _defaultAppManager = nil;
     return hestaurantSortOptions;
 }
 
+- (NSArray*)buildShoppingSortOptionList
+{
+    NSMutableArray *shoppingtSortOptions = [[[NSMutableArray alloc] init] autorelease];    
+    [shoppingtSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐高至低") 
+                                                                 forKey:[NSNumber numberWithInt:SORT_BY_RECOMMEND]]];;
+    [shoppingtSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") 
+                                                                 forKey:[NSNumber numberWithInt:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR]]];
+    return shoppingtSortOptions;
+}
+
+- (NSArray*)buildEntertainmentSortOptionList
+{
+    NSMutableArray *entertainmentSortOptions = [[[NSMutableArray alloc] init] autorelease];    
+    [entertainmentSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"大拇指推荐高至低") 
+                                                                 forKey:[NSNumber numberWithInt:SORT_BY_RECOMMEND]]];
+    [entertainmentSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"价格高至低") 
+                                                                 forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP]]];
+    [entertainmentSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"价格低至高") 
+                                                                 forKey:[NSNumber numberWithInt:SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE]]];
+    [entertainmentSortOptions addObject:[NSDictionary dictionaryWithObject:NSLS(@"距离近至远") 
+                                                                 forKey:[NSNumber numberWithInt:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR]]];
+    return entertainmentSortOptions;
+}
+
 - (NSArray*)getSubCategoryList:(int)categoryId
 {
     NSMutableArray *subCategoryList = [[[NSMutableArray alloc] init] autorelease];    
@@ -397,6 +421,14 @@ static AppManager* _defaultAppManager = nil;
             
         case PLACE_TYPE_RESTAURANT:
             array = [self buildRestaurantSortOptionList];
+            break;
+            
+        case PLACE_TYPE_SHOPPING:
+            array = [self buildShoppingSortOptionList];
+            break;
+            
+        case PLACE_TYPE_ENTERTAINMENT:
+            array = [self buildEntertainmentSortOptionList];
             break;
             
         default:
