@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
 #import "CityManagementController.h"
+#import "UserService.h"
 
-@interface MoreController : PPTableViewController
+@interface MoreController : PPTableViewController <UserServiceDelegate>
 {
     CityManagementController *_cityManagementController;
 }

@@ -62,7 +62,7 @@
 
 - (BOOL)isRightLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude
 {
-    if (-180.0 <= latitude && latitude <= 180.0 &&  -90 <= longitude && longitude <= 90){
+    if (-90.0 <= latitude && latitude <= 90.0 &&  -180.0 <= longitude && longitude <= 180.0){
         return  YES;
     }else {
         return NO;

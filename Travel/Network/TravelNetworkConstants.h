@@ -18,14 +18,16 @@
 //#define URL_TRAVEL_REGISTER_USER    @"http://damuzhi.com/service/registerUser?"
 #define URL_TRAVEL_REGISTER_USER    @"http://59.34.17.68:8012/service/RegisterUser.aspx?"
 
-
 //query place list
 #define URL_TRAVEL_QUERY_LIST       @"http://59.34.17.68:8012/service/queryList.aspx?"
 #define URL_TRAVEL_QUERY_OBJECT     @"http://59.34.17.68:8012/service/queryObject.aspx?"
 
-//add favorite
+
 //#define URL_TRAVEL_ADD_FAVORITE     @"http://damuzhi.com/service/addFavorite?"
 #define URL_TRAVEL_ADD_FAVORITE     @"http://59.34.17.68:8012/service/addFavorite.aspx?"
+//#define URL_TRAVEL_QUERY_VERSION      @"http://www.damuzhi.com/service/iphoneVersion.txt"
+#define URL_TRAVEL_QUERY_VERSION      @"http://59.34.17.68:8012/service/iphoneVersion.txt"
+
 
 // Output Format
 #define FORMAT_TRAVEL_JSON          1
@@ -49,6 +51,8 @@
 #define PARA_TRAVEL_LATITUDE        @"latitude"
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT  @"placeFavoriteCount"
+#define PARA_TRAVEL_APP_VERSION           @"app_version"
+#define PARA_TRAVEL_APP_DATA_VERSION      @"app_data_version"
 
 // define query object type
 #define OBJECT_TYPE_ALL_PLACE       1
