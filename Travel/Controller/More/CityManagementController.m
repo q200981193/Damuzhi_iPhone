@@ -93,6 +93,8 @@
     self.dataList = [[PackageManager defaultManager] getLocalCityList];
     //self.downloadList = [[PackageManager defaultManager] getOnlineCityList];
     self.downloadList = [[AppManager defaultManager] getCityList];
+    
+    [self setBackgroundImageName:IMAGE_CITY_MAIN_BOTTOM];
 
     [super viewDidLoad];
     
@@ -104,13 +106,9 @@
     
     [self setCityManageButtons];
     [self showCityList];
-    self.dataTableView.backgroundColor = [UIColor whiteColor];
     [self setNavigationLeftButton:NSLS(@"返回") 
                         imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
-
-    [self setBackgroundImageName:IMAGE_CITY_MAIN_BOTTOM];
-    // start timer to update progress, timer 
 }
 
 - (void)viewDidUnload
@@ -166,9 +164,6 @@
             [view setImage:[UIImage imageNamed:IMAGE_CITY_CELL_BG]];
             [cell setBackgroundView:view];
             [view release];
-            
-//            cannot use this, why?
-//            [cell setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_CELL_BG]]];
         }
         
         // set text label
@@ -219,7 +214,6 @@
     }
 }
 
-
 - (void)showCityList
 {
     self.dataTableView.hidden = NO;
@@ -230,13 +224,11 @@
 {
     self.dataTableView.hidden = YES;
     self.downloadTableView.hidden = NO;
-    
 }
 
 - (void)clickCityListButton:(id)sender
 {
     [self showCityList];
-    self.dataList = [[PackageManager defaultManager] getLocalCityList];
     _downloadListBtn.selected = NO;
     _cityListBtn.selected = YES;
     

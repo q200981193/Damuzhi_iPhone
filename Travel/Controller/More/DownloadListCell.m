@@ -11,6 +11,8 @@
 #import "PPDebug.h"
 #import "ImageName.h"
 #import "LocalCityManager.h"
+#import "LocaleUtils.h"
+
 
 #define NO_DOWNLOAD 0
 #define DOWNLOAD 1
@@ -56,8 +58,8 @@
 
 - (void)setCellData:(City*)city
 {
-    self.city = city;
-    self.cityNameLabel.text = _city.cityName;
+    self.city = city;    
+    self.cityNameLabel.text = [[city.countryName stringByAppendingString:NSLS(@".")] stringByAppendingString:city.cityName];
     float dataSize = city.dataSize/1024.0/1024.0;
     self.dataSizeLabel.text = [[NSString alloc] initWithFormat:@"%0.1fM", dataSize];
     [self setCellAppearance];
