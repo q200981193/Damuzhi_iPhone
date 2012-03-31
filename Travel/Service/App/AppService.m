@@ -68,10 +68,10 @@ static AppService* _defaultAppService = nil;
     return @"";
 }
 
-- (BOOL)hasUnzipCityData:(int)cityId
-{
-    return [[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]];
-}
+//- (BOOL)hasUnzipCityData:(int)cityId
+//{
+//    return [[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]];
+//}
 
 - (void)copyDefaultAppDataFormBundle
 {    
@@ -101,7 +101,8 @@ static AppService* _defaultAppService = nil;
     }
     
     // if there has no unzip city data, unzip
-    if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
+    //if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
+    if (![AppUtils hasLocalCityData:DEFAULT_CITY_ID]) {
         [AppUtils unzipCityZip:DEFAULT_CITY_ID];
     }
 }
@@ -234,6 +235,7 @@ static AppService* _defaultAppService = nil;
     // remove localCity
     [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
     
+    // remove request
     for (ASIHTTPRequest *request in _downloadRequestList) {
         LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
         if(localCity.cityId == city.cityId)
@@ -279,10 +281,10 @@ static AppService* _defaultAppService = nil;
     NSLog(@"requestFinished");
     
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-    localCity.downloadingFlag = NO;
     localCity.downloadDoneFlag = YES;
 
     [_downloadRequestList removeObject:request];
+    [AppUtils unzipCityZip:localCity.cityId];
 }
 
 

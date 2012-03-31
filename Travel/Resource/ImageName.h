@@ -46,6 +46,11 @@
 #define     IMAGE_NEARBY_MAP_BTN        @"map_btn.png"
 #define     IMAGE_NEARBY_MAP_BTNON      @"map_btnon.png"
 
+#define     IMAGE_CITY_CELL_BG          @"td_bg.png"
+
+
+#define     IMAGE_NAVIGATIONBAR_BACK_BTN   @"back.png"
+
 
 
 

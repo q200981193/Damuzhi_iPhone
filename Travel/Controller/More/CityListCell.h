@@ -10,14 +10,23 @@
 #import "PPTableViewCell.h"
 #import "App.pb.h"
 
+@protocol  CityCellDelegate <NSObject>
+@required
+- (void)deleteCity:(City*)city;
+@end
+
+
 @interface CityListCell : PPTableViewCell<PPTableViewCellProtocol>
+
+@property (retain, nonatomic) City *city;
+@property (assign, nonatomic) id<CityCellDelegate> cityCellDelegate;
 
 @property (retain, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (retain, nonatomic) IBOutlet UIButton *updateButton;
 @property (retain, nonatomic) IBOutlet UIButton *deleteButton;
 @property (retain, nonatomic) IBOutlet UILabel *dataSizeLabel;
+@property (retain, nonatomic) IBOutlet UILabel *defaultLabel;
 
 - (void)setCellData:(City*)city;
-- (void)initCellData;
 
 @end

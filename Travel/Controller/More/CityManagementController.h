@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
+#import "CityListCell.h"
 
-@interface CityManagementController : PPTableViewController
+
+@interface CityManagementController : PPTableViewController <CityCellDelegate>
 {
     UITableView *_downloadTableView;
     NSArray *_downloadList;

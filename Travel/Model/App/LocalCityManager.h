@@ -24,5 +24,7 @@
 - (void)updateLocalCity:(int)cityId downloadingFlag:(float)downloadingFlag;
 - (void)updateLocalCity:(int)cityId downloadDoneFlag:(float)downloadDoneFlag;
 
+- (void)save;
+
 
 @end

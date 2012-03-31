@@ -121,4 +121,12 @@
     return;
 }
 
++ (void)deleteCityData:(int)cityId
+{
+    NSString *path = [AppUtils getCityDir:cityId];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    
+    return;
+}
+
 @end
