@@ -13,7 +13,7 @@
 #import "LocalCityManager.h"
 
 #define NO_DOWNLOAD 0
-#define DOWNLOADING 1
+#define DOWNLOAD 1
 #define FINISH_DOWNLOAD 2
 
 @interface DownloadListCell ()
@@ -40,19 +40,7 @@
 - (void)setCellAppearance
 {
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
-        
-    if(localCity == nil)
-    {
-        [self setCellAppearance:NO_DOWNLOAD downloadProgress:0.0];
-    }
-    else {
-        if (localCity.downloadDoneFlag == NO) {
-            [self setCellAppearance:DOWNLOADING downloadProgress:localCity.downloadProgress];
-        }
-        else {
-            [self setCellAppearance:FINISH_DOWNLOAD downloadProgress:localCity.downloadProgress];
-        }
-    }
+    [self setCellAppearance:localCity];
 }
 
 
@@ -119,8 +107,24 @@
     self.pauseDownloadBtn.selected = NO;
 }
 
-- (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress
+- (void)setCellAppearance:(LocalCity*)localCity
 { 
+    if(localCity == nil)
+    {
+        [self setCellAppearance:NO_DOWNLOAD localCity:localCity];
+        return;
+    }
+    
+    if (localCity.downloadDoneFlag == NO) {
+        [self setCellAppearance:DOWNLOAD localCity:localCity];
+    }
+    else {
+        [self setCellAppearance:FINISH_DOWNLOAD localCity:localCity];
+    }
+}
+
+- (void)setCellAppearance:(int)downloadStatus localCity:(LocalCity*)localCity
+{
     switch (downloadStatus) {
         case NO_DOWNLOAD:
             [self.downloadFlagButton setImage:[UIImage imageNamed:IMAGE_CITY_DOWNLOADED_NO] forState:UIControlStateNormal];   
@@ -138,7 +142,7 @@
             self.moreDetailBtn.hidden = YES;
             break;
             
-        case DOWNLOADING:
+        case DOWNLOAD:
             [self.downloadFlagButton setImage:[UIImage imageNamed:IMAGE_CITY_DOWNLOADED_NO] forState:UIControlStateNormal]; 
             [self.cityNameLabel setTextColor:[UIColor darkGrayColor]];
             self.dataSizeLabel.hidden = YES;
@@ -153,8 +157,9 @@
             self.downloadDoneLabel.hidden = YES;
             self.moreDetailBtn.hidden = YES;
             
-            self.downloadProgressView.progress = downloadProgress;
-            float persent = downloadProgress*100;
+            self.pauseDownloadBtn.selected = !localCity.downloadingFlag;
+            self.downloadProgressView.progress = localCity.downloadProgress;
+            float persent = localCity.downloadProgress*100;
             self.downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
             
             break;
@@ -178,7 +183,6 @@
         default:
             break;
     }
-    
 }
 
 - (IBAction)clickOnlineBtn:(id)sender {

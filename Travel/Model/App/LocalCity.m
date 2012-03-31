@@ -33,8 +33,8 @@
 {
     [aCoder encodeInt:self.cityId forKey:KEY_LOCAL_CITY_ID];
     [aCoder encodeFloat:self.downloadProgress forKey:KEY_DOWNLOAD_PROGRESS];
-    [aCoder encodeInt:self.downloadingFlag forKey:KEY_DOWNLOADING_FLAG];
-    [aCoder encodeInt:self.downloadingFlag forKey:KEY_DOWNLOAD_DONE_FLAG];
+    [aCoder encodeBool:self.downloadingFlag forKey:KEY_DOWNLOADING_FLAG];
+    [aCoder encodeBool:self.downloadDoneFlag forKey:KEY_DOWNLOAD_DONE_FLAG];
 
 }
 
@@ -43,8 +43,8 @@
     if (self = [super init]) {
         self.cityId = [aDecoder decodeIntForKey:KEY_LOCAL_CITY_ID];
         self.downloadProgress = [aDecoder decodeFloatForKey:KEY_DOWNLOAD_PROGRESS];
-        self.downloadingFlag = [aDecoder decodeIntForKey:KEY_DOWNLOADING_FLAG];
-        self.downloadingFlag = [aDecoder decodeIntForKey:KEY_DOWNLOAD_DONE_FLAG];
+        self.downloadingFlag = [aDecoder decodeBoolForKey:KEY_DOWNLOADING_FLAG];
+        self.downloadDoneFlag = [aDecoder decodeBoolForKey:KEY_DOWNLOAD_DONE_FLAG];
     }
     
     return self;
@@ -55,5 +55,6 @@
     NSLog(@"progress = %f", newProgress);
     self.downloadProgress = newProgress;
 }
+
 
 @end

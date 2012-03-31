@@ -207,6 +207,7 @@
     UIImageView *view = [[UIImageView alloc] init];
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
+    [view release];
     [placeCell setCellDataByPlace:place currentLocation:self.currentLocation ];
     
     if (canDelete) {

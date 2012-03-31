@@ -20,7 +20,11 @@ static LocalCityManager *_defaultManager = nil;
 {
     if (_defaultManager == nil) {
         _defaultManager = [[LocalCityManager alloc] init];
-        _defaultManager.localCities = [[NSMutableDictionary alloc] init];
+        [_defaultManager loadLocalCities];
+        for (LocalCity *localCity in [_defaultManager.localCities allValues]) {
+            localCity.downloadingFlag = NO;
+//            NSLog(@"localCity: %@", localCity.description);
+        }
     }
     
     return _defaultManager;
@@ -36,19 +40,24 @@ static LocalCityManager *_defaultManager = nil;
 #pragma mark: load and save localcities
 - (void)loadLocalCities
 {
+    _defaultManager.localCities = [[NSMutableDictionary alloc] init];
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSData* data = [userDefault objectForKey:KEY_LOCAL_CITIES];
     
     if (data != nil){
         //TODO: parase data to localcities
+        self.localCities = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     }    
 }
-
 
 - (void)save
 {
     //TODO: save localcities
     //NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.localCities];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:data forKey:KEY_LOCAL_CITIES];
+    [userDefaults synchronize];
 }
 
 #pragma mark -
@@ -73,18 +82,18 @@ static LocalCityManager *_defaultManager = nil;
 - (void)removeLocalCity:(int)cityId
 {
     [self.localCities removeObjectForKey:[NSNumber numberWithInt:cityId]];
-    [self save];
 }
 
 #pragma mark -
 #pragma mark: access a localCity's property
+
 - (void)updateLocalCity:(int)cityId downloadProgress:(float)downloadProgress
 {
     LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
     if (localCity != nil) {
         localCity.downloadProgress = downloadProgress;
     }
-        
+    
     return;
 }
 

@@ -132,7 +132,7 @@ static AppManager* _defaultAppManager = nil;
     NSString *cityName = @"";
     for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
-            cityName = cityName;
+            cityName = city.cityName;
         }   
     }
     
@@ -144,7 +144,7 @@ static AppManager* _defaultAppManager = nil;
     NSString *cityName = @"";
     for (City *city in _app.testCitiesList) {
         if (city.cityId == cityId) {
-            cityName = cityName;
+            cityName = city.cityName;
         }   
     }
     
@@ -296,12 +296,13 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getCurrentCityName
 {
-    return DEFAULT_CITY_NAME;
+    int cityId = [self getCurrentCityId];
+    return [self getCityName:cityId];
 }
 
 - (void)setCurrentCityId:(int)newCityId
 {
-    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults]; 
     [userDefault setObject:[NSNumber numberWithInt:newCityId] forKey:KEY_CURRENT_CITY];
     [userDefault synchronize];
 }

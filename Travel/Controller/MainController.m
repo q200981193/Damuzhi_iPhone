@@ -17,6 +17,7 @@
 
 #import "NearbyController.h"
 #import "AppManager.h"
+#import "CityManagementController.h"
 
 @implementation MainController
 
@@ -51,6 +52,9 @@
 -(void) clickTitle:(id)sender
 {
     NSLog(@"click title");
+    CityManagementController *controller = [[CityManagementController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 
@@ -176,5 +180,6 @@
     [self.navigationController pushViewController:fc animated:YES];
     [fc release];
 }
+
 
 @end

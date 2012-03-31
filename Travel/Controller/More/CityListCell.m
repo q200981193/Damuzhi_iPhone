@@ -11,6 +11,7 @@
 #import "LocaleUtils.h"
 #import "ImageName.h"
 #import "PackageManager.h"
+#import "PPDebug.h"
 
 
 @interface CityListCell ()
@@ -22,7 +23,10 @@
 @synthesize updateButton;
 @synthesize deleteButton;
 @synthesize dataSizeLabel;
+@synthesize defaultLabel;
 
+@synthesize cityCellDelegate;
+@synthesize city = _city;
 
 + (NSString*)getCellIdentifier
 {
@@ -33,21 +37,27 @@
 {
     return 44.0f;
 }
+#define TAG_DEFAULT 0
+#define TAG_DELETE  1
 
 - (void)setCellData:(City*)city
 {
+    self.city = city;
     self.cityNameLabel.text = [[city.countryName stringByAppendingString:NSLS(@".")] stringByAppendingString:city.cityName];
     
     float dataSize = city.dataSize/1024.0/1024.0;
     self.dataSizeLabel.text = [[NSString alloc] initWithFormat:@"%0.1fM", dataSize];
     
-    if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
-        [self.deleteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]forState:UIControlStateNormal];
-        [self.deleteButton setTitle:NSLS(@"默认") forState:UIControlStateNormal];
-    }
+//    if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
+
+    if (NO) {
+        self.deleteButton.hidden = YES;
+        self.defaultLabel.hidden = NO;
+        [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
+     }
     else {
-        [self.deleteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_DEL_BTN]forState:UIControlStateNormal];
-        [self.deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+        self.deleteButton.hidden = NO;
+        self.defaultLabel.hidden = YES;
     }
     
     if (![city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:city.cityId]]) {
@@ -59,6 +69,21 @@
     }
 }
 
+- (IBAction)clickDeleteBtn:(id)sender {
+    //TODO: delete city
+    if ([self.cityCellDelegate respondsToSelector:@selector(deleteCity:)]) {
+        [self.cityCellDelegate deleteCity:_city];
+    }
+    else {
+        PPDebug(@"self.deletCityDelegate cannot respondsTo deleteCity");
+    }
+}
+
+- (IBAction)clickUpdateBtn:(id)sender {
+    //TODO: download a city package
+    
+
+}
 
 - (void)dealloc {
     [cityNameLabel release];
@@ -67,6 +92,9 @@
     [dataSizeLabel release];
     [dataSizeLabel release];
     [cityNameLabel release];
+    [defaultLabel release];
+    [_city release];
+    
     [super dealloc];
 }
 @end

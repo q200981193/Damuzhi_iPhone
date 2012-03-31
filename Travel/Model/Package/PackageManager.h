@@ -20,6 +20,6 @@
 - (NSString*)getCityVersion:(int)cityId;
 - (LanguageType)getLanguageType:(int)cityId;
 - (NSArray*)getLocalCityList;
-- (NSArray*)getOnlineCityList;
+//- (NSArray*)getOnlineCityList;
 
 @end

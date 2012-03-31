@@ -137,9 +137,9 @@
                 [place2Location release];
                 
                 if (distance1 < distance2)
-                    return NSOrderedDescending;
-                else  if (distance1 > distance2)
                     return NSOrderedAscending;
+                else  if (distance1 > distance2)
+                    return NSOrderedDescending;
                 else return NSOrderedSame;
             }];
             break;

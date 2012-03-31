@@ -130,6 +130,9 @@
 		A48E879A151C0B6D007954D3 /* online_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48E8799151C0B6D007954D3 /* online_btn@2x.png */; };
 		A48E87A6151C5FC0007954D3 /* LocalCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A5151C5FC0007954D3 /* LocalCity.m */; };
 		A48E87A9151C6A3D007954D3 /* LocalCityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A8151C6A3D007954D3 /* LocalCityManager.m */; };
+		A4BB6D8915269E07001CEA6B /* FeekbackController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6D8715269E07001CEA6B /* FeekbackController.m */; };
+		A4BB6D8A15269E07001CEA6B /* FeekbackController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6D8815269E07001CEA6B /* FeekbackController.xib */; };
+		A4BB6D8C1526F52B001CEA6B /* td_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6D8B1526F52B001CEA6B /* td_bg@2x.png */; };
 		A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DC80EF150F2EF00025F032 /* SelectController.m */; };
 		A4DC80F2150F2EF00025F032 /* SelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F0150F2EF00025F032 /* SelectController.xib */; };
 		A4DC80F5150F3DAB0025F032 /* select_bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F3150F3DAB0025F032 /* select_bg_1@2x.png */; };
@@ -552,6 +555,10 @@
 		A48E87A5151C5FC0007954D3 /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
 		A48E87A7151C6A3D007954D3 /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCityManager.h; sourceTree = "<group>"; };
 		A48E87A8151C6A3D007954D3 /* LocalCityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCityManager.m; sourceTree = "<group>"; };
+		A4BB6D8615269E07001CEA6B /* FeekbackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "\bFeekbackController.h"; sourceTree = "<group>"; };
+		A4BB6D8715269E07001CEA6B /* FeekbackController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "\bFeekbackController.m"; sourceTree = "<group>"; };
+		A4BB6D8815269E07001CEA6B /* FeekbackController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "\bFeekbackController.xib"; sourceTree = "<group>"; };
+		A4BB6D8B1526F52B001CEA6B /* td_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "td_bg@2x.png"; sourceTree = "<group>"; };
 		A4DC80EE150F2EF00025F032 /* SelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectController.h; sourceTree = "<group>"; };
 		A4DC80EF150F2EF00025F032 /* SelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectController.m; sourceTree = "<group>"; };
 		A4DC80F0150F2EF00025F032 /* SelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectController.xib; sourceTree = "<group>"; };
@@ -1101,6 +1108,9 @@
 				A3ACE10F1524459F00C9B3DD /* HistoryController.h */,
 				A3ACE1101524459F00C9B3DD /* HistoryController.m */,
 				A3ACE1111524459F00C9B3DD /* HistoryController.xib */,
+				A4BB6D8615269E07001CEA6B /* FeekbackController.h */,
+				A4BB6D8715269E07001CEA6B /* FeekbackController.m */,
+				A4BB6D8815269E07001CEA6B /* FeekbackController.xib */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -1221,6 +1231,7 @@
 		A48CE01D15185C340094BD5D /* city_manager */ = {
 			isa = PBXGroup;
 			children = (
+				A4BB6D8B1526F52B001CEA6B /* td_bg@2x.png */,
 				A48E8799151C0B6D007954D3 /* online_btn@2x.png */,
 				A489ABFF1519729E00B4F691 /* refresh_btn@2x.png */,
 				A48CE01E15185C340094BD5D /* citybtn_off2@2x.png */,
@@ -2780,6 +2791,8 @@
 				A3DED49F152044040076E5CD /* PlaceCell.xib in Resources */,
 				A327DEEF15231A31003DEE8C /* FavoriteController.xib in Resources */,
 				A3ACE1131524459F00C9B3DD /* HistoryController.xib in Resources */,
+				A4BB6D8A15269E07001CEA6B /* FeekbackController.xib in Resources */,
+				A4BB6D8C1526F52B001CEA6B /* td_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3002,6 +3015,7 @@
 				A327DEEE15231A31003DEE8C /* FavoriteController.m in Sources */,
 				A3ACE1121524459F00C9B3DD /* HistoryController.m in Sources */,
 				A3ACE12C152478DD00C9B3DD /* RestaurantFilter.m in Sources */,
+				A4BB6D8915269E07001CEA6B /* FeekbackController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
