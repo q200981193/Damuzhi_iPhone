@@ -14,7 +14,7 @@
 		<string>dmzlogo@2x.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.orange.damuzhi</string>
+	<string>com.gancheng.damuzhi</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

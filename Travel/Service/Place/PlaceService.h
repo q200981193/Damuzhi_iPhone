@@ -31,11 +31,7 @@
 {
     PlaceManager    *_localPlaceManager;
     PlaceManager    *_onlinePlaceManager;
-    
-    int             _currentCityId;
 }
-
-@property (nonatomic, assign) int currentCityId;
 
 + (PlaceService*)defaultService;
 

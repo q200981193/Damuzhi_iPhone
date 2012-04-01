@@ -7,6 +7,8 @@
 //
 
 #import "SlideImageView.h"
+#import "HJObjManager.h"
+#import "PPApplication.h"
 
 @implementation SlideImageView
 
@@ -39,14 +41,7 @@
     [super dealloc];
 }
 
-//self.imageView.callbackOnSetImage = self;
-//[self.imageView clear];
-//self.imageView.url = [NSURL URLWithString:[place icon]];
-//PPDebug(@"load place image from URL %@", [place icon]);
-//[GlobalGetImageCache() manage:self.imageView];
-
-- (void)setImages:(NSArray*)images
-{
+- (void)setImages:(NSArray*)images{
     // remove all old previous images
     NSArray* subviews = [scrollView subviews];
     for (UIView* subview in subviews){
@@ -54,7 +49,6 @@
     }
     
     int imagesCount = [images count];
-    NSLog(@"imagesCount = %d", imagesCount);
     scrollView.contentSize = CGSizeMake(320*imagesCount, scrollView.frame.size.height);   
     for (int i=0; i<imagesCount; i++) {
         CGRect frame;
@@ -62,8 +56,25 @@
         frame.origin.y = 0;
         frame.size = scrollView.frame.size;
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame]; 
-        [imageView setImage:[images objectAtIndex:i]];
+        NSString *image = [images objectAtIndex:i];
+    
+        HJManagedImageV *imageView = [[HJManagedImageV alloc]initWithFrame:frame]; 
+        
+//        NSLog(@"image = %@", image);
+        if ([image isAbsolutePath]) {
+            [imageView setImage:[[UIImage alloc] initWithContentsOfFile:[images objectAtIndex:i]]];
+        }
+        else if([image hasPrefix:@"http:"]){
+            imageView.callbackOnSetImage = self;
+            [imageView clear];
+            imageView.url = [NSURL URLWithString:image];
+//            NSLog(@"load place image from URL %@", image);
+            [GlobalGetImageCache() manage:imageView];
+        }
+        else{
+            [imageView setImage:[images objectAtIndex:i]];
+        }
+        
         [scrollView addSubview:imageView];
         [imageView release];
     }
@@ -76,6 +87,15 @@
     [self addSubview:pageControl];
 }
 
+- (void) managedImageSet:(HJManagedImageV*)mi
+{
+}
+
+- (void) managedImageCancelled:(HJManagedImageV*)mi
+{
+}
+
+
 #pragma mark -
 #pragma mark UIScrollViewDelegate stuff
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView1
@@ -87,7 +107,7 @@
     /* we switch page at %50 across */
     CGFloat pageWidth = scrollView1.frame.size.width;
     int page = floor((scrollView1.contentOffset.x - pageWidth/2)/pageWidth +1);
-    NSLog(@"page = %d", page);
+//    NSLog(@"page = %d", page);
     pageControl.currentPage = page;
     [pageControl setImagePageStateNormal:[UIImage imageNamed:@"pageStateNormal.jpg"]];
     [pageControl setImagePageStateHighted:[UIImage imageNamed:@"pageStateHeight.jpg"]];

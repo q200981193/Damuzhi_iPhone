@@ -62,16 +62,15 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
-    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    [imageHolderView addSubview:slideImageView];  
-    
     [dataSource requestDataWithDelegate:self];
-
 }
 
 - (void)findRequestDone:(int)result data:(CommonOverview*)commonOverview
 {
     NSString* urlString = [commonOverview html];
+    NSArray *imageList = [commonOverview imagesList];
+    
+    //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     NSURL* url = nil;
     if ([urlString hasPrefix:@"http:"]){
         url = [NSURL URLWithString:urlString];           
@@ -81,11 +80,32 @@
         url = [NSURL fileURLWithPath:htmlPath];
     }
     
+    //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);
     if (request) {
         [self.dataWebview loadRequest:request];        
     }
+    
+    
+    //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    NSLog(@"imagePath = %@", [imageList objectAtIndex:0]);
+    if (![[imageList objectAtIndex:0] hasPrefix:@"http:"]) {
+        NSMutableArray *images = [[NSMutableArray alloc] init];
+        for (NSString *image in imageList) {
+            NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image];
+            [images addObject:imagePath];
+//            NSLog(@"imagePath = %@", imagePath);
+        }
+        [slideImageView setImages:images];
+    }
+    else {
+        [slideImageView setImages:imageList];
+    }
+    
+    [imageHolderView addSubview:slideImageView]; 
+    [slideImageView release];
 }
 
 - (void)viewDidUnload

@@ -208,6 +208,7 @@
 }
 
 - (IBAction)clickOnlineBtn:(id)sender {
+    [[AppManager defaultManager] setCurrentCityId:_city.cityId];
 }
 
 @end
