@@ -19,7 +19,9 @@
 - (void)findRequestDone:(int)result dataList:(NSArray*)dataList;
 - (void)filterAndSort;
 
-- (void)finishAddFavourite:(NSNumber*)resultCode count:(int)count;
+- (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
+- (void)finishDeleteFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
+- (void)finishFindTopFavoritePlaces:(NSArray*)list type:(int)type;
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
 
 @end
@@ -48,9 +50,11 @@
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
                        place:(Place*)place;
-
+- (void)deletePlaceFromFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
+                          place:(Place*)place;
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
                       placeId:(int)placeId;
+- (void)findTopFavoritePlaces:(PPViewController<PlaceServiceDelegate>*)viewController type:(int)type;
 
 //- (BOOL)isPlaceInFavorite:(int)placeId;
 
