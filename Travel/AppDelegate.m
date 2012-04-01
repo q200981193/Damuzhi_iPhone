@@ -43,8 +43,6 @@
     
     //juage if app is firstLaunch
     if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
-        [[LocalCityManager defaultManager] createLocalCity:BUILDIN_CITY_ID];
-        
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_LAUNCH];
     }
@@ -76,6 +74,12 @@
     
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
+    
+    //if app is first launch, create build-in city info
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+        [[[LocalCityManager defaultManager] createLocalCity:BUILDIN_CITY_ID] setDownloadDoneFlag:YES];
+    }
+
     return YES;
 }
 
