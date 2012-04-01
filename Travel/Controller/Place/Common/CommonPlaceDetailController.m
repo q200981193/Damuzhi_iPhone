@@ -19,6 +19,7 @@
 #import "PlaceService.h"
 #import "LogUtil.h"
 #import "PlaceStorage.h"
+#import "NearByRecommendController.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -126,7 +127,7 @@
 
 - (void)clickMap:(id)sender
 {
-    PlaceMapViewController* controller = [[[PlaceMapViewController alloc]init]autorelease];
+    NearByRecommendController* controller = [[[NearByRecommendController alloc]init]autorelease];
     controller.superController = self;
     [self.navigationController pushViewController:controller animated:YES];
     [controller gotoLocation:self.place];
