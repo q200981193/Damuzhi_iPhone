@@ -36,6 +36,8 @@
 		A3CD5B20152804490049D2F3 /* QQWeiboService.m in Sources */ = {isa = PBXBuildFile; fileRef = A3CD5B08152804490049D2F3 /* QQWeiboService.m */; };
 		A3CD5B21152804490049D2F3 /* SinaSNSService.m in Sources */ = {isa = PBXBuildFile; fileRef = A3CD5B0A152804490049D2F3 /* SinaSNSService.m */; };
 		A3CD5B22152804490049D2F3 /* SINAWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A3CD5B0E152804490049D2F3 /* SINAWeiboRequest.m */; };
+		A3CD5B2915280D2C0049D2F3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3CD5B2715280D2C0049D2F3 /* Localizable.strings */; };
+		A3CD5B2B15280D360049D2F3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3CD5B2715280D2C0049D2F3 /* Localizable.strings */; };
 		A3DED49E152044040076E5CD /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DED49C152044040076E5CD /* PlaceCell.m */; };
 		A3DED49F152044040076E5CD /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3DED49D152044040076E5CD /* PlaceCell.xib */; };
 		A4034755150D998200D2B11E /* HotelListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034754150D998200D2B11E /* HotelListFilter.m */; };
@@ -479,6 +481,9 @@
 		A3CD5B0B152804490049D2F3 /* SNSServiceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNSServiceDelegate.h; sourceTree = "<group>"; };
 		A3CD5B0D152804490049D2F3 /* SINAWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SINAWeiboRequest.h; sourceTree = "<group>"; };
 		A3CD5B0E152804490049D2F3 /* SINAWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SINAWeiboRequest.m; sourceTree = "<group>"; };
+		A3CD5B2815280D2C0049D2F3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A3CD5B2A15280D360049D2F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A3CD5B2C15280E280049D2F3 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A3DED49B152044040076E5CD /* PlaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceCell.h; sourceTree = "<group>"; };
 		A3DED49C152044040076E5CD /* PlaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceCell.m; sourceTree = "<group>"; };
 		A3DED49D152044040076E5CD /* PlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
@@ -2651,6 +2656,7 @@
 		CA4906FF14F5F05B00228C37 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A3CD5B2715280D2C0049D2F3 /* Localizable.strings */,
 				CA49070014F5F05B00228C37 /* Travel-Info.plist */,
 				CA49070114F5F05B00228C37 /* InfoPlist.strings */,
 				CA49070414F5F05B00228C37 /* main.m */,
@@ -3012,6 +3018,8 @@
 				A3CD5B1D152804490049D2F3 /* sinaico@2x.png in Resources */,
 				A3CD5B1E152804490049D2F3 /* sinaico_big.png in Resources */,
 				A3CD5B1F152804490049D2F3 /* sinaico_big@2x.png in Resources */,
+				A3CD5B2915280D2C0049D2F3 /* Localizable.strings in Resources */,
+				A3CD5B2B15280D360049D2F3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3260,6 +3268,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A3CD5B2715280D2C0049D2F3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A3CD5B2815280D2C0049D2F3 /* zh-Hans */,
+				A3CD5B2A15280D360049D2F3 /* en */,
+				A3CD5B2C15280E280049D2F3 /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		CA455F5014F66EDD00DA085D /* ReviewRequest.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

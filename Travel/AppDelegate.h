@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "PPApplication.h"
 
+#define kAppId			@"travl_id"
+
 @class MainController;
 
 @interface AppDelegate : PPApplication <UIApplicationDelegate>
