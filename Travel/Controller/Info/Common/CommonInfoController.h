@@ -13,7 +13,8 @@
 @protocol CommonInfoDataSourceProtocol <NSObject>
 
 - (NSArray*)getImages;
-- (NSString*)getHtmlFilePath;
+- (NSURL*)getHtmlFileURL;
+- (NSString*)getTitleName;
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource;
 
 @end

@@ -211,9 +211,16 @@
 {
     if (tableView1 == self.dataTableView) {
         NSLog(@"touch row %d", indexPath.row);
+        //city is alread setted!
         City *city = [dataList objectAtIndex:indexPath.row];
+        if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
+            return;
+        }
+        
         [[AppManager defaultManager] setCurrentCityId:city.cityId];
         [tableView1 reloadData];
+        
+        //show message for selected a default city
         NSString *cityName = [[city.countryName stringByAppendingString:NSLS(@".")] stringByAppendingString:city.cityName];
         NSString *message = [NSString stringWithFormat:@"您已把%@设为默认访问城市!", cityName];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
@@ -287,6 +294,11 @@
     [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
     self.dataList = [[PackageManager defaultManager] getLocalCityList];
     [self.dataTableView reloadData];
+}
+
+- (void)didDownloadFailed:(NSError *)error
+{
+    [self popupMessage:NSLS(@"下载失败") title:nil];
 }
 
 @end

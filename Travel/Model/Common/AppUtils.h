@@ -29,6 +29,7 @@
 + (NSString*)getAppDir;
 + (NSString*)getZipDir;
 + (NSString*)getCityDir:(int)cityId;
++ (NSString*)getCityDataDir:(int)cityId;
 
 //interface for file path
 + (NSString*)getCityoverViewFilePath:(int)cityId;
