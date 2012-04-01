@@ -13,6 +13,8 @@
 #import "Place.pb.h"
 #import "CommonPlace.h"
 #import "ImageName.h"
+#import "PlaceService.h"
+#import "TravelNetworkConstants.h"
 
 @interface FavoriteController ()
 
@@ -20,7 +22,7 @@
 - (void)clickMyFavorite:(id)sender;
 - (void)clickTopFavorite:(id)sender;
 - (void)clickDelete:(id)sender;
-- (void)reloadList:(NSArray*)list;
+- (NSArray*)filterFromMyFavorite:(int)categoryId;
 
 @end
 
@@ -30,13 +32,32 @@
 @synthesize placeListController;
 @synthesize placeList = _placeList;
 @synthesize canDelete;
-
+@synthesize myFavoriteButton;
+@synthesize topFavoriteButton;
+@synthesize deleteButton;
+@synthesize myAllFavoritePlaceList;
+@synthesize topAllFavoritePlaceList;
+@synthesize topSpotFavoritePlaceList;
+@synthesize topHotelFavoritePlaceList;
+@synthesize topRestaurantFavoritePlaceList;
+@synthesize topShoppingFavoritePlaceList;
+@synthesize topEntertainmentFavoritePlaceList;
 
 - (void)dealloc {
     [buttonHolderView release];
     [placeListHolderView release];
     [placeListController release];
     [_placeList release];
+    [myFavoriteButton release];
+    [topFavoriteButton release];
+    [deleteButton release];
+    [myAllFavoritePlaceList release];
+    [topAllFavoritePlaceList release];
+    [topSpotFavoritePlaceList release];
+    [topHotelFavoritePlaceList release];
+    [topRestaurantFavoritePlaceList release];
+    [topShoppingFavoritePlaceList release];
+    [topEntertainmentFavoritePlaceList release];
     [super dealloc];
 }
 
@@ -52,18 +73,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self setNavigationLeftButton:NSLS(@"返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     [self createRightBarButton];
     
-    self.placeList = [[PlaceStorage favoriteManager] allPlaces];
-    
-    PPDebug(@"%d",[_placeList count]);
-    self.placeListController = [PlaceListController createController:_placeList 
-                                                           superView:placeListHolderView
-                                                     superController:self];  
+    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    if ([myAllFavoritePlaceList count] >= 1) {
+        [self clickMyFavorite:nil];
+    }else {
+        [self clickTopFavorite:nil];
+    }
+}
+
+- (void)showPlaces{
+    if (self.placeListController == nil) {
+        self.placeListController = [PlaceListController createController:self.placeList 
+                                                               superView:placeListHolderView
+                                                         superController:self];
+    }
+    else {
+        [self.placeListController setAndReloadPlaceList:self.placeList];
+    }
 }
 
 - (void)viewDidUnload
@@ -72,6 +103,16 @@
     [self setPlaceListHolderView:nil];
     [self setPlaceListController:nil];
     [self setPlaceList:nil];
+    [self setMyFavoriteButton:nil];
+    [self setTopFavoriteButton:nil];
+    [self setDeleteButton:nil];
+    [self setMyAllFavoritePlaceList:nil];
+    [self setTopAllFavoritePlaceList:nil];
+    [self setTopSpotFavoritePlaceList:nil];
+    [self setTopHotelFavoritePlaceList:nil];
+    [self setTopRestaurantFavoritePlaceList:nil];
+    [self setTopShoppingFavoritePlaceList:nil];
+    [self setTopEntertainmentFavoritePlaceList:nil];
     [super viewDidUnload];
 }
 
@@ -85,55 +126,42 @@
 #define BUTTON_WIDTH                80
 #define BUTTON_HIGHT                30
 #define DELETE_BUTTON_WIDTH          40
-
-#define TAG_MY_FAVORITE_BUTTON   210
-#define TAG_TOP_FAVORITE_BUTTON  211
-#define TAG_DELETE_BUTTON        222
-
 - (void)createRightBarButton
 {
     UIView *rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RIGHT_BUTTON_VIEW_WIDTH, RIGHT_BUTTON_VIEW_HIGHT)];
-    //test backgroundcolor
-    //rightButtonView.backgroundColor = [UIColor blueColor];
     
-    UIButton *myFavoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
-    myFavoriteButton.tag = TAG_MY_FAVORITE_BUTTON;
-    //test backgroundcolor
-    //myFavoriteButton.backgroundColor = [UIColor grayColor];
-    myFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [myFavoriteButton setTitle:NSLS(@"我的收藏") forState:UIControlStateNormal];
-    [myFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
-    [myFavoriteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    [myFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
-    [myFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
-    [myFavoriteButton addTarget:self action:@selector(clickMyFavorite:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButtonView addSubview:myFavoriteButton];
-    [myFavoriteButton release];
+    UIButton *mfbtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
+    self.myFavoriteButton = mfbtn;
+    [mfbtn release];
     
-    UIButton *topFavoriteButton = [[UIButton alloc] initWithFrame:CGRectMake(BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
-    topFavoriteButton.tag = TAG_TOP_FAVORITE_BUTTON;
-    //test backgroundcolor
-    //topFavoriteButton.backgroundColor = [UIColor greenColor];
-    topFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [topFavoriteButton setTitle:NSLS(@"收藏排行") forState:UIControlStateNormal];
-    [topFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
-    [topFavoriteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    [topFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
-    [topFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
-    [topFavoriteButton addTarget:self action:@selector(clickTopFavorite:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButtonView addSubview:topFavoriteButton];
-    [topFavoriteButton release];
+    self.myFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.myFavoriteButton setTitle:NSLS(@"我的收藏") forState:UIControlStateNormal];
+    [self.myFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [self.myFavoriteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [self.myFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
+    [self.myFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
+    [self.myFavoriteButton addTarget:self action:@selector(clickMyFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:self.myFavoriteButton];
     
-    UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 0, DELETE_BUTTON_WIDTH, BUTTON_HIGHT)];
-    deleteButton.tag = TAG_DELETE_BUTTON;
-    //test backgroundcolor
-    //deleteButton.backgroundColor = [UIColor grayColor];
-    deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [deleteButton setBackgroundImage:[UIImage imageNamed:@"topmenu_btn_right.png"] forState:UIControlStateNormal];
-    [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
-    [deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButtonView addSubview:deleteButton];
-    [deleteButton release];
+    UIButton *tfbtn = [[UIButton alloc] initWithFrame:CGRectMake(BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
+    self.topFavoriteButton = tfbtn;
+    self.topFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.topFavoriteButton setTitle:NSLS(@"收藏排行") forState:UIControlStateNormal];
+    [self.topFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [self.topFavoriteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+    [self.topFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
+    [self.topFavoriteButton setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
+    [self.topFavoriteButton addTarget:self action:@selector(clickTopFavorite:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:self.topFavoriteButton];
+    
+    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 0, DELETE_BUTTON_WIDTH, BUTTON_HIGHT)];
+    self.deleteButton = dbtn;
+    [dbtn release];
+    self.deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"topmenu_btn_right.png"] forState:UIControlStateNormal];
+    [self.deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+    [self.deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:self.deleteButton];
     
     
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButtonView];
@@ -142,26 +170,57 @@
     [rightButtonItem release];
 }
 
-- (void)clickMyFavorite:(id)sender
+- (void)loadTopFavorite:(int)type
 {
-    UIButton *myFavoriteButton = (UIButton*)sender;
-    UIButton *topFavoriteButton = (UIButton*)[self.navigationItem.rightBarButtonItem.customView viewWithTag:TAG_TOP_FAVORITE_BUTTON];
-    myFavoriteButton.selected = YES;
-    topFavoriteButton.selected = NO;
-    
-    //show my favorite
+    [[PlaceService defaultService] findTopFavoritePlaces:self type:type];
 }
 
-- (void)clickTopFavorite:(id)sender
+#pragma mark - deletePlaceDelegate 
+- (void)deletedPlace:(Place *)place
 {
-    UIButton *myFavoriteButton = (UIButton*)[self.navigationItem.rightBarButtonItem.customView viewWithTag:TAG_MY_FAVORITE_BUTTON];
-    UIButton *topFavoriteButton = (UIButton*)sender;
-    myFavoriteButton.selected = NO;
-    topFavoriteButton.selected = YES;
-    
-    //show top favorite
+    [[PlaceService defaultService] deletePlaceFromFavorite:self place:place];
+    self.placeList = [[PlaceStorage favoriteManager] allPlaces];
 }
 
+#pragma mark - PlaceServiceDelegate 
+- (void)finishDeleteFavourite:(NSNumber *)resultCode count:(NSNumber *)count
+{
+    
+}
+
+- (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type
+{
+    switch (type) {
+        case OBJECT_TYPE_TOP_FAVORITE_ALL:
+            self.topAllFavoritePlaceList = list;
+            break;
+            
+        case OBJECT_TYPE_TOP_FAVORITE_SPOT:
+            self.topSpotFavoritePlaceList = list;
+            break;
+            
+        case OBJECT_TYPE_TOP_FAVORITE_HOTEL:
+            self.topHotelFavoritePlaceList = list;
+            break;
+            
+        case OBJECT_TYPE_TOP_FAVORITE_RESTAURANT:
+            self.topRestaurantFavoritePlaceList = list;
+            break;
+            
+        case OBJECT_TYPE_TOP_FAVORITE_SHOPPING:
+            self.topShoppingFavoritePlaceList = list;
+            break;
+            
+        case OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT:
+            self.topEntertainmentFavoritePlaceList = list;
+            break;
+        
+        default:
+            break;
+    }
+}
+
+#pragma -mark BarButton action
 - (void)clickDelete:(id)sender
 {
     UIButton *button = (UIButton*)sender;
@@ -175,49 +234,129 @@
     }
 }
 
-#pragma mark - deletePlaceDelegate 
-- (void)deletedPlace:(Place *)place
+- (void)clickMyFavorite:(id)sender
 {
-    PlaceStorage *manager = [PlaceStorage favoriteManager];
-    [manager deletePlace:place];
-    self.placeList = [manager allPlaces];
+    myFavoriteButton.selected = YES;
+    topFavoriteButton.selected = NO;
+    deleteButton.hidden = NO;
+    
+    [self clickAll:nil];
 }
 
+- (void)clickTopFavorite:(id)sender
+{
+    myFavoriteButton.selected = NO;
+    topFavoriteButton.selected = YES;
+    deleteButton.hidden = YES;
+    
+    [self clickAll:nil];
+}
 
 #pragma mark - filter button action
 - (IBAction)clickAll:(id)sender
 {
-     [self reloadList:_placeList];
+    if (self.myFavoriteButton.selected == YES) {
+        self.placeList = myAllFavoritePlaceList;
+    }
+    
+    else {
+        if (topAllFavoritePlaceList == nil) {
+            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ALL];
+        }
+        self.placeList = topAllFavoritePlaceList;
+    }
+    [self showPlaces];
 }
 
 - (IBAction)clickSpot:(id)sender
 { 
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (Place *place in _placeList) {
-        if (place.categoryId == PLACE_TYPE_SPOT){
-            [array addObject:place];
-        }
+    if (myFavoriteButton.selected == YES) {
+        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SPOT];
     }
-    [self reloadList:array];
-    [array release];
+    
+    else {
+        if(topSpotFavoritePlaceList == nil){
+            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SPOT];
+        }
+        self.placeList = topAllFavoritePlaceList;
+    }
+    
+    [self showPlaces];
 }
 
 - (IBAction)clickHotel:(id)sender
 {
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (Place *place in _placeList) {
-        if (place.categoryId == PLACE_TYPE_HOTEL){
+    if (myFavoriteButton.selected == YES) {
+        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_HOTEL];
+    }
+    
+    else {
+        if(topHotelFavoritePlaceList == nil){
+            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_HOTEL];
+        }
+        self.placeList = topHotelFavoritePlaceList;
+    }
+    
+    [self showPlaces];
+}
+
+- (IBAction)clickRestaurant:(id)sender
+{
+    if (myFavoriteButton.selected == YES) {
+        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_RESTAURANT];
+    }
+    
+    else {
+        if(topRestaurantFavoritePlaceList == nil){
+            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_RESTAURANT];
+        }
+        self.placeList = topRestaurantFavoritePlaceList;
+    }
+    
+    [self showPlaces]; 
+}
+
+- (IBAction)clickShopping:(id)sender
+{
+    if (myFavoriteButton.selected == YES) {
+        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SHOPPING];
+    }
+    
+    else {
+        if(topShoppingFavoritePlaceList == nil){
+            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SHOPPING];
+        }
+        self.placeList = topShoppingFavoritePlaceList;
+    }
+    
+    [self showPlaces];
+}
+
+- (IBAction)clickEntertainment:(id)sender
+{
+    if (myFavoriteButton.selected == YES) {
+        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_ENTERTAINMENT];
+    }
+    
+    else {
+        if(topEntertainmentFavoritePlaceList == nil){
+            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT];
+        }
+        self.placeList = topEntertainmentFavoritePlaceList;
+    }
+    
+    [self showPlaces];
+}
+
+- (NSArray*)filterFromMyFavorite:(int)categoryId
+{
+    NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];
+    for (Place *place in myAllFavoritePlaceList) {
+        if (place.categoryId == categoryId){
             [array addObject:place];
         }
     }
-    [self reloadList:array];
-    [array release];
+    return array;
 }
-
-- (void)reloadList:(NSArray*)list
-{
-    [self.placeListController setAndReloadPlaceList:list];
-}
-
 
 @end

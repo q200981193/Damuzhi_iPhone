@@ -26,6 +26,7 @@
 
 @synthesize downloadRequestList = _downloadRequestList;
 @synthesize queue = _queue;
+@synthesize delegate = _delegate;
 
 static AppService* _defaultAppService = nil;
 
@@ -258,7 +259,7 @@ static AppService* _defaultAppService = nil;
         LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
         if(localCity.cityId == city.cityId)
         {
-            //    Cancels an asynchronous request, clearing all delegates and blocks first
+            //Cancels an asynchronous request, clearing all delegates and blocks first
             [request clearDelegatesAndCancel];    
             [request cancel];
             
@@ -278,26 +279,27 @@ static AppService* _defaultAppService = nil;
 //    // Use when fetching binary data
 //    NSData *responseData = [request responseData];
     
-    NSLog(@"requestFinished");
-    
+    //update download city info.
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
     localCity.downloadDoneFlag = YES;
 
+    //
     [_downloadRequestList removeObject:request];
     [AppUtils unzipCityZip:localCity.cityId];
 }
 
-
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-//    NSError *error = [request error];
+    //call delegate method to show download failed message.
+    NSError *error = [request error];
+    [_delegate didDownloadFailed:error];
     
-    NSLog(@"requestFailed");
-    
+    //remove download city info.
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-
-    [_downloadRequestList removeObject:request];
     [[LocalCityManager defaultManager] removeLocalCity:localCity.cityId];
+
+    //remove failed request.
+    [_downloadRequestList removeObject:request];
 }
 
 
