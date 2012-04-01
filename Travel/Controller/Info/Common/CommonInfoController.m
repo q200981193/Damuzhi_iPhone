@@ -66,19 +66,42 @@
     [imageHolderView addSubview:slideImageView];  
     
     // add image array
-    [dataSource getImages];
+//    [dataSource getImages];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:[dataSource getHtmlFileURL]];
-    NSLog(@"load webview url = %@", [request description]);
-    if (request) {
-        [self.dataWebview loadRequest:request];
-    }
+//    NSArray* images = [dataSource getImages];
+//    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
+//        NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
+//        for (NSString *image in images) {
+//            NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image]; 
+//            [imagePathList addObject:imagePath];
+//        }
+//    }
+//    else
+//    {
+//        
+//    }
+    
+    [dataSource requestDataWithDelegate:self];
 
 }
 
-- (void)findRequestDone:(int)result data:(CityOverview*)cityOverView
+- (void)findRequestDone:(int)result data:(CommonOverview*)commonOverview
 {
+    NSString* urlString = [commonOverview html];
+    NSURL* url = nil;
+    if ([urlString hasPrefix:@"http:"]){
+        url = [NSURL URLWithString:urlString];           
+    }
+    else{
+        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:urlString];         
+        url = [NSURL fileURLWithPath:htmlPath];
+    }
     
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSLog(@"load webview url = %@", [request description]);
+    if (request) {
+        [self.dataWebview loadRequest:request];        
+    }
 }
 
 - (void)viewDidUnload
