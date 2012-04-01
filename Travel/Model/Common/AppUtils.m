@@ -39,6 +39,11 @@
     return [[FileUtil getFileFullPath:DIR_OF_CITY] stringByAppendingPathComponent:[[NSString alloc] initWithFormat:@"/%d", cityId]];
 }
 
++ (NSString*)getCityDataDir:(int)cityId
+{
+    return [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_CITY_DATA];
+}
+
 + (NSString*)getCityoverViewFilePath:(int)cityId
 {
     return [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:FILENAME_OF_CITY_OVERVIEW_DATA]; 
