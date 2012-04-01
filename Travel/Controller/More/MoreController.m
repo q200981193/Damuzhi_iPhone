@@ -9,6 +9,7 @@
 #import "MoreController.h"
 #import "LocaleUtils.h"
 #import "HistoryController.h"
+#import "AppDelegate.h"
 
 @interface MoreController ()
 
@@ -149,9 +150,9 @@
     if (version && dataVersion) {
         NSString *localVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         if ([version isEqual:localVersion]) {
-            [self popupHappyMessage:NSLS(@"已经是最新版本") title:nil];
+            [self popupHappyMessage:NSLS(@"isNewVersion") title:nil];
         }else {
-            //[UIUtils openApp:kAppId];
+            [UIUtils openApp:kAppId];
         }
     }
     else {
