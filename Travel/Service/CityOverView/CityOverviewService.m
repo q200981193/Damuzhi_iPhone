@@ -21,8 +21,6 @@
 
 @implementation CityOverViewService
 
-@synthesize currentCityId = _currentCityId;
-
 static CityOverViewService *_cityOverViewService = nil;
 
 + (CityOverViewService*)defaultService
@@ -39,7 +37,6 @@ static CityOverViewService *_cityOverViewService = nil;
     self = [super init];
     _localCityOverViewManager = [[CityOverViewManager alloc] init];
     _onlineCityOverViewManager = [[CityOverViewManager alloc] init];
-    self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     return self;
 }
 
@@ -67,14 +64,14 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         int resultCode = 0;
         if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
             // read local data firstly               
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:[[AppManager defaultManager]getCurrentCityId]]);
             if (localHandler != NULL){
                 overview = localHandler(&resultCode);
             }
         }
         else{
             // if local data no exist, try to read data from remote            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:_currentCityId]);            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:[[AppManager defaultManager]getCurrentCityId]]);            
             if (remoteHandler != NULL){
                 overview = remoteHandler(&resultCode);
             }
@@ -96,7 +93,7 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
     };
     
     LocalRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:4 objId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:4 objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
         
@@ -124,7 +121,7 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
     };
     
     LocalRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:2 objId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:2 objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
         

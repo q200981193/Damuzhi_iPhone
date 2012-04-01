@@ -19,20 +19,11 @@
 
 @interface CityOverViewService : CommonService
 {
-    int        _currentCityId;
-
     CityOverViewManager *_localCityOverViewManager;
     CityOverViewManager *_onlineCityOverViewManager;
 }
 
-@property (nonatomic, assign) int currentCityId;
-
 + (CityOverViewService*)defaultService;
-
-//- (void)findCityBasic:(PPViewController*)viewController;
-//- (void)findTravelPrepration:(PPViewController*)viewController;
-//- (void)findTravelUtility:(PPViewController*)viewController;
-//- (void)findTravelTransportation:(PPViewController*)viewController;
 
 - (void)findCityBasic:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate>*)viewController;
 - (void)findTravelUtility:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate> *)viewController;

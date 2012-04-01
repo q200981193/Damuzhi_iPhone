@@ -92,16 +92,13 @@
 
 - (void)viewDidLoad
 {
-    self.dataList = [[PackageManager defaultManager] getLocalCityList];
-    //self.downloadList = [[PackageManager defaultManager] getOnlineCityList];
-    self.downloadList = [[AppManager defaultManager] getCityList];
-    
     [self setBackgroundImageName:IMAGE_CITY_MAIN_BOTTOM];
-
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    
+    self.dataList = [[PackageManager defaultManager] getLocalCityList];
+    self.downloadList = [[AppManager defaultManager] getCityList];
+
     UIColor *color = [[UIColor alloc] initWithRed:121.0/255.0 green:164.0/255.0 blue:180.0/255.0 alpha:1]; 
     [self.promptLabel setBackgroundColor:color];
     [color release];
