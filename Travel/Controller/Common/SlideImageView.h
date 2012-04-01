@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "UICustomPageControl.h"
+#import "HJManagedImageV.h"
 
-@interface SlideImageView : UIView <UIScrollViewDelegate>
+@interface SlideImageView : UIView <UIScrollViewDelegate, HJManagedImageVDelegate>
 {
     BOOL pageControlIsChangingPage;
 }

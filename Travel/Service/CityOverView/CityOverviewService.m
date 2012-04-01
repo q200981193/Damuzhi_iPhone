@@ -65,7 +65,7 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
     [queue addOperationWithBlock:^{
         CommonOverview* overview = nil;
         int resultCode = 0;
-        if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+        if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
             if (localHandler != NULL){
@@ -131,12 +131,6 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
 
         CommonOverview *commonOverView = [travelResponse overview];
-        
-        CityOverview_Builder* builder = [[[CityOverview_Builder alloc] init] autorelease];
-        [builder setCityBasic:commonOverView];
-        CityOverview *cityOverView = [builder build];
-        
-        _onlineCityOverViewManager.cityOverView = cityOverView;
 
         *resultCode = 0;
         

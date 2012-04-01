@@ -25,8 +25,6 @@
 
 static PlaceService* _defaultPlaceService = nil;
 
-@synthesize currentCityId = _currentCityId;
-
 #pragma mark - 
 #pragma mark Life Cycle Management
 
@@ -51,7 +49,6 @@ static PlaceService* _defaultPlaceService = nil;
     self = [super init];
     _localPlaceManager = [[PlaceManager alloc] init];
     _onlinePlaceManager = [[PlaceManager alloc] init];
-    self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     return self;
 }
 
@@ -74,16 +71,16 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     [queue addOperationWithBlock:^{
         NSArray* list = nil;
         int resultCode = 0;
-        if ([AppUtils hasLocalCityData:_currentCityId] == YES){
+        if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
             // read local data firstly               
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:[[AppManager defaultManager] getCurrentCityId]]);
             if (localHandler != NULL){
                 list = localHandler(&resultCode);
             }
         }
         else{
             // if local data no exist, try to read data from remote            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:_currentCityId]);            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:[[AppManager defaultManager] getCurrentCityId]]);            
             if (remoteHandler != NULL){
                 list = remoteHandler(&resultCode);
             }
@@ -137,9 +134,8 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 
 - (void)findPlaces:(int)categoryId viewController:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localPlaceManager switchCity:_currentCityId];
+        [_localPlaceManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
         NSArray* list = [_localPlaceManager findPlacesByCategory:categoryId];   
         *resultCode = 0;
         return list;
@@ -148,7 +144,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:[self getObjectTypeByPlaceCategoryId:categoryId] 
-                                                               cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+                                                               cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
         _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
@@ -164,91 +160,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                      localHandler:localHandler
                     remoteHandler:remoteHandler];
 }
-
-//- (void)findAllSpots:(PPViewController<PlaceServiceDelegate>*)viewController
-//{
-//    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-//        [_localPlaceManager switchCity:_currentCityId];
-//        NSArray* list = [_localPlaceManager findAllSpots];   
-//        *resultCode = 0;
-//        return list;
-//    };
-//    
-//    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-//        // TODO, send network request here
-//        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_SPOT cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-//        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-//        
-//        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
-//        
-//        NSArray* list = [_onlinePlaceManager findAllSpots];   
-//        
-//        *resultCode = 0;
-//
-//        return list;
-//    };
-//
-//    [self processLocalRemoteQuery:viewController
-//                     localHandler:localHandler
-//                    remoteHandler:remoteHandler];
-//}
-//
-//
-//- (void)findAllHotels:(PPViewController<PlaceServiceDelegate>*)viewController
-//{
-//    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-//        [_localPlaceManager switchCity:_currentCityId];
-//        NSArray* list = [_localPlaceManager findAllHotels];   
-//        *resultCode = 0;
-//        return list;
-//    };
-//    
-//    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-//        // TODO, send network request here
-//        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_HOTEL 
-//                                                               cityId:_currentCityId
-//                                                                 lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-//        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-//        
-//        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
-//        
-//        NSArray* list = [_onlinePlaceManager findAllHotels];   
-//        *resultCode = 0;
-//        
-//        return list;
-//    };
-//    
-//    [self processLocalRemoteQuery:viewController
-//                     localHandler:localHandler
-//                    remoteHandler:remoteHandler];
-//}
-//
-//- (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
-//{
-//    
-//    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-//        [_localPlaceManager switchCity:_currentCityId];
-//        NSArray* list = [_localPlaceManager findAllPlaces];   
-//        *resultCode = 0;
-//        return list;
-//    };
-//    
-//    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-//        // TODO, send network request here
-//        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_ALL_PLACE cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE];
-//        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-//        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];
-//        
-//        NSArray* list = [_onlinePlaceManager findAllPlaces];
-//        *resultCode = 0;
-//        
-//        return list;
-//    };
-//    
-//    [self processLocalRemoteQuery:viewController
-//                     localHandler:localHandler
-//                    remoteHandler:remoteHandler];    
-//}
 
 - (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
@@ -345,7 +256,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         
-        CommonNetworkOutput *output = [TravelNetworkRequest queryList:type cityId:_currentCityId lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        CommonNetworkOutput *output = [TravelNetworkRequest queryList:type cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
@@ -358,10 +269,5 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         });
     }); 
 }
-
-//- (BOOL)isPlaceInFavorite:(int)placeId
-//{ 
-//    return NO;
-//}
 
 @end
