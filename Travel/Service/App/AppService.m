@@ -87,13 +87,13 @@ static AppService* _defaultAppService = nil;
     }
 }
 
-- (void)copyDefaultCityZipFromBundleAndRelease
+- (void)copyBuildinCityZipFromBundleAndRelease
 {    
     // create City Dir
     [FileUtil createDir:[AppUtils getZipDir]];
     
     // copy file from bundle to zip dir
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:BUILDIN_CITY_ID]]) {
         PPDebug(@"copy defalut zip from bundle to zip dir");
         [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
                                       appDir:[AppUtils getZipDir] 
@@ -102,15 +102,15 @@ static AppService* _defaultAppService = nil;
     
     // if there has no unzip city data, unzip
     //if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
-    if (![AppUtils hasLocalCityData:DEFAULT_CITY_ID]) {
-        [AppUtils unzipCityZip:DEFAULT_CITY_ID];
+    if (![AppUtils hasLocalCityData:BUILDIN_CITY_ID]) {
+        [AppUtils unzipCityZip:BUILDIN_CITY_ID];
     }
 }
 
 - (void)loadAppData
 {
     [self copyDefaultAppDataFormBundle];
-    [self copyDefaultCityZipFromBundleAndRelease];
+    [self copyBuildinCityZipFromBundleAndRelease];
     [[AppManager defaultManager] loadAppData];
 }
 

@@ -14,6 +14,7 @@
 #import "AppService.h"
 #import "UserService.h"
 #import "LocalCityManager.h"
+#import "AppConstants.h"
 
 @implementation AppDelegate
 
@@ -27,14 +28,28 @@
     [super dealloc];
 }
 
+#define EVER_LAUNCHED @"everLaunched"
+#define FIRST_LAUNCH @"firstLaunch"
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
     if ([DeviceDetection isOS5]){
         [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_live.png"] forBarMetrics:UIBarMetricsDefault];
     }
     else{
         GlobalSetNavBarBackground(@"top_live.png");        
+    }
+    
+    //juage if app is firstLaunch
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
+        [[LocalCityManager defaultManager] createLocalCity:BUILDIN_CITY_ID];
+        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_LAUNCH];
+    }
+    else{
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_LAUNCH];
     }
     
     [self initImageCacheManager];

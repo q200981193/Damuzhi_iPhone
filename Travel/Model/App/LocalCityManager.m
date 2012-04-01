@@ -7,6 +7,7 @@
 //
 
 #import "LocalCityManager.h"
+#import "AppUtils.h"
 
 @implementation LocalCityManager
 
@@ -23,7 +24,6 @@ static LocalCityManager *_defaultManager = nil;
         [_defaultManager loadLocalCities];
         for (LocalCity *localCity in [_defaultManager.localCities allValues]) {
             localCity.downloadingFlag = NO;
-//            NSLog(@"localCity: %@", localCity.description);
         }
     }
     
