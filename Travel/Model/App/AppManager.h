@@ -29,6 +29,7 @@
 - (NSString*)getAppDataVersion;
 - (NSString*)getHelpHtml;
 
+- (NSString*)getCategoryName:(int)categoryId;
 - (NSArray*)getCityList;
 - (NSArray*)getCityIdList;
 - (NSArray*)getCityNameList;
@@ -38,13 +39,12 @@
 - (NSString*)getCityLatestVersion:(int)cityId;
 - (NSString*)getCountryName:(int)cityId;
 - (int)getCityDataSize:(int)cityId;
-- (NSString*)getCItyDownloadUrl:(int)cityId;
+- (NSString*)getCityDownloadUrl:(int)cityId;
 
-- (NSArray*)getPlaceName:(int)categoryId;
 - (NSArray*)getSubCategoryList:(int)categoryId;
 - (NSArray*)getProvidedServiceList:(int)categoryId;
 
-- (NSArray*)getSubCategotyNameList:(int)categoryId;
+//- (NSArray*)getSubCategotyNameList:(int)categoryId;
 - (NSArray*)getProvidedServiceNameList:(int)categoryId;
 - (NSArray*)getProvidedServiceIconList:(int)categoryId;
 
