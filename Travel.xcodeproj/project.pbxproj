@@ -405,6 +405,7 @@
 		EAFC7E121515D1FF00CE20CF /* RestaurantDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */; };
 		EAFC7E151515D22300CE20CF /* ShoppingDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */; };
 		EAFC7E181515D25300CE20CF /* EntertainmentDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */; };
+		EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1082,6 +1083,8 @@
 		EAFC7E111515D1FE00CE20CF /* RestaurantDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewHandler.m; sourceTree = "<group>"; };
 		EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingDetailViewHandler.m; sourceTree = "<group>"; };
 		EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntertainmentDetailViewHandler.m; sourceTree = "<group>"; };
+		EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelUtilityDataSource.h; sourceTree = "<group>"; };
+		EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelUtilityDataSource.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2689,6 +2692,8 @@
 				CA585FB314F73C0400471880 /* Common */,
 				CA238FD314FF321C00114175 /* CityBasicDataSource.h */,
 				CA238FD414FF321C00114175 /* CityBasicDataSource.m */,
+				EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */,
+				EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -3254,6 +3259,7 @@
 				A3CD5B20152804490049D2F3 /* QQWeiboService.m in Sources */,
 				A3CD5B21152804490049D2F3 /* SinaSNSService.m in Sources */,
 				A3CD5B22152804490049D2F3 /* SINAWeiboRequest.m in Sources */,
+				EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

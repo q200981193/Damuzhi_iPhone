@@ -92,7 +92,7 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
     LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
         [_localCityOverViewManager switchCity:cityId];
         *resultCode = 0;
-        return _localCityOverViewManager.cityOverView.cityBasic;
+        return _localCityOverViewManager.cityOverView.travelUtility;
     };
     
     LocalRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
