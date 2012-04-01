@@ -27,6 +27,7 @@
 #define URL_TRAVEL_ADD_FAVORITE     @"http://59.34.17.68:8012/service/addFavorite.aspx?"
 
 #define URL_TRAVEL_DELETE_FAVORITE  @"http://damuzhi.com/service/deleteFavorite?"
+#define URL_TRAVEL_QUERY_PLACE      @"http://damuzhi.com/service/queryPlace?"
 
 //#define URL_TRAVEL_QUERY_VERSION      @"http://www.damuzhi.com/service/iphoneVersion.txt"
 #define URL_TRAVEL_QUERY_VERSION      @"http://59.34.17.68:8012/service/iphoneVersion.txt"
