@@ -34,6 +34,6 @@
 //- (void)findTravelUtility:(PPViewController*)viewController;
 //- (void)findTravelTransportation:(PPViewController*)viewController;
 
-- (void)findCityOverViewByCityId:(PPViewController<CommonOverViewServiceDelegate>*)viewController cityId:(int)cityId;
+- (void)findCityBasic:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate>*)viewController;
 
 @end

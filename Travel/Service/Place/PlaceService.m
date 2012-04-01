@@ -318,14 +318,27 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
                       placeId:(int)placeId
 {
-    int count = 108; // test
-    
-    
-    if ([viewController respondsToSelector:@selector(didGetPlaceData:count:)]){
-        // Test
-        PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, count);
-        [viewController didGetPlaceData:placeId count:count];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+        CommonNetworkOutput* output = [TravelNetworkRequest queryPlace:[[UserManager defaultManager] userId] placeId:[NSString stringWithFormat:@"%d",placeId]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+            
+            if (0 == result.intValue){
+                
+            }else {
+                PPDebug(@"<PlaceService> getPlaceFavoriteCount faild,result:%d", result.intValue);
+            }
+            
+            if ([viewController respondsToSelector:@selector(didGetPlaceData:count:)]){
+                PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, placeFavoriteCount.intValue);
+                [viewController didGetPlaceData:placeId count:placeFavoriteCount.intValue];
+            }
+        });
+    }); 
 }
 
 - (void)findTopFavoritePlaces:(PPViewController<PlaceServiceDelegate>*)viewController type:(int)type
