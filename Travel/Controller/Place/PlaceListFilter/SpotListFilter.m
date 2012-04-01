@@ -83,7 +83,7 @@
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    return [[PlaceService defaultService] findPlacesByCategoryId:viewController categoryId:[self getCategoryId]];
+    return [[PlaceService defaultService] findPlaces:[self getCategoryId]  viewController:viewController];
 }
 
 -(NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList

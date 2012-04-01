@@ -135,7 +135,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     return objectType;
 }
 
-- (void)findPlacesByCategoryId:(PPViewController<PlaceServiceDelegate>*)viewController categoryId:(int)categoryId
+- (void)findPlaces:(int)categoryId viewController:(PPViewController<PlaceServiceDelegate>*)viewController
 {
     self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {

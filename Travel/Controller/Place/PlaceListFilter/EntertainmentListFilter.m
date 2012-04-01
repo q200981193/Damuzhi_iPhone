@@ -49,7 +49,7 @@
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
 {
-    return [[PlaceService defaultService] findPlacesByCategoryId:viewController categoryId:[self getCategoryId]];
+    return [[PlaceService defaultService] findPlaces:[self getCategoryId]  viewController:viewController];
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter
