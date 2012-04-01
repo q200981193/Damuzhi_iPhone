@@ -39,6 +39,12 @@
     [super dealloc];
 }
 
+//self.imageView.callbackOnSetImage = self;
+//[self.imageView clear];
+//self.imageView.url = [NSURL URLWithString:[place icon]];
+//PPDebug(@"load place image from URL %@", [place icon]);
+//[GlobalGetImageCache() manage:self.imageView];
+
 - (void)setImages:(NSArray*)images
 {
     // remove all old previous images

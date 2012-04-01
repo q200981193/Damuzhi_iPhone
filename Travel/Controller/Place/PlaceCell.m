@@ -116,10 +116,11 @@
 
 - (void)setPlaceIcon:(Place*)place
 {
-    if ([[place icon] isAbsolutePath]){
-    //if (YES){
+    if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
-        
+        NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
+        PPDebug(@"place iconPath = %@", iconPath);
+        [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
     else{
         self.imageView.callbackOnSetImage = self;

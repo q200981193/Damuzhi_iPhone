@@ -40,13 +40,6 @@ static CityOverViewManager *_defaultInstance = nil;
 
 - (NSArray*)getCityBasicImageList
 {
-//    NSMutableArray *imageList = [[[NSMutableArray alloc] init] autorelease];
-//    for (NSString *image in _cityOverView.cityBasic.imagesList) {
-//        NSString *imagePath = [[[AppUtils getCityDir:_cityId] stringByAppendingPathComponent: DIR_OF_CITY_DATA]stringByAppendingPathComponent:image];
-//        [imageList addObject:imagePath];
-//    }
-//    
-//    return imageList;
     return _cityOverView.cityBasic.imagesList;
 }
 

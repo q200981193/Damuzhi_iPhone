@@ -149,8 +149,6 @@ static AppService* _defaultAppService = nil;
         
         
         if (output.resultCode == ERROR_SUCCESS && parseDataFlag == YES){
-
-            
             // TODO , performance can be improved by add sperate working queue for download
             NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
             for (PlaceMeta *placeMeta in placeMetas) {

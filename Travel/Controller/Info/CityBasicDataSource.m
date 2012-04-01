@@ -18,7 +18,12 @@
 {
     NSLog(@"CityBasicDataSource <getImages>");
     NSArray *images = [[CityOverViewManager defaultManager] getCityBasicImageList];
-    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
+    
+    if ([AppUtils validateUrl:[images objectAtIndex:0]]) {
+        return images;
+    }
+    else
+    {
         NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
         for (NSString *image in images) {
             NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image]; 
@@ -26,26 +31,19 @@
         }
         return imagePathList;
     }
-    else
-    {
-        return images;
-    }
 }
 
 - (NSURL*)getHtmlFileURL
 {
-//    return [[[InfoManager defaultManager] getCityBasic] html];
     NSURL *url = nil;
     NSString *html = [[CityOverViewManager defaultManager] getCityBasicHtml];
-    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
-        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:html]; 
-        url = [NSURL fileURLWithPath:htmlPath];
-        
-    }
-    else{
+    if ([AppUtils validateUrl:html]) {
         url = [NSURL URLWithString:html];
     }
-
+    else{
+        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:html]; 
+        url = [NSURL fileURLWithPath:htmlPath];
+    }
     
     return url;
 }

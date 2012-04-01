@@ -12,7 +12,7 @@
 
 @protocol CommonInfoDataSourceProtocol <NSObject>
 
-- (NSArray*)getImages;
+- (NSArray*)getImages:(PPViewController<CommonOverViewServiceDelegate>*)viewController;
 - (NSURL*)getHtmlFileURL;
 - (NSString*)getTitleName;
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource;
