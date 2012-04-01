@@ -65,6 +65,7 @@
     }
     [slideImageView setImages:images];
     
+    
     NSURL *url = [NSURL URLWithString:[dataSource getHtmlFilePath]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);

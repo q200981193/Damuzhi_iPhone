@@ -76,7 +76,7 @@
     [self.window makeKeyAndVisible];
     
     //if app is first launch, create build-in city info
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
         [[[LocalCityManager defaultManager] createLocalCity:BUILDIN_CITY_ID] setDownloadDoneFlag:YES];
     }
 
