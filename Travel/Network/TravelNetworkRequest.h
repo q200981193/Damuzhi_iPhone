@@ -21,5 +21,6 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
 + (CommonNetworkOutput*)addFavoriteByUserId:(NSString *)userId placeId:(NSString *)placeId longitude:(NSString *)longitude latitude:(NSString *)latitude;
 + (CommonNetworkOutput*)deleteFavoriteByUserId:(NSString *)userId placeId:(NSString *)placeId;
 + (CommonNetworkOutput*)queryVersion;
++ (CommonNetworkOutput*)queryPlace:(NSString*)userId placeId:(NSString*)placeId;
 
 @end
