@@ -173,11 +173,11 @@
     [placeService addPlaceIntoFavorite:self place:self.place];
 }
 
-- (void)finishAddFavourite:(NSNumber*)resultCode count:(int)count
+- (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count
 {
     if (resultCode != nil) {
         PPDebug(@"add Favourite successfully");
-        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"(已有%d人收藏)"),count];
+        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"(已有%d人收藏)"), count.intValue];
         
         //add sucess view
         
