@@ -406,6 +406,8 @@
 		EAFC7E151515D22300CE20CF /* ShoppingDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E141515D22200CE20CF /* ShoppingDetailViewHandler.m */; };
 		EAFC7E181515D25300CE20CF /* EntertainmentDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */; };
 		EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */; };
+		EAFE21EB152861480013D040 /* NearByRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E9152861480013D040 /* NearByRecommendController.m */; };
+		EAFE21EC152861480013D040 /* NearByRecommendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFE21EA152861480013D040 /* NearByRecommendController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1085,6 +1087,9 @@
 		EAFC7E171515D25200CE20CF /* EntertainmentDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntertainmentDetailViewHandler.m; sourceTree = "<group>"; };
 		EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelUtilityDataSource.h; sourceTree = "<group>"; };
 		EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelUtilityDataSource.m; sourceTree = "<group>"; };
+		EAFE21E8152861480013D040 /* NearByRecommendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearByRecommendController.h; sourceTree = "<group>"; };
+		EAFE21E9152861480013D040 /* NearByRecommendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearByRecommendController.m; sourceTree = "<group>"; };
+		EAFE21EA152861480013D040 /* NearByRecommendController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearByRecommendController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2757,6 +2762,9 @@
 				CA238FC114FDCAAD00114175 /* PlaceListController.xib */,
 				CA238FC414FDCB0300114175 /* CommonPlaceCell.h */,
 				CA238FC514FDCB0400114175 /* CommonPlaceCell.m */,
+				EAFE21E8152861480013D040 /* NearByRecommendController.h */,
+				EAFE21E9152861480013D040 /* NearByRecommendController.m */,
+				EAFE21EA152861480013D040 /* NearByRecommendController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3025,6 +3033,7 @@
 				A3CD5B1F152804490049D2F3 /* sinaico_big@2x.png in Resources */,
 				A3CD5B2915280D2C0049D2F3 /* Localizable.strings in Resources */,
 				A3CD5B2B15280D360049D2F3 /* Localizable.strings in Resources */,
+				EAFE21EC152861480013D040 /* NearByRecommendController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3260,6 +3269,7 @@
 				A3CD5B21152804490049D2F3 /* SinaSNSService.m in Sources */,
 				A3CD5B22152804490049D2F3 /* SINAWeiboRequest.m in Sources */,
 				EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */,
+				EAFE21EB152861480013D040 /* NearByRecommendController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
