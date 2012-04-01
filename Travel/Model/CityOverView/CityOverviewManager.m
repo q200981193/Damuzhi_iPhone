@@ -13,6 +13,7 @@
 #import "PPDebug.h"
 #import "LocaleUtils.h"
 #import "CommonPlace.h"
+#import "AppConstants.h"
 
 @implementation CityOverViewManager
 
@@ -44,6 +45,7 @@ static CityOverViewManager *_defaultInstance = nil;
 
 - (NSString*)getCityBasicHtml
 {
+    PPDebug(@"CityBasicHtml: %@", _cityOverView.cityBasic.html);
     return _cityOverView.cityBasic.html;
 }
 

@@ -135,11 +135,9 @@
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PLACE_TYPE_ALL;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
     
-//    [[PlaceService defaultService] findAllPlaces:self];  
     [self initLocationManager] ;
-    
     
     findAllPlaceButton.tag = PLACE_TYPE_ALL;
     findSpotButton.tag = PLACE_TYPE_SPOT;
@@ -272,63 +270,63 @@
 - (IBAction)click500M:(id)sender {
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
     self.distance = DISTANCE_500M;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
 }
 
 - (IBAction)click1K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
     self.distance = DISTANCE_1KM;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
 }
 
 - (IBAction)click5K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
     self.distance = DISTANCE_5KM;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
 }
 
 - (IBAction)click10K:(id)sender {
 //    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
     [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
     self.distance = DISTANCE_10KM;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
 }
 
 - (IBAction)clickSpotBtn:(id)sender {
     self.categoryId = PLACE_TYPE_SPOT;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];    
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
     [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickHotelBtn:(id)sender {
     self.categoryId = PLACE_TYPE_HOTEL;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId];
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
     [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickAllBtn:(id)sender {
     self.categoryId = PLACE_TYPE_ALL;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickRestaurantBtn:(id)sender {
     self.categoryId = PLACE_TYPE_RESTAURANT;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickShoppingBtn:(id)sender {
     self.categoryId = PLACE_TYPE_SHOPPING;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     [self setSelectedBtn:_categoryId];
 }
 
 - (IBAction)clickEntertainmentBtn:(id)sender {
     self.categoryId = PLACE_TYPE_ENTERTAINMENT;
-    [[PlaceService defaultService] findPlacesByCategoryId:self categoryId:_categoryId]; 
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     [self setSelectedBtn:_categoryId];
 }
 

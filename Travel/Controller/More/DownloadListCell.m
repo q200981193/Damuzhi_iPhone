@@ -12,17 +12,11 @@
 #import "ImageName.h"
 #import "LocalCityManager.h"
 #import "LocaleUtils.h"
-
+#import "Reachability.h"
 
 #define NO_DOWNLOAD 0
 #define DOWNLOAD 1
 #define FINISH_DOWNLOAD 2
-
-@interface DownloadListCell ()
-
-- (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress;
-
-@end
 
 @implementation DownloadListCell
 
@@ -44,7 +38,6 @@
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
     [self setCellAppearance:localCity];
 }
-
 
 + (NSString*)getCellIdentifier
 {
@@ -68,9 +61,27 @@
 }
 
 - (IBAction)clickDownload:(id)sender {
-    NSLog(@"download city = %d", _city.cityId);
-    [[AppService defaultService] downloadCity:_city];
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
+        // user is using Mobile Network
+        NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
+        [alert show];
+        [alert release];
+    }
+    else {
+        [[AppService defaultService] downloadCity:_city];
+    }
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+//    PPDebug(@"click button %d", buttonIndex);
+    if (buttonIndex == 1) {
+//        PPDebug(@"download city = %d", _city.cityId);
+        [[AppService defaultService] downloadCity:_city];
+    }
+}
+
 
 - (IBAction)clickPauseBtn:(id)sender {
     UIButton *button = (UIButton *)sender;
@@ -81,7 +92,16 @@
     }
     else {
         //TODO, resume download request
-        [[AppService defaultService] downloadCity:_city];
+        if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
+            // user is using Mobile Network
+            NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
+            [alert show];
+            [alert release];
+        }
+        else {
+            [[AppService defaultService] downloadCity:_city];
+        }
     }
 }
 

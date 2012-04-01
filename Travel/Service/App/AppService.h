@@ -10,11 +10,18 @@
 #import "AppManager.h"
 #import "ASINetworkQueue.h"
 
+@protocol AppServiceDelegate <NSObject>
+
+@required
+- (void)didDownloadFailed:(NSError *)error;
+
+@end
+
 @interface AppService : CommonService
 
+@property (assign, nonatomic) id<AppServiceDelegate> delegate;
 @property (retain, nonatomic) NSMutableArray *downloadRequestList;
 @property (retain, nonatomic) NSOperationQueue *queue;
-
 + (AppService*)defaultService;
 
 - (void)loadAppData;
@@ -23,8 +30,5 @@
 - (void)downloadCity:(City*)city;
 - (void)pauseDownloadCity:(City*)city;
 - (void)cancelDownloadCity:(City*)city;
-- (float)getCityDownloadProgress:(City*)city;
-
-+ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName;
 
 @end

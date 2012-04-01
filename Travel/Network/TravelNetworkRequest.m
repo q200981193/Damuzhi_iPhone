@@ -234,6 +234,32 @@
                                       output:output];
 }
 
++ (CommonNetworkOutput*)deleteFavoriteByUserId:(NSString *)userId placeId:(NSString *)placeId
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACEID value:placeId];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_DELETE_FAVORITE
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
 + (CommonNetworkOutput*)queryVersion
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
@@ -248,6 +274,32 @@
     };
     
     return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_VERSION
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryPlace:(NSString*)userId placeId:(NSString*)placeId;
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACEID value:placeId];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_PLACE
                          constructURLHandler:constructURLHandler                         
                              responseHandler:responseHandler         
                                 outputFormat:FORMAT_TRAVEL_JSON

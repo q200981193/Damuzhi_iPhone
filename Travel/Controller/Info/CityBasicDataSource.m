@@ -7,26 +7,25 @@
 //
 
 #import "CityBasicDataSource.h"
-#import "InfoManager.h"
+#import "CityOverviewManager.h"
+#import "AppManager.h"
 
 @implementation CityBasicDataSource
 
-- (NSArray*)getImages
+- (NSString*)getTitleName
 {
-    NSLog(@"CityBasicDataSource <getImages>");
-//    InfoManager* manager = [InfoManager defaultManager];
-//    NSArray* array = [[manager getCityBasic] imagesList];
-    return [[[InfoManager defaultManager] getCityBasic] imagesList];
+    return NSLS(@"城市概况");
 }
 
-- (NSString*)getHtmlFilePath
+- (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate
 {
-    return [[[InfoManager defaultManager] getCityBasic] html];
+    [[CityOverViewService defaultService]findCityBasic:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
+
 }
 
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource
 {
-    CityBasicDataSource* obj = [[[CityBasicDataSource alloc] init] autorelease];
+    CityBasicDataSource* obj = [[[CityBasicDataSource alloc] init] autorelease];    
     return obj;
 }
 

@@ -25,6 +25,10 @@
 
 //#define URL_TRAVEL_ADD_FAVORITE     @"http://damuzhi.com/service/addFavorite?"
 #define URL_TRAVEL_ADD_FAVORITE     @"http://59.34.17.68:8012/service/addFavorite.aspx?"
+
+#define URL_TRAVEL_DELETE_FAVORITE  @"http://damuzhi.com/service/deleteFavorite?"
+#define URL_TRAVEL_QUERY_PLACE      @"http://damuzhi.com/service/queryPlace?"
+
 //#define URL_TRAVEL_QUERY_VERSION      @"http://www.damuzhi.com/service/iphoneVersion.txt"
 #define URL_TRAVEL_QUERY_VERSION      @"http://59.34.17.68:8012/service/iphoneVersion.txt"
 
@@ -61,6 +65,13 @@
 #define OBJECT_TYPE_RESTAURANT      23
 #define OBJECT_TYPE_SHOPPING        24
 #define OBJECT_TYPE_ENTERTAINMENT   25
+
+#define OBJECT_TYPE_TOP_FAVORITE_ALL                40
+#define OBJECT_TYPE_TOP_FAVORITE_SPOT               41
+#define OBJECT_TYPE_TOP_FAVORITE_HOTEL              42
+#define OBJECT_TYPE_TOP_FAVORITE_RESTAURANT         43
+#define OBJECT_TYPE_TOP_FAVORITE_SHOPPING           44
+#define OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT      45
 
 #define OBJECT_TYPE_CITY_OVERVIEW   2
 #define OBJECT_TYPE_CITY_TRAFFIC    3

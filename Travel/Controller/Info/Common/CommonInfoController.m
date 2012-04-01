@@ -8,6 +8,9 @@
 
 #import "CommonInfoController.h"
 #import "SlideImageView.h"
+#import "CityOverviewService.h"
+#import "AppManager.h"
+#import "AppUtils.h"
 
 @implementation CommonInfoController
 
@@ -53,47 +56,36 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self.navigationItem setTitle:[dataSource getTitleName]];
+    
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     [imageHolderView addSubview:slideImageView];  
     
-    // add image array
-    NSArray* imagePathArray = [dataSource getImages];
-    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
-    for (NSString* imagePath in imagePathArray){
-        NSLog(@"%@", imagePath);
-        [images addObject:[UIImage imageNamed:imagePath]];
-    }
-    [slideImageView setImages:images];
-    
-    NSURL *url = [NSURL URLWithString:[dataSource getHtmlFilePath]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSLog(@"load webview url = %@", [request description]);
-    if (request) {
-        [self.dataWebview loadRequest:request];
-    }
+    [dataSource requestDataWithDelegate:self];
 
 }
 
-- (void)findRequestDone:(int)result data:(CityOverview*)cityOverView
+- (void)findRequestDone:(int)result data:(CommonOverview*)commonOverview
 {
-    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    [imageHolderView addSubview:slideImageView];  
-    
-    // add image array
-    NSArray* imagePathArray = [cityOverView.cityBasic imagesList];
-    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
-    for (NSString* imagePath in imagePathArray){
-        NSLog(@"%@", imagePath);
-        [images addObject:[UIImage imageNamed:imagePath]];
+    NSString* urlString = [commonOverview html];
+    NSURL* url = nil;
+    if ([urlString hasPrefix:@"http:"]){
+        url = [NSURL URLWithString:urlString];           
     }
-    [slideImageView setImages:images];
+    else{
+        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:urlString];         
+        url = [NSURL fileURLWithPath:htmlPath];
+    }
     
-    NSURL *url = [NSURL URLWithString:[cityOverView.cityBasic html]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);
     if (request) {
-        [self.dataWebview loadRequest:request];
-    } 
+        [self.dataWebview loadRequest:request];        
+    }
 }
 
 - (void)viewDidUnload

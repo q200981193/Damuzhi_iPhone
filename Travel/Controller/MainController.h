@@ -28,6 +28,7 @@
 - (IBAction)clickEntertainment:(id)sender;
 
 - (IBAction)clickCityOverviewButton:(id)sender;
+- (IBAction)clickTravelUtilityButton:(id)sender;
 - (IBAction)clickNearbyButton:(id)sender;
 - (IBAction)clickMoreButton:(id)sender;
 -(void) clickTitle:(id)sender;

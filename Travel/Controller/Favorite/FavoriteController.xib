@@ -294,6 +294,33 @@
 					</object>
 					<int key="connectionID">20</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">clickRestaurant:</string>
+						<reference key="source" ref="619852767"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">clickShopping:</string>
+						<reference key="source" ref="247205780"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">22</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">clickEntertainment:</string>
+						<reference key="source" ref="874497802"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">23</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -358,11 +385,6 @@
 						<reference key="parent" ref="331834203"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">12</int>
-						<reference key="object" ref="619852767"/>
-						<reference key="parent" ref="331834203"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">13</int>
 						<reference key="object" ref="247205780"/>
 						<reference key="parent" ref="331834203"/>
@@ -376,6 +398,11 @@
 						<int key="objectID">5</int>
 						<reference key="object" ref="6487389"/>
 						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">12</int>
+						<reference key="object" ref="619852767"/>
+						<reference key="parent" ref="331834203"/>
 					</object>
 				</array>
 			</object>
@@ -399,7 +426,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">20</int>
+			<int key="maxID">23</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -408,7 +435,10 @@
 					<string key="superclassName">PPViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="clickAll:">id</string>
+						<string key="clickEntertainment:">id</string>
 						<string key="clickHotel:">id</string>
+						<string key="clickRestaurant:">id</string>
+						<string key="clickShopping:">id</string>
 						<string key="clickSpot:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -416,8 +446,20 @@
 							<string key="name">clickAll:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="clickEntertainment:">
+							<string key="name">clickEntertainment:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="clickHotel:">
 							<string key="name">clickHotel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="clickRestaurant:">
+							<string key="name">clickRestaurant:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="clickShopping:">
+							<string key="name">clickShopping:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="clickSpot:">

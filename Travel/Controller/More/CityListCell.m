@@ -72,13 +72,25 @@
 
 - (IBAction)clickDeleteBtn:(id)sender {
     //TODO: delete city
-    if ([self.cityCellDelegate respondsToSelector:@selector(deleteCity:)]) {
-        [self.cityCellDelegate deleteCity:_city];
-    }
-    else {
-        PPDebug(@"self.deletCityDelegate cannot respondsTo deleteCity");
+    NSString *message = NSLS(@"删除城市数据后再次打开需要重新下载，确认删除?");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
+    [alert show];
+    [alert release];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        if ([self.cityCellDelegate respondsToSelector:@selector(deleteCity:)]) {
+            [self.cityCellDelegate deleteCity:_city];
+        }
+        else {
+            PPDebug(@"self.deletCityDelegate cannot respondsTo deleteCity");
+        }
+
     }
 }
+
 
 - (IBAction)clickUpdateBtn:(id)sender {
     //TODO: download a city package

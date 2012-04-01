@@ -14,8 +14,7 @@
 @protocol CommonOverViewServiceDelegate <NSObject>
 
 @optional
-- (void)findRequestDone:(int)result data:(CityOverview*)cityOverView;
-
+- (void)findRequestDone:(int)result data:(CommonOverview*)overViewData;
 @end
 
 @interface CityOverViewService : CommonService
@@ -35,6 +34,6 @@
 //- (void)findTravelUtility:(PPViewController*)viewController;
 //- (void)findTravelTransportation:(PPViewController*)viewController;
 
-- (void)findCityOverViewByCityId:(PPViewController<CommonOverViewServiceDelegate>*)viewController cityId:(int)cityId;
-
+- (void)findCityBasic:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate>*)viewController;
+- (void)findTravelUtility:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate> *)viewController;
 @end

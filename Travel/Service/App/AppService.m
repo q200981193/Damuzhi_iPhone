@@ -26,6 +26,7 @@
 
 @synthesize downloadRequestList = _downloadRequestList;
 @synthesize queue = _queue;
+@synthesize delegate = _delegate;
 
 static AppService* _defaultAppService = nil;
 
@@ -87,13 +88,13 @@ static AppService* _defaultAppService = nil;
     }
 }
 
-- (void)copyDefaultCityZipFromBundleAndRelease
+- (void)copyBuildinCityZipFromBundleAndRelease
 {    
     // create City Dir
     [FileUtil createDir:[AppUtils getZipDir]];
     
     // copy file from bundle to zip dir
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:BUILDIN_CITY_ID]]) {
         PPDebug(@"copy defalut zip from bundle to zip dir");
         [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
                                       appDir:[AppUtils getZipDir] 
@@ -102,15 +103,15 @@ static AppService* _defaultAppService = nil;
     
     // if there has no unzip city data, unzip
     //if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
-    if (![AppUtils hasLocalCityData:DEFAULT_CITY_ID]) {
-        [AppUtils unzipCityZip:DEFAULT_CITY_ID];
+    if (![AppUtils hasLocalCityData:BUILDIN_CITY_ID]) {
+        [AppUtils unzipCityZip:BUILDIN_CITY_ID];
     }
 }
 
 - (void)loadAppData
 {
     [self copyDefaultAppDataFormBundle];
-    [self copyDefaultCityZipFromBundleAndRelease];
+    [self copyBuildinCityZipFromBundleAndRelease];
     [[AppManager defaultManager] loadAppData];
 }
 
@@ -148,8 +149,6 @@ static AppService* _defaultAppService = nil;
         
         
         if (output.resultCode == ERROR_SUCCESS && parseDataFlag == YES){
-
-            
             // TODO , performance can be improved by add sperate working queue for download
             NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
             for (PlaceMeta *placeMeta in placeMetas) {
@@ -258,7 +257,7 @@ static AppService* _defaultAppService = nil;
         LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
         if(localCity.cityId == city.cityId)
         {
-            //    Cancels an asynchronous request, clearing all delegates and blocks first
+            //Cancels an asynchronous request, clearing all delegates and blocks first
             [request clearDelegatesAndCancel];    
             [request cancel];
             
@@ -278,26 +277,27 @@ static AppService* _defaultAppService = nil;
 //    // Use when fetching binary data
 //    NSData *responseData = [request responseData];
     
-    NSLog(@"requestFinished");
-    
+    //update download city info.
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
     localCity.downloadDoneFlag = YES;
 
+    //
     [_downloadRequestList removeObject:request];
     [AppUtils unzipCityZip:localCity.cityId];
 }
 
-
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-//    NSError *error = [request error];
+    //call delegate method to show download failed message.
+    NSError *error = [request error];
+    [_delegate didDownloadFailed:error];
     
-    NSLog(@"requestFailed");
-    
+    //remove download city info.
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-
-    [_downloadRequestList removeObject:request];
     [[LocalCityManager defaultManager] removeLocalCity:localCity.cityId];
+
+    //remove failed request.
+    [_downloadRequestList removeObject:request];
 }
 
 

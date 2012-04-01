@@ -27,6 +27,8 @@
 #define DIR_OF_CITY                         @"cities"
 #define DIR_OF_DOWNLOAD                     @"download"
 
+#define DIR_OF_CITY_DATA                    @"data"
+
 #define DEFAULT_CITY_ZIP                    @"1.zip"     //in bundle
 #define FLAG_OF_UNZIP_SUCCESS               @"unzip_success" 
     
@@ -36,11 +38,12 @@
 #define DIR_OF_PLACE_DATA                   @"data/place"
 #define DIR_OF_TIPS_DATA                    @"data/tips"
 
+
 #define DIR_OF_PROVIDED_SERVICE_IMAGE       @"app/image/providedService"
 #define DIR_OF_CATEGORY_IMAGE               @"app/image/category"
 
-#define DEFAULT_CITY_ID                     1   // 1 for @"香港"
-#define DEFAULT_CITY_NAME                   NSLS(@"香港")
+#define BUILDIN_CITY_ID                     1   // 1 for @"香港"
+#define BUILDIN_CITY_NAME                   NSLS(@"香港")
 #define KEY_CURRENT_CITY                    @"current_city"
 
 #endif

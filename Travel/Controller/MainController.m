@@ -16,6 +16,7 @@
 #import "FavoriteController.h"
 #import "CommonInfoController.h"
 #import "CityBasicDataSource.h"
+#import "TravelUtilityDataSource.h"
 #import "CommonPlace.h"
 
 #import "NearbyController.h"
@@ -182,6 +183,14 @@
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        
 }
+
+- (IBAction)clickTravelUtilityButton:(id)sender
+{
+    CommonInfoController *controller = [[CommonInfoController alloc]initWithDataSource:[TravelUtilityDataSource createDataSource]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];  
+}
+
 
 - (IBAction)clickNearbyButton:(id)sender
 {
