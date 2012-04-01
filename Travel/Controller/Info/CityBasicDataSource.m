@@ -21,7 +21,7 @@
 
 - (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate
 {
-    [[CityOverViewService defaultService]findCityOverViewByCityId:delegate cityId:[[AppManager defaultManager] getCurrentCityId]];
+    [[CityOverViewService defaultService]findCityBasic:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
 
 }
 
