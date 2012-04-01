@@ -14,40 +14,40 @@
 
 @implementation CityBasicDataSource
 
-- (NSArray*)getImages
-{
-    NSLog(@"CityBasicDataSource <getImages>");
-    NSArray *images = [[CityOverViewManager defaultManager] getCityBasicImageList];
-    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
-        NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
-        for (NSString *image in images) {
-            NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image]; 
-            [imagePathList addObject:imagePath];
-        }
-        return imagePathList;
-    }
-    else
-    {
-        return images;
-    }
-}
-
-- (NSURL*)getHtmlFileURL
-{
-    NSURL *url = nil;
-    NSString *html = [[CityOverViewManager defaultManager] getCityBasicHtml];
-    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
-        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:html]; 
-        url = [NSURL fileURLWithPath:htmlPath];
-        
-    }
-    else{
-        url = [NSURL URLWithString:html];
-    }
-
-    
-    return url;
-}
+//- (NSArray*)getImages
+//{
+//    NSLog(@"CityBasicDataSource <getImages>");
+//    NSArray *images = [[CityOverViewManager defaultManager] getCityBasicImageList];
+//    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
+//        NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
+//        for (NSString *image in images) {
+//            NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image]; 
+//            [imagePathList addObject:imagePath];
+//        }
+//        return imagePathList;
+//    }
+//    else
+//    {
+//        return images;
+//    }
+//}
+//
+//- (NSURL*)getHtmlFileURL
+//{
+//    NSURL *url = nil;
+//    NSString *html = [[CityOverViewManager defaultManager] getCityBasicHtml];
+//    if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
+//        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:html]; 
+//        url = [NSURL fileURLWithPath:htmlPath];
+//        
+//    }
+//    else{
+//        url = [NSURL URLWithString:html];
+//    }
+//
+//    
+//    return url;
+//}
 
 - (NSString*)getTitleName
 {
@@ -56,8 +56,7 @@
 
 - (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate
 {
-    [[CityOverViewService defaultService]findCityOverViewByCityId:delegate cityId:[[AppManager defaultManager] getCurrentCityId]];
-
+    [[CityOverViewService defaultService] findCityBasic:[[AppManager defaultManager] getCurrentCityId]  delegate:delegate];
 }
 
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource
