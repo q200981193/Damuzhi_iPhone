@@ -74,7 +74,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     [queue addOperationWithBlock:^{
         NSArray* list = nil;
         int resultCode = 0;
-        //if ([_localPlaceManager hasLocalCityData:_currentCityId] == YES){
         if ([AppUtils hasLocalCityData:_currentCityId] == YES){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:_currentCityId]);
@@ -138,6 +137,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 
 - (void)findPlacesByCategoryId:(PPViewController<PlaceServiceDelegate>*)viewController categoryId:(int)categoryId
 {
+    self.currentCityId = [[AppManager defaultManager] getCurrentCityId];
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
         [_localPlaceManager switchCity:_currentCityId];
         NSArray* list = [_localPlaceManager findPlacesByCategory:categoryId];   

@@ -48,9 +48,7 @@
     float dataSize = city.dataSize/1024.0/1024.0;
     self.dataSizeLabel.text = [[NSString alloc] initWithFormat:@"%0.1fM", dataSize];
     
-//    if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
-
-    if (NO) {
+    if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
         self.deleteButton.hidden = YES;
         self.defaultLabel.hidden = NO;
         [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
@@ -64,8 +62,11 @@
         CGRect rect = CGRectMake(0, 0, 16, 17);
         UIImageView *view = [[UIImageView alloc] initWithFrame:rect];
         [view setImage:[UIImage imageNamed:IMAGE_CITY_REFRESH_BTN]];
-        
         [self.updateButton addSubview:view];
+        self.updateButton.hidden = NO;
+    }
+    else {
+        self.updateButton.hidden = YES;
     }
 }
 
