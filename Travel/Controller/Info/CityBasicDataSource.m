@@ -34,7 +34,6 @@
 
 - (NSURL*)getHtmlFileURL
 {
-//    return [[[InfoManager defaultManager] getCityBasic] html];
     NSURL *url = nil;
     NSString *html = [[CityOverViewManager defaultManager] getCityBasicHtml];
     if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]]) {
@@ -55,12 +54,15 @@
     return NSLS(@"城市概况");
 }
 
+- (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate
+{
+    [[CityOverViewService defaultService]findCityOverViewByCityId:delegate cityId:[[AppManager defaultManager] getCurrentCityId]];
+
+}
+
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource
 {
-    CityBasicDataSource* obj = [[[CityBasicDataSource alloc] init] autorelease];
-    
-    [[CityOverViewService defaultService]findCityOverViewByCityId:nil cityId:[[AppManager defaultManager] getCurrentCityId]];
-
+    CityBasicDataSource* obj = [[[CityBasicDataSource alloc] init] autorelease];    
     return obj;
 }
 

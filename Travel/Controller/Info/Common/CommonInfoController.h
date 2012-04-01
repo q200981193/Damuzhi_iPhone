@@ -11,10 +11,8 @@
 #import "CityOverviewService.h"
 
 @protocol CommonInfoDataSourceProtocol <NSObject>
-
-- (NSArray*)getImages;
-- (NSURL*)getHtmlFileURL;
 - (NSString*)getTitleName;
+- (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate;
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource;
 
 @end

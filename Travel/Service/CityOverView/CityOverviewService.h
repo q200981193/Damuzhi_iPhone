@@ -14,8 +14,7 @@
 @protocol CommonOverViewServiceDelegate <NSObject>
 
 @optional
-- (void)findRequestDone:(int)result data:(CityOverview*)cityOverView;
-
+- (void)findRequestDone:(int)result data:(CommonOverview*)overViewData;
 @end
 
 @interface CityOverViewService : CommonService
