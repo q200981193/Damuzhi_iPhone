@@ -18,12 +18,6 @@
 #define DOWNLOAD 1
 #define FINISH_DOWNLOAD 2
 
-@interface DownloadListCell ()
-
-- (void)setCellAppearance:(int)downloadStatus downloadProgress:(float)downloadProgress;
-
-@end
-
 @implementation DownloadListCell
 
 @synthesize city = _city;
@@ -44,7 +38,6 @@
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
     [self setCellAppearance:localCity];
 }
-
 
 + (NSString*)getCellIdentifier
 {

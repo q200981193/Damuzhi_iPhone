@@ -23,8 +23,5 @@
 - (void)downloadCity:(City*)city;
 - (void)pauseDownloadCity:(City*)city;
 - (void)cancelDownloadCity:(City*)city;
-- (float)getCityDownloadProgress:(City*)city;
-
-+ (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName;
 
 @end
