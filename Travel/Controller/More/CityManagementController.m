@@ -214,6 +214,11 @@
         City *city = [dataList objectAtIndex:indexPath.row];
         [[AppManager defaultManager] setCurrentCityId:city.cityId];
         [tableView1 reloadData];
+        NSString *cityName = [[city.countryName stringByAppendingString:NSLS(@".")] stringByAppendingString:city.cityName];
+        NSString *message = [NSString stringWithFormat:@"您已把%@设为默认访问城市!", cityName];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
+        [alert show];
+        [alert release];
     }
 }
 

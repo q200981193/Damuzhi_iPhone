@@ -44,6 +44,7 @@ static CityOverViewManager *_defaultInstance = nil;
 
 - (NSString*)getCityBasicHtml
 {
+    PPDebug(@"CityBasicHtml: %@", _cityOverView.cityBasic.html);
     return _cityOverView.cityBasic.html;
 }
 

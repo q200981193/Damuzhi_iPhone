@@ -287,7 +287,7 @@ static AppManager* _defaultAppManager = nil;
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSNumber* city = [userDefault objectForKey:KEY_CURRENT_CITY];
     if (city == nil){
-        return DEFAULT_CITY_ID;
+        return BUILDIN_CITY_ID;
     }
     else {
         return [city intValue];
