@@ -35,10 +35,7 @@
 - (void)setAndReloadPlaceList:(NSArray*)list;
 + (PlaceListController*)createController:(NSArray*)list 
                                superView:(UIView*)superView
-                         superController:(UIViewController*)superController;
-
-+ (PlaceListController*)createController:(UIView*)superView
-                         superController:(UIViewController*)superController;
+                         superController:(PPViewController*)superController;
 
 - (void)switchToMapMode;
 - (void)switchToListMode;

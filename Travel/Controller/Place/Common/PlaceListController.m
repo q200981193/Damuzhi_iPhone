@@ -59,39 +59,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [self startUpdatingLocation];
-    [super viewDidAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
-    [super viewDidDisappear:animated];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-	
-    // save to current location
-    self.currentLocation = newLocation;
-	//NSLog(@"Current location is %@, horizontalAccuracy=%f, timestamp=%@", [self.currentLocation description], [self.currentLocation horizontalAccuracy], [[currentLocation timestamp] description]);
-	
-	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
-	
-	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
-	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
-	
-    NSLog(@"currentLocation: latitude=%f, longitude=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
-	// translate location to address
-	// [self reverseGeocodeCurrentLocation:self.currentLocation];
-    
-    [self.dataTableView reloadData];
-}
-
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -103,11 +70,25 @@
     self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
     self.mapViewController.view.frame = self.mapHolderView.bounds;
     [self.mapHolderView addSubview:self.mapViewController.view];
-        
     [self updateViewByMode];
     
-    [self initLocationManager] ;
+    [self initLocationManager];
+    [self startUpdatingLocation];
 }
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    // save to current location
+    self.currentLocation = newLocation;
+	
+	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
+	
+	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
+	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
+	
+    [self.dataTableView reloadData];
+}
+
 
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
 {
@@ -132,17 +113,13 @@
 
 + (PlaceListController*)createController:placeList
                                superView:(UIView*)superView
-                         superController:(UIViewController*)superController
+                         superController:(PPViewController*)superController
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
     controller.view.frame = superView.bounds;
     controller.superController = superController;
     controller.mapViewController.superController = superController;
-
     [superView addSubview:controller.view];
-    
-    
-        
     return controller;
 }
 
@@ -162,12 +139,6 @@
 {
     return [[CityOverviewService defaultService] findCityConfig:[[AppManager defaultManager] getCurrentCityId] delegate:self];
 }
-
-- (void)findCityConfigRequestDone:(int)result cityConfig:(CityConfig*)cityConfig
-{
-    
-}
-
 
 #pragma mark -
 #pragma mark TableView Delegate

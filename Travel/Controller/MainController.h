@@ -10,6 +10,7 @@
 #import "PPViewController.h"
 #import "CommonPlaceListController.h"
 #import "MoreController.h"
+#import "NearbyController.h"
 
 @interface MainController : PPViewController
 {
@@ -18,6 +19,7 @@
     CommonPlaceListController *_restaurantListComtroller;
     CommonPlaceListController *_shoppingListComtroller;
     CommonPlaceListController *_entertainmentListComtroller;
+    NearbyController *_nearbyController;
     MoreController *_moreController;
 }
 

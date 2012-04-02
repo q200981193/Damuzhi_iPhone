@@ -12,11 +12,10 @@
 @interface CommonListFilter : NSObject
 
 + (UIButton*)createFilterButton:(CGRect)frame title:(NSString*)title;
-
-+ (NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList;
-+ (NSArray*)filterByPriceList:(NSArray*)placeList selectedPriceList:(NSArray*)selectedPriceList;
-+ (NSArray*)filterByAreaList:(NSArray*)placeList selectedPriceList:(NSArray*)selectedAreaIdList;
-+ (NSArray*)filterByServiceList:(NSArray*)placeList selectedServiceIdList:(NSArray*)selectedServiceIdList;
++ (NSArray*)filterBySelectedSubCategoryIdList:(NSArray*)list selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList;
++ (NSArray*)filterBySelectedPriceIdList:(NSArray*)placeList selectedPriceIdList:(NSArray*)selectedPriceIdList;
++ (NSArray*)filterBySelectedAreaIdList:(NSArray*)placeList selectedAreaIdList:(NSArray*)selectedAreaIdList;
++ (NSArray*)filterBySelectedServiceIdList:(NSArray*)placeList selectedServiceIdList:(NSArray*)selectedServiceIdList;
 + (NSArray*)sortBySelectedSortId:(NSArray*)placeList selectedSortId:(NSNumber*)selectedSortId currentLocation:(CLLocation*)currentLocation;
 
 @end

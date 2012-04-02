@@ -161,6 +161,7 @@
 		A4BB6E3315294CF4001CEA6B /* DownloadListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E2F15294CF0001CEA6B /* DownloadListCell.m */; };
 		A4BB6E3415294CF4001CEA6B /* DownloadListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6E3015294CF2001CEA6B /* DownloadListCell.xib */; };
 		A4BB6E401529A9AD001CEA6B /* CityOverviewService.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */; };
+		A4BB6E50152A415D001CEA6B /* SelectedItemsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E4F152A415D001CEA6B /* SelectedItemsManager.m */; };
 		A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DC80EF150F2EF00025F032 /* SelectController.m */; };
 		A4DC80F2150F2EF00025F032 /* SelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F0150F2EF00025F032 /* SelectController.xib */; };
 		A4DC80F5150F3DAB0025F032 /* select_bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F3150F3DAB0025F032 /* select_bg_1@2x.png */; };
@@ -630,6 +631,8 @@
 		A4BB6E3015294CF2001CEA6B /* DownloadListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadListCell.xib; sourceTree = "<group>"; };
 		A4BB6E3E1529A9AD001CEA6B /* CityOverviewService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverviewService.h; sourceTree = "<group>"; };
 		A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverviewService.m; sourceTree = "<group>"; };
+		A4BB6E4E152A415D001CEA6B /* SelectedItemsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedItemsManager.h; sourceTree = "<group>"; };
+		A4BB6E4F152A415D001CEA6B /* SelectedItemsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedItemsManager.m; sourceTree = "<group>"; };
 		A4DC80EE150F2EF00025F032 /* SelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectController.h; sourceTree = "<group>"; };
 		A4DC80EF150F2EF00025F032 /* SelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectController.m; sourceTree = "<group>"; };
 		A4DC80F0150F2EF00025F032 /* SelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectController.xib; sourceTree = "<group>"; };
@@ -1054,7 +1057,7 @@
 		CA585F9414F7377E00471880 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		CA585F9514F7377E00471880 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		CA585F9614F7377E00471880 /* MainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainController.xib; sourceTree = "<group>"; };
-		CA585F9E14F73AF700471880 /* SpotDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpotDetailController.h; path = Place/SpotDetailController.h; sourceTree = "<group>"; };
+		CA585F9E14F73AF700471880 /* SpotDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotDetailController.h; sourceTree = "<group>"; };
 		CA585F9F14F73AF700471880 /* SpotDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailController.m; sourceTree = "<group>"; };
 		CA585FA014F73AF700471880 /* SpotDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotDetailController.xib; sourceTree = "<group>"; };
 		CA585FA414F73B5800471880 /* CommonPlaceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlaceListController.h; sourceTree = "<group>"; };
@@ -1471,6 +1474,15 @@
 				A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */,
 			);
 			path = CityOverview;
+			sourceTree = "<group>";
+		};
+		A4BB6E4D152A415C001CEA6B /* SelectedItems */ = {
+			isa = PBXGroup;
+			children = (
+				A4BB6E4E152A415D001CEA6B /* SelectedItemsManager.h */,
+				A4BB6E4F152A415D001CEA6B /* SelectedItemsManager.m */,
+			);
+			path = SelectedItems;
 			sourceTree = "<group>";
 		};
 		A4EAFCCA150DB9BB003C35E5 /* App */ = {
@@ -2652,7 +2664,6 @@
 				CA585F8D14F7376300471880 /* Info */,
 				CA585F8F14F7376300471880 /* Place */,
 				CA585F9414F7377E00471880 /* MainController.h */,
-				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
 				CA585F9514F7377E00471880 /* MainController.m */,
 				CA585F9614F7377E00471880 /* MainController.xib */,
 			);
@@ -2676,6 +2687,7 @@
 			children = (
 				CA238FC714FE56F900114175 /* PlaceListFilter */,
 				CA585FA314F73B4500471880 /* Common */,
+				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
 				CA585F9F14F73AF700471880 /* SpotDetailController.m */,
 				CA585FA014F73AF700471880 /* SpotDetailController.xib */,
 				A3DED49B152044040076E5CD /* PlaceCell.h */,
@@ -2688,6 +2700,7 @@
 		CA585F9114F7376300471880 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A4BB6E4D152A415C001CEA6B /* SelectedItems */,
 				A48CE06215187D910094BD5D /* Package */,
 				A4FCE23D1516FF360077A333 /* Common */,
 				A48D6E4F1514232400507BDD /* CityOverView */,
@@ -3232,6 +3245,7 @@
 				A4BB6E3115294CF4001CEA6B /* CityListCell.m in Sources */,
 				A4BB6E3315294CF4001CEA6B /* DownloadListCell.m in Sources */,
 				A4BB6E401529A9AD001CEA6B /* CityOverviewService.m in Sources */,
+				A4BB6E50152A415D001CEA6B /* SelectedItemsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

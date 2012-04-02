@@ -88,7 +88,7 @@
 }
 
 
--(NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList
+-(NSArray*)filterBySubCategoryIdList:(NSArray*)list selectedSubCategoryIdList:(NSArray*)selectedCategoryIdList
 {
     NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
     
@@ -166,7 +166,7 @@
 }
 
 - (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
-            selectedCategoryIdList:(NSArray*)selectedCategoryIdList 
+         selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList 
                selectedPriceIdList:(NSArray*)selectedPriceIdList 
                 selectedAreaIdList:(NSArray*)selectedAreaIdList 
              selectedServiceIdList:(NSArray*)selectedServiceIdList
@@ -174,7 +174,7 @@
                             sortBy:(NSNumber*)selectedSortId
                    currentLocation:(CLLocation*)currentLocation
 {
-    return [self sortBySelectedSortId:[self filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList] selectedSortId:selectedSortId currentLocation:currentLocation];
+    return [self sortBySelectedSortId:[self filterBySubCategoryIdList:placeList selectedSubCategoryIdList:selectedSubCategoryIdList] selectedSortId:selectedSortId currentLocation:currentLocation];
 }
 
 @end

@@ -29,7 +29,7 @@
 @synthesize categoryId = _categoryId;
 @synthesize showMap = _showMap;
 @synthesize btnArray = _btnArray;
-
+@synthesize placeList = _placeList;
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -53,6 +53,7 @@
     [findEntertainmentButton release];
     [findRestaurantButton release];
     [_btnArray release];
+    [_placeList release];
     [super dealloc];
 }
 
@@ -76,31 +77,40 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self startUpdatingLocation];
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
     [super viewDidAppear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
-    [super viewDidDisappear:animated];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
 	
     // save to current location
     self.currentLocation = newLocation;
-	//NSLog(@"Current location is %@, horizontalAccuracy=%f, timestamp=%@", [self.currentLocation description], [self.currentLocation horizontalAccuracy], [[currentLocation timestamp] description]);
 	
 	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
 	
 	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
 	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
-	
-    NSLog(@"currentLocation: latitude=%f, longitude=%f", currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
     
-    [self.placeListController.dataTableView reloadData];
+    self.placeList = [self filterByDistance:_placeList distance:_distance];
+    [self createAndReloadPlaceListController];
+}
+
+- (void)findRequestDone:(int)result placeList:(NSArray*)placeList
+{
+    self.placeList = placeList;
+    [self startUpdatingLocation];
+}
+
+- (void)createAndReloadPlaceListController
+{        
+    if (self.placeListController == nil){
+        self.placeListController = [PlaceListController createController:_placeList 
+                                                               superView:placeListHolderView
+                                                         superController:self];  
+    }
+    
+    [self.placeListController setAndReloadPlaceList:_placeList];
 }
 
 #pragma mark - View lifecycle
@@ -125,19 +135,11 @@
     [mapBtn release];
     [mapBarBtn release];
     
-    
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
 
     [distanceView addSubview:imageRedStartView];
-    
-    // Do any additional setup after loading the view from its nib.
-    self.distance = DISTANCE_500M;
-    self.categoryId = PLACE_TYPE_ALL;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
-    
-    [self initLocationManager] ;
     
     findAllPlaceButton.tag = PLACE_TYPE_ALL;
     findSpotButton.tag = PLACE_TYPE_SPOT;
@@ -145,9 +147,14 @@
     findRestaurantButton.tag = PLACE_TYPE_RESTAURANT;
     findEntertainmentButton.tag = PLACE_TYPE_ENTERTAINMENT;
     findShoppingButton.tag = PLACE_TYPE_SHOPPING;
+
+    // Do any additional setup after loading the view from its nib.
+    self.distance = DISTANCE_500M;
+    self.categoryId = PLACE_TYPE_ALL;
+    
+    [self initLocationManager] ;
     
     self.btnArray = [NSArray arrayWithObjects:findAllPlaceButton, findSpotButton, findHotelButton, findRestaurantButton, findShoppingButton, findEntertainmentButton, nil];
-    
     
     [self setSelectedBtn:_categoryId];
 }
@@ -205,19 +212,6 @@
     return placeList;
 }
 
-- (void)findRequestDone:(int)result placeList:(NSArray*)list
-{
-    if (self.placeListController == nil){
-        list = [self filterByDistance:list distance:self.distance];
-        self.placeListController = [PlaceListController createController:list 
-                                                               superView:placeListHolderView
-                                                         superController:self];    
-    }
-    else{
-        list = [self filterByDistance:list distance:self.distance];
-        [self.placeListController setAndReloadPlaceList:list];
-    }    
-}
 
 - (void )clickMapBtn:(id)sender
 {

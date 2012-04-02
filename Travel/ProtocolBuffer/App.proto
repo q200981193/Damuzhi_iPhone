@@ -29,7 +29,7 @@ message PlaceMeta {
 
 
 message City {
-  required int32 cityId = 1;           // 城市ID
+  required int32 cityId = 1;            // 城市ID
   required string cityName = 2;         // 城市显示名称，如香港
   optional string latestVersion = 3;    // 最新城市数据包版本，格式如1.0
   optional string countryName = 4;
