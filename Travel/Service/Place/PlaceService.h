@@ -16,8 +16,7 @@
 @protocol PlaceServiceDelegate <NSObject>
 
 @optional
-- (void)findRequestDone:(int)result dataList:(NSArray*)dataList;
-- (void)filterAndSort;
+- (void)findRequestDone:(int)result placeList:(NSArray*)placeList;
 
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
 - (void)finishDeleteFavourite:(NSNumber*)resultCode count:(NSNumber*)count;

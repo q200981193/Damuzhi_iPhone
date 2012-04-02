@@ -11,6 +11,7 @@
 #import "PlaceService.h"
 #import "AppManager.h"
 #import "Place.pb.h"
+#import "CityOverviewService.h"
 
 @implementation SpotListFilter
 @synthesize controller;
@@ -85,6 +86,7 @@
 {
     return [[PlaceService defaultService] findPlaces:[self getCategoryId]  viewController:viewController];
 }
+
 
 -(NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList
 {

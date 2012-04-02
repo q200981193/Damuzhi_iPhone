@@ -37,8 +37,8 @@
   BOOL hasWebsite_:1;
   BOOL hasPriceDescription_:1;
   BOOL hasOpenTime_:1;
-  Float32 latitude;
-  Float32 longitude;
+  Float64 latitude;
+  Float64 longitude;
   int32_t hasDiscount;
   int32_t placeFavoriteCount;
   int32_t hotelStar;
@@ -94,8 +94,8 @@
 @property (readonly) int32_t subCategoryId;
 @property (readonly, retain) NSString* name;
 @property (readonly) int32_t rank;
-@property (readonly) Float32 longitude;
-@property (readonly) Float32 latitude;
+@property (readonly) Float64 longitude;
+@property (readonly) Float64 latitude;
 @property (readonly) int32_t areaId;
 @property (readonly, retain) NSString* price;
 @property (readonly, retain) NSString* avgPrice;
@@ -195,13 +195,13 @@
 - (Place_Builder*) clearProvidedServiceIdList;
 
 - (BOOL) hasLongitude;
-- (Float32) longitude;
-- (Place_Builder*) setLongitude:(Float32) value;
+- (Float64) longitude;
+- (Place_Builder*) setLongitude:(Float64) value;
 - (Place_Builder*) clearLongitude;
 
 - (BOOL) hasLatitude;
-- (Float32) latitude;
-- (Place_Builder*) setLatitude:(Float32) value;
+- (Float64) latitude;
+- (Place_Builder*) setLatitude:(Float64) value;
 - (Place_Builder*) clearLatitude;
 
 - (BOOL) hasAreaId;

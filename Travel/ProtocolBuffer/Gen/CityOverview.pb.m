@@ -484,16 +484,377 @@ static CityArea* defaultCityAreaInstance = nil;
 }
 @end
 
-@interface CityOverview ()
-@property (retain) CommonOverview* cityBasic;
-@property (retain) CommonOverview* travelPrepration;
-@property (retain) CommonOverview* travelUtility;
-@property (retain) CommonOverview* travelTransportation;
+@interface CityConfig ()
 @property (retain) NSMutableArray* mutableAreaListList;
 @property (retain) NSString* currencySymbol;
 @property (retain) NSString* currencyId;
 @property (retain) NSString* currencyName;
 @property int32_t priceRank;
+@end
+
+@implementation CityConfig
+
+@synthesize mutableAreaListList;
+- (BOOL) hasCurrencySymbol {
+  return !!hasCurrencySymbol_;
+}
+- (void) setHasCurrencySymbol:(BOOL) value {
+  hasCurrencySymbol_ = !!value;
+}
+@synthesize currencySymbol;
+- (BOOL) hasCurrencyId {
+  return !!hasCurrencyId_;
+}
+- (void) setHasCurrencyId:(BOOL) value {
+  hasCurrencyId_ = !!value;
+}
+@synthesize currencyId;
+- (BOOL) hasCurrencyName {
+  return !!hasCurrencyName_;
+}
+- (void) setHasCurrencyName:(BOOL) value {
+  hasCurrencyName_ = !!value;
+}
+@synthesize currencyName;
+- (BOOL) hasPriceRank {
+  return !!hasPriceRank_;
+}
+- (void) setHasPriceRank:(BOOL) value {
+  hasPriceRank_ = !!value;
+}
+@synthesize priceRank;
+- (void) dealloc {
+  self.mutableAreaListList = nil;
+  self.currencySymbol = nil;
+  self.currencyId = nil;
+  self.currencyName = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.currencySymbol = @"";
+    self.currencyId = @"";
+    self.currencyName = @"";
+    self.priceRank = 3;
+  }
+  return self;
+}
+static CityConfig* defaultCityConfigInstance = nil;
++ (void) initialize {
+  if (self == [CityConfig class]) {
+    defaultCityConfigInstance = [[CityConfig alloc] init];
+  }
+}
++ (CityConfig*) defaultInstance {
+  return defaultCityConfigInstance;
+}
+- (CityConfig*) defaultInstance {
+  return defaultCityConfigInstance;
+}
+- (NSArray*) areaListList {
+  return mutableAreaListList;
+}
+- (CityArea*) areaListAtIndex:(int32_t) index {
+  id value = [mutableAreaListList objectAtIndex:index];
+  return value;
+}
+- (BOOL) isInitialized {
+  if (!self.hasCurrencySymbol) {
+    return NO;
+  }
+  if (!self.hasCurrencyId) {
+    return NO;
+  }
+  if (!self.hasCurrencyName) {
+    return NO;
+  }
+  for (CityArea* element in self.areaListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  for (CityArea* element in self.areaListList) {
+    [output writeMessage:1 value:element];
+  }
+  if (self.hasCurrencySymbol) {
+    [output writeString:2 value:self.currencySymbol];
+  }
+  if (self.hasCurrencyId) {
+    [output writeString:3 value:self.currencyId];
+  }
+  if (self.hasCurrencyName) {
+    [output writeString:4 value:self.currencyName];
+  }
+  if (self.hasPriceRank) {
+    [output writeInt32:5 value:self.priceRank];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  for (CityArea* element in self.areaListList) {
+    size += computeMessageSize(1, element);
+  }
+  if (self.hasCurrencySymbol) {
+    size += computeStringSize(2, self.currencySymbol);
+  }
+  if (self.hasCurrencyId) {
+    size += computeStringSize(3, self.currencyId);
+  }
+  if (self.hasCurrencyName) {
+    size += computeStringSize(4, self.currencyName);
+  }
+  if (self.hasPriceRank) {
+    size += computeInt32Size(5, self.priceRank);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (CityConfig*) parseFromData:(NSData*) data {
+  return (CityConfig*)[[[CityConfig builder] mergeFromData:data] build];
+}
++ (CityConfig*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityConfig*)[[[CityConfig builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (CityConfig*) parseFromInputStream:(NSInputStream*) input {
+  return (CityConfig*)[[[CityConfig builder] mergeFromInputStream:input] build];
+}
++ (CityConfig*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityConfig*)[[[CityConfig builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityConfig*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CityConfig*)[[[CityConfig builder] mergeFromCodedInputStream:input] build];
+}
++ (CityConfig*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityConfig*)[[[CityConfig builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityConfig_Builder*) builder {
+  return [[[CityConfig_Builder alloc] init] autorelease];
+}
++ (CityConfig_Builder*) builderWithPrototype:(CityConfig*) prototype {
+  return [[CityConfig builder] mergeFrom:prototype];
+}
+- (CityConfig_Builder*) builder {
+  return [CityConfig builder];
+}
+@end
+
+@interface CityConfig_Builder()
+@property (retain) CityConfig* result;
+@end
+
+@implementation CityConfig_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[CityConfig alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (CityConfig_Builder*) clear {
+  self.result = [[[CityConfig alloc] init] autorelease];
+  return self;
+}
+- (CityConfig_Builder*) clone {
+  return [CityConfig builderWithPrototype:result];
+}
+- (CityConfig*) defaultInstance {
+  return [CityConfig defaultInstance];
+}
+- (CityConfig*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (CityConfig*) buildPartial {
+  CityConfig* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (CityConfig_Builder*) mergeFrom:(CityConfig*) other {
+  if (other == [CityConfig defaultInstance]) {
+    return self;
+  }
+  if (other.mutableAreaListList.count > 0) {
+    if (result.mutableAreaListList == nil) {
+      result.mutableAreaListList = [NSMutableArray array];
+    }
+    [result.mutableAreaListList addObjectsFromArray:other.mutableAreaListList];
+  }
+  if (other.hasCurrencySymbol) {
+    [self setCurrencySymbol:other.currencySymbol];
+  }
+  if (other.hasCurrencyId) {
+    [self setCurrencyId:other.currencyId];
+  }
+  if (other.hasCurrencyName) {
+    [self setCurrencyName:other.currencyName];
+  }
+  if (other.hasPriceRank) {
+    [self setPriceRank:other.priceRank];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (CityConfig_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (CityConfig_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        CityArea_Builder* subBuilder = [CityArea builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addAreaList:[subBuilder buildPartial]];
+        break;
+      }
+      case 18: {
+        [self setCurrencySymbol:[input readString]];
+        break;
+      }
+      case 26: {
+        [self setCurrencyId:[input readString]];
+        break;
+      }
+      case 34: {
+        [self setCurrencyName:[input readString]];
+        break;
+      }
+      case 40: {
+        [self setPriceRank:[input readInt32]];
+        break;
+      }
+    }
+  }
+}
+- (NSArray*) areaListList {
+  if (result.mutableAreaListList == nil) { return [NSArray array]; }
+  return result.mutableAreaListList;
+}
+- (CityArea*) areaListAtIndex:(int32_t) index {
+  return [result areaListAtIndex:index];
+}
+- (CityConfig_Builder*) replaceAreaListAtIndex:(int32_t) index with:(CityArea*) value {
+  [result.mutableAreaListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (CityConfig_Builder*) addAllAreaList:(NSArray*) values {
+  if (result.mutableAreaListList == nil) {
+    result.mutableAreaListList = [NSMutableArray array];
+  }
+  [result.mutableAreaListList addObjectsFromArray:values];
+  return self;
+}
+- (CityConfig_Builder*) clearAreaListList {
+  result.mutableAreaListList = nil;
+  return self;
+}
+- (CityConfig_Builder*) addAreaList:(CityArea*) value {
+  if (result.mutableAreaListList == nil) {
+    result.mutableAreaListList = [NSMutableArray array];
+  }
+  [result.mutableAreaListList addObject:value];
+  return self;
+}
+- (BOOL) hasCurrencySymbol {
+  return result.hasCurrencySymbol;
+}
+- (NSString*) currencySymbol {
+  return result.currencySymbol;
+}
+- (CityConfig_Builder*) setCurrencySymbol:(NSString*) value {
+  result.hasCurrencySymbol = YES;
+  result.currencySymbol = value;
+  return self;
+}
+- (CityConfig_Builder*) clearCurrencySymbol {
+  result.hasCurrencySymbol = NO;
+  result.currencySymbol = @"";
+  return self;
+}
+- (BOOL) hasCurrencyId {
+  return result.hasCurrencyId;
+}
+- (NSString*) currencyId {
+  return result.currencyId;
+}
+- (CityConfig_Builder*) setCurrencyId:(NSString*) value {
+  result.hasCurrencyId = YES;
+  result.currencyId = value;
+  return self;
+}
+- (CityConfig_Builder*) clearCurrencyId {
+  result.hasCurrencyId = NO;
+  result.currencyId = @"";
+  return self;
+}
+- (BOOL) hasCurrencyName {
+  return result.hasCurrencyName;
+}
+- (NSString*) currencyName {
+  return result.currencyName;
+}
+- (CityConfig_Builder*) setCurrencyName:(NSString*) value {
+  result.hasCurrencyName = YES;
+  result.currencyName = value;
+  return self;
+}
+- (CityConfig_Builder*) clearCurrencyName {
+  result.hasCurrencyName = NO;
+  result.currencyName = @"";
+  return self;
+}
+- (BOOL) hasPriceRank {
+  return result.hasPriceRank;
+}
+- (int32_t) priceRank {
+  return result.priceRank;
+}
+- (CityConfig_Builder*) setPriceRank:(int32_t) value {
+  result.hasPriceRank = YES;
+  result.priceRank = value;
+  return self;
+}
+- (CityConfig_Builder*) clearPriceRank {
+  result.hasPriceRank = NO;
+  result.priceRank = 3;
+  return self;
+}
+@end
+
+@interface CityOverview ()
+@property (retain) CommonOverview* cityBasic;
+@property (retain) CommonOverview* travelPrepration;
+@property (retain) CommonOverview* travelUtility;
+@property (retain) CommonOverview* travelTransportation;
+@property (retain) CityConfig* cityConfig;
 @end
 
 @implementation CityOverview
@@ -526,44 +887,19 @@ static CityArea* defaultCityAreaInstance = nil;
   hasTravelTransportation_ = !!value;
 }
 @synthesize travelTransportation;
-@synthesize mutableAreaListList;
-- (BOOL) hasCurrencySymbol {
-  return !!hasCurrencySymbol_;
+- (BOOL) hasCityConfig {
+  return !!hasCityConfig_;
 }
-- (void) setHasCurrencySymbol:(BOOL) value {
-  hasCurrencySymbol_ = !!value;
+- (void) setHasCityConfig:(BOOL) value {
+  hasCityConfig_ = !!value;
 }
-@synthesize currencySymbol;
-- (BOOL) hasCurrencyId {
-  return !!hasCurrencyId_;
-}
-- (void) setHasCurrencyId:(BOOL) value {
-  hasCurrencyId_ = !!value;
-}
-@synthesize currencyId;
-- (BOOL) hasCurrencyName {
-  return !!hasCurrencyName_;
-}
-- (void) setHasCurrencyName:(BOOL) value {
-  hasCurrencyName_ = !!value;
-}
-@synthesize currencyName;
-- (BOOL) hasPriceRank {
-  return !!hasPriceRank_;
-}
-- (void) setHasPriceRank:(BOOL) value {
-  hasPriceRank_ = !!value;
-}
-@synthesize priceRank;
+@synthesize cityConfig;
 - (void) dealloc {
   self.cityBasic = nil;
   self.travelPrepration = nil;
   self.travelUtility = nil;
   self.travelTransportation = nil;
-  self.mutableAreaListList = nil;
-  self.currencySymbol = nil;
-  self.currencyId = nil;
-  self.currencyName = nil;
+  self.cityConfig = nil;
   [super dealloc];
 }
 - (id) init {
@@ -572,10 +908,7 @@ static CityArea* defaultCityAreaInstance = nil;
     self.travelPrepration = [CommonOverview defaultInstance];
     self.travelUtility = [CommonOverview defaultInstance];
     self.travelTransportation = [CommonOverview defaultInstance];
-    self.currencySymbol = @"";
-    self.currencyId = @"";
-    self.currencyName = @"";
-    self.priceRank = 3;
+    self.cityConfig = [CityConfig defaultInstance];
   }
   return self;
 }
@@ -591,23 +924,7 @@ static CityOverview* defaultCityOverviewInstance = nil;
 - (CityOverview*) defaultInstance {
   return defaultCityOverviewInstance;
 }
-- (NSArray*) areaListList {
-  return mutableAreaListList;
-}
-- (CityArea*) areaListAtIndex:(int32_t) index {
-  id value = [mutableAreaListList objectAtIndex:index];
-  return value;
-}
 - (BOOL) isInitialized {
-  if (!self.hasCurrencySymbol) {
-    return NO;
-  }
-  if (!self.hasCurrencyId) {
-    return NO;
-  }
-  if (!self.hasCurrencyName) {
-    return NO;
-  }
   if (self.hasCityBasic) {
     if (!self.cityBasic.isInitialized) {
       return NO;
@@ -628,8 +945,8 @@ static CityOverview* defaultCityOverviewInstance = nil;
       return NO;
     }
   }
-  for (CityArea* element in self.areaListList) {
-    if (!element.isInitialized) {
+  if (self.hasCityConfig) {
+    if (!self.cityConfig.isInitialized) {
       return NO;
     }
   }
@@ -648,20 +965,8 @@ static CityOverview* defaultCityOverviewInstance = nil;
   if (self.hasTravelTransportation) {
     [output writeMessage:4 value:self.travelTransportation];
   }
-  for (CityArea* element in self.areaListList) {
-    [output writeMessage:5 value:element];
-  }
-  if (self.hasCurrencySymbol) {
-    [output writeString:6 value:self.currencySymbol];
-  }
-  if (self.hasCurrencyId) {
-    [output writeString:7 value:self.currencyId];
-  }
-  if (self.hasCurrencyName) {
-    [output writeString:8 value:self.currencyName];
-  }
-  if (self.hasPriceRank) {
-    [output writeInt32:9 value:self.priceRank];
+  if (self.hasCityConfig) {
+    [output writeMessage:5 value:self.cityConfig];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -684,20 +989,8 @@ static CityOverview* defaultCityOverviewInstance = nil;
   if (self.hasTravelTransportation) {
     size += computeMessageSize(4, self.travelTransportation);
   }
-  for (CityArea* element in self.areaListList) {
-    size += computeMessageSize(5, element);
-  }
-  if (self.hasCurrencySymbol) {
-    size += computeStringSize(6, self.currencySymbol);
-  }
-  if (self.hasCurrencyId) {
-    size += computeStringSize(7, self.currencyId);
-  }
-  if (self.hasCurrencyName) {
-    size += computeStringSize(8, self.currencyName);
-  }
-  if (self.hasPriceRank) {
-    size += computeInt32Size(9, self.priceRank);
+  if (self.hasCityConfig) {
+    size += computeMessageSize(5, self.cityConfig);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -786,23 +1079,8 @@ static CityOverview* defaultCityOverviewInstance = nil;
   if (other.hasTravelTransportation) {
     [self mergeTravelTransportation:other.travelTransportation];
   }
-  if (other.mutableAreaListList.count > 0) {
-    if (result.mutableAreaListList == nil) {
-      result.mutableAreaListList = [NSMutableArray array];
-    }
-    [result.mutableAreaListList addObjectsFromArray:other.mutableAreaListList];
-  }
-  if (other.hasCurrencySymbol) {
-    [self setCurrencySymbol:other.currencySymbol];
-  }
-  if (other.hasCurrencyId) {
-    [self setCurrencyId:other.currencyId];
-  }
-  if (other.hasCurrencyName) {
-    [self setCurrencyName:other.currencyName];
-  }
-  if (other.hasPriceRank) {
-    [self setPriceRank:other.priceRank];
+  if (other.hasCityConfig) {
+    [self mergeCityConfig:other.cityConfig];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -862,25 +1140,12 @@ static CityOverview* defaultCityOverviewInstance = nil;
         break;
       }
       case 42: {
-        CityArea_Builder* subBuilder = [CityArea builder];
+        CityConfig_Builder* subBuilder = [CityConfig builder];
+        if (self.hasCityConfig) {
+          [subBuilder mergeFrom:self.cityConfig];
+        }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self addAreaList:[subBuilder buildPartial]];
-        break;
-      }
-      case 50: {
-        [self setCurrencySymbol:[input readString]];
-        break;
-      }
-      case 58: {
-        [self setCurrencyId:[input readString]];
-        break;
-      }
-      case 66: {
-        [self setCurrencyName:[input readString]];
-        break;
-      }
-      case 72: {
-        [self setPriceRank:[input readInt32]];
+        [self setCityConfig:[subBuilder buildPartial]];
         break;
       }
     }
@@ -1006,97 +1271,34 @@ static CityOverview* defaultCityOverviewInstance = nil;
   result.travelTransportation = [CommonOverview defaultInstance];
   return self;
 }
-- (NSArray*) areaListList {
-  if (result.mutableAreaListList == nil) { return [NSArray array]; }
-  return result.mutableAreaListList;
+- (BOOL) hasCityConfig {
+  return result.hasCityConfig;
 }
-- (CityArea*) areaListAtIndex:(int32_t) index {
-  return [result areaListAtIndex:index];
+- (CityConfig*) cityConfig {
+  return result.cityConfig;
 }
-- (CityOverview_Builder*) replaceAreaListAtIndex:(int32_t) index with:(CityArea*) value {
-  [result.mutableAreaListList replaceObjectAtIndex:index withObject:value];
+- (CityOverview_Builder*) setCityConfig:(CityConfig*) value {
+  result.hasCityConfig = YES;
+  result.cityConfig = value;
   return self;
 }
-- (CityOverview_Builder*) addAllAreaList:(NSArray*) values {
-  if (result.mutableAreaListList == nil) {
-    result.mutableAreaListList = [NSMutableArray array];
+- (CityOverview_Builder*) setCityConfigBuilder:(CityConfig_Builder*) builderForValue {
+  return [self setCityConfig:[builderForValue build]];
+}
+- (CityOverview_Builder*) mergeCityConfig:(CityConfig*) value {
+  if (result.hasCityConfig &&
+      result.cityConfig != [CityConfig defaultInstance]) {
+    result.cityConfig =
+      [[[CityConfig builderWithPrototype:result.cityConfig] mergeFrom:value] buildPartial];
+  } else {
+    result.cityConfig = value;
   }
-  [result.mutableAreaListList addObjectsFromArray:values];
+  result.hasCityConfig = YES;
   return self;
 }
-- (CityOverview_Builder*) clearAreaListList {
-  result.mutableAreaListList = nil;
-  return self;
-}
-- (CityOverview_Builder*) addAreaList:(CityArea*) value {
-  if (result.mutableAreaListList == nil) {
-    result.mutableAreaListList = [NSMutableArray array];
-  }
-  [result.mutableAreaListList addObject:value];
-  return self;
-}
-- (BOOL) hasCurrencySymbol {
-  return result.hasCurrencySymbol;
-}
-- (NSString*) currencySymbol {
-  return result.currencySymbol;
-}
-- (CityOverview_Builder*) setCurrencySymbol:(NSString*) value {
-  result.hasCurrencySymbol = YES;
-  result.currencySymbol = value;
-  return self;
-}
-- (CityOverview_Builder*) clearCurrencySymbol {
-  result.hasCurrencySymbol = NO;
-  result.currencySymbol = @"";
-  return self;
-}
-- (BOOL) hasCurrencyId {
-  return result.hasCurrencyId;
-}
-- (NSString*) currencyId {
-  return result.currencyId;
-}
-- (CityOverview_Builder*) setCurrencyId:(NSString*) value {
-  result.hasCurrencyId = YES;
-  result.currencyId = value;
-  return self;
-}
-- (CityOverview_Builder*) clearCurrencyId {
-  result.hasCurrencyId = NO;
-  result.currencyId = @"";
-  return self;
-}
-- (BOOL) hasCurrencyName {
-  return result.hasCurrencyName;
-}
-- (NSString*) currencyName {
-  return result.currencyName;
-}
-- (CityOverview_Builder*) setCurrencyName:(NSString*) value {
-  result.hasCurrencyName = YES;
-  result.currencyName = value;
-  return self;
-}
-- (CityOverview_Builder*) clearCurrencyName {
-  result.hasCurrencyName = NO;
-  result.currencyName = @"";
-  return self;
-}
-- (BOOL) hasPriceRank {
-  return result.hasPriceRank;
-}
-- (int32_t) priceRank {
-  return result.priceRank;
-}
-- (CityOverview_Builder*) setPriceRank:(int32_t) value {
-  result.hasPriceRank = YES;
-  result.priceRank = value;
-  return self;
-}
-- (CityOverview_Builder*) clearPriceRank {
-  result.hasPriceRank = NO;
-  result.priceRank = 3;
+- (CityOverview_Builder*) clearCityConfig {
+  result.hasCityConfig = NO;
+  result.cityConfig = [CityConfig defaultInstance];
   return self;
 }
 @end

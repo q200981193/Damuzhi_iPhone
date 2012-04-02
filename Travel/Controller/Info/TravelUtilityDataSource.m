@@ -17,10 +17,9 @@
     return NSLS(@"实用信息");
 }
 
-- (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate
+- (void)requestDataWithDelegate:(PPViewController<CityOverviewServiceDelegate>*)delegate
 {
-    [[CityOverViewService defaultService]findTravelUtility:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
-    
+    [[CityOverviewService defaultService]findTravelUtility:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
 }
 
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource

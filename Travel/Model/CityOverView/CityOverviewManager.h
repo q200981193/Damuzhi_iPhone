@@ -11,31 +11,19 @@
 #import "CityOverview.pb.h"
 
 @interface CityOverViewManager : NSObject <CommonManagerProtocol>
-{
-    int             _cityId;
-    CityOverview    *cityOverView;
-}
 
-@property (assign, nonatomic) int          cityId;
-@property (retain, nonatomic) CityOverview *cityOverView;
+@property (assign, nonatomic) int cityId;
+@property (retain, nonatomic) CommonOverview *cityBasic;                  // 城市概况
+@property (retain, nonatomic) CommonOverview *travelPrepration;           // 旅行准备
+@property (retain, nonatomic) CommonOverview *travelUtility;              // 实用信息
+@property (retain, nonatomic) CommonOverview *travelTransportation ;      // 城市交通
+@property (retain, nonatomic) CityConfig *cityConfig;                     // 城市配置
 
-- (NSArray*)getCityBasicImageList;
-- (NSString*)getCityBasicHtml;
-
-- (NSString*)getTravelPreprationHtml;
-- (NSString*)getTravelUtilityHtml;
-- (NSString*)getTravelTransportationHtml;
-
-- (NSArray*)getAreaList;
 - (NSString*)getAreaName:(int)areaId;
 - (NSString*)getCurrencySymbol;
-- (NSString*)getCurrencyId;
-- (NSString*)getCurrencyName;
-- (int)getPriceRank;
+- (NSArray *)getSelectAreaList;
+- (NSArray *)getSelectPriceList;
 
 - (void)switchCity:(int)newCity;
-
-- (NSArray *)getWillSelectAreaList;
-- (NSArray *)getWillSelectPriceList;
 
 @end

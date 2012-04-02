@@ -59,6 +59,7 @@
 #define PARA_TRAVEL_APP_DATA_VERSION      @"app_data_version"
 
 // define query object type
+// for place
 #define OBJECT_TYPE_ALL_PLACE       1
 #define OBJECT_TYPE_SPOT            21
 #define OBJECT_TYPE_HOTEL           22
@@ -66,6 +67,7 @@
 #define OBJECT_TYPE_SHOPPING        24
 #define OBJECT_TYPE_ENTERTAINMENT   25
 
+// for top favorite
 #define OBJECT_TYPE_TOP_FAVORITE_ALL                40
 #define OBJECT_TYPE_TOP_FAVORITE_SPOT               41
 #define OBJECT_TYPE_TOP_FAVORITE_HOTEL              42
@@ -73,12 +75,16 @@
 #define OBJECT_TYPE_TOP_FAVORITE_SHOPPING           44
 #define OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT      45
 
-#define OBJECT_TYPE_CITY_OVERVIEW   2
-#define OBJECT_TYPE_CITY_TRAFFIC    3
-#define OBJECT_TYPE_USEFUL_INFO            4
-#define OBJECT_TYPE_TRAVEL_GUIDE    5
-#define OBJECT_TYPE_TOURIST_RECOMMENDED      6
+// for city overview
+#define OBJECT_TYPE_CITY_BASIC                  2
+#define OBJECT_TYPE_CITY_CONFIG                 3
+#define OBJECT_TYPE_TRAVEL_TRANSPORTATIO        4     
+#define OBJECT_TYPE_TRAVEL_UTILITY              5
+#define OBJECT_TYPE_TRAVEL_GUIDE                6
+#define OBJECT_TYPE_TOURIST_RECOMMENDED         7
+#define OBJECT_TYPE_HELP_INOF                   8
 
+// for app
 #define OBJECT_TYPE_APP_DATA        10
 
 

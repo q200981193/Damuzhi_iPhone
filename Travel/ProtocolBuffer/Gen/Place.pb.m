@@ -27,8 +27,8 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (retain) NSString* name;
 @property int32_t rank;
 @property (retain) NSMutableArray* mutableProvidedServiceIdList;
-@property Float32 longitude;
-@property Float32 latitude;
+@property Float64 longitude;
+@property Float64 latitude;
 @property int32_t areaId;
 @property (retain) NSString* price;
 @property (retain) NSString* avgPrice;
@@ -365,10 +365,10 @@ static Place* defaultPlaceInstance = nil;
     [output writeInt32:7 value:[value intValue]];
   }
   if (self.hasLongitude) {
-    [output writeFloat:11 value:self.longitude];
+    [output writeDouble:11 value:self.longitude];
   }
   if (self.hasLatitude) {
-    [output writeFloat:12 value:self.latitude];
+    [output writeDouble:12 value:self.latitude];
   }
   if (self.hasAreaId) {
     [output writeInt32:13 value:self.areaId];
@@ -463,10 +463,10 @@ static Place* defaultPlaceInstance = nil;
     size += 1 * self.mutableProvidedServiceIdList.count;
   }
   if (self.hasLongitude) {
-    size += computeFloatSize(11, self.longitude);
+    size += computeDoubleSize(11, self.longitude);
   }
   if (self.hasLatitude) {
-    size += computeFloatSize(12, self.latitude);
+    size += computeDoubleSize(12, self.latitude);
   }
   if (self.hasAreaId) {
     size += computeInt32Size(13, self.areaId);
@@ -776,12 +776,12 @@ static Place* defaultPlaceInstance = nil;
         [self addProvidedServiceId:[input readInt32]];
         break;
       }
-      case 93: {
-        [self setLongitude:[input readFloat]];
+      case 89: {
+        [self setLongitude:[input readDouble]];
         break;
       }
-      case 101: {
-        [self setLatitude:[input readFloat]];
+      case 97: {
+        [self setLatitude:[input readDouble]];
         break;
       }
       case 104: {
@@ -993,10 +993,10 @@ static Place* defaultPlaceInstance = nil;
 - (BOOL) hasLongitude {
   return result.hasLongitude;
 }
-- (Float32) longitude {
+- (Float64) longitude {
   return result.longitude;
 }
-- (Place_Builder*) setLongitude:(Float32) value {
+- (Place_Builder*) setLongitude:(Float64) value {
   result.hasLongitude = YES;
   result.longitude = value;
   return self;
@@ -1009,10 +1009,10 @@ static Place* defaultPlaceInstance = nil;
 - (BOOL) hasLatitude {
   return result.hasLatitude;
 }
-- (Float32) latitude {
+- (Float64) latitude {
   return result.latitude;
 }
-- (Place_Builder*) setLatitude:(Float32) value {
+- (Place_Builder*) setLatitude:(Float64) value {
   result.hasLatitude = YES;
   result.latitude = value;
   return self;

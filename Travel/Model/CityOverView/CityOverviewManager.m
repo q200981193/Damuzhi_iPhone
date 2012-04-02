@@ -18,7 +18,11 @@
 @implementation CityOverViewManager
 
 @synthesize cityId = _cityId;
-@synthesize cityOverView = _cityOverView;
+@synthesize cityBasic = _cityBasic;
+@synthesize travelPrepration = _travelPrepration;
+@synthesize travelUtility = _travelUtility;
+@synthesize travelTransportation = _travelTransportation;
+@synthesize cityConfig = _cityConfig;
 
 static CityOverViewManager *_defaultInstance = nil;
 
@@ -26,54 +30,26 @@ static CityOverViewManager *_defaultInstance = nil;
 {
     if (_defaultInstance == nil){
         _defaultInstance = [[CityOverViewManager alloc] init];
-        [_defaultInstance switchCity:[[AppManager defaultManager] getCurrentCityId]];
     }
     
+    [_defaultInstance switchCity:[[AppManager defaultManager] getCurrentCityId]];
     return _defaultInstance;
 }
 
 - (void)dealloc
 {
-    [_cityOverView release];
+    [_cityBasic release];
+    [_travelPrepration release];
+    [_travelUtility release];
+    [_travelTransportation release];
+    [_cityConfig release];
     [super dealloc];
-}
-
-- (NSArray*)getCityBasicImageList
-{
-    return _cityOverView.cityBasic.imagesList;
-}
-
-- (NSString*)getCityBasicHtml
-{
-    PPDebug(@"CityBasicHtml: %@", _cityOverView.cityBasic.html);
-    return _cityOverView.cityBasic.html;
-}
-
-
-- (NSString*)getTravelPreprationHtml
-{
-    return _cityOverView.travelPrepration.html;
-}
-
-- (NSString*)getTravelUtilityHtml;
-{
-    return _cityOverView.travelUtility.html;
-}
-
-- (NSString*)getTravelTransportationHtml
-{
-    return _cityOverView.travelTransportation.html;
-}
-
-- (NSArray*)getAreaList
-{
-    return _cityOverView.areaListList;
 }
 
 - (NSString*)getAreaName:(int)areaId
 {
     NSString *areaName = @"";
-    for (CityArea *area in _cityOverView.areaListList) {
+    for (CityArea *area in _cityConfig.areaListList) {
         if (areaId == area.areaId) {
             areaName = area.areaName;
         }
@@ -84,28 +60,12 @@ static CityOverViewManager *_defaultInstance = nil;
 
 - (NSString*)getCurrencySymbol
 {
-    if (!_cityOverView.currencySymbol){
+    if (!_cityConfig.currencySymbol){
         PPDebug(@"Warning, <getCurrencySymbol> but currencty symbol is null?");
         return @"";
     }
-//    NSLog(@"currencySymbol = %@", _cityOverView.currencySymbol);
     
-    return _cityOverView.currencySymbol;
-}
-
-- (NSString*)getCurrencyId;
-{
-    return _cityOverView.currencyId;
-}
-
-- (NSString*)getCurrencyName
-{
-    return _cityOverView.currencyName;
-}
-
-- (int)getPriceRank
-{
-    return _cityOverView.priceRank;
+    return _cityConfig.currencySymbol;
 }
 
 - (CityOverview*)readCityOverviewData:(int)cityId
@@ -118,7 +78,6 @@ static CityOverViewManager *_defaultInstance = nil;
     NSString *cityOverviewFilePath = [AppUtils getCityoverViewFilePath:cityId];
     NSData *cityOverviewData = [NSData dataWithContentsOfFile:cityOverviewFilePath];
     
-    
     return [CityOverview parseFromData:cityOverviewData];
 }
 
@@ -130,23 +89,29 @@ static CityOverViewManager *_defaultInstance = nil;
     
     self.cityId = newCityId;
 
-    self.cityOverView = [self readCityOverviewData:newCityId];
+    CityOverview *cityOverView = [self readCityOverviewData:newCityId];
     
-    NSLog(@"currencyId = %@, currencyName = %@, currencySymbol = %@", 
-            _cityOverView.currencyId, _cityOverView.currencyName, _cityOverView.currencySymbol);
+    self.cityBasic = cityOverView.cityBasic; 
+    self.travelPrepration = cityOverView.travelPrepration;          
+    self.travelUtility = cityOverView.travelUtility;              
+    self.travelTransportation = cityOverView.travelTransportation;       
+    self.cityConfig = cityOverView.cityConfig; 
     
-    for (CityArea *area in _cityOverView.areaListList) {
-        NSLog(@"areaId = %d, areaName = %@", area.areaId, area.areaName);
-    }
+//    PPDebug(@"currencyId = %@, currencyName = %@, currencySymbol = %@", 
+//            _cityConfig.currencyId, _cityConfig.currencyName, _cityConfig.currencySymbol);
+//    
+//    for (CityArea *area in _cityConfig.areaListList) {
+//        PPDebug(@"areaId = %d, areaName = %@", area.areaId, area.areaName);
+//    }
 }
 
-- (NSArray *)getWillSelectAreaList
+- (NSArray *)getSelectAreaList
 {
     NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
     [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
                     forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
-    NSArray *area = [self getAreaList];
+    NSArray *area = _cityConfig.areaListList;
     for (CityArea* cityArea in area) {
         [resultArray addObject:[NSDictionary dictionaryWithObject:cityArea.areaName
                                                            forKey:[NSNumber numberWithInt:cityArea.areaId]]];
@@ -154,13 +119,13 @@ static CityOverViewManager *_defaultInstance = nil;
     return resultArray;
 }
 
-- (NSArray *)getWillSelectPriceList
+- (NSArray *)getSelectPriceList
 {
     NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
     [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
                                                        forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
     
-    for (int rank = 1; rank <= [_cityOverView priceRank]; rank ++) {
+    for (int rank = 1; rank <= _cityConfig.priceRank; rank ++) {
         NSString *rankString = nil;
         switch (rank) {
             case 1:

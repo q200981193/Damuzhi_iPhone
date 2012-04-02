@@ -205,7 +205,7 @@
     return placeList;
 }
 
-- (void)findRequestDone:(int)result dataList:(NSArray*)list
+- (void)findRequestDone:(int)result placeList:(NSArray*)list
 {
     if (self.placeListController == nil){
         list = [self filterByDistance:list distance:self.distance];

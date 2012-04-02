@@ -30,6 +30,8 @@
 @synthesize selectedPriceIdList = _selectedPriceIdList;
 @synthesize selectedServiceIdList = _selectedServiceIdList;
 @synthesize selectedCuisineIdList = _selectedCuisineIdList;
+@synthesize placeList = _placeList;
+@synthesize cityConfig = _cityConfig;
 
 - (void)dealloc {
     [_filterHandler release];
@@ -43,6 +45,8 @@
     [_selectedServiceIdList release];
     [_selectedCuisineIdList release];
     [modeButton release];
+    [_placeList release];
+    [_cityConfig release];
     [super dealloc];
 }
 
@@ -110,6 +114,7 @@
 {
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     [_filterHandler findAllPlaces:self];
+    
     [super viewWillAppear:animated];
 }
 
@@ -143,8 +148,10 @@
     return placeList;
 }
 
-- (void)findRequestDone:(int)result dataList:(NSArray*)list
+- (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
+    
+    
     if (self.placeListController == nil){
         [self.selectedCategoryIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
@@ -152,16 +159,26 @@
         [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.selectedServiceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.selectedCuisineIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        list = [self filterAndSort:list];
-        self.placeListController = [PlaceListController createController:list 
+        placeList = [self filterAndSort:placeList];
+        self.placeListController = [PlaceListController createController:placeList 
                                                                superView:placeListHolderView
-                                                         superController:self];    
+                                                         superController:self];  
+        
+
     }
-    else{
-        list = [self filterAndSort:list];
-        [self.placeListController setAndReloadPlaceList:list];
-    }    
-    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", list.count];
+    
+    placeList = [self filterAndSort:placeList];
+    [self.placeListController setAndReloadPlaceList:placeList];
+        
+    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", placeList.count];
+}
+
+- (void)findCityConfigRequestDone:(int)result cityConfig:(CityConfig*)cityConfig
+{
+    if (self.placeListController == nil){
+        self.placeListController = [PlaceListController createController:placeListHolderView
+                                                         superController:self];  
+    }
 }
 
 - (void)updateModeButton
@@ -242,7 +259,7 @@
     NSString *title = button.titleLabel.text;
     
     //NSArray *hotelPriceList = [[AppManager defaultManager] getHotelPriceList];
-    NSArray *hotelPriceList = [[CityOverViewManager defaultManager] getWillSelectPriceList];
+    NSArray *hotelPriceList = [[CityOverViewManager defaultManager] getSelectPriceList];
     SelectController* selectController = [SelectController createController:hotelPriceList
                                                                 selectedIds:self.selectedPriceIdList
                                                                multiOptions:YES];
@@ -256,7 +273,7 @@
     UIButton *button = (UIButton *)sender;
     NSString *title = button.titleLabel.text;
     
-    NSArray *areaList = [[CityOverViewManager defaultManager] getWillSelectAreaList];
+    NSArray *areaList = [[CityOverViewManager defaultManager] getSelectAreaList];
     SelectController* selectController = [SelectController createController:areaList
                                                                 selectedIds:self.selectedAreaIdList
                                                                multiOptions:YES];

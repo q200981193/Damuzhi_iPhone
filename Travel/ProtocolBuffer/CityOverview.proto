@@ -30,5 +30,4 @@ message CityOverview {
   optional CommonOverview travelUtility = 3;           // 实用信息
   optional CommonOverview travelTransportation = 4;    // 城市交通
   optional CityConfig cityConfig = 5;                  // 城市配置
-
 }

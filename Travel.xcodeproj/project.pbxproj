@@ -147,7 +147,6 @@
 		A48CE03B15185C340094BD5D /* stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48CE02B15185C340094BD5D /* stop@2x.png */; };
 		A48CE03C15185C340094BD5D /* yes_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48CE02C15185C340094BD5D /* yes_s@2x.png */; };
 		A48CE06515187DDA0094BD5D /* PackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CE06415187DDA0094BD5D /* PackageManager.m */; };
-		A48D6E5F1514470200507BDD /* CityOverviewService.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D6E5E1514470200507BDD /* CityOverviewService.m */; };
 		A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D6E611514472200507BDD /* CityOverviewManager.m */; };
 		A48E879A151C0B6D007954D3 /* online_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48E8799151C0B6D007954D3 /* online_btn@2x.png */; };
 		A48E87A6151C5FC0007954D3 /* LocalCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A5151C5FC0007954D3 /* LocalCity.m */; };
@@ -161,6 +160,7 @@
 		A4BB6E3215294CF4001CEA6B /* CityListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6E2D15294CEE001CEA6B /* CityListCell.xib */; };
 		A4BB6E3315294CF4001CEA6B /* DownloadListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E2F15294CF0001CEA6B /* DownloadListCell.m */; };
 		A4BB6E3415294CF4001CEA6B /* DownloadListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6E3015294CF2001CEA6B /* DownloadListCell.xib */; };
+		A4BB6E401529A9AD001CEA6B /* CityOverviewService.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */; };
 		A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DC80EF150F2EF00025F032 /* SelectController.m */; };
 		A4DC80F2150F2EF00025F032 /* SelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F0150F2EF00025F032 /* SelectController.xib */; };
 		A4DC80F5150F3DAB0025F032 /* select_bg_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F3150F3DAB0025F032 /* select_bg_1@2x.png */; };
@@ -169,7 +169,6 @@
 		A4F01FF31508BB900041726D /* TravelNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F01FF21508BB900041726D /* TravelNetworkRequest.m */; };
 		A4FCE24115170A830077A333 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FCE24015170A830077A333 /* AppUtils.m */; };
 		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
-		CA103AF3150339C200F60C03 /* InfoService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF2150339C200F60C03 /* InfoService.m */; };
 		CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF5150467B200F60C03 /* PlaceMapViewController.m */; };
 		CA103AF8150467B200F60C03 /* PlaceMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */; };
 		CA103AFC15046A3300F60C03 /* AppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AFB15046A3300F60C03 /* AppManager.m */; };
@@ -194,7 +193,6 @@
 		CA238FC614FDCB0400114175 /* CommonPlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FC514FDCB0400114175 /* CommonPlaceCell.m */; };
 		CA238FCA14FE571500114175 /* SpotListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FC914FE571500114175 /* SpotListFilter.m */; };
 		CA238FCE14FE5EE700114175 /* SlideImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FCD14FE5EE700114175 /* SlideImageView.m */; };
-		CA238FD214FF2AA100114175 /* InfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FD114FF2AA100114175 /* InfoManager.m */; };
 		CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FD414FF321C00114175 /* CityBasicDataSource.m */; };
 		CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FDD14FF4B5300114175 /* PlaceService.m */; };
 		CA238FE714FF587B00114175 /* image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA238FE214FF587B00114175 /* image.jpg */; };
@@ -608,8 +606,6 @@
 		A48CE02C15185C340094BD5D /* yes_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yes_s@2x.png"; sourceTree = "<group>"; };
 		A48CE06315187DDA0094BD5D /* PackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageManager.h; sourceTree = "<group>"; };
 		A48CE06415187DDA0094BD5D /* PackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageManager.m; sourceTree = "<group>"; };
-		A48D6E5D1514470200507BDD /* CityOverviewService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverviewService.h; sourceTree = "<group>"; };
-		A48D6E5E1514470200507BDD /* CityOverviewService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverviewService.m; sourceTree = "<group>"; };
 		A48D6E601514472200507BDD /* CityOverviewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverviewManager.h; sourceTree = "<group>"; };
 		A48D6E611514472200507BDD /* CityOverviewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverviewManager.m; sourceTree = "<group>"; };
 		A48E8799151C0B6D007954D3 /* online_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "online_btn@2x.png"; sourceTree = "<group>"; };
@@ -632,6 +628,8 @@
 		A4BB6E2E15294CEF001CEA6B /* DownloadListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadListCell.h; sourceTree = "<group>"; };
 		A4BB6E2F15294CF0001CEA6B /* DownloadListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadListCell.m; sourceTree = "<group>"; };
 		A4BB6E3015294CF2001CEA6B /* DownloadListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownloadListCell.xib; sourceTree = "<group>"; };
+		A4BB6E3E1529A9AD001CEA6B /* CityOverviewService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverviewService.h; sourceTree = "<group>"; };
+		A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverviewService.m; sourceTree = "<group>"; };
 		A4DC80EE150F2EF00025F032 /* SelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectController.h; sourceTree = "<group>"; };
 		A4DC80EF150F2EF00025F032 /* SelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectController.m; sourceTree = "<group>"; };
 		A4DC80F0150F2EF00025F032 /* SelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectController.xib; sourceTree = "<group>"; };
@@ -645,8 +643,6 @@
 		A4FCE24015170A830077A333 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
 		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
-		CA103AF1150339C200F60C03 /* InfoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoService.h; sourceTree = "<group>"; };
-		CA103AF2150339C200F60C03 /* InfoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoService.m; sourceTree = "<group>"; };
 		CA103AF4150467B200F60C03 /* PlaceMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapViewController.h; sourceTree = "<group>"; };
 		CA103AF5150467B200F60C03 /* PlaceMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceMapViewController.m; sourceTree = "<group>"; };
 		CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceMapViewController.xib; sourceTree = "<group>"; };
@@ -688,8 +684,6 @@
 		CA238FC914FE571500114175 /* SpotListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotListFilter.m; sourceTree = "<group>"; };
 		CA238FCC14FE5EE700114175 /* SlideImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideImageView.h; sourceTree = "<group>"; };
 		CA238FCD14FE5EE700114175 /* SlideImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideImageView.m; sourceTree = "<group>"; };
-		CA238FD014FF2AA100114175 /* InfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoManager.h; sourceTree = "<group>"; };
-		CA238FD114FF2AA100114175 /* InfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoManager.m; sourceTree = "<group>"; };
 		CA238FD314FF321C00114175 /* CityBasicDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityBasicDataSource.h; sourceTree = "<group>"; };
 		CA238FD414FF321C00114175 /* CityBasicDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityBasicDataSource.m; sourceTree = "<group>"; };
 		CA238FDD14FF4B5300114175 /* PlaceService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceService.m; sourceTree = "<group>"; };
@@ -1470,13 +1464,13 @@
 			path = CityOverView;
 			sourceTree = "<group>";
 		};
-		A48D6E53151432A300507BDD /* CityOverView */ = {
+		A4BB6E3D1529A9AD001CEA6B /* CityOverview */ = {
 			isa = PBXGroup;
 			children = (
-				A48D6E5D1514470200507BDD /* CityOverviewService.h */,
-				A48D6E5E1514470200507BDD /* CityOverviewService.m */,
+				A4BB6E3E1529A9AD001CEA6B /* CityOverviewService.h */,
+				A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */,
 			);
-			path = CityOverView;
+			path = CityOverview;
 			sourceTree = "<group>";
 		};
 		A4EAFCCA150DB9BB003C35E5 /* App */ = {
@@ -1505,15 +1499,6 @@
 				CA103AEE1503355F00F60C03 /* UserManager.m */,
 			);
 			path = User;
-			sourceTree = "<group>";
-		};
-		CA103AF0150339B300F60C03 /* Info */ = {
-			isa = PBXGroup;
-			children = (
-				CA103AF1150339C200F60C03 /* InfoService.h */,
-				CA103AF2150339C200F60C03 /* InfoService.m */,
-			);
-			path = Info;
 			sourceTree = "<group>";
 		};
 		CA103AF91504683100F60C03 /* App */ = {
@@ -1647,15 +1632,6 @@
 				CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		CA238FCF14FF2A3B00114175 /* Info */ = {
-			isa = PBXGroup;
-			children = (
-				CA238FD014FF2AA100114175 /* InfoManager.h */,
-				CA238FD114FF2AA100114175 /* InfoManager.m */,
-			);
-			path = Info;
 			sourceTree = "<group>";
 		};
 		CA238FE014FF587800114175 /* Resource */ = {
@@ -2717,7 +2693,6 @@
 				A48D6E4F1514232400507BDD /* CityOverView */,
 				CA103AF91504683100F60C03 /* App */,
 				CA103AEC1503354A00F60C03 /* User */,
-				CA238FCF14FF2A3B00114175 /* Info */,
 				CA238FA414FCCDE800114175 /* Place */,
 			);
 			path = Model;
@@ -2726,9 +2701,8 @@
 		CA585F9214F7376300471880 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				A48D6E53151432A300507BDD /* CityOverView */,
+				A4BB6E3D1529A9AD001CEA6B /* CityOverview */,
 				A4EAFCCA150DB9BB003C35E5 /* App */,
-				CA103AF0150339B300F60C03 /* Info */,
 				CA238FF014FF6A5A00114175 /* User */,
 				CA238FA514FCCDF200114175 /* Place */,
 			);
@@ -3208,12 +3182,10 @@
 				CA238FC614FDCB0400114175 /* CommonPlaceCell.m in Sources */,
 				CA238FCA14FE571500114175 /* SpotListFilter.m in Sources */,
 				CA238FCE14FE5EE700114175 /* SlideImageView.m in Sources */,
-				CA238FD214FF2AA100114175 /* InfoManager.m in Sources */,
 				CA238FD514FF321D00114175 /* CityBasicDataSource.m in Sources */,
 				CA238FDF14FF4B5300114175 /* PlaceService.m in Sources */,
 				CA238FF314FF6A6C00114175 /* UserService.m in Sources */,
 				CA103AEF1503355F00F60C03 /* UserManager.m in Sources */,
-				CA103AF3150339C200F60C03 /* InfoService.m in Sources */,
 				CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */,
 				CA103AFC15046A3300F60C03 /* AppManager.m in Sources */,
 				A48782BB1507193900A0D91E /* UICustomPageControl.m in Sources */,
@@ -3224,7 +3196,6 @@
 				A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */,
 				A4EAFCCD150DB9BB003C35E5 /* AppService.m in Sources */,
 				A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */,
-				A48D6E5F1514470200507BDD /* CityOverviewService.m in Sources */,
 				A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */,
 				EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */,
 				EAFC7E0F1515D15300CE20CF /* HotelDetailViewHandler.m in Sources */,
@@ -3260,6 +3231,7 @@
 				EAFE21EB152861480013D040 /* NearByRecommendController.m in Sources */,
 				A4BB6E3115294CF4001CEA6B /* CityListCell.m in Sources */,
 				A4BB6E3315294CF4001CEA6B /* DownloadListCell.m in Sources */,
+				A4BB6E401529A9AD001CEA6B /* CityOverviewService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

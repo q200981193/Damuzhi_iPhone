@@ -65,10 +65,10 @@
     [dataSource requestDataWithDelegate:self];
 }
 
-- (void)findRequestDone:(int)result data:(CommonOverview*)commonOverview
+- (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView;
 {
-    NSString* urlString = [commonOverview html];
-    NSArray *imageList = [commonOverview imagesList];
+    NSString* urlString = [overView html];
+    NSArray *imageList = [overView imagesList];
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     NSURL* url = nil;
