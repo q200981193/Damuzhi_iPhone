@@ -67,7 +67,7 @@ static PackageManager *_instance = nil;
         if ([AppUtils hasLocalCityData:[cityId intValue]]) {
             NSString *packageFilePath = [AppUtils getPackageFilePath:[cityId intValue]];
             
-            NSLog(@"path = %@", packageFilePath);
+//            NSLog(@"path = %@", packageFilePath);
             if ([[NSFileManager defaultManager] fileExistsAtPath:packageFilePath]) {
                 NSData *packageData = [NSData dataWithContentsOfFile:packageFilePath];
                 Package *package = [Package parseFromData:packageData]; 

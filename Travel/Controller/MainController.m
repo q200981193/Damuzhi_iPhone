@@ -58,7 +58,6 @@
 
 -(void) clickTitle:(id)sender
 {
-    NSLog(@"click title");
     CityManagementController *controller = [[CityManagementController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        

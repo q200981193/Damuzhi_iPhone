@@ -166,7 +166,7 @@
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-    NSLog(@"didAddAnnotationViews");
+//    NSLog(@"didAddAnnotationViews");
     [self gotoLocation:[_placeList objectAtIndex:0]];
 }
 

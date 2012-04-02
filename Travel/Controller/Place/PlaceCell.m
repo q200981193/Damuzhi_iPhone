@@ -142,13 +142,10 @@
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
     self.nameLabel.text = [place name];
-//    NSLog(@"place: %@", [place name]);
-//    PPDebug(@"经纬度:%f,%f",place.longitude ,place.latitude);
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-    NSLog(@"place: %@", [place name]);
-
-    PPDebug(@"当前经纬度:%lf,%lf", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
-    PPDebug(@"地点经纬度:%lf,%lf",place.longitude ,place.latitude);
+//    PPDebug(@"place: %@", [place name]);
+//    PPDebug(@"当前经纬度:%lf,%lf", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
+//    PPDebug(@"地点经纬度:%lf,%lf",place.longitude ,place.latitude);
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     [placeLocation release];
     

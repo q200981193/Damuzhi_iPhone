@@ -152,8 +152,6 @@
 		A48E879A151C0B6D007954D3 /* online_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48E8799151C0B6D007954D3 /* online_btn@2x.png */; };
 		A48E87A6151C5FC0007954D3 /* LocalCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A5151C5FC0007954D3 /* LocalCity.m */; };
 		A48E87A9151C6A3D007954D3 /* LocalCityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A8151C6A3D007954D3 /* LocalCityManager.m */; };
-		A4BB6D8915269E07001CEA6B /* FeekbackController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6D8715269E07001CEA6B /* FeekbackController.m */; };
-		A4BB6D8A15269E07001CEA6B /* FeekbackController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6D8815269E07001CEA6B /* FeekbackController.xib */; };
 		A4BB6D8C1526F52B001CEA6B /* td_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6D8B1526F52B001CEA6B /* td_bg@2x.png */; };
 		A4BB6DB115270AFA001CEA6B /* CommonListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6DAA15270AFA001CEA6B /* CommonListFilter.m */; };
 		A4BB6DB215270AFA001CEA6B /* EntertainmentListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6DAC15270AFA001CEA6B /* EntertainmentListFilter.m */; };
@@ -619,9 +617,6 @@
 		A48E87A5151C5FC0007954D3 /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
 		A48E87A7151C6A3D007954D3 /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCityManager.h; sourceTree = "<group>"; };
 		A48E87A8151C6A3D007954D3 /* LocalCityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCityManager.m; sourceTree = "<group>"; };
-		A4BB6D8615269E07001CEA6B /* FeekbackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "\bFeekbackController.h"; sourceTree = "<group>"; };
-		A4BB6D8715269E07001CEA6B /* FeekbackController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "\bFeekbackController.m"; sourceTree = "<group>"; };
-		A4BB6D8815269E07001CEA6B /* FeekbackController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "\bFeekbackController.xib"; sourceTree = "<group>"; };
 		A4BB6D8B1526F52B001CEA6B /* td_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "td_bg@2x.png"; sourceTree = "<group>"; };
 		A4BB6DA915270AFA001CEA6B /* CommonListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonListFilter.h; sourceTree = "<group>"; };
 		A4BB6DAA15270AFA001CEA6B /* CommonListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonListFilter.m; sourceTree = "<group>"; };
@@ -1316,9 +1311,6 @@
 				A3ACE10F1524459F00C9B3DD /* HistoryController.h */,
 				A3ACE1101524459F00C9B3DD /* HistoryController.m */,
 				A3ACE1111524459F00C9B3DD /* HistoryController.xib */,
-				A4BB6D8615269E07001CEA6B /* FeekbackController.h */,
-				A4BB6D8715269E07001CEA6B /* FeekbackController.m */,
-				A4BB6D8815269E07001CEA6B /* FeekbackController.xib */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -3011,7 +3003,6 @@
 				A3DED49F152044040076E5CD /* PlaceCell.xib in Resources */,
 				A327DEEF15231A31003DEE8C /* FavoriteController.xib in Resources */,
 				A3ACE1131524459F00C9B3DD /* HistoryController.xib in Resources */,
-				A4BB6D8A15269E07001CEA6B /* FeekbackController.xib in Resources */,
 				A4BB6D8C1526F52B001CEA6B /* td_bg@2x.png in Resources */,
 				A3CD5ADE152803640049D2F3 /* dmzlogo.png in Resources */,
 				A3CD5ADF152803640049D2F3 /* dmzlogo@2x.png in Resources */,
@@ -3253,7 +3244,6 @@
 				CA42160B15219CE100FAA008 /* PlaceStorage.m in Sources */,
 				A327DEEE15231A31003DEE8C /* FavoriteController.m in Sources */,
 				A3ACE1121524459F00C9B3DD /* HistoryController.m in Sources */,
-				A4BB6D8915269E07001CEA6B /* FeekbackController.m in Sources */,
 				A4BB6DB115270AFA001CEA6B /* CommonListFilter.m in Sources */,
 				A4BB6DB215270AFA001CEA6B /* EntertainmentListFilter.m in Sources */,
 				A4BB6DB315270AFA001CEA6B /* RestaurantListFilter.m in Sources */,

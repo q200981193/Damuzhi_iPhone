@@ -41,18 +41,17 @@ static AppManager* _defaultAppManager = nil;
 {
     // TODO: check if there is a copy data for app in document dir, if yes, return;
     NSData *localAppData = [NSData dataWithContentsOfFile:[AppUtils getAppFilePath]];
-    PPDebug(@"app data file path = %@", [AppUtils getAppFilePath]);
     if(localAppData != nil)
     {
         App *localApp = [App parseFromData:localAppData];
         self.app = localApp;
+        PPDebug(@"loading local app data %@...... done!", [AppUtils getAppFilePath]);
     }
-    
 }
 
 - (void)updateAppData:(App*)appData
 {
-    PPDebug(@"Updating app data......");
+    PPDebug(@"Updating app data and save!");
     self.app = appData;    
     [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
