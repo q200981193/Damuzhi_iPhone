@@ -14,6 +14,7 @@
 #import "LogUtil.h"
 #import "PlaceCell.h"
 #import "PlaceStorage.h"
+#import "AppManager.h"
 
 @interface PlaceListController () 
 
@@ -129,7 +130,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-+ (PlaceListController*)createController:(NSArray*)list 
++ (PlaceListController*)createController:placeList
                                superView:(UIView*)superView
                          superController:(UIViewController*)superController
 {
@@ -139,8 +140,9 @@
     controller.mapViewController.superController = superController;
 
     [superView addSubview:controller.view];
-    [controller setAndReloadPlaceList:list];    
     
+    
+        
     return controller;
 }
 
@@ -150,6 +152,22 @@
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
 }
+
+- (void)setCityConfig:(CityConfig*)cityConfig
+{
+    self.cityConfig = cityConfig;
+}
+
+- (void)findCityConfig
+{
+    return [[CityOverviewService defaultService] findCityConfig:[[AppManager defaultManager] getCurrentCityId] delegate:self];
+}
+
+- (void)findCityConfigRequestDone:(int)result cityConfig:(CityConfig*)cityConfig
+{
+    
+}
+
 
 #pragma mark -
 #pragma mark TableView Delegate
@@ -201,14 +219,13 @@
 		cell = [placeClass createCell:self];
 	}
 	
-    //CommonPlaceCell* commonPlaceCell = (CommonPlaceCell*)cell;
     PlaceCell *placeCell = (PlaceCell*)cell;
     
     UIImageView *view = [[UIImageView alloc] init];
     [view setImage:[UIImage imageNamed:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
     [view release];
-    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation ];
+    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation];
     
     if (canDelete) {
         placeCell.priceLable.hidden = YES;
@@ -227,7 +244,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    CommonPlaceDetailController* controller = [[CommonPlaceDetailController alloc] init];
     NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
 
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[dataList objectAtIndex:[indexPath row]]];
@@ -261,7 +277,6 @@
 
 - (void)updateViewByMode
 {    
-    
     if (_showMap){
         _mapHolderView.hidden = NO;
         dataTableView.hidden = YES;
@@ -283,6 +298,5 @@
     _showMap = NO;
     [self updateViewByMode];
 }
-
 
 @end

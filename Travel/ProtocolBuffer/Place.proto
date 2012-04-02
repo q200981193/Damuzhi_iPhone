@@ -17,13 +17,13 @@ message Place {
   required int32 rank = 6;                  // 大拇指评级，取值从1到3
   repeated int32 providedServiceId = 7;    // 服务选项ID，多个，不同分类不同，如 室外停车场／免费上网／景观美丽 等
   
-  required float longitude = 11;            // 地点经度
-  required float latitude = 12;             // 地点纬度        
+  required double longitude = 11;            // 地点经度
+  required double latitude = 12;             // 地点纬度        
   optional int32 areaId = 13;              // 区域ID
   
   optional string price = 21;                // 最低价格，适用于景点／酒店
   optional string avgPrice = 22;             // 人均价格，适用于餐馆／娱乐
-       optional int32 priceRank = 23;                   // 价格等级，取值 1-4
+  optional int32 priceRank = 23;                   // 价格等级，取值 1-4
 
   required string icon = 31;                 // 地点小图标文件名
   repeated string images = 32;               // 地点图片文件名，多个

@@ -27,15 +27,10 @@ message TravelResponse{
   optional Place place = 2;
   optional CommonOverview overview = 3;
   optional CommonTravelGuide travelGuide = 4;
-  optional HelpInfo helpInfo = 5;
-  optional PlaceList placeList = 6;
-  optional CityList cityList = 7;
-  optional App appInfo = 8;   
-  optional CommonTravelGuideList travelGuideList = 9;
-  
-  optional CityArea areaList = 5;                      // 城市区域列表，二级列表
-  optional string currencySymbol = 6;                  // 货币显示符号，如人民币为¥，美元为$
-  optional string currencyId = 7;                      // 货币ID，用于实时汇率查询，使用国际标准，如人民币为CNY，美元为USD
-  optional string currencyName = 8;                    // 货币显示名字，如“人民币”，“美元”，“欧元”
-  optional int32 priceRank = 9 [default=3];            // 城市查询价格等级，默认为3
+  optional CityConfig cityConfig = 5;
+  optional HelpInfo helpInfo = 6;
+  optional PlaceList placeList = 7;
+  optional CityList cityList = 8;
+  optional App appInfo = 9;   
+  optional CommonTravelGuideList travelGuideList = 10;
 }

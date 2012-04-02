@@ -17,9 +17,9 @@
     return NSLS(@"城市概况");
 }
 
-- (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate
+- (void)requestDataWithDelegate:(PPViewController<CityOverviewServiceDelegate>*)delegate
 {
-    [[CityOverViewService defaultService]findCityBasic:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
+    [[CityOverviewService defaultService]findCityBasic:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
 
 }
 

@@ -119,7 +119,7 @@
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
         NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
-        PPDebug(@"place iconPath = %@", iconPath);
+        //PPDebug(@"place iconPath = %@", iconPath);
         [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
     else{
@@ -142,22 +142,8 @@
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
     self.nameLabel.text = [place name];
-    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-//    PPDebug(@"place: %@", [place name]);
-//    PPDebug(@"当前经纬度:%lf,%lf", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
-//    PPDebug(@"地点经纬度:%lf,%lf",place.longitude ,place.latitude);
-    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    [placeLocation release];
-    
-    if (distance <1000.0) {
-        self.distanceLable.text = [[NSString stringWithFormat:@"%d", distance] stringByAppendingString:NSLS(@"米")];
-    }
-    else {
-        self.distanceLable.text = [[NSString stringWithFormat:@"%0.1lf", distance/1000] stringByAppendingString:NSLS(@"公里")];
-    }
-    
+    self.distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];
-    
     self.priceLable.text = [NSString stringWithFormat:@"%@%@",
                             [[CityOverViewManager defaultManager] getCurrencySymbol],
                             [place price]];
@@ -189,6 +175,20 @@
     
     [self setServiceIcons:providedServiceIcons];
 
+}
+
+- (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation *)currentLocation
+{
+    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+    [placeLocation release];
+
+    if (distance <1000.0) {
+        return [NSString stringWithFormat:NSLS(@"%d米"), distance];
+    }
+    else {
+        return [NSString stringWithFormat:NSLS(@"%0.1lf公里"), distance/1000];
+    }
 }
 
 - (void)dealloc {

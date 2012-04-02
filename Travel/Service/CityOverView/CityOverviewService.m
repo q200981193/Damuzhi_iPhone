@@ -17,16 +17,17 @@
 #import "AppManager.h"
 #import "AppUtils.h"
 
+
 #define SERACH_WORKING_QUEUE1    @"SERACH_WORKING_QUEUE1"
 
-@implementation CityOverViewService
+@implementation CityOverviewService
 
-static CityOverViewService *_cityOverViewService = nil;
+static CityOverviewService *_cityOverViewService = nil;
 
-+ (CityOverViewService*)defaultService
++ (CityOverviewService*)defaultService
 {
     if (_cityOverViewService == nil) {
-        _cityOverViewService = [[CityOverViewService alloc] init];
+        _cityOverViewService = [[CityOverviewService alloc] init];
     }
     
     return _cityOverViewService;
@@ -50,7 +51,7 @@ static CityOverViewService *_cityOverViewService = nil;
 typedef CommonOverview* (^LocalRequestHandler)(int* resultCode);
 typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
 
-- (void)processLocalRemoteQuery:(PPViewController<CommonOverViewServiceDelegate>*)viewController
+- (void)processLocalRemoteQuery:(PPViewController<CityOverviewServiceDelegate>*)viewController
                    localHandler:(LocalRequestHandler)localHandler
                   remoteHandler:(RemoteRequestHandler)remoteHandler
 {
@@ -79,21 +80,48 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [viewController hideActivity];             
-            [viewController findRequestDone:resultCode data:overview];
+            [viewController findOverviewRequestDone:resultCode overview:overview];
         });
     }];
 }
 
-- (void)findTravelUtility:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate> *)viewController
+- (void)findCityBasic:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController 
 {
     LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
         [_localCityOverViewManager switchCity:cityId];
         *resultCode = 0;
-        return _localCityOverViewManager.cityOverView.travelUtility;
+        return _localCityOverViewManager.cityBasic;
     };
     
     LocalRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:4 objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_CITY_BASIC objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        
+        // TODO check output result code
+        
+        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+
+        CommonOverview *commonOverView = [travelResponse overview];
+
+        *resultCode = 0;
+        
+        return commonOverView;
+    };
+    
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
+}
+
+- (void)findTravelUtility:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate> *)viewController
+{
+    LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
+        [_localCityOverViewManager switchCity:cityId];
+        return _localCityOverViewManager.travelUtility;
+        *resultCode = 0;
+    };
+    
+    LocalRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_UTILITY objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
         
@@ -109,32 +137,70 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
     [self processLocalRemoteQuery:viewController
                      localHandler:localHandler
                     remoteHandler:remoteHandler];
-
+    
 }
 
-- (void)findCityBasic:(int)cityId delegate:(PPViewController<CommonOverViewServiceDelegate>*)viewController 
+
+typedef CityConfig* (^LocalRequestHandlerCC)(int* resultCode);
+typedef CityConfig* (^RemoteRequestHandlerCC)(int* resultCode);
+
+- (void)processLocalRemoteQueryCC:(PPViewController<CityOverviewServiceDelegate>*)viewController
+                   localHandler:(LocalRequestHandlerCC)localHandler
+                  remoteHandler:(RemoteRequestHandlerCC)remoteHandler
 {
-    LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
+    [viewController showActivityWithText:NSLS(@"kLoadingData")];
+    
+    NSOperationQueue* queue = [self getOperationQueue:SERACH_WORKING_QUEUE1];
+    [queue cancelAllOperations];
+    
+    [queue addOperationWithBlock:^{
+        CityConfig* cityConfig = nil;
+        int resultCode = 0;
+        if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
+            // read local data firstly               
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:[[AppManager defaultManager]getCurrentCityId]]);
+            if (localHandler != NULL){
+                cityConfig = localHandler(&resultCode);
+            }
+        }
+        else{
+            // if local data no exist, try to read data from remote            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:[[AppManager defaultManager]getCurrentCityId]]);            
+            if (remoteHandler != NULL){
+                cityConfig = remoteHandler(&resultCode);
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [viewController hideActivity];             
+            [viewController findCityConfigRequestDone:resultCode cityConfig:cityConfig];
+        });
+    }];
+}
+
+- (void)findCityConfig:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController 
+{
+    LocalRequestHandlerCC localHandler = ^CityConfig *(int* resultCode) {
         [_localCityOverViewManager switchCity:cityId];
         *resultCode = 0;
-        return _localCityOverViewManager.cityOverView.cityBasic;
+        return _localCityOverViewManager.cityConfig;
     };
     
-    LocalRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:2 objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+    LocalRequestHandlerCC remoteHandler = ^CityConfig *(int* resultCode) {
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_CITY_CONFIG objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
         
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-
-        CommonOverview *commonOverView = [travelResponse overview];
-
+        
+        CityConfig *cityConfig = [travelResponse cityConfig];
+        
         *resultCode = 0;
         
-        return commonOverView;
+        return cityConfig;
     };
     
-    [self processLocalRemoteQuery:viewController
+    [self processLocalRemoteQueryCC:viewController
                      localHandler:localHandler
                     remoteHandler:remoteHandler];
 }

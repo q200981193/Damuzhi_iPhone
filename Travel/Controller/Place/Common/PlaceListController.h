@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
+#import "CityOverviewService.h"
+
 
 @class PlaceMapViewController;
 @class Place;
@@ -18,19 +20,11 @@
 
 @end
 
-@interface PlaceListController : PPTableViewController
+@interface PlaceListController : PPTableViewController <CityOverviewServiceDelegate>
 {
     BOOL _showMap;
     UIView *_mapHolderView;
 }
-
-
-
-- (void)setAndReloadPlaceList:(NSArray*)list;
-+ (PlaceListController*)createController:(NSArray*)list 
-                               superView:(UIView*)superView
-                         superController:(UIViewController*)superController;
-
 
 @property (retain, nonatomic) PlaceMapViewController *mapViewController;
 @property (retain, nonatomic) IBOutlet UILabel *locationLabel;
@@ -38,9 +32,19 @@
 @property (retain, nonatomic) UIViewController *superController;
 @property (assign, nonatomic) id<DeletePlaceDelegate> deletePlaceDelegate;
 
+- (void)setAndReloadPlaceList:(NSArray*)list;
++ (PlaceListController*)createController:(NSArray*)list 
+                               superView:(UIView*)superView
+                         superController:(UIViewController*)superController;
+
++ (PlaceListController*)createController:(UIView*)superView
+                         superController:(UIViewController*)superController;
+
 - (void)switchToMapMode;
 - (void)switchToListMode;
 
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegate;
+
+- (void)findCityConfig;
 
 @end

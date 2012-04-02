@@ -10,11 +10,12 @@
 #import "PPTableViewController.h"
 #import "PlaceService.h"
 #import "SelectController.h"
+#import "CityOverviewService.h"
 
 @class PlaceListController;
 
 @protocol PlaceListFilterProtocol <NSObject>
-
+@optional
 - (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController*)controller;
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController;
 + (NSObject<PlaceListFilterProtocol>*)createFilter;
@@ -31,10 +32,9 @@
                             sortBy:(NSNumber*)selectedSortId
                    currentLocation:(CLLocation*)currentLocation;
 
-
 @end
 
-@interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, SelectControllerDelegate>
+@interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, CityOverviewServiceDelegate, SelectControllerDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;
     NSMutableArray *_selectedCategoryIdList;
@@ -46,6 +46,9 @@
     
     BOOL _showMap;
 }
+
+@property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) CityConfig *cityConfig;
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 @property (retain, nonatomic) IBOutlet UIButton *modeButton;

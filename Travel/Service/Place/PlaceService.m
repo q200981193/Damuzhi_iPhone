@@ -88,7 +88,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             
         dispatch_async(dispatch_get_main_queue(), ^{
             [viewController hideActivity];             
-            [viewController findRequestDone:resultCode dataList:list];
+            [viewController findRequestDone:resultCode placeList:list];
         });
     }];
 }

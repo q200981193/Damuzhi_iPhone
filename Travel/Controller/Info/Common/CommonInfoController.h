@@ -12,12 +12,12 @@
 
 @protocol CommonInfoDataSourceProtocol <NSObject>
 - (NSString*)getTitleName;
-- (void)requestDataWithDelegate:(PPViewController<CommonOverViewServiceDelegate>*)delegate;
+- (void)requestDataWithDelegate:(PPViewController<CityOverviewServiceDelegate>*)delegate;
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource;
 
 @end
 
-@interface CommonInfoController : PPViewController <CommonOverViewServiceDelegate>
+@interface CommonInfoController : PPViewController <CityOverviewServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebview;
