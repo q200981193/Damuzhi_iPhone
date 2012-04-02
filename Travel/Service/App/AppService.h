@@ -12,14 +12,14 @@
 
 @protocol AppServiceDelegate <NSObject>
 
-@required
-- (void)didDownloadFailed:(NSError *)error;
-
+@optional
+- (void)didFailDownload:(City*)city error:(NSError *)error;
+- (void)didFinishDownload:(City*) city;
 @end
 
 @interface AppService : CommonService
 
-@property (assign, nonatomic) id<AppServiceDelegate> delegate;
+@property (retain, nonatomic) NSObject<AppServiceDelegate>* appServiceDelegate;
 @property (retain, nonatomic) NSMutableArray *downloadRequestList;
 @property (retain, nonatomic) NSOperationQueue *queue;
 + (AppService*)defaultService;

@@ -9,23 +9,14 @@
 #import "CityManagementController.h"
 #import "AppManager.h"
 #import "App.pb.h"
-#import "DownloadListCell.h"
 #import "LogUtil.h"
 #import "ImageName.h"
 #import "PackageManager.h"
 #import "AppUtils.h"
-#import "LocalCityManager.h"
-
-@interface CityManagementController ()
-
-- (void)showCityList;
-
-@end
 
 @implementation CityManagementController 
 
 @synthesize downloadList = _downloadList;
-
 @synthesize promptLabel = _promptLabel;
 @synthesize downloadTableView = _downloadTableView;
 @synthesize timer = _timer;
@@ -40,45 +31,73 @@
     [super dealloc];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)viewDidLoad
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-
-    }
-    return self;
+    [self setBackgroundImageName:IMAGE_CITY_MAIN_BOTTOM];
+    [super viewDidLoad];
+    
+    // Do any additional setup after loading the view from its nib.
+    self.dataList = [[AppManager defaultManager] getCityList];
+    self.downloadList = [[PackageManager defaultManager] getLocalCityList];
+    
+    UIColor *color = [[UIColor alloc] initWithRed:121.0/255.0 green:164.0/255.0 blue:180.0/255.0 alpha:1]; 
+    [self.promptLabel setBackgroundColor:color];
+    [color release];
+    
+    [self addCityManageButtons];
+    
+    // Set buttons status.
+    _downloadListBtn.selected = NO;
+    _cityListBtn.selected = YES;
+    
+    // Show city list table view.
+    self.dataTableView.hidden = NO;
+    self.downloadTableView.hidden = YES;
+    
+    [self setNavigationLeftButton:NSLS(@"返回") 
+                        imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
+                           action:@selector(clickBack:)];
+    [[AppService defaultService] setAppServiceDelegate:self];
 }
 
--(void)setCityManageButtons
+- (void)viewDidUnload
+{
+    // Release any retained subviews of the main view
+    // e.g. self.myOutlet = nil;
+    [self setTipsLabel:nil];
+    [self setPromptLabel:nil];
+    [super viewDidUnload];
+}
+
+-(void)addCityManageButtons
 {
     UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 30)];
     
+    // set position of the two button
     self.cityListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cityListBtn.frame = CGRectMake(0, 0, 80, 30);
     
     self.downloadListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _downloadListBtn.frame = CGRectMake(80, 0, 80, 30);
-       
+    
+    // Customize the appearance 
     [_cityListBtn setTitle:@"城市列表" forState:UIControlStateNormal];
     _cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
     [_cityListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    _cityListBtn.selected = YES;
-    
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_ON] forState:UIControlStateSelected];
-    
+       
     [_downloadListBtn setTitle:@"下载管理" forState:UIControlStateNormal];
     _downloadListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [_downloadListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
+    [_downloadListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [_downloadListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_OFF] forState:UIControlStateNormal];
     [_downloadListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_RIGHT_BTN_ON] forState:UIControlStateSelected];
-    _downloadListBtn.selected = NO;
     
-    [_cityListBtn addTarget:self action:@selector(clickCityListButton:) forControlEvents:UIControlEventTouchUpInside];
+    // Add target to the two buttons
     [_downloadListBtn addTarget:self action:@selector(clickDownloadListButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_cityListBtn addTarget:self action:@selector(clickCityListButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [buttonView addSubview:_cityListBtn];
     [buttonView addSubview:_downloadListBtn];
@@ -90,44 +109,9 @@
     [barButton release];
 }
 
-- (void)viewDidLoad
-{
-    [self setBackgroundImageName:IMAGE_CITY_MAIN_BOTTOM];
-    [super viewDidLoad];
-    
-    // Do any additional setup after loading the view from its nib.
-    self.dataList = [[PackageManager defaultManager] getLocalCityList];
-    self.downloadList = [[AppManager defaultManager] getCityList];
 
-    UIColor *color = [[UIColor alloc] initWithRed:121.0/255.0 green:164.0/255.0 blue:180.0/255.0 alpha:1]; 
-    [self.promptLabel setBackgroundColor:color];
-    [color release];
-    
-    [self setCityManageButtons];
-    [self showCityList];
-    [self setNavigationLeftButton:NSLS(@"返回") 
-                        imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
-                           action:@selector(clickBack:)];
-}
-
-- (void)viewDidUnload
-{
-    [self setTipsLabel:nil];
-    [self setPromptLabel:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
-#pragma mark Table View Delegate
-
-
+#pragma mark - 
+#pragma mark: Table View Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return 54;
@@ -147,25 +131,22 @@
     }
 }
 
-
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     UITableViewCell *cell = nil;
     if (theTableView == self.downloadTableView) {
         cell = [theTableView dequeueReusableCellWithIdentifier:[DownloadListCell getCellIdentifier]];
-        
         if (cell == nil) {
             cell = [DownloadListCell createCell:self];				
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            // Customize the appearance of table view cells at first time
             UIImageView *view = [[UIImageView alloc] init];
             [view setImage:[UIImage imageNamed:IMAGE_CITY_CELL_BG]];
             [cell setBackgroundView:view];
             [view release];
         }
         
-        // set text label
         int row = [indexPath row];	
         int count = [_downloadList count];
         if (row >= count){
@@ -174,7 +155,7 @@
         }
         DownloadListCell* downloadCell = (DownloadListCell*)cell;
         [downloadCell setCellData:[self.downloadList objectAtIndex:row]];
-        downloadCell.indexPath = indexPath;
+        downloadCell.downloadListCellDelegate = self;
     }
     else {
         cell = [theTableView dequeueReusableCellWithIdentifier:[CityListCell getCellIdentifier]];
@@ -183,6 +164,7 @@
             cell = [CityListCell createCell:self];				
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
+            // Customize the appearance of table view cells at first time
             UIImageView *view = [[UIImageView alloc] init];
             [view setImage:[UIImage imageNamed:IMAGE_CITY_CELL_BG]];
             [cell setBackgroundView:view];
@@ -198,104 +180,120 @@
         }
         CityListCell* cityCell = (CityListCell*)cell;
         [cityCell setCellData:[self.dataList objectAtIndex:row]];
-        cityCell.cityCellDelegate = self;
+        cityCell.cityListCellDelegate = self;
     }
 
 	return cell;
 }
 
-- (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView1 == self.dataTableView) {
-        NSLog(@"touch row %d", indexPath.row);
-        //city is alread setted!
-        City *city = [dataList objectAtIndex:indexPath.row];
-        if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
-            return;
-        }
-        
-        [[AppManager defaultManager] setCurrentCityId:city.cityId];
-        [tableView1 reloadData];
-        
-        //show message for selected a default city
-        NSString *cityName = [[city.countryName stringByAppendingString:NSLS(@".")] stringByAppendingString:city.cityName];
-        NSString *message = [NSString stringWithFormat:@"您已把%@设为默认访问城市!", cityName];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-    }
-}
-
-- (void)showCityList
-{
-    self.dataTableView.hidden = NO;
-    self.downloadTableView.hidden = YES;
-}
-
-- (void)showDownloadList
-{
-    self.dataTableView.hidden = YES;
-    self.downloadTableView.hidden = NO;
-}
-
+#pragma mark -
+#pragma mark: implementation of buttons event
 - (void)clickCityListButton:(id)sender
 {
-    [self showCityList];
+    // Set buttons status.
     _downloadListBtn.selected = NO;
     _cityListBtn.selected = YES;
     
-    self.dataList = [[PackageManager defaultManager] getLocalCityList];
+    // Show city list table view.
+    self.dataTableView.hidden = NO;
+    self.downloadTableView.hidden = YES;
+    
+    // reload city list table view
     [self.dataTableView reloadData];
 }
 
 - (void)clickDownloadListButton:(id)sender
 {
-    [self showDownloadList];
+    // Set buttons status.
     _downloadListBtn.selected = YES;
     _cityListBtn.selected = NO;
-
-    //PPDebug(@"click right button");
-}
-
-- (void)handleTimer
-{
+    
+    // Show download management table view.
+    self.dataTableView.hidden = YES;
+    self.downloadTableView.hidden = NO;
+    
+    // load downloadList and reload download table view
+    self.downloadList = [[PackageManager defaultManager] getLocalCityList];
     [self.downloadTableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{    
+#pragma mark -
+#pragma mark: implementation of Timer
+- (void)createTimer
+{
     if (self.timer != nil){
         [self.timer invalidate];
     }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
-                                             target: self
-                                           selector: @selector(handleTimer)
-                                           userInfo: nil
-                                            repeats: YES];
-    [super viewDidAppear:animated];
+                                                  target: self
+                                                selector: @selector(handleTimer)
+                                                userInfo: nil
+                                                 repeats: YES];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)killTimer
 {
     [timer invalidate];
     self.timer = nil;
-    
-    [super viewDidDisappear:animated];
 }
 
-- (void)deleteCity:(City*)city
+- (void)handleTimer
 {
-    PPDebug(@"delete City: %d", city.cityId);
-    [AppUtils deleteCityData:city.cityId];
-    [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
-    self.dataList = [[PackageManager defaultManager] getLocalCityList];
     [self.dataTableView reloadData];
 }
 
-- (void)didDownloadFailed:(NSError *)error
+#pragma mark -
+#pragma mark: implementation of CityListCellDelegate
+- (void)didSelectCurrendCity:(City*)city
 {
-    [self popupMessage:NSLS(@"下载失败") title:nil];
+    NSString *message = [NSString stringWithFormat:NSLS(@"您已把%@.%@设为默认访问城市!"), city.cityName, city.countryName];
+    [self popupMessage:message title:NSLS(@"提示")];
+    [self.dataTableView reloadData];
+}
+
+- (void)didStartDownload:(City*)city
+{
+    [self createTimer];
+}
+
+- (void)didCancelDownload:(City*)city
+{
+    [self killTimer];
+}
+
+- (void)didPauseDownload:(City*)city
+{
+    [self killTimer];
+}
+
+#pragma mark -
+#pragma mark: implementation of DownloadListCellDelegate
+- (void)didDeleteCity:(City*)city
+{
+    self.downloadList = [[PackageManager defaultManager] getLocalCityList];
+    [self.downloadTableView reloadData];
+}
+
+- (void)didUpdateCity:(City*)city
+{
+    [self.dataTableView reloadData];
+}
+
+#pragma mark -
+#pragma mark: implementation of AppServiceDelegate
+- (void)didFailDownload:(City*)city error:(NSError *)error;
+{
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [self.dataTableView reloadData];
+}
+
+- (void)didFinishDownload:(City*) city
+{
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [self.dataTableView reloadData];
 }
 
 @end

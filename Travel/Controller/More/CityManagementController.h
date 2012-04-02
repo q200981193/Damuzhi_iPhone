@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
 #import "CityListCell.h"
+#import "DownloadListCell.h"
 #import "AppService.h"
 
 
-@interface CityManagementController : PPTableViewController <CityCellDelegate, AppServiceDelegate>
+@interface CityManagementController : PPTableViewController <CityListCellDelegate, DownloadListCellDelegate,AppServiceDelegate>
 {
     UITableView *_downloadTableView;
     NSArray *_downloadList;

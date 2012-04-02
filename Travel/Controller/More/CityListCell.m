@@ -1,5 +1,5 @@
 //
-//  CityListCell.m
+//  DownloadListCell.m
 //  Travel
 //
 //  Created by 小涛 王 on 12-3-7.
@@ -7,27 +7,57 @@
 //
 
 #import "CityListCell.h"
-#import "AppManager.h"
-#import "LocaleUtils.h"
-#import "ImageName.h"
-#import "PackageManager.h"
+#import "AppUtils.h"
 #import "PPDebug.h"
+#import "ImageName.h"
+#import "LocalCityManager.h"
+#import "LocaleUtils.h"
+#import "Reachability.h"
 
-
-@interface CityListCell ()
-
-@end
+#define NO_DOWNLOAD 0
+#define DOWNLOAD 1
+#define FINISH_DOWNLOAD 2
 
 @implementation CityListCell
-@synthesize cityNameLabel;
-@synthesize updateButton;
-@synthesize deleteButton;
-@synthesize dataSizeLabel;
-@synthesize defaultLabel;
 
-@synthesize cityCellDelegate;
 @synthesize city = _city;
+@synthesize cityListCellDelegate = _cityListCellDelegate;
+@synthesize selectCurrentCityBtn;
+@synthesize dataSizeLabel;
+@synthesize downloadProgressView;
+@synthesize downloadPersentLabel;
+@synthesize pauseDownloadBtn;
+@synthesize downloadButton;
+@synthesize onlineButton;
+@synthesize cancelDownloadBtn;
+@synthesize cityNameLabel;
+@synthesize downloadDoneLabel;
+@synthesize moreDetailBtn;
 
+#pragma mark -
+#pragma mark: 
+- (void)dealloc {
+    [_city release];
+    [_cityListCellDelegate release];
+    [downloadProgressView release];
+    [downloadPersentLabel release];
+    [downloadButton release];
+    [onlineButton release];
+    [cityNameLabel release];
+    [dataSizeLabel release];
+    [cityNameLabel release];
+    [dataSizeLabel release];
+    [downloadPersentLabel release];
+    [downloadDoneLabel release];
+    [pauseDownloadBtn release];
+    [cancelDownloadBtn release];
+    [moreDetailBtn release];
+    [selectCurrentCityBtn release];
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark: implementation of PPTableViewCellProtocol
 + (NSString*)getCellIdentifier
 {
     return @"CityListCell";
@@ -37,77 +67,195 @@
 {
     return 44.0f;
 }
-#define TAG_DEFAULT 0
-#define TAG_DELETE  1
 
+
+#pragma mark -
+#pragma mark: Customize the appearance of cell.
 - (void)setCellData:(City*)city
 {
-    self.city = city;
-    self.cityNameLabel.text = [[city.countryName stringByAppendingString:NSLS(@".")] stringByAppendingString:city.cityName];
+    self.city = city;    
+    self.selectCurrentCityBtn.selected = ([[AppManager defaultManager] getCurrentCityId] == city.cityId);    
+    self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
+    self.dataSizeLabel.text = [self getCityDataSizeString];
     
-    float dataSize = city.dataSize/1024.0/1024.0;
-    self.dataSizeLabel.text = [[NSString alloc] initWithFormat:@"%0.1fM", dataSize];
-    
-    if ([[AppManager defaultManager] getCurrentCityId] == city.cityId) {
-        self.deleteButton.hidden = YES;
-        self.defaultLabel.hidden = NO;
-        [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
-     }
-    else {
-        self.deleteButton.hidden = NO;
-        self.defaultLabel.hidden = YES;
+    [self setCellAppearance];
+    return;
+}
+
+- (NSString*)getCityDataSizeString
+{
+    return [NSString stringWithFormat:@"%0.2fM", _city.dataSize/1024.0/1024.0];
+}
+
+- (void)setCellAppearance
+{ 
+    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
+
+    if(localCity == nil)
+    {
+        [self setCellAppearance:NO_DOWNLOAD localCity:localCity];
+        return;
     }
     
-    if (![city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:city.cityId]]) {
-        CGRect rect = CGRectMake(0, 0, 16, 17);
-        UIImageView *view = [[UIImageView alloc] initWithFrame:rect];
-        [view setImage:[UIImage imageNamed:IMAGE_CITY_REFRESH_BTN]];
-        [self.updateButton addSubview:view];
-        self.updateButton.hidden = NO;
+    if (localCity.downloadDoneFlag == NO) {
+        [self setCellAppearance:DOWNLOAD localCity:localCity];
     }
     else {
-        self.updateButton.hidden = YES;
+        [self setCellAppearance:FINISH_DOWNLOAD localCity:localCity];
     }
 }
 
-- (IBAction)clickDeleteBtn:(id)sender {
-    //TODO: delete city
-    NSString *message = NSLS(@"删除城市数据后再次打开需要重新下载，确认删除?");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
-    [alert show];
-    [alert release];
+- (void)setCellAppearance:(int)downloadStatus localCity:(LocalCity*)localCity
+{
+    switch (downloadStatus) {
+        case NO_DOWNLOAD:  
+            [self.cityNameLabel setTextColor:[UIColor darkGrayColor]];
+            self.dataSizeLabel.hidden = NO;
+            self.downloadProgressView.hidden = YES;
+            self.downloadPersentLabel.hidden = YES;
+            self.pauseDownloadBtn.hidden = YES;
+            
+            self.downloadButton.hidden = NO;
+            self.cancelDownloadBtn.hidden = YES;
+            self.onlineButton.hidden = NO;
+            
+            self.downloadDoneLabel.hidden = YES;
+            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
+            self.moreDetailBtn.hidden = YES;
+            break;
+            
+        case DOWNLOAD:
+            [self.cityNameLabel setTextColor:[UIColor darkGrayColor]];
+            self.dataSizeLabel.hidden = YES;
+            self.downloadProgressView.hidden = NO;
+            self.downloadPersentLabel.hidden = NO;
+            self.pauseDownloadBtn.hidden = NO;
+            
+            self.downloadButton.hidden = YES;
+            self.cancelDownloadBtn.hidden = NO;
+            self.onlineButton.hidden = NO;
+            
+            self.downloadDoneLabel.hidden = YES;
+            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
+            self.moreDetailBtn.hidden = YES;
+            
+            self.pauseDownloadBtn.selected = !localCity.downloadingFlag;
+            self.downloadProgressView.progress = localCity.downloadProgress;
+            float persent = localCity.downloadProgress*100;
+            self.downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
+            
+            break;
+            
+        case FINISH_DOWNLOAD:
+            [self.cityNameLabel setTextColor:[UIColor redColor]];
+            self.dataSizeLabel.hidden = NO;
+            self.downloadProgressView.hidden = YES;
+            self.downloadPersentLabel.hidden = YES;
+            self.pauseDownloadBtn.hidden = YES;
+            
+            self.downloadButton.hidden = YES;
+            self.cancelDownloadBtn.hidden = YES;
+            self.onlineButton.hidden = YES;
+            
+            self.downloadDoneLabel.hidden = NO;
+            [downloadDoneLabel setTextColor:[UIColor redColor]];
+            self.moreDetailBtn.hidden = NO;
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark -
+#pragma mark: Imlementation for buttons event.
+- (IBAction)clickDownload:(id)sender {
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
+        // user is using Mobile Network
+        NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
+        [alert show];
+        [alert release];
+    }
+    else {
+        // Download city data.
+        [[AppService defaultService] downloadCity:_city];
+        
+        // Call delegate method to do some addition work.
+        if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
+            [_cityListCellDelegate didStartDownload:_city];
+        } 
+        else {
+            PPDebug(@"[_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]");
+        }
+    }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        if ([self.cityCellDelegate respondsToSelector:@selector(deleteCity:)]) {
-            [self.cityCellDelegate deleteCity:_city];
-        }
+        // Download city data.
+        [[AppService defaultService] downloadCity:_city];
+        
+        // Call delegate method to do some addition work.
+        if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
+            [_cityListCellDelegate didStartDownload:_city];
+        } 
         else {
-            PPDebug(@"self.deletCityDelegate cannot respondsTo deleteCity");
+            PPDebug(@"[_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]");
         }
-
     }
 }
 
-
-- (IBAction)clickUpdateBtn:(id)sender {
-    //TODO: download a city package
-    
-
+- (IBAction)clickPauseBtn:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected;
+    if (button.selected) {
+        //TODO, pause download request
+        [[AppService defaultService] pauseDownloadCity:_city];
+    }
+    else {
+        //TODO, resume download request
+        if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
+            // user is using Mobile Network
+            NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
+            [alert show];
+            [alert release];
+        }
+        else {
+            [[AppService defaultService] downloadCity:_city];
+        }
+    }
 }
 
-- (void)dealloc {
-    [cityNameLabel release];
-    [updateButton release];
-    [deleteButton release];
-    [dataSizeLabel release];
-    [dataSizeLabel release];
-    [cityNameLabel release];
-    [defaultLabel release];
-    [_city release];
-    
-    [super dealloc];
+- (IBAction)clickCancel:(id)sender {
+    [[AppService defaultService] cancelDownloadCity:_city];
+    self.pauseDownloadBtn.selected = NO;
 }
+
+
+- (IBAction)clickOnlineBtn:(id)sender {
+    [self selectCurrentCity];
+}
+
+- (IBAction)clickCurrentCityBtn:(id)sender {
+    [self selectCurrentCity];
+}
+
+- (void)selectCurrentCity
+{
+    // Set current cityId.
+    [[AppManager defaultManager] setCurrentCityId:_city.cityId];
+    
+    // Call delegate metchod to do some addition work.
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didSelectCurrendCity:)]) {
+        [_cityListCellDelegate didSelectCurrendCity:_city];
+    }
+    else {
+        PPDebug(@"[_cityCellDelegate respondsToSelector:@selector(didSelectCurrendCity:)]");
+    }
+}
+
 @end

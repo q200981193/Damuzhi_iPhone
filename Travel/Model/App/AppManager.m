@@ -129,7 +129,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getCityName:(int)cityId
 {
-    NSString *cityName = NSLS(@"未知");;
+    NSString *cityName = NSLS(@"");;
     for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             cityName = city.cityName;
@@ -141,7 +141,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getCityLatestVersion:(int)cityId
 {
-    NSString *cityName = NSLS(@"未知");;
+    NSString *cityName = NSLS(@"");;
     for (City *city in _app.testCitiesList) {
         if (city.cityId == cityId) {
             cityName = city.cityName;
@@ -153,7 +153,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getCountryName:(int)cityId
 {
-    NSString *countryName = NSLS(@"未知");;
+    NSString *countryName = NSLS(@"");;
     for (City *city in _app.testCitiesList) {
         if (city.cityId == cityId) {
             countryName = city.countryName;
@@ -177,7 +177,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getCityDownloadUrl:(int)cityId
 {
-    NSString *url = NSLS(@"未知");;
+    NSString *url = NSLS(@"");;
     for (City *city in _app.testCitiesList) {
         if (city.cityId == cityId) {
             url = city.downloadUrl;
@@ -200,7 +200,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getCategoryName:(int)categoryId
 {
-    NSString *categoryName = NSLS(@"未知");
+    NSString *categoryName = NSLS(@"");
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if(placeMeta != nil)
     {
@@ -252,7 +252,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getSubCategotyName:(int)categoryId subCategoryId:(int)subCategoryId;
 {
-    NSString *subCategoryName = NSLS(@"未知");
+    NSString *subCategoryName = NSLS(@"");
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if (placeMeta !=nil) {
         for (NameIdPair *subCategory in placeMeta.subCategoryListList) {
@@ -267,7 +267,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getProvidedServiceName:(int)categoryId providedServiceId:(int)providedServiceId;
 {
-    NSString *providedServiceName = NSLS(@"未知");
+    NSString *providedServiceName = NSLS(@"");
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if (placeMeta !=nil) {
         for (NameIdPair *providedService in placeMeta.providedServiceListList) {
@@ -282,7 +282,7 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSString*)getProvidedServiceIcon:(int)categoryId providedServiceId:(int)providedServiceId;
 {
-    NSString *providedServiceIcon = NSLS(@"未知");
+    NSString *providedServiceIcon = NSLS(@"");
     PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
     if (placeMeta !=nil) {
         for (NameIdPair *providedService in placeMeta.providedServiceListList) {
@@ -300,7 +300,7 @@ static AppManager* _defaultAppManager = nil;
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSNumber* city = [userDefault objectForKey:KEY_CURRENT_CITY];
     if (city == nil){
-        return BUILDIN_CITY_ID;
+        return DEFAULT_CITY_ID;
     }
     else {
         return [city intValue];

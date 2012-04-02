@@ -1,5 +1,5 @@
 //
-//  CityListCell.h
+//  DownloadListCell.h
 //  Travel
 //
 //  Created by 小涛 王 on 12-3-7.
@@ -9,23 +9,36 @@
 #import <UIKit/UIKit.h>
 #import "PPTableViewCell.h"
 #import "App.pb.h"
+#import "AppService.h"
 
-@protocol  CityCellDelegate <NSObject>
-@required
-- (void)deleteCity:(City*)city;
+@protocol CityListCellDelegate <NSObject>
+
+@optional
+- (void)didSelectCurrendCity:(City*)city;
+- (void)didStartDownload:(City*)city;
+- (void)didCancelDownload:(City*)city;
+- (void)didPauseDownload:(City*)city;
 @end
 
-
 @interface CityListCell : PPTableViewCell<PPTableViewCellProtocol>
+{
+    City *_city;
+}
 
 @property (retain, nonatomic) City *city;
-@property (assign, nonatomic) id<CityCellDelegate> cityCellDelegate;
+@property (assign, nonatomic) id<CityListCellDelegate> cityListCellDelegate;
 
-@property (retain, nonatomic) IBOutlet UILabel *cityNameLabel;
-@property (retain, nonatomic) IBOutlet UIButton *updateButton;
-@property (retain, nonatomic) IBOutlet UIButton *deleteButton;
+@property (retain, nonatomic) IBOutlet UIButton *selectCurrentCityBtn;
 @property (retain, nonatomic) IBOutlet UILabel *dataSizeLabel;
-@property (retain, nonatomic) IBOutlet UILabel *defaultLabel;
+@property (retain, nonatomic) IBOutlet UIProgressView *downloadProgressView;
+@property (retain, nonatomic) IBOutlet UILabel *downloadPersentLabel;
+@property (retain, nonatomic) IBOutlet UIButton *pauseDownloadBtn;
+@property (retain, nonatomic) IBOutlet UIButton *downloadButton;
+@property (retain, nonatomic) IBOutlet UIButton *onlineButton;
+@property (retain, nonatomic) IBOutlet UIButton *cancelDownloadBtn;
+@property (retain, nonatomic) IBOutlet UILabel *cityNameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *downloadDoneLabel;
+@property (retain, nonatomic) IBOutlet UIButton *moreDetailBtn;
 
 - (void)setCellData:(City*)city;
 

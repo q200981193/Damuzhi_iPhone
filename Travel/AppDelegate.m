@@ -75,9 +75,9 @@
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     
-    //if app is first launch, create build-in city info
+    //if app is first launch, create default city info
     if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
-        [[[LocalCityManager defaultManager] createLocalCity:BUILDIN_CITY_ID] setDownloadDoneFlag:YES];
+        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadDoneFlag:YES];
     }
 
     return YES;

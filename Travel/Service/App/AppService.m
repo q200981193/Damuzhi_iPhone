@@ -26,7 +26,7 @@
 
 @synthesize downloadRequestList = _downloadRequestList;
 @synthesize queue = _queue;
-@synthesize delegate = _delegate;
+@synthesize appServiceDelegate = _appServiceDelegate;
 
 static AppService* _defaultAppService = nil;
 
@@ -41,6 +41,7 @@ static AppService* _defaultAppService = nil;
     }
     [_downloadRequestList release];
     [_queue release];
+    [_appServiceDelegate release];
     [super dealloc];
 }
 
@@ -94,7 +95,7 @@ static AppService* _defaultAppService = nil;
     [FileUtil createDir:[AppUtils getZipDir]];
     
     // copy file from bundle to zip dir
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:BUILDIN_CITY_ID]]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]]) {
         PPDebug(@"copy defalut zip from bundle to zip dir");
         [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
                                       appDir:[AppUtils getZipDir] 
@@ -102,9 +103,8 @@ static AppService* _defaultAppService = nil;
     }
     
     // if there has no unzip city data, unzip
-    //if (![self hasUnzipCityData:DEFAULT_CITY_ID]) {
-    if (![AppUtils hasLocalCityData:BUILDIN_CITY_ID]) {
-        [AppUtils unzipCityZip:BUILDIN_CITY_ID];
+    if (![AppUtils hasLocalCityData:DEFAULT_CITY_ID]) {
+        [AppUtils unzipCityZip:DEFAULT_CITY_ID];
     }
 }
 
@@ -210,7 +210,6 @@ static AppService* _defaultAppService = nil;
     //set request delegate
     [request setDelegate:self];
     [request setDownloadProgressDelegate:localCity];
-//    [request setShowAccurateProgress:YES];
     
     //add request into queue and run
     [self.queue addOperation:request];
@@ -281,23 +280,35 @@ static AppService* _defaultAppService = nil;
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
     localCity.downloadDoneFlag = YES;
 
-    //
     [_downloadRequestList removeObject:request];
     [AppUtils unzipCityZip:localCity.cityId];
+    
+    //call delegate method to do addition work 
+    if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFinishDownload:)]) {
+        [_appServiceDelegate didFinishDownload:[[AppManager defaultManager] getCity:localCity.cityId]];
+    }
+    else {
+        PPDebug(@"[_appServiceDelegate respondsToSelector:@selector(didFinishDownload:)]");
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    //call delegate method to show download failed message.
-    NSError *error = [request error];
-    [_delegate didDownloadFailed:error];
-    
     //remove download city info.
     LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
     [[LocalCityManager defaultManager] removeLocalCity:localCity.cityId];
 
     //remove failed request.
     [_downloadRequestList removeObject:request];
+    
+    //call delegate method to do addition work 
+    NSError *error = [request error];
+    if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFailDownload:error:)]) {
+        [_appServiceDelegate didFailDownload:[[AppManager defaultManager] getCity:localCity.cityId] error:error];
+    }
+    else {
+        PPDebug(@"[_appServiceDelegate respondsToSelector:@selector(didFailDownload:error:)]");
+    }
 }
 
 
