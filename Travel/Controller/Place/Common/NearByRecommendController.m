@@ -53,9 +53,11 @@
     [self.mapAnnotations removeAllObjects];
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
-            PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
-            [self.mapAnnotations addObject:placeAnnotation];
-             NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
+            if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
+                PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
+                [self.mapAnnotations addObject:placeAnnotation];
+//                NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
+            }
         } 
     }
     
@@ -69,6 +71,14 @@
     self.placeList = placeList;
     [self loadAllAnnotations];
 }
+
+- (void)setPlaces:(NSArray*)placeList selectedIndex:(NSInteger)index
+{
+    self.placeList = placeList;
+    self.indexOfSelectedPlace = index;
+    [self loadAllAnnotations];
+}
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -121,6 +131,16 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//The event handling method
+- (void)notationAction:(id)sender
+{        
+    UIButton *button = sender;
+    NSInteger index = button.tag;
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[_placeList objectAtIndex:index]];
+    [self.superController.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // if it's the user location, just return nil.
@@ -138,36 +158,54 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-            UIButton *customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
+            UIButton *customizeView ;
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"map_button"];
-            annotationView.image = image;            
             
-            UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
-            
-            NSString *destinationDir = [AppUtils getCategoryImageDir];
-            NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png",placeAnnotation.place.categoryId];
-            UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
-            
-            [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
-            [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
-            [customizeView addSubview:leftIndicatorButton];
-            [leftIndicatorButton release];
-            [icon release];
-            
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
-            label.font = [UIFont systemFontOfSize:12];
-            label.text  = [placeAnnotation.place name];
-            NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
-            label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
-            label.backgroundColor = [UIColor clearColor];
-            [customizeView addSubview:label];
-            [label release];
-            
-            customizeView.tag = value;
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];            
-            
+            if ([self.placeList indexOfObject:placeAnnotation.place] == indexOfSelectedPlace ) {
+                customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
+
+                UIImage *image = [UIImage imageNamed:@"map_button"];
+                annotationView.image = image;            
+                
+                UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
+                
+                NSString *destinationDir = [AppUtils getCategoryImageDir];
+                NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png",placeAnnotation.place.categoryId];
+                UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+                
+                [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
+                [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+                [customizeView addSubview:leftIndicatorButton];
+                [leftIndicatorButton release];
+                [icon release];
+                
+                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
+                label.font = [UIFont systemFontOfSize:12];
+                label.text  = [placeAnnotation.place name];
+                NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
+                label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
+                label.backgroundColor = [UIColor clearColor];
+                [customizeView addSubview:label];
+                [label release];
+                
+                customizeView.tag = value;
+                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside]; 
+            }
+            else
+            {
+                NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
+
+                customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,13,17)];
+                
+                UIImage *image = [UIImage imageNamed:@"red_star"];
+                annotationView.image = image; 
+                customizeView.tag = value;
+                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+                
+
+            }
+                        
             [annotationView addSubview:customizeView];
             [customizeView release];
             return annotationView;

@@ -28,6 +28,7 @@
 @property (nonatomic, retain) UIViewController* superController;
 
 - (void)setPlaces:(NSArray*)placeList;
+- (void)setPlaces:(NSArray*)placeList selectedIndex:(NSInteger)index;
 - (void)gotoLocation:(Place*)place;
 
 @end
