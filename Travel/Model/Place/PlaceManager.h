@@ -14,19 +14,11 @@
 @interface PlaceManager : NSObject<CommonManagerProtocol>
 {
     int             _cityId;
-    NSArray*        _placeList; 
 }
 
-@property (nonatomic, assign) int       cityId;
 @property (nonatomic, retain) NSArray*  placeList;
 
 - (void)switchCity:(int)newCityId;
-
 - (NSArray*)findPlacesByCategory:(int)categoryId;
-//- (NSArray*)findAllPlaces;
-//- (NSArray*)findAllSpots;
-//- (NSArray*)findAllHotels;
-
-//- (BOOL)hasLocalCityData:(int)cityId;
 
 @end

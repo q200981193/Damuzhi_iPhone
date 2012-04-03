@@ -30,18 +30,18 @@
     return button;
 }
 
-+ (NSArray*)filterByCategoryIdList:(NSArray*)list selectedCategoryIdList:(NSArray*)selectedCategoryIdList
++ (NSArray*)filterBySelectedSubCategoryIdList:(NSArray*)list selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList
 {
     NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
     
     //filter by selectedCategoryId
-    for (NSNumber *selectedCategoryId in selectedCategoryIdList) {
-        if ([selectedCategoryId intValue] == ALL_CATEGORY) {
+    for (NSNumber *selectedSubCategoryId in selectedSubCategoryIdList) {
+        if ([selectedSubCategoryId intValue] == ALL_CATEGORY) {
             return list;
         }
         
         for (Place *place in list) {
-            if ([selectedCategoryId intValue] == [place subCategoryId])
+            if ([selectedSubCategoryId intValue] == [place subCategoryId])
             {
                 [array addObject:place];
             }
@@ -51,12 +51,11 @@
     return array;
 }
 
-+ (NSArray*)filterByPriceList:(NSArray*)placeList selectedPriceList:(NSArray*)selectedPriceList
++ (NSArray*)filterBySelectedPriceIdList:(NSArray*)placeList selectedPriceIdList:(NSArray*)selectedPriceIdList
 {
     NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];    
     
-    
-    for (NSNumber *selectedPriceId in selectedPriceList)
+    for (NSNumber *selectedPriceId in selectedPriceIdList)
     {
         PPDebug(@"selectedPriceList:%d",[selectedPriceId intValue]);
         if ([selectedPriceId intValue] == ALL_CATEGORY) {
@@ -66,7 +65,7 @@
     
     for (Place *place in placeList) {
         PPDebug(@"place priceRank:%d",place.priceRank);
-        for (NSNumber *number in selectedPriceList) {
+        for (NSNumber *number in selectedPriceIdList) {
             if (place.priceRank == number.intValue) {
                 [array addObject:place];
                 break;
@@ -77,7 +76,7 @@
     return array;
 }
 
-+ (NSArray*)filterByAreaList:(NSArray*)placeList selectedPriceList:(NSArray*)selectedAreaIdList
++ (NSArray*)filterBySelectedAreaIdList:(NSArray*)placeList selectedAreaIdList:(NSArray*)selectedAreaIdList
 {
     for (NSNumber *selectedAreaId in selectedAreaIdList)
     {
@@ -98,7 +97,7 @@
     return array;
 }
 
-+ (NSArray*)filterByServiceList:(NSArray*)placeList selectedServiceIdList:(NSArray*)selectedServiceIdList
++ (NSArray*)filterBySelectedServiceIdList:(NSArray*)placeList selectedServiceIdList:(NSArray*)selectedServiceIdList
 {
     for (NSNumber *selectedServiceId in selectedServiceIdList)
     {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PlaceService.h"
-#import "PPViewController.h"
+#import "PPTableViewController.h"
 
 @class PlaceListController;
 
@@ -16,6 +16,7 @@
 
 @property (assign, nonatomic) int distance;
 @property (assign, nonatomic) int categoryId;
+@property (retain, nonatomic) NSArray *placeList;
 @property (assign, nonatomic) BOOL showMap;
 @property (retain, nonatomic) NSArray *btnArray; 
 

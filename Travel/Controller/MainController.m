@@ -43,6 +43,7 @@
     [_restaurantListComtroller release];
     [_shoppingListComtroller release];
     [_entertainmentListComtroller release];
+    [_nearbyController release];
     [super dealloc];
 }
 
@@ -123,57 +124,37 @@
 }
 
 - (IBAction)clickSpotButton:(id)sender {
-    
-    if(_spotListComtroller == nil)
-    {
-        _spotListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:[SpotListFilter createFilter]];
-    }
-    
-    [self.navigationController pushViewController:_spotListComtroller animated:YES];
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:[SpotListFilter createFilter]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 - (IBAction)clickHotelButton:(id)sender
 {
-    if(_hotelListComtroller == nil)
-    {
-        _hotelListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                               [HotelListFilter createFilter]];
-    }
-    
-    [self.navigationController pushViewController:_hotelListComtroller animated:YES];
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:[HotelListFilter createFilter]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 - (IBAction)clickRestaurant:(id)sender
 {
-    if(_restaurantListComtroller == nil)
-    {
-        _restaurantListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                                     [RestaurantListFilter createFilter]];
-    }
-    
-    [self.navigationController pushViewController:_restaurantListComtroller animated:YES];
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:[RestaurantListFilter createFilter]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 - (IBAction)clickShopping:(id)sender
 {
-    if(_shoppingListComtroller == nil)
-    {
-        _shoppingListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                                     [ShoppingListFilter createFilter]];
-    }
-    
-    [self.navigationController pushViewController:_shoppingListComtroller animated:YES];
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:[ShoppingListFilter createFilter]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 - (IBAction)clickEntertainment:(id)sender
 {
-    if(_entertainmentListComtroller == nil)
-    {
-        _entertainmentListComtroller = [[CommonPlaceListController alloc] initWithFilterHandler:
-                                     [EntertainmentListFilter createFilter]];
-    }
-    
-    [self.navigationController pushViewController:_entertainmentListComtroller animated:YES];
+    CommonPlaceListController* controller = [[CommonPlaceListController alloc] initWithFilterHandler:[EntertainmentListFilter createFilter]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];        
 }
 
 - (IBAction)clickCityOverviewButton:(id)sender
@@ -193,9 +174,12 @@
 
 - (IBAction)clickNearbyButton:(id)sender
 {
-    NearbyController* controller = [[NearbyController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];        
+    if(_nearbyController == nil)
+    {
+        _nearbyController = [[NearbyController alloc] init];
+    }
+    
+    [self.navigationController pushViewController:_nearbyController animated:YES];
 }
 
 - (IBAction)clickMoreButton:(id)sender
@@ -209,6 +193,9 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    
+    
+    
     [super viewWillDisappear:animated];
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];

@@ -20,7 +20,6 @@
 
 static AppManager* _defaultAppManager = nil;
 @synthesize app = _app;
-@synthesize cityList = _cityList;
 
 + (id)defaultManager
 {
@@ -33,7 +32,6 @@ static AppManager* _defaultAppManager = nil;
 -(void)dealloc
 {
     [_app release];
-    [_cityList release];
     [super dealloc];
 }
 

@@ -72,7 +72,7 @@
 }
 
 - (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
-            selectedCategoryIdList:(NSArray*)selectedCategoryIdList 
+         selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList 
                selectedPriceIdList:(NSArray*)selectedPriceIdList 
                 selectedAreaIdList:(NSArray*)selectedAreaIdList 
              selectedServiceIdList:(NSArray*)selectedServiceIdList
@@ -80,9 +80,9 @@
                             sortBy:(NSNumber*)selectedSortId
                    currentLocation:(CLLocation*)currentLocation
 {
-    NSArray *afterCategoryFilter = [CommonListFilter filterByCategoryIdList:placeList selectedCategoryIdList:selectedCategoryIdList];
-    NSArray *afterAreaFilter = [CommonListFilter filterByAreaList:afterCategoryFilter selectedPriceList:selectedAreaIdList];
-    NSArray *afterServiceFilter = [CommonListFilter filterByServiceList:afterAreaFilter selectedServiceIdList:selectedServiceIdList];
+    NSArray *afterCategoryFilter = [CommonListFilter filterBySelectedSubCategoryIdList:placeList selectedSubCategoryIdList:selectedSubCategoryIdList];
+    NSArray *afterAreaFilter = [CommonListFilter filterBySelectedAreaIdList:afterCategoryFilter selectedAreaIdList:selectedAreaIdList];
+    NSArray *afterServiceFilter = [CommonListFilter filterBySelectedServiceIdList:afterAreaFilter selectedServiceIdList:selectedServiceIdList];
     NSArray *resultList = [CommonListFilter sortBySelectedSortId:afterServiceFilter selectedSortId:selectedSortId currentLocation:currentLocation];
     return resultList;
 }

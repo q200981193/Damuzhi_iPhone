@@ -165,7 +165,7 @@
     
     [self setRankImage:[place rank]];
     
-    NSMutableArray *providedServiceIcons = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *providedServiceIcons = [[NSMutableArray alloc] init];
     for (NSNumber *providedServiceId in [place providedServiceIdList]) {
         NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
         NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
@@ -174,6 +174,7 @@
     }
     
     [self setServiceIcons:providedServiceIcons];
+    [providedServiceIcons release];
 
 }
 
