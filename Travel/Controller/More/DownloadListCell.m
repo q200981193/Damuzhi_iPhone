@@ -56,7 +56,7 @@
     
     [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
-    self.dataSizeLabel.text = self.getCityDataSizeString;
+    self.dataSizeLabel.text = [self getCityDataSizeString];
 
     if (DEFAULT_CITY_ID == _city.cityId) {
         self.deleteButton.hidden = YES;
