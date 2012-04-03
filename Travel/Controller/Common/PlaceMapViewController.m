@@ -136,9 +136,12 @@
     [self.mapAnnotations removeAllObjects];
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
-            PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
-            [self.mapAnnotations addObject:placeAnnotation];
-//            NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
+            if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
+                PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
+                [self.mapAnnotations addObject:placeAnnotation];
+//                NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
+            }
+            
         } 
     }
     
