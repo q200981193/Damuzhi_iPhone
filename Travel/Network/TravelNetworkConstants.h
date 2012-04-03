@@ -14,22 +14,25 @@
 #define LANGUAGE_TRADITIONAL_CHINESE    2 
 #define LANGUAGE_ENGLISH                3
 
+// for test
+//#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
+
+// for 
+#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+
+
 // URL
-//#define URL_TRAVEL_REGISTER_USER    @"http://damuzhi.com/service/registerUser?"
-#define URL_TRAVEL_REGISTER_USER    @"http://59.34.17.68:8012/service/RegisterUser.aspx?"
+#define URL_TRAVEL_REGISTER_USER    (URL_SERVICE@"RegisterUser.aspx?")
 
 //query place list
-#define URL_TRAVEL_QUERY_LIST       @"http://59.34.17.68:8012/service/queryList.aspx?"
-#define URL_TRAVEL_QUERY_OBJECT     @"http://59.34.17.68:8012/service/queryObject.aspx?"
+#define URL_TRAVEL_QUERY_LIST       (URL_SERVICE@"queryList.aspx?")
+#define URL_TRAVEL_QUERY_OBJECT     (URL_SERVICE@"queryObject.aspx?")
 
+#define URL_TRAVEL_ADD_FAVORITE     (URL_SERVICE@"addFavorite.aspx?")
 
-//#define URL_TRAVEL_ADD_FAVORITE     @"http://damuzhi.com/service/addFavorite?"
-#define URL_TRAVEL_ADD_FAVORITE     @"http://59.34.17.68:8012/service/addFavorite.aspx?"
+#define URL_TRAVEL_DELETE_FAVORITE  (URL_SERVICE@"deleteFavorite?") 
+#define URL_TRAVEL_QUERY_PLACE      (URL_SERVICE@"queryPlace?") 
 
-#define URL_TRAVEL_DELETE_FAVORITE  @"http://damuzhi.com/service/deleteFavorite?"
-#define URL_TRAVEL_QUERY_PLACE      @"http://damuzhi.com/service/queryPlace?"
-
-//#define URL_TRAVEL_QUERY_VERSION      @"http://www.damuzhi.com/service/iphoneVersion.txt"
 #define URL_TRAVEL_QUERY_VERSION      @"http://59.34.17.68:8012/service/iphoneVersion.txt"
 
 

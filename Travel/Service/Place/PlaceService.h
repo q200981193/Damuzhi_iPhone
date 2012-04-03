@@ -17,7 +17,6 @@
 
 @optional
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList;
-
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
 - (void)finishDeleteFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
 - (void)finishFindTopFavoritePlaces:(NSArray*)list type:(int)type;
@@ -26,7 +25,6 @@
 @end
 
 @interface PlaceService : CommonService
-
 {
     PlaceManager    *_localPlaceManager;
     PlaceManager    *_onlinePlaceManager;
@@ -46,7 +44,5 @@
 - (void)getPlaceFavoriteCount:(PPViewController<PlaceServiceDelegate>*)viewController
                       placeId:(int)placeId;
 - (void)findTopFavoritePlaces:(PPViewController<PlaceServiceDelegate>*)viewController type:(int)type;
-
-//- (BOOL)isPlaceInFavorite:(int)placeId;
 
 @end
