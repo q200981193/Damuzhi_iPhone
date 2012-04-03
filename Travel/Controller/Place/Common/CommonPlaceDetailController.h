@@ -61,6 +61,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *praiseIcon3;
 @property (retain, nonatomic) IBOutlet UIView *serviceHolder;
 @property (retain, nonatomic) Place *place;
+@property (retain, nonatomic) NSArray *placeList;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
 
 @property (assign, nonatomic) float detailHeight;
@@ -72,6 +73,7 @@
 
 - (IBAction)clickHelpButton:(id)sender;
 - (id)initWithPlace:(Place*)onePlace;
+- (id)initWithPlaceList:(NSArray *)placeList selectedIndex:(NSInteger)row;
 
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 @end

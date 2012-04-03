@@ -216,8 +216,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
-
-    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[dataList objectAtIndex:[indexPath row]]];
+    
+//    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[dataList objectAtIndex:[indexPath row]]];
+    
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:dataList selectedIndex:[indexPath row]];
+    
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 

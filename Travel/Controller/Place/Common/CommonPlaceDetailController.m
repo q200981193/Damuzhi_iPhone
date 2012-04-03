@@ -29,6 +29,7 @@
 @synthesize imageHolderView;
 @synthesize dataScrollView;
 @synthesize place;
+@synthesize placeList;
 @synthesize praiseIcon1;
 @synthesize praiseIcon2;
 @synthesize praiseIcon3;
@@ -82,6 +83,15 @@
     return self;
 }
 
+- (id)initWithPlaceList:(NSArray *)placeList selectedIndex:(NSInteger)row
+{
+    self = [super init];
+    self.placeList = placeList;
+    self.place = [placeList objectAtIndex:row];    
+    self.handler = [self createPlaceHandler:self.place superController:self];     
+    return self;
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -132,10 +142,10 @@
     [self.navigationController pushViewController:controller animated:YES];
     [controller gotoLocation:self.place];
     
-    NSArray *placeList = [[NSArray alloc]initWithObjects:self.place, nil];
-    [controller setPlaces:placeList];
-    
-    [placeList release];
+    NSArray *list = [[NSArray alloc] initWithArray:placeList];
+//    [controller setPlaces:list];
+    [controller setPlaces:list selectedIndex:[self.placeList indexOfObject:self.place]];
+    [list release];
 }
 
 - (void)clickTelephone:(id)sender
