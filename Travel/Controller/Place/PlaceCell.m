@@ -111,9 +111,9 @@
                                              categoryLable.center.y); 
         
         [serviceIconView setImage:icon];
+        [serviceIconView viewWithTag:1];
         [self.contentView addSubview:serviceIconView];
-        [self.contentView viewWithTag:1];
-        
+                
         [icon release];
         [serviceIconView release];
     }
@@ -171,12 +171,13 @@
     
     [self setRankImage:[place rank]];
     
+    PPDebug(@"palce name = %@", [place name]);
+    
     NSMutableArray *providedServiceIcons = [[NSMutableArray alloc] init];
     for (NSNumber *providedServiceId in [place providedServiceIdList]) {
-        NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
-        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
-        [providedServiceIcons addObject:[destinationDir stringByAppendingPathComponent:fileName]];
-        [fileName release];
+        NSString *iconPath = [AppUtils getProvidedServiceIconPath:[providedServiceId intValue]];
+        PPDebug(@"provided service icon: %@", iconPath);
+        [providedServiceIcons addObject:iconPath];
     }
     
     [self setServiceIcons:providedServiceIcons];

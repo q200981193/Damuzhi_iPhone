@@ -28,8 +28,8 @@
 @synthesize buttonHolerView;
 @synthesize imageHolderView;
 @synthesize dataScrollView;
-@synthesize place;
-@synthesize placeList;
+@synthesize place = _place;
+@synthesize placeList = _placeList;
 @synthesize praiseIcon1;
 @synthesize praiseIcon2;
 @synthesize praiseIcon3;
@@ -142,7 +142,7 @@
     [self.navigationController pushViewController:controller animated:YES];
     [controller gotoLocation:self.place];
     
-    NSArray *list = [[NSArray alloc] initWithArray:placeList];
+    NSArray *list = [[NSArray alloc] initWithArray:_placeList];
 //    [controller setPlaces:list];
     [controller setPlaces:list selectedIndex:[self.placeList indexOfObject:self.place]];
     [list release];
@@ -212,8 +212,8 @@
     self.serviceHolder.backgroundColor = [UIColor clearColor];
     int i = 0;
 
-    for (NSNumber *providedServiceId in [place providedServiceIdList]) {
-        NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
+    for (NSNumber *providedServiceId in [_place providedServiceIdList]) {
+        NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
         NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
         
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:CGRectMake((i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE)];
@@ -488,7 +488,7 @@
 - (void)dealloc {
     [imageHolderView release];
     [dataScrollView release];
-    [place release];
+    [_place release];
     [buttonHolerView release];
     [praiseIcon1 release];
     [praiseIcon2 release];

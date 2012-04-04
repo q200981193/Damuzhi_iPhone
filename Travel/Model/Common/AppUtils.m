@@ -92,7 +92,7 @@
 }
 
 
-+ (NSString*)getProvidedServiceImageDir
++ (NSString*)getProvidedServiceIconDir
 {
     return [FileUtil getFileFullPath:DIR_OF_PROVIDED_SERVICE_IMAGE];
 }
@@ -157,6 +157,14 @@
     
     return url;
 }
+
++ (NSString*)getProvidedServiceIconPath:(int)providedServiceId
+{
+    NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
+    NSString *fileName = [NSString stringWithFormat:@"%d.png", providedServiceId];
+    return [destinationDir stringByAppendingPathComponent:fileName];
+}
+
 
 
 @end

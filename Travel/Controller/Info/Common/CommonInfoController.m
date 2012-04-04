@@ -73,6 +73,8 @@
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     NSURL *url = [AppUtils getNSURLFromHtmlFilePathOrURL:[AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:urlString]];
     
+//    NSURL *url = [NSURL fileURLWithPath:@"/Users/Linruin/tencent.html"];
+    
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);

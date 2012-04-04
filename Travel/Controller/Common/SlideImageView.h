@@ -11,9 +11,6 @@
 #import "HJManagedImageV.h"
 
 @interface SlideImageView : UIView <UIScrollViewDelegate, HJManagedImageVDelegate>
-{
-    BOOL pageControlIsChangingPage;
-}
 
 @property (nonatomic, retain)IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain)IBOutlet UICustomPageControl *pageControl;

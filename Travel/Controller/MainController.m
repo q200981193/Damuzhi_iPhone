@@ -174,12 +174,9 @@
 
 - (IBAction)clickNearbyButton:(id)sender
 {
-    if(_nearbyController == nil)
-    {
-        _nearbyController = [[NearbyController alloc] init];
-    }
-    
-    [self.navigationController pushViewController:_nearbyController animated:YES];
+    NearbyController *controller = [[NearbyController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];  
 }
 
 - (IBAction)clickMoreButton:(id)sender
@@ -193,9 +190,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    
-    
-    
     [super viewWillDisappear:animated];
 
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];

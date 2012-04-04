@@ -10,6 +10,8 @@
 #import "HJObjManager.h"
 #import "PPApplication.h"
 
+#define DEFAULT_HEIGHT_OF_PAGE_CONTROL 20
+
 @implementation SlideImageView
 
 @synthesize scrollView;
@@ -23,10 +25,10 @@
         // Initialization code
         scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
         scrollView.pagingEnabled = YES;
-        scrollView.showsVerticalScrollIndicator = NO; 
+        scrollView.showsVerticalScrollIndicator = NO;
         scrollView.showsHorizontalScrollIndicator = NO;
         
-        pageControl = [[UICustomPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x/2, self.bounds.size.height-20, self.bounds.size.width, 20)]; 
+        pageControl = [[UICustomPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x/2, self.bounds.size.height-DEFAULT_HEIGHT_OF_PAGE_CONTROL, self.bounds.size.width, DEFAULT_HEIGHT_OF_PAGE_CONTROL)]; 
         
         scrollView.delegate = self;
         [pageControl addTarget:self action:@selector(pageClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -42,7 +44,7 @@
 }
 
 
-// images is a NSString array that indecate image'absolutepath or url
+// images is a NSString array that contain a list of absoute path or absolute URL or bundle file name of the images.
 - (void)setImages:(NSArray*)images{
     // remove all old previous images
     NSArray* subviews = [scrollView subviews];
@@ -50,8 +52,10 @@
         [subview removeFromSuperview];
     }
     
+    //set content size of scroll view.
     int imagesCount = [images count];
-    scrollView.contentSize = CGSizeMake(320*imagesCount, scrollView.frame.size.height);   
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width*imagesCount, scrollView.frame.size.height);
+    
     for (int i=0; i<imagesCount; i++) {
         CGRect frame;
         frame.origin.x = scrollView.frame.size.width * i;
@@ -60,7 +64,7 @@
         
         NSString *image = [images objectAtIndex:i];
     
-        HJManagedImageV *imageView = [[HJManagedImageV alloc]initWithFrame:frame]; 
+        HJManagedImageV *imageView = [[HJManagedImageV alloc] initWithFrame:frame]; 
         
         NSLog(@"image = %@", image);
     
@@ -103,24 +107,13 @@
 #pragma mark UIScrollViewDelegate stuff
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView1
 {
-    if(pageControlIsChangingPage){
-      return;
-    }
-        
     /* we switch page at %50 across */
     CGFloat pageWidth = scrollView1.frame.size.width;
     int page = floor((scrollView1.contentOffset.x - pageWidth/2)/pageWidth +1);
-//    NSLog(@"page = %d", page);
     pageControl.currentPage = page;
     [pageControl setImagePageStateNormal:[UIImage imageNamed:@"pageStateNormal.jpg"]];
     [pageControl setImagePageStateHighted:[UIImage imageNamed:@"pageStateHeight.jpg"]];
 }
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView1
-{
-    pageControlIsChangingPage = NO;
-}
-
 
 #pragma mark -
 #pragma mark PageControl stuff
@@ -130,10 +123,7 @@
     CGRect frame = scrollView.frame;
     frame.origin.x  = frame.size.width * pageControl.currentPage;
     frame.origin.y = 0;
-    
     [scrollView scrollRectToVisible:frame animated:YES];
-    
-    pageControlIsChangingPage = YES;
 }
 
 @end
