@@ -469,4 +469,5 @@ static AppManager* _defaultAppManager = nil;
     return hotelPriceList;
 }
 
+
 @end

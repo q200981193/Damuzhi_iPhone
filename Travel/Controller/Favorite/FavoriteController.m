@@ -116,11 +116,6 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #define RIGHT_BUTTON_VIEW_WIDTH     230
 #define RIGHT_BUTTON_VIEW_HIGHT     30
 #define BUTTON_WIDTH                80

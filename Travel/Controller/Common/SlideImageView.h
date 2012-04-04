@@ -22,7 +22,6 @@
 
 - (void)setImages:(NSArray*)images;
 
-//for pageControl
 - (IBAction)pageClick:(id)sender;
 
 @end

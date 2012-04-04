@@ -52,6 +52,12 @@
     return @"PlaceCell";
 }
 
+//+ (CGFloat)getCellHeight
+//{
+//    return 200.0f;
+//}
+
+
 -(void)setRankImage:(int32_t)rank
 {
     self.praise1View.image = [UIImage imageNamed:IMAGE_GOOD2];
@@ -100,7 +106,6 @@
     for (NSString *providedServiceIcon in providedServiceIcons) {
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:rect];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:providedServiceIcon];
-        //PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
         
         serviceIconView.center = CGPointMake(categoryLable.frame.origin.x + categoryLable.frame.size.width+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+(i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 
                                              categoryLable.center.y); 
@@ -116,6 +121,7 @@
 
 - (void)setPlaceIcon:(Place*)place
 {
+    [self.imageView showLoadingWheel];
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
         NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];

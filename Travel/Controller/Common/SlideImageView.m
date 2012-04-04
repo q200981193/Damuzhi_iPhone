@@ -41,6 +41,8 @@
     [super dealloc];
 }
 
+
+// images is a NSString array that indecate image'absolutepath or url
 - (void)setImages:(NSArray*)images{
     // remove all old previous images
     NSArray* subviews = [scrollView subviews];
@@ -60,7 +62,8 @@
     
         HJManagedImageV *imageView = [[HJManagedImageV alloc]initWithFrame:frame]; 
         
-//        NSLog(@"image = %@", image);
+        NSLog(@"image = %@", image);
+    
         if ([image isAbsolutePath]) {
             [imageView setImage:[[UIImage alloc] initWithContentsOfFile:[images objectAtIndex:i]]];
         }

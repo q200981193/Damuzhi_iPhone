@@ -71,14 +71,7 @@
     NSArray *imageList = [overView imagesList];
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
-    NSURL* url = nil;
-    if ([urlString hasPrefix:@"http:"]){
-        url = [NSURL URLWithString:urlString];           
-    }
-    else{
-        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:urlString];         
-        url = [NSURL fileURLWithPath:htmlPath];
-    }
+    NSURL *url = [AppUtils getNSURLFromHtmlFilePathOrURL:[AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:urlString]];
     
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -89,23 +82,17 @@
     
     
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
-    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    NSLog(@"imagePath = %@", [imageList objectAtIndex:0]);
-    if (![[imageList objectAtIndex:0] hasPrefix:@"http:"]) {
-        NSMutableArray *images = [[NSMutableArray alloc] init];
-        for (NSString *image in imageList) {
-            NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image];
-            [images addObject:imagePath];
-//            NSLog(@"imagePath = %@", imagePath);
-        }
-        [slideImageView setImages:images];
-    }
-    else {
-        [slideImageView setImages:imageList];
+    NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
+    for (NSString *image in imageList) {
+        NSString *path = [AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+        [imagePathList addObject:path];
     }
     
-    [imageHolderView addSubview:slideImageView]; 
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    [slideImageView setImages:imagePathList];
+    
     [slideImageView release];
+    [imagePathList release];
 }
 
 - (void)viewDidUnload

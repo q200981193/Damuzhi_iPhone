@@ -134,4 +134,29 @@
     return;
 }
 
++ (NSString*)getAbsolutePathOrURLFromString:(NSString*)absoluteDir string:(NSString*)string
+{
+    if ([string hasPrefix:@"http:"] || [string isAbsolutePath]) {
+        return string;
+    }
+    else {
+        return [absoluteDir stringByAppendingPathComponent:string];
+    }
+}
+
++ (NSURL*)getNSURLFromHtmlFilePathOrURL:(NSString*)pathOrURL
+{
+    NSURL* url = nil;
+    if ([pathOrURL hasPrefix:@"http:"]){
+        url = [NSURL URLWithString:pathOrURL];           
+    }
+    else{
+        NSString *htmlPath = pathOrURL;        
+        url = [NSURL fileURLWithPath:htmlPath];
+    }
+    
+    return url;
+}
+
+
 @end

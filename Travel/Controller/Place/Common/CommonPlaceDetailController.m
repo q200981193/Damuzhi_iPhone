@@ -219,8 +219,6 @@
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:CGRectMake((i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE)];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
         
-//        UIImage *icon = [UIImage imageNamed:@"map_food"];
-//        NSLog(@"providedServiceIcon = %@", [destinationDir stringByAppendingPathComponent:fileName]);
         [serviceIconView setImage:icon];
         
         [serviceHolder addSubview:serviceIconView];
@@ -413,18 +411,19 @@
 
 - (void)addSlideImageView
 {
-    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    [imageHolderView addSubview:slideImageView];  
+    //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
+    NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
+    for (NSString *image in self.place.imagesList) {
+        NSString *path = [AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+        [imagePathList addObject:path];
+    }
     
-//    // add image array
-//    NSArray* imagePathArray = [self.place imagesList];
-//    NSMutableArray* images = [[[NSMutableArray alloc] init] autorelease];
-//    for (NSString* imagePath in imagePathArray){
-//        NSLog(@"%@", imagePath);
-//        [images addObject:[UIImage imageNamed:imagePath]];
-//    }
-//   [slideImageView setImages:images];
-
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    [slideImageView setImages:imagePathList];
+    [self.imageHolderView addSubview:slideImageView];
+    
+    [imagePathList release];
+    [slideImageView release];
 }
 
 - (void)viewDidLoad

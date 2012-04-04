@@ -14,10 +14,10 @@
 #define LANGUAGE_TRADITIONAL_CHINESE    2 
 #define LANGUAGE_ENGLISH                3
 
-// for test
+// for test service
 //#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
-// for 
+// for formal service
 #define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
 

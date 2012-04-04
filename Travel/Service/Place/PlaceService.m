@@ -72,6 +72,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         NSArray* list = nil;
         int resultCode = 0;
         if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
+//        if (NO){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:[[AppManager defaultManager] getCurrentCityId]]);
             if (localHandler != NULL){
