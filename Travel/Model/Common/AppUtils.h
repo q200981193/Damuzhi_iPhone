@@ -49,9 +49,8 @@
 + (void)deleteCityData:(int)cityId;
 
 
-+ (NSString*)getAbsolutePathOrURLFromString:(NSString*)absoluteDir string:(NSString*)string;
-+ (NSURL*)getNSURLFromHtmlFilePathOrURL:(NSString*)pathOrURL;
-
++ (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string;
++ (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL;
 + (NSString*)getProvidedServiceIconPath:(int)providedServiceId;
 
 

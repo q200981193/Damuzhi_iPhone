@@ -58,7 +58,7 @@
     
     [self.navigationItem setTitle:[dataSource getTitleName]];
     
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
@@ -67,14 +67,15 @@
 
 - (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView;
 {
-    NSString* urlString = [overView html];
+    NSString* htmlString = [overView html];
     NSArray *imageList = [overView imagesList];
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
-    NSURL *url = [AppUtils getNSURLFromHtmlFilePathOrURL:[AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:urlString]];
     
-//    NSURL *url = [NSURL fileURLWithPath:@"/Users/Linruin/tencent.html"];
-    
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+        
+    NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
+        
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);
@@ -86,12 +87,15 @@
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
     for (NSString *image in imageList) {
-        NSString *path = [AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
-        [imagePathList addObject:path];
+        NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+
+        NSLog(@"image path = %@", imgaePath);
+        [imagePathList addObject:imgaePath];
     }
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     [slideImageView setImages:imagePathList];
+    [self.imageHolderView addSubview:slideImageView];
     
     [slideImageView release];
     [imagePathList release];

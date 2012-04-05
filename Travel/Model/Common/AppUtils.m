@@ -134,24 +134,23 @@
     return;
 }
 
-+ (NSString*)getAbsolutePathOrURLFromString:(NSString*)absoluteDir string:(NSString*)string
++ (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string
 {
-    if ([string hasPrefix:@"http:"] || [string isAbsolutePath]) {
+    if ([string hasPrefix:@"http:"]) {
         return string;
-    }
-    else {
+    }else{
         return [absoluteDir stringByAppendingPathComponent:string];
     }
 }
 
-+ (NSURL*)getNSURLFromHtmlFilePathOrURL:(NSString*)pathOrURL
++ (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL
 {
     NSURL* url = nil;
-    if ([pathOrURL hasPrefix:@"http:"]){
-        url = [NSURL URLWithString:pathOrURL];           
+    if ([fileOrURL hasPrefix:@"http:"]){
+        url = [NSURL URLWithString:fileOrURL];           
     }
     else{
-        NSString *htmlPath = pathOrURL;        
+        NSString *htmlPath = fileOrURL;        
         url = [NSURL fileURLWithPath:htmlPath];
     }
     

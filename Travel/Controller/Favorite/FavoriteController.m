@@ -73,7 +73,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     [self createRightBarButton];

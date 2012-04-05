@@ -3,7 +3,7 @@
 //  Travel
 //
 //  Created by  on 12-2-24.
-//  Copyright (c) 2012å¹´ __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012å¹?__MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

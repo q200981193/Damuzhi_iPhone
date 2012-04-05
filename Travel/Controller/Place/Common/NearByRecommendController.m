@@ -111,7 +111,7 @@
     self.mapAnnotations = [[NSMutableArray alloc]init];
     [self loadAllAnnotations];
     
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     

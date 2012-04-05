@@ -20,6 +20,7 @@
 #import "LogUtil.h"
 #import "PlaceStorage.h"
 #import "NearByRecommendController.h"
+#import "HelpController.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -133,6 +134,9 @@
 - (void)clickHelpButton:(id)sender
 {
     NSLog(@"click help");
+    HelpController *controller = [[HelpController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (void)clickMap:(id)sender
@@ -404,7 +408,6 @@
 - (void)addHeaderView
 {
     buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"topmenu_bg2"]];
-    
     [self setRankImage:[self.place rank]];
     [self setServiceIcons];
 }
@@ -414,7 +417,7 @@
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
     for (NSString *image in self.place.imagesList) {
-        NSString *path = [AppUtils getAbsolutePathOrURLFromString:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+        NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
         [imagePathList addObject:path];
     }
     
@@ -430,7 +433,7 @@
 {
     [super viewDidLoad];
     
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
@@ -445,12 +448,12 @@
            
     [self addPaddingVew];
     
-    self.detailHeight = 3;
+    self.detailHeight = imageHolderView.frame.size.height;
     
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 266)];
+    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332)];
 
     [self addTelephoneView];
     

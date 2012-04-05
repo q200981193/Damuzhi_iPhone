@@ -3,7 +3,7 @@
 //  Travel
 //
 //  Created by gckj on 12-3-17.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012Âπ?__MyCompanyName__. All rights reserved.
 //
 
 #import "CommonPlaceDetailController.h"
@@ -46,18 +46,17 @@
 
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"景点介绍") description:[place introduction]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"门票价格") description:[place price]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"开放时间") description:[place openTime]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"交通信息") description:[place transportation]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"游览贴士") description:[place tips]];
-    
+//    [self addSegmentViewTo:dataScrollView title:NSLS(@"???‰ª??") description:[place introduction]];
+//    [self addSegmentViewTo:dataScrollView title:NSLS(@"?®Á•®‰ª∑Ê?") description:[place price]];
+//    [self addSegmentViewTo:dataScrollView title:NSLS(@"Âº???∂È?") description:[place openTime]];
+//    [self addSegmentViewTo:dataScrollView title:NSLS(@"‰∫§È?‰ø°Ê?") description:[place transportation]];
+//    [self addSegmentViewTo:dataScrollView title:NSLS(@"Ê∏∏Ë?Ë¥¥Â£´") description:[place tips]];
+
     [self.commonController addSegmentViewWith: NSLS(@"景点介绍") description:[place introduction]];
     [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[place price]];
     [self.commonController addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
     [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];
-    [self.commonController addSegmentViewWith: NSLS(@"游览贴士") description:[place tips]];
-
+    [self.commonController addSegmentViewWith: NSLS(@"旅游贴士") description:[place tips]];
 }
 
 -(id)initWith:(CommonPlaceDetailController *)controller

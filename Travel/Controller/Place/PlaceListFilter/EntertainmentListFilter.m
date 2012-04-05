@@ -33,6 +33,8 @@
     CGRect frame3 = CGRectMake(FILTER_BUTTON_WIDTH*2, 0, FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT);
 
     UIButton *button1 = [CommonListFilter createFilterButton:frame1 title:NSLS(@"分类")];
+    button1.tag = 1;
+
     UIButton *button2 = [CommonListFilter createFilterButton:frame2 title:NSLS(@"区域")];
     UIButton *button3 = [CommonListFilter createFilterButton:frame3 title:NSLS(@"排序")];
     

@@ -68,17 +68,21 @@
         
         NSLog(@"image = %@", image);
     
+        [imageView showLoadingWheel];
+         
         if ([image isAbsolutePath]) {
+            // Load image from file
             [imageView setImage:[[UIImage alloc] initWithContentsOfFile:[images objectAtIndex:i]]];
         }
         else if([image hasPrefix:@"http:"]){
+            // Load image from url
             imageView.callbackOnSetImage = self;
             [imageView clear];
             imageView.url = [NSURL URLWithString:image];
-//            NSLog(@"load place image from URL %@", image);
             [GlobalGetImageCache() manage:imageView];
         }
         else{
+            // Load image from bundle
             [imageView setImage:[images objectAtIndex:i]];
         }
         

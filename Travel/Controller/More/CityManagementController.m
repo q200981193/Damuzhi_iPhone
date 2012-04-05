@@ -54,7 +54,7 @@
     self.dataTableView.hidden = NO;
     self.downloadTableView.hidden = YES;
     
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
     [[AppService defaultService] setAppServiceDelegate:self];

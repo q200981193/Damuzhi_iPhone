@@ -52,8 +52,8 @@
     
     [self initImageCacheManager];
     
-    //–insert a delay of 5 seconds before the splash screen disappears–
-    [NSThread sleepForTimeInterval:1.0];
+//    //–insert a delay of 5 seconds before the splash screen disappears–
+//    [NSThread sleepForTimeInterval:1.0];
         
     // init app data
     [[AppService defaultService] loadAppData]; 

@@ -15,6 +15,8 @@
 #import "AppManager.h"
 #import "CityOverviewManager.h"
 #import "SelectedItemsManager.h"
+#import "HelpController.h"
+
 
 @implementation CommonPlaceListController
 
@@ -64,6 +66,9 @@
 - (void)clickHelp:(id)sender
 {
     NSLog(@"click help");
+    HelpController *controller = [[HelpController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (void)popSelf
@@ -76,7 +81,7 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
@@ -86,7 +91,6 @@
     
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     [_filterHandler findAllPlaces:self];
-
 }
 
 - (void)viewDidUnload
@@ -133,9 +137,10 @@
     // set button text by _showMap flag
     if (_showMap) {
         [self.modeButton setTitle:@"列表" forState:UIControlStateNormal];
+        [self hideSomeFilterButtons];
     } else {
         [self.modeButton setTitle:@"地图" forState:UIControlStateNormal];
-
+        [self showFilterButtons];
     }
 }
 
@@ -165,6 +170,24 @@
     
     _showMap = !_showMap;
     [self updateModeButton];
+}
+
+- (void)hideSomeFilterButtons
+{
+    for (UIView *subView in [self.buttonHolderView subviews]) {
+        if (subView.tag !=1) {
+            subView.hidden = YES;
+        }
+    }
+    
+    return;
+}
+
+- (void)showFilterButtons
+{
+    for (UIView *subView in [self.buttonHolderView subviews]) {
+            subView.hidden = NO;
+    }
 }
 
 

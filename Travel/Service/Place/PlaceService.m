@@ -63,7 +63,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                    localHandler:(LocalRequestHandler)localHandler
                   remoteHandler:(RemoteRequestHandler)remoteHandler
 {
-    [viewController showActivityWithText:NSLS(@"kLoadingData")];
+    [viewController showActivityWithText:NSLS(@"数据加载中......")];
     
     NSOperationQueue* queue = [self getOperationQueue:SERACH_WORKING_QUEUE];
     [queue cancelAllOperations];

@@ -22,6 +22,7 @@
 #import "NearbyController.h"
 #import "AppManager.h"
 #import "CityManagementController.h"
+#import "HelpController.h"
 
 
 @implementation MainController
@@ -203,5 +204,10 @@
     [fc release];
 }
 
+- (IBAction)clickHelp:(id)sender {
+    HelpController *controller = [[HelpController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
 
 @end

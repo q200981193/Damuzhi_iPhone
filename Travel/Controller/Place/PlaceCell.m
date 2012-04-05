@@ -111,7 +111,7 @@
                                              categoryLable.center.y); 
         
         [serviceIconView setImage:icon];
-        [serviceIconView viewWithTag:1];
+        serviceIconView.tag = 1;
         [self.contentView addSubview:serviceIconView];
                 
         [icon release];
@@ -190,12 +190,15 @@
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     [placeLocation release];
-
-    if (distance <1000.0) {
-        return [NSString stringWithFormat:NSLS(@"%d米"), distance];
+    
+    if (distance >1000.0) {
+        return [NSString stringWithFormat:NSLS(@"%d公里"), distance/1000];
+    }
+    else if (distance > 100.0) {
+        return [NSString stringWithFormat:NSLS(@"%0.1fKM"), distance];
     }
     else {
-        return [NSString stringWithFormat:NSLS(@"%0.1lf公里"), distance/1000];
+        return [NSString stringWithFormat:NSLS(@"0.1KM")];
     }
 }
 

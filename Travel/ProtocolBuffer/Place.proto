@@ -40,6 +40,7 @@ message Place {
   repeated string typicalDishes = 42;        // 特色菜式
 
   optional int32 hotelStar = 43;            // 酒店专用：酒店星级，显示如 五星级／四星级等，0－7
+  optional string parkingGuide = 44;         // 停车指南
 
   optional int32 placeFavoriteCount = 60;      // 地点收藏人数，仅用于在线查询  
   optional int32 hasDiscount = 61;             // 是否有优惠，第二阶段
