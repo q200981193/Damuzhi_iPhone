@@ -11,8 +11,12 @@
 #import "CommonPlaceListController.h"
 #import "MoreController.h"
 #import "NearbyController.h"
+#import "WBEngine.h"
 
-@interface MainController : PPViewController
+#define kSinaWeiBoAppKey        @"475196157"
+#define kSinaWeiBoAppSecret     @"747adfaf3ec50dfe3791f9f0481365aa"
+
+@interface MainController : PPViewController<UIActionSheetDelegate>
 {
     CommonPlaceListController *_spotListComtroller;
     CommonPlaceListController *_hotelListComtroller;
@@ -22,6 +26,8 @@
     NearbyController *_nearbyController;
     MoreController *_moreController;
 }
+
+@property (nonatomic, retain) WBEngine *sinaWeiBoEngine;
 
 - (IBAction)clickSpotButton:(id)sender;
 - (IBAction)clickHotelButton:(id)sender;
@@ -35,5 +41,6 @@
 - (IBAction)clickMoreButton:(id)sender;
 -(void) clickTitle:(id)sender;
 - (IBAction)clickFavorite:(id)sender;
+- (IBAction)clickShare:(id)sender;
 
 @end
