@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A313DE5C152F02EB004E0964 /* ShareToSina.m in Sources */ = {isa = PBXBuildFile; fileRef = A313DE58152F02EB004E0964 /* ShareToSina.m */; };
+		A313DE5D152F02EB004E0964 /* ShareToSinaController.m in Sources */ = {isa = PBXBuildFile; fileRef = A313DE5A152F02EB004E0964 /* ShareToSinaController.m */; };
+		A313DE5E152F02EB004E0964 /* ShareToSinaController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A313DE5B152F02EB004E0964 /* ShareToSinaController.xib */; };
 		A327DEEE15231A31003DEE8C /* FavoriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = A327DEEC15231A31003DEE8C /* FavoriteController.m */; };
 		A327DEEF15231A31003DEE8C /* FavoriteController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A327DEED15231A31003DEE8C /* FavoriteController.xib */; };
 		A3ACE1121524459F00C9B3DD /* HistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ACE1101524459F00C9B3DD /* HistoryController.m */; };
@@ -454,6 +457,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A313DE57152F02EB004E0964 /* ShareToSina.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareToSina.h; sourceTree = "<group>"; };
+		A313DE58152F02EB004E0964 /* ShareToSina.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareToSina.m; sourceTree = "<group>"; };
+		A313DE59152F02EB004E0964 /* ShareToSinaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareToSinaController.h; sourceTree = "<group>"; };
+		A313DE5A152F02EB004E0964 /* ShareToSinaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareToSinaController.m; sourceTree = "<group>"; };
+		A313DE5B152F02EB004E0964 /* ShareToSinaController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareToSinaController.xib; sourceTree = "<group>"; };
 		A327DEEB15231A31003DEE8C /* FavoriteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteController.h; sourceTree = "<group>"; };
 		A327DEEC15231A31003DEE8C /* FavoriteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteController.m; sourceTree = "<group>"; };
 		A327DEED15231A31003DEE8C /* FavoriteController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteController.xib; sourceTree = "<group>"; };
@@ -1138,6 +1146,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A313DE56152F02EB004E0964 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				A313DE57152F02EB004E0964 /* ShareToSina.h */,
+				A313DE58152F02EB004E0964 /* ShareToSina.m */,
+				A313DE59152F02EB004E0964 /* ShareToSinaController.h */,
+				A313DE5A152F02EB004E0964 /* ShareToSinaController.m */,
+				A313DE5B152F02EB004E0964 /* ShareToSinaController.xib */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
 		A327DEEA15231A31003DEE8C /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
@@ -2725,6 +2745,7 @@
 		CA585F8C14F7376300471880 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A313DE56152F02EB004E0964 /* Share */,
 				A40D9DFF150C87AB00BB2D29 /* ImageName.h */,
 				A4BB6E9B152D3D57001CEA6B /* Help */,
 				A327DEEA15231A31003DEE8C /* Favorite */,
@@ -3098,6 +3119,7 @@
 				A3EB73F4152E965C003BA8B8 /* delete@2x.png in Resources */,
 				A3EB73F5152E965C003BA8B8 /* logo.png in Resources */,
 				A3EB73F6152E965C003BA8B8 /* logo@2x.png in Resources */,
+				A313DE5E152F02EB004E0964 /* ShareToSinaController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3334,6 +3356,8 @@
 				A3EB7403152E965C003BA8B8 /* WBSendView.m in Sources */,
 				A3EB7404152E965C003BA8B8 /* WBUtil.m in Sources */,
 				A3EB7405152E965C003BA8B8 /* SinaWeiBoSDK.m in Sources */,
+				A313DE5C152F02EB004E0964 /* ShareToSina.m in Sources */,
+				A313DE5D152F02EB004E0964 /* ShareToSinaController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
