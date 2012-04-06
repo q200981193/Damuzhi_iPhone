@@ -102,6 +102,7 @@
 {
 }
 
+// Loading image failed will call this method
 - (void) managedImageCancelled:(HJManagedImageV*)mi
 {
 }

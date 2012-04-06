@@ -41,8 +41,6 @@
     [updateButton release];
     [deleteButton release];
     [dataSizeLabel release];
-    [dataSizeLabel release];
-    [cityNameLabel release];
     [defaultLabel release];
     [_city release];
     [_downloadListCellDelegate release];
