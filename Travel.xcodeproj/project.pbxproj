@@ -2674,8 +2674,8 @@
 		CA585F8C14F7376300471880 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A4BB6E9B152D3D57001CEA6B /* Help */,
 				A40D9DFF150C87AB00BB2D29 /* ImageName.h */,
+				A4BB6E9B152D3D57001CEA6B /* Help */,
 				A327DEEA15231A31003DEE8C /* Favorite */,
 				A48782BC15071BAA00A0D91E /* More */,
 				CA238FCB14FE5ECE00114175 /* Common */,
@@ -3335,7 +3335,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv7,
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = NO;
@@ -3352,8 +3355,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "081BF019-D2A7-4C28-B770-5EE04A962956";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "081BF019-D2A7-4C28-B770-5EE04A962956";
+				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/";
 			};
@@ -3363,7 +3366,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv7,
+					armv6,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = YES;
@@ -3374,8 +3380,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "081BF019-D2A7-4C28-B770-5EE04A962956";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "081BF019-D2A7-4C28-B770-5EE04A962956";
+				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/";
 				VALIDATE_PRODUCT = YES;
@@ -3402,6 +3408,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -3411,7 +3418,8 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "081BF019-D2A7-4C28-B770-5EE04A962956";
+				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

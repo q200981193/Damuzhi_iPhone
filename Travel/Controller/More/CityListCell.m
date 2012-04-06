@@ -120,7 +120,7 @@
             self.onlineButton.hidden = NO;
             
             self.downloadDoneLabel.hidden = YES;
-            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
+//            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
             self.moreDetailBtn.hidden = YES;
             break;
             
@@ -136,7 +136,7 @@
             self.onlineButton.hidden = NO;
             
             self.downloadDoneLabel.hidden = YES;
-            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
+//            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
             self.moreDetailBtn.hidden = YES;
             
             self.pauseDownloadBtn.selected = !localCity.downloadingFlag;
@@ -158,7 +158,7 @@
             self.onlineButton.hidden = YES;
             
             self.downloadDoneLabel.hidden = NO;
-            [downloadDoneLabel setTextColor:[UIColor redColor]];
+//            [downloadDoneLabel setTextColor:[UIColor redColor]];
             self.moreDetailBtn.hidden = NO;
             
             break;
@@ -241,6 +241,7 @@
 }
 
 - (IBAction)clickCurrentCityBtn:(id)sender {
+    [self.cityNameLabel setTextColor:[UIColor redColor]];
     [self selectCurrentCity];
 }
 
