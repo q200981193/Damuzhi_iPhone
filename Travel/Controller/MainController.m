@@ -23,13 +23,9 @@
 #import "AppManager.h"
 #import "CityManagementController.h"
 #import "HelpController.h"
-#import "WBEngine.h"
-#import "WBSendView.h"
-#import "ShareToSina.h"
 #import "ShareToSinaController.h"
 
 @implementation MainController
-@synthesize sinaWeiBoEngine;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,7 +45,6 @@
     [_shoppingListComtroller release];
     [_entertainmentListComtroller release];
     [_nearbyController release];
-    [sinaWeiBoEngine release];
     [super dealloc];
 }
 
@@ -121,7 +116,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    [self setSinaWeiBoEngine:nil];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -223,31 +217,6 @@
     [shareSheet release];
 }
 
-- (void)shareToSina
-{
-    WBEngine *engine = [[WBEngine alloc] initWithAppKey:kSinaWeiBoAppKey appSecret:kSinaWeiBoAppSecret];
-    [engine setRootViewController:self];
-    ShareToSina *shareToSina1 = [[ShareToSina alloc] init];
-    [engine setDelegate:shareToSina1];
-    [shareToSina1 release];
-    [engine setRedirectURI:@"http://"];
-    [engine setIsUserExclusive:NO];
-    self.sinaWeiBoEngine = engine;
-    [engine release]; 
-    
-    if ([sinaWeiBoEngine isLoggedIn]) {
-        WBSendView *sendView = [[WBSendView alloc] initWithAppKey:kSinaWeiBoAppKey appSecret:kSinaWeiBoAppSecret text:@"test" image:[UIImage imageNamed:@"bg.png"]];
-        ShareToSina *shareToSina2 = [[ShareToSina alloc] init];
-        [sendView setDelegate:shareToSina2];
-        [shareToSina2 release];
-        [sendView show:YES];
-        [sendView release];
-    }
-    else {
-        [sinaWeiBoEngine logIn];
-    }
-}
-
 #pragma -mark share UIActionSheet delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -257,7 +226,6 @@
             break;
         case 1:
             NSLog(@"click 1");
-            //[self shareToSina];
             ShareToSinaController *sc = [[ShareToSinaController alloc] init];
             [self.navigationController pushViewController:sc animated:NO];
             [sc release];

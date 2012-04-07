@@ -13,8 +13,6 @@
 #import "NearbyController.h"
 #import "WBEngine.h"
 
-#define kSinaWeiBoAppKey        @"475196157"
-#define kSinaWeiBoAppSecret     @"747adfaf3ec50dfe3791f9f0481365aa"
 
 @interface MainController : PPViewController<UIActionSheetDelegate>
 {
@@ -26,8 +24,6 @@
     NearbyController *_nearbyController;
     MoreController *_moreController;
 }
-
-@property (nonatomic, retain) WBEngine *sinaWeiBoEngine;
 
 - (IBAction)clickSpotButton:(id)sender;
 - (IBAction)clickHotelButton:(id)sender;

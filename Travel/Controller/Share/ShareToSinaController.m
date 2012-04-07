@@ -7,6 +7,8 @@
 //
 
 #import "ShareToSinaController.h"
+#import "LogUtil.h"
+#import "LocaleUtils.h"
 
 #define kSinaWeiBoAppKey        @"475196157"
 #define kSinaWeiBoAppSecret     @"747adfaf3ec50dfe3791f9f0481365aa"
@@ -64,10 +66,7 @@
     self.sinaWeiBoEngine = engine;
     [engine release]; 
     
-    if ([sinaWeiBoEngine isLoggedIn]) {
-        
-    }
-    else {
+    if (![sinaWeiBoEngine isLoggedIn]) {
         [sinaWeiBoEngine logIn];
     }
 }
@@ -86,30 +85,53 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#define CONTENT_WIDTH   260
-#define CONTENT_HEIGHT  140
+#define WEIBO_LOGO_HEIGHT   30
+#define WORDSNUMBER_WIDTH   30
+#define WORDSNUMBER_HEIGHT  20
+#define CONTENT_WIDTH       280
+#define CONTENT_HEIGHT      120
+
 - (void)createSendView
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, 0, 73, 30)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, 0, 73, WEIBO_LOGO_HEIGHT)];
     imageView.image = [UIImage imageNamed:@"logo.png"];
     [self.view addSubview:imageView];
     [imageView release];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(260, 10, 30, 20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2+CONTENT_WIDTH-WORDSNUMBER_WIDTH, WEIBO_LOGO_HEIGHT-WORDSNUMBER_HEIGHT, WORDSNUMBER_WIDTH, WORDSNUMBER_HEIGHT)];
     label.text = @"0";
     label.textAlignment = UITextAlignmentRight;
     label.textColor = [UIColor whiteColor];
+    //label.backgroundColor = [UIColor blueColor];
     label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:12];
     self.wordsNumberLabel = label;
     [label release];
     
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, 30, CONTENT_WIDTH, CONTENT_HEIGHT)];
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, WEIBO_LOGO_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT)];
     textView.delegate = self;
+    textView.font = [UIFont systemFontOfSize:13];
+    textView.text = NSLS(@"朋友们，我发现了一款非常专业的旅游指南《大拇指旅游》，非常适合我们外出旅游使用，快下载来看看吧：http://xxxxxx");
     self.contentTextView = textView;
     [textView release];
     
     [self.view addSubview:wordsNumberLabel];
     [self.view addSubview:contentTextView];
+    
+    self.wordsNumberLabel.text = [NSString stringWithFormat:@"%d",[contentTextView.text length]];
+}
+
+- (void)sendSinaWeibo:(id)sender
+{
+    if ([sinaWeiBoEngine isLoggedIn]) {
+        //发送微博
+        [contentTextView resignFirstResponder];
+        [sinaWeiBoEngine sendWeiBoWithText:contentTextView.text image:nil];
+        [self showActivity];
+    }
+    else {
+        [sinaWeiBoEngine logIn];
+    }
 }
 
 #pragma -mark UITextViewDelegate 
@@ -118,54 +140,53 @@
     self.wordsNumberLabel.text = [NSString stringWithFormat:@"%d",[textView.text length]];
 }
 
-- (void)sendSinaWeibo:(id)sender
-{
-    if ([sinaWeiBoEngine isLoggedIn]) {
-        [sinaWeiBoEngine sendWeiBoWithText:contentTextView.text image:nil];
-    }
-    else {
-        [sinaWeiBoEngine logIn];
-    }
-}
-
+#pragma -mark WBEngineDelegate
 - (void)engineAlreadyLoggedIn:(WBEngine *)engine
 {
-    NSLog(@"engineAlreadyLoggedIn");
+    NSLog(@"已登陆");
 }
 
 - (void)engineDidLogIn:(WBEngine *)engine
 {
-    NSLog(@"engineDidLogIn");
+    NSLog(@"登陆成功");
 }
 
 - (void)engine:(WBEngine *)engine didFailToLogInWithError:(NSError *)error
 {
-    NSLog(@"engine: didFailToLogInWithError:");
+    NSLog(@"登陆错误,错误代码:%@",error);
 }
 
 - (void)engineDidLogOut:(WBEngine *)engine
 {
-    NSLog(@"engineDidLogOut");
+    NSLog(@"退出成功");
 }
 
 - (void)engineNotAuthorized:(WBEngine *)engine
 {
-    NSLog(@"engineNotAuthorized");
+    NSLog(@"没有授权");
+    [self hideActivity];
+    [sinaWeiBoEngine logIn];
 }
 
 - (void)engineAuthorizeExpired:(WBEngine *)engine
 {
-    NSLog(@"engineAuthorizeExpired");
+    NSLog(@"授权过期");
+    [self hideActivity];
+    [sinaWeiBoEngine logIn];
 }
 
 - (void)engine:(WBEngine *)engine requestDidFailWithError:(NSError *)error
 {
-    NSLog(@"engine: requestDidFailWithError:");
+    NSLog(@"发送失败,error:%@",error);
+    [self hideActivity];
+    [self popupUnhappyMessage:NSLS(@"发送失败") title:nil];
 }
 
 - (void)engine:(WBEngine *)engine requestDidSucceedWithResult:(id)result
 {
-    NSLog(@"engine: requestDidSucceedWithResult:");
+    NSLog(@"发送成功");
+    [self hideActivity];
+    [self popupHappyMessage:NSLS(@"发送成功") title:nil];
 }
 
 
