@@ -44,6 +44,7 @@
     frame.origin.x += 10;
     UIButton *button1 = [CommonListFilter createFilterButton:frame title:NSLS(@"分类")];
     [button1 addTarget:commonPlaceController action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
+    button1.tag = 1;
     [superView addSubview:button1];
     
     frame.origin.x += WIDTH_OF_FILTER_BUTTON+DISTANCE_BETWEEN_BUTTONS;

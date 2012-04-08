@@ -30,5 +30,6 @@
 @property (retain, nonatomic) IBOutlet UIButton *findShoppingButton;
 @property (retain, nonatomic) IBOutlet UIButton *findEntertainmentButton;
 @property (retain, nonatomic) IBOutlet UIButton *findRestaurantButton;
+@property (retain, nonatomic) IBOutlet UIImageView *buttonHolderView;
 
 @end

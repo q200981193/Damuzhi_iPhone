@@ -42,7 +42,6 @@
 @interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, CityOverviewServiceDelegate, SelectControllerDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;    
-//    BOOL _showMap;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
