@@ -11,8 +11,10 @@
 #import "CommonPlaceListController.h"
 #import "MoreController.h"
 #import "NearbyController.h"
+#import "WBEngine.h"
 
-@interface MainController : PPViewController
+
+@interface MainController : PPViewController<UIActionSheetDelegate>
 {
     CommonPlaceListController *_spotListComtroller;
     CommonPlaceListController *_hotelListComtroller;
@@ -35,5 +37,6 @@
 - (IBAction)clickMoreButton:(id)sender;
 -(void) clickTitle:(id)sender;
 - (IBAction)clickFavorite:(id)sender;
+- (IBAction)clickShare:(id)sender;
 
 @end
