@@ -437,6 +437,7 @@
 		CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FB614F73C1100471880 /* CommonInfoController.xib */; };
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
+		EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA20A060153192AE00F6F478 /* AnimationManager.m */; };
 		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
 		EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */; };
 		EAFE21EB152861480013D040 /* NearByRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E9152861480013D040 /* NearByRecommendController.m */; };
@@ -1177,6 +1178,8 @@
 		CA585FBA14F73C4900471880 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
 		CA585FBB14F73C4900471880 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
+		EA20A05F153192AE00F6F478 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
+		EA20A060153192AE00F6F478 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
 		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
 		EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelUtilityDataSource.h; sourceTree = "<group>"; };
 		EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelUtilityDataSource.m; sourceTree = "<group>"; };
@@ -1951,6 +1954,7 @@
 		CA455E7314F66EDD00DA085D /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				EA20A05E153192AE00F6F478 /* Core-Utils-Animation */,
 				CA455E7414F66EDD00DA085D /* Core-3PP */,
 				CA455F1614F66EDD00DA085D /* Core-Application */,
 				CA455F2F14F66EDD00DA085D /* Core-Components-Controller */,
@@ -3036,6 +3040,15 @@
 			path = Nearby;
 			sourceTree = "<group>";
 		};
+		EA20A05E153192AE00F6F478 /* Core-Utils-Animation */ = {
+			isa = PBXGroup;
+			children = (
+				EA20A05F153192AE00F6F478 /* AnimationManager.h */,
+				EA20A060153192AE00F6F478 /* AnimationManager.m */,
+			);
+			path = "Core-Utils-Animation";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3571,6 +3584,7 @@
 				A31334E8152FFB460047D013 /* QWeiboAsyncApi.m in Sources */,
 				A31334E9152FFB460047D013 /* QWeiboSyncApi.m in Sources */,
 				A441535115314FFF00ACBD41 /* SingleOptionCell.m in Sources */,
+				EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
