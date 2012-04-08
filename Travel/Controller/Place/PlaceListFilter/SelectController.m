@@ -11,7 +11,6 @@
 #import "PPDebug.h"
 #import "AppManager.h"
 #import "CommonPlace.h"
-#import "SingleOptionCell.h"
 
 @interface SelectController ()
 
