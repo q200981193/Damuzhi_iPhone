@@ -11,13 +11,14 @@
 #import "PlaceService.h"
 #import "LogUtil.h"
 #import "LocaleUtils.h"
+#import "ImageName.h"
 
 @implementation CommonListFilter
 
 + (UIButton*)createFilterButton:(CGRect)frame title:(NSString*)title
 {
-    UIImage *bgImageForNormal = [UIImage imageNamed:@"2menu_btn.png"];
-    UIImage *bgImageForHeightlight = [UIImage imageNamed:@"2menu_btn_on.png"];
+    UIImage *bgImageForNormal = [UIImage imageNamed:IMAGE_SELECT_DOWN];
+    UIImage *bgImageForHeightlight = [UIImage imageNamed:IMAGE_SELECT_DOWN];
     
     UIButton *button  = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = frame;
@@ -25,7 +26,8 @@
     [button setBackgroundImage:bgImageForHeightlight forState:UIControlStateHighlighted];
     [button setTitle:title forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize: 15];
+    button.titleLabel.font = [UIFont systemFontOfSize: 12];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 15)];
     
     return button;
 }

@@ -46,7 +46,7 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
-    [self setNavigationRightButton:NSLS(@"删除") 
+    [self setNavigationRightButton:NSLS(@"清空") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickDelete:)];
     
@@ -80,7 +80,7 @@
         [button setTitle:NSLS(@"完成") forState:UIControlStateNormal];
     }
     else {
-        [button setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+        [button setTitle:NSLS(@"清空") forState:UIControlStateNormal];
     }
 }
 

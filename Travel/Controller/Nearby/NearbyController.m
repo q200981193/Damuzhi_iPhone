@@ -13,6 +13,8 @@
 #import "CommonPlace.h"
 #import "Place.pb.h"
 #import "ImageName.h"
+#import "UIImageUtil.h"
+
 
 @implementation NearbyController
 @synthesize imageRedStartView;
@@ -22,6 +24,7 @@
 @synthesize findShoppingButton;
 @synthesize findEntertainmentButton;
 @synthesize findRestaurantButton;
+@synthesize buttonHolderView;
 @synthesize placeListController;
 @synthesize placeListHolderView;
 @synthesize distanceView;
@@ -54,6 +57,7 @@
     [findRestaurantButton release];
     [_btnArray release];
     [_placeList release];
+    [buttonHolderView release];
     [super dealloc];
 }
 
@@ -116,17 +120,9 @@
     
     self.title = NSLS(@"我的附近");
     
-    UIButton *mapBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-    [mapBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [mapBtn setTitle:NSLS(@"地图") forState:UIControlStateNormal];
-    [mapBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [mapBtn setBackgroundImage:[UIImage imageNamed:IMAGE_NEARBY_MAP_BTN] forState:UIControlStateNormal];
-    [mapBtn addTarget:self action:@selector(clickMapBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *mapBarBtn = [[UIBarButtonItem alloc] initWithCustomView:mapBtn];
-    [self.navigationItem setRightBarButtonItem:mapBarBtn];
-    [mapBtn release];
-    [mapBarBtn release];
+    [self setNavigationRightButton:NSLS(@"地图") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickMapBtn:)];
     
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
@@ -134,17 +130,11 @@
 
     [distanceView addSubview:imageRedStartView];
     
-    findAllPlaceButton.tag = PLACE_TYPE_ALL;
-    findSpotButton.tag = PLACE_TYPE_SPOT;
-    findHotelButton.tag = PLACE_TYPE_HOTEL;
-    findRestaurantButton.tag = PLACE_TYPE_RESTAURANT;
-    findEntertainmentButton.tag = PLACE_TYPE_ENTERTAINMENT;
-    findShoppingButton.tag = PLACE_TYPE_SHOPPING;
-
+    [buttonHolderView setImage:[UIImage strectchableImageName:@"options_bg2.png"]];
+    
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PLACE_TYPE_ALL;
-    
     
     self.btnArray = [NSArray arrayWithObjects:findAllPlaceButton, findSpotButton, findHotelButton, findRestaurantButton, findShoppingButton, findEntertainmentButton, nil];
     
@@ -179,6 +169,7 @@
     [self setFindShoppingButton:nil];
     [self setFindEntertainmentButton:nil];
     [self setFindRestaurantButton:nil];
+    [self setButtonHolderView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -241,7 +232,6 @@
     } else {
         UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
         [mapBtn setTitle:@"地图" forState:UIControlStateNormal];
-
     }
 }
 
