@@ -11,7 +11,6 @@
 #import "PPDebug.h"
 #import "AppManager.h"
 #import "CommonPlace.h"
-#import "SingleOptionCell.h"
 
 @interface SelectController ()
 
@@ -85,65 +84,67 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UITableViewCell *cell = nil;
-    if (_multiOptinos) {
-        cell = [theTableView dequeueReusableCellWithIdentifier:[SingleOptionCell getCellIdentifier]];
-//        SingleOptionCell *singleOptionCell = (SingleOptionCell*)cell;        [singleOptionCell setCellData:opionName selected:selected];
-    }else {
-        
+    int row = [indexPath row];	
+	int count = [dataList count];
+	if (row >= count){
+		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+		return nil;
+	}
+    
+    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellForCategory"] autorelease];
+    
+    NSString *currentName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
+    NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
+    
+    [[cell textLabel] setText:currentName];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    
+    BOOL found = NO;
+    for(NSNumber *selectedId in self.selectedIds)
+    {
+        if ([currentId intValue] == [selectedId intValue]) {
+            found = YES;
+            break;
+        }
     }
-    return cell;
-//    if (theTableView == self.downloadTableView) {
-//        cell = [theTableView dequeueReusableCellWithIdentifier:[DownloadListCell getCellIdentifier]];
     
-//    int row = [indexPath row];	
-//	int count = [dataList count];
-//	if (row >= count){
-//		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
-//		return nil;
-//	}
-    
-//    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellForCategory"] autorelease];
-//    
-//    NSString *currentName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
-//    NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
-//    
-//    [[cell textLabel] setText:currentName];
-//    cell.textLabel.font = [UIFont systemFontOfSize:16];
-//    
-//    BOOL found = NO;
-//    for(NSNumber *selectedId in self.selectedIds)
-//    {
-//        if ([currentId intValue] == [selectedId intValue]) {
-//            found = YES;
-//            break;
-//        }
-//    }
-//    
-//    //if (NSNotFound==[self.selectedList indexOfObject:pair]) {
-//    if (!found) {
-//        //cell.accessoryType = UITableViewCellAccessoryNone;
-//        cell.accessoryView = nil;
-//    }else 
-//    {
-//        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//        UIImageView *selectedView = [[UIImageView alloc] initWithFrame:CGRectMake(80, 10, 32, 32)];
-//        [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
-//        
-//        UIImageView *radioView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 10, 32, 32)];
-//        [selectedView setImage:[UIImage imageNamed:@"radio_1.png"]];
-//        
-//        UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 37.2)];
-//        [view addSubview:radioView];
-//        [view addSubview:selectedView];
-//        
-//        cell.accessoryView = view;
-////        [cell.accessoryView addSubview:imageView];
-//        [selectedView release];
-//    }
-//
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//	return cell;	
+    if (!found) {
+        cell.accessoryView = nil;
+        [cell.imageView setImage:[self getUnselectedImage]];
+    }else 
+    {
+        cell.accessoryView = [self getCheckImageView];
+        [cell.imageView setImage:[self getSelectedImage]];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	return cell;	
+}
+
+- (UIView*)getCheckImageView
+{
+    UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)] autorelease];
+    [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
+    return selectedView;
+}
+
+- (UIImage*)getUnselectedImage
+{
+    if (_multiOptinos) {
+        return [UIImage imageNamed:@"radio_1.png"];
+    }
+    else {
+        return [UIImage imageNamed:@"radio_1.png"];
+    }
+}
+
+- (UIImage*)getSelectedImage
+{
+    if (_multiOptinos) {
+        return [UIImage imageNamed:@"radio_2.png"];
+    }
+    else {
+        return [UIImage imageNamed:@"radio_2.png"];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -31,7 +31,6 @@
 @synthesize distance=_distance;
 @synthesize categoryId = _categoryId;
 @synthesize showMap = _showMap;
-@synthesize btnArray = _btnArray;
 @synthesize placeList = _placeList;
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
@@ -55,7 +54,6 @@
     [findShoppingButton release];
     [findEntertainmentButton release];
     [findRestaurantButton release];
-    [_btnArray release];
     [_placeList release];
     [buttonHolderView release];
     [super dealloc];
@@ -130,14 +128,11 @@
 
     [distanceView addSubview:imageRedStartView];
     
-    [buttonHolderView setImage:[UIImage strectchableImageName:@"options_bg2.png"]];
-    
+    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PLACE_TYPE_ALL;
-    
-    self.btnArray = [NSArray arrayWithObjects:findAllPlaceButton, findSpotButton, findHotelButton, findRestaurantButton, findShoppingButton, findEntertainmentButton, nil];
-    
+        
     [self setSelectedBtn:_categoryId];
     
     [self initLocationManager] ;
@@ -147,9 +142,13 @@
 
 - (void)setSelectedBtn:(int)categoryId
 {
-    for (UIButton *button in _btnArray) {
-        if(button.tag == categoryId)
-        {
+    for (UIView *subView in [buttonHolderView subviews]) {
+        if (![subView isKindOfClass:[UIButton class]]) {
+            return;
+        }
+        
+        UIButton *button = (UIButton*)subView;
+        if (button.tag == categoryId) {
             button.selected = YES;
         }
         else
