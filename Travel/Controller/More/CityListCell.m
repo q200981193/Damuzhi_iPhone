@@ -45,8 +45,6 @@
     [onlineButton release];
     [cityNameLabel release];
     [dataSizeLabel release];
-    [cityNameLabel release];
-    [dataSizeLabel release];
     [downloadPersentLabel release];
     [downloadDoneLabel release];
     [pauseDownloadBtn release];
@@ -74,9 +72,17 @@
 - (void)setCellData:(City*)city
 {
     self.city = city;    
-    self.selectCurrentCityBtn.selected = ([[AppManager defaultManager] getCurrentCityId] == city.cityId);    
+    self.selectCurrentCityBtn.selected = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId); 
+    PPDebug(@"current city id: %d", [[AppManager defaultManager] getCurrentCityId]);
+    PPDebug(@"city id: %d", _city.cityId);
+
+    
+
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
+    self.cityNameLabel.textColor = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId)?[UIColor redColor]:[UIColor darkGrayColor];
+
     self.dataSizeLabel.text = [self getCityDataSizeString];
+    self.downloadDoneLabel.textColor = [UIColor darkGrayColor];
     
     [self setCellAppearance];
     return;
@@ -109,7 +115,6 @@
 {
     switch (downloadStatus) {
         case NO_DOWNLOAD:  
-            [self.cityNameLabel setTextColor:[UIColor darkGrayColor]];
             self.dataSizeLabel.hidden = NO;
             self.downloadProgressView.hidden = YES;
             self.downloadPersentLabel.hidden = YES;
@@ -120,12 +125,11 @@
             self.onlineButton.hidden = NO;
             
             self.downloadDoneLabel.hidden = YES;
-            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
+//            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
             self.moreDetailBtn.hidden = YES;
             break;
             
         case DOWNLOAD:
-            [self.cityNameLabel setTextColor:[UIColor darkGrayColor]];
             self.dataSizeLabel.hidden = YES;
             self.downloadProgressView.hidden = NO;
             self.downloadPersentLabel.hidden = NO;
@@ -136,7 +140,6 @@
             self.onlineButton.hidden = NO;
             
             self.downloadDoneLabel.hidden = YES;
-            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
             self.moreDetailBtn.hidden = YES;
             
             self.pauseDownloadBtn.selected = !localCity.downloadingFlag;
@@ -147,7 +150,6 @@
             break;
             
         case FINISH_DOWNLOAD:
-            [self.cityNameLabel setTextColor:[UIColor redColor]];
             self.dataSizeLabel.hidden = NO;
             self.downloadProgressView.hidden = YES;
             self.downloadPersentLabel.hidden = YES;
@@ -158,7 +160,6 @@
             self.onlineButton.hidden = YES;
             
             self.downloadDoneLabel.hidden = NO;
-            [downloadDoneLabel setTextColor:[UIColor redColor]];
             self.moreDetailBtn.hidden = NO;
             
             break;

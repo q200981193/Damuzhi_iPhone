@@ -92,7 +92,7 @@
 }
 
 
-+ (NSString*)getProvidedServiceImageDir
++ (NSString*)getProvidedServiceIconDir
 {
     return [FileUtil getFileFullPath:DIR_OF_PROVIDED_SERVICE_IMAGE];
 }
@@ -133,5 +133,37 @@
     
     return;
 }
+
++ (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string
+{
+    if ([string hasPrefix:@"http:"]) {
+        return string;
+    }else{
+        return [absoluteDir stringByAppendingPathComponent:string];
+    }
+}
+
++ (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL
+{
+    NSURL* url = nil;
+    if ([fileOrURL hasPrefix:@"http:"]){
+        url = [NSURL URLWithString:fileOrURL];           
+    }
+    else{
+        NSString *htmlPath = fileOrURL;        
+        url = [NSURL fileURLWithPath:htmlPath];
+    }
+    
+    return url;
+}
+
++ (NSString*)getProvidedServiceIconPath:(int)providedServiceId
+{
+    NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
+    NSString *fileName = [NSString stringWithFormat:@"%d.png", providedServiceId];
+    return [destinationDir stringByAppendingPathComponent:fileName];
+}
+
+
 
 @end

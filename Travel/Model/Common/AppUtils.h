@@ -40,12 +40,18 @@
 + (NSString*)getZipFilePath:(int)cityId;
 + (NSString*)getAppFilePath;
 
-+ (NSString*)getProvidedServiceImageDir;
++ (NSString*)getProvidedServiceIconDir;
 + (NSString*)getCategoryImageDir;
 
 + (BOOL)hasLocalCityData:(int)cityId;
 + (void)unzipCityZip:(int)cityId;
 
 + (void)deleteCityData:(int)cityId;
+
+
++ (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string;
++ (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL;
++ (NSString*)getProvidedServiceIconPath:(int)providedServiceId;
+
 
 @end

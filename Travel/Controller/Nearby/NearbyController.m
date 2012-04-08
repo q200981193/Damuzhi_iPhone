@@ -13,6 +13,8 @@
 #import "CommonPlace.h"
 #import "Place.pb.h"
 #import "ImageName.h"
+#import "UIImageUtil.h"
+
 
 @implementation NearbyController
 @synthesize imageRedStartView;
@@ -22,13 +24,13 @@
 @synthesize findShoppingButton;
 @synthesize findEntertainmentButton;
 @synthesize findRestaurantButton;
+@synthesize buttonHolderView;
 @synthesize placeListController;
 @synthesize placeListHolderView;
 @synthesize distanceView;
 @synthesize distance=_distance;
 @synthesize categoryId = _categoryId;
 @synthesize showMap = _showMap;
-@synthesize btnArray = _btnArray;
 @synthesize placeList = _placeList;
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
@@ -52,8 +54,8 @@
     [findShoppingButton release];
     [findEntertainmentButton release];
     [findRestaurantButton release];
-    [_btnArray release];
     [_placeList release];
+    [buttonHolderView release];
     [super dealloc];
 }
 
@@ -75,12 +77,6 @@
 
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
-    [super viewDidAppear:animated];
-}
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
 	
     // save to current location
@@ -92,14 +88,13 @@
 	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
 	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
     
-    self.placeList = [self filterByDistance:_placeList distance:_distance];
-    [self createAndReloadPlaceListController];
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];  
 }
 
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList
 {
-    self.placeList = placeList;
-    [self startUpdatingLocation];
+    self.placeList = [self filterByDistance:placeList distance:_distance];
+    [self createAndReloadPlaceListController];
 }
 
 - (void)createAndReloadPlaceListController
@@ -117,23 +112,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
     self.title = NSLS(@"我的附近");
     
-    UIButton *mapBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-    [mapBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [mapBtn setTitle:NSLS(@"地图") forState:UIControlStateNormal];
-    [mapBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [mapBtn setBackgroundImage:[UIImage imageNamed:IMAGE_NEARBY_MAP_BTN] forState:UIControlStateNormal];
-    [mapBtn addTarget:self action:@selector(clickMapBtn:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *mapBarBtn = [[UIBarButtonItem alloc] initWithCustomView:mapBtn];
-    [self.navigationItem setRightBarButtonItem:mapBarBtn];
-    [mapBtn release];
-    [mapBarBtn release];
+    [self setNavigationRightButton:NSLS(@"地图") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickMapBtn:)];
     
     imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
     
@@ -141,29 +128,27 @@
 
     [distanceView addSubview:imageRedStartView];
     
-    findAllPlaceButton.tag = PLACE_TYPE_ALL;
-    findSpotButton.tag = PLACE_TYPE_SPOT;
-    findHotelButton.tag = PLACE_TYPE_HOTEL;
-    findRestaurantButton.tag = PLACE_TYPE_RESTAURANT;
-    findEntertainmentButton.tag = PLACE_TYPE_ENTERTAINMENT;
-    findShoppingButton.tag = PLACE_TYPE_SHOPPING;
-
+    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PLACE_TYPE_ALL;
+        
+    [self setSelectedBtn:_categoryId];
     
     [self initLocationManager] ;
     
-    self.btnArray = [NSArray arrayWithObjects:findAllPlaceButton, findSpotButton, findHotelButton, findRestaurantButton, findShoppingButton, findEntertainmentButton, nil];
-    
-    [self setSelectedBtn:_categoryId];
+    [self startUpdatingLocation] ;
 }
 
 - (void)setSelectedBtn:(int)categoryId
 {
-    for (UIButton *button in _btnArray) {
-        if(button.tag == categoryId)
-        {
+    for (UIView *subView in [buttonHolderView subviews]) {
+        if (![subView isKindOfClass:[UIButton class]]) {
+            return;
+        }
+        
+        UIButton *button = (UIButton*)subView;
+        if (button.tag == categoryId) {
             button.selected = YES;
         }
         else
@@ -183,6 +168,7 @@
     [self setFindShoppingButton:nil];
     [self setFindEntertainmentButton:nil];
     [self setFindRestaurantButton:nil];
+    [self setButtonHolderView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -245,7 +231,6 @@
     } else {
         UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
         [mapBtn setTitle:@"地图" forState:UIControlStateNormal];
-
     }
 }
 
@@ -262,66 +247,83 @@
 }
 
 - (IBAction)click500M:(id)sender {
-    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
-    self.distance = DISTANCE_500M;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    if (_distance != DISTANCE_500M) {
+        self.distance = DISTANCE_500M;
+        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    }
 }
 
 - (IBAction)click1K:(id)sender {
-//    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
-    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
-    self.distance = DISTANCE_1KM;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    if (_distance != DISTANCE_1KM) {
+        self.distance = DISTANCE_1KM;
+        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    }   
 }
 
 - (IBAction)click5K:(id)sender {
-//    [imageRedStartView setCenter:POINT_OF_DISTANCE_5KM];
-    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
-    self.distance = DISTANCE_5KM;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    if (_distance != DISTANCE_5KM) {
+        self.distance = DISTANCE_5KM;
+        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];  
+    }    
 }
 
 - (IBAction)click10K:(id)sender {
-//    [imageRedStartView setCenter:POINT_OF_DISTANCE_10KM];
-    [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
-    self.distance = DISTANCE_10KM;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    if (_distance != DISTANCE_10KM) {
+        self.distance = DISTANCE_10KM;
+        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+    }
 }
 
 - (IBAction)clickSpotBtn:(id)sender {
-    self.categoryId = PLACE_TYPE_SPOT;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
-    [self setSelectedBtn:_categoryId];
+    if (_categoryId != PLACE_TYPE_SPOT) {
+        self.categoryId = PLACE_TYPE_SPOT;
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
+        [self setSelectedBtn:_categoryId];
+    }
 }
 
 - (IBAction)clickHotelBtn:(id)sender {
-    self.categoryId = PLACE_TYPE_HOTEL;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
-    [self setSelectedBtn:_categoryId];
+    if (_categoryId != PLACE_TYPE_HOTEL) {
+        self.categoryId = PLACE_TYPE_HOTEL;
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
+        [self setSelectedBtn:_categoryId];
+    }
 }
 
 - (IBAction)clickAllBtn:(id)sender {
-    self.categoryId = PLACE_TYPE_ALL;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
-    [self setSelectedBtn:_categoryId];
+    if (_categoryId != PLACE_TYPE_ALL) {
+        self.categoryId = PLACE_TYPE_ALL;
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
+        [self setSelectedBtn:_categoryId];
+    }
 }
 
 - (IBAction)clickRestaurantBtn:(id)sender {
-    self.categoryId = PLACE_TYPE_RESTAURANT;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
-    [self setSelectedBtn:_categoryId];
+    if (_categoryId != PLACE_TYPE_RESTAURANT) {
+        self.categoryId = PLACE_TYPE_RESTAURANT;
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
+        [self setSelectedBtn:_categoryId];
+    }
 }
 
 - (IBAction)clickShoppingBtn:(id)sender {
-    self.categoryId = PLACE_TYPE_SHOPPING;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
-    [self setSelectedBtn:_categoryId];
+    if (_categoryId != PLACE_TYPE_SHOPPING) {
+        self.categoryId = PLACE_TYPE_SHOPPING;
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
+        [self setSelectedBtn:_categoryId];
+    }
 }
 
 - (IBAction)clickEntertainmentBtn:(id)sender {
-    self.categoryId = PLACE_TYPE_ENTERTAINMENT;
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
-    [self setSelectedBtn:_categoryId];
+    if (_categoryId != PLACE_TYPE_ENTERTAINMENT) {
+        self.categoryId = PLACE_TYPE_ENTERTAINMENT;
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
+        [self setSelectedBtn:_categoryId];
+    }
 }
 
 @end

@@ -20,7 +20,6 @@
 + (PlaceStorage*)historyManager;
 
 - (id)initWithFileName:(NSString*)fileName;
-- (NSArray*)loadPlaceList;
 - (NSArray*)allPlaces;
 - (void)addPlace:(Place*)place;
 - (void)deletePlace:(Place*)place;

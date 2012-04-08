@@ -10,6 +10,7 @@
 #import "Place.pb.h"
 #import "LogUtil.h"
 #import "FileUtil.h"
+#import "AppManager.h"
 
 #define FAVORITE_PLACE_FILE         @"favorite_place.dat"
 #define HISTORY_PLACE_FILE          @"history_place.dat"
@@ -58,23 +59,20 @@ static PlaceStorage* _historyManager = nil;
 
 - (NSString*)getFilePath
 {
-    NSString* fileWithDir = [NSString stringWithFormat:@"%@/%@", PLACE_STORAGE_DEFAULT_DIR, _fileName];
+    NSString* fileWithDir = [NSString stringWithFormat:@"%@/%d_%@", PLACE_STORAGE_DEFAULT_DIR, [[AppManager defaultManager] getCurrentCityId], _fileName];
     NSString *filePath = [FileUtil getFileFullPath:fileWithDir];
     return filePath;
 }
 
-- (NSArray*)loadPlaceList
+- (void)loadPlaceList
 {
     NSData* data = [NSData dataWithContentsOfFile:[self getFilePath]];
     self.placeList = [PlaceList parseFromData:data];
-    return [_placeList listList];
 }
 
 - (NSArray*)allPlaces
 {
-    if ([self.placeList listList] == nil) {
-        [self loadPlaceList];
-    }
+    [self loadPlaceList];
     return [self.placeList listList];
 }
 

@@ -52,6 +52,12 @@
     return @"PlaceCell";
 }
 
+//+ (CGFloat)getCellHeight
+//{
+//    return 200.0f;
+//}
+
+
 -(void)setRankImage:(int32_t)rank
 {
     self.praise1View.image = [UIImage imageNamed:IMAGE_GOOD2];
@@ -100,15 +106,14 @@
     for (NSString *providedServiceIcon in providedServiceIcons) {
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:rect];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:providedServiceIcon];
-        //PPDebug(@"providedServiceIcon = %@", providedServiceIcon);
         
         serviceIconView.center = CGPointMake(categoryLable.frame.origin.x + categoryLable.frame.size.width+DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL+(i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 
                                              categoryLable.center.y); 
         
         [serviceIconView setImage:icon];
+        serviceIconView.tag = 1;
         [self.contentView addSubview:serviceIconView];
-        [self.contentView viewWithTag:1];
-        
+                
         [icon release];
         [serviceIconView release];
     }
@@ -116,17 +121,18 @@
 
 - (void)setPlaceIcon:(Place*)place
 {
+    [self.imageView showLoadingWheel];
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
         NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
-        //PPDebug(@"place iconPath = %@", iconPath);
+//        PPDebug(@"place iconPath = %@", iconPath);
         [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
     else{
         self.imageView.callbackOnSetImage = self;
         [self.imageView clear];
         self.imageView.url = [NSURL URLWithString:[place icon]];
-        PPDebug(@"load place image from URL %@", [place icon]);
+//        PPDebug(@"load place image from URL %@", [place icon]);
         [GlobalGetImageCache() manage:self.imageView];
     }
 }
@@ -165,12 +171,13 @@
     
     [self setRankImage:[place rank]];
     
+//    PPDebug(@"palce name = %@", [place name]);
+    
     NSMutableArray *providedServiceIcons = [[NSMutableArray alloc] init];
     for (NSNumber *providedServiceId in [place providedServiceIdList]) {
-        NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
-        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
-        [providedServiceIcons addObject:[destinationDir stringByAppendingPathComponent:fileName]];
-        [fileName release];
+        NSString *iconPath = [AppUtils getProvidedServiceIconPath:[providedServiceId intValue]];
+//        PPDebug(@"provided service icon: %@", iconPath);
+        [providedServiceIcons addObject:iconPath];
     }
     
     [self setServiceIcons:providedServiceIcons];
@@ -183,12 +190,15 @@
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     [placeLocation release];
-
-    if (distance <1000.0) {
-        return [NSString stringWithFormat:NSLS(@"%d米"), distance];
+    
+    if (distance >1000.0) {
+        return [NSString stringWithFormat:NSLS(@"%d公里"), distance/1000];
+    }
+    else if (distance > 100.0) {
+        return [NSString stringWithFormat:NSLS(@"%0.1fKM"), distance];
     }
     else {
-        return [NSString stringWithFormat:NSLS(@"%0.1lf公里"), distance/1000];
+        return [NSString stringWithFormat:NSLS(@"0.1KM")];
     }
 }
 

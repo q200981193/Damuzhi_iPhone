@@ -22,7 +22,8 @@
 #import "NearbyController.h"
 #import "AppManager.h"
 #import "CityManagementController.h"
-
+#import "HelpController.h"
+#import "ShareToSinaController.h"
 
 @implementation MainController
 
@@ -174,12 +175,9 @@
 
 - (IBAction)clickNearbyButton:(id)sender
 {
-    if(_nearbyController == nil)
-    {
-        _nearbyController = [[NearbyController alloc] init];
-    }
-    
-    [self.navigationController pushViewController:_nearbyController animated:YES];
+    NearbyController *controller = [[NearbyController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];  
 }
 
 - (IBAction)clickMoreButton:(id)sender
@@ -191,17 +189,6 @@
     [self.navigationController pushViewController:_moreController animated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    
-    
-    
-    [super viewWillDisappear:animated];
-
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBarHidden = NO;
-}
-
 - (IBAction)clickFavorite:(id)sender
 {
     FavoriteController *fc = [[FavoriteController alloc] init];
@@ -209,5 +196,41 @@
     [fc release];
 }
 
+- (IBAction)clickHelp:(id)sender {
+    HelpController *controller = [[HelpController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+- (IBAction)clickShare:(id)sender
+{
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLS(@"取消") destructiveButtonTitle:NSLS(@"通过短信") otherButtonTitles:NSLS(@"分享到新浪微博"), NSLS(@"分享到腾讯微博"), nil];
+    [shareSheet showInView:self.view];
+    [shareSheet release];
+}
+
+#pragma -mark share UIActionSheet delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"click 0");
+            break;
+        case 1:
+            NSLog(@"click 1");
+            ShareToSinaController *sc = [[ShareToSinaController alloc] init];
+            [self.navigationController pushViewController:sc animated:NO];
+            [sc release];
+            break;
+        case 2:
+            NSLog(@"click 2");
+            break;
+        case 3:
+            NSLog(@"click 3");
+            break;
+        default:
+            break;
+    }
+}
 
 @end

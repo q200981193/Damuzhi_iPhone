@@ -14,11 +14,11 @@
 #define LANGUAGE_TRADITIONAL_CHINESE    2 
 #define LANGUAGE_ENGLISH                3
 
-// for test
-//#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
+// for test service
+#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
-// for 
-#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+// for formal service
+//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
 
 // URL
@@ -30,10 +30,10 @@
 
 #define URL_TRAVEL_ADD_FAVORITE     (URL_SERVICE@"addFavorite.aspx?")
 
-#define URL_TRAVEL_DELETE_FAVORITE  (URL_SERVICE@"deleteFavorite?") 
-#define URL_TRAVEL_QUERY_PLACE      (URL_SERVICE@"queryPlace?") 
+#define URL_TRAVEL_DELETE_FAVORITE  (URL_SERVICE@"deleteFavorite.aspx?") 
+#define URL_TRAVEL_QUERY_PLACE      (URL_SERVICE@"queryPlace.aspx?") 
 
-#define URL_TRAVEL_QUERY_VERSION      @"http://59.34.17.68:8012/service/iphoneVersion.txt"
+#define URL_TRAVEL_QUERY_VERSION    (URL_SERVICE@"iphoneVersion.txt")
 
 
 // Output Format

@@ -54,7 +54,7 @@
     self.dataTableView.hidden = NO;
     self.downloadTableView.hidden = YES;
     
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
     [[AppService defaultService] setAppServiceDelegate:self];
@@ -184,6 +184,17 @@
     }
 
 	return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.dataTableView) {
+        City *city = [self.dataList objectAtIndex:indexPath.row];
+        if ([AppUtils hasLocalCityData:city.cityId]) {
+            [[AppManager defaultManager] setCurrentCityId:city.cityId];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
 }
 
 #pragma mark -

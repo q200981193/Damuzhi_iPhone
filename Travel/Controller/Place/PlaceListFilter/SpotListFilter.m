@@ -12,6 +12,9 @@
 #import "AppManager.h"
 #import "Place.pb.h"
 #import "CityOverviewService.h"
+#import "ImageName.h"
+#import "UIImageUtil.h"
+#import "CommonListFilter.h"
 
 @implementation SpotListFilter
 @synthesize controller;
@@ -20,22 +23,6 @@
 {
     [controller release];
     [super dealloc];
-}
-
-- (UIButton*)createFilterButton:(CGRect)frame title:(NSString*)title bgImageForNormalState:(NSString*)bgImageForNormalState bgImageForHeightlightState:(NSString*)bgImageForHeightlightState 
-{
-    UIImage *bgImageForNormal = [UIImage imageNamed:bgImageForNormalState];
-    UIImage *bgImageForHeightlight = [UIImage imageNamed:bgImageForHeightlightState];
-    
-    UIButton *button  = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = frame;
-    [button setBackgroundImage:bgImageForNormal forState:UIControlStateNormal];
-    [button setBackgroundImage:bgImageForHeightlight forState:UIControlStateHighlighted];
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize: 15];
-    
-    return button;
 }
 
 #pragma Protocol Implementations
@@ -51,29 +38,21 @@
 }
 
 - (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController *)commonPlaceController
-{
-    superView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]];
+{    
+    CGRect frame = CGRectMake(0, superView.frame.size.height/2-HEIGHT_OF_FILTER_BUTTON/2, WIDTH_OF_FILTER_BUTTON, HEIGHT_OF_FILTER_BUTTON);
     
-    CGRect frame1 = CGRectMake(0, 0, 58, 36);
-    CGRect frame2 = CGRectMake(58, 0, 58, 36);
+    frame.origin.x += 10;
+    UIButton *button1 = [CommonListFilter createFilterButton:frame title:NSLS(@"分类")];
+    [button1 addTarget:commonPlaceController action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
+    button1.tag = 1;
+    [superView addSubview:button1];
     
-    UIButton *buttonCategory = [self createFilterButton:frame1 title:NSLS(@"分类") bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-    
-    UIButton *buttonSort = [self createFilterButton:frame2 title:NSLS(@"排序") bgImageForNormalState:@"2menu_btn.png" bgImageForHeightlightState:@"2menu_btn_on.png"];
-    
-    [buttonSort addTarget:commonPlaceController
-                   action:@selector(clickSortButton:) 
-         forControlEvents:UIControlEventTouchUpInside];
-    
-    [buttonCategory addTarget:commonPlaceController 
-                       action:@selector(clickCategoryButton:) 
-             forControlEvents:UIControlEventTouchUpInside];
-    
-    [superView addSubview:buttonCategory];
-    [superView addSubview:buttonSort];
+    frame.origin.x += WIDTH_OF_FILTER_BUTTON+DISTANCE_BETWEEN_BUTTONS;
+    UIButton *button2 = [CommonListFilter createFilterButton:frame title:NSLS(@"排序")];
+    [button2 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
+    [superView addSubview:button2];
 
     self.controller = commonPlaceController;
-    
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter

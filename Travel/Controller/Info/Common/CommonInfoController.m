@@ -14,6 +14,7 @@
 
 @implementation CommonInfoController
 
+@synthesize scrollView;
 @synthesize imageHolderView;
 @synthesize dataWebview;
 @synthesize dataSource;
@@ -22,6 +23,7 @@
     [dataSource release];
     [imageHolderView release];
     [dataWebview release];
+    [scrollView release];
     [super dealloc];
 }
 
@@ -58,28 +60,45 @@
     
     [self.navigationItem setTitle:[dataSource getTitleName]];
     
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
+    
+    self.dataWebview.userInteractionEnabled = NO;
+    dataWebview.delegate = self;
+    scrollView.backgroundColor = [UIColor whiteColor];
     
     [dataSource requestDataWithDelegate:self];
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+
+    NSString *heightString = [webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"];
+    NSLog(@"webview document body scrollHeight is %@ high",heightString);
+
+    //set webview frame
+    CGRect webViewFrame = webView.frame;
+    webViewFrame.size = CGSizeMake(webView.frame.size.width, [heightString floatValue]);
+    webView.frame = webViewFrame;
+    
+    //set scrollview frame
+    CGSize sz = scrollView.bounds.size;
+    sz.height = webView.frame.size.height + imageHolderView.frame.size.height;
+    scrollView.contentSize = sz;
+}
+
 - (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView;
 {
-    NSString* urlString = [overView html];
+    NSString* htmlString = [overView html];
     NSArray *imageList = [overView imagesList];
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
-    NSURL* url = nil;
-    if ([urlString hasPrefix:@"http:"]){
-        url = [NSURL URLWithString:urlString];           
-    }
-    else{
-        NSString *htmlPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:urlString];         
-        url = [NSURL fileURLWithPath:htmlPath];
-    }
     
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+        
+    NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
+        
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);
@@ -87,31 +106,30 @@
         [self.dataWebview loadRequest:request];        
     }
     
+   
     
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
-    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    NSLog(@"imagePath = %@", [imageList objectAtIndex:0]);
-    if (![[imageList objectAtIndex:0] hasPrefix:@"http:"]) {
-        NSMutableArray *images = [[NSMutableArray alloc] init];
-        for (NSString *image in imageList) {
-            NSString *imagePath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:image];
-            [images addObject:imagePath];
-//            NSLog(@"imagePath = %@", imagePath);
-        }
-        [slideImageView setImages:images];
-    }
-    else {
-        [slideImageView setImages:imageList];
+    NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
+    for (NSString *image in imageList) {
+        NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+
+        NSLog(@"image path = %@", imgaePath);
+        [imagePathList addObject:imgaePath];
     }
     
-    [imageHolderView addSubview:slideImageView]; 
+    SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    [slideImageView setImages:imagePathList];
+    [self.imageHolderView addSubview:slideImageView];
+    
     [slideImageView release];
+    [imagePathList release];
 }
 
 - (void)viewDidUnload
 {
     [self setImageHolderView:nil];
     [self setDataWebview:nil];
+    [self setScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

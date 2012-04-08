@@ -21,8 +21,9 @@
 @synthesize delegate;
 @synthesize selectedIds = _selectedIds;
 @synthesize multiOptions = _multiOptinos;
+@synthesize needConfirm = _needConfirm;
 
-+ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions
++ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions needConfirm:(BOOL)needConfirm
 {
     SelectController* controller = [[[SelectController alloc] init] autorelease];  
     
@@ -32,26 +33,26 @@
     
     controller.multiOptions = multiOptions;
     
+    controller.needConfirm = needConfirm;
+    
     [controller viewDidLoad];
+    
     return controller;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
 {        
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
-                           action:@selector(clickFinish:)];
+                           action:@selector(clickBack:)];
+    
+    if (_needConfirm) {
+        [self setNavigationRightButton:NSLS(@"确定") 
+                             imageName:@"topmenu_btn_right.png" 
+                                action:@selector(clickFinish:)];
+    }
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"select_bg_1.png"]]];
 }
@@ -64,26 +65,15 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
 - (void)dealloc {
     [tableView release];
     [_selectedIds release];
     [super dealloc];
 }
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	return 37.2;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;		// default implementation
 }
 
 // Customize the number of rows in the table view.
@@ -93,8 +83,7 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
+
     int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
@@ -102,7 +91,7 @@
 		return nil;
 	}
     
-    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"CellForCategory"] autorelease];
+    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellForCategory"] autorelease];
     
     NSString *currentName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
     NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
@@ -119,20 +108,43 @@
         }
     }
     
-    //if (NSNotFound==[self.selectedList indexOfObject:pair]) {
     if (!found) {
-        //cell.accessoryType = UITableViewCellAccessoryNone;
         cell.accessoryView = nil;
-    }else {
-        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(80, 10, 32, 32)];
-        [imageView setImage:[UIImage imageNamed:@"select_btn_1"]];
-        cell.accessoryView = imageView;
-        [imageView release];
+        [cell.imageView setImage:[self getUnselectedImage]];
+    }else 
+    {
+        cell.accessoryView = [self getCheckImageView];
+        [cell.imageView setImage:[self getSelectedImage]];
     }
-
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
+}
+
+- (UIView*)getCheckImageView
+{
+    UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)] autorelease];
+    [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
+    return selectedView;
+}
+
+- (UIImage*)getUnselectedImage
+{
+    if (_multiOptinos) {
+        return [UIImage imageNamed:@"radio_1.png"];
+    }
+    else {
+        return [UIImage imageNamed:@"radio_1.png"];
+    }
+}
+
+- (UIImage*)getSelectedImage
+{
+    if (_multiOptinos) {
+        return [UIImage imageNamed:@"radio_2.png"];
+    }
+    else {
+        return [UIImage imageNamed:@"radio_2.png"];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,6 +187,16 @@
         [self.selectedIds addObject:currentSelectedId];
         
         [tableView1 reloadData];
+    }
+    
+    if (!_needConfirm) {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (delegate && [delegate respondsToSelector:@selector(didSelectFinish:)]) {
+            [delegate didSelectFinish:self.selectedIds];
+        }
+        else {
+            PPDebug(@"[delegate respondsToSelector:@selector(didSelectFinish:)]");
+        }
     }
 }
 

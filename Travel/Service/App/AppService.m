@@ -156,7 +156,7 @@ static AppService* _defaultAppService = nil;
                     // download images of each provide service icon
                     NSURL *url = [NSURL URLWithString:providedService.image];
                     
-                    NSString *destinationDir = [AppUtils getProvidedServiceImageDir];
+                    NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
                     NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", providedService.id]; 
                     
                     [self downloadResource:url destinationDir:destinationDir fileName:fileName];

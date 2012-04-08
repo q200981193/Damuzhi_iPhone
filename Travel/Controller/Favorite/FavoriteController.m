@@ -15,6 +15,7 @@
 #import "ImageName.h"
 #import "PlaceService.h"
 #import "TravelNetworkConstants.h"
+#import "UIImageUtil.h"
 
 @interface FavoriteController ()
 
@@ -73,7 +74,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNavigationLeftButton:NSLS(@"返回") 
+    [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     [self createRightBarButton];
@@ -84,6 +85,8 @@
     }else {
         [self clickTopFavorite:nil];
     }
+    
+    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 }
 
 - (void)showPlaces{
@@ -92,9 +95,7 @@
                                                                superView:placeListHolderView
                                                          superController:self];
     }
-    else {
-        [self.placeListController setAndReloadPlaceList:self.placeList];
-    }
+    [self.placeListController setAndReloadPlaceList:self.placeList];
 }
 
 - (void)viewDidUnload
@@ -114,11 +115,6 @@
     [self setTopShoppingFavoritePlaceList:nil];
     [self setTopEntertainmentFavoritePlaceList:nil];
     [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #define RIGHT_BUTTON_VIEW_WIDTH     230
@@ -179,7 +175,8 @@
 - (void)deletedPlace:(Place *)place
 {
     [[PlaceService defaultService] deletePlaceFromFavorite:self place:place];
-    self.placeList = [[PlaceStorage favoriteManager] allPlaces];
+    [[PlaceStorage favoriteManager] deletePlace:place];
+    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
 }
 
 #pragma mark - PlaceServiceDelegate 
@@ -218,6 +215,9 @@
         default:
             break;
     }
+    
+    self.placeList = list;
+    [self showPlaces];
 }
 
 #pragma -mark BarButton action
@@ -249,103 +249,143 @@
     topFavoriteButton.selected = YES;
     deleteButton.hidden = YES;
     
+    [self.placeListController canDeletePlace:NO delegate:nil];
+    [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
     [self clickAll:nil];
 }
 
 #pragma mark - filter button action
 - (IBAction)clickAll:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_ALL];
+
     if (self.myFavoriteButton.selected == YES) {
         self.placeList = myAllFavoritePlaceList;
+        [self showPlaces];
     }
-    
     else {
         if (topAllFavoritePlaceList == nil) {
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ALL];
         }
-        self.placeList = topAllFavoritePlaceList;
+        else {
+            self.placeList = topAllFavoritePlaceList;
+            [self showPlaces];
+        }
     }
-    [self showPlaces];
 }
 
 - (IBAction)clickSpot:(id)sender
 { 
+    [self setSelectedBtn:PLACE_TYPE_SPOT];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SPOT];
+        [self showPlaces];
     }
-    
     else {
         if(topSpotFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SPOT];
+        }else {
+            self.placeList = topSpotFavoritePlaceList;
+            [self showPlaces];
         }
-        self.placeList = topAllFavoritePlaceList;
     }
-    
-    [self showPlaces];
 }
 
 - (IBAction)clickHotel:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_HOTEL];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_HOTEL];
+        [self showPlaces];
     }
     
     else {
         if(topHotelFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_HOTEL];
+        }else {
+            self.placeList = topHotelFavoritePlaceList;
+            [self showPlaces];
         }
-        self.placeList = topHotelFavoritePlaceList;
     }
-    
-    [self showPlaces];
 }
 
 - (IBAction)clickRestaurant:(id)sender
-{
+{    
+    [self setSelectedBtn:PLACE_TYPE_RESTAURANT];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_RESTAURANT];
+        [self showPlaces];
     }
     
     else {
         if(topRestaurantFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_RESTAURANT];
         }
-        self.placeList = topRestaurantFavoritePlaceList;
+        else {
+            self.placeList = topRestaurantFavoritePlaceList;
+            [self showPlaces]; 
+        }
     }
-    
-    [self showPlaces]; 
 }
 
 - (IBAction)clickShopping:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_SHOPPING];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SHOPPING];
+        [self showPlaces];
     }
     
     else {
         if(topShoppingFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SHOPPING];
+        }else {
+            self.placeList = topShoppingFavoritePlaceList;
+            [self showPlaces];
         }
-        self.placeList = topShoppingFavoritePlaceList;
     }
-    
-    [self showPlaces];
 }
 
 - (IBAction)clickEntertainment:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_ENTERTAINMENT];
+    
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_ENTERTAINMENT];
+        [self showPlaces];
     }
     
     else {
         if(topEntertainmentFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT];
         }
-        self.placeList = topEntertainmentFavoritePlaceList;
+        else {
+            self.placeList = topEntertainmentFavoritePlaceList;
+            [self showPlaces];
+        }
     }
-    
-    [self showPlaces];
+}
+
+- (void)setSelectedBtn:(int)categoryId
+{
+    for (UIView *subView in [buttonHolderView subviews]) {
+        if (![subView isKindOfClass:[UIButton class]]) {
+            return;
+        }
+        
+        UIButton *button = (UIButton*)subView;
+        if (button.tag == categoryId) {
+            button.selected = YES;
+        }
+        else
+        {
+            button.selected = NO;
+        }
+    }
 }
 
 - (NSArray*)filterFromMyFavorite:(int)categoryId
