@@ -200,8 +200,8 @@
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 109, 52)];
         view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok"]];
         view.tag = FAVORITES_OK_VIEW;
-        CGPoint fromPosition = CGPointMake(160, 340);
-        CGPoint toPosition = CGPointMake(160, 340);
+        CGPoint fromPosition = CGPointMake(150, 345);
+        CGPoint toPosition = CGPointMake(150, 345);
 
         [self.view addSubview:view];
         [view release];
@@ -444,12 +444,12 @@
      favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg"]];
     
-    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 10, 93, 29)];
+    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 15, 93, 29)];
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites"]];
     [favouritesView addSubview:favButton];
     
-    self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 15, 120, 15)];
+    self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 21, 120, 15)];
     self.favoriteCountLabel.backgroundColor = [UIColor clearColor];
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];

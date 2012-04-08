@@ -169,8 +169,6 @@
 		A44153381531326200ACBD41 /* list_tr_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44152C31531326200ACBD41 /* list_tr_bg2@2x.png */; };
 		A44153391531326200ACBD41 /* book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44152C51531326200ACBD41 /* book@2x.png */; };
 		A441533B1531391E00ACBD41 /* list_btn_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A441533A1531391E00ACBD41 /* list_btn_2@2x.png */; };
-		A441535115314FFF00ACBD41 /* SingleOptionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A441534F15314FEF00ACBD41 /* SingleOptionCell.m */; };
-		A441535215314FFF00ACBD41 /* SingleOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A441535015314FF500ACBD41 /* SingleOptionCell.xib */; };
 		A485784B1516DE7B00FDFE5B /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578411516DE7B00FDFE5B /* ioapi.c */; };
 		A485784C1516DE7B00FDFE5B /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578431516DE7B00FDFE5B /* mztools.c */; };
 		A485784D1516DE7B00FDFE5B /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578451516DE7B00FDFE5B /* unzip.c */; };
@@ -683,9 +681,6 @@
 		A44152C31531326200ACBD41 /* list_tr_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list_tr_bg2@2x.png"; sourceTree = "<group>"; };
 		A44152C51531326200ACBD41 /* book@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book@2x.png"; sourceTree = "<group>"; };
 		A441533A1531391E00ACBD41 /* list_btn_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list_btn_2@2x.png"; sourceTree = "<group>"; };
-		A441534E15314FED00ACBD41 /* SingleOptionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleOptionCell.h; sourceTree = "<group>"; };
-		A441534F15314FEF00ACBD41 /* SingleOptionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleOptionCell.m; sourceTree = "<group>"; };
-		A441535015314FF500ACBD41 /* SingleOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SingleOptionCell.xib; sourceTree = "<group>"; };
 		A48578401516DE7B00FDFE5B /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		A48578411516DE7B00FDFE5B /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		A48578421516DE7B00FDFE5B /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -1877,9 +1872,6 @@
 		CA238FC714FE56F900114175 /* PlaceListFilter */ = {
 			isa = PBXGroup;
 			children = (
-				A441534E15314FED00ACBD41 /* SingleOptionCell.h */,
-				A441534F15314FEF00ACBD41 /* SingleOptionCell.m */,
-				A441535015314FF500ACBD41 /* SingleOptionCell.xib */,
 				A4BB6DA915270AFA001CEA6B /* CommonListFilter.h */,
 				A4BB6DAA15270AFA001CEA6B /* CommonListFilter.m */,
 				A4BB6DAB15270AFA001CEA6B /* EntertainmentListFilter.h */,
@@ -3342,7 +3334,6 @@
 				A44153381531326200ACBD41 /* list_tr_bg2@2x.png in Resources */,
 				A44153391531326200ACBD41 /* book@2x.png in Resources */,
 				A441533B1531391E00ACBD41 /* list_btn_2@2x.png in Resources */,
-				A441535215314FFF00ACBD41 /* SingleOptionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3583,7 +3574,6 @@
 				A31334E7152FFB460047D013 /* QVerifyWebViewController.m in Sources */,
 				A31334E8152FFB460047D013 /* QWeiboAsyncApi.m in Sources */,
 				A31334E9152FFB460047D013 /* QWeiboSyncApi.m in Sources */,
-				A441535115314FFF00ACBD41 /* SingleOptionCell.m in Sources */,
 				EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
