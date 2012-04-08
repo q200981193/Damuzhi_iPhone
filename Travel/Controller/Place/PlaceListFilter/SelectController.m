@@ -110,18 +110,41 @@
     
     if (!found) {
         cell.accessoryView = nil;
-        [cell.imageView setImage:[UIImage imageNamed:@"radio_1.png"]];
+        [cell.imageView setImage:[self getUnselectedImage]];
     }else 
     {
-        UIImageView *selectedView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-        [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
-        cell.accessoryView = selectedView;
-        [selectedView release];
-
-        [cell.imageView setImage:[UIImage imageNamed:@"radio_2.png"]];
+        cell.accessoryView = [self getCheckImageView];
+        [cell.imageView setImage:[self getSelectedImage]];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
+}
+
+- (UIView*)getCheckImageView
+{
+    UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)] autorelease];
+    [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
+    return selectedView;
+}
+
+- (UIImage*)getUnselectedImage
+{
+    if (_multiOptinos) {
+        return [UIImage imageNamed:@"radio_1.png"];
+    }
+    else {
+        return [UIImage imageNamed:@"radio_1.png"];
+    }
+}
+
+- (UIImage*)getSelectedImage
+{
+    if (_multiOptinos) {
+        return [UIImage imageNamed:@"radio_2.png"];
+    }
+    else {
+        return [UIImage imageNamed:@"radio_2.png"];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
