@@ -300,7 +300,7 @@
 
 - (void)addPaddingVew
 {
-    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 3)];
+    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHolderView.frame.size.height, 320, 3)];
     paddingView.backgroundColor = [UIColor colorWithRed:40/255.0 green:123/255.0 blue:181/255.0 alpha:1.0];
     [dataScrollView addSubview:paddingView];
     [paddingView release];
@@ -431,6 +431,46 @@
     [slideImageView release];
 }
 
+- (void) calculateNearby
+{
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
+
+    for (Place *place in _placeList) {
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+        CLLocationDistance distance = [loc distanceFromLocation:loc2];
+//        NSLog(@"%@     %f千米",place.name, distance/1000);
+        
+    }
+      
+    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
+        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
+            Place *place1 = (Place*)obj1;
+            Place *place2 = (Place*)obj2;
+            
+            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
+            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
+            
+            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
+            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
+
+            
+            if (dis1 > dis2) {
+                return (NSComparisonResult)NSOrderedAscending;
+            } else if (dis1 < dis2) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+        }
+        
+        // TODO: default is the same?
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
+    for (Place *place in sortedPlaceList) {
+//        NSLog(@"%@ ",place.name);
+
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -450,7 +490,7 @@
            
     [self addPaddingVew];
     
-    self.detailHeight = imageHolderView.frame.size.height;
+    self.detailHeight = imageHolderView.frame.size.height + 3 ;
     
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
@@ -466,6 +506,8 @@
     [self addBottomView];
     
     [[PlaceStorage historyManager] addPlace:self.place];
+    
+    [self calculateNearby];
 }
 
 - (void)viewDidUnload
