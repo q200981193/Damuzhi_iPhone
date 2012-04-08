@@ -21,8 +21,9 @@
 @synthesize delegate;
 @synthesize selectedIds = _selectedIds;
 @synthesize multiOptions = _multiOptinos;
+@synthesize needConfirm = _needConfirm;
 
-+ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions
++ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions needConfirm:(BOOL)needConfirm
 {
     SelectController* controller = [[[SelectController alloc] init] autorelease];  
     
@@ -32,17 +33,11 @@
     
     controller.multiOptions = multiOptions;
     
+    controller.needConfirm = needConfirm;
+    
     [controller viewDidLoad];
+    
     return controller;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -51,7 +46,13 @@
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
-                           action:@selector(clickFinish:)];
+                           action:@selector(clickBack:)];
+    
+    if (_needConfirm) {
+        [self setNavigationRightButton:NSLS(@"确定") 
+                             imageName:@"topmenu_btn_right.png" 
+                                action:@selector(clickFinish:)];
+    }
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"select_bg_1.png"]]];
 }
@@ -64,18 +65,11 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
 - (void)dealloc {
     [tableView release];
     [_selectedIds release];
     [super dealloc];
 }
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -93,8 +87,6 @@
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
     int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
@@ -123,7 +115,8 @@
     if (!found) {
         //cell.accessoryType = UITableViewCellAccessoryNone;
         cell.accessoryView = nil;
-    }else {
+    }else 
+    {
         //cell.accessoryType = UITableViewCellAccessoryCheckmark;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(80, 10, 32, 32)];
         [imageView setImage:[UIImage imageNamed:@"select_btn_1"]];
@@ -175,6 +168,16 @@
         [self.selectedIds addObject:currentSelectedId];
         
         [tableView1 reloadData];
+    }
+    
+    if (!_needConfirm) {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (delegate && [delegate respondsToSelector:@selector(didSelectFinish:)]) {
+            [delegate didSelectFinish:self.selectedIds];
+        }
+        else {
+            PPDebug(@"[delegate respondsToSelector:@selector(didSelectFinish:)]");
+        }
     }
 }
 

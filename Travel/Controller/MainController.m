@@ -189,14 +189,6 @@
     [self.navigationController pushViewController:_moreController animated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBarHidden = NO;
-}
-
 - (IBAction)clickFavorite:(id)sender
 {
     FavoriteController *fc = [[FavoriteController alloc] init];
