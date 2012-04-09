@@ -122,13 +122,13 @@
     NSString *contact = [self.contactWayTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString *feekback = [self.feekbackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    if ([contact compare:@""] == 0) {
-        [self popupMessage:NSLS(@"请输入联系方式") title:nil];
+    if ([feekback compare:@""] == 0) {
+        [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
         return;
     }
     
-    if ([feekback compare:@""] == 0) {
-        [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
+    if ([contact compare:@""] == 0) {
+        [self popupMessage:NSLS(@"请输入联系方式") title:nil];
         return;
     }
     
