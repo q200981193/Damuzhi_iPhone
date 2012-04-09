@@ -187,6 +187,9 @@
 		A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D6E611514472200507BDD /* CityOverviewManager.m */; };
 		A48E87A6151C5FC0007954D3 /* LocalCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A5151C5FC0007954D3 /* LocalCity.m */; };
 		A48E87A9151C6A3D007954D3 /* LocalCityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A8151C6A3D007954D3 /* LocalCityManager.m */; };
+		A4B35EEF1532D34800684AF6 /* feedback_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35EEE1532D34800684AF6 /* feedback_bg2@2x.png */; };
+		A4B35EF31532D36800684AF6 /* FeekbackController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4B35EF11532D36800684AF6 /* FeekbackController.m */; };
+		A4B35EF41532D36800684AF6 /* FeekbackController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4B35EF21532D36800684AF6 /* FeekbackController.xib */; };
 		A4BB6DB115270AFA001CEA6B /* CommonListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6DAA15270AFA001CEA6B /* CommonListFilter.m */; };
 		A4BB6DB215270AFA001CEA6B /* EntertainmentListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6DAC15270AFA001CEA6B /* EntertainmentListFilter.m */; };
 		A4BB6DB315270AFA001CEA6B /* RestaurantListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6DAE15270AFA001CEA6B /* RestaurantListFilter.m */; };
@@ -715,6 +718,10 @@
 		A48E87A5151C5FC0007954D3 /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
 		A48E87A7151C6A3D007954D3 /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCityManager.h; sourceTree = "<group>"; };
 		A48E87A8151C6A3D007954D3 /* LocalCityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCityManager.m; sourceTree = "<group>"; };
+		A4B35EEE1532D34800684AF6 /* feedback_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback_bg2@2x.png"; sourceTree = "<group>"; };
+		A4B35EF01532D36800684AF6 /* FeekbackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeekbackController.h; sourceTree = "<group>"; };
+		A4B35EF11532D36800684AF6 /* FeekbackController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeekbackController.m; sourceTree = "<group>"; };
+		A4B35EF21532D36800684AF6 /* FeekbackController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeekbackController.xib; sourceTree = "<group>"; };
 		A4BB6DA915270AFA001CEA6B /* CommonListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonListFilter.h; sourceTree = "<group>"; };
 		A4BB6DAA15270AFA001CEA6B /* CommonListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonListFilter.m; sourceTree = "<group>"; };
 		A4BB6DAB15270AFA001CEA6B /* EntertainmentListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntertainmentListFilter.h; sourceTree = "<group>"; };
@@ -1480,6 +1487,7 @@
 		A44152661531326200ACBD41 /* feedback */ = {
 			isa = PBXGroup;
 			children = (
+				A4B35EEE1532D34800684AF6 /* feedback_bg2@2x.png */,
 				A44152671531326200ACBD41 /* feedback_logo@2x.png */,
 				A44152681531326200ACBD41 /* shadow_down2@2x.png */,
 			);
@@ -2926,6 +2934,9 @@
 		CA585F8C14F7376300471880 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A4B35EF01532D36800684AF6 /* FeekbackController.h */,
+				A4B35EF11532D36800684AF6 /* FeekbackController.m */,
+				A4B35EF21532D36800684AF6 /* FeekbackController.xib */,
 				A313DE56152F02EB004E0964 /* Share */,
 				A40D9DFF150C87AB00BB2D29 /* ImageName.h */,
 				A4BB6E9B152D3D57001CEA6B /* Help */,
@@ -3343,6 +3354,8 @@
 				A44153391531326200ACBD41 /* book@2x.png in Resources */,
 				A441533B1531391E00ACBD41 /* list_btn_2@2x.png in Resources */,
 				A3DE351F153285B80034C6D5 /* ShareToQQController.xib in Resources */,
+				A4B35EEF1532D34800684AF6 /* feedback_bg2@2x.png in Resources */,
+				A4B35EF41532D36800684AF6 /* FeekbackController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3585,6 +3598,7 @@
 				A31334E9152FFB460047D013 /* QWeiboSyncApi.m in Sources */,
 				EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */,
 				A3DE351E153285B80034C6D5 /* ShareToQQController.m in Sources */,
+				A4B35EF31532D36800684AF6 /* FeekbackController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

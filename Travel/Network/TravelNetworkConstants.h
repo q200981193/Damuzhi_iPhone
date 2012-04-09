@@ -35,6 +35,8 @@
 
 #define URL_TRAVEL_QUERY_VERSION    (URL_SERVICE@"iphoneVersion.txt")
 
+#define URL_TRAVEL_SUBMIT_FEEKBACK  (URL_SERVICE@"feedback.aspx?")
+
 
 // Output Format
 #define FORMAT_TRAVEL_JSON          1
@@ -48,6 +50,9 @@
 #define PARA_TRAVEL_RESULT          @"result"
 #define PARA_TRAVEL_DEVICE_ID       @"deviceId"
 #define PARA_TRAVEL_ID              @"id"
+
+#define PARA_TRAVEL_CONTACT         @"contact"
+#define PARA_TRAVEL_CONTENT         @"content"
 
 #define PARA_TRAVEL_CITY_ID         @"cityId"
 #define PARA_TRAVEL_ID              @"id"

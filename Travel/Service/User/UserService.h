@@ -11,7 +11,10 @@
 
 @protocol UserServiceDelegate <NSObject>
 
+@optional
+
 - (void)queryVersionFinish:(NSString*)version dataVersion:(NSString*)dataVersion;
+- (void)submitFeekbackDidFinish:(BOOL)success;
 
 @end
 
@@ -22,5 +25,7 @@
 - (void)autoRegisterUser:(NSString*)deviceToken;
 
 - (void)queryVersion:(id<UserServiceDelegate>)delegate;
+
+- (void)submitFeekback:(id<UserServiceDelegate>)delegate feekback:(NSString*)feekback contact:(NSString*)contact;
 
 @end

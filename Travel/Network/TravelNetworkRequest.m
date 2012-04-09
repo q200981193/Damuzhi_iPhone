@@ -11,6 +11,7 @@
 #import "ASIHTTPRequest.h"
 #import "JSON.h"
 #import "UIDevice+IdentifierAddition.h"
+#import "UserManager.h"
 //#import "Package.pb.h"
 
 @implementation TravelNetworkRequest
@@ -94,6 +95,36 @@
     }
     
     return output;
+}
+
++ (CommonNetworkOutput*)submitFeekback:(NSString*)feekback contact:(NSString*)contact
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:[[UserManager defaultManager] userId]];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTACT 
+                                       value:[contact stringByURLEncode]];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTENT 
+                                       value:[feekback stringByURLEncode]];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_SUBMIT_FEEKBACK
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
 }
 
 + (CommonNetworkOutput*)registerUser:(int)type token:(NSString*)deviceToken
