@@ -10,14 +10,13 @@
 #import "LocaleUtils.h"
 #import "HistoryController.h"
 #import "AppDelegate.h"
+#import "FeekbackController.h"
 
 @interface MoreController ()
 
 @end
 
 @implementation MoreController
-
-@synthesize cityManagementController = _cityManagementController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,7 +67,6 @@
 
 - (void)dealloc
 {
-    [_cityManagementController release];
     [super dealloc];
 }
 
@@ -124,11 +122,9 @@
 
 - (void)showCityManagment
 {
-    if (_cityManagementController == nil) {
-        _cityManagementController = [[CityManagementController alloc] init];
-    }
-    
-    [self.navigationController pushViewController:_cityManagementController animated:YES];
+    CityManagementController *controller = [[CityManagementController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (void)showHistory
@@ -137,6 +133,14 @@
     hc.navigationItem.title = BROWSE_HISTORY;
     [self.navigationController pushViewController:hc animated:YES];
     [hc release];
+}
+
+- (void)showFeekback
+{
+    FeekbackController *controller = [[FeekbackController alloc] init];
+    controller.navigationItem.title = BROWSE_HISTORY;
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (void)queryVersion
@@ -172,7 +176,7 @@
             [self showHistory];
             break;
         case 2:
-            
+            [self showFeekback];
             break;
         case 3:
             [self queryVersion];

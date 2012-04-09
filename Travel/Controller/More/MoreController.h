@@ -12,10 +12,5 @@
 #import "UserService.h"
 
 @interface MoreController : PPTableViewController <UserServiceDelegate>
-{
-    CityManagementController *_cityManagementController;
-}
-
-@property (retain, nonatomic) CityManagementController *cityManagementController;
 
 @end
