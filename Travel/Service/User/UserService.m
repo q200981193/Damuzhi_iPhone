@@ -76,4 +76,19 @@ static UserService* _defaultUserService = nil;
 
 }
 
+- (void)submitFeekback:(id<UserServiceDelegate>)delegate feekback:(NSString*)feekback contact:(NSString*)contact
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        CommonNetworkOutput *output = [TravelNetworkRequest submitFeekback:feekback contact:contact];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+             if (delegate && [delegate respondsToSelector:@selector(submitFeekbackDidFinish:)]) {
+                 [delegate submitFeekbackDidFinish:(!output.resultCode)];
+            }
+        });                        
+    });
+}
+
+
 @end

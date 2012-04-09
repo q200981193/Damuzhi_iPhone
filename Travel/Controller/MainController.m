@@ -24,6 +24,7 @@
 #import "CityManagementController.h"
 #import "HelpController.h"
 #import "ShareToSinaController.h"
+#import "ShareToQQController.h"
 
 @implementation MainController
 
@@ -224,6 +225,9 @@
             break;
         case 2:
             NSLog(@"click 2");
+            ShareToQQController *shareToQQ = [[ShareToQQController alloc] init];
+            [self.navigationController pushViewController:shareToQQ animated:YES];
+            [shareToQQ release];
             break;
         case 3:
             NSLog(@"click 3");
