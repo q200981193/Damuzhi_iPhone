@@ -123,9 +123,10 @@
 
 - (void)sendSinaWeibo:(id)sender
 {
+    [contentTextView resignFirstResponder];
+    
     if ([sinaWeiBoEngine isLoggedIn]) {
         //发送微博
-        [contentTextView resignFirstResponder];
         [sinaWeiBoEngine sendWeiBoWithText:contentTextView.text image:nil];
         [self showActivity];
     }
