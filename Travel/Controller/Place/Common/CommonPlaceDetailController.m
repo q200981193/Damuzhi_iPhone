@@ -353,6 +353,117 @@
     self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
 }
 
+- (NSArray*) calculateNearby
+{
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
+    
+    //    for (Place *place in _placeList) {
+    //        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    //        CLLocationDistance distance = [loc distanceFromLocation:loc2];
+    //        NSLog(@"%@     %f千米",place.name, distance/1000);
+    //        
+    //    }
+    
+    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
+        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
+            Place *place1 = (Place*)obj1;
+            Place *place2 = (Place*)obj2;
+            
+            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
+            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
+            
+            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
+            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
+            
+            
+            if (dis1 > dis2) {
+                return (NSComparisonResult)NSOrderedAscending;
+            } else if (dis1 < dis2) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+        }
+        
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
+    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    int count = [sortedPlaceList count];
+    for (int i = 1; i <= 5; i++)
+    {
+        [retArray addObject:[sortedPlaceList objectAtIndex:(count - 1 - i)]];
+    }
+    return retArray;
+    
+}
+
+- (void) clickNearbyRow:(id)sender
+{
+    UIButton *button = sender;
+    NSInteger index = button.tag;
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:_placeList selectedIndex:index];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+- (void) addNearbyView
+{
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 135)] autorelease];
+    segmentView.backgroundColor = PRICE_BG_COLOR;
+    
+    UILabel *title = [self createTitleView:@"周边推荐"];
+    [segmentView addSubview:title];
+    
+    [dataScrollView addSubview:segmentView];    
+    self.detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
+    
+    
+    NSArray *nearPlaceList = [self calculateNearby];
+    
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
+    for (int i = 0; i <= 4; i++)
+    {
+        Place *place = [nearPlaceList objectAtIndex:i];        
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+        CLLocationDistance distance = [loc distanceFromLocation:location];
+        
+        UIButton *rowView = [[[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*i, 300, 20)] autorelease];
+        rowView.tag = [_placeList indexOfObject:place];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(2, 3, 14, 14)];
+        
+        NSString *destinationDir = [AppUtils getCategoryImageDir];
+        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [place categoryId]];
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+        
+//        UIImage *image = [UIImage imageNamed:@"ht"];
+        [imageView setImage:image];
+        [rowView addSubview:imageView];
+        [imageView release];
+        
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 3, 150, 14)];
+        nameLabel.text = [place name];
+        nameLabel.font = [UIFont boldSystemFontOfSize:12];
+        nameLabel.textColor = DESCRIPTION_COLOR;
+        nameLabel.backgroundColor = [UIColor clearColor];
+        [rowView addSubview:nameLabel];
+        [nameLabel release];
+        
+        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 3, 100, 14)];
+        
+        distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
+        distanceLabel.font = [UIFont boldSystemFontOfSize:12];
+        distanceLabel.textColor = DESCRIPTION_COLOR;
+        distanceLabel.backgroundColor = [UIColor clearColor];
+        [rowView addSubview:distanceLabel];
+        [distanceLabel release];
+        
+        [segmentView addSubview:rowView];
+        
+        [rowView addTarget:self action:@selector(clickNearbyRow:) forControlEvents:UIControlEventTouchUpInside];
+    }    
+    
+}
+
 
 - (void)addPaddingVew
 {
@@ -404,7 +515,7 @@
 //    for (NSString* address in addressList) {
 //        addr = [addr stringByAppendingFormat:@" ", address];
 //    }
-    NSString *addr = [NSString stringWithFormat:NSLS(@"地址:%@"),[[_place addressList] componentsJoinedByString:@" "]];
+    NSString *addr = [NSString stringWithFormat:NSLS(@"地址: %@"),[[_place addressList] componentsJoinedByString:@" "]];
     
     addressLabel.text = addr;
     [addressView addSubview:addressLabel];
@@ -487,46 +598,6 @@
     [slideImageView release];
 }
 
-- (void) calculateNearby
-{
-    CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
-
-    for (Place *place in _placeList) {
-        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
-        CLLocationDistance distance = [loc distanceFromLocation:loc2];
-//        NSLog(@"%@     %f千米",place.name, distance/1000);
-        
-    }
-      
-    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
-        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
-            Place *place1 = (Place*)obj1;
-            Place *place2 = (Place*)obj2;
-            
-            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
-            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
-            
-            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
-            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
-
-            
-            if (dis1 > dis2) {
-                return (NSComparisonResult)NSOrderedAscending;
-            } else if (dis1 < dis2) {
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-        }
-        
-        // TODO: default is the same?
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
-    for (Place *place in sortedPlaceList) {
-//        NSLog(@"%@ ",place.name);
-
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -551,8 +622,10 @@
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332)];
-
+    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332 + 135)];
+    
+    [self addNearbyView];
+    
     [self addTelephoneView];
     
     [self addAddressView];
@@ -563,7 +636,6 @@
     
     [[PlaceStorage historyManager] addPlace:self.place];
     
-    [self calculateNearby];
 }
 
 - (void)viewDidUnload
