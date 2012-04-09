@@ -125,14 +125,14 @@
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
         NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
-        PPDebug(@"place iconPath = %@", iconPath);
+//        PPDebug(@"place iconPath = %@", iconPath);
         [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
     else{
         self.imageView.callbackOnSetImage = self;
         [self.imageView clear];
         self.imageView.url = [NSURL URLWithString:[place icon]];
-        PPDebug(@"load place image from URL %@", [place icon]);
+//        PPDebug(@"load place image from URL %@", [place icon]);
         [GlobalGetImageCache() manage:self.imageView];
     }
 }
@@ -171,12 +171,12 @@
     
     [self setRankImage:[place rank]];
     
-    PPDebug(@"palce name = %@", [place name]);
+//    PPDebug(@"palce name = %@", [place name]);
     
     NSMutableArray *providedServiceIcons = [[NSMutableArray alloc] init];
     for (NSNumber *providedServiceId in [place providedServiceIdList]) {
         NSString *iconPath = [AppUtils getProvidedServiceIconPath:[providedServiceId intValue]];
-        PPDebug(@"provided service icon: %@", iconPath);
+//        PPDebug(@"provided service icon: %@", iconPath);
         [providedServiceIcons addObject:iconPath];
     }
     

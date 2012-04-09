@@ -14,6 +14,7 @@
 
 @implementation CommonInfoController
 
+@synthesize scrollView;
 @synthesize imageHolderView;
 @synthesize dataWebview;
 @synthesize dataSource;
@@ -22,6 +23,7 @@
     [dataSource release];
     [imageHolderView release];
     [dataWebview release];
+    [scrollView release];
     [super dealloc];
 }
 
@@ -62,7 +64,28 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
+    self.dataWebview.userInteractionEnabled = NO;
+    dataWebview.delegate = self;
+    scrollView.backgroundColor = [UIColor whiteColor];
+    
     [dataSource requestDataWithDelegate:self];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+
+    NSString *heightString = [webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"];
+    NSLog(@"webview document body scrollHeight is %@ high",heightString);
+
+    //set webview frame
+    CGRect webViewFrame = webView.frame;
+    webViewFrame.size = CGSizeMake(webView.frame.size.width, [heightString floatValue]);
+    webView.frame = webViewFrame;
+    
+    //set scrollview frame
+    CGSize sz = scrollView.bounds.size;
+    sz.height = webView.frame.size.height + imageHolderView.frame.size.height;
+    scrollView.contentSize = sz;
 }
 
 - (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView;
@@ -83,6 +106,7 @@
         [self.dataWebview loadRequest:request];        
     }
     
+   
     
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
@@ -105,6 +129,7 @@
 {
     [self setImageHolderView:nil];
     [self setDataWebview:nil];
+    [self setScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

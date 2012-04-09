@@ -9,11 +9,7 @@
 #ifndef Travel_Header_h
 #define Travel_Header_h
 
-#pragma mark -
-#pragma mark spot_list image 
-
 #define     IMAGE_HEART                 @"heart.png"
-
 #define     IMAGE_FOOD                  @"food.png"
 #define     IMAGE_SLEEP                 @"sleep.png"
 #define     IMAGE_SHOPPING              @"shopping.png"
@@ -51,6 +47,8 @@
 
 #define     IMAGE_NAVIGATIONBAR_BACK_BTN   @"back.png"
 
+
+#define     IMAGE_SELECT_DOWN           @"select_down.png"
 
 
 

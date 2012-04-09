@@ -52,7 +52,7 @@
 //    [self addSegmentViewTo:dataScrollView title:NSLS(@"‰∫§È?‰ø°Ê?") description:[place transportation]];
 //    [self addSegmentViewTo:dataScrollView title:NSLS(@"Ê∏∏Ë?Ë¥¥Â£´") description:[place tips]];
 
-    [self.commonController addSegmentViewWith: NSLS(@"景点介绍") description:[place introduction]];
+    [self.commonController addIntroductionViewWith: NSLS(@"景点介绍") description:[place introduction]];
     [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[place price]];
     [self.commonController addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
     [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];

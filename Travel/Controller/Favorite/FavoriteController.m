@@ -15,6 +15,7 @@
 #import "ImageName.h"
 #import "PlaceService.h"
 #import "TravelNetworkConstants.h"
+#import "UIImageUtil.h"
 
 @interface FavoriteController ()
 
@@ -84,6 +85,8 @@
     }else {
         [self clickTopFavorite:nil];
     }
+    
+    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 }
 
 - (void)showPlaces{
@@ -254,6 +257,8 @@
 #pragma mark - filter button action
 - (IBAction)clickAll:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_ALL];
+
     if (self.myFavoriteButton.selected == YES) {
         self.placeList = myAllFavoritePlaceList;
         [self showPlaces];
@@ -271,6 +276,8 @@
 
 - (IBAction)clickSpot:(id)sender
 { 
+    [self setSelectedBtn:PLACE_TYPE_SPOT];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SPOT];
         [self showPlaces];
@@ -287,6 +294,8 @@
 
 - (IBAction)clickHotel:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_HOTEL];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_HOTEL];
         [self showPlaces];
@@ -303,7 +312,9 @@
 }
 
 - (IBAction)clickRestaurant:(id)sender
-{
+{    
+    [self setSelectedBtn:PLACE_TYPE_RESTAURANT];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_RESTAURANT];
         [self showPlaces];
@@ -322,6 +333,8 @@
 
 - (IBAction)clickShopping:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_SHOPPING];
+
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SHOPPING];
         [self showPlaces];
@@ -339,6 +352,8 @@
 
 - (IBAction)clickEntertainment:(id)sender
 {
+    [self setSelectedBtn:PLACE_TYPE_ENTERTAINMENT];
+    
     if (myFavoriteButton.selected == YES) {
         self.placeList = [self filterFromMyFavorite:PLACE_TYPE_ENTERTAINMENT];
         [self showPlaces];
@@ -351,6 +366,24 @@
         else {
             self.placeList = topEntertainmentFavoritePlaceList;
             [self showPlaces];
+        }
+    }
+}
+
+- (void)setSelectedBtn:(int)categoryId
+{
+    for (UIView *subView in [buttonHolderView subviews]) {
+        if (![subView isKindOfClass:[UIButton class]]) {
+            return;
+        }
+        
+        UIButton *button = (UIButton*)subView;
+        if (button.tag == categoryId) {
+            button.selected = YES;
+        }
+        else
+        {
+            button.selected = NO;
         }
     }
 }

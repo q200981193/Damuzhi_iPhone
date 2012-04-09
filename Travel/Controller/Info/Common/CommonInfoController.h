@@ -17,7 +17,8 @@
 
 @end
 
-@interface CommonInfoController : PPViewController <CityOverviewServiceDelegate>
+@interface CommonInfoController : PPViewController <CityOverviewServiceDelegate, UIWebViewDelegate>
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
 @property (retain, nonatomic) IBOutlet UIWebView *dataWebview;

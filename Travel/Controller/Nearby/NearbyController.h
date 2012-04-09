@@ -18,7 +18,6 @@
 @property (assign, nonatomic) int categoryId;
 @property (retain, nonatomic) NSArray *placeList;
 @property (assign, nonatomic) BOOL showMap;
-@property (retain, nonatomic) NSArray *btnArray; 
 
 @property (retain, nonatomic) PlaceListController* placeListController;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
@@ -30,5 +29,6 @@
 @property (retain, nonatomic) IBOutlet UIButton *findShoppingButton;
 @property (retain, nonatomic) IBOutlet UIButton *findEntertainmentButton;
 @property (retain, nonatomic) IBOutlet UIButton *findRestaurantButton;
+@property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 
 @end

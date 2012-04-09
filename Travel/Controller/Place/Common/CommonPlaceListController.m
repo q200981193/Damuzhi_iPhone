@@ -16,6 +16,7 @@
 #import "CityOverviewManager.h"
 #import "SelectedItemsManager.h"
 #import "HelpController.h"
+#import "UIImageUtil.h"
 
 
 @implementation CommonPlaceListController
@@ -39,7 +40,7 @@
 {
     self = [super init];
     self.filterHandler = handler;
-    
+        
     return self;
 }
 
@@ -71,11 +72,6 @@
     [controller release];
 }
 
-- (void)popSelf
-{
-    [self.navigationController popViewControllerAnimated:YES];    
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -89,8 +85,44 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickHelp:)];
     
+    [self setNavigationBarTitle];
+        
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
+    UIImage *image = [UIImage strectchableImageName:@"select_tr_bg.png"];
+    _buttonHolderView.backgroundColor = [UIColor colorWithPatternImage:image];
+
     [_filterHandler findAllPlaces:self];
+}
+
+- (void)setNavigationBarTitle
+{
+    UILabel *categoryNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -8, 38, 20)];
+    categoryNameLabel.text = [_filterHandler getCategoryName];
+    categoryNameLabel.font = [UIFont boldSystemFontOfSize:19];
+    categoryNameLabel.textColor = [UIColor whiteColor];
+    categoryNameLabel.backgroundColor = [UIColor clearColor];
+
+    UILabel *placeCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, -8, 30, 20)];
+    placeCountLabel.text = [NSString stringWithFormat:NSLS(@"(%d)"), dataList.count];
+    placeCountLabel.font = [UIFont systemFontOfSize:12];
+    placeCountLabel.textColor = [UIColor colorWithRed:0xB9 green:0xDF blue:0xF3 alpha:1];
+    placeCountLabel.backgroundColor = [UIColor clearColor];
+    placeCountLabel.tag = 1;
+
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 8)];
+    [view addSubview:categoryNameLabel];
+    [view addSubview:placeCountLabel];
+    [self.navigationItem setTitleView:view];
+
+    [categoryNameLabel release];
+    [placeCountLabel release];
+    [view release];
+}
+
+- (void)updateNavigationBarTitle:(int)count
+{
+    UILabel *placeCountLabel = (UILabel*)[self.navigationItem.titleView viewWithTag:1];
+    [placeCountLabel setText:[NSString stringWithFormat:NSLS(@"(%d)"), count]];
 }
 
 - (void)viewDidUnload
@@ -114,7 +146,8 @@
     }
     
     [self.placeListController setAndReloadPlaceList:placeList];
-    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", placeList.count];
+    
+    [self updateNavigationBarTitle:placeList.count];
 }
 
 - (NSArray*)filterAndSort:(NSArray*)placeList
@@ -135,40 +168,31 @@
 - (void)updateModeButton
 {
     // set button text by _showMap flag
-    if (_showMap) {
-        [self.modeButton setTitle:@"列表" forState:UIControlStateNormal];
+    _modeButton.selected = !_modeButton.selected;
+    if (_modeButton.selected) {
         [self hideSomeFilterButtons];
     } else {
-        [self.modeButton setTitle:@"地图" forState:UIControlStateNormal];
         [self showFilterButtons];
     }
 }
 
 - (IBAction)clickMapButton:(id)sender
-{
-//    CATransition *animation=[CATransition animation];
-//    [animation setDelegate:self];
-//    [animation setDuration:0.5];
-//    animation.type = @"pageCurl"; //动画样式
-//    animation.subtype = kCATransitionFromLeft; //方向
-//    [self.view.layer addAnimation:animation forKey:@"animation"];
-    
+{    
     [UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.75];
 	
-	[UIView setAnimationTransition:(_showMap ?
+	[UIView setAnimationTransition:(_modeButton.selected ?
 									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
 						   forView:self.view cache:YES];
     [UIView commitAnimations];
 
-    if (_showMap){
+    if (_modeButton.selected){
         [self.placeListController switchToListMode];
     }
     else{
         [self.placeListController switchToMapMode];
     }
     
-    _showMap = !_showMap;
     [self updateModeButton];
 }
 
@@ -197,9 +221,10 @@
     
     SelectController* selectController = [SelectController createController:subCategoryList                                                           
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedSubCategoryIdList] 
-                                                               multiOptions:YES];
+                                                               multiOptions:YES
+                                                                needConfirm:YES];
     
-    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"分类")];
+    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
     
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
@@ -212,65 +237,65 @@
     NSArray *sortOptionList = [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]];
     SelectController* selectController = [SelectController createController:sortOptionList
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedSortIdList] 
-                                                               multiOptions:NO];
+                                                               multiOptions:NO
+                                                                needConfirm:NO];
 
-    
-    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:NSLS(@"排序")];
-    
+    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];    
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
-    
-    NSLog(@"<clickSortButton>");
 }
 
 - (void)clickPrice:(id)sender
-{
-    UIButton *button = (UIButton *)sender;
-    NSString *title = button.titleLabel.text;
-    
-    //NSArray *hotelPriceList = [[AppManager defaultManager] getHotelPriceList];
+{    
     NSArray *hotelPriceList = [[CityOverViewManager defaultManager] getSelectPriceList];
     SelectController* selectController = [SelectController createController:hotelPriceList
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedPriceIdList]
-                                                               multiOptions:YES];
-    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
+                                                               multiOptions:YES
+                                                                needConfirm:YES];
+    
+    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
 }
 
 - (void)clickArea:(id)sender
 {
-    UIButton *button = (UIButton *)sender;
-    NSString *title = button.titleLabel.text;
-    
     NSArray *areaList = [[CityOverViewManager defaultManager] getSelectAreaList];
     SelectController* selectController = [SelectController createController:areaList
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedAreaIdList]
-                                                               multiOptions:YES];
-    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
+                                                               multiOptions:YES 
+                                                                needConfirm:YES];
+
+    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
 }
 
 - (void)clickService:(id)sender
 {
-    UIButton *button = (UIButton *)sender;
-    NSString *title = button.titleLabel.text;
-    NSArray *serverList = [[AppManager defaultManager] getProvidedServiceList:[_filterHandler getCategoryId]];
-    SelectController* selectController = [SelectController createController:serverList
+    
+    NSArray *serviceList = [[AppManager defaultManager] getProvidedServiceList:[_filterHandler getCategoryId]];
+    
+    SelectController* selectController = [SelectController createController:serviceList
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedServiceIdList]
-
-                                                               multiOptions:YES];
-    selectController.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingString:title];
+                                                               multiOptions:YES
+                                                                needConfirm:YES];
+    
+    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
+}
+
+- (void)setSelectControllerNavigationTitle:(SelectController*)controller title:(NSString*)title
+{
+//    controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[[AppManager defaultManager] getCategoryName:[_filterHandler getCategoryId]], title];
+    NSLog(@"cagegory name : %@", [_filterHandler getCategoryName]);
+    controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[_filterHandler getCategoryName],title];
 }
 
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
     [_filterHandler findAllPlaces:self];
-    self.navigationItem.title = [[_filterHandler getCategoryName] stringByAppendingFormat:@"(%d)", selectedList.count]; 
 }
-
 
 @end

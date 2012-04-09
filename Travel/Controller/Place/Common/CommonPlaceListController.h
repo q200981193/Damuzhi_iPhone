@@ -12,6 +12,10 @@
 #import "SelectController.h"
 #import "CityOverviewService.h"
 
+#define WIDTH_OF_FILTER_BUTTON 52
+#define HEIGHT_OF_FILTER_BUTTON 27
+#define DISTANCE_BETWEEN_BUTTONS 5
+
 @class PlaceListController;
 
 @protocol PlaceListFilterProtocol <NSObject>
@@ -38,7 +42,6 @@
 @interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, CityOverviewServiceDelegate, SelectControllerDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;    
-    BOOL _showMap;
 }
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;

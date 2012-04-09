@@ -26,26 +26,26 @@
 #define FILTER_BUTTON_HEIGHT 36
 - (void)createFilterButtons:(UIView*)superView controller:(PPTableViewController*)commonPlaceController
 {
-    superView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"2menu_bg.png"]];
+    CGRect frame = CGRectMake(0, superView.frame.size.height/2-HEIGHT_OF_FILTER_BUTTON/2, WIDTH_OF_FILTER_BUTTON, HEIGHT_OF_FILTER_BUTTON);
     
-    CGRect frame1 = CGRectMake(0, 0, FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT);
-    CGRect frame2 = CGRectMake(FILTER_BUTTON_WIDTH, 0, FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT);
-    CGRect frame3 = CGRectMake(FILTER_BUTTON_WIDTH*2, 0, FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT);
-    CGRect frame4 = CGRectMake(FILTER_BUTTON_WIDTH*3, 0, FILTER_BUTTON_WIDTH, FILTER_BUTTON_HEIGHT);
-    
-    UIButton *button1 = [CommonListFilter createFilterButton:frame1 title:NSLS(@"菜系")];
-    UIButton *button2 = [CommonListFilter createFilterButton:frame2 title:NSLS(@"区域")];
-    UIButton *button3 = [CommonListFilter createFilterButton:frame3 title:NSLS(@"服务")];
-    UIButton *button4 = [CommonListFilter createFilterButton:frame4 title:NSLS(@"排序")];
-    
+    frame.origin.x += 10;
+    UIButton *button1 = [CommonListFilter createFilterButton:frame title:NSLS(@"菜系")];
     [button1 addTarget:commonPlaceController action:@selector(clickCategoryButton:) forControlEvents:UIControlEventTouchUpInside];
-    [button2 addTarget:commonPlaceController action:@selector(clickArea:) forControlEvents:UIControlEventTouchUpInside];
-    [button3 addTarget:commonPlaceController action:@selector(clickService:) forControlEvents:UIControlEventTouchUpInside];
-    [button4 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
-    
     [superView addSubview:button1];
+    
+    frame.origin.x += WIDTH_OF_FILTER_BUTTON+DISTANCE_BETWEEN_BUTTONS;
+    UIButton *button2 = [CommonListFilter createFilterButton:frame title:NSLS(@"区域")];
+    [button2 addTarget:commonPlaceController action:@selector(clickArea:) forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:button2];
+    
+    frame.origin.x += WIDTH_OF_FILTER_BUTTON+DISTANCE_BETWEEN_BUTTONS;
+    UIButton *button3 = [CommonListFilter createFilterButton:frame title:NSLS(@"服务")];
+    [button3 addTarget:commonPlaceController action:@selector(clickService:) forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:button3];
+    
+    frame.origin.x += WIDTH_OF_FILTER_BUTTON+DISTANCE_BETWEEN_BUTTONS;
+    UIButton *button4 = [CommonListFilter createFilterButton:frame title:NSLS(@"排序")];
+    [button4 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:button4];
     
     self.controller = commonPlaceController;

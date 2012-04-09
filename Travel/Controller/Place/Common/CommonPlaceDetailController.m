@@ -21,6 +21,7 @@
 #import "PlaceStorage.h"
 #import "NearByRecommendController.h"
 #import "HelpController.h"
+#import "AnimationManager.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -188,23 +189,38 @@
     [placeService addPlaceIntoFavorite:self place:self.place];
 }
 
+#define FAVORITES_OK_VIEW 2012040817
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count
 {
     if (resultCode != nil) {
         PPDebug(@"add Favourite successfully");
-        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"(已有%d人收藏)"), count.intValue];
+        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
         
         //add sucess view
-        
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 109, 52)];
+        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok"]];
+        view.tag = FAVORITES_OK_VIEW;
+        CGPoint fromPosition = CGPointMake(150, 345);
+        CGPoint toPosition = CGPointMake(150, 345);
+
+        [self.view addSubview:view];
+        [view release];
+        [AnimationManager alertView:view fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
     }
     else {
         PPDebug(@"add Favourite failed");
     }
 }
 
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    UIView *view = [self.view viewWithTag:FAVORITES_OK_VIEW];
+    [view removeFromSuperview];
+}
+
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
 {
-    self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"(已有%d人收藏)"),placeFavoriteCount];
+    self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"),placeFavoriteCount];
 }
 
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 25
@@ -265,7 +281,15 @@
     return middleLineView;
 }
 
--(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
+- (UIView*)createMiddleLineView2:(CGFloat)y
+{
+    
+    UIView *middleLineView = [[[UIView alloc]initWithFrame:CGRectMake(0, y, 320, MIDDLE_LINE_HEIGHT)] autorelease];
+    middleLineView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"middle_line"]];
+    return middleLineView;
+}
+
+-(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
     UIFont *font = [UIFont systemFontOfSize:12];
     CGSize withinSize = CGSizeMake(300, 100000);
@@ -282,10 +306,10 @@
     UILabel *title = [self createTitleView:titleString];
     [segmentView addSubview:title];
     
-    //    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(5, 24, 310, 1)];
-    //    lineView.backgroundColor = PRICE_BG_COLOR;
-    //    [segmentView addSubview:lineView];
-    //    [lineView release];
+//    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, 24, 300, 1)];
+//    lineView.backgroundColor = PRICE_BG_COLOR;
+//    [segmentView addSubview:lineView];
+//    [lineView release];
     
     UILabel *introductionDescription = [self createDescriptionView:description height:size.height];    
     [segmentView addSubview:introductionDescription];
@@ -297,10 +321,42 @@
     self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
 }
 
+-(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
+{
+    UIFont *font = [UIFont systemFontOfSize:12];
+    CGSize withinSize = CGSizeMake(300, 100000);
+    
+    NSString *description = descriptionString;
+    if ([description length] == 0) {
+        description = NO_DETAIL_DATA;
+    }
+    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
+    segmentView.backgroundColor = PRICE_BG_COLOR;
+    
+    UILabel *title = [self createTitleView:titleString];
+    [segmentView addSubview:title];
+    
+    //    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(5, 24, 310, 1)];
+    //    lineView.backgroundColor = PRICE_BG_COLOR;
+    //    [segmentView addSubview:lineView];
+    //    [lineView release];
+    
+    UILabel *introductionDescription = [self createDescriptionView:description height:size.height];    
+    [segmentView addSubview:introductionDescription];
+    [dataScrollView addSubview:segmentView];    
+    
+    UIView *middleLineView = [self createMiddleLineView2: self.detailHeight + segmentView.frame.size.height];
+    [dataScrollView addSubview:middleLineView];
+    
+    self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
+}
+
 
 - (void)addPaddingVew
 {
-    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 3)];
+    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHolderView.frame.size.height, 320, 3)];
     paddingView.backgroundColor = [UIColor colorWithRed:40/255.0 green:123/255.0 blue:181/255.0 alpha:1.0];
     [dataScrollView addSubview:paddingView];
     [paddingView release];
@@ -388,12 +444,12 @@
      favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg"]];
     
-    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(100, 10, 130, 27)];
+    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 15, 93, 29)];
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
-    favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"fov"]];
+    favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites"]];
     [favouritesView addSubview:favButton];
     
-    self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 40, 120, 15)];
+    self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 21, 120, 15)];
     self.favoriteCountLabel.backgroundColor = [UIColor clearColor];
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
@@ -431,6 +487,46 @@
     [slideImageView release];
 }
 
+- (void) calculateNearby
+{
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
+
+    for (Place *place in _placeList) {
+        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+        CLLocationDistance distance = [loc distanceFromLocation:loc2];
+//        NSLog(@"%@     %f千米",place.name, distance/1000);
+        
+    }
+      
+    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
+        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
+            Place *place1 = (Place*)obj1;
+            Place *place2 = (Place*)obj2;
+            
+            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
+            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
+            
+            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
+            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
+
+            
+            if (dis1 > dis2) {
+                return (NSComparisonResult)NSOrderedAscending;
+            } else if (dis1 < dis2) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+        }
+        
+        // TODO: default is the same?
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
+    for (Place *place in sortedPlaceList) {
+//        NSLog(@"%@ ",place.name);
+
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -450,7 +546,7 @@
            
     [self addPaddingVew];
     
-    self.detailHeight = imageHolderView.frame.size.height;
+    self.detailHeight = imageHolderView.frame.size.height + 3 ;
     
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
@@ -466,6 +562,8 @@
     [self addBottomView];
     
     [[PlaceStorage historyManager] addPlace:self.place];
+    
+    [self calculateNearby];
 }
 
 - (void)viewDidUnload
