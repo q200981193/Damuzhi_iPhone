@@ -16,7 +16,7 @@
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
     
-    [self.commonController addSegmentViewWith: NSLS(@"餐馆介绍") description:[place introduction]];
+    [self.commonController addIntroductionViewWith: NSLS(@"餐馆介绍") description:[place introduction]];
     
     [self.commonController addSegmentViewWith: NSLS(@"菜式类型") description: @"粤菜"];
     

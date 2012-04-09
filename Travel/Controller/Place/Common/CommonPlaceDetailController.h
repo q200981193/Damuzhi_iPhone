@@ -75,5 +75,10 @@
 - (id)initWithPlace:(Place*)onePlace;
 - (id)initWithPlaceList:(NSArray *)placeList selectedIndex:(NSInteger)row;
 
+- (UILabel*)createTitleView:(NSString*)title;
+- (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height;
+- (UIView*)createMiddleLineView2:(CGFloat)y;
+
+-(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 @end
