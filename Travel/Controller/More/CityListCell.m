@@ -226,7 +226,16 @@
             [alert release];
         }
         else {
+            // Download city data.
             [[AppService defaultService] downloadCity:_city];
+            
+            // Call delegate method to do some addition work.
+            if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
+                [_cityListCellDelegate didStartDownload:_city];
+            } 
+            else {
+                PPDebug(@"[_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]");
+            }
         }
     }
 }
