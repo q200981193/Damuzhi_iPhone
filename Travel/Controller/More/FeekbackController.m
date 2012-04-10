@@ -190,12 +190,18 @@
     CGRect keyboardRect;
     [value getValue:&keyboardRect];
     
-    CGPoint newCenter = CGPointMake(_viewCenter.x, _viewCenter.y+[self getMoveDistance:[self.view viewWithTag:1].frame keyboardHeight:keyboardRect.size.height]);
+    CGRect frame = [self.view viewWithTag:1].frame;
+    CGFloat height = keyboardRect.size.height;
+    
+    CGFloat y = [self getMoveDistance:frame
+                       keyboardHeight:height];
+    
+    CGPoint newCenter = CGPointMake(_viewCenter.x, _viewCenter.y+y);
     
     [self moveView:self.view toCenter:newCenter needAnimation:YES];
 }
 
-- (float)getMoveDistance:(CGRect)frame keyboardHeight:(float)keyboardHeight
+- (CGFloat)getMoveDistance:(CGRect)frame keyboardHeight:(CGFloat)keyboardHeight
 {
     return (self.view.frame.size.height-frame.origin.y-frame.size.height)-keyboardHeight-2;
 }
