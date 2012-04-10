@@ -15,7 +15,7 @@
 #import "ASIHTTPRequest.h"
 #import "FileUtil.h"
 #import "PPApplication.h"
-#import "CityOverviewManager.h"
+#import "AppManager.h"
 #import "AppUtils.h"
 #import "CommonPlace.h"
 #import "PlaceService.h"
@@ -151,10 +151,10 @@
     self.distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];
     self.priceLable.text = [NSString stringWithFormat:@"%@%@",
-                            [[CityOverViewManager defaultManager] getCurrencySymbol],
+                            [[AppManager defaultManager] getCurrencySymbol:place.cityId],
                             [place price]];
     
-    self.areaLable.text = [[CityOverViewManager defaultManager] getAreaName:[place areaId]];
+    self.areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
 
     self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                 subCategoryId:[place subCategoryId]];

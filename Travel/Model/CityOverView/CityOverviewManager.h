@@ -17,12 +17,6 @@
 @property (retain, nonatomic) CommonOverview *travelPrepration;           // 旅行准备
 @property (retain, nonatomic) CommonOverview *travelUtility;              // 实用信息
 @property (retain, nonatomic) CommonOverview *travelTransportation ;      // 城市交通
-@property (retain, nonatomic) CityConfig *cityConfig;                     // 城市配置
-
-- (NSString*)getAreaName:(int)areaId;
-- (NSString*)getCurrencySymbol;
-- (NSArray *)getSelectAreaList;
-- (NSArray *)getSelectPriceList;
 
 - (void)switchCity:(int)newCity;
 

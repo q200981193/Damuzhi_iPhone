@@ -27,6 +27,10 @@ message PlaceMeta {
   repeated NameIdPair providedServiceList = 4;    // 地点分类下的可用的所有服务选项列表
 }
 
+message CityArea{                                      // 城市区域，用于筛选条件查询和显示
+  required int32 areaId = 1;
+  required string areaName = 2;
+}
 
 message City {
   required int32 cityId = 1;            // 城市ID
@@ -35,6 +39,14 @@ message City {
   optional string countryName = 4;
   optional int32  dataSize = 5;         // 数据包大小
   optional string downloadURL = 6;      // 数据包下载地址
+    
+  repeated CityArea areaList = 10;                      // 城市区域列表，二级列表
+  
+  required string currencySymbol = 11;                  // 货币显示符号，如人民币为¥，美元为$
+  required string currencyId = 12;                      // 货币ID，用于实时汇率查询，使用国际标准，如人民币为CNY，美元为USD
+  required string currencyName = 13;                    // 货币显示名字，如“人民币”，“美元”，“欧元”
+
+  optional int32 priceRank = 20 [default=3];            // 城市查询价格等级，默认为3
 }
 
 message CityList {
@@ -50,7 +62,7 @@ message App {
   required string dataVersion = 1;                // 数据的版本，如1.0
   repeated City cities = 2;                     // 正式启用城市列表
   repeated City testCities = 3;                 // 测试实用测试列表
-  repeated PlaceMeta placeMetaDataList = 4;       // 每种地点分类的相关数据
+  repeated PlaceMeta placeMetaDataList = 5;       // 每种地点分类的相关数据
   optional string helpHtml = 11;                  // 帮助说明的HTML文件路径
 }
 

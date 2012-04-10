@@ -46,6 +46,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (retain) NSMutableArray* mutableKeywordsList;
 @property (retain) NSMutableArray* mutableTypicalDishesList;
 @property int32_t hotelStar;
+@property (retain) NSString* parkingGuide;
 @property int32_t placeFavoriteCount;
 @property int32_t hasDiscount;
 @end
@@ -198,6 +199,13 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasHotelStar_ = !!value;
 }
 @synthesize hotelStar;
+- (BOOL) hasParkingGuide {
+  return !!hasParkingGuide_;
+}
+- (void) setHasParkingGuide:(BOOL) value {
+  hasParkingGuide_ = !!value;
+}
+@synthesize parkingGuide;
 - (BOOL) hasPlaceFavoriteCount {
   return !!hasPlaceFavoriteCount_;
 }
@@ -229,6 +237,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
   self.tips = nil;
   self.mutableKeywordsList = nil;
   self.mutableTypicalDishesList = nil;
+  self.parkingGuide = nil;
   [super dealloc];
 }
 - (id) init {
@@ -253,6 +262,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.openTime = @"";
     self.tips = @"";
     self.hotelStar = 0;
+    self.parkingGuide = @"";
     self.placeFavoriteCount = 0;
     self.hasDiscount = 0;
   }
@@ -421,6 +431,9 @@ static Place* defaultPlaceInstance = nil;
   if (self.hasHotelStar) {
     [output writeInt32:43 value:self.hotelStar];
   }
+  if (self.hasParkingGuide) {
+    [output writeString:44 value:self.parkingGuide];
+  }
   if (self.hasPlaceFavoriteCount) {
     [output writeInt32:60 value:self.placeFavoriteCount];
   }
@@ -543,6 +556,9 @@ static Place* defaultPlaceInstance = nil;
   }
   if (self.hasHotelStar) {
     size += computeInt32Size(43, self.hotelStar);
+  }
+  if (self.hasParkingGuide) {
+    size += computeStringSize(44, self.parkingGuide);
   }
   if (self.hasPlaceFavoriteCount) {
     size += computeInt32Size(60, self.placeFavoriteCount);
@@ -721,6 +737,9 @@ static Place* defaultPlaceInstance = nil;
   if (other.hasHotelStar) {
     [self setHotelStar:other.hotelStar];
   }
+  if (other.hasParkingGuide) {
+    [self setParkingGuide:other.parkingGuide];
+  }
   if (other.hasPlaceFavoriteCount) {
     [self setPlaceFavoriteCount:other.placeFavoriteCount];
   }
@@ -850,6 +869,10 @@ static Place* defaultPlaceInstance = nil;
       }
       case 344: {
         [self setHotelStar:[input readInt32]];
+        break;
+      }
+      case 354: {
+        [self setParkingGuide:[input readString]];
         break;
       }
       case 480: {
@@ -1367,6 +1390,22 @@ static Place* defaultPlaceInstance = nil;
 - (Place_Builder*) clearHotelStar {
   result.hasHotelStar = NO;
   result.hotelStar = 0;
+  return self;
+}
+- (BOOL) hasParkingGuide {
+  return result.hasParkingGuide;
+}
+- (NSString*) parkingGuide {
+  return result.parkingGuide;
+}
+- (Place_Builder*) setParkingGuide:(NSString*) value {
+  result.hasParkingGuide = YES;
+  result.parkingGuide = value;
+  return self;
+}
+- (Place_Builder*) clearParkingGuide {
+  result.hasParkingGuide = NO;
+  result.parkingGuide = @"";
   return self;
 }
 - (BOOL) hasPlaceFavoriteCount {

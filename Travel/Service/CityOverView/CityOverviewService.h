@@ -16,7 +16,6 @@
 
 @optional
 - (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView;
-- (void)findCityConfigRequestDone:(int)result cityConfig:(CityConfig*)cityConfig;
 @end
 
 @interface CityOverviewService : CommonService
@@ -29,6 +28,5 @@
 
 - (void)findCityBasic:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
 - (void)findTravelUtility:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
-- (void)findCityConfig:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
 
 @end

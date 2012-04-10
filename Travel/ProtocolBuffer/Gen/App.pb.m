@@ -643,6 +643,228 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 }
 @end
 
+@interface CityArea ()
+@property int32_t areaId;
+@property (retain) NSString* areaName;
+@end
+
+@implementation CityArea
+
+- (BOOL) hasAreaId {
+  return !!hasAreaId_;
+}
+- (void) setHasAreaId:(BOOL) value {
+  hasAreaId_ = !!value;
+}
+@synthesize areaId;
+- (BOOL) hasAreaName {
+  return !!hasAreaName_;
+}
+- (void) setHasAreaName:(BOOL) value {
+  hasAreaName_ = !!value;
+}
+@synthesize areaName;
+- (void) dealloc {
+  self.areaName = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.areaId = 0;
+    self.areaName = @"";
+  }
+  return self;
+}
+static CityArea* defaultCityAreaInstance = nil;
++ (void) initialize {
+  if (self == [CityArea class]) {
+    defaultCityAreaInstance = [[CityArea alloc] init];
+  }
+}
++ (CityArea*) defaultInstance {
+  return defaultCityAreaInstance;
+}
+- (CityArea*) defaultInstance {
+  return defaultCityAreaInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasAreaId) {
+    return NO;
+  }
+  if (!self.hasAreaName) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasAreaId) {
+    [output writeInt32:1 value:self.areaId];
+  }
+  if (self.hasAreaName) {
+    [output writeString:2 value:self.areaName];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasAreaId) {
+    size += computeInt32Size(1, self.areaId);
+  }
+  if (self.hasAreaName) {
+    size += computeStringSize(2, self.areaName);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (CityArea*) parseFromData:(NSData*) data {
+  return (CityArea*)[[[CityArea builder] mergeFromData:data] build];
+}
++ (CityArea*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityArea*)[[[CityArea builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (CityArea*) parseFromInputStream:(NSInputStream*) input {
+  return (CityArea*)[[[CityArea builder] mergeFromInputStream:input] build];
+}
++ (CityArea*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityArea*)[[[CityArea builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CityArea*)[[[CityArea builder] mergeFromCodedInputStream:input] build];
+}
++ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CityArea*)[[[CityArea builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (CityArea_Builder*) builder {
+  return [[[CityArea_Builder alloc] init] autorelease];
+}
++ (CityArea_Builder*) builderWithPrototype:(CityArea*) prototype {
+  return [[CityArea builder] mergeFrom:prototype];
+}
+- (CityArea_Builder*) builder {
+  return [CityArea builder];
+}
+@end
+
+@interface CityArea_Builder()
+@property (retain) CityArea* result;
+@end
+
+@implementation CityArea_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[CityArea alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (CityArea_Builder*) clear {
+  self.result = [[[CityArea alloc] init] autorelease];
+  return self;
+}
+- (CityArea_Builder*) clone {
+  return [CityArea builderWithPrototype:result];
+}
+- (CityArea*) defaultInstance {
+  return [CityArea defaultInstance];
+}
+- (CityArea*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (CityArea*) buildPartial {
+  CityArea* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (CityArea_Builder*) mergeFrom:(CityArea*) other {
+  if (other == [CityArea defaultInstance]) {
+    return self;
+  }
+  if (other.hasAreaId) {
+    [self setAreaId:other.areaId];
+  }
+  if (other.hasAreaName) {
+    [self setAreaName:other.areaName];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 8: {
+        [self setAreaId:[input readInt32]];
+        break;
+      }
+      case 18: {
+        [self setAreaName:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasAreaId {
+  return result.hasAreaId;
+}
+- (int32_t) areaId {
+  return result.areaId;
+}
+- (CityArea_Builder*) setAreaId:(int32_t) value {
+  result.hasAreaId = YES;
+  result.areaId = value;
+  return self;
+}
+- (CityArea_Builder*) clearAreaId {
+  result.hasAreaId = NO;
+  result.areaId = 0;
+  return self;
+}
+- (BOOL) hasAreaName {
+  return result.hasAreaName;
+}
+- (NSString*) areaName {
+  return result.areaName;
+}
+- (CityArea_Builder*) setAreaName:(NSString*) value {
+  result.hasAreaName = YES;
+  result.areaName = value;
+  return self;
+}
+- (CityArea_Builder*) clearAreaName {
+  result.hasAreaName = NO;
+  result.areaName = @"";
+  return self;
+}
+@end
+
 @interface City ()
 @property int32_t cityId;
 @property (retain) NSString* cityName;
@@ -650,6 +872,11 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 @property (retain) NSString* countryName;
 @property int32_t dataSize;
 @property (retain) NSString* downloadUrl;
+@property (retain) NSMutableArray* mutableAreaListList;
+@property (retain) NSString* currencySymbol;
+@property (retain) NSString* currencyId;
+@property (retain) NSString* currencyName;
+@property int32_t priceRank;
 @end
 
 @implementation City
@@ -696,11 +923,44 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
   hasDownloadUrl_ = !!value;
 }
 @synthesize downloadUrl;
+@synthesize mutableAreaListList;
+- (BOOL) hasCurrencySymbol {
+  return !!hasCurrencySymbol_;
+}
+- (void) setHasCurrencySymbol:(BOOL) value {
+  hasCurrencySymbol_ = !!value;
+}
+@synthesize currencySymbol;
+- (BOOL) hasCurrencyId {
+  return !!hasCurrencyId_;
+}
+- (void) setHasCurrencyId:(BOOL) value {
+  hasCurrencyId_ = !!value;
+}
+@synthesize currencyId;
+- (BOOL) hasCurrencyName {
+  return !!hasCurrencyName_;
+}
+- (void) setHasCurrencyName:(BOOL) value {
+  hasCurrencyName_ = !!value;
+}
+@synthesize currencyName;
+- (BOOL) hasPriceRank {
+  return !!hasPriceRank_;
+}
+- (void) setHasPriceRank:(BOOL) value {
+  hasPriceRank_ = !!value;
+}
+@synthesize priceRank;
 - (void) dealloc {
   self.cityName = nil;
   self.latestVersion = nil;
   self.countryName = nil;
   self.downloadUrl = nil;
+  self.mutableAreaListList = nil;
+  self.currencySymbol = nil;
+  self.currencyId = nil;
+  self.currencyName = nil;
   [super dealloc];
 }
 - (id) init {
@@ -711,6 +971,10 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
     self.countryName = @"";
     self.dataSize = 0;
     self.downloadUrl = @"";
+    self.currencySymbol = @"";
+    self.currencyId = @"";
+    self.currencyName = @"";
+    self.priceRank = 3;
   }
   return self;
 }
@@ -726,12 +990,33 @@ static City* defaultCityInstance = nil;
 - (City*) defaultInstance {
   return defaultCityInstance;
 }
+- (NSArray*) areaListList {
+  return mutableAreaListList;
+}
+- (CityArea*) areaListAtIndex:(int32_t) index {
+  id value = [mutableAreaListList objectAtIndex:index];
+  return value;
+}
 - (BOOL) isInitialized {
   if (!self.hasCityId) {
     return NO;
   }
   if (!self.hasCityName) {
     return NO;
+  }
+  if (!self.hasCurrencySymbol) {
+    return NO;
+  }
+  if (!self.hasCurrencyId) {
+    return NO;
+  }
+  if (!self.hasCurrencyName) {
+    return NO;
+  }
+  for (CityArea* element in self.areaListList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
   }
   return YES;
 }
@@ -753,6 +1038,21 @@ static City* defaultCityInstance = nil;
   }
   if (self.hasDownloadUrl) {
     [output writeString:6 value:self.downloadUrl];
+  }
+  for (CityArea* element in self.areaListList) {
+    [output writeMessage:10 value:element];
+  }
+  if (self.hasCurrencySymbol) {
+    [output writeString:11 value:self.currencySymbol];
+  }
+  if (self.hasCurrencyId) {
+    [output writeString:12 value:self.currencyId];
+  }
+  if (self.hasCurrencyName) {
+    [output writeString:13 value:self.currencyName];
+  }
+  if (self.hasPriceRank) {
+    [output writeInt32:20 value:self.priceRank];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -780,6 +1080,21 @@ static City* defaultCityInstance = nil;
   }
   if (self.hasDownloadUrl) {
     size += computeStringSize(6, self.downloadUrl);
+  }
+  for (CityArea* element in self.areaListList) {
+    size += computeMessageSize(10, element);
+  }
+  if (self.hasCurrencySymbol) {
+    size += computeStringSize(11, self.currencySymbol);
+  }
+  if (self.hasCurrencyId) {
+    size += computeStringSize(12, self.currencyId);
+  }
+  if (self.hasCurrencyName) {
+    size += computeStringSize(13, self.currencyName);
+  }
+  if (self.hasPriceRank) {
+    size += computeInt32Size(20, self.priceRank);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -874,6 +1189,24 @@ static City* defaultCityInstance = nil;
   if (other.hasDownloadUrl) {
     [self setDownloadUrl:other.downloadUrl];
   }
+  if (other.mutableAreaListList.count > 0) {
+    if (result.mutableAreaListList == nil) {
+      result.mutableAreaListList = [NSMutableArray array];
+    }
+    [result.mutableAreaListList addObjectsFromArray:other.mutableAreaListList];
+  }
+  if (other.hasCurrencySymbol) {
+    [self setCurrencySymbol:other.currencySymbol];
+  }
+  if (other.hasCurrencyId) {
+    [self setCurrencyId:other.currencyId];
+  }
+  if (other.hasCurrencyName) {
+    [self setCurrencyName:other.currencyName];
+  }
+  if (other.hasPriceRank) {
+    [self setPriceRank:other.priceRank];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -917,6 +1250,28 @@ static City* defaultCityInstance = nil;
       }
       case 50: {
         [self setDownloadUrl:[input readString]];
+        break;
+      }
+      case 82: {
+        CityArea_Builder* subBuilder = [CityArea builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addAreaList:[subBuilder buildPartial]];
+        break;
+      }
+      case 90: {
+        [self setCurrencySymbol:[input readString]];
+        break;
+      }
+      case 98: {
+        [self setCurrencyId:[input readString]];
+        break;
+      }
+      case 106: {
+        [self setCurrencyName:[input readString]];
+        break;
+      }
+      case 160: {
+        [self setPriceRank:[input readInt32]];
         break;
       }
     }
@@ -1016,6 +1371,99 @@ static City* defaultCityInstance = nil;
 - (City_Builder*) clearDownloadUrl {
   result.hasDownloadUrl = NO;
   result.downloadUrl = @"";
+  return self;
+}
+- (NSArray*) areaListList {
+  if (result.mutableAreaListList == nil) { return [NSArray array]; }
+  return result.mutableAreaListList;
+}
+- (CityArea*) areaListAtIndex:(int32_t) index {
+  return [result areaListAtIndex:index];
+}
+- (City_Builder*) replaceAreaListAtIndex:(int32_t) index with:(CityArea*) value {
+  [result.mutableAreaListList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (City_Builder*) addAllAreaList:(NSArray*) values {
+  if (result.mutableAreaListList == nil) {
+    result.mutableAreaListList = [NSMutableArray array];
+  }
+  [result.mutableAreaListList addObjectsFromArray:values];
+  return self;
+}
+- (City_Builder*) clearAreaListList {
+  result.mutableAreaListList = nil;
+  return self;
+}
+- (City_Builder*) addAreaList:(CityArea*) value {
+  if (result.mutableAreaListList == nil) {
+    result.mutableAreaListList = [NSMutableArray array];
+  }
+  [result.mutableAreaListList addObject:value];
+  return self;
+}
+- (BOOL) hasCurrencySymbol {
+  return result.hasCurrencySymbol;
+}
+- (NSString*) currencySymbol {
+  return result.currencySymbol;
+}
+- (City_Builder*) setCurrencySymbol:(NSString*) value {
+  result.hasCurrencySymbol = YES;
+  result.currencySymbol = value;
+  return self;
+}
+- (City_Builder*) clearCurrencySymbol {
+  result.hasCurrencySymbol = NO;
+  result.currencySymbol = @"";
+  return self;
+}
+- (BOOL) hasCurrencyId {
+  return result.hasCurrencyId;
+}
+- (NSString*) currencyId {
+  return result.currencyId;
+}
+- (City_Builder*) setCurrencyId:(NSString*) value {
+  result.hasCurrencyId = YES;
+  result.currencyId = value;
+  return self;
+}
+- (City_Builder*) clearCurrencyId {
+  result.hasCurrencyId = NO;
+  result.currencyId = @"";
+  return self;
+}
+- (BOOL) hasCurrencyName {
+  return result.hasCurrencyName;
+}
+- (NSString*) currencyName {
+  return result.currencyName;
+}
+- (City_Builder*) setCurrencyName:(NSString*) value {
+  result.hasCurrencyName = YES;
+  result.currencyName = value;
+  return self;
+}
+- (City_Builder*) clearCurrencyName {
+  result.hasCurrencyName = NO;
+  result.currencyName = @"";
+  return self;
+}
+- (BOOL) hasPriceRank {
+  return result.hasPriceRank;
+}
+- (int32_t) priceRank {
+  return result.priceRank;
+}
+- (City_Builder*) setPriceRank:(int32_t) value {
+  result.hasPriceRank = YES;
+  result.priceRank = value;
+  return self;
+}
+- (City_Builder*) clearPriceRank {
+  result.hasPriceRank = NO;
+  result.priceRank = 3;
   return self;
 }
 @end
@@ -1506,7 +1954,7 @@ static App* defaultAppInstance = nil;
     [output writeMessage:3 value:element];
   }
   for (PlaceMeta* element in self.placeMetaDataListList) {
-    [output writeMessage:4 value:element];
+    [output writeMessage:5 value:element];
   }
   if (self.hasHelpHtml) {
     [output writeString:11 value:self.helpHtml];
@@ -1530,7 +1978,7 @@ static App* defaultAppInstance = nil;
     size += computeMessageSize(3, element);
   }
   for (PlaceMeta* element in self.placeMetaDataListList) {
-    size += computeMessageSize(4, element);
+    size += computeMessageSize(5, element);
   }
   if (self.hasHelpHtml) {
     size += computeStringSize(11, self.helpHtml);
@@ -1671,7 +2119,7 @@ static App* defaultAppInstance = nil;
         [self addTestCities:[subBuilder buildPartial]];
         break;
       }
-      case 34: {
+      case 42: {
         PlaceMeta_Builder* subBuilder = [PlaceMeta builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addPlaceMetaDataList:[subBuilder buildPartial]];

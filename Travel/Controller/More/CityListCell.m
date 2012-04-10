@@ -73,8 +73,8 @@
 {
     self.city = city;    
     self.selectCurrentCityBtn.selected = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId); 
-    PPDebug(@"current city id: %d", [[AppManager defaultManager] getCurrentCityId]);
-    PPDebug(@"city id: %d", _city.cityId);
+//    PPDebug(@"current city id: %d", [[AppManager defaultManager] getCurrentCityId]);
+//    PPDebug(@"city id: %d", _city.cityId);
 
     
 

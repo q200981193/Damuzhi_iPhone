@@ -130,6 +130,7 @@ static AppManager* _defaultAppManager = nil;
     for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             cityName = city.cityName;
+            break;
         }   
     }
     
@@ -139,9 +140,10 @@ static AppManager* _defaultAppManager = nil;
 - (NSString*)getCityLatestVersion:(int)cityId
 {
     NSString *cityName = NSLS(@"");;
-    for (City *city in _app.testCitiesList) {
+    for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             cityName = city.cityName;
+            break;
         }   
     }
     
@@ -151,9 +153,10 @@ static AppManager* _defaultAppManager = nil;
 - (NSString*)getCountryName:(int)cityId
 {
     NSString *countryName = NSLS(@"");;
-    for (City *city in _app.testCitiesList) {
+    for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             countryName = city.countryName;
+            break;
         }   
     }
     
@@ -163,9 +166,10 @@ static AppManager* _defaultAppManager = nil;
 - (int)getCityDataSize:(int)cityId
 {
     int dataSize = 0;
-    for (City *city in _app.testCitiesList) {
+    for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             dataSize = city.dataSize;
+            break;
         }   
     }
     
@@ -175,13 +179,57 @@ static AppManager* _defaultAppManager = nil;
 - (NSString*)getCityDownloadUrl:(int)cityId
 {
     NSString *url = NSLS(@"");;
-    for (City *city in _app.testCitiesList) {
+    for (City *city in _app.citiesList) {
         if (city.cityId == cityId) {
             url = city.downloadUrl;
+            break;
         }   
     }
     
     return url;
+}
+
+- (NSArray*)getAreaList:(int)cityId
+{
+    City *city = [self getCity:cityId];
+    return city.areaListList;
+}
+
+- (NSString*)getAreaName:(int)cityId areaId:(int)areaId
+{
+    NSString *areaName = @"";
+    for (CityArea *area in [self getAreaList:cityId]) {
+        if (areaId == area.areaId) {
+            areaName = area.areaName;
+            break;
+        }
+    }
+    
+    return areaName;
+}
+
+- (NSString*)getCurrencySymbol:(int)cityId
+{
+    City *city = [self getCity:cityId];
+    return city.currencySymbol;
+}
+
+- (NSString*)getCurrencyId:(int)cityId
+{
+    City *city = [self getCity:cityId];
+    return city.currencyId;
+}
+
+- (NSString*)getCurrencyName:(int)cityId
+{
+    City *city = [self getCity:cityId];
+    return city.currencyName;
+}
+
+- (int)getPriceRank:(int)cityId
+{
+    City *city = [self getCity:cityId];
+    return city.priceRank;
 }
 
 - (PlaceMeta*)getPlaceMeta:(int)categoryId
@@ -448,26 +496,49 @@ static AppManager* _defaultAppManager = nil;
     return array;
 }
 
-- (NSArray*)getHotelPriceList;
+- (NSArray *)getAreaNameList:(int)cityId
 {
-    NSMutableArray *hotelPriceList = [[[NSMutableArray alloc] init] autorelease];    
-    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部") 
-                                                           forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
+    NSMutableArray *areaList = [[[NSMutableArray alloc] init] autorelease];
+    [areaList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
+                                                       forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
+    for (CityArea* area in [[self getCity:cityId] areaListList]) {
+        [areaList addObject:[NSDictionary dictionaryWithObject:area.areaName
+                                                           forKey:[NSNumber numberWithInt:area.areaId]]];
+    }
     
-    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"500以下") 
-                                                          forKey:[NSNumber numberWithInt:PRICE_BELOW_500]]];
-    
-    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"500-1000") 
-                                                          forKey:[NSNumber numberWithInt:PRICE_500_1000]]];
-    
-    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"1000-1500") 
-                                                          forKey:[NSNumber numberWithInt:PRICE_1000_1500]]];
-    
-    [hotelPriceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"1500以上") 
-                                                          forKey:[NSNumber numberWithInt:PRICE_MORE_THAN_1500]]];
-    
-    return hotelPriceList;
+    return areaList;
 }
 
+- (NSArray *)getPriceList:(int)cityId
+{
+    NSMutableArray *priceList = [[[NSMutableArray alloc] init] autorelease];
+    [priceList addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
+                                                     forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
+    
+    for (int rank = 1; rank <= [self getPriceRank:cityId]; rank ++) {
+        NSString *rankString = nil;
+        switch (rank) {
+            case 1:
+                rankString = @"$";
+                break;
+            case 2:
+                rankString = @"$$";
+                break;
+            case 3:
+                rankString = @"$$$";
+                break;
+            case 4:
+                rankString = @"$$$$";
+                break;
+                
+            default:
+                break;
+        }
+        [priceList addObject:[NSDictionary dictionaryWithObject:rankString
+                                                           forKey:[NSNumber numberWithInt:rank]]];
+    }
+    
+    return priceList;
+}
 
 @end

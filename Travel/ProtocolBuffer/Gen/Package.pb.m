@@ -348,7 +348,6 @@ static Package* defaultPackageInstance = nil;
 @property (retain) Place* place;
 @property (retain) CommonOverview* overview;
 @property (retain) CommonTravelGuide* travelGuide;
-@property (retain) CityConfig* cityConfig;
 @property (retain) HelpInfo* helpInfo;
 @property (retain) PlaceList* placeList;
 @property (retain) CityList* cityList;
@@ -386,13 +385,6 @@ static Package* defaultPackageInstance = nil;
   hasTravelGuide_ = !!value;
 }
 @synthesize travelGuide;
-- (BOOL) hasCityConfig {
-  return !!hasCityConfig_;
-}
-- (void) setHasCityConfig:(BOOL) value {
-  hasCityConfig_ = !!value;
-}
-@synthesize cityConfig;
 - (BOOL) hasHelpInfo {
   return !!hasHelpInfo_;
 }
@@ -432,7 +424,6 @@ static Package* defaultPackageInstance = nil;
   self.place = nil;
   self.overview = nil;
   self.travelGuide = nil;
-  self.cityConfig = nil;
   self.helpInfo = nil;
   self.placeList = nil;
   self.cityList = nil;
@@ -446,7 +437,6 @@ static Package* defaultPackageInstance = nil;
     self.place = [Place defaultInstance];
     self.overview = [CommonOverview defaultInstance];
     self.travelGuide = [CommonTravelGuide defaultInstance];
-    self.cityConfig = [CityConfig defaultInstance];
     self.helpInfo = [HelpInfo defaultInstance];
     self.placeList = [PlaceList defaultInstance];
     self.cityList = [CityList defaultInstance];
@@ -486,11 +476,6 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
-  if (self.hasCityConfig) {
-    if (!self.cityConfig.isInitialized) {
-      return NO;
-    }
-  }
   if (self.hasPlaceList) {
     if (!self.placeList.isInitialized) {
       return NO;
@@ -526,23 +511,20 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasTravelGuide) {
     [output writeMessage:4 value:self.travelGuide];
   }
-  if (self.hasCityConfig) {
-    [output writeMessage:5 value:self.cityConfig];
-  }
   if (self.hasHelpInfo) {
-    [output writeMessage:6 value:self.helpInfo];
+    [output writeMessage:5 value:self.helpInfo];
   }
   if (self.hasPlaceList) {
-    [output writeMessage:7 value:self.placeList];
+    [output writeMessage:6 value:self.placeList];
   }
   if (self.hasCityList) {
-    [output writeMessage:8 value:self.cityList];
+    [output writeMessage:7 value:self.cityList];
   }
   if (self.hasAppInfo) {
-    [output writeMessage:9 value:self.appInfo];
+    [output writeMessage:8 value:self.appInfo];
   }
   if (self.hasTravelGuideList) {
-    [output writeMessage:10 value:self.travelGuideList];
+    [output writeMessage:9 value:self.travelGuideList];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -565,23 +547,20 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasTravelGuide) {
     size += computeMessageSize(4, self.travelGuide);
   }
-  if (self.hasCityConfig) {
-    size += computeMessageSize(5, self.cityConfig);
-  }
   if (self.hasHelpInfo) {
-    size += computeMessageSize(6, self.helpInfo);
+    size += computeMessageSize(5, self.helpInfo);
   }
   if (self.hasPlaceList) {
-    size += computeMessageSize(7, self.placeList);
+    size += computeMessageSize(6, self.placeList);
   }
   if (self.hasCityList) {
-    size += computeMessageSize(8, self.cityList);
+    size += computeMessageSize(7, self.cityList);
   }
   if (self.hasAppInfo) {
-    size += computeMessageSize(9, self.appInfo);
+    size += computeMessageSize(8, self.appInfo);
   }
   if (self.hasTravelGuideList) {
-    size += computeMessageSize(10, self.travelGuideList);
+    size += computeMessageSize(9, self.travelGuideList);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -670,9 +649,6 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other.hasTravelGuide) {
     [self mergeTravelGuide:other.travelGuide];
   }
-  if (other.hasCityConfig) {
-    [self mergeCityConfig:other.cityConfig];
-  }
   if (other.hasHelpInfo) {
     [self mergeHelpInfo:other.helpInfo];
   }
@@ -741,15 +717,6 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         break;
       }
       case 42: {
-        CityConfig_Builder* subBuilder = [CityConfig builder];
-        if (self.hasCityConfig) {
-          [subBuilder mergeFrom:self.cityConfig];
-        }
-        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self setCityConfig:[subBuilder buildPartial]];
-        break;
-      }
-      case 50: {
         HelpInfo_Builder* subBuilder = [HelpInfo builder];
         if (self.hasHelpInfo) {
           [subBuilder mergeFrom:self.helpInfo];
@@ -758,7 +725,7 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         [self setHelpInfo:[subBuilder buildPartial]];
         break;
       }
-      case 58: {
+      case 50: {
         PlaceList_Builder* subBuilder = [PlaceList builder];
         if (self.hasPlaceList) {
           [subBuilder mergeFrom:self.placeList];
@@ -767,7 +734,7 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         [self setPlaceList:[subBuilder buildPartial]];
         break;
       }
-      case 66: {
+      case 58: {
         CityList_Builder* subBuilder = [CityList builder];
         if (self.hasCityList) {
           [subBuilder mergeFrom:self.cityList];
@@ -776,7 +743,7 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         [self setCityList:[subBuilder buildPartial]];
         break;
       }
-      case 74: {
+      case 66: {
         App_Builder* subBuilder = [App builder];
         if (self.hasAppInfo) {
           [subBuilder mergeFrom:self.appInfo];
@@ -785,7 +752,7 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         [self setAppInfo:[subBuilder buildPartial]];
         break;
       }
-      case 82: {
+      case 74: {
         CommonTravelGuideList_Builder* subBuilder = [CommonTravelGuideList builder];
         if (self.hasTravelGuideList) {
           [subBuilder mergeFrom:self.travelGuideList];
@@ -901,36 +868,6 @@ static TravelResponse* defaultTravelResponseInstance = nil;
 - (TravelResponse_Builder*) clearTravelGuide {
   result.hasTravelGuide = NO;
   result.travelGuide = [CommonTravelGuide defaultInstance];
-  return self;
-}
-- (BOOL) hasCityConfig {
-  return result.hasCityConfig;
-}
-- (CityConfig*) cityConfig {
-  return result.cityConfig;
-}
-- (TravelResponse_Builder*) setCityConfig:(CityConfig*) value {
-  result.hasCityConfig = YES;
-  result.cityConfig = value;
-  return self;
-}
-- (TravelResponse_Builder*) setCityConfigBuilder:(CityConfig_Builder*) builderForValue {
-  return [self setCityConfig:[builderForValue build]];
-}
-- (TravelResponse_Builder*) mergeCityConfig:(CityConfig*) value {
-  if (result.hasCityConfig &&
-      result.cityConfig != [CityConfig defaultInstance]) {
-    result.cityConfig =
-      [[[CityConfig builderWithPrototype:result.cityConfig] mergeFrom:value] buildPartial];
-  } else {
-    result.cityConfig = value;
-  }
-  result.hasCityConfig = YES;
-  return self;
-}
-- (TravelResponse_Builder*) clearCityConfig {
-  result.hasCityConfig = NO;
-  result.cityConfig = [CityConfig defaultInstance];
   return self;
 }
 - (BOOL) hasHelpInfo {

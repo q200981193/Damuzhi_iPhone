@@ -2,10 +2,6 @@
 
 #import "ProtocolBuffers.h"
 
-@class CityArea;
-@class CityArea_Builder;
-@class CityConfig;
-@class CityConfig_Builder;
 @class CityOverview;
 @class CityOverview_Builder;
 @class CommonOverview;
@@ -75,171 +71,25 @@
 - (CommonOverview_Builder*) clearHtml;
 @end
 
-@interface CityArea : PBGeneratedMessage {
-@private
-  BOOL hasAreaId_:1;
-  BOOL hasAreaName_:1;
-  int32_t areaId;
-  NSString* areaName;
-}
-- (BOOL) hasAreaId;
-- (BOOL) hasAreaName;
-@property (readonly) int32_t areaId;
-@property (readonly, retain) NSString* areaName;
-
-+ (CityArea*) defaultInstance;
-- (CityArea*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (CityArea_Builder*) builder;
-+ (CityArea_Builder*) builder;
-+ (CityArea_Builder*) builderWithPrototype:(CityArea*) prototype;
-
-+ (CityArea*) parseFromData:(NSData*) data;
-+ (CityArea*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CityArea*) parseFromInputStream:(NSInputStream*) input;
-+ (CityArea*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface CityArea_Builder : PBGeneratedMessage_Builder {
-@private
-  CityArea* result;
-}
-
-- (CityArea*) defaultInstance;
-
-- (CityArea_Builder*) clear;
-- (CityArea_Builder*) clone;
-
-- (CityArea*) build;
-- (CityArea*) buildPartial;
-
-- (CityArea_Builder*) mergeFrom:(CityArea*) other;
-- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasAreaId;
-- (int32_t) areaId;
-- (CityArea_Builder*) setAreaId:(int32_t) value;
-- (CityArea_Builder*) clearAreaId;
-
-- (BOOL) hasAreaName;
-- (NSString*) areaName;
-- (CityArea_Builder*) setAreaName:(NSString*) value;
-- (CityArea_Builder*) clearAreaName;
-@end
-
-@interface CityConfig : PBGeneratedMessage {
-@private
-  BOOL hasPriceRank_:1;
-  BOOL hasCurrencySymbol_:1;
-  BOOL hasCurrencyId_:1;
-  BOOL hasCurrencyName_:1;
-  int32_t priceRank;
-  NSString* currencySymbol;
-  NSString* currencyId;
-  NSString* currencyName;
-  NSMutableArray* mutableAreaListList;
-}
-- (BOOL) hasCurrencySymbol;
-- (BOOL) hasCurrencyId;
-- (BOOL) hasCurrencyName;
-- (BOOL) hasPriceRank;
-@property (readonly, retain) NSString* currencySymbol;
-@property (readonly, retain) NSString* currencyId;
-@property (readonly, retain) NSString* currencyName;
-@property (readonly) int32_t priceRank;
-- (NSArray*) areaListList;
-- (CityArea*) areaListAtIndex:(int32_t) index;
-
-+ (CityConfig*) defaultInstance;
-- (CityConfig*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (CityConfig_Builder*) builder;
-+ (CityConfig_Builder*) builder;
-+ (CityConfig_Builder*) builderWithPrototype:(CityConfig*) prototype;
-
-+ (CityConfig*) parseFromData:(NSData*) data;
-+ (CityConfig*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CityConfig*) parseFromInputStream:(NSInputStream*) input;
-+ (CityConfig*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CityConfig*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (CityConfig*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface CityConfig_Builder : PBGeneratedMessage_Builder {
-@private
-  CityConfig* result;
-}
-
-- (CityConfig*) defaultInstance;
-
-- (CityConfig_Builder*) clear;
-- (CityConfig_Builder*) clone;
-
-- (CityConfig*) build;
-- (CityConfig*) buildPartial;
-
-- (CityConfig_Builder*) mergeFrom:(CityConfig*) other;
-- (CityConfig_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (CityConfig_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (NSArray*) areaListList;
-- (CityArea*) areaListAtIndex:(int32_t) index;
-- (CityConfig_Builder*) replaceAreaListAtIndex:(int32_t) index with:(CityArea*) value;
-- (CityConfig_Builder*) addAreaList:(CityArea*) value;
-- (CityConfig_Builder*) addAllAreaList:(NSArray*) values;
-- (CityConfig_Builder*) clearAreaListList;
-
-- (BOOL) hasCurrencySymbol;
-- (NSString*) currencySymbol;
-- (CityConfig_Builder*) setCurrencySymbol:(NSString*) value;
-- (CityConfig_Builder*) clearCurrencySymbol;
-
-- (BOOL) hasCurrencyId;
-- (NSString*) currencyId;
-- (CityConfig_Builder*) setCurrencyId:(NSString*) value;
-- (CityConfig_Builder*) clearCurrencyId;
-
-- (BOOL) hasCurrencyName;
-- (NSString*) currencyName;
-- (CityConfig_Builder*) setCurrencyName:(NSString*) value;
-- (CityConfig_Builder*) clearCurrencyName;
-
-- (BOOL) hasPriceRank;
-- (int32_t) priceRank;
-- (CityConfig_Builder*) setPriceRank:(int32_t) value;
-- (CityConfig_Builder*) clearPriceRank;
-@end
-
 @interface CityOverview : PBGeneratedMessage {
 @private
   BOOL hasCityBasic_:1;
   BOOL hasTravelPrepration_:1;
   BOOL hasTravelUtility_:1;
   BOOL hasTravelTransportation_:1;
-  BOOL hasCityConfig_:1;
   CommonOverview* cityBasic;
   CommonOverview* travelPrepration;
   CommonOverview* travelUtility;
   CommonOverview* travelTransportation;
-  CityConfig* cityConfig;
 }
 - (BOOL) hasCityBasic;
 - (BOOL) hasTravelPrepration;
 - (BOOL) hasTravelUtility;
 - (BOOL) hasTravelTransportation;
-- (BOOL) hasCityConfig;
 @property (readonly, retain) CommonOverview* cityBasic;
 @property (readonly, retain) CommonOverview* travelPrepration;
 @property (readonly, retain) CommonOverview* travelUtility;
 @property (readonly, retain) CommonOverview* travelTransportation;
-@property (readonly, retain) CityConfig* cityConfig;
 
 + (CityOverview*) defaultInstance;
 - (CityOverview*) defaultInstance;
@@ -302,12 +152,5 @@
 - (CityOverview_Builder*) setTravelTransportationBuilder:(CommonOverview_Builder*) builderForValue;
 - (CityOverview_Builder*) mergeTravelTransportation:(CommonOverview*) value;
 - (CityOverview_Builder*) clearTravelTransportation;
-
-- (BOOL) hasCityConfig;
-- (CityConfig*) cityConfig;
-- (CityOverview_Builder*) setCityConfig:(CityConfig*) value;
-- (CityOverview_Builder*) setCityConfigBuilder:(CityConfig_Builder*) builderForValue;
-- (CityOverview_Builder*) mergeCityConfig:(CityConfig*) value;
-- (CityOverview_Builder*) clearCityConfig;
 @end
 

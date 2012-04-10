@@ -22,7 +22,6 @@
 @synthesize travelPrepration = _travelPrepration;
 @synthesize travelUtility = _travelUtility;
 @synthesize travelTransportation = _travelTransportation;
-@synthesize cityConfig = _cityConfig;
 
 static CityOverViewManager *_defaultInstance = nil;
 
@@ -42,30 +41,7 @@ static CityOverViewManager *_defaultInstance = nil;
     [_travelPrepration release];
     [_travelUtility release];
     [_travelTransportation release];
-    [_cityConfig release];
     [super dealloc];
-}
-
-- (NSString*)getAreaName:(int)areaId
-{
-    NSString *areaName = @"";
-    for (CityArea *area in _cityConfig.areaListList) {
-        if (areaId == area.areaId) {
-            areaName = area.areaName;
-        }
-    }
-    
-    return areaName;
-}
-
-- (NSString*)getCurrencySymbol
-{
-    if (!_cityConfig.currencySymbol){
-        PPDebug(@"Warning, <getCurrencySymbol> but currencty symbol is null?");
-        return @"";
-    }
-    
-    return _cityConfig.currencySymbol;
 }
 
 - (CityOverview*)readCityOverviewData:(int)cityId
@@ -95,60 +71,6 @@ static CityOverViewManager *_defaultInstance = nil;
     self.travelPrepration = cityOverView.travelPrepration;          
     self.travelUtility = cityOverView.travelUtility;              
     self.travelTransportation = cityOverView.travelTransportation;       
-    self.cityConfig = cityOverView.cityConfig; 
-    
-//    PPDebug(@"currencyId = %@, currencyName = %@, currencySymbol = %@", 
-//            _cityConfig.currencyId, _cityConfig.currencyName, _cityConfig.currencySymbol);
-//    
-//    for (CityArea *area in _cityConfig.areaListList) {
-//        PPDebug(@"areaId = %d, areaName = %@", area.areaId, area.areaName);
-//    }
-}
-
-- (NSArray *)getSelectAreaList
-{
-    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
-    [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
-                    forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
-    
-    NSArray *area = _cityConfig.areaListList;
-    for (CityArea* cityArea in area) {
-        [resultArray addObject:[NSDictionary dictionaryWithObject:cityArea.areaName
-                                                           forKey:[NSNumber numberWithInt:cityArea.areaId]]];
-    }
-    return resultArray;
-}
-
-- (NSArray *)getSelectPriceList
-{
-    NSMutableArray *resultArray = [[[NSMutableArray alloc] init] autorelease];
-    [resultArray addObject:[NSDictionary dictionaryWithObject:NSLS(@"全部")
-                                                       forKey:[NSNumber numberWithInt:ALL_CATEGORY]]];
-    
-    for (int rank = 1; rank <= _cityConfig.priceRank; rank ++) {
-        NSString *rankString = nil;
-        switch (rank) {
-            case 1:
-                rankString = @"$";
-                break;
-            case 2:
-                rankString = @"$$";
-                break;
-            case 3:
-                rankString = @"$$$";
-                break;
-            case 4:
-                rankString = @"$$$$";
-                break;
-                
-            default:
-                break;
-        }
-        [resultArray addObject:[NSDictionary dictionaryWithObject:rankString
-                                                           forKey:[NSNumber numberWithInt:rank]]];
-    }
-    
-    return resultArray;
 }
 
 @end

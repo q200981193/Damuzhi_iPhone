@@ -5,6 +5,8 @@
 @class App;
 @class App_Builder;
 @class City;
+@class CityArea;
+@class CityArea_Builder;
 @class CityList;
 @class CityList_Builder;
 @class City_Builder;
@@ -174,20 +176,86 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (PlaceMeta_Builder*) clearProvidedServiceListList;
 @end
 
+@interface CityArea : PBGeneratedMessage {
+@private
+  BOOL hasAreaId_:1;
+  BOOL hasAreaName_:1;
+  int32_t areaId;
+  NSString* areaName;
+}
+- (BOOL) hasAreaId;
+- (BOOL) hasAreaName;
+@property (readonly) int32_t areaId;
+@property (readonly, retain) NSString* areaName;
+
++ (CityArea*) defaultInstance;
+- (CityArea*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (CityArea_Builder*) builder;
++ (CityArea_Builder*) builder;
++ (CityArea_Builder*) builderWithPrototype:(CityArea*) prototype;
+
++ (CityArea*) parseFromData:(NSData*) data;
++ (CityArea*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CityArea*) parseFromInputStream:(NSInputStream*) input;
++ (CityArea*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (CityArea*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface CityArea_Builder : PBGeneratedMessage_Builder {
+@private
+  CityArea* result;
+}
+
+- (CityArea*) defaultInstance;
+
+- (CityArea_Builder*) clear;
+- (CityArea_Builder*) clone;
+
+- (CityArea*) build;
+- (CityArea*) buildPartial;
+
+- (CityArea_Builder*) mergeFrom:(CityArea*) other;
+- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (CityArea_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasAreaId;
+- (int32_t) areaId;
+- (CityArea_Builder*) setAreaId:(int32_t) value;
+- (CityArea_Builder*) clearAreaId;
+
+- (BOOL) hasAreaName;
+- (NSString*) areaName;
+- (CityArea_Builder*) setAreaName:(NSString*) value;
+- (CityArea_Builder*) clearAreaName;
+@end
+
 @interface City : PBGeneratedMessage {
 @private
   BOOL hasCityId_:1;
   BOOL hasDataSize_:1;
+  BOOL hasPriceRank_:1;
   BOOL hasCityName_:1;
   BOOL hasLatestVersion_:1;
   BOOL hasCountryName_:1;
   BOOL hasDownloadUrl_:1;
+  BOOL hasCurrencySymbol_:1;
+  BOOL hasCurrencyId_:1;
+  BOOL hasCurrencyName_:1;
   int32_t cityId;
   int32_t dataSize;
+  int32_t priceRank;
   NSString* cityName;
   NSString* latestVersion;
   NSString* countryName;
   NSString* downloadUrl;
+  NSString* currencySymbol;
+  NSString* currencyId;
+  NSString* currencyName;
+  NSMutableArray* mutableAreaListList;
 }
 - (BOOL) hasCityId;
 - (BOOL) hasCityName;
@@ -195,12 +263,22 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (BOOL) hasCountryName;
 - (BOOL) hasDataSize;
 - (BOOL) hasDownloadUrl;
+- (BOOL) hasCurrencySymbol;
+- (BOOL) hasCurrencyId;
+- (BOOL) hasCurrencyName;
+- (BOOL) hasPriceRank;
 @property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* cityName;
 @property (readonly, retain) NSString* latestVersion;
 @property (readonly, retain) NSString* countryName;
 @property (readonly) int32_t dataSize;
 @property (readonly, retain) NSString* downloadUrl;
+@property (readonly, retain) NSString* currencySymbol;
+@property (readonly, retain) NSString* currencyId;
+@property (readonly, retain) NSString* currencyName;
+@property (readonly) int32_t priceRank;
+- (NSArray*) areaListList;
+- (CityArea*) areaListAtIndex:(int32_t) index;
 
 + (City*) defaultInstance;
 - (City*) defaultInstance;
@@ -265,6 +343,33 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (NSString*) downloadUrl;
 - (City_Builder*) setDownloadUrl:(NSString*) value;
 - (City_Builder*) clearDownloadUrl;
+
+- (NSArray*) areaListList;
+- (CityArea*) areaListAtIndex:(int32_t) index;
+- (City_Builder*) replaceAreaListAtIndex:(int32_t) index with:(CityArea*) value;
+- (City_Builder*) addAreaList:(CityArea*) value;
+- (City_Builder*) addAllAreaList:(NSArray*) values;
+- (City_Builder*) clearAreaListList;
+
+- (BOOL) hasCurrencySymbol;
+- (NSString*) currencySymbol;
+- (City_Builder*) setCurrencySymbol:(NSString*) value;
+- (City_Builder*) clearCurrencySymbol;
+
+- (BOOL) hasCurrencyId;
+- (NSString*) currencyId;
+- (City_Builder*) setCurrencyId:(NSString*) value;
+- (City_Builder*) clearCurrencyId;
+
+- (BOOL) hasCurrencyName;
+- (NSString*) currencyName;
+- (City_Builder*) setCurrencyName:(NSString*) value;
+- (City_Builder*) clearCurrencyName;
+
+- (BOOL) hasPriceRank;
+- (int32_t) priceRank;
+- (City_Builder*) setPriceRank:(int32_t) value;
+- (City_Builder*) clearPriceRank;
 @end
 
 @interface CityList : PBGeneratedMessage {

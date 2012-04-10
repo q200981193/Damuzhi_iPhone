@@ -56,7 +56,7 @@
 //    [NSThread sleepForTimeInterval:1.0];
         
     // init app data
-    [[AppService defaultService] loadAppData]; 
+    //[[AppService defaultService] loadAppData]; 
     
     // update app data from server
     [[AppService defaultService] updateAppData];

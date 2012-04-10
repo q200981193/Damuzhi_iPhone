@@ -27,10 +27,9 @@ message TravelResponse{
   optional Place place = 2;
   optional CommonOverview overview = 3;
   optional CommonTravelGuide travelGuide = 4;
-  optional CityConfig cityConfig = 5;
-  optional HelpInfo helpInfo = 6;
-  optional PlaceList placeList = 7;
-  optional CityList cityList = 8;
-  optional App appInfo = 9;   
-  optional CommonTravelGuideList travelGuideList = 10;
+  optional HelpInfo helpInfo = 5;
+  optional PlaceList placeList = 6;
+  optional CityList cityList = 7;
+  optional App appInfo = 8;   
+  optional CommonTravelGuideList travelGuideList = 9;
 }

@@ -42,6 +42,4 @@
 
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegate;
 
-- (void)findCityConfig;
-
 @end

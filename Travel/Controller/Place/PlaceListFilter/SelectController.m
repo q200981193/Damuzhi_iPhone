@@ -11,6 +11,7 @@
 #import "PPDebug.h"
 #import "AppManager.h"
 #import "CommonPlace.h"
+#import "UIImageUtil.h"
 
 @interface SelectController ()
 
@@ -109,28 +110,31 @@
     }
     
     if (!found) {
-        cell.accessoryView = nil;
+//        cell.accessoryView = nil;
         [cell.imageView setImage:[self getUnselectedImage]];
     }else 
     {
-        cell.accessoryView = [self getCheckImageView];
+//        cell.accessoryView = [self getCheckImageView];
         [cell.imageView setImage:[self getSelectedImage]];
+        
+//        UIImage *image = [UIImage strectchableImageName:@"select_bg_tr.png"]; 
+//        [cell setBackgroundView:image];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
 }
 
-- (UIView*)getCheckImageView
-{
-    UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)] autorelease];
-    [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
-    return selectedView;
-}
+//- (UIView*)getCheckImageView
+//{
+//    UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)] autorelease];
+//    [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
+//    return selectedView;
+//}
 
 - (UIImage*)getUnselectedImage
 {
     if (_multiOptinos) {
-        return [UIImage imageNamed:@"radio_1.png"];
+        return [UIImage imageNamed:@"no_s.png"];
     }
     else {
         return [UIImage imageNamed:@"radio_1.png"];
@@ -140,7 +144,7 @@
 - (UIImage*)getSelectedImage
 {
     if (_multiOptinos) {
-        return [UIImage imageNamed:@"radio_2.png"];
+        return [UIImage imageNamed:@"yes_s.png"];
     }
     else {
         return [UIImage imageNamed:@"radio_2.png"];

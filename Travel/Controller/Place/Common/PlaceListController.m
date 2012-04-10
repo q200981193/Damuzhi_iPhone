@@ -130,16 +130,6 @@
     [self.mapViewController setPlaces:list];
 }
 
-- (void)setCityConfig:(CityConfig*)cityConfig
-{
-    self.cityConfig = cityConfig;
-}
-
-- (void)findCityConfig
-{
-    return [[CityOverviewService defaultService] findCityConfig:[[AppManager defaultManager] getCurrentCityId] delegate:self];
-}
-
 #pragma mark -
 #pragma mark TableView Delegate
 

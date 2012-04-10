@@ -33,10 +33,11 @@
   BOOL hasIcon_:1;
   BOOL hasIntroduction_:1;
   BOOL hasTransportation_:1;
-  BOOL hasTips_:1;
+  BOOL hasParkingGuide_:1;
   BOOL hasWebsite_:1;
   BOOL hasPriceDescription_:1;
   BOOL hasOpenTime_:1;
+  BOOL hasTips_:1;
   Float64 latitude;
   Float64 longitude;
   int32_t hasDiscount;
@@ -55,14 +56,15 @@
   NSString* icon;
   NSString* introduction;
   NSString* transportation;
-  NSString* tips;
+  NSString* parkingGuide;
   NSString* website;
   NSString* priceDescription;
   NSString* openTime;
+  NSString* tips;
   NSMutableArray* mutableProvidedServiceIdList;
-  NSMutableArray* mutableAddressList;
   NSMutableArray* mutableKeywordsList;
   NSMutableArray* mutableTypicalDishesList;
+  NSMutableArray* mutableAddressList;
   NSMutableArray* mutableTelephoneList;
   NSMutableArray* mutableImagesList;
 }
@@ -86,6 +88,7 @@
 - (BOOL) hasOpenTime;
 - (BOOL) hasTips;
 - (BOOL) hasHotelStar;
+- (BOOL) hasParkingGuide;
 - (BOOL) hasPlaceFavoriteCount;
 - (BOOL) hasHasDiscount;
 @property (readonly) int32_t placeId;
@@ -108,6 +111,7 @@
 @property (readonly, retain) NSString* openTime;
 @property (readonly, retain) NSString* tips;
 @property (readonly) int32_t hotelStar;
+@property (readonly, retain) NSString* parkingGuide;
 @property (readonly) int32_t placeFavoriteCount;
 @property (readonly) int32_t hasDiscount;
 - (NSArray*) providedServiceIdList;
@@ -298,6 +302,11 @@
 - (int32_t) hotelStar;
 - (Place_Builder*) setHotelStar:(int32_t) value;
 - (Place_Builder*) clearHotelStar;
+
+- (BOOL) hasParkingGuide;
+- (NSString*) parkingGuide;
+- (Place_Builder*) setParkingGuide:(NSString*) value;
+- (Place_Builder*) clearParkingGuide;
 
 - (BOOL) hasPlaceFavoriteCount;
 - (int32_t) placeFavoriteCount;

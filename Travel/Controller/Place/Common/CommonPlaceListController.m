@@ -247,7 +247,7 @@
 
 - (void)clickPrice:(id)sender
 {    
-    NSArray *hotelPriceList = [[CityOverViewManager defaultManager] getSelectPriceList];
+    NSArray *hotelPriceList = [[AppManager defaultManager] getPriceList:[[AppManager defaultManager] getCurrentCityId]];
     SelectController* selectController = [SelectController createController:hotelPriceList
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedPriceIdList]
                                                                multiOptions:YES
@@ -260,7 +260,7 @@
 
 - (void)clickArea:(id)sender
 {
-    NSArray *areaList = [[CityOverViewManager defaultManager] getSelectAreaList];
+    NSArray *areaList = [[AppManager defaultManager] getAreaNameList:[[AppManager defaultManager] getCurrentCityId]];
     SelectController* selectController = [SelectController createController:areaList
                                                                 selectedIds:[[SelectedItemsManager defaultManager] selectedAreaIdList]
                                                                multiOptions:YES 

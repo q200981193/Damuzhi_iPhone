@@ -39,10 +39,16 @@
 - (int)getCityDataSize:(int)cityId;
 - (NSString*)getCityDownloadUrl:(int)cityId;
 
+//- (NSArray*)getAreaList:(int)cityId;
+- (NSString*)getAreaName:(int)cityId areaId:(int)areaId;
+- (NSString*)getCurrencySymbol:(int)cityId;
+- (NSString*)getCurrencyId:(int)cityId;
+- (NSString*)getCurrencyName:(int)cityId;
+//- (int)getPriceRank:(int)cityId;
+
 - (NSArray*)getSubCategoryList:(int)categoryId;
 - (NSArray*)getProvidedServiceList:(int)categoryId;
 
-//- (NSArray*)getSubCategotyNameList:(int)categoryId;
 - (NSArray*)getProvidedServiceNameList:(int)categoryId;
 - (NSArray*)getProvidedServiceIconList:(int)categoryId;
 
@@ -55,6 +61,8 @@
 - (void)setCurrentCityId:(int)newCity;
 
 - (NSArray*)getSortOptionList:(int)categoryId;
-- (NSArray*)getHotelPriceList;
+
+- (NSArray *)getAreaNameList:(int)cityId;
+- (NSArray *)getPriceList:(int)cityId;
 
 @end
