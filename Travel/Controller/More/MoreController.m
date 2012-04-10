@@ -61,7 +61,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithRed:0xDE green:0xE2 blue:0xE4 alpha:1]];
     
-    self.dataTableView.backgroundColor = [UIColor whiteColor];
+//    self.dataTableView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidUnload
