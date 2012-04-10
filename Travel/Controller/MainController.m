@@ -215,22 +215,25 @@
 {
     switch (buttonIndex) {
         case 0:
-            NSLog(@"click 0");
+        {
+            [self sendSms:nil body:NSLS(@"朋友们，我发现了一款非常专业的旅游指南《大拇指旅游》，非常适合我们外出旅游使用，快下载来看看吧：http://xxxxxx")];
             break;
+        }
         case 1:
-            NSLog(@"click 1");
+        {
             ShareToSinaController *sc = [[ShareToSinaController alloc] init];
-            [self.navigationController pushViewController:sc animated:NO];
+            [self.navigationController pushViewController:sc animated:YES];
             [sc release];
             break;
+        }
         case 2:
-            NSLog(@"click 2");
+        {
             ShareToQQController *shareToQQ = [[ShareToQQController alloc] init];
             [self.navigationController pushViewController:shareToQQ animated:YES];
             [shareToQQ release];
             break;
+        }
         case 3:
-            NSLog(@"click 3");
             break;
         default:
             break;
