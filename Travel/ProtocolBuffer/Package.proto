@@ -26,10 +26,10 @@ message TravelResponse{
   required int32 resultCode = 1 [default=0];
   optional Place place = 2;
   optional CommonOverview overview = 3;
-  optional CommonTravelGuide travelGuide = 4;
+  optional CommonTravelTip travelTip = 4;
   optional HelpInfo helpInfo = 5;
   optional PlaceList placeList = 6;
   optional CityList cityList = 7;
   optional App appInfo = 8;   
-  optional CommonTravelGuideList travelGuideList = 9;
+  optional CommonTravelTipList travelTipList = 9;
 }

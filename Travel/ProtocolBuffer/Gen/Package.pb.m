@@ -347,12 +347,12 @@ static Package* defaultPackageInstance = nil;
 @property int32_t resultCode;
 @property (retain) Place* place;
 @property (retain) CommonOverview* overview;
-@property (retain) CommonTravelGuide* travelGuide;
+@property (retain) CommonTravelTip* travelTip;
 @property (retain) HelpInfo* helpInfo;
 @property (retain) PlaceList* placeList;
 @property (retain) CityList* cityList;
 @property (retain) App* appInfo;
-@property (retain) CommonTravelGuideList* travelGuideList;
+@property (retain) CommonTravelTipList* travelTipList;
 @end
 
 @implementation TravelResponse
@@ -378,13 +378,13 @@ static Package* defaultPackageInstance = nil;
   hasOverview_ = !!value;
 }
 @synthesize overview;
-- (BOOL) hasTravelGuide {
-  return !!hasTravelGuide_;
+- (BOOL) hasTravelTip {
+  return !!hasTravelTip_;
 }
-- (void) setHasTravelGuide:(BOOL) value {
-  hasTravelGuide_ = !!value;
+- (void) setHasTravelTip:(BOOL) value {
+  hasTravelTip_ = !!value;
 }
-@synthesize travelGuide;
+@synthesize travelTip;
 - (BOOL) hasHelpInfo {
   return !!hasHelpInfo_;
 }
@@ -413,22 +413,22 @@ static Package* defaultPackageInstance = nil;
   hasAppInfo_ = !!value;
 }
 @synthesize appInfo;
-- (BOOL) hasTravelGuideList {
-  return !!hasTravelGuideList_;
+- (BOOL) hasTravelTipList {
+  return !!hasTravelTipList_;
 }
-- (void) setHasTravelGuideList:(BOOL) value {
-  hasTravelGuideList_ = !!value;
+- (void) setHasTravelTipList:(BOOL) value {
+  hasTravelTipList_ = !!value;
 }
-@synthesize travelGuideList;
+@synthesize travelTipList;
 - (void) dealloc {
   self.place = nil;
   self.overview = nil;
-  self.travelGuide = nil;
+  self.travelTip = nil;
   self.helpInfo = nil;
   self.placeList = nil;
   self.cityList = nil;
   self.appInfo = nil;
-  self.travelGuideList = nil;
+  self.travelTipList = nil;
   [super dealloc];
 }
 - (id) init {
@@ -436,12 +436,12 @@ static Package* defaultPackageInstance = nil;
     self.resultCode = 0;
     self.place = [Place defaultInstance];
     self.overview = [CommonOverview defaultInstance];
-    self.travelGuide = [CommonTravelGuide defaultInstance];
+    self.travelTip = [CommonTravelTip defaultInstance];
     self.helpInfo = [HelpInfo defaultInstance];
     self.placeList = [PlaceList defaultInstance];
     self.cityList = [CityList defaultInstance];
     self.appInfo = [App defaultInstance];
-    self.travelGuideList = [CommonTravelGuideList defaultInstance];
+    self.travelTipList = [CommonTravelTipList defaultInstance];
   }
   return self;
 }
@@ -471,8 +471,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
-  if (self.hasTravelGuide) {
-    if (!self.travelGuide.isInitialized) {
+  if (self.hasTravelTip) {
+    if (!self.travelTip.isInitialized) {
       return NO;
     }
   }
@@ -491,8 +491,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
-  if (self.hasTravelGuideList) {
-    if (!self.travelGuideList.isInitialized) {
+  if (self.hasTravelTipList) {
+    if (!self.travelTipList.isInitialized) {
       return NO;
     }
   }
@@ -508,8 +508,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasOverview) {
     [output writeMessage:3 value:self.overview];
   }
-  if (self.hasTravelGuide) {
-    [output writeMessage:4 value:self.travelGuide];
+  if (self.hasTravelTip) {
+    [output writeMessage:4 value:self.travelTip];
   }
   if (self.hasHelpInfo) {
     [output writeMessage:5 value:self.helpInfo];
@@ -523,8 +523,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasAppInfo) {
     [output writeMessage:8 value:self.appInfo];
   }
-  if (self.hasTravelGuideList) {
-    [output writeMessage:9 value:self.travelGuideList];
+  if (self.hasTravelTipList) {
+    [output writeMessage:9 value:self.travelTipList];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -544,8 +544,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasOverview) {
     size += computeMessageSize(3, self.overview);
   }
-  if (self.hasTravelGuide) {
-    size += computeMessageSize(4, self.travelGuide);
+  if (self.hasTravelTip) {
+    size += computeMessageSize(4, self.travelTip);
   }
   if (self.hasHelpInfo) {
     size += computeMessageSize(5, self.helpInfo);
@@ -559,8 +559,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasAppInfo) {
     size += computeMessageSize(8, self.appInfo);
   }
-  if (self.hasTravelGuideList) {
-    size += computeMessageSize(9, self.travelGuideList);
+  if (self.hasTravelTipList) {
+    size += computeMessageSize(9, self.travelTipList);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -646,8 +646,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other.hasOverview) {
     [self mergeOverview:other.overview];
   }
-  if (other.hasTravelGuide) {
-    [self mergeTravelGuide:other.travelGuide];
+  if (other.hasTravelTip) {
+    [self mergeTravelTip:other.travelTip];
   }
   if (other.hasHelpInfo) {
     [self mergeHelpInfo:other.helpInfo];
@@ -661,8 +661,8 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other.hasAppInfo) {
     [self mergeAppInfo:other.appInfo];
   }
-  if (other.hasTravelGuideList) {
-    [self mergeTravelGuideList:other.travelGuideList];
+  if (other.hasTravelTipList) {
+    [self mergeTravelTipList:other.travelTipList];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -708,12 +708,12 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         break;
       }
       case 34: {
-        CommonTravelGuide_Builder* subBuilder = [CommonTravelGuide builder];
-        if (self.hasTravelGuide) {
-          [subBuilder mergeFrom:self.travelGuide];
+        CommonTravelTip_Builder* subBuilder = [CommonTravelTip builder];
+        if (self.hasTravelTip) {
+          [subBuilder mergeFrom:self.travelTip];
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self setTravelGuide:[subBuilder buildPartial]];
+        [self setTravelTip:[subBuilder buildPartial]];
         break;
       }
       case 42: {
@@ -753,12 +753,12 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         break;
       }
       case 74: {
-        CommonTravelGuideList_Builder* subBuilder = [CommonTravelGuideList builder];
-        if (self.hasTravelGuideList) {
-          [subBuilder mergeFrom:self.travelGuideList];
+        CommonTravelTipList_Builder* subBuilder = [CommonTravelTipList builder];
+        if (self.hasTravelTipList) {
+          [subBuilder mergeFrom:self.travelTipList];
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self setTravelGuideList:[subBuilder buildPartial]];
+        [self setTravelTipList:[subBuilder buildPartial]];
         break;
       }
     }
@@ -840,34 +840,34 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   result.overview = [CommonOverview defaultInstance];
   return self;
 }
-- (BOOL) hasTravelGuide {
-  return result.hasTravelGuide;
+- (BOOL) hasTravelTip {
+  return result.hasTravelTip;
 }
-- (CommonTravelGuide*) travelGuide {
-  return result.travelGuide;
+- (CommonTravelTip*) travelTip {
+  return result.travelTip;
 }
-- (TravelResponse_Builder*) setTravelGuide:(CommonTravelGuide*) value {
-  result.hasTravelGuide = YES;
-  result.travelGuide = value;
+- (TravelResponse_Builder*) setTravelTip:(CommonTravelTip*) value {
+  result.hasTravelTip = YES;
+  result.travelTip = value;
   return self;
 }
-- (TravelResponse_Builder*) setTravelGuideBuilder:(CommonTravelGuide_Builder*) builderForValue {
-  return [self setTravelGuide:[builderForValue build]];
+- (TravelResponse_Builder*) setTravelTipBuilder:(CommonTravelTip_Builder*) builderForValue {
+  return [self setTravelTip:[builderForValue build]];
 }
-- (TravelResponse_Builder*) mergeTravelGuide:(CommonTravelGuide*) value {
-  if (result.hasTravelGuide &&
-      result.travelGuide != [CommonTravelGuide defaultInstance]) {
-    result.travelGuide =
-      [[[CommonTravelGuide builderWithPrototype:result.travelGuide] mergeFrom:value] buildPartial];
+- (TravelResponse_Builder*) mergeTravelTip:(CommonTravelTip*) value {
+  if (result.hasTravelTip &&
+      result.travelTip != [CommonTravelTip defaultInstance]) {
+    result.travelTip =
+      [[[CommonTravelTip builderWithPrototype:result.travelTip] mergeFrom:value] buildPartial];
   } else {
-    result.travelGuide = value;
+    result.travelTip = value;
   }
-  result.hasTravelGuide = YES;
+  result.hasTravelTip = YES;
   return self;
 }
-- (TravelResponse_Builder*) clearTravelGuide {
-  result.hasTravelGuide = NO;
-  result.travelGuide = [CommonTravelGuide defaultInstance];
+- (TravelResponse_Builder*) clearTravelTip {
+  result.hasTravelTip = NO;
+  result.travelTip = [CommonTravelTip defaultInstance];
   return self;
 }
 - (BOOL) hasHelpInfo {
@@ -990,34 +990,34 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   result.appInfo = [App defaultInstance];
   return self;
 }
-- (BOOL) hasTravelGuideList {
-  return result.hasTravelGuideList;
+- (BOOL) hasTravelTipList {
+  return result.hasTravelTipList;
 }
-- (CommonTravelGuideList*) travelGuideList {
-  return result.travelGuideList;
+- (CommonTravelTipList*) travelTipList {
+  return result.travelTipList;
 }
-- (TravelResponse_Builder*) setTravelGuideList:(CommonTravelGuideList*) value {
-  result.hasTravelGuideList = YES;
-  result.travelGuideList = value;
+- (TravelResponse_Builder*) setTravelTipList:(CommonTravelTipList*) value {
+  result.hasTravelTipList = YES;
+  result.travelTipList = value;
   return self;
 }
-- (TravelResponse_Builder*) setTravelGuideListBuilder:(CommonTravelGuideList_Builder*) builderForValue {
-  return [self setTravelGuideList:[builderForValue build]];
+- (TravelResponse_Builder*) setTravelTipListBuilder:(CommonTravelTipList_Builder*) builderForValue {
+  return [self setTravelTipList:[builderForValue build]];
 }
-- (TravelResponse_Builder*) mergeTravelGuideList:(CommonTravelGuideList*) value {
-  if (result.hasTravelGuideList &&
-      result.travelGuideList != [CommonTravelGuideList defaultInstance]) {
-    result.travelGuideList =
-      [[[CommonTravelGuideList builderWithPrototype:result.travelGuideList] mergeFrom:value] buildPartial];
+- (TravelResponse_Builder*) mergeTravelTipList:(CommonTravelTipList*) value {
+  if (result.hasTravelTipList &&
+      result.travelTipList != [CommonTravelTipList defaultInstance]) {
+    result.travelTipList =
+      [[[CommonTravelTipList builderWithPrototype:result.travelTipList] mergeFrom:value] buildPartial];
   } else {
-    result.travelGuideList = value;
+    result.travelTipList = value;
   }
-  result.hasTravelGuideList = YES;
+  result.hasTravelTipList = YES;
   return self;
 }
-- (TravelResponse_Builder*) clearTravelGuideList {
-  result.hasTravelGuideList = NO;
-  result.travelGuideList = [CommonTravelGuideList defaultInstance];
+- (TravelResponse_Builder*) clearTravelTipList {
+  result.hasTravelTipList = NO;
+  result.travelTipList = [CommonTravelTipList defaultInstance];
   return self;
 }
 @end

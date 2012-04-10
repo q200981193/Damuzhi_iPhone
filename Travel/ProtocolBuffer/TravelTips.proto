@@ -4,20 +4,20 @@ package damuzhi;
 option java_package = "com.damuzhi.travel";
 option java_outer_classname = "TravelTipsProtos";
 
-message CommonTravelGuide {
-  optional int32  guideId = 1;  
+message CommonTravelTip {
+  optional int32  tipId = 1;  
   optional int32  cityId = 2;
   required string name = 3;     // 攻略名称
   optional string html = 4;       //  对应的HTML文件名，相对路径，如 html/abc/abc.html
 }
 
-message CommonTravelGuideList{
-  repeated CommonTravelGuide guideList = 1;
+message CommonTravelTipList{
+  repeated CommonTravelTip tipList = 1;
 }
 
 message TravelTips {
-  repeated CommonTravelGuide tipsList = 1;            // 所有攻略
-  repeated CommonTravelGuide routeList = 2;         // 所有推荐线路  
+  repeated CommonTravelTip guideList = 1;            // 所有攻略
+  repeated CommonTravelTip routeList = 2;         // 所有推荐线路  
   optional int32 cityId = 3;
 }
 

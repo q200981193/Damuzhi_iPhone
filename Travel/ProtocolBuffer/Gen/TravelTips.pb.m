@@ -19,22 +19,22 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @end
 
-@interface CommonTravelGuide ()
-@property int32_t guideId;
+@interface CommonTravelTip ()
+@property int32_t tipId;
 @property int32_t cityId;
 @property (retain) NSString* name;
 @property (retain) NSString* html;
 @end
 
-@implementation CommonTravelGuide
+@implementation CommonTravelTip
 
-- (BOOL) hasGuideId {
-  return !!hasGuideId_;
+- (BOOL) hasTipId {
+  return !!hasTipId_;
 }
-- (void) setHasGuideId:(BOOL) value {
-  hasGuideId_ = !!value;
+- (void) setHasTipId:(BOOL) value {
+  hasTipId_ = !!value;
 }
-@synthesize guideId;
+@synthesize tipId;
 - (BOOL) hasCityId {
   return !!hasCityId_;
 }
@@ -63,24 +63,24 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.guideId = 0;
+    self.tipId = 0;
     self.cityId = 0;
     self.name = @"";
     self.html = @"";
   }
   return self;
 }
-static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
+static CommonTravelTip* defaultCommonTravelTipInstance = nil;
 + (void) initialize {
-  if (self == [CommonTravelGuide class]) {
-    defaultCommonTravelGuideInstance = [[CommonTravelGuide alloc] init];
+  if (self == [CommonTravelTip class]) {
+    defaultCommonTravelTipInstance = [[CommonTravelTip alloc] init];
   }
 }
-+ (CommonTravelGuide*) defaultInstance {
-  return defaultCommonTravelGuideInstance;
++ (CommonTravelTip*) defaultInstance {
+  return defaultCommonTravelTipInstance;
 }
-- (CommonTravelGuide*) defaultInstance {
-  return defaultCommonTravelGuideInstance;
+- (CommonTravelTip*) defaultInstance {
+  return defaultCommonTravelTipInstance;
 }
 - (BOOL) isInitialized {
   if (!self.hasName) {
@@ -89,8 +89,8 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasGuideId) {
-    [output writeInt32:1 value:self.guideId];
+  if (self.hasTipId) {
+    [output writeInt32:1 value:self.tipId];
   }
   if (self.hasCityId) {
     [output writeInt32:2 value:self.cityId];
@@ -110,8 +110,8 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
   }
 
   size = 0;
-  if (self.hasGuideId) {
-    size += computeInt32Size(1, self.guideId);
+  if (self.hasTipId) {
+    size += computeInt32Size(1, self.tipId);
   }
   if (self.hasCityId) {
     size += computeInt32Size(2, self.cityId);
@@ -126,40 +126,40 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
   memoizedSerializedSize = size;
   return size;
 }
-+ (CommonTravelGuide*) parseFromData:(NSData*) data {
-  return (CommonTravelGuide*)[[[CommonTravelGuide builder] mergeFromData:data] build];
++ (CommonTravelTip*) parseFromData:(NSData*) data {
+  return (CommonTravelTip*)[[[CommonTravelTip builder] mergeFromData:data] build];
 }
-+ (CommonTravelGuide*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (CommonTravelGuide*)[[[CommonTravelGuide builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
++ (CommonTravelTip*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CommonTravelTip*)[[[CommonTravelTip builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
 }
-+ (CommonTravelGuide*) parseFromInputStream:(NSInputStream*) input {
-  return (CommonTravelGuide*)[[[CommonTravelGuide builder] mergeFromInputStream:input] build];
++ (CommonTravelTip*) parseFromInputStream:(NSInputStream*) input {
+  return (CommonTravelTip*)[[[CommonTravelTip builder] mergeFromInputStream:input] build];
 }
-+ (CommonTravelGuide*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (CommonTravelGuide*)[[[CommonTravelGuide builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
++ (CommonTravelTip*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CommonTravelTip*)[[[CommonTravelTip builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (CommonTravelGuide*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (CommonTravelGuide*)[[[CommonTravelGuide builder] mergeFromCodedInputStream:input] build];
++ (CommonTravelTip*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CommonTravelTip*)[[[CommonTravelTip builder] mergeFromCodedInputStream:input] build];
 }
-+ (CommonTravelGuide*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (CommonTravelGuide*)[[[CommonTravelGuide builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
++ (CommonTravelTip*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CommonTravelTip*)[[[CommonTravelTip builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (CommonTravelGuide_Builder*) builder {
-  return [[[CommonTravelGuide_Builder alloc] init] autorelease];
++ (CommonTravelTip_Builder*) builder {
+  return [[[CommonTravelTip_Builder alloc] init] autorelease];
 }
-+ (CommonTravelGuide_Builder*) builderWithPrototype:(CommonTravelGuide*) prototype {
-  return [[CommonTravelGuide builder] mergeFrom:prototype];
++ (CommonTravelTip_Builder*) builderWithPrototype:(CommonTravelTip*) prototype {
+  return [[CommonTravelTip builder] mergeFrom:prototype];
 }
-- (CommonTravelGuide_Builder*) builder {
-  return [CommonTravelGuide builder];
+- (CommonTravelTip_Builder*) builder {
+  return [CommonTravelTip builder];
 }
 @end
 
-@interface CommonTravelGuide_Builder()
-@property (retain) CommonTravelGuide* result;
+@interface CommonTravelTip_Builder()
+@property (retain) CommonTravelTip* result;
 @end
 
-@implementation CommonTravelGuide_Builder
+@implementation CommonTravelTip_Builder
 @synthesize result;
 - (void) dealloc {
   self.result = nil;
@@ -167,38 +167,38 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.result = [[[CommonTravelGuide alloc] init] autorelease];
+    self.result = [[[CommonTravelTip alloc] init] autorelease];
   }
   return self;
 }
 - (PBGeneratedMessage*) internalGetResult {
   return result;
 }
-- (CommonTravelGuide_Builder*) clear {
-  self.result = [[[CommonTravelGuide alloc] init] autorelease];
+- (CommonTravelTip_Builder*) clear {
+  self.result = [[[CommonTravelTip alloc] init] autorelease];
   return self;
 }
-- (CommonTravelGuide_Builder*) clone {
-  return [CommonTravelGuide builderWithPrototype:result];
+- (CommonTravelTip_Builder*) clone {
+  return [CommonTravelTip builderWithPrototype:result];
 }
-- (CommonTravelGuide*) defaultInstance {
-  return [CommonTravelGuide defaultInstance];
+- (CommonTravelTip*) defaultInstance {
+  return [CommonTravelTip defaultInstance];
 }
-- (CommonTravelGuide*) build {
+- (CommonTravelTip*) build {
   [self checkInitialized];
   return [self buildPartial];
 }
-- (CommonTravelGuide*) buildPartial {
-  CommonTravelGuide* returnMe = [[result retain] autorelease];
+- (CommonTravelTip*) buildPartial {
+  CommonTravelTip* returnMe = [[result retain] autorelease];
   self.result = nil;
   return returnMe;
 }
-- (CommonTravelGuide_Builder*) mergeFrom:(CommonTravelGuide*) other {
-  if (other == [CommonTravelGuide defaultInstance]) {
+- (CommonTravelTip_Builder*) mergeFrom:(CommonTravelTip*) other {
+  if (other == [CommonTravelTip defaultInstance]) {
     return self;
   }
-  if (other.hasGuideId) {
-    [self setGuideId:other.guideId];
+  if (other.hasTipId) {
+    [self setTipId:other.tipId];
   }
   if (other.hasCityId) {
     [self setCityId:other.cityId];
@@ -212,10 +212,10 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
-- (CommonTravelGuide_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+- (CommonTravelTip_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
   return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
 }
-- (CommonTravelGuide_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+- (CommonTravelTip_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
   PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
   while (YES) {
     int32_t tag = [input readTag];
@@ -231,7 +231,7 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
         break;
       }
       case 8: {
-        [self setGuideId:[input readInt32]];
+        [self setTipId:[input readInt32]];
         break;
       }
       case 16: {
@@ -249,20 +249,20 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
     }
   }
 }
-- (BOOL) hasGuideId {
-  return result.hasGuideId;
+- (BOOL) hasTipId {
+  return result.hasTipId;
 }
-- (int32_t) guideId {
-  return result.guideId;
+- (int32_t) tipId {
+  return result.tipId;
 }
-- (CommonTravelGuide_Builder*) setGuideId:(int32_t) value {
-  result.hasGuideId = YES;
-  result.guideId = value;
+- (CommonTravelTip_Builder*) setTipId:(int32_t) value {
+  result.hasTipId = YES;
+  result.tipId = value;
   return self;
 }
-- (CommonTravelGuide_Builder*) clearGuideId {
-  result.hasGuideId = NO;
-  result.guideId = 0;
+- (CommonTravelTip_Builder*) clearTipId {
+  result.hasTipId = NO;
+  result.tipId = 0;
   return self;
 }
 - (BOOL) hasCityId {
@@ -271,12 +271,12 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
 - (int32_t) cityId {
   return result.cityId;
 }
-- (CommonTravelGuide_Builder*) setCityId:(int32_t) value {
+- (CommonTravelTip_Builder*) setCityId:(int32_t) value {
   result.hasCityId = YES;
   result.cityId = value;
   return self;
 }
-- (CommonTravelGuide_Builder*) clearCityId {
+- (CommonTravelTip_Builder*) clearCityId {
   result.hasCityId = NO;
   result.cityId = 0;
   return self;
@@ -287,12 +287,12 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
 - (NSString*) name {
   return result.name;
 }
-- (CommonTravelGuide_Builder*) setName:(NSString*) value {
+- (CommonTravelTip_Builder*) setName:(NSString*) value {
   result.hasName = YES;
   result.name = value;
   return self;
 }
-- (CommonTravelGuide_Builder*) clearName {
+- (CommonTravelTip_Builder*) clearName {
   result.hasName = NO;
   result.name = @"";
   return self;
@@ -303,27 +303,27 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
 - (NSString*) html {
   return result.html;
 }
-- (CommonTravelGuide_Builder*) setHtml:(NSString*) value {
+- (CommonTravelTip_Builder*) setHtml:(NSString*) value {
   result.hasHtml = YES;
   result.html = value;
   return self;
 }
-- (CommonTravelGuide_Builder*) clearHtml {
+- (CommonTravelTip_Builder*) clearHtml {
   result.hasHtml = NO;
   result.html = @"";
   return self;
 }
 @end
 
-@interface CommonTravelGuideList ()
-@property (retain) NSMutableArray* mutableGuideListList;
+@interface CommonTravelTipList ()
+@property (retain) NSMutableArray* mutableTipListList;
 @end
 
-@implementation CommonTravelGuideList
+@implementation CommonTravelTipList
 
-@synthesize mutableGuideListList;
+@synthesize mutableTipListList;
 - (void) dealloc {
-  self.mutableGuideListList = nil;
+  self.mutableTipListList = nil;
   [super dealloc];
 }
 - (id) init {
@@ -331,27 +331,27 @@ static CommonTravelGuide* defaultCommonTravelGuideInstance = nil;
   }
   return self;
 }
-static CommonTravelGuideList* defaultCommonTravelGuideListInstance = nil;
+static CommonTravelTipList* defaultCommonTravelTipListInstance = nil;
 + (void) initialize {
-  if (self == [CommonTravelGuideList class]) {
-    defaultCommonTravelGuideListInstance = [[CommonTravelGuideList alloc] init];
+  if (self == [CommonTravelTipList class]) {
+    defaultCommonTravelTipListInstance = [[CommonTravelTipList alloc] init];
   }
 }
-+ (CommonTravelGuideList*) defaultInstance {
-  return defaultCommonTravelGuideListInstance;
++ (CommonTravelTipList*) defaultInstance {
+  return defaultCommonTravelTipListInstance;
 }
-- (CommonTravelGuideList*) defaultInstance {
-  return defaultCommonTravelGuideListInstance;
+- (CommonTravelTipList*) defaultInstance {
+  return defaultCommonTravelTipListInstance;
 }
-- (NSArray*) guideListList {
-  return mutableGuideListList;
+- (NSArray*) tipListList {
+  return mutableTipListList;
 }
-- (CommonTravelGuide*) guideListAtIndex:(int32_t) index {
-  id value = [mutableGuideListList objectAtIndex:index];
+- (CommonTravelTip*) tipListAtIndex:(int32_t) index {
+  id value = [mutableTipListList objectAtIndex:index];
   return value;
 }
 - (BOOL) isInitialized {
-  for (CommonTravelGuide* element in self.guideListList) {
+  for (CommonTravelTip* element in self.tipListList) {
     if (!element.isInitialized) {
       return NO;
     }
@@ -359,7 +359,7 @@ static CommonTravelGuideList* defaultCommonTravelGuideListInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  for (CommonTravelGuide* element in self.guideListList) {
+  for (CommonTravelTip* element in self.tipListList) {
     [output writeMessage:1 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
@@ -371,47 +371,47 @@ static CommonTravelGuideList* defaultCommonTravelGuideListInstance = nil;
   }
 
   size = 0;
-  for (CommonTravelGuide* element in self.guideListList) {
+  for (CommonTravelTip* element in self.tipListList) {
     size += computeMessageSize(1, element);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
   return size;
 }
-+ (CommonTravelGuideList*) parseFromData:(NSData*) data {
-  return (CommonTravelGuideList*)[[[CommonTravelGuideList builder] mergeFromData:data] build];
++ (CommonTravelTipList*) parseFromData:(NSData*) data {
+  return (CommonTravelTipList*)[[[CommonTravelTipList builder] mergeFromData:data] build];
 }
-+ (CommonTravelGuideList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (CommonTravelGuideList*)[[[CommonTravelGuideList builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
++ (CommonTravelTipList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CommonTravelTipList*)[[[CommonTravelTipList builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
 }
-+ (CommonTravelGuideList*) parseFromInputStream:(NSInputStream*) input {
-  return (CommonTravelGuideList*)[[[CommonTravelGuideList builder] mergeFromInputStream:input] build];
++ (CommonTravelTipList*) parseFromInputStream:(NSInputStream*) input {
+  return (CommonTravelTipList*)[[[CommonTravelTipList builder] mergeFromInputStream:input] build];
 }
-+ (CommonTravelGuideList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (CommonTravelGuideList*)[[[CommonTravelGuideList builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
++ (CommonTravelTipList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CommonTravelTipList*)[[[CommonTravelTipList builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (CommonTravelGuideList*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (CommonTravelGuideList*)[[[CommonTravelGuideList builder] mergeFromCodedInputStream:input] build];
++ (CommonTravelTipList*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (CommonTravelTipList*)[[[CommonTravelTipList builder] mergeFromCodedInputStream:input] build];
 }
-+ (CommonTravelGuideList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (CommonTravelGuideList*)[[[CommonTravelGuideList builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
++ (CommonTravelTipList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (CommonTravelTipList*)[[[CommonTravelTipList builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (CommonTravelGuideList_Builder*) builder {
-  return [[[CommonTravelGuideList_Builder alloc] init] autorelease];
++ (CommonTravelTipList_Builder*) builder {
+  return [[[CommonTravelTipList_Builder alloc] init] autorelease];
 }
-+ (CommonTravelGuideList_Builder*) builderWithPrototype:(CommonTravelGuideList*) prototype {
-  return [[CommonTravelGuideList builder] mergeFrom:prototype];
++ (CommonTravelTipList_Builder*) builderWithPrototype:(CommonTravelTipList*) prototype {
+  return [[CommonTravelTipList builder] mergeFrom:prototype];
 }
-- (CommonTravelGuideList_Builder*) builder {
-  return [CommonTravelGuideList builder];
+- (CommonTravelTipList_Builder*) builder {
+  return [CommonTravelTipList builder];
 }
 @end
 
-@interface CommonTravelGuideList_Builder()
-@property (retain) CommonTravelGuideList* result;
+@interface CommonTravelTipList_Builder()
+@property (retain) CommonTravelTipList* result;
 @end
 
-@implementation CommonTravelGuideList_Builder
+@implementation CommonTravelTipList_Builder
 @synthesize result;
 - (void) dealloc {
   self.result = nil;
@@ -419,49 +419,49 @@ static CommonTravelGuideList* defaultCommonTravelGuideListInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.result = [[[CommonTravelGuideList alloc] init] autorelease];
+    self.result = [[[CommonTravelTipList alloc] init] autorelease];
   }
   return self;
 }
 - (PBGeneratedMessage*) internalGetResult {
   return result;
 }
-- (CommonTravelGuideList_Builder*) clear {
-  self.result = [[[CommonTravelGuideList alloc] init] autorelease];
+- (CommonTravelTipList_Builder*) clear {
+  self.result = [[[CommonTravelTipList alloc] init] autorelease];
   return self;
 }
-- (CommonTravelGuideList_Builder*) clone {
-  return [CommonTravelGuideList builderWithPrototype:result];
+- (CommonTravelTipList_Builder*) clone {
+  return [CommonTravelTipList builderWithPrototype:result];
 }
-- (CommonTravelGuideList*) defaultInstance {
-  return [CommonTravelGuideList defaultInstance];
+- (CommonTravelTipList*) defaultInstance {
+  return [CommonTravelTipList defaultInstance];
 }
-- (CommonTravelGuideList*) build {
+- (CommonTravelTipList*) build {
   [self checkInitialized];
   return [self buildPartial];
 }
-- (CommonTravelGuideList*) buildPartial {
-  CommonTravelGuideList* returnMe = [[result retain] autorelease];
+- (CommonTravelTipList*) buildPartial {
+  CommonTravelTipList* returnMe = [[result retain] autorelease];
   self.result = nil;
   return returnMe;
 }
-- (CommonTravelGuideList_Builder*) mergeFrom:(CommonTravelGuideList*) other {
-  if (other == [CommonTravelGuideList defaultInstance]) {
+- (CommonTravelTipList_Builder*) mergeFrom:(CommonTravelTipList*) other {
+  if (other == [CommonTravelTipList defaultInstance]) {
     return self;
   }
-  if (other.mutableGuideListList.count > 0) {
-    if (result.mutableGuideListList == nil) {
-      result.mutableGuideListList = [NSMutableArray array];
+  if (other.mutableTipListList.count > 0) {
+    if (result.mutableTipListList == nil) {
+      result.mutableTipListList = [NSMutableArray array];
     }
-    [result.mutableGuideListList addObjectsFromArray:other.mutableGuideListList];
+    [result.mutableTipListList addObjectsFromArray:other.mutableTipListList];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
-- (CommonTravelGuideList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+- (CommonTravelTipList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
   return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
 }
-- (CommonTravelGuideList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+- (CommonTravelTipList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
   PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
   while (YES) {
     int32_t tag = [input readTag];
@@ -477,54 +477,54 @@ static CommonTravelGuideList* defaultCommonTravelGuideListInstance = nil;
         break;
       }
       case 10: {
-        CommonTravelGuide_Builder* subBuilder = [CommonTravelGuide builder];
+        CommonTravelTip_Builder* subBuilder = [CommonTravelTip builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self addGuideList:[subBuilder buildPartial]];
+        [self addTipList:[subBuilder buildPartial]];
         break;
       }
     }
   }
 }
-- (NSArray*) guideListList {
-  if (result.mutableGuideListList == nil) { return [NSArray array]; }
-  return result.mutableGuideListList;
+- (NSArray*) tipListList {
+  if (result.mutableTipListList == nil) { return [NSArray array]; }
+  return result.mutableTipListList;
 }
-- (CommonTravelGuide*) guideListAtIndex:(int32_t) index {
-  return [result guideListAtIndex:index];
+- (CommonTravelTip*) tipListAtIndex:(int32_t) index {
+  return [result tipListAtIndex:index];
 }
-- (CommonTravelGuideList_Builder*) replaceGuideListAtIndex:(int32_t) index with:(CommonTravelGuide*) value {
-  [result.mutableGuideListList replaceObjectAtIndex:index withObject:value];
+- (CommonTravelTipList_Builder*) replaceTipListAtIndex:(int32_t) index with:(CommonTravelTip*) value {
+  [result.mutableTipListList replaceObjectAtIndex:index withObject:value];
   return self;
 }
-- (CommonTravelGuideList_Builder*) addAllGuideList:(NSArray*) values {
-  if (result.mutableGuideListList == nil) {
-    result.mutableGuideListList = [NSMutableArray array];
+- (CommonTravelTipList_Builder*) addAllTipList:(NSArray*) values {
+  if (result.mutableTipListList == nil) {
+    result.mutableTipListList = [NSMutableArray array];
   }
-  [result.mutableGuideListList addObjectsFromArray:values];
+  [result.mutableTipListList addObjectsFromArray:values];
   return self;
 }
-- (CommonTravelGuideList_Builder*) clearGuideListList {
-  result.mutableGuideListList = nil;
+- (CommonTravelTipList_Builder*) clearTipListList {
+  result.mutableTipListList = nil;
   return self;
 }
-- (CommonTravelGuideList_Builder*) addGuideList:(CommonTravelGuide*) value {
-  if (result.mutableGuideListList == nil) {
-    result.mutableGuideListList = [NSMutableArray array];
+- (CommonTravelTipList_Builder*) addTipList:(CommonTravelTip*) value {
+  if (result.mutableTipListList == nil) {
+    result.mutableTipListList = [NSMutableArray array];
   }
-  [result.mutableGuideListList addObject:value];
+  [result.mutableTipListList addObject:value];
   return self;
 }
 @end
 
 @interface TravelTips ()
-@property (retain) NSMutableArray* mutableTipsListList;
+@property (retain) NSMutableArray* mutableGuideListList;
 @property (retain) NSMutableArray* mutableRouteListList;
 @property int32_t cityId;
 @end
 
 @implementation TravelTips
 
-@synthesize mutableTipsListList;
+@synthesize mutableGuideListList;
 @synthesize mutableRouteListList;
 - (BOOL) hasCityId {
   return !!hasCityId_;
@@ -534,7 +534,7 @@ static CommonTravelGuideList* defaultCommonTravelGuideListInstance = nil;
 }
 @synthesize cityId;
 - (void) dealloc {
-  self.mutableTipsListList = nil;
+  self.mutableGuideListList = nil;
   self.mutableRouteListList = nil;
   [super dealloc];
 }
@@ -556,27 +556,27 @@ static TravelTips* defaultTravelTipsInstance = nil;
 - (TravelTips*) defaultInstance {
   return defaultTravelTipsInstance;
 }
-- (NSArray*) tipsListList {
-  return mutableTipsListList;
+- (NSArray*) guideListList {
+  return mutableGuideListList;
 }
-- (CommonTravelGuide*) tipsListAtIndex:(int32_t) index {
-  id value = [mutableTipsListList objectAtIndex:index];
+- (CommonTravelTip*) guideListAtIndex:(int32_t) index {
+  id value = [mutableGuideListList objectAtIndex:index];
   return value;
 }
 - (NSArray*) routeListList {
   return mutableRouteListList;
 }
-- (CommonTravelGuide*) routeListAtIndex:(int32_t) index {
+- (CommonTravelTip*) routeListAtIndex:(int32_t) index {
   id value = [mutableRouteListList objectAtIndex:index];
   return value;
 }
 - (BOOL) isInitialized {
-  for (CommonTravelGuide* element in self.tipsListList) {
+  for (CommonTravelTip* element in self.guideListList) {
     if (!element.isInitialized) {
       return NO;
     }
   }
-  for (CommonTravelGuide* element in self.routeListList) {
+  for (CommonTravelTip* element in self.routeListList) {
     if (!element.isInitialized) {
       return NO;
     }
@@ -584,10 +584,10 @@ static TravelTips* defaultTravelTipsInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  for (CommonTravelGuide* element in self.tipsListList) {
+  for (CommonTravelTip* element in self.guideListList) {
     [output writeMessage:1 value:element];
   }
-  for (CommonTravelGuide* element in self.routeListList) {
+  for (CommonTravelTip* element in self.routeListList) {
     [output writeMessage:2 value:element];
   }
   if (self.hasCityId) {
@@ -602,10 +602,10 @@ static TravelTips* defaultTravelTipsInstance = nil;
   }
 
   size = 0;
-  for (CommonTravelGuide* element in self.tipsListList) {
+  for (CommonTravelTip* element in self.guideListList) {
     size += computeMessageSize(1, element);
   }
-  for (CommonTravelGuide* element in self.routeListList) {
+  for (CommonTravelTip* element in self.routeListList) {
     size += computeMessageSize(2, element);
   }
   if (self.hasCityId) {
@@ -686,11 +686,11 @@ static TravelTips* defaultTravelTipsInstance = nil;
   if (other == [TravelTips defaultInstance]) {
     return self;
   }
-  if (other.mutableTipsListList.count > 0) {
-    if (result.mutableTipsListList == nil) {
-      result.mutableTipsListList = [NSMutableArray array];
+  if (other.mutableGuideListList.count > 0) {
+    if (result.mutableGuideListList == nil) {
+      result.mutableGuideListList = [NSMutableArray array];
     }
-    [result.mutableTipsListList addObjectsFromArray:other.mutableTipsListList];
+    [result.mutableGuideListList addObjectsFromArray:other.mutableGuideListList];
   }
   if (other.mutableRouteListList.count > 0) {
     if (result.mutableRouteListList == nil) {
@@ -723,13 +723,13 @@ static TravelTips* defaultTravelTipsInstance = nil;
         break;
       }
       case 10: {
-        CommonTravelGuide_Builder* subBuilder = [CommonTravelGuide builder];
+        CommonTravelTip_Builder* subBuilder = [CommonTravelTip builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self addTipsList:[subBuilder buildPartial]];
+        [self addGuideList:[subBuilder buildPartial]];
         break;
       }
       case 18: {
-        CommonTravelGuide_Builder* subBuilder = [CommonTravelGuide builder];
+        CommonTravelTip_Builder* subBuilder = [CommonTravelTip builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addRouteList:[subBuilder buildPartial]];
         break;
@@ -741,43 +741,43 @@ static TravelTips* defaultTravelTipsInstance = nil;
     }
   }
 }
-- (NSArray*) tipsListList {
-  if (result.mutableTipsListList == nil) { return [NSArray array]; }
-  return result.mutableTipsListList;
+- (NSArray*) guideListList {
+  if (result.mutableGuideListList == nil) { return [NSArray array]; }
+  return result.mutableGuideListList;
 }
-- (CommonTravelGuide*) tipsListAtIndex:(int32_t) index {
-  return [result tipsListAtIndex:index];
+- (CommonTravelTip*) guideListAtIndex:(int32_t) index {
+  return [result guideListAtIndex:index];
 }
-- (TravelTips_Builder*) replaceTipsListAtIndex:(int32_t) index with:(CommonTravelGuide*) value {
-  [result.mutableTipsListList replaceObjectAtIndex:index withObject:value];
+- (TravelTips_Builder*) replaceGuideListAtIndex:(int32_t) index with:(CommonTravelTip*) value {
+  [result.mutableGuideListList replaceObjectAtIndex:index withObject:value];
   return self;
 }
-- (TravelTips_Builder*) addAllTipsList:(NSArray*) values {
-  if (result.mutableTipsListList == nil) {
-    result.mutableTipsListList = [NSMutableArray array];
+- (TravelTips_Builder*) addAllGuideList:(NSArray*) values {
+  if (result.mutableGuideListList == nil) {
+    result.mutableGuideListList = [NSMutableArray array];
   }
-  [result.mutableTipsListList addObjectsFromArray:values];
+  [result.mutableGuideListList addObjectsFromArray:values];
   return self;
 }
-- (TravelTips_Builder*) clearTipsListList {
-  result.mutableTipsListList = nil;
+- (TravelTips_Builder*) clearGuideListList {
+  result.mutableGuideListList = nil;
   return self;
 }
-- (TravelTips_Builder*) addTipsList:(CommonTravelGuide*) value {
-  if (result.mutableTipsListList == nil) {
-    result.mutableTipsListList = [NSMutableArray array];
+- (TravelTips_Builder*) addGuideList:(CommonTravelTip*) value {
+  if (result.mutableGuideListList == nil) {
+    result.mutableGuideListList = [NSMutableArray array];
   }
-  [result.mutableTipsListList addObject:value];
+  [result.mutableGuideListList addObject:value];
   return self;
 }
 - (NSArray*) routeListList {
   if (result.mutableRouteListList == nil) { return [NSArray array]; }
   return result.mutableRouteListList;
 }
-- (CommonTravelGuide*) routeListAtIndex:(int32_t) index {
+- (CommonTravelTip*) routeListAtIndex:(int32_t) index {
   return [result routeListAtIndex:index];
 }
-- (TravelTips_Builder*) replaceRouteListAtIndex:(int32_t) index with:(CommonTravelGuide*) value {
+- (TravelTips_Builder*) replaceRouteListAtIndex:(int32_t) index with:(CommonTravelTip*) value {
   [result.mutableRouteListList replaceObjectAtIndex:index withObject:value];
   return self;
 }
@@ -792,7 +792,7 @@ static TravelTips* defaultTravelTipsInstance = nil;
   result.mutableRouteListList = nil;
   return self;
 }
-- (TravelTips_Builder*) addRouteList:(CommonTravelGuide*) value {
+- (TravelTips_Builder*) addRouteList:(CommonTravelTip*) value {
   if (result.mutableRouteListList == nil) {
     result.mutableRouteListList = [NSMutableArray array];
   }

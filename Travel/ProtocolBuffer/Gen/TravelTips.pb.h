@@ -2,10 +2,10 @@
 
 #import "ProtocolBuffers.h"
 
-@class CommonTravelGuide;
-@class CommonTravelGuideList;
-@class CommonTravelGuideList_Builder;
-@class CommonTravelGuide_Builder;
+@class CommonTravelTip;
+@class CommonTravelTipList;
+@class CommonTravelTipList_Builder;
+@class CommonTravelTip_Builder;
 @class TravelTips;
 @class TravelTips_Builder;
 
@@ -15,143 +15,143 @@
 + (void) registerAllExtensions:(PBMutableExtensionRegistry*) registry;
 @end
 
-@interface CommonTravelGuide : PBGeneratedMessage {
+@interface CommonTravelTip : PBGeneratedMessage {
 @private
-  BOOL hasGuideId_:1;
+  BOOL hasTipId_:1;
   BOOL hasCityId_:1;
   BOOL hasName_:1;
   BOOL hasHtml_:1;
-  int32_t guideId;
+  int32_t tipId;
   int32_t cityId;
   NSString* name;
   NSString* html;
 }
-- (BOOL) hasGuideId;
+- (BOOL) hasTipId;
 - (BOOL) hasCityId;
 - (BOOL) hasName;
 - (BOOL) hasHtml;
-@property (readonly) int32_t guideId;
+@property (readonly) int32_t tipId;
 @property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* name;
 @property (readonly, retain) NSString* html;
 
-+ (CommonTravelGuide*) defaultInstance;
-- (CommonTravelGuide*) defaultInstance;
++ (CommonTravelTip*) defaultInstance;
+- (CommonTravelTip*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (CommonTravelGuide_Builder*) builder;
-+ (CommonTravelGuide_Builder*) builder;
-+ (CommonTravelGuide_Builder*) builderWithPrototype:(CommonTravelGuide*) prototype;
+- (CommonTravelTip_Builder*) builder;
++ (CommonTravelTip_Builder*) builder;
++ (CommonTravelTip_Builder*) builderWithPrototype:(CommonTravelTip*) prototype;
 
-+ (CommonTravelGuide*) parseFromData:(NSData*) data;
-+ (CommonTravelGuide*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CommonTravelGuide*) parseFromInputStream:(NSInputStream*) input;
-+ (CommonTravelGuide*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CommonTravelGuide*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (CommonTravelGuide*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelTip*) parseFromData:(NSData*) data;
++ (CommonTravelTip*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelTip*) parseFromInputStream:(NSInputStream*) input;
++ (CommonTravelTip*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelTip*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (CommonTravelTip*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface CommonTravelGuide_Builder : PBGeneratedMessage_Builder {
+@interface CommonTravelTip_Builder : PBGeneratedMessage_Builder {
 @private
-  CommonTravelGuide* result;
+  CommonTravelTip* result;
 }
 
-- (CommonTravelGuide*) defaultInstance;
+- (CommonTravelTip*) defaultInstance;
 
-- (CommonTravelGuide_Builder*) clear;
-- (CommonTravelGuide_Builder*) clone;
+- (CommonTravelTip_Builder*) clear;
+- (CommonTravelTip_Builder*) clone;
 
-- (CommonTravelGuide*) build;
-- (CommonTravelGuide*) buildPartial;
+- (CommonTravelTip*) build;
+- (CommonTravelTip*) buildPartial;
 
-- (CommonTravelGuide_Builder*) mergeFrom:(CommonTravelGuide*) other;
-- (CommonTravelGuide_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (CommonTravelGuide_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (CommonTravelTip_Builder*) mergeFrom:(CommonTravelTip*) other;
+- (CommonTravelTip_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (CommonTravelTip_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasGuideId;
-- (int32_t) guideId;
-- (CommonTravelGuide_Builder*) setGuideId:(int32_t) value;
-- (CommonTravelGuide_Builder*) clearGuideId;
+- (BOOL) hasTipId;
+- (int32_t) tipId;
+- (CommonTravelTip_Builder*) setTipId:(int32_t) value;
+- (CommonTravelTip_Builder*) clearTipId;
 
 - (BOOL) hasCityId;
 - (int32_t) cityId;
-- (CommonTravelGuide_Builder*) setCityId:(int32_t) value;
-- (CommonTravelGuide_Builder*) clearCityId;
+- (CommonTravelTip_Builder*) setCityId:(int32_t) value;
+- (CommonTravelTip_Builder*) clearCityId;
 
 - (BOOL) hasName;
 - (NSString*) name;
-- (CommonTravelGuide_Builder*) setName:(NSString*) value;
-- (CommonTravelGuide_Builder*) clearName;
+- (CommonTravelTip_Builder*) setName:(NSString*) value;
+- (CommonTravelTip_Builder*) clearName;
 
 - (BOOL) hasHtml;
 - (NSString*) html;
-- (CommonTravelGuide_Builder*) setHtml:(NSString*) value;
-- (CommonTravelGuide_Builder*) clearHtml;
+- (CommonTravelTip_Builder*) setHtml:(NSString*) value;
+- (CommonTravelTip_Builder*) clearHtml;
 @end
 
-@interface CommonTravelGuideList : PBGeneratedMessage {
+@interface CommonTravelTipList : PBGeneratedMessage {
 @private
-  NSMutableArray* mutableGuideListList;
+  NSMutableArray* mutableTipListList;
 }
-- (NSArray*) guideListList;
-- (CommonTravelGuide*) guideListAtIndex:(int32_t) index;
+- (NSArray*) tipListList;
+- (CommonTravelTip*) tipListAtIndex:(int32_t) index;
 
-+ (CommonTravelGuideList*) defaultInstance;
-- (CommonTravelGuideList*) defaultInstance;
++ (CommonTravelTipList*) defaultInstance;
+- (CommonTravelTipList*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (CommonTravelGuideList_Builder*) builder;
-+ (CommonTravelGuideList_Builder*) builder;
-+ (CommonTravelGuideList_Builder*) builderWithPrototype:(CommonTravelGuideList*) prototype;
+- (CommonTravelTipList_Builder*) builder;
++ (CommonTravelTipList_Builder*) builder;
++ (CommonTravelTipList_Builder*) builderWithPrototype:(CommonTravelTipList*) prototype;
 
-+ (CommonTravelGuideList*) parseFromData:(NSData*) data;
-+ (CommonTravelGuideList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CommonTravelGuideList*) parseFromInputStream:(NSInputStream*) input;
-+ (CommonTravelGuideList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (CommonTravelGuideList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (CommonTravelGuideList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelTipList*) parseFromData:(NSData*) data;
++ (CommonTravelTipList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelTipList*) parseFromInputStream:(NSInputStream*) input;
++ (CommonTravelTipList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (CommonTravelTipList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (CommonTravelTipList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface CommonTravelGuideList_Builder : PBGeneratedMessage_Builder {
+@interface CommonTravelTipList_Builder : PBGeneratedMessage_Builder {
 @private
-  CommonTravelGuideList* result;
+  CommonTravelTipList* result;
 }
 
-- (CommonTravelGuideList*) defaultInstance;
+- (CommonTravelTipList*) defaultInstance;
 
-- (CommonTravelGuideList_Builder*) clear;
-- (CommonTravelGuideList_Builder*) clone;
+- (CommonTravelTipList_Builder*) clear;
+- (CommonTravelTipList_Builder*) clone;
 
-- (CommonTravelGuideList*) build;
-- (CommonTravelGuideList*) buildPartial;
+- (CommonTravelTipList*) build;
+- (CommonTravelTipList*) buildPartial;
 
-- (CommonTravelGuideList_Builder*) mergeFrom:(CommonTravelGuideList*) other;
-- (CommonTravelGuideList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (CommonTravelGuideList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (CommonTravelTipList_Builder*) mergeFrom:(CommonTravelTipList*) other;
+- (CommonTravelTipList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (CommonTravelTipList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (NSArray*) guideListList;
-- (CommonTravelGuide*) guideListAtIndex:(int32_t) index;
-- (CommonTravelGuideList_Builder*) replaceGuideListAtIndex:(int32_t) index with:(CommonTravelGuide*) value;
-- (CommonTravelGuideList_Builder*) addGuideList:(CommonTravelGuide*) value;
-- (CommonTravelGuideList_Builder*) addAllGuideList:(NSArray*) values;
-- (CommonTravelGuideList_Builder*) clearGuideListList;
+- (NSArray*) tipListList;
+- (CommonTravelTip*) tipListAtIndex:(int32_t) index;
+- (CommonTravelTipList_Builder*) replaceTipListAtIndex:(int32_t) index with:(CommonTravelTip*) value;
+- (CommonTravelTipList_Builder*) addTipList:(CommonTravelTip*) value;
+- (CommonTravelTipList_Builder*) addAllTipList:(NSArray*) values;
+- (CommonTravelTipList_Builder*) clearTipListList;
 @end
 
 @interface TravelTips : PBGeneratedMessage {
 @private
   BOOL hasCityId_:1;
   int32_t cityId;
-  NSMutableArray* mutableTipsListList;
+  NSMutableArray* mutableGuideListList;
   NSMutableArray* mutableRouteListList;
 }
 - (BOOL) hasCityId;
 @property (readonly) int32_t cityId;
-- (NSArray*) tipsListList;
-- (CommonTravelGuide*) tipsListAtIndex:(int32_t) index;
+- (NSArray*) guideListList;
+- (CommonTravelTip*) guideListAtIndex:(int32_t) index;
 - (NSArray*) routeListList;
-- (CommonTravelGuide*) routeListAtIndex:(int32_t) index;
+- (CommonTravelTip*) routeListAtIndex:(int32_t) index;
 
 + (TravelTips*) defaultInstance;
 - (TravelTips*) defaultInstance;
@@ -187,17 +187,17 @@
 - (TravelTips_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (TravelTips_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (NSArray*) tipsListList;
-- (CommonTravelGuide*) tipsListAtIndex:(int32_t) index;
-- (TravelTips_Builder*) replaceTipsListAtIndex:(int32_t) index with:(CommonTravelGuide*) value;
-- (TravelTips_Builder*) addTipsList:(CommonTravelGuide*) value;
-- (TravelTips_Builder*) addAllTipsList:(NSArray*) values;
-- (TravelTips_Builder*) clearTipsListList;
+- (NSArray*) guideListList;
+- (CommonTravelTip*) guideListAtIndex:(int32_t) index;
+- (TravelTips_Builder*) replaceGuideListAtIndex:(int32_t) index with:(CommonTravelTip*) value;
+- (TravelTips_Builder*) addGuideList:(CommonTravelTip*) value;
+- (TravelTips_Builder*) addAllGuideList:(NSArray*) values;
+- (TravelTips_Builder*) clearGuideListList;
 
 - (NSArray*) routeListList;
-- (CommonTravelGuide*) routeListAtIndex:(int32_t) index;
-- (TravelTips_Builder*) replaceRouteListAtIndex:(int32_t) index with:(CommonTravelGuide*) value;
-- (TravelTips_Builder*) addRouteList:(CommonTravelGuide*) value;
+- (CommonTravelTip*) routeListAtIndex:(int32_t) index;
+- (TravelTips_Builder*) replaceRouteListAtIndex:(int32_t) index with:(CommonTravelTip*) value;
+- (TravelTips_Builder*) addRouteList:(CommonTravelTip*) value;
 - (TravelTips_Builder*) addAllRouteList:(NSArray*) values;
 - (TravelTips_Builder*) clearRouteListList;
 
