@@ -11,6 +11,7 @@
 #import "HistoryController.h"
 #import "AppDelegate.h"
 #import "FeekbackController.h"
+#import "AboutController.h"
 
 @interface MoreController ()
 
@@ -167,6 +168,13 @@
     }
 }
 
+- (void)showAbout
+{
+    AboutController *ac = [[AboutController alloc] init];
+    ac.navigationItem.title = ABOUT_APP;
+    [self.navigationController pushViewController:ac animated:YES];
+    [ac release];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -183,6 +191,9 @@
             break;
         case 3:
             [self queryVersion];
+            break;
+        case 4:
+            [self showAbout];
             break;
         default:
             break;

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PPViewController.h"
 
-@interface AboutController : UIViewController
+@interface AboutController : PPViewController<UIWebViewDelegate>
+@property (retain, nonatomic) IBOutlet UIWebView *aboutWebView;
 
 @end
