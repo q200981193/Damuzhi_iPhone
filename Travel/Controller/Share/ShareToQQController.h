@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
 
-@interface ShareToQQController : PPViewController
+@interface ShareToQQController : PPViewController<UIWebViewDelegate, UITextViewDelegate>
 
 @end

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A31115161532DBEB00E33BB2 /* NSData+QBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115041532DBEB00E33BB2 /* NSData+QBase64.m */; };
+		A31115171532DBEB00E33BB2 /* NSString+QEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115061532DBEB00E33BB2 /* NSString+QEncoding.m */; };
+		A31115181532DBEB00E33BB2 /* NSURL+QAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115081532DBEB00E33BB2 /* NSURL+QAdditions.m */; };
+		A31115191532DBEB00E33BB2 /* QAsyncHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A311150A1532DBEB00E33BB2 /* QAsyncHttp.m */; };
+		A311151A1532DBEB00E33BB2 /* QMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A311150C1532DBEB00E33BB2 /* QMutableURLRequest.m */; };
+		A311151B1532DBEB00E33BB2 /* QOauth.m in Sources */ = {isa = PBXBuildFile; fileRef = A311150E1532DBEB00E33BB2 /* QOauth.m */; };
+		A311151C1532DBEB00E33BB2 /* QOauthKey.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115101532DBEB00E33BB2 /* QOauthKey.m */; };
+		A311151D1532DBEB00E33BB2 /* QSyncHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115121532DBEB00E33BB2 /* QSyncHttp.m */; };
+		A311151E1532DBEB00E33BB2 /* QWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115141532DBEB00E33BB2 /* QWeiboRequest.m */; };
+		A31115211533028200E33BB2 /* QQWeibo_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A31115201533028200E33BB2 /* QQWeibo_logo@2x.png */; };
 		A31334DF152FFB260047D013 /* libQWeiboSDK4iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A31334DC152FFA6F0047D013 /* libQWeiboSDK4iOS.a */; };
 		A31334E7152FFB460047D013 /* QVerifyWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A31334E2152FFB460047D013 /* QVerifyWebViewController.m */; };
 		A31334E8152FFB460047D013 /* QWeiboAsyncApi.m in Sources */ = {isa = PBXBuildFile; fileRef = A31334E4152FFB460047D013 /* QWeiboAsyncApi.m */; };
@@ -500,6 +510,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A31115031532DBEB00E33BB2 /* NSData+QBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+QBase64.h"; path = "../NSData+QBase64.h"; sourceTree = "<group>"; };
+		A31115041532DBEB00E33BB2 /* NSData+QBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+QBase64.m"; path = "../NSData+QBase64.m"; sourceTree = "<group>"; };
+		A31115051532DBEB00E33BB2 /* NSString+QEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+QEncoding.h"; path = "../NSString+QEncoding.h"; sourceTree = "<group>"; };
+		A31115061532DBEB00E33BB2 /* NSString+QEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+QEncoding.m"; path = "../NSString+QEncoding.m"; sourceTree = "<group>"; };
+		A31115071532DBEB00E33BB2 /* NSURL+QAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+QAdditions.h"; path = "../NSURL+QAdditions.h"; sourceTree = "<group>"; };
+		A31115081532DBEB00E33BB2 /* NSURL+QAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+QAdditions.m"; path = "../NSURL+QAdditions.m"; sourceTree = "<group>"; };
+		A31115091532DBEB00E33BB2 /* QAsyncHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QAsyncHttp.h; path = ../QAsyncHttp.h; sourceTree = "<group>"; };
+		A311150A1532DBEB00E33BB2 /* QAsyncHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QAsyncHttp.m; path = ../QAsyncHttp.m; sourceTree = "<group>"; };
+		A311150B1532DBEB00E33BB2 /* QMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QMutableURLRequest.h; path = ../QMutableURLRequest.h; sourceTree = "<group>"; };
+		A311150C1532DBEB00E33BB2 /* QMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QMutableURLRequest.m; path = ../QMutableURLRequest.m; sourceTree = "<group>"; };
+		A311150D1532DBEB00E33BB2 /* QOauth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QOauth.h; path = ../QOauth.h; sourceTree = "<group>"; };
+		A311150E1532DBEB00E33BB2 /* QOauth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QOauth.m; path = ../QOauth.m; sourceTree = "<group>"; };
+		A311150F1532DBEB00E33BB2 /* QOauthKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QOauthKey.h; path = ../QOauthKey.h; sourceTree = "<group>"; };
+		A31115101532DBEB00E33BB2 /* QOauthKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QOauthKey.m; path = ../QOauthKey.m; sourceTree = "<group>"; };
+		A31115111532DBEB00E33BB2 /* QSyncHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QSyncHttp.h; path = ../QSyncHttp.h; sourceTree = "<group>"; };
+		A31115121532DBEB00E33BB2 /* QSyncHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QSyncHttp.m; path = ../QSyncHttp.m; sourceTree = "<group>"; };
+		A31115131532DBEB00E33BB2 /* QWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QWeiboRequest.h; path = ../QWeiboRequest.h; sourceTree = "<group>"; };
+		A31115141532DBEB00E33BB2 /* QWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QWeiboRequest.m; path = ../QWeiboRequest.m; sourceTree = "<group>"; };
+		A31115151532DBEB00E33BB2 /* QWeiboSDK4iOS_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QWeiboSDK4iOS_Prefix.pch; path = ../QWeiboSDK4iOS_Prefix.pch; sourceTree = "<group>"; };
+		A31115201533028200E33BB2 /* QQWeibo_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQWeibo_logo@2x.png"; sourceTree = "<group>"; };
 		A31334D4152FFA6F0047D013 /* QWeiboSDK4iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QWeiboSDK4iOS.xcodeproj; path = "../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS/QWeiboSDK4iOS.xcodeproj"; sourceTree = "<group>"; };
 		A31334E1152FFB460047D013 /* QVerifyWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QVerifyWebViewController.h; sourceTree = "<group>"; };
 		A31334E2152FFB460047D013 /* QVerifyWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QVerifyWebViewController.m; sourceTree = "<group>"; };
@@ -1224,6 +1254,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A31115021532DBB300E33BB2 /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				A31115031532DBEB00E33BB2 /* NSData+QBase64.h */,
+				A31115041532DBEB00E33BB2 /* NSData+QBase64.m */,
+				A31115051532DBEB00E33BB2 /* NSString+QEncoding.h */,
+				A31115061532DBEB00E33BB2 /* NSString+QEncoding.m */,
+				A31115071532DBEB00E33BB2 /* NSURL+QAdditions.h */,
+				A31115081532DBEB00E33BB2 /* NSURL+QAdditions.m */,
+				A31115091532DBEB00E33BB2 /* QAsyncHttp.h */,
+				A311150A1532DBEB00E33BB2 /* QAsyncHttp.m */,
+				A311150B1532DBEB00E33BB2 /* QMutableURLRequest.h */,
+				A311150C1532DBEB00E33BB2 /* QMutableURLRequest.m */,
+				A311150D1532DBEB00E33BB2 /* QOauth.h */,
+				A311150E1532DBEB00E33BB2 /* QOauth.m */,
+				A311150F1532DBEB00E33BB2 /* QOauthKey.h */,
+				A31115101532DBEB00E33BB2 /* QOauthKey.m */,
+				A31115111532DBEB00E33BB2 /* QSyncHttp.h */,
+				A31115121532DBEB00E33BB2 /* QSyncHttp.m */,
+				A31115131532DBEB00E33BB2 /* QWeiboRequest.h */,
+				A31115141532DBEB00E33BB2 /* QWeiboRequest.m */,
+				A31115151532DBEB00E33BB2 /* QWeiboSDK4iOS_Prefix.pch */,
+			);
+			name = Src;
+			sourceTree = "<group>";
+		};
+		A311151F1533028200E33BB2 /* share */ = {
+			isa = PBXGroup;
+			children = (
+				A31115201533028200E33BB2 /* QQWeibo_logo@2x.png */,
+			);
+			path = share;
+			sourceTree = "<group>";
+		};
 		A31334D5152FFA6F0047D013 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1235,6 +1299,7 @@
 		A31334E0152FFB460047D013 /* QQWeiboEngine */ = {
 			isa = PBXGroup;
 			children = (
+				A31115021532DBB300E33BB2 /* Src */,
 				A31334E1152FFB460047D013 /* QVerifyWebViewController.h */,
 				A31334E2152FFB460047D013 /* QVerifyWebViewController.m */,
 				A31334E3152FFB460047D013 /* QWeiboAsyncApi.h */,
@@ -1418,6 +1483,7 @@
 		A44152441531326200ACBD41 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A311151F1533028200E33BB2 /* share */,
 				A44152451531326200ACBD41 /* category_icons */,
 				A441524C1531326200ACBD41 /* city_manager */,
 				A441525F1531326200ACBD41 /* Default.png */,
@@ -3356,6 +3422,7 @@
 				A3DE351F153285B80034C6D5 /* ShareToQQController.xib in Resources */,
 				A4B35EEF1532D34800684AF6 /* feedback_bg2@2x.png in Resources */,
 				A4B35EF41532D36800684AF6 /* FeekbackController.xib in Resources */,
+				A31115211533028200E33BB2 /* QQWeibo_logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3599,6 +3666,15 @@
 				EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */,
 				A3DE351E153285B80034C6D5 /* ShareToQQController.m in Sources */,
 				A4B35EF31532D36800684AF6 /* FeekbackController.m in Sources */,
+				A31115161532DBEB00E33BB2 /* NSData+QBase64.m in Sources */,
+				A31115171532DBEB00E33BB2 /* NSString+QEncoding.m in Sources */,
+				A31115181532DBEB00E33BB2 /* NSURL+QAdditions.m in Sources */,
+				A31115191532DBEB00E33BB2 /* QAsyncHttp.m in Sources */,
+				A311151A1532DBEB00E33BB2 /* QMutableURLRequest.m in Sources */,
+				A311151B1532DBEB00E33BB2 /* QOauth.m in Sources */,
+				A311151C1532DBEB00E33BB2 /* QOauthKey.m in Sources */,
+				A311151D1532DBEB00E33BB2 /* QSyncHttp.m in Sources */,
+				A311151E1532DBEB00E33BB2 /* QWeiboRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3691,7 +3767,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "11CDA258-B0BB-440D-A291-C5B91D6C153B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
@@ -3716,7 +3792,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "11CDA258-B0BB-440D-A291-C5B91D6C153B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
@@ -3727,6 +3803,7 @@
 		CA49071314F5F05B00228C37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -3736,6 +3813,7 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "11CDA258-B0BB-440D-A291-C5B91D6C153B";
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3755,7 +3833,7 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "11CDA258-B0BB-440D-A291-C5B91D6C153B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
