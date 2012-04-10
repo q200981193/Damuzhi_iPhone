@@ -12,12 +12,16 @@
 #import "AppDelegate.h"
 #import "FeekbackController.h"
 #import "AboutController.h"
+#import "UserManager.h"
 
 @interface MoreController ()
+
+@property (nonatomic, retain) UISwitch *showImageSwitch;
 
 @end
 
 @implementation MoreController
+@synthesize showImageSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,10 +67,17 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:0xDE green:0xE2 blue:0xE4 alpha:1]];
     
 //    self.dataTableView.backgroundColor = [UIColor whiteColor];
+    
+    UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(167, 9, 79, 27)];
+    [aSwitch addTarget:self action:@selector(clickSwitch:) forControlEvents:UIControlEventValueChanged];
+    self.showImageSwitch = aSwitch;
+    [aSwitch release];
+    showImageSwitch.on = [[UserManager defaultManager] isShowImage];
 }
 
 - (void)viewDidUnload
 {
+    [self setShowImageSwitch:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -74,6 +85,7 @@
 
 - (void)dealloc
 {
+    [showImageSwitch release];
     [super dealloc];
 }
 
@@ -123,6 +135,11 @@
     
     if (row == 0) {
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    }
+    
+    if (row == 6) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [cell.contentView addSubview:showImageSwitch];
     }
     
     cell.textLabel.text = [dataList objectAtIndex:row];
@@ -202,6 +219,9 @@
         case 4:
             [self showAbout];
             break;
+        case 5:
+            [UIUtils gotoReview:kAppId];
+            break;
         default:
             break;
     }
@@ -209,6 +229,10 @@
 
 }
 
-
+- (void)clickSwitch:(id)sender
+{
+    UISwitch *currentSwitch = (UISwitch *)sender;
+    [[UserManager defaultManager] saveIsShowImage:currentSwitch.on];
+}
 
 @end
