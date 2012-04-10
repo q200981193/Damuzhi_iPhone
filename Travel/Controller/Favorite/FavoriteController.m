@@ -121,7 +121,8 @@
 #define RIGHT_BUTTON_VIEW_HIGHT     30
 #define BUTTON_WIDTH                80
 #define BUTTON_HIGHT                30
-#define DELETE_BUTTON_WIDTH          40
+#define DELETE_BUTTON_WIDTH         22
+#define DELETE_BUTTON_HIGHT         22
 - (void)createRightBarButton
 {
     UIView *rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RIGHT_BUTTON_VIEW_WIDTH, RIGHT_BUTTON_VIEW_HIGHT)];
@@ -150,15 +151,15 @@
     [self.topFavoriteButton addTarget:self action:@selector(clickTopFavorite:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.topFavoriteButton];
     
-    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 0, DELETE_BUTTON_WIDTH, BUTTON_HIGHT)];
+    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 4, DELETE_BUTTON_WIDTH, DELETE_BUTTON_HIGHT)];
     self.deleteButton = dbtn;
     [dbtn release];
     self.deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"topmenu_btn_right.png"] forState:UIControlStateNormal];
-    [self.deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+    //[self.deleteButton setBackgroundImage:[UIImage imageNamed:@"topmenu_btn_right.png"] forState:UIControlStateNormal];
+    //[self.deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"delete@2x.png"] forState:UIControlStateNormal];
     [self.deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.deleteButton];
-    
     
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButtonView];
     [rightButtonView release];
@@ -223,15 +224,16 @@
 #pragma -mark BarButton action
 - (void)clickDelete:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
     canDelete = !canDelete;
     [self.placeListController canDeletePlace:canDelete delegate:self];
-    if (canDelete) {
-        [button setTitle:NSLS(@"完成") forState:UIControlStateNormal];
-    }
-    else {
-        [button setTitle:NSLS(@"删除") forState:UIControlStateNormal];
-    }
+    
+//    UIButton *button = (UIButton*)sender;
+//    if (canDelete) {
+//        [button setTitle:NSLS(@"完成") forState:UIControlStateNormal];
+//    }
+//    else {
+//        [button setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+//    }
 }
 
 - (void)clickMyFavorite:(id)sender
@@ -250,7 +252,7 @@
     deleteButton.hidden = YES;
     
     [self.placeListController canDeletePlace:NO delegate:nil];
-    [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+//    [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
     [self clickAll:nil];
 }
 

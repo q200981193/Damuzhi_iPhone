@@ -70,8 +70,9 @@
 
 - (void)viewDidLoad
 {
+    [self setBackgroundImageName:@"all_page_bg.jpg"];
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:84.0/255.0 green:154.0/255.0 blue:182.0/255.0 alpha:1.0];
+    //self.view.backgroundColor = [UIColor colorWithRed:84.0/255.0 green:154.0/255.0 blue:182.0/255.0 alpha:1.0];
     [self loadDefaultKey];
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
