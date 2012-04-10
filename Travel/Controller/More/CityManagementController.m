@@ -288,13 +288,16 @@
 
 - (void)didUpdateCity:(City*)city
 {
-    [self.dataTableView reloadData];
+    // TODO: 
+//    [self.dataTableView reloadData];
 }
 
 #pragma mark -
 #pragma mark: implementation of AppServiceDelegate
 - (void)didFailDownload:(City*)city error:(NSError *)error;
 {
+    [self killTimer];
+
     PPDebug(@"down load failed, error = %@", error.description);
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
@@ -303,6 +306,8 @@
 
 - (void)didFinishDownload:(City*) city
 {
+    [self killTimer];
+
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
     [self.dataTableView reloadData];

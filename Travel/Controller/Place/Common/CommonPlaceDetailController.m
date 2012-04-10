@@ -353,6 +353,7 @@
     self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
 }
 
+#define MAX_NUM_OF_NEARBY_RECOMMEND_PLACE 5
 - (NSArray*) calculateNearby
 {
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
@@ -388,9 +389,11 @@
     
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
     int count = [sortedPlaceList count];
-    for (int i = 1; i <= 5; i++)
+    int loopCount = (count<MAX_NUM_OF_NEARBY_RECOMMEND_PLACE) ? count : MAX_NUM_OF_NEARBY_RECOMMEND_PLACE;
+    
+    for (int i = 0; i < loopCount; i++)
     {
-        [retArray addObject:[sortedPlaceList objectAtIndex:(count - 1 - i)]];
+        [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
     }
     return retArray;
     
@@ -420,13 +423,15 @@
     NSArray *nearPlaceList = [self calculateNearby];
     
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
-    for (int i = 0; i <= 4; i++)
+//    for (int i = 0; i <= MAX_NUM_OF_NEARBY_RECOMMEND_PLACE; i++)
+    int i = 0;
+    for (Place *place in nearPlaceList)
     {
-        Place *place = [nearPlaceList objectAtIndex:i];        
+//        Place *place = [nearPlaceList objectAtIndex:i];        
         CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
         CLLocationDistance distance = [loc distanceFromLocation:location];
         
-        UIButton *rowView = [[[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*i, 300, 20)] autorelease];
+        UIButton *rowView = [[[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*(i++), 300, 20)] autorelease];
         rowView.tag = [_placeList indexOfObject:place];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(2, 3, 14, 14)];

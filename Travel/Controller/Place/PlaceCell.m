@@ -191,11 +191,17 @@
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     [placeLocation release];
     
+//    PPDebug(@"place name = %@", place.name);
+//    PPDebug(@"place latitude = %lf, place longitude ＝ %lf", place.latitude, place.longitude);
+//    PPDebug(@"current location = %@", currentLocation.description);
+//    PPDebug(@"distance = %lf", distance);
+
     if (distance >1000.0) {
-        return [NSString stringWithFormat:NSLS(@"%d公里"), distance/1000];
+        long long temp = (long long)distance / 1000;
+        return [NSString stringWithFormat:NSLS(@"%lldKM"), temp];
     }
     else if (distance > 100.0) {
-        return [NSString stringWithFormat:NSLS(@"%0.1fKM"), distance];
+        return [NSString stringWithFormat:NSLS(@"%0.1fKM"), (float)distance];
     }
     else {
         return [NSString stringWithFormat:NSLS(@"0.1KM")];
