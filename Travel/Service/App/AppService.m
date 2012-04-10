@@ -193,8 +193,10 @@ static AppService* _defaultAppService = nil;
     
     //specify destination path and temp path
     NSString *destinationPath = [AppUtils getZipFilePath:city.cityId];
-    [FileUtil createDir:[AppUtils getDownloadDir]];
     NSString *tempPath = [AppUtils getDownloadPath:city.cityId];
+    
+    [FileUtil createDir:[AppUtils getDownloadDir]];
+    [FileUtil createDir:[AppUtils getZipDir]];
     
     //create a request
     NSURL *url = [NSURL URLWithString:city.downloadUrl];

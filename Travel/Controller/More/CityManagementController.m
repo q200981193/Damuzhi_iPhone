@@ -295,6 +295,7 @@
 #pragma mark: implementation of AppServiceDelegate
 - (void)didFailDownload:(City*)city error:(NSError *)error;
 {
+    PPDebug(@"down load failed, error = %@", error.description);
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
     [self.dataTableView reloadData];
