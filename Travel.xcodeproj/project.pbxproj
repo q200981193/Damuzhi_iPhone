@@ -433,6 +433,8 @@
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
 		EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA20A060153192AE00F6F478 /* AnimationManager.m */; };
+		EA5C766A1534575B0025AFB2 /* CityConfigDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C76691534575B0025AFB2 /* CityConfigDataSource.m */; };
+		EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */; };
 		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
 		EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */; };
 		EAFE21EB152861480013D040 /* NearByRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E9152861480013D040 /* NearByRecommendController.m */; };
@@ -720,7 +722,7 @@
 		A48E05B315342BBE00B2695E /* RouteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteController.h; sourceTree = "<group>"; };
 		A48E05B415342BBE00B2695E /* RouteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteController.m; sourceTree = "<group>"; };
 		A48E05B515342BBE00B2695E /* RouteController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteController.xib; sourceTree = "<group>"; };
-		A48E05B915342BD300B2695E /* TravelTipsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; path = TravelTipsManager.h; sourceTree = "<group>"; };
+		A48E05B915342BD300B2695E /* TravelTipsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTipsManager.h; sourceTree = "<group>"; };
 		A48E05BA15342BD300B2695E /* TravelTipsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTipsManager.m; sourceTree = "<group>"; };
 		A48E87A4151C5FC0007954D3 /* LocalCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCity.h; sourceTree = "<group>"; };
 		A48E87A5151C5FC0007954D3 /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
@@ -1185,6 +1187,10 @@
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
 		EA20A05F153192AE00F6F478 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		EA20A060153192AE00F6F478 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
+		EA5C76681534575B0025AFB2 /* CityConfigDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityConfigDataSource.h; path = Common/CityConfigDataSource.h; sourceTree = "<group>"; };
+		EA5C76691534575B0025AFB2 /* CityConfigDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityConfigDataSource.m; path = Common/CityConfigDataSource.m; sourceTree = "<group>"; };
+		EA5C766B1534579A0025AFB2 /* TravelTransportDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTransportDataSource.h; sourceTree = "<group>"; };
+		EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTransportDataSource.m; sourceTree = "<group>"; };
 		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
 		EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelUtilityDataSource.h; sourceTree = "<group>"; };
 		EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelUtilityDataSource.m; sourceTree = "<group>"; };
@@ -2979,8 +2985,12 @@
 				CA585FB314F73C0400471880 /* Common */,
 				CA238FD314FF321C00114175 /* CityBasicDataSource.h */,
 				CA238FD414FF321C00114175 /* CityBasicDataSource.m */,
+				EA5C76681534575B0025AFB2 /* CityConfigDataSource.h */,
+				EA5C76691534575B0025AFB2 /* CityConfigDataSource.m */,
 				EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */,
 				EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */,
+				EA5C766B1534579A0025AFB2 /* TravelTransportDataSource.h */,
+				EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -3612,6 +3622,8 @@
 				A48E059115341B3A00B2695E /* FeekbackController.m in Sources */,
 				A48E05B615342BBE00B2695E /* RouteController.m in Sources */,
 				A48E05BB15342BD300B2695E /* TravelTipsManager.m in Sources */,
+				EA5C766A1534575B0025AFB2 /* CityConfigDataSource.m in Sources */,
+				EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
