@@ -39,6 +39,15 @@
 
 - (void)viewDidLoad
 {
+
+    
+    [super viewDidLoad];
+
+    // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
     self.dataList = [NSArray arrayWithObjects:
                      OPENED_CITY, 
                      BROWSE_HISTORY,
@@ -50,15 +59,9 @@
                      APP_RECOMMENDATION,
                      nil];
     
-    [super viewDidLoad];
-
-    // Do any additional setup after loading the view from its nib.
-    [self setNavigationLeftButton:NSLS(@" 返回") 
-                        imageName:@"back.png"
-                           action:@selector(clickBack:)];
-    self.dataTableView.backgroundColor = [UIColor whiteColor];
+    [self.view setBackgroundColor:[UIColor colorWithRed:0xDE green:0xE2 blue:0xE4 alpha:1]];
     
-    self.view.backgroundColor = [UIColor colorWithRed:0xDE green:0xE2 blue:0xE4 alpha:1];
+    self.dataTableView.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidUnload
@@ -106,6 +109,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];				
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;		
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [cell.imageView setImage:[UIImage imageNamed:@"more_icon.png"]];
 	}
 	
 	// set text label
@@ -116,9 +120,12 @@
 		return cell;
 	}
     
+    if (row == 0) {
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    }
+    
     cell.textLabel.text = [dataList objectAtIndex:row];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.imageView.image = [UIImage imageNamed:@"pageStateNormal.jpg"];
 	
 	return cell;
 }
