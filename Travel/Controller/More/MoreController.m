@@ -148,7 +148,7 @@
 - (void)showFeekback
 {
     FeekbackController *controller = [[FeekbackController alloc] init];
-    controller.navigationItem.title = BROWSE_HISTORY;
+    controller.navigationItem.title = FEEDBACK;
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
