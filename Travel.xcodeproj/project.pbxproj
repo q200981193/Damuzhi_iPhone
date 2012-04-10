@@ -112,7 +112,6 @@
 		A4B35FC01533D8E200684AF6 /* stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F381533D8E200684AF6 /* stop@2x.png */; };
 		A4B35FC11533D8E200684AF6 /* td_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F391533D8E200684AF6 /* td_bg@2x.png */; };
 		A4B35FC21533D8E200684AF6 /* yes_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F3A1533D8E200684AF6 /* yes_s@2x.png */; };
-		A4B35FC31533D8E200684AF6 /* 下载管理.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F3B1533D8E200684AF6 /* 下载管理.jpg */; };
 		A4B35FC41533D8E200684AF6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F3C1533D8E200684AF6 /* Default.png */; };
 		A4B35FC51533D8E200684AF6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F3D1533D8E200684AF6 /* Default@2x.png */; };
 		A4B35FC61533D8E200684AF6 /* delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F3F1533D8E200684AF6 /* delete@2x.png */; };
@@ -159,7 +158,6 @@
 		A4B35FEF1533D8E200684AF6 /* index_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F6A1533D8E200684AF6 /* index_bg@2x.png */; };
 		A4B35FF01533D8E200684AF6 /* top_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F6B1533D8E200684AF6 /* top_arrow@2x.png */; };
 		A4B35FF11533D8E200684AF6 /* topmenu_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F6C1533D8E200684AF6 /* topmenu_bg@2x.png */; };
-		A4B35FF21533D8E200684AF6 /* 欢迎页@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F6D1533D8E200684AF6 /* 欢迎页@2x.jpg */; };
 		A4B35FF31533D8E200684AF6 /* dmzlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F6F1533D8E200684AF6 /* dmzlogo.png */; };
 		A4B35FF41533D8E200684AF6 /* dmzlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F701533D8E200684AF6 /* dmzlogo@2x.png */; };
 		A4B35FF51533D8E200684AF6 /* index_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F711533D8E200684AF6 /* index_bg.png */; };
@@ -172,12 +170,9 @@
 		A4B35FFC1533D8E200684AF6 /* more_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F7A1533D8E200684AF6 /* more_ico@2x.png */; };
 		A4B35FFD1533D8E200684AF6 /* position@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F7C1533D8E200684AF6 /* position@2x.png */; };
 		A4B35FFE1533D8E200684AF6 /* red_star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F7D1533D8E200684AF6 /* red_star@2x.png */; };
-		A4B35FFF1533D8E200684AF6 /* 附近@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F7E1533D8E200684AF6 /* 附近@2x.jpg */; };
-		A4B360001533D8E200684AF6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F801533D8E200684AF6 /* .gitignore */; };
 		A4B360011533D8E200684AF6 /* 2menu_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F811533D8E200684AF6 /* 2menu_bg@2x.png */; };
 		A4B360021533D8E200684AF6 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F821533D8E200684AF6 /* back@2x.png */; };
 		A4B360031533D8E200684AF6 /* li_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F831533D8E200684AF6 /* li_bg@2x.png */; };
-		A4B360041533D8E200684AF6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F851533D8E200684AF6 /* .gitignore */; };
 		A4B360051533D8E200684AF6 /* bottombg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F861533D8E200684AF6 /* bottombg@2x.png */; };
 		A4B360061533D8E200684AF6 /* detail_tr_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F871533D8E200684AF6 /* detail_tr_bg.png */; };
 		A4B360071533D8E200684AF6 /* favorites@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F881533D8E200684AF6 /* favorites@2x.png */; };
@@ -192,7 +187,6 @@
 		A4B360101533D8E200684AF6 /* t_map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F911533D8E200684AF6 /* t_map@2x.png */; };
 		A4B360111533D8E200684AF6 /* t_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F921533D8E200684AF6 /* t_phone@2x.png */; };
 		A4B360121533D8E200684AF6 /* topmenu_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F931533D8E200684AF6 /* topmenu_bg2@2x.png */; };
-		A4B360131533D8E200684AF6 /* 景点介绍2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F941533D8E200684AF6 /* 景点介绍2@2x.jpg */; };
 		A4B360141533D8E200684AF6 /* all_page_bg2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F961533D8E200684AF6 /* all_page_bg2@2x.jpg */; };
 		A4B360151533D8E200684AF6 /* all_page_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F971533D8E200684AF6 /* all_page_bg@2x.jpg */; };
 		A4B360161533D8E200684AF6 /* radio_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35F981533D8E200684AF6 /* radio_1@2x.png */; };
@@ -206,7 +200,6 @@
 		A4B3601E1533D8E200684AF6 /* select_map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA01533D8E200684AF6 /* select_map@2x.png */; };
 		A4B3601F1533D8E200684AF6 /* select_tr_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA11533D8E200684AF6 /* select_tr_bg@2x.png */; };
 		A4B360201533D8E200684AF6 /* topmenu_btn_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA21533D8E200684AF6 /* topmenu_btn_right@2x.png */; };
-		A4B360211533D8E200684AF6 /* 景点@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA31533D8E200684AF6 /* 景点@2x.jpg */; };
 		A4B360221533D8E200684AF6 /* QQWeibo_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA51533D8E200684AF6 /* QQWeibo_logo@2x.png */; };
 		A4B360231533D8E200684AF6 /* list_tr_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA71533D8E200684AF6 /* list_tr_bg2@2x.png */; };
 		A4B360241533D8E200684AF6 /* book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B35FA91533D8E200684AF6 /* book@2x.png */; };
@@ -674,7 +667,6 @@
 		A4B35F381533D8E200684AF6 /* stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop@2x.png"; sourceTree = "<group>"; };
 		A4B35F391533D8E200684AF6 /* td_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "td_bg@2x.png"; sourceTree = "<group>"; };
 		A4B35F3A1533D8E200684AF6 /* yes_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yes_s@2x.png"; sourceTree = "<group>"; };
-		A4B35F3B1533D8E200684AF6 /* 下载管理.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "下载管理.jpg"; sourceTree = "<group>"; };
 		A4B35F3C1533D8E200684AF6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		A4B35F3D1533D8E200684AF6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		A4B35F3F1533D8E200684AF6 /* delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete@2x.png"; sourceTree = "<group>"; };
@@ -721,7 +713,6 @@
 		A4B35F6A1533D8E200684AF6 /* index_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "index_bg@2x.png"; sourceTree = "<group>"; };
 		A4B35F6B1533D8E200684AF6 /* top_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top_arrow@2x.png"; sourceTree = "<group>"; };
 		A4B35F6C1533D8E200684AF6 /* topmenu_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topmenu_bg@2x.png"; sourceTree = "<group>"; };
-		A4B35F6D1533D8E200684AF6 /* 欢迎页@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "欢迎页@2x.jpg"; sourceTree = "<group>"; };
 		A4B35F6F1533D8E200684AF6 /* dmzlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dmzlogo.png; sourceTree = "<group>"; };
 		A4B35F701533D8E200684AF6 /* dmzlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dmzlogo@2x.png"; sourceTree = "<group>"; };
 		A4B35F711533D8E200684AF6 /* index_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = index_bg.png; sourceTree = "<group>"; };
@@ -734,12 +725,9 @@
 		A4B35F7A1533D8E200684AF6 /* more_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "more_ico@2x.png"; sourceTree = "<group>"; };
 		A4B35F7C1533D8E200684AF6 /* position@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "position@2x.png"; sourceTree = "<group>"; };
 		A4B35F7D1533D8E200684AF6 /* red_star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_star@2x.png"; sourceTree = "<group>"; };
-		A4B35F7E1533D8E200684AF6 /* 附近@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "附近@2x.jpg"; sourceTree = "<group>"; };
-		A4B35F801533D8E200684AF6 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A4B35F811533D8E200684AF6 /* 2menu_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2menu_bg@2x.png"; sourceTree = "<group>"; };
 		A4B35F821533D8E200684AF6 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back@2x.png"; sourceTree = "<group>"; };
 		A4B35F831533D8E200684AF6 /* li_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "li_bg@2x.png"; sourceTree = "<group>"; };
-		A4B35F851533D8E200684AF6 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A4B35F861533D8E200684AF6 /* bottombg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottombg@2x.png"; sourceTree = "<group>"; };
 		A4B35F871533D8E200684AF6 /* detail_tr_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_tr_bg.png; sourceTree = "<group>"; };
 		A4B35F881533D8E200684AF6 /* favorites@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorites@2x.png"; sourceTree = "<group>"; };
@@ -754,7 +742,6 @@
 		A4B35F911533D8E200684AF6 /* t_map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_map@2x.png"; sourceTree = "<group>"; };
 		A4B35F921533D8E200684AF6 /* t_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t_phone@2x.png"; sourceTree = "<group>"; };
 		A4B35F931533D8E200684AF6 /* topmenu_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topmenu_bg2@2x.png"; sourceTree = "<group>"; };
-		A4B35F941533D8E200684AF6 /* 景点介绍2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "景点介绍2@2x.jpg"; sourceTree = "<group>"; };
 		A4B35F961533D8E200684AF6 /* all_page_bg2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "all_page_bg2@2x.jpg"; sourceTree = "<group>"; };
 		A4B35F971533D8E200684AF6 /* all_page_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "all_page_bg@2x.jpg"; sourceTree = "<group>"; };
 		A4B35F981533D8E200684AF6 /* radio_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radio_1@2x.png"; sourceTree = "<group>"; };
@@ -768,7 +755,6 @@
 		A4B35FA01533D8E200684AF6 /* select_map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_map@2x.png"; sourceTree = "<group>"; };
 		A4B35FA11533D8E200684AF6 /* select_tr_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_tr_bg@2x.png"; sourceTree = "<group>"; };
 		A4B35FA21533D8E200684AF6 /* topmenu_btn_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topmenu_btn_right@2x.png"; sourceTree = "<group>"; };
-		A4B35FA31533D8E200684AF6 /* 景点@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "景点@2x.jpg"; sourceTree = "<group>"; };
 		A4B35FA51533D8E200684AF6 /* QQWeibo_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QQWeibo_logo@2x.png"; sourceTree = "<group>"; };
 		A4B35FA71533D8E200684AF6 /* list_tr_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "list_tr_bg2@2x.png"; sourceTree = "<group>"; };
 		A4B35FA91533D8E200684AF6 /* book@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "book@2x.png"; sourceTree = "<group>"; };
@@ -1635,7 +1621,6 @@
 				A4B35F381533D8E200684AF6 /* stop@2x.png */,
 				A4B35F391533D8E200684AF6 /* td_bg@2x.png */,
 				A4B35F3A1533D8E200684AF6 /* yes_s@2x.png */,
-				A4B35F3B1533D8E200684AF6 /* 下载管理.jpg */,
 			);
 			path = city_manager;
 			sourceTree = "<group>";
@@ -1701,7 +1686,6 @@
 				A4B35F6A1533D8E200684AF6 /* index_bg@2x.png */,
 				A4B35F6B1533D8E200684AF6 /* top_arrow@2x.png */,
 				A4B35F6C1533D8E200684AF6 /* topmenu_bg@2x.png */,
-				A4B35F6D1533D8E200684AF6 /* 欢迎页@2x.jpg */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -1741,7 +1725,6 @@
 			children = (
 				A4B35F7C1533D8E200684AF6 /* position@2x.png */,
 				A4B35F7D1533D8E200684AF6 /* red_star@2x.png */,
-				A4B35F7E1533D8E200684AF6 /* 附近@2x.jpg */,
 			);
 			path = nearby;
 			sourceTree = "<group>";
@@ -1750,7 +1733,6 @@
 			isa = PBXGroup;
 			children = (
 				A4B360251533D92E00684AF6 /* heart.png */,
-				A4B35F801533D8E200684AF6 /* .gitignore */,
 				A4B35F811533D8E200684AF6 /* 2menu_bg@2x.png */,
 				A4B35F821533D8E200684AF6 /* back@2x.png */,
 				A4B35F831533D8E200684AF6 /* li_bg@2x.png */,
@@ -1761,7 +1743,6 @@
 				A4B35FA01533D8E200684AF6 /* select_map@2x.png */,
 				A4B35FA11533D8E200684AF6 /* select_tr_bg@2x.png */,
 				A4B35FA21533D8E200684AF6 /* topmenu_btn_right@2x.png */,
-				A4B35FA31533D8E200684AF6 /* 景点@2x.jpg */,
 			);
 			path = place_list;
 			sourceTree = "<group>";
@@ -1769,7 +1750,6 @@
 		A4B35F841533D8E200684AF6 /* place_detail */ = {
 			isa = PBXGroup;
 			children = (
-				A4B35F851533D8E200684AF6 /* .gitignore */,
 				A4B35F861533D8E200684AF6 /* bottombg@2x.png */,
 				A4B35F871533D8E200684AF6 /* detail_tr_bg.png */,
 				A4B35F881533D8E200684AF6 /* favorites@2x.png */,
@@ -1784,7 +1764,6 @@
 				A4B35F911533D8E200684AF6 /* t_map@2x.png */,
 				A4B35F921533D8E200684AF6 /* t_phone@2x.png */,
 				A4B35F931533D8E200684AF6 /* topmenu_bg2@2x.png */,
-				A4B35F941533D8E200684AF6 /* 景点介绍2@2x.jpg */,
 			);
 			path = place_detail;
 			sourceTree = "<group>";
@@ -3364,7 +3343,6 @@
 				A4B35FC01533D8E200684AF6 /* stop@2x.png in Resources */,
 				A4B35FC11533D8E200684AF6 /* td_bg@2x.png in Resources */,
 				A4B35FC21533D8E200684AF6 /* yes_s@2x.png in Resources */,
-				A4B35FC31533D8E200684AF6 /* 下载管理.jpg in Resources */,
 				A4B35FC41533D8E200684AF6 /* Default.png in Resources */,
 				A4B35FC51533D8E200684AF6 /* Default@2x.png in Resources */,
 				A4B35FC61533D8E200684AF6 /* delete@2x.png in Resources */,
@@ -3411,7 +3389,6 @@
 				A4B35FEF1533D8E200684AF6 /* index_bg@2x.png in Resources */,
 				A4B35FF01533D8E200684AF6 /* top_arrow@2x.png in Resources */,
 				A4B35FF11533D8E200684AF6 /* topmenu_bg@2x.png in Resources */,
-				A4B35FF21533D8E200684AF6 /* 欢迎页@2x.jpg in Resources */,
 				A4B35FF31533D8E200684AF6 /* dmzlogo.png in Resources */,
 				A4B35FF41533D8E200684AF6 /* dmzlogo@2x.png in Resources */,
 				A4B35FF51533D8E200684AF6 /* index_bg.png in Resources */,
@@ -3424,12 +3401,9 @@
 				A4B35FFC1533D8E200684AF6 /* more_ico@2x.png in Resources */,
 				A4B35FFD1533D8E200684AF6 /* position@2x.png in Resources */,
 				A4B35FFE1533D8E200684AF6 /* red_star@2x.png in Resources */,
-				A4B35FFF1533D8E200684AF6 /* 附近@2x.jpg in Resources */,
-				A4B360001533D8E200684AF6 /* .gitignore in Resources */,
 				A4B360011533D8E200684AF6 /* 2menu_bg@2x.png in Resources */,
 				A4B360021533D8E200684AF6 /* back@2x.png in Resources */,
 				A4B360031533D8E200684AF6 /* li_bg@2x.png in Resources */,
-				A4B360041533D8E200684AF6 /* .gitignore in Resources */,
 				A4B360051533D8E200684AF6 /* bottombg@2x.png in Resources */,
 				A4B360061533D8E200684AF6 /* detail_tr_bg.png in Resources */,
 				A4B360071533D8E200684AF6 /* favorites@2x.png in Resources */,
@@ -3444,7 +3418,6 @@
 				A4B360101533D8E200684AF6 /* t_map@2x.png in Resources */,
 				A4B360111533D8E200684AF6 /* t_phone@2x.png in Resources */,
 				A4B360121533D8E200684AF6 /* topmenu_bg2@2x.png in Resources */,
-				A4B360131533D8E200684AF6 /* 景点介绍2@2x.jpg in Resources */,
 				A4B360141533D8E200684AF6 /* all_page_bg2@2x.jpg in Resources */,
 				A4B360151533D8E200684AF6 /* all_page_bg@2x.jpg in Resources */,
 				A4B360161533D8E200684AF6 /* radio_1@2x.png in Resources */,
@@ -3458,7 +3431,6 @@
 				A4B3601E1533D8E200684AF6 /* select_map@2x.png in Resources */,
 				A4B3601F1533D8E200684AF6 /* select_tr_bg@2x.png in Resources */,
 				A4B360201533D8E200684AF6 /* topmenu_btn_right@2x.png in Resources */,
-				A4B360211533D8E200684AF6 /* 景点@2x.jpg in Resources */,
 				A4B360221533D8E200684AF6 /* QQWeibo_logo@2x.png in Resources */,
 				A4B360231533D8E200684AF6 /* list_tr_bg2@2x.png in Resources */,
 				A4B360241533D8E200684AF6 /* book@2x.png in Resources */,
