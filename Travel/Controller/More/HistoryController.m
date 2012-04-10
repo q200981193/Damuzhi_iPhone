@@ -54,6 +54,7 @@
     self.placeListController = [PlaceListController createController:_placeList 
                                                            superView:placeListHolderView
                                                      superController:self];
+    [self.placeListController setAndReloadPlaceList:self.placeList];
 }
 
 - (void)viewDidUnload
