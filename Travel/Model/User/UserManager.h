@@ -13,5 +13,7 @@
 
 - (NSString*)userId;
 - (void)saveUserId:(NSString*)userId;
+- (BOOL)isShowImage;
+- (void)saveIsShowImage:(BOOL)isShow;
 
 @end
