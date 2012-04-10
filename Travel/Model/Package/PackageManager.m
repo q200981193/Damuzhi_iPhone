@@ -93,18 +93,4 @@ static PackageManager *_instance = nil;
     return cityList;
 }
 
-//- (NSArray*)getOnlineCityList
-//{
-//    NSMutableArray *onlineCityList = [[[NSMutableArray alloc] init] autorelease];
-//    NSArray *cityList = [[AppManager defaultManager] getCityList];
-//    NSArray *localCityList = [self getLocalCityList];
-//    for (City *city in cityList) {
-//        if (NSNotFound == [localCityList indexOfObject:city]) {
-//            [onlineCityList addObject:city];
-//        }
-//    }
-//    
-//    return onlineCityList;
-//}
-
 @end
