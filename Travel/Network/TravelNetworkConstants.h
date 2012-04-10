@@ -86,7 +86,7 @@
 // for city overview
 #define OBJECT_TYPE_CITY_BASIC                  2
 #define OBJECT_TYPE_CITY_CONFIG                 3
-#define OBJECT_TYPE_TRAVEL_TRANSPORTATIO        4     
+#define OBJECT_TYPE_TRAVEL_TRANSPORTATION       4     
 #define OBJECT_TYPE_TRAVEL_UTILITY              5
 #define OBJECT_TYPE_TRAVEL_GUIDE                6
 #define OBJECT_TYPE_TOURIST_RECOMMENDED         7
