@@ -20,6 +20,7 @@
 #import "CommonPlace.h"
 #import "PlaceService.h"
 #import "PlaceStorage.h"
+#import "PlaceUtils.h"
 
 @implementation PlaceCell
 @synthesize nameLabel;
@@ -155,9 +156,13 @@
                             [place price]];
     
     self.areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
-
-    self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
-                                                                subCategoryId:[place subCategoryId]];
+    
+    if (place.categoryId == PLACE_TYPE_HOTEL) {
+        self.categoryLable.text = [PlaceUtils hotelStarToString:place.hotelStar];
+    }else {
+        self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
+                                                                    subCategoryId:[place subCategoryId]];
+    }
     
     if ([[PlaceStorage favoriteManager] isPlaceInFavorite:place.placeId]) {
         [self.favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];

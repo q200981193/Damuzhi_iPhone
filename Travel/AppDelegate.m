@@ -15,6 +15,9 @@
 #import "UserService.h"
 #import "LocalCityManager.h"
 #import "AppConstants.h"
+#import "MobClick.h"
+
+#define UMENG_KEY @"4f76a1c15270157f7700004d"
 
 @implementation AppDelegate
 
@@ -34,6 +37,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [MobClick startWithAppkey:UMENG_KEY];
+    
     if ([DeviceDetection isOS5]){
         [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_live.png"] forBarMetrics:UIBarMetricsDefault];
     }
