@@ -10,10 +10,8 @@
 #import "AppUtils.h"
 #import "AppManager.h"
 #import "UIImageUtil.h"
-#import "PPApplication.h"
 #import "PPDebug.h"
-#import "TravelTipsManager.h"
-
+#import "RouteCell.h"
 
 @implementation RouteController
 
@@ -36,66 +34,42 @@
     // e.g. self.myOutlet = nil;
 }
 
-#pragma mark - 
-#pragma mark: Table View Delegate
+#pragma mark Table View Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 74.5;
+	return 75;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;		// default implementation
 }
 
-// Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [dataList count];
-}
-
--(void) managedImageSet:(HJManagedImageV*)mi
-{
-}
-
--(void) managedImageCancelled:(HJManagedImageV*)mi
-{
-}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    cell = [theTableView dequeueReusableCellWithIdentifier:[RouteCell getCellIdentifier]];
+    if (cell == nil) {
+        cell = [RouteCell createCell:self];				
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+        // Customize the appearance of table view cells at first time
+        UIImageView *view = [[UIImageView alloc] init];
+        [view setImage:[UIImage imageNamed:@"list_tr_bg2.png"]];
+        [cell setBackgroundView:view];
+        [view release];
+    }
+    
     int row = [indexPath row];	
-	int count = [dataList count];
-	if (row >= count){
-		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
-		return nil;
-	}
+    int count = [dataList count];
+    if (row >= count){
+        PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+        return cell;
+    }
+    RouteCell* routeCell = (RouteCell*)cell;
+    [routeCell setCellData:[dataList objectAtIndex:row]];
     
-    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"CellForRoute"] autorelease];
-    
-    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage strectchableImageName:@"list_tr_bg2.png"]];
-    [cell setBackgroundView: backgroundView];
-    [backgroundView release];
-    
-    CommonTravelTip *tip = [dataList objectAtIndex:row];
-    PPDebug(@"tip name = %@", tip.name);
-    PPDebug(@"tip briefIntro = %@", tip.briefIntro);
-    PPDebug(@"tip image = %@", tip.image);
-
-
-    
-    cell.textLabel.text = tip.name;
-    [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
-
-    cell.detailTextLabel.text = tip.briefIntro;
-    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:13]];
-    cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
-    
-    HJManagedImageV *imageView  = [[HJManagedImageV alloc] initWithFrame:CGRectMake(30, 30, 100, 75)];
-    [self setImage:imageView image:tip.image];
-    UIImageView *temp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart.png"]];
-    [cell.imageView addSubview:temp];
-    [imageView release];
-    
-  	return cell;
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,32 +92,5 @@
     }
     
 }
-
-#pragma mark -
-#pragma mark: fech image from url asynchrounous
-
-//- (void)grabURLInBackground:(NSString*)urlString
-//{
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-//    [request setDelegate:self];
-//    [request startAsynchronous];
-//}
-//
-//- (void)requestFinished:(ASIHTTPRequest *)request
-//{    
-//    // Use when fetching binary data
-//    NSData *responseData = [request responseData];
-//    
-//    UIImage *image = [UIImage ]
-//}
-//
-//- (void)requestFailed:(ASIHTTPRequest *)request
-//{
-//    NSError *error = [request error];
-//}
-
-
-
 
 @end
