@@ -21,7 +21,7 @@
 - (NSArray*)getTravelGuideList;
 - (NSArray*)getTravelRouteList;
 
-- (NSArray*)getTravelGuideHtml:(int)guideId;
-- (NSArray*)getTravelRouteHtml:(int)guideId;
+- (NSString*)getTravelGuideHtml:(int)guideId;
+- (NSString*)getTravelRouteHtml:(int)guideId;
 
 @end

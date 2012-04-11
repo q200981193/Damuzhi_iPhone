@@ -21,19 +21,27 @@
   BOOL hasCityId_:1;
   BOOL hasName_:1;
   BOOL hasHtml_:1;
+  BOOL hasBriefIntro_:1;
+  BOOL hasImage_:1;
   int32_t tipId;
   int32_t cityId;
   NSString* name;
   NSString* html;
+  NSString* briefIntro;
+  NSString* image;
 }
 - (BOOL) hasTipId;
 - (BOOL) hasCityId;
 - (BOOL) hasName;
 - (BOOL) hasHtml;
+- (BOOL) hasBriefIntro;
+- (BOOL) hasImage;
 @property (readonly) int32_t tipId;
 @property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* name;
 @property (readonly, retain) NSString* html;
+@property (readonly, retain) NSString* briefIntro;
+@property (readonly, retain) NSString* image;
 
 + (CommonTravelTip*) defaultInstance;
 - (CommonTravelTip*) defaultInstance;
@@ -88,6 +96,16 @@
 - (NSString*) html;
 - (CommonTravelTip_Builder*) setHtml:(NSString*) value;
 - (CommonTravelTip_Builder*) clearHtml;
+
+- (BOOL) hasBriefIntro;
+- (NSString*) briefIntro;
+- (CommonTravelTip_Builder*) setBriefIntro:(NSString*) value;
+- (CommonTravelTip_Builder*) clearBriefIntro;
+
+- (BOOL) hasImage;
+- (NSString*) image;
+- (CommonTravelTip_Builder*) setImage:(NSString*) value;
+- (CommonTravelTip_Builder*) clearImage;
 @end
 
 @interface CommonTravelTipList : PBGeneratedMessage {

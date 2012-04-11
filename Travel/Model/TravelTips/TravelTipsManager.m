@@ -81,21 +81,33 @@ static TravelTipsManager * _instance = nil;
 
 - (NSArray*)getTravelGuideList
 {
-    return nil;
+    return _guideList;
 }
 
 - (NSArray*)getTravelRouteList
 {
+    return _routeList;
+}
+
+- (NSString*)getTravelGuideHtml:(int)guideId
+{
+    for (CommonTravelTip *tip in _guideList) {
+        if (tip.tipId == guideId) {
+            return tip.html;
+        }
+    }
+    
     return nil;
 }
 
-- (NSArray*)getTravelGuideHtml:(int)guideId
+- (NSString*)getTravelRouteHtml:(int)routeId
 {
-    return nil;
-}
-
-- (NSArray*)getTravelRouteHtml:(int)guideId
-{
+    for (CommonTravelTip *tip in _guideList) {
+        if (tip.tipId == routeId) {
+            return tip.html;
+        }
+    }
+    
     return nil;
 }
 

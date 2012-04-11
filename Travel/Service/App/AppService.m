@@ -289,9 +289,6 @@ static AppService* _defaultAppService = nil;
     if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFinishDownload:)]) {
         [_appServiceDelegate didFinishDownload:[[AppManager defaultManager] getCity:localCity.cityId]];
     }
-    else {
-        PPDebug(@"[_appServiceDelegate respondsToSelector:@selector(didFinishDownload:)]");
-    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
@@ -307,9 +304,6 @@ static AppService* _defaultAppService = nil;
     NSError *error = [request error];
     if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFailDownload:error:)]) {
         [_appServiceDelegate didFailDownload:[[AppManager defaultManager] getCity:localCity.cityId] error:error];
-    }
-    else {
-        PPDebug(@"[_appServiceDelegate respondsToSelector:@selector(didFailDownload:error:)]");
     }
 }
 

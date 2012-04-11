@@ -68,12 +68,15 @@
 
 // define query object type
 // for place
-#define OBJECT_TYPE_ALL_PLACE       1
-#define OBJECT_TYPE_SPOT            21
-#define OBJECT_TYPE_HOTEL           22
-#define OBJECT_TYPE_RESTAURANT      23
-#define OBJECT_TYPE_SHOPPING        24
-#define OBJECT_TYPE_ENTERTAINMENT   25
+#define OBJECT_LIST_TYPE_ALL_PLACE       1
+#define OBJECT_LIST_TYPE_SPOT            21
+#define OBJECT_LIST_TYPE_HOTEL           22
+#define OBJECT_LIST_TYPE_RESTAURANT      23
+#define OBJECT_LIST_TYPE_SHOPPING        24
+#define OBJECT_LIST_TYPE_ENTERTAINMENT   25
+
+#define OBJECT_LIST_TYPE_TRAVEL_GUIDE    5
+#define OBJECT_LIST_TYPE_TRAVEL_ROUTE    6
 
 // for top favorite
 #define OBJECT_TYPE_TOP_FAVORITE_ALL                40

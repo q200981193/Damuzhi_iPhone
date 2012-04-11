@@ -187,9 +187,6 @@
         if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
             [_cityListCellDelegate didStartDownload:_city];
         } 
-        else {
-            PPDebug(@"[_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]");
-        }
     }
 }
 
@@ -203,9 +200,6 @@
         if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
             [_cityListCellDelegate didStartDownload:_city];
         } 
-        else {
-            PPDebug(@"[_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]");
-        }
     }
 }
 
@@ -233,9 +227,6 @@
             if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
                 [_cityListCellDelegate didStartDownload:_city];
             } 
-            else {
-                PPDebug(@"[_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]");
-            }
         }
     }
 }
@@ -262,9 +253,6 @@
     // Call delegate metchod to do some addition work.
     if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didSelectCurrendCity:)]) {
         [_cityListCellDelegate didSelectCurrendCity:_city];
-    }
-    else {
-        PPDebug(@"[_cityCellDelegate respondsToSelector:@selector(didSelectCurrendCity:)]");
     }
 }
 

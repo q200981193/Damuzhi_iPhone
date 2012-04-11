@@ -65,14 +65,14 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         int resultCode = 0;
         if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
             // read local data firstly               
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:[[AppManager defaultManager]getCurrentCityId]]);
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCurrentCityName]);
             if (localHandler != NULL){
                 overview = localHandler(&resultCode);
             }
         }
         else{
             // if local data no exist, try to read data from remote            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:[[AppManager defaultManager]getCurrentCityId]]);            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCurrentCityName]);            
             if (remoteHandler != NULL){
                 overview = remoteHandler(&resultCode);
             }

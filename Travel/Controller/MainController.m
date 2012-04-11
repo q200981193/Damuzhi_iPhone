@@ -27,6 +27,7 @@
 #import "HelpController.h"
 #import "ShareToSinaController.h"
 #import "ShareToQQController.h"
+#import "RouteController.h"
 
 @implementation MainController
 
@@ -189,6 +190,11 @@
     [controller release];  
 }
 
+- (IBAction)clickTravelRouteBtn:(id)sender {
+    RouteController *controller = [[RouteController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
 
 - (IBAction)clickNearbyButton:(id)sender
 {

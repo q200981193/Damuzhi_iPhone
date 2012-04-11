@@ -19,8 +19,6 @@
 #import "JSON.h"
 #import "PlaceStorage.h"
 
-#define SERACH_WORKING_QUEUE    @"SERACH_WORKING_QUEUE"
-
 @implementation PlaceService
 
 static PlaceService* _defaultPlaceService = nil;
@@ -65,7 +63,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 {
     [viewController showActivityWithText:NSLS(@"数据加载中......")];
     
-    NSOperationQueue* queue = [self getOperationQueue:SERACH_WORKING_QUEUE];
+    NSOperationQueue* queue = [self getOperationQueue:@"SERACH_WORKING_QUEUE"];
     [queue cancelAllOperations];
     
     [queue addOperationWithBlock:^{
@@ -74,22 +72,24 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
 //        if (NO){
             // read local data firstly               
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:[[AppManager defaultManager] getCurrentCityId]]);
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCurrentCityName]);
             if (localHandler != NULL){
                 list = localHandler(&resultCode);
             }
         }
         else{
             // if local data no exist, try to read data from remote            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:[[AppManager defaultManager] getCurrentCityId]]);            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCurrentCityName]);            
             if (remoteHandler != NULL){
                 list = remoteHandler(&resultCode);
             }
         }
             
         dispatch_async(dispatch_get_main_queue(), ^{
-            [viewController hideActivity];             
-            [viewController findRequestDone:resultCode placeList:list];
+            [viewController hideActivity];     
+            if (viewController && [viewController respondsToSelector:@selector(findRequestDone:placeList:)]) {
+                [viewController findRequestDone:resultCode placeList:list];
+            }
         });
     }];
 }
@@ -102,27 +102,27 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     int objectType = 0;
     switch (categoryId) {
         case PLACE_TYPE_ALL:
-            objectType = OBJECT_TYPE_ALL_PLACE;
+            objectType = OBJECT_LIST_TYPE_ALL_PLACE;
             break;
             
         case PLACE_TYPE_SPOT:
-            objectType = OBJECT_TYPE_SPOT;
+            objectType = OBJECT_LIST_TYPE_SPOT;
             break;
             
         case PLACE_TYPE_HOTEL:
-            objectType = OBJECT_TYPE_HOTEL;
+            objectType = OBJECT_LIST_TYPE_HOTEL;
             break;
             
         case PLACE_TYPE_RESTAURANT:
-            objectType = OBJECT_TYPE_RESTAURANT;
+            objectType = OBJECT_LIST_TYPE_RESTAURANT;
             break;
             
         case PLACE_TYPE_SHOPPING:
-            objectType = OBJECT_TYPE_SHOPPING;
+            objectType = OBJECT_LIST_TYPE_SHOPPING;
             break;
             
         case PLACE_TYPE_ENTERTAINMENT:
-            objectType = OBJECT_TYPE_ENTERTAINMENT;
+            objectType = OBJECT_LIST_TYPE_ENTERTAINMENT;
             break;
     
         

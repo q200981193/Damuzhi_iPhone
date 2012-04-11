@@ -24,6 +24,8 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property int32_t cityId;
 @property (retain) NSString* name;
 @property (retain) NSString* html;
+@property (retain) NSString* briefIntro;
+@property (retain) NSString* image;
 @end
 
 @implementation CommonTravelTip
@@ -56,9 +58,25 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasHtml_ = !!value;
 }
 @synthesize html;
+- (BOOL) hasBriefIntro {
+  return !!hasBriefIntro_;
+}
+- (void) setHasBriefIntro:(BOOL) value {
+  hasBriefIntro_ = !!value;
+}
+@synthesize briefIntro;
+- (BOOL) hasImage {
+  return !!hasImage_;
+}
+- (void) setHasImage:(BOOL) value {
+  hasImage_ = !!value;
+}
+@synthesize image;
 - (void) dealloc {
   self.name = nil;
   self.html = nil;
+  self.briefIntro = nil;
+  self.image = nil;
   [super dealloc];
 }
 - (id) init {
@@ -67,6 +85,8 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.cityId = 0;
     self.name = @"";
     self.html = @"";
+    self.briefIntro = @"";
+    self.image = @"";
   }
   return self;
 }
@@ -101,6 +121,12 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   if (self.hasHtml) {
     [output writeString:4 value:self.html];
   }
+  if (self.hasBriefIntro) {
+    [output writeString:5 value:self.briefIntro];
+  }
+  if (self.hasImage) {
+    [output writeString:6 value:self.image];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -121,6 +147,12 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   }
   if (self.hasHtml) {
     size += computeStringSize(4, self.html);
+  }
+  if (self.hasBriefIntro) {
+    size += computeStringSize(5, self.briefIntro);
+  }
+  if (self.hasImage) {
+    size += computeStringSize(6, self.image);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -209,6 +241,12 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   if (other.hasHtml) {
     [self setHtml:other.html];
   }
+  if (other.hasBriefIntro) {
+    [self setBriefIntro:other.briefIntro];
+  }
+  if (other.hasImage) {
+    [self setImage:other.image];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -244,6 +282,14 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
       }
       case 34: {
         [self setHtml:[input readString]];
+        break;
+      }
+      case 42: {
+        [self setBriefIntro:[input readString]];
+        break;
+      }
+      case 50: {
+        [self setImage:[input readString]];
         break;
       }
     }
@@ -311,6 +357,38 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
 - (CommonTravelTip_Builder*) clearHtml {
   result.hasHtml = NO;
   result.html = @"";
+  return self;
+}
+- (BOOL) hasBriefIntro {
+  return result.hasBriefIntro;
+}
+- (NSString*) briefIntro {
+  return result.briefIntro;
+}
+- (CommonTravelTip_Builder*) setBriefIntro:(NSString*) value {
+  result.hasBriefIntro = YES;
+  result.briefIntro = value;
+  return self;
+}
+- (CommonTravelTip_Builder*) clearBriefIntro {
+  result.hasBriefIntro = NO;
+  result.briefIntro = @"";
+  return self;
+}
+- (BOOL) hasImage {
+  return result.hasImage;
+}
+- (NSString*) image {
+  return result.image;
+}
+- (CommonTravelTip_Builder*) setImage:(NSString*) value {
+  result.hasImage = YES;
+  result.image = value;
+  return self;
+}
+- (CommonTravelTip_Builder*) clearImage {
+  result.hasImage = NO;
+  result.image = @"";
   return self;
 }
 @end

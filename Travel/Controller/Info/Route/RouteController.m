@@ -7,6 +7,9 @@
 //
 
 #import "RouteController.h"
+#import "TravelTipsManager.h"
+#import "AppUtils.h"
+#import "AppManager.h"
 
 @implementation RouteController
 
@@ -15,7 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-//    self.dataList = []
+    self.dataList = [[TravelTipsManager defaultManager] getTravelRouteList];
 }
 
 - (void)viewDidUnload
@@ -52,14 +55,21 @@
     
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellForRoute"] autorelease];
     
+    CommonTravelTip *tip = [dataList objectAtIndex:row];
     
+    cell.textLabel.text = tip.name;
+    cell.detailTextLabel.text = tip.briefIntro;
+    cell.accessoryType =  UITableViewCellAccessoryDetailDisclosureButton;
+    
+    NSString *imagePath =  [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:tip.image];
+    [cell.imageView setImage:[UIImage imageNamed:imagePath]];
     
   	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
 }
 
 
