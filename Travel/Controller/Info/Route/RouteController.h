@@ -7,7 +7,10 @@
 //
 
 #import "PPTableViewController.h"
+#import "TravelTipsService.h"
+#import "HJManagedImageV.h"
 
-@interface RouteController : PPTableViewController
+
+@interface RouteController : PPTableViewController <TravelTipsServiceDelegate, HJManagedImageVDelegate>
 
 @end

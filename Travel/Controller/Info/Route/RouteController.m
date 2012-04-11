@@ -7,18 +7,26 @@
 //
 
 #import "RouteController.h"
-#import "TravelTipsManager.h"
 #import "AppUtils.h"
 #import "AppManager.h"
+#import "UIImageUtil.h"
+#import "PPApplication.h"
+#import "PPDebug.h"
+#import "TravelTipsManager.h"
+
 
 @implementation RouteController
 
 - (void)viewDidLoad
 {
+    [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@"返回") imageName:@"back.png" action:@selector(clickBack:)];
     
-    self.dataList = [[TravelTipsManager defaultManager] getTravelRouteList];
+    [self.navigationItem setTitle:NSLS(@"线路推荐")];
+        
+    [[TravelTipsService defaultService] findTravelRouteList:[[AppManager defaultManager] getCurrentCityId] viewController:self];
 }
 
 - (void)viewDidUnload
@@ -32,7 +40,7 @@
 #pragma mark: Table View Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 54;
+	return 74.5;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -44,6 +52,14 @@
     return [dataList count];
 }
 
+-(void) managedImageSet:(HJManagedImageV*)mi
+{
+}
+
+-(void) managedImageCancelled:(HJManagedImageV*)mi
+{
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     int row = [indexPath row];	
@@ -53,16 +69,31 @@
 		return nil;
 	}
     
-    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellForRoute"] autorelease];
+    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"CellForRoute"] autorelease];
+    
+    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage strectchableImageName:@"list_tr_bg2.png"]];
+    [cell setBackgroundView: backgroundView];
+    [backgroundView release];
     
     CommonTravelTip *tip = [dataList objectAtIndex:row];
+    PPDebug(@"tip name = %@", tip.name);
+    PPDebug(@"tip briefIntro = %@", tip.briefIntro);
+    PPDebug(@"tip image = %@", tip.image);
+
+
     
     cell.textLabel.text = tip.name;
+    [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
+
     cell.detailTextLabel.text = tip.briefIntro;
-    cell.accessoryType =  UITableViewCellAccessoryDetailDisclosureButton;
+    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:13]];
+    cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
     
-    NSString *imagePath =  [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:tip.image];
-    [cell.imageView setImage:[UIImage imageNamed:imagePath]];
+    HJManagedImageV *imageView  = [[HJManagedImageV alloc] initWithFrame:CGRectMake(30, 30, 100, 75)];
+    [self setImage:imageView image:tip.image];
+    UIImageView *temp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart.png"]];
+    [cell.imageView addSubview:temp];
+    [imageView release];
     
   	return cell;
 }
@@ -71,6 +102,47 @@
 {
     
 }
+
+
+#pragma mark -
+#pragma mark: implementation of TravelTipsServiceDelegate
+
+- (void)findRequestDone:(int)resulteCode tipList:(NSArray*)tipList
+{
+    if (resulteCode == 0) {
+        self.dataList = tipList;
+        [self.dataTableView reloadData];
+    }
+    else {
+        [self popupMessage:NSLS(@"加载数据失败") title:nil];
+    }
+    
+}
+
+#pragma mark -
+#pragma mark: fech image from url asynchrounous
+
+//- (void)grabURLInBackground:(NSString*)urlString
+//{
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+//    [request setDelegate:self];
+//    [request startAsynchronous];
+//}
+//
+//- (void)requestFinished:(ASIHTTPRequest *)request
+//{    
+//    // Use when fetching binary data
+//    NSData *responseData = [request responseData];
+//    
+//    UIImage *image = [UIImage ]
+//}
+//
+//- (void)requestFailed:(ASIHTTPRequest *)request
+//{
+//    NSError *error = [request error];
+//}
+
 
 
 

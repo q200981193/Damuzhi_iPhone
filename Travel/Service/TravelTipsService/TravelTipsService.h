@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TravelTipsManager.h"
+#import "PPTableViewController.h"
 
 @protocol TravelTipsServiceDelegate <NSObject>
         
@@ -21,7 +22,9 @@
 @property (retain, nonatomic) TravelTipsManager *localTravelTipsManager;
 @property (retain, nonatomic) TravelTipsManager *onlineTravelTipsManager;
 
-- (void)findTravelGuideList:(int)cityId;
-- (void)findTravelRouteList:(int)cityId;
++ (TravelTipsService*)defaultService;
+
+- (void)findTravelGuideList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController;
+- (void)findTravelRouteList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController;
 
 @end

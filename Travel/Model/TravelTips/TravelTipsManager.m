@@ -9,6 +9,7 @@
 #import "TravelTipsManager.h"
 #import "AppManager.h"
 #import "AppUtils.h"
+#import "PPDebug.h"
 
 @implementation TravelTipsManager
 

@@ -7,7 +7,6 @@
 //
 
 #import "TravelTipsService.h"
-#import "PPTableViewController.h"
 #import "AppUtils.h"
 #import "AppManager.h"
 #import "PPDebug.h"
@@ -20,11 +19,33 @@
 @synthesize localTravelTipsManager = _localTravelTipsManager;
 @synthesize onlineTravelTipsManager = _onlineTravelTipsManager;
 
+static TravelTipsService *_instance = nil;
+
+#pragma mark - 
+#pragma mark Life Cycle Management
+
 - (void)dealloc
 {
     [_localTravelTipsManager release];
     [_onlineTravelTipsManager release];
     [super dealloc];
+}
+
++ (TravelTipsService*)defaultService
+{
+    if (_instance == nil){
+        _instance = [[TravelTipsService alloc] init];                
+    }
+    
+    return _instance;
+}
+
+- (id)init
+{
+    self = [super init];
+    _localTravelTipsManager = [[TravelTipsManager alloc] init];
+    _onlineTravelTipsManager = [[TravelTipsManager alloc] init];
+    return self;
 }
 
 #pragma mark - 

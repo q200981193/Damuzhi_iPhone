@@ -175,8 +175,6 @@ static AppService* _defaultAppService = nil;
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     [request setDownloadDestinationPath:destinationPath];
     
-    //PPDebug(@"download url: %@ to destination: %@", url, destinationPath);
-    
     [request startSynchronous];
 }  
 

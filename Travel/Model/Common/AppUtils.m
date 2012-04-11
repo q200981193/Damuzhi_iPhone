@@ -63,16 +63,16 @@
 
 + (NSArray*)getGuideFilePathList:(int)cityId
 {
-    NSString *guideFileDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_GUIDE_DATA];
+    NSString *guideDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_GUIDE_DATA];
     
-    return [self getFilePathList:guideFileDir];
+    return [self getFilePathList:guideDir];
 }
 
 + (NSArray*)getRouteFilePathList:(int)cityId
 {
-    NSString *guideRouteDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_ROUTE_DATA];
+    NSString *routeDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_ROUTE_DATA];
     
-    return [self getFilePathList:guideRouteDir];
+    return [self getFilePathList:routeDir];
 }
 
 + (NSArray*)getFilePathList:(NSString*)fileDir

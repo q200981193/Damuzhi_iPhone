@@ -37,7 +37,7 @@
 #define FILENAME_OF_APP_DATA                @"app.dat"
 #define DIR_OF_PLACE_DATA                   @"data/place"
 #define DIR_OF_GUIDE_DATA                   @"data/tips/guides/"
-#define DIR_OF_ROUTE_DATA                   @"data/tips/guides/"
+#define DIR_OF_ROUTE_DATA                   @"data/tips/routes/"
 
 
 
