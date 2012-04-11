@@ -158,12 +158,11 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-            UIButton *customizeView ;
-            [customizeView setBackgroundColor:[UIColor clearColor]];
-            
+            UIButton *customizeView ;            
             
             if ([self.placeList indexOfObject:placeAnnotation.place] == indexOfSelectedPlace ) {
                 customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
+                [customizeView setBackgroundColor:[UIColor clearColor]];
 
                 UIImage *image = [UIImage imageNamed:@"red_glass"];
                 annotationView.image = image;            
@@ -197,7 +196,8 @@
                 NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
 
                 customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,13,17)];
-                
+                [customizeView setBackgroundColor:[UIColor clearColor]];
+
                 UIImage *image = [UIImage imageNamed:@"red_star"];
                 annotationView.image = image; 
                 customizeView.tag = value;
