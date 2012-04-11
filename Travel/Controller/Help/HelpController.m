@@ -20,6 +20,8 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
+    [self.navigationItem setTitle:NSLS(@"帮助")];
+    
     NSString *helpHtml = [[AppManager defaultManager] getHelpHtml];
     NSLog(@"helpHtmlPath = %@",helpHtml);
     NSURL *url = [NSURL URLWithString:helpHtml];

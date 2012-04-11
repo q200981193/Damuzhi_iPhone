@@ -34,42 +34,69 @@ static TravelTipsManager * _instance = nil;
     [super dealloc];
 }
 
-//- (void)switchCity:(int)newCityId
-//{
-//    if (newCityId == _cityId){
-//        return;
-//    }
-//    
-//    // set city and read data by new city
-//    _cityId = newCityId;
-//    self.guideList = [self readTipsData:]
-//    [self readTravelTipsData:newCityId];
-//}
-//
-//- (TravelTips*)readTravelTipsData:cityId
-//{
-//    
-//    return 
-//}
-//
-//- (NSArray*)getTravelGuideList
-//{
-//    return nil;
-//}
-//
-//- (NSArray*)getTravelRouteList
-//{
-//    return nil;
-//}
-//
-//- (NSArray*)getTravelGuideHtml:(int)guideId
-//{
-//    return nil;
-//}
-//
-//- (NSArray*)getTravelRouteHtml:(int)guideId
-//{
-//    return nil;
-//}
+- (void)switchCity:(int)newCityId
+{
+    if (newCityId == _cityId){
+        return;
+    }
+    
+    // set city and read data by new city
+    _cityId = newCityId;
+    self.guideList = [self readGuideData];
+    self.routeList = [self readRouteData];
+}
+
+- (NSArray*)readGuideData
+{
+    // if there has no local city data
+    if (![AppUtils hasLocalCityData:_cityId]) {
+        return nil;
+    }
+    
+    return [self readTipDataFromFile:[AppUtils getGuideFilePathList:_cityId]]; 
+}
+
+- (NSArray*)readRouteData
+{
+    // if there has no local city data
+    if (![AppUtils hasLocalCityData:_cityId]) {
+        return nil;
+    }
+    
+    return [self readTipDataFromFile:[AppUtils getRouteFilePathList:_cityId]]; 
+}
+
+- (NSArray*)readTipDataFromFile:(NSArray*)filePathList
+{
+    NSMutableArray *list = [[[NSMutableArray alloc] init] autorelease];
+    for (NSString *filePath in filePathList) {
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        CommonTravelTip *tip = [CommonTravelTip parseFromData:data];
+        [list addObject:tip];
+    }
+    
+    return list; 
+}
+
+
+- (NSArray*)getTravelGuideList
+{
+    return nil;
+}
+
+- (NSArray*)getTravelRouteList
+{
+    return nil;
+}
+
+- (NSArray*)getTravelGuideHtml:(int)guideId
+{
+    return nil;
+}
+
+- (NSArray*)getTravelRouteHtml:(int)guideId
+{
+    return nil;
+}
 
 @end

@@ -132,6 +132,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 @interface TravelResponse : PBGeneratedMessage {
 @private
   BOOL hasResultCode_:1;
+  BOOL hasResultInfo_:1;
   BOOL hasPlace_:1;
   BOOL hasOverview_:1;
   BOOL hasTravelTip_:1;
@@ -141,6 +142,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   BOOL hasAppInfo_:1;
   BOOL hasTravelTipList_:1;
   int32_t resultCode;
+  NSString* resultInfo;
   Place* place;
   CommonOverview* overview;
   CommonTravelTip* travelTip;
@@ -151,6 +153,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   CommonTravelTipList* travelTipList;
 }
 - (BOOL) hasResultCode;
+- (BOOL) hasResultInfo;
 - (BOOL) hasPlace;
 - (BOOL) hasOverview;
 - (BOOL) hasTravelTip;
@@ -160,6 +163,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (BOOL) hasAppInfo;
 - (BOOL) hasTravelTipList;
 @property (readonly) int32_t resultCode;
+@property (readonly, retain) NSString* resultInfo;
 @property (readonly, retain) Place* place;
 @property (readonly, retain) CommonOverview* overview;
 @property (readonly, retain) CommonTravelTip* travelTip;
@@ -207,6 +211,11 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (int32_t) resultCode;
 - (TravelResponse_Builder*) setResultCode:(int32_t) value;
 - (TravelResponse_Builder*) clearResultCode;
+
+- (BOOL) hasResultInfo;
+- (NSString*) resultInfo;
+- (TravelResponse_Builder*) setResultInfo:(NSString*) value;
+- (TravelResponse_Builder*) clearResultInfo;
 
 - (BOOL) hasPlace;
 - (Place*) place;
