@@ -34,7 +34,8 @@ static TravelTipsService *_instance = nil;
 + (TravelTipsService*)defaultService
 {
     if (_instance == nil){
-        _instance = [[TravelTipsService alloc] init];                
+        _instance = [[TravelTipsService alloc] init];   
+        
     }
     
     return _instance;
@@ -57,6 +58,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 - (void)processLocalRemoteQuery:(PPViewController<TravelTipsServiceDelegate>*)viewController
                    localHandler:(LocalRequestHandler)localHandler
                   remoteHandler:(RemoteRequestHandler)remoteHandler
+                         cityId:(int)cityId
 {
     [viewController showActivityWithText:NSLS(@"数据加载中......")];
     
@@ -66,16 +68,16 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     [queue addOperationWithBlock:^{
         NSArray* list = nil;
         int resultCode = 0;
-        if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
+        if ([AppUtils hasLocalCityData:cityId] == YES){
             // read local data firstly               
-            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCurrentCityName]);
+            PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCityName:cityId]);
             if (localHandler != NULL){
                 list = localHandler(&resultCode);
             }
         }
         else{
             // if local data no exist, try to read data from remote            
-            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCurrentCityName]);            
+            PPDebug(@"No Local Data For City %@, Read Data Remotely", [[AppManager defaultManager] getCityName:cityId]);            
             if (remoteHandler != NULL){
                 list = remoteHandler(&resultCode);
             }
@@ -93,7 +95,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 - (void)findTravelGuideList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localTravelTipsManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
+        [_localTravelTipsManager switchCity:cityId];
         NSArray* list = [_localTravelTipsManager getTravelGuideList];   
         *resultCode = 0;
         return list;
@@ -102,11 +104,12 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_LIST_TYPE_TRAVEL_GUIDE                                                               
-                                                               cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+                                                               cityId:cityId
+                                                                 lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
         _onlineTravelTipsManager.guideList = [[travelResponse travelTipList] tipListList];
-        NSArray* list = [_localTravelTipsManager getTravelGuideList];   
+        NSArray* list = [_onlineTravelTipsManager getTravelGuideList];   
                 
         *resultCode = 0;
         
@@ -115,14 +118,15 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     [self processLocalRemoteQuery:viewController
                      localHandler:localHandler
-                    remoteHandler:remoteHandler];
+                    remoteHandler:remoteHandler
+                           cityId:cityId];
     
 }
 
 - (void)findTravelRouteList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localTravelTipsManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
+        [_localTravelTipsManager switchCity:cityId];
         NSArray* list = [_localTravelTipsManager getTravelRouteList];   
         *resultCode = 0;
         return list;
@@ -136,8 +140,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
         _onlineTravelTipsManager.routeList = [[travelResponse travelTipList] tipListList];
-        NSArray* list = [_localTravelTipsManager getTravelRouteList];   
-        
+        NSArray* list = [_onlineTravelTipsManager getTravelRouteList];           
         *resultCode = 0;
         
         return list;
@@ -145,8 +148,8 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     [self processLocalRemoteQuery:viewController
                      localHandler:localHandler
-                    remoteHandler:remoteHandler];
-    
+                    remoteHandler:remoteHandler
+                            cityId:cityId];
 }
 
 @end
