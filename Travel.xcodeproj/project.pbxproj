@@ -50,6 +50,8 @@
 		A3EB7404152E965C003BA8B8 /* WBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A3EB73CB152E965B003BA8B8 /* WBUtil.m */; };
 		A3EB7405152E965C003BA8B8 /* SinaWeiBoSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = A3EB73D0152E965B003BA8B8 /* SinaWeiBoSDK.m */; };
 		A3EB740E152E96E4003BA8B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EB740D152E96E4003BA8B8 /* Security.framework */; };
+		A3FE359215358DB7002190D7 /* GuideController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3FE359015358DB7002190D7 /* GuideController.m */; };
+		A3FE359315358DB7002190D7 /* GuideController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3FE359115358DB7002190D7 /* GuideController.xib */; };
 		A4034755150D998200D2B11E /* HotelListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034754150D998200D2B11E /* HotelListFilter.m */; };
 		A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */; };
 		A485784B1516DE7B00FDFE5B /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578411516DE7B00FDFE5B /* ioapi.c */; };
@@ -187,8 +189,6 @@
 		A48E05EF15354BC100B2695E /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A48E05EE15354BC100B2695E /* CoreTelephony.framework */; };
 		A48E05F715357C5D00B2695E /* RouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E05F515357C5D00B2695E /* RouteCell.m */; };
 		A48E05F815357C5D00B2695E /* RouteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48E05F615357C5D00B2695E /* RouteCell.xib */; };
-		A48E061115358D1A00B2695E /* CommonWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E060F15358D1A00B2695E /* CommonWebController.m */; };
-		A48E061215358D1A00B2695E /* CommonWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48E061015358D1A00B2695E /* CommonWebController.xib */; };
 		A48E87A6151C5FC0007954D3 /* LocalCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A5151C5FC0007954D3 /* LocalCity.m */; };
 		A48E87A9151C6A3D007954D3 /* LocalCityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E87A8151C6A3D007954D3 /* LocalCityManager.m */; };
 		A4BB6DB115270AFA001CEA6B /* CommonListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6DAA15270AFA001CEA6B /* CommonListFilter.m */; };
@@ -574,6 +574,9 @@
 		A3EB73D0152E965B003BA8B8 /* SinaWeiBoSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiBoSDK.m; sourceTree = "<group>"; };
 		A3EB73D1152E965B003BA8B8 /* SinaWeiBoSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SinaWeiBoSDK.xcodeproj; sourceTree = "<group>"; };
 		A3EB740D152E96E4003BA8B8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		A3FE358F15358DB7002190D7 /* GuideController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideController.h; sourceTree = "<group>"; };
+		A3FE359015358DB7002190D7 /* GuideController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideController.m; sourceTree = "<group>"; };
+		A3FE359115358DB7002190D7 /* GuideController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideController.xib; sourceTree = "<group>"; };
 		A4034753150D998200D2B11E /* HotelListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelListFilter.h; sourceTree = "<group>"; };
 		A4034754150D998200D2B11E /* HotelListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelListFilter.m; sourceTree = "<group>"; };
 		A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapAnnotation.h; sourceTree = "<group>"; };
@@ -731,9 +734,6 @@
 		A48E05F415357C5C00B2695E /* RouteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteCell.h; sourceTree = "<group>"; };
 		A48E05F515357C5D00B2695E /* RouteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteCell.m; sourceTree = "<group>"; };
 		A48E05F615357C5D00B2695E /* RouteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteCell.xib; sourceTree = "<group>"; };
-		A48E060E15358D1A00B2695E /* CommonWebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonWebController.h; sourceTree = "<group>"; };
-		A48E060F15358D1A00B2695E /* CommonWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonWebController.m; sourceTree = "<group>"; };
-		A48E061015358D1A00B2695E /* CommonWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonWebController.xib; sourceTree = "<group>"; };
 		A48E87A4151C5FC0007954D3 /* LocalCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCity.h; sourceTree = "<group>"; };
 		A48E87A5151C5FC0007954D3 /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
 		A48E87A7151C6A3D007954D3 /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCityManager.h; sourceTree = "<group>"; };
@@ -1427,6 +1427,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A3FE358E15358DB7002190D7 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				A3FE358F15358DB7002190D7 /* GuideController.h */,
+				A3FE359015358DB7002190D7 /* GuideController.m */,
+				A3FE359115358DB7002190D7 /* GuideController.xib */,
+			);
+			path = Guide;
+			sourceTree = "<group>";
+		};
 		A485783E1516DE7B00FDFE5B /* ssziparchive */ = {
 			isa = PBXGroup;
 			children = (
@@ -1995,9 +2005,6 @@
 				CA103AF4150467B200F60C03 /* PlaceMapViewController.h */,
 				CA103AF5150467B200F60C03 /* PlaceMapViewController.m */,
 				CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */,
-				A48E060E15358D1A00B2695E /* CommonWebController.h */,
-				A48E060F15358D1A00B2695E /* CommonWebController.m */,
-				A48E061015358D1A00B2695E /* CommonWebController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3006,6 +3013,7 @@
 		CA585F8D14F7376300471880 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				A3FE358E15358DB7002190D7 /* Guide */,
 				A48E05B215342BBE00B2695E /* Route */,
 				CA585FB314F73C0400471880 /* Common */,
 				CA238FD314FF321C00114175 /* CityBasicDataSource.h */,
@@ -3390,7 +3398,7 @@
 				A3DCBC19153428BE0067E69E /* SinaWeibo_logo@2x.png in Resources */,
 				A48E05B715342BBE00B2695E /* RouteController.xib in Resources */,
 				A48E05F815357C5D00B2695E /* RouteCell.xib in Resources */,
-				A48E061215358D1A00B2695E /* CommonWebController.xib in Resources */,
+				A3FE359315358DB7002190D7 /* GuideController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3651,7 +3659,7 @@
 				A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */,
 				A48E05ED15354AC300B2695E /* TravelTipsService.m in Sources */,
 				A48E05F715357C5D00B2695E /* RouteCell.m in Sources */,
-				A48E061115358D1A00B2695E /* CommonWebController.m in Sources */,
+				A3FE359215358DB7002190D7 /* GuideController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

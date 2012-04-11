@@ -35,6 +35,7 @@
 - (IBAction)clickCityConfigButton:(id)sender;
 - (IBAction)clickTravelUtilityButton:(id)sender;
 - (IBAction)clickTravelTransportButton:(id)sender;
+- (IBAction)clickTraveGuideButton:(id)sender;
 - (IBAction)clickNearbyButton:(id)sender;
 - (IBAction)clickMoreButton:(id)sender;
 -(void) clickTitle:(id)sender;
