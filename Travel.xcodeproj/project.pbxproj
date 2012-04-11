@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A30D610915354943007CE0F4 /* PlaceUtils.m */; };
 		A31115161532DBEB00E33BB2 /* NSData+QBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115041532DBEB00E33BB2 /* NSData+QBase64.m */; };
 		A31115171532DBEB00E33BB2 /* NSString+QEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115061532DBEB00E33BB2 /* NSString+QEncoding.m */; };
 		A31115181532DBEB00E33BB2 /* NSURL+QAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115081532DBEB00E33BB2 /* NSURL+QAdditions.m */; };
@@ -490,6 +491,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A30D610815354943007CE0F4 /* PlaceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceUtils.h; sourceTree = "<group>"; };
+		A30D610915354943007CE0F4 /* PlaceUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceUtils.m; sourceTree = "<group>"; };
 		A31115031532DBEB00E33BB2 /* NSData+QBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+QBase64.h"; path = "../NSData+QBase64.h"; sourceTree = "<group>"; };
 		A31115041532DBEB00E33BB2 /* NSData+QBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+QBase64.m"; path = "../NSData+QBase64.m"; sourceTree = "<group>"; };
 		A31115051532DBEB00E33BB2 /* NSString+QEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+QEncoding.h"; path = "../NSString+QEncoding.h"; sourceTree = "<group>"; };
@@ -1899,6 +1902,8 @@
 		CA238FA414FCCDE800114175 /* Place */ = {
 			isa = PBXGroup;
 			children = (
+				A30D610815354943007CE0F4 /* PlaceUtils.h */,
+				A30D610915354943007CE0F4 /* PlaceUtils.m */,
 				CA238FAB14FCDB0700114175 /* CommonPlace.h */,
 				CA238FAC14FCDB0700114175 /* CommonPlace.m */,
 				CA238FAE14FCDB1500114175 /* PlaceManager.h */,
@@ -3608,6 +3613,7 @@
 				A48E05BB15342BD300B2695E /* TravelTipsManager.m in Sources */,
 				EA5C766A1534575B0025AFB2 /* CityConfigDataSource.m in Sources */,
 				EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */,
+				A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
