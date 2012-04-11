@@ -28,6 +28,7 @@
 #import "ShareToSinaController.h"
 #import "ShareToQQController.h"
 #import "RouteController.h"
+#import "GuideController.h"
 
 @implementation MainController
 
@@ -188,6 +189,13 @@
     CommonInfoController *controller = [[CommonInfoController alloc]initWithDataSource:[TravelTransportDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];  
+}
+
+- (IBAction)clickTraveGuideButton:(id)sender
+{
+    GuideController *controller = [[GuideController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (IBAction)clickTravelRouteBtn:(id)sender {
