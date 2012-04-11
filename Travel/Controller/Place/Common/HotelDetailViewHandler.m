@@ -8,34 +8,10 @@
 
 #import "CommonPlaceDetailController.h"
 #import "Place.pb.h"
+#import "PlaceUtils.h"
 
 @implementation HotelDetailViewHandler
 @synthesize commonController;
-
-- (NSString*)starToString:(int32_t)star
-{
-    switch (star) {
-        case 1:
-            return NSLS(@"一星级");
-            break;
-        case 2:
-            return NSLS(@"二星级");
-            break;
-        case 3:
-            return NSLS(@"三星级");
-            break;
-        case 4:
-            return NSLS(@"四星级");
-            break;
-        case 5:
-            return NSLS(@"五星级");
-            break;
-            
-        default:
-            break;
-    }
-    return nil;
-}
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -98,7 +74,7 @@
     
     [self.commonController addIntroductionViewWith: NSLS(@"酒店简介") description:[place introduction]];
     
-    [self addStarLevelViewWith: NSLS(@"酒店星级") description:[self starToString:[place hotelStar]] starCount:[place hotelStar]];
+    [self addStarLevelViewWith: NSLS(@"酒店星级") description:[PlaceUtils hotelStarToString:[place hotelStar]] starCount:[place hotelStar]];
     
     //NSString *keyWords = [[place keywordsList] componentsJoinedByString:@" "];
     NSString *keyWords = [[place keywordsList] objectAtIndex:0];
