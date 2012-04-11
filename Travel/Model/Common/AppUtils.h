@@ -36,6 +36,9 @@
 + (NSString*)getPackageFilePath:(int)cityId;
 + (NSArray*)getPlaceFilePathList:(int)cityId;
 
++ (NSArray*)getGuideFilePathList:(int)cityId;
++ (NSArray*)getRouteFilePathList:(int)cityId;
+
 //interface for ...
 + (NSString*)getZipFilePath:(int)cityId;
 + (NSString*)getAppFilePath;

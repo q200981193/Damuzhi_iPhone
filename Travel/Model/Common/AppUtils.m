@@ -57,12 +57,32 @@
 + (NSArray*)getPlaceFilePathList:(int)cityId
 {
     NSString *palceFileDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_PLACE_DATA];
-    NSArray *filenameList = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:palceFileDir error:nil];
-    NSMutableArray *filePathList = [[NSMutableArray alloc] init];
+    
+    return [self getFilePathList:palceFileDir];
+}
+
++ (NSArray*)getGuideFilePathList:(int)cityId
+{
+    NSString *guideFileDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_GUIDE_DATA];
+    
+    return [self getFilePathList:guideFileDir];
+}
+
++ (NSArray*)getRouteFilePathList:(int)cityId
+{
+    NSString *guideRouteDir = [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_ROUTE_DATA];
+    
+    return [self getFilePathList:guideRouteDir];
+}
+
++ (NSArray*)getFilePathList:(NSString*)fileDir
+{
+    NSArray *filenameList = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:fileDir error:nil];
+    NSMutableArray *filePathList = [[[NSMutableArray alloc] init] autorelease];
     
     for (NSString *filename in filenameList) {
         BOOL flag = YES;
-        NSString *fullPath = [palceFileDir stringByAppendingPathComponent:filename];
+        NSString *fullPath = [fileDir stringByAppendingPathComponent:filename];
         if ([[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&flag]) {
             if (!flag) {
                 [filePathList addObject:fullPath];
