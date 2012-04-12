@@ -70,7 +70,7 @@
     }
     RouteCell* routeCell = (RouteCell*)cell;
     [routeCell setCellData:[dataList objectAtIndex:row]];
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
 }
 
