@@ -3,7 +3,7 @@
 //  Travel
 //
 //  Created by  on 12-2-29.
-//  Copyright (c) 2012�?__MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012Âπ?__MyCompanyName__. All rights reserved.
 //
 
 #import "SlideImageView.h"
@@ -15,8 +15,10 @@
 @implementation SlideImageView
 
 @synthesize scrollView;
-
 @synthesize pageControl;
+@synthesize imageForPageStateNormal = _imageForPageStateNormal;
+@synthesize imageForPageStateHighted = _imageForPageStateHighted;
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -27,10 +29,10 @@
         scrollView.pagingEnabled = YES;
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.showsHorizontalScrollIndicator = NO;
-        
+        scrollView.delegate = self;
+                
         pageControl = [[UICustomPageControl alloc] initWithFrame:CGRectMake(self.bounds.origin.x/2, self.bounds.size.height-DEFAULT_HEIGHT_OF_PAGE_CONTROL, self.bounds.size.width, DEFAULT_HEIGHT_OF_PAGE_CONTROL)]; 
         
-        scrollView.delegate = self;
         [pageControl addTarget:self action:@selector(pageClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -40,12 +42,33 @@
 {
     [scrollView release];
     [pageControl release];
+    [_imageForPageStateNormal release];
+    [_imageForPageStateHighted release];
     [super dealloc];
 }
 
 
 // images is a NSString array that contain a list of absoute path or absolute URL or bundle file name of the images.
 - (void)setImages:(NSArray*)images{
+    [self addImageScrollView:images];
+    [self addPageControl:[images count]];
+}
+
+- (void)addPageControl:(int)imagesCount
+{
+    if (imagesCount <=1 ) {
+        return;
+    }
+    
+    pageControl.numberOfPages = imagesCount;
+    [pageControl setImagePageStateNormal:[UIImage imageNamed:_imageForPageStateNormal]];
+    [pageControl setImagePageStateHighted:[UIImage imageNamed:_imageForPageStateHighted]];
+            
+    [self addSubview:pageControl];
+}
+
+- (void)addImageScrollView:(NSArray*)images
+{
     // remove all old previous images
     NSArray* subviews = [scrollView subviews];
     for (UIView* subview in subviews){
@@ -63,13 +86,13 @@
         frame.size = scrollView.frame.size;
         
         NSString *image = [images objectAtIndex:i];
-    
+        
         HJManagedImageV *imageView = [[HJManagedImageV alloc] initWithFrame:frame]; 
         
         NSLog(@"image = %@", image);
-    
+        
         [imageView showLoadingWheel];
-         
+        
         if ([image isAbsolutePath]) {
             // Load image from file
             [imageView setImage:[[UIImage alloc] initWithContentsOfFile:[images objectAtIndex:i]]];
@@ -90,12 +113,7 @@
         [imageView release];
     }
     
-    pageControl.numberOfPages = imagesCount;
-    [pageControl setImagePageStateNormal:[UIImage imageNamed:@"pageStateNormal.jpg"]];
-    [pageControl setImagePageStateHighted:[UIImage imageNamed:@"pageStateHeight.jpg"]];
-    
     [self addSubview:scrollView];
-    [self addSubview:pageControl];
 }
 
 - (void) managedImageSet:(HJManagedImageV*)mi

@@ -14,6 +14,8 @@
 
 @property (nonatomic, retain)IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain)IBOutlet UICustomPageControl *pageControl;
+@property (nonatomic, retain) NSString *imageForPageStateNormal;
+@property (nonatomic, retain) NSString *imageForPageStateHighted;
 
 - (id)initWithFrame:(CGRect)frame;
 
