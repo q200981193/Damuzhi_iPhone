@@ -15,8 +15,8 @@
 #import "AppManager.h"
 #import "CityOverviewManager.h"
 #import "SelectedItemsManager.h"
-#import "HelpController.h"
 #import "UIImageUtil.h"
+#import "CommonWebController.h"
 
 
 @implementation CommonPlaceListController
@@ -67,7 +67,8 @@
 - (void)clickHelp:(id)sender
 {
     NSLog(@"click help");
-    HelpController *controller = [[HelpController alloc] init];
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[[AppManager defaultManager] getHelpHtml]];
+    controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

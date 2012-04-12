@@ -24,11 +24,11 @@
 #import "NearbyController.h"
 #import "AppManager.h"
 #import "CityManagementController.h"
-#import "HelpController.h"
 #import "ShareToSinaController.h"
 #import "ShareToQQController.h"
 #import "RouteController.h"
 #import "GuideController.h"
+#import "CommonWebController.h"
 
 @implementation MainController
 
@@ -228,7 +228,8 @@
 }
 
 - (IBAction)clickHelp:(id)sender {
-    HelpController *controller = [[HelpController alloc] init];
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[[AppManager defaultManager] getHelpHtml]];
+    controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
