@@ -38,6 +38,7 @@
 #define     IMAGE_CITY_REFRESH_BTN      @"refresh_btn.png"
 #define     IMAGE_CITY_DOWNLOADED_NO    @"no_s.png"
 #define     IMAGE_CITY_DOWNLOADED_YES   @"yes_s.png"
+#define     IMAGE_CITY_CELL_ACCESSORY   @"go_btn.png"
 
 #define     IMAGE_NEARBY_MAP_BTN        @"map_btn.png"
 #define     IMAGE_NEARBY_MAP_BTNON      @"map_btnon.png"
@@ -54,5 +55,7 @@
 #pragma mark favorite
 #define     IMAGE_FAVORITE_DELETE_BTN   @"delete.png"
 
+#pragma mark -
+#define     IMAGE_GUIDE_CELL  @"book.png"
 
 #endif

@@ -9,14 +9,19 @@
 #import "GuideController.h"
 #import "AppManager.h"
 #import "TravelTips.pb.h"
+#import "ImageName.h"
+#import "LocaleUtils.h"
 
 @implementation GuideController
 
 - (void)viewDidLoad
 {
-    [self setBackgroundImageName:@"all_page_bg2.jpg"];
+    [self setBackgroundImageName:@"all_page_bg.jpg"];
     [super viewDidLoad];
-    
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    [self.navigationItem setTitle:NSLS(@"游记攻略")];
     
     [[TravelTipsService defaultService] findTravelGuideList:[[AppManager defaultManager] getCurrentCityId] viewController:self];
 }
@@ -31,11 +36,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
-	cell.textLabel.text = tip.name;
 }
 
 #pragma mark - TravelTipsServiceDelegate
@@ -57,13 +57,37 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        
+        cell.imageView.image = [UIImage imageNamed:IMAGE_GUIDE_CELL];
+        
+        UIImage* image = [UIImage imageNamed:IMAGE_CITY_CELL_ACCESSORY];
+        UIImageView* cellAccessoryView = [[UIImageView alloc] initWithImage:image];
+        cell.accessoryView = cellAccessoryView;
+        [cellAccessoryView release];
+        
+        cell.textLabel.textColor = [UIColor colorWithRed:97.0/255.0 green:97.0/255.0 blue:97.0/255.0 alpha:1.0];
     }
     
-	[self configureCell:cell atIndexPath:indexPath];
+	CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
+	cell.textLabel.text = tip.name;
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 42;
+}
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 18;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 
 @end
