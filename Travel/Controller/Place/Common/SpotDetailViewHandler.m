@@ -54,8 +54,13 @@
 
     [self.commonController addIntroductionViewWith: NSLS(@"景点介绍") description:[place introduction]];
     [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[place price]];
+    
     [self.commonController addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];
+    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
+    NSRange range = NSMakeRange(0, [transportation length]); 
+    [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
+    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
+    
     [self.commonController addSegmentViewWith: NSLS(@"旅游贴士") description:[place tips]];
 }
 

@@ -8,6 +8,7 @@
 
 #import "CommonPlaceDetailController.h"
 #import "Place.pb.h"
+#import "AppManager.h"
 
 @implementation RestaurantViewHandler
 
@@ -18,7 +19,8 @@
     
     [self.commonController addIntroductionViewWith: NSLS(@"餐馆介绍") description:[place introduction]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"菜式类型") description: @"粤菜"];
+    NSString *str = [[AppManager defaultManager] getSubCategotyName:[place categoryId] subCategoryId:[place subCategoryId]];
+    [self.commonController addSegmentViewWith: NSLS(@"菜式类型") description: str];
     
     [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[place avgPrice]];
     
@@ -26,7 +28,10 @@
     
     [self.commonController addSegmentViewWith: NSLS(@"特色菜式") description:[[place typicalDishesList] componentsJoinedByString:@" "]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];
+    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
+    NSRange range = NSMakeRange(0, [transportation length]); 
+    [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
+    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
 }
 
 - (id)initWith:(CommonPlaceDetailController *)controller
