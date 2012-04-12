@@ -32,8 +32,6 @@
 		A3CD5AE8152803A80049D2F3 /* tips.html in Resources */ = {isa = PBXBuildFile; fileRef = A3CD5AE5152803A80049D2F3 /* tips.html */; };
 		A3CD5B2915280D2C0049D2F3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3CD5B2715280D2C0049D2F3 /* Localizable.strings */; };
 		A3CD5B2B15280D360049D2F3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A3CD5B2715280D2C0049D2F3 /* Localizable.strings */; };
-		A3DCBBC41533DCFE0067E69E /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DCBBC21533DCFE0067E69E /* AboutController.m */; };
-		A3DCBBC51533DCFE0067E69E /* AboutController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3DCBBC31533DCFE0067E69E /* AboutController.xib */; };
 		A3DCBC19153428BE0067E69E /* SinaWeibo_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3DCBC18153428BE0067E69E /* SinaWeibo_logo@2x.png */; };
 		A3DE351E153285B80034C6D5 /* ShareToQQController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DE351C153285B80034C6D5 /* ShareToQQController.m */; };
 		A3DE351F153285B80034C6D5 /* ShareToQQController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3DE351D153285B80034C6D5 /* ShareToQQController.xib */; };
@@ -202,8 +200,6 @@
 		A4BB6E3415294CF4001CEA6B /* DownloadListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6E3015294CF2001CEA6B /* DownloadListCell.xib */; };
 		A4BB6E401529A9AD001CEA6B /* CityOverviewService.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */; };
 		A4BB6E50152A415D001CEA6B /* SelectedItemsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E4F152A415D001CEA6B /* SelectedItemsManager.m */; };
-		A4BB6E9F152D3D78001CEA6B /* HelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BB6E9D152D3D78001CEA6B /* HelpController.m */; };
-		A4BB6EA0152D3D78001CEA6B /* HelpController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4BB6E9E152D3D78001CEA6B /* HelpController.xib */; };
 		A4C6BC4C152DF83000681DD7 /* EntertainmentDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C6BC48152DF83000681DD7 /* EntertainmentDetailViewHandler.m */; };
 		A4C6BC4D152DF83000681DD7 /* HotelDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C6BC49152DF83000681DD7 /* HotelDetailViewHandler.m */; };
 		A4C6BC4E152DF83000681DD7 /* RestaurantDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C6BC4A152DF83000681DD7 /* RestaurantDetailViewHandler.m */; };
@@ -544,9 +540,6 @@
 		A3CD5B2815280D2C0049D2F3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A3CD5B2A15280D360049D2F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A3CD5B2C15280E280049D2F3 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		A3DCBBC11533DCFE0067E69E /* AboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutController.h; sourceTree = "<group>"; };
-		A3DCBBC21533DCFE0067E69E /* AboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutController.m; sourceTree = "<group>"; };
-		A3DCBBC31533DCFE0067E69E /* AboutController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutController.xib; sourceTree = "<group>"; };
 		A3DCBC18153428BE0067E69E /* SinaWeibo_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SinaWeibo_logo@2x.png"; sourceTree = "<group>"; };
 		A3DE351B153285B80034C6D5 /* ShareToQQController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareToQQController.h; sourceTree = "<group>"; };
 		A3DE351C153285B80034C6D5 /* ShareToQQController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareToQQController.m; sourceTree = "<group>"; };
@@ -761,9 +754,6 @@
 		A4BB6E3F1529A9AD001CEA6B /* CityOverviewService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverviewService.m; sourceTree = "<group>"; };
 		A4BB6E4E152A415D001CEA6B /* SelectedItemsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedItemsManager.h; sourceTree = "<group>"; };
 		A4BB6E4F152A415D001CEA6B /* SelectedItemsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedItemsManager.m; sourceTree = "<group>"; };
-		A4BB6E9C152D3D78001CEA6B /* HelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpController.h; sourceTree = "<group>"; };
-		A4BB6E9D152D3D78001CEA6B /* HelpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpController.m; sourceTree = "<group>"; };
-		A4BB6E9E152D3D78001CEA6B /* HelpController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpController.xib; sourceTree = "<group>"; };
 		A4C6BC48152DF83000681DD7 /* EntertainmentDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntertainmentDetailViewHandler.m; sourceTree = "<group>"; };
 		A4C6BC49152DF83000681DD7 /* HotelDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelDetailViewHandler.m; sourceTree = "<group>"; };
 		A4C6BC4A152DF83000681DD7 /* RestaurantDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewHandler.m; sourceTree = "<group>"; };
@@ -1502,9 +1492,6 @@
 				A3ACE10F1524459F00C9B3DD /* HistoryController.h */,
 				A3ACE1101524459F00C9B3DD /* HistoryController.m */,
 				A3ACE1111524459F00C9B3DD /* HistoryController.xib */,
-				A3DCBBC11533DCFE0067E69E /* AboutController.h */,
-				A3DCBBC21533DCFE0067E69E /* AboutController.m */,
-				A3DCBBC31533DCFE0067E69E /* AboutController.xib */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -1842,16 +1829,6 @@
 				A4BB6E4F152A415D001CEA6B /* SelectedItemsManager.m */,
 			);
 			path = SelectedItems;
-			sourceTree = "<group>";
-		};
-		A4BB6E9B152D3D57001CEA6B /* Help */ = {
-			isa = PBXGroup;
-			children = (
-				A4BB6E9C152D3D78001CEA6B /* HelpController.h */,
-				A4BB6E9D152D3D78001CEA6B /* HelpController.m */,
-				A4BB6E9E152D3D78001CEA6B /* HelpController.xib */,
-			);
-			path = Help;
 			sourceTree = "<group>";
 		};
 		A4EAFCCA150DB9BB003C35E5 /* App */ = {
@@ -3017,7 +2994,6 @@
 			children = (
 				A313DE56152F02EB004E0964 /* Share */,
 				A40D9DFF150C87AB00BB2D29 /* ImageName.h */,
-				A4BB6E9B152D3D57001CEA6B /* Help */,
 				A327DEEA15231A31003DEE8C /* Favorite */,
 				A48782BC15071BAA00A0D91E /* More */,
 				CA238FCB14FE5ECE00114175 /* Common */,
@@ -3296,11 +3272,9 @@
 				EAFE21EC152861480013D040 /* NearByRecommendController.xib in Resources */,
 				A4BB6E3215294CF4001CEA6B /* CityListCell.xib in Resources */,
 				A4BB6E3415294CF4001CEA6B /* DownloadListCell.xib in Resources */,
-				A4BB6EA0152D3D78001CEA6B /* HelpController.xib in Resources */,
 				A3EB73E4152E965C003BA8B8 /* IOS SDK Readme 2.0.0.docx in Resources */,
 				A313DE5E152F02EB004E0964 /* ShareToSinaController.xib in Resources */,
 				A3DE351F153285B80034C6D5 /* ShareToQQController.xib in Resources */,
-				A3DCBBC51533DCFE0067E69E /* AboutController.xib in Resources */,
 				A48E050E1534058900B2695E /* 1.zip in Resources */,
 				A48E050F1534058900B2695E /* app.dat in Resources */,
 				A48E05101534058900B2695E /* all_page_bg2@2x.jpg in Resources */,
@@ -3643,7 +3617,6 @@
 				A4BB6E3315294CF4001CEA6B /* DownloadListCell.m in Sources */,
 				A4BB6E401529A9AD001CEA6B /* CityOverviewService.m in Sources */,
 				A4BB6E50152A415D001CEA6B /* SelectedItemsManager.m in Sources */,
-				A4BB6E9F152D3D78001CEA6B /* HelpController.m in Sources */,
 				A4C6BC4C152DF83000681DD7 /* EntertainmentDetailViewHandler.m in Sources */,
 				A4C6BC4D152DF83000681DD7 /* HotelDetailViewHandler.m in Sources */,
 				A4C6BC4E152DF83000681DD7 /* RestaurantDetailViewHandler.m in Sources */,
@@ -3672,7 +3645,6 @@
 				A311151C1532DBEB00E33BB2 /* QOauthKey.m in Sources */,
 				A311151D1532DBEB00E33BB2 /* QSyncHttp.m in Sources */,
 				A311151E1532DBEB00E33BB2 /* QWeiboRequest.m in Sources */,
-				A3DCBBC41533DCFE0067E69E /* AboutController.m in Sources */,
 				A48E059115341B3A00B2695E /* FeekbackController.m in Sources */,
 				A48E05B615342BBE00B2695E /* RouteController.m in Sources */,
 				A48E05BB15342BD300B2695E /* TravelTipsManager.m in Sources */,
