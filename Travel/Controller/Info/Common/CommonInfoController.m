@@ -63,7 +63,7 @@
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
-    
+        
     self.dataWebview.userInteractionEnabled = NO;
     dataWebview.delegate = self;
     scrollView.backgroundColor = [UIColor whiteColor];
