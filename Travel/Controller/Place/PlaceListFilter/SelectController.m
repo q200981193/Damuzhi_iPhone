@@ -55,7 +55,7 @@
                                 action:@selector(clickFinish:)];
     }
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"select_bg_1.png"]]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg.jpg"]]];
 }
 
 - (void)viewDidUnload

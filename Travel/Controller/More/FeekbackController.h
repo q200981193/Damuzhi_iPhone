@@ -8,13 +8,14 @@
 
 #import "PPViewController.h"
 #import "UserService.h"
+#import "UIPlaceholderTextView.h"
 
 
 @interface FeekbackController : PPViewController <UITextViewDelegate, UITextFieldDelegate, UserServiceDelegate>
 
 @property (assign, nonatomic) CGPoint viewCenter;
 
-@property (retain, nonatomic) IBOutlet UITextView *feekbackTextView;
+@property (retain, nonatomic) IBOutlet UIPlaceholderTextView *feekbackTextView;
 
 @property (retain, nonatomic) IBOutlet UITextField *contactWayTextField;
 
