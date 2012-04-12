@@ -26,7 +26,8 @@
     NSRange range = NSMakeRange(0, [transportation length]); 
     [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
     [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
-    
+//    [self.commonController addTransportView:place];
+
     [self.commonController addSegmentViewWith: NSLS(@"购物贴士") description:[place tips]];
     
     

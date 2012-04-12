@@ -81,4 +81,5 @@
 
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;
+- (void)addTransportView:(Place*)place;
 @end
