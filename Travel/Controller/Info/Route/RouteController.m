@@ -12,6 +12,8 @@
 #import "UIImageUtil.h"
 #import "PPDebug.h"
 #import "RouteCell.h"
+#import "CommonWebController.h"
+#import "AppConstants.h"
 
 @implementation RouteController
 
@@ -74,7 +76,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
     
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
+    controller.title = tip.name;
+    [self.navigationController pushViewController:controller animated:YES];
+    
+    [controller release];
 }
 
 

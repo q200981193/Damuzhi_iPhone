@@ -7,22 +7,38 @@
 //
 
 #import "CommonWebController.h"
+#import "AppUtils.h"
 
 @implementation CommonWebController
 
-@synthesize urlString = _urlString;
+@synthesize htmlPath = _htmlPath;
 @synthesize webView;
 
 
-- (void)initWithWebUrl:(NSString*)urlString
+- (CommonWebController*)initWithWebUrl:(NSString*)htmlPath
 {
-    self.urlString = urlString;
+    self.htmlPath = htmlPath;
+    return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@"返回") imageName:@"back.png" action:@selector(clickBack:)];
+    
+    webView.delegate = self;
+    
+    //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
+    
+    NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:_htmlPath];
+    
+    //request from a url, load request to web view.
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSLog(@"load webview url = %@", [request description]);
+    if (request) {
+        [self.webView loadRequest:request];        
+    }
 }
 
 - (void)viewDidUnload
@@ -34,8 +50,32 @@
 }
 
 - (void)dealloc {
-    [_urlString release];
+    [_htmlPath release];
     [webView release];
     [super dealloc];
 }
+
+
+#pragma mark -
+#pragma mark: implementation of web view delegate.
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self showActivityWithText:NSLS(@"数据加载中...")];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self hideActivity];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [self popupMessage:@"数据加载失败" title:nil];
+    [self hideActivity];
+}
+
 @end

@@ -29,6 +29,8 @@
     
     // Set feekback text view delegate.
     self.feekbackTextView.delegate = self;
+    self.feekbackTextView.placeholder = NSLS(@"请输入您的建议或意见!");
+    self.feekbackTextView.placeholderColor = [UIColor lightGrayColor];
     
     // Set navigation bar buttons
     [self setNavigationLeftButton:NSLS(@"返回") imageName:IMAGE_NAVIGATIONBAR_BACK_BTN action:@selector(clickBack:)];
@@ -118,7 +120,6 @@
 #define MAX_LENGTH_OF_CONTACT 80
 - (void)clickSubmit:(id)sender
 {
-    [self hideKeyboard];
     NSString *contact = [self.contactWayTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString *feekback = [self.feekbackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
@@ -142,6 +143,7 @@
         return;
     }
     
+    [self hideKeyboard];
     PPDebug(@"contact = %@, feekback = %@", contact, feekback);
     [[UserService defaultService] submitFeekback:self feekback:feekback contact:contact];
 }
@@ -183,7 +185,8 @@
 - (void)keyboardDidShow:(NSNotification *)notification
 {
 	// adjust current view frame
-	
+    PPDebug(@"keyboardDidShow");
+
 	// get keyboard frame
 	NSDictionary* info = [notification userInfo];
 	NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];	
@@ -220,6 +223,7 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
+    PPDebug(@"keyboardDidHide");
     [self moveView:self.view toCenter:_viewCenter needAnimation:YES];
 }
 
