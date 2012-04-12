@@ -52,6 +52,7 @@
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
+    self.navigationItem.title = NSLS(@"更多");
     
     self.dataList = [NSArray arrayWithObjects:
                      OPENED_CITY, 
@@ -64,11 +65,9 @@
                      APP_RECOMMENDATION,
                      nil];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:0xDE green:0xE2 blue:0xE4 alpha:1]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
     
-//    self.dataTableView.backgroundColor = [UIColor whiteColor];
-    
-    UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(167, 9, 79, 27)];
+    UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(194, 8, 79, 27)];
     [aSwitch addTarget:self action:@selector(clickSwitch:) forControlEvents:UIControlEventValueChanged];
     self.showImageSwitch = aSwitch;
     [aSwitch release];
@@ -97,10 +96,16 @@
 
 #pragma mark Table View Delegate
 
+#define MORE_TABLE_CELL_HEIGHT  44
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 44;
+	return MORE_TABLE_CELL_HEIGHT;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 22;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -123,6 +128,9 @@
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;		
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [cell.imageView setImage:[UIImage imageNamed:@"more_icon.png"]];
+        
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.textLabel.textColor = [UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0];
 	}
 	
 	// set text label
@@ -134,6 +142,13 @@
 	}
     
     if (row == 0) {
+        UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(114, 2, 122, MORE_TABLE_CELL_HEIGHT-4)];
+        cityLabel.text = [[AppManager defaultManager] getCurrentCityName];
+        cityLabel.font = [UIFont boldSystemFontOfSize:16];
+        cityLabel.textAlignment = UITextAlignmentRight;
+        cityLabel.textColor = [UIColor colorWithRed:35.0/255.0 green:110.0/255.0 blue:216.0/255.0 alpha:1.0];
+        [cell.contentView addSubview:cityLabel];
+        [cityLabel release];
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
     
