@@ -56,5 +56,8 @@
 + (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL;
 + (NSString*)getProvidedServiceIconPath:(int)providedServiceId;
 
++ (BOOL)isShowImage;
++ (void)enableImageShow:(BOOL)isShow;
+
 
 @end

@@ -186,4 +186,19 @@
 
 
 
++ (BOOL)isShowImage
+{
+    //default return YES
+    if (nil == [[NSUserDefaults standardUserDefaults] objectForKey:KEY_IS_SHOW_IMAGE]) {
+        return YES;
+    }
+    return [[NSUserDefaults standardUserDefaults] boolForKey:KEY_IS_SHOW_IMAGE];
+}
+
++ (void)enableImageShow:(BOOL)isShow
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:isShow forKey:KEY_IS_SHOW_IMAGE];
+}
+
 @end

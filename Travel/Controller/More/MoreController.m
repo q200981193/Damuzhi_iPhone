@@ -11,8 +11,8 @@
 #import "HistoryController.h"
 #import "AppDelegate.h"
 #import "FeekbackController.h"
-#import "UserManager.h"
 #import "CommonWebController.h"
+#import "AppUtils.h"
 
 @interface MoreController ()
 
@@ -71,7 +71,7 @@
     [aSwitch addTarget:self action:@selector(clickSwitch:) forControlEvents:UIControlEventValueChanged];
     self.showImageSwitch = aSwitch;
     [aSwitch release];
-    showImageSwitch.on = [[UserManager defaultManager] isShowImage];
+    showImageSwitch.on = [AppUtils isShowImage];
 }
 
 - (void)viewDidUnload
@@ -247,7 +247,7 @@
 - (void)clickSwitch:(id)sender
 {
     UISwitch *currentSwitch = (UISwitch *)sender;
-    [[UserManager defaultManager] saveIsShowImage:currentSwitch.on];
+    [AppUtils enableImageShow:currentSwitch.on];
 }
 
 @end

@@ -589,11 +589,17 @@
 
 - (void)addSlideImageView
 {
-    //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
-    for (NSString *image in self.place.imagesList) {
-        NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
-        [imagePathList addObject:path];
+
+    if ([AppUtils isShowImage]) {
+        //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
+        for (NSString *image in self.place.imagesList) {
+            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+            [imagePathList addObject:path];
+        }
+    }
+    else {
+        [imagePathList addObject:IMAGE_PLACE_DETAIL];
     }
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
@@ -641,7 +647,6 @@
     [self addBottomView];
     
     [[PlaceStorage historyManager] addPlace:self.place];
-    
 }
 
 - (void)viewDidUnload

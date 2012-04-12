@@ -9,6 +9,7 @@
 #import "SlideImageView.h"
 #import "HJObjManager.h"
 #import "PPApplication.h"
+#import "ImageName.h"
 
 #define DEFAULT_HEIGHT_OF_PAGE_CONTROL 20
 
@@ -18,7 +19,6 @@
 @synthesize pageControl;
 @synthesize imageForPageStateNormal = _imageForPageStateNormal;
 @synthesize imageForPageStateHighted = _imageForPageStateHighted;
-
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -74,7 +74,7 @@
     for (UIView* subview in subviews){
         [subview removeFromSuperview];
     }
-    
+
     //set content size of scroll view.
     int imagesCount = [images count];
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width*imagesCount, scrollView.frame.size.height);
@@ -85,28 +85,26 @@
         frame.origin.y = 0;
         frame.size = scrollView.frame.size;
         
+        HJManagedImageV *imageView = [[HJManagedImageV alloc] initWithFrame:frame];
+        
+        [imageView setImage:[UIImage imageNamed:IMAGE_PLACE_DETAIL]];
+                
         NSString *image = [images objectAtIndex:i];
-        
-        HJManagedImageV *imageView = [[HJManagedImageV alloc] initWithFrame:frame]; 
-        
-        NSLog(@"image = %@", image);
-        
-        [imageView showLoadingWheel];
-        
         if ([image isAbsolutePath]) {
             // Load image from file
-            [imageView setImage:[[UIImage alloc] initWithContentsOfFile:[images objectAtIndex:i]]];
+            [imageView setImage:[[UIImage alloc] initWithContentsOfFile:image]];
         }
         else if([image hasPrefix:@"http:"]){
             // Load image from url
+            [imageView showLoadingWheel];
+            
             imageView.callbackOnSetImage = self;
-            [imageView clear];
             imageView.url = [NSURL URLWithString:image];
             [GlobalGetImageCache() manage:imageView];
         }
         else{
             // Load image from bundle
-            [imageView setImage:[images objectAtIndex:i]];
+            [imageView setImage:[UIImage imageNamed:image]];
         }
         
         [scrollView addSubview:imageView];
@@ -134,8 +132,8 @@
     CGFloat pageWidth = scrollView1.frame.size.width;
     int page = floor((scrollView1.contentOffset.x - pageWidth/2)/pageWidth +1);
     pageControl.currentPage = page;
-    [pageControl setImagePageStateNormal:[UIImage imageNamed:@"pageStateNormal.jpg"]];
-    [pageControl setImagePageStateHighted:[UIImage imageNamed:@"pageStateHeight.jpg"]];
+    [pageControl setImagePageStateNormal:[UIImage imageNamed:_imageForPageStateNormal]];
+    [pageControl setImagePageStateHighted:[UIImage imageNamed:_imageForPageStateHighted]];
 }
 
 #pragma mark -

@@ -9,6 +9,9 @@
 #ifndef Travel_Header_h
 #define Travel_Header_h
 
+#define IMAGE_PLACE_DETAIL @"default_b.png"
+
+
 #define     IMAGE_HEART                 @"heart.png"
 #define     IMAGE_FOOD                  @"food.png"
 #define     IMAGE_SLEEP                 @"sleep.png"

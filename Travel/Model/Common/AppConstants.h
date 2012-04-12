@@ -48,4 +48,7 @@
 #define DEFAULT_CITY_NAME                   NSLS(@"香港")
 #define KEY_CURRENT_CITY                    @"current_city"
 
+#define KEY_IS_SHOW_IMAGE   @"KEY_IS_SHOW_IMAGE"
+
+
 #endif
