@@ -17,7 +17,10 @@
 
 - (CommonWebController*)initWithWebUrl:(NSString*)htmlPath
 {
-    self.htmlPath = htmlPath;
+    self = [super init];
+    if (self){
+        self.htmlPath = htmlPath;
+    }
     return self;
 }
 

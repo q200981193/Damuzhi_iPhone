@@ -20,8 +20,8 @@
 #import "LogUtil.h"
 #import "PlaceStorage.h"
 #import "NearByRecommendController.h"
-#import "HelpController.h"
 #import "AnimationManager.h"
+#import "CommonWebController.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -135,7 +135,8 @@
 - (void)clickHelpButton:(id)sender
 {
     NSLog(@"click help");
-    HelpController *controller = [[HelpController alloc] init];
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[[AppManager defaultManager] getHelpHtml]];
+    controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

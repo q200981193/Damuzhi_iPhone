@@ -11,6 +11,8 @@
 #import "TravelTips.pb.h"
 #import "ImageName.h"
 #import "LocaleUtils.h"
+#import "AppUtils.h"
+#import "CommonWebController.h"
 
 @implementation GuideController
 
@@ -87,7 +89,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
+//    NSLog(@"%@",tip.html);
+    CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
     
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
+    controller.title = tip.name;
+    [self.navigationController pushViewController:controller animated:YES];
+    
+    [controller release];
 }
 
 @end
