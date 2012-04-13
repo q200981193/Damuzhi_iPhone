@@ -112,18 +112,31 @@
     
     if (!found) {
         [cell.imageView setImage:[self getUnselectedImage]];
+        cell.accessoryView = nil;
     }else 
     {
         [cell.imageView setImage:[self getSelectedImage]];
-        cell.backgroundView = [self getBackgoundImageView:row];    
+        cell.backgroundView = [self getBackgoundImageView:row];
+        if (!_multiOptinos) {
+            cell.accessoryView =[self getCheckedImageView];
+        }
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
 }
 
+- (UIImageView*)getCheckedImageView
+{
+    CGRect rect = CGRectMake(0, 0, 36, 36);
+    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:rect] autorelease];
+    [imageView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
+    
+    return  imageView;
+}
+
 - (UIView*)getBackgoundImageView:(int)row
 {
-    UIImageView *view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 310, 36)] autorelease];
+    UIImageView *view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 20)] autorelease];
   
     if (row == 0) {
         [view setImage:[UIImage imageNamed:@"select_bg_top.png"]];
