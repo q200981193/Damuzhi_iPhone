@@ -468,7 +468,7 @@
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 3, 150, 14)];
         nameLabel.text = [place name];
-        nameLabel.font = [UIFont boldSystemFontOfSize:12];
+        nameLabel.font = [UIFont systemFontOfSize:12];
         nameLabel.textColor = DESCRIPTION_COLOR;
         nameLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:nameLabel];
@@ -477,7 +477,7 @@
         UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 3, 60, 14)];
         
         distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
-        distanceLabel.font = [UIFont boldSystemFontOfSize:12];
+        distanceLabel.font = [UIFont systemFontOfSize:12];
         distanceLabel.textColor = DESCRIPTION_COLOR;
         distanceLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:distanceLabel];
@@ -532,7 +532,7 @@
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
         nameLabel.text = [subArray objectAtIndex:0];
-        nameLabel.font = [UIFont boldSystemFontOfSize:12];
+        nameLabel.font = [UIFont systemFontOfSize:12];
         nameLabel.textColor = DESCRIPTION_COLOR;
         nameLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:nameLabel];
@@ -541,7 +541,7 @@
         UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 6, 100, 14)];
         
         distanceLabel.text = [subArray objectAtIndex:1];
-        distanceLabel.font = [UIFont boldSystemFontOfSize:12];
+        distanceLabel.font = [UIFont systemFontOfSize:12];
         distanceLabel.textColor = DESCRIPTION_COLOR;
         distanceLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:distanceLabel];
