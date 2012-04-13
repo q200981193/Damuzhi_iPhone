@@ -38,7 +38,6 @@
 #pragma mark: 
 - (void)dealloc {
     [_city release];
-    [_cityListCellDelegate release];
     [downloadProgressView release];
     [downloadPersentLabel release];
     [downloadButton release];

@@ -65,9 +65,8 @@
 
 -(void) clickTitle:(id)sender
 {
-    CityManagementController *controller = [[CityManagementController alloc] init];
+    CityManagementController *controller = [CityManagementController getInstance];
     [self.navigationController pushViewController:controller animated:YES];
-    [controller release];        
 }
 
 

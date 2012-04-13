@@ -26,7 +26,8 @@
 @property (retain, nonatomic) IBOutlet UILabel *promptLabel;
 @property (retain, nonatomic) UIButton *cityListBtn;
 @property (retain, nonatomic) UIButton *downloadListBtn;
+@property (retain, nonatomic) NSTimer *timer;
 
-@property (retain, nonatomic)  NSTimer *timer;
++ (CityManagementController*)getInstance;
 
 @end

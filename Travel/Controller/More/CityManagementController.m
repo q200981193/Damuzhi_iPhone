@@ -16,6 +16,8 @@
 
 @implementation CityManagementController 
 
+static CityManagementController *_instance;
+
 @synthesize downloadList = _downloadList;
 @synthesize promptLabel = _promptLabel;
 @synthesize downloadTableView = _downloadTableView;
@@ -23,11 +25,23 @@
 @synthesize cityListBtn = _cityListBtn;
 @synthesize downloadListBtn = _downloadListBtn;
 
+
++ (CityManagementController*)getInstance
+{
+    if (_instance == nil) {
+        _instance = [[CityManagementController alloc] init];
+    }
+    
+    return _instance;
+}
+
 - (void)dealloc {
     [_downloadTableView release];
     [_downloadList release];
     [_tipsLabel release];
     [_promptLabel release];
+    [_timer release];
+    [_cityListBtn release];
     [super dealloc];
 }
 
@@ -53,12 +67,12 @@
     // Show city list table view.
     self.dataTableView.hidden = NO;
     self.downloadTableView.hidden = YES;
-    
+        
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
     [[AppService defaultService] setAppServiceDelegate:self];
-}
+} 
 
 - (void)viewDidUnload
 {
@@ -66,6 +80,7 @@
     // e.g. self.myOutlet = nil;
     [self setTipsLabel:nil];
     [self setPromptLabel:nil];
+    
     [super viewDidUnload];
 }
 
