@@ -59,5 +59,6 @@
 + (BOOL)isShowImage;
 + (void)enableImageShow:(BOOL)isShow;
 
++ (NSString*)getCategoryIcon:(int)categoryId;
 
 @end
