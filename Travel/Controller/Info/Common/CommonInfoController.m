@@ -64,7 +64,6 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
         
-    self.dataWebview.userInteractionEnabled = NO;
     dataWebview.delegate = self;
     scrollView.backgroundColor = [UIColor whiteColor];
     

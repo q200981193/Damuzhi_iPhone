@@ -155,29 +155,31 @@
 
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
-    self.nameLabel.text = [place name];
-    self.distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
+    imageView.center = CGPointMake(imageView.center.x, imageView.center.y+0.5);
+//    imageView.center = CGPointMake(imageView.frame.origin.x+imageView.center.x, self.center.y);
+    nameLabel.text = [place name];
+    distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];
-    self.priceLable.text = [NSString stringWithFormat:@"%@%@",
+    priceLable.text = [NSString stringWithFormat:@"%@%@",
                             [[AppManager defaultManager] getCurrencySymbol:place.cityId],
                             [place price]];
     
-    self.areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
+    areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
     
     if (place.categoryId == PLACE_TYPE_HOTEL) {
-        self.categoryLable.text = [PlaceUtils hotelStarToString:place.hotelStar];
+        categoryLable.text = [PlaceUtils hotelStarToString:place.hotelStar];
     }else {
-        self.categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
+        categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                     subCategoryId:[place subCategoryId]];
     }
     
     if ([[PlaceStorage favoriteManager] isPlaceInFavorite:place.placeId]) {
-        [self.favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
-        self.favoritesView.hidden = NO;
+        [favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
+        favoritesView.hidden = NO;
     }
     else {
-        [self.favoritesView setImage:nil];
-        self.favoritesView.hidden = YES;
+        [favoritesView setImage:nil];
+        favoritesView.hidden = YES;
     }
     
     

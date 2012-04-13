@@ -212,7 +212,7 @@
 							<object class="IBUIView" id="1022057312">
 								<reference key="NSNextResponder" ref="609629750"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrameSize">{100, 76}</string>
+								<string key="NSFrameSize">{100, 75}</string>
 								<reference key="NSSuperview" ref="609629750"/>
 								<reference key="NSNextKeyView" ref="325112332"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -226,7 +226,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{324, 75.5}</string>
+						<string key="NSFrameSize">{324, 75}</string>
 						<reference key="NSSuperview" ref="503030138"/>
 						<reference key="NSNextKeyView" ref="1022057312"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -240,13 +240,13 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{324, 76.5}</string>
+				<string key="NSFrameSize">{324, 76}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="609629750"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="609629750"/>
 				<string key="IBUIReuseIdentifier">PlaceCell</string>
-				<real value="78.5" key="IBUIRowHeight"/>
+				<real value="79" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

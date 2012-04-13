@@ -69,7 +69,10 @@
         CGRect rect = CGRectMake(0, 0, 16, 17);
         UIImageView *view = [[UIImageView alloc] initWithFrame:rect];
         [view setImage:[UIImage imageNamed:IMAGE_CITY_REFRESH_BTN]];
+        view.center = CGPointMake(updateButton.frame.size.width/2, updateButton.frame.size.height/2);
         [self.updateButton addSubview:view];
+        [view release];
+        
         self.updateButton.hidden = NO;
     }
     else {

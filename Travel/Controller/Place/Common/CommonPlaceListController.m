@@ -89,7 +89,7 @@
     [self setNavigationBarTitle];
         
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
-    UIImage *image = [UIImage strectchableImageName:@"select_tr_bg.png"];
+    UIImage *image = [UIImage imageNamed:@"select_tr_bg.png"];
     _buttonHolderView.backgroundColor = [UIColor colorWithPatternImage:image];
 
     [_filterHandler findAllPlaces:self];
