@@ -50,5 +50,10 @@
 
 #define KEY_IS_SHOW_IMAGE   @"KEY_IS_SHOW_IMAGE"
 
+#define PLACE_SPOT          1
+#define PLACE_HOTEL         2
+#define PLACE_RESTRAURANT   3
+#define PLACE_SHOPPING      4
+#define PLACE_ENTERTAINMENT 5
 
 #endif

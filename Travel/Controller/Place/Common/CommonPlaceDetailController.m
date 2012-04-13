@@ -441,13 +441,10 @@
         UIButton *rowView = [[[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*(i++), 300, 20)] autorelease];
         rowView.tag = [_placeList indexOfObject:place];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(2, 3, 14, 14)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 14, 14)];
         
-        NSString *destinationDir = [AppUtils getCategoryImageDir];
-        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [place categoryId]];
-        UIImage *image = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
-        
-//        UIImage *image = [UIImage imageNamed:@"ht"];
+        NSString *imageName = [AppUtils getCategoryIcon:[place categoryId]];
+        UIImage *image = [UIImage imageNamed:imageName];
         [imageView setImage:image];
         [rowView addSubview:imageView];
         [imageView release];
@@ -460,7 +457,7 @@
         [rowView addSubview:nameLabel];
         [nameLabel release];
         
-        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 3, 100, 14)];
+        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 3, 60, 14)];
         
         distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
         distanceLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -468,6 +465,13 @@
         distanceLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:distanceLabel];
         [distanceLabel release];
+        
+        UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 6, 7, 7)];
+        
+        UIImage *goImage = [UIImage imageNamed:@"go_btn"];
+        [goView setImage:goImage];
+        [rowView addSubview:goView];
+        [goView release];
         
         [segmentView addSubview:rowView];
         
@@ -509,7 +513,7 @@
         NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
         UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 25*(i), 300, 20)];
         
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 6, 150, 14)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
         nameLabel.text = [subArray objectAtIndex:0];
         nameLabel.font = [UIFont boldSystemFontOfSize:12];
         nameLabel.textColor = DESCRIPTION_COLOR;
