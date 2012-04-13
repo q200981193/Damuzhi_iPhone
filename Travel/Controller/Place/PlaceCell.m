@@ -153,14 +153,24 @@
 {
 }
 
+- (NSString*)getPriceString:(Place*)place
+{
+    if ([place.price intValue] > 0) {
+        
+        return [NSString stringWithFormat:@"%@ %@",
+                [[AppManager defaultManager] getCurrencySymbol:place.cityId],
+                [place price]];
+    }else {
+        return NSLS(@"免费");
+    }
+}
+
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
     nameLabel.text = [place name];
     distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];
-    priceLable.text = [NSString stringWithFormat:@"%@%@",
-                            [[AppManager defaultManager] getCurrencySymbol:place.cityId],
-                            [place price]];
+    priceLable.text = [self getPriceString:place];
     
     areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
     
