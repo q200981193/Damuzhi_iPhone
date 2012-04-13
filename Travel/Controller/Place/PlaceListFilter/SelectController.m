@@ -74,7 +74,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 37.2;
+	return 36;
 }
 
 // Customize the number of rows in the table view.
@@ -98,6 +98,7 @@
     NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
     
     [[cell textLabel] setText:currentName];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     
     BOOL found = NO;
@@ -110,26 +111,32 @@
     }
     
     if (!found) {
-//        cell.accessoryView = nil;
         [cell.imageView setImage:[self getUnselectedImage]];
     }else 
     {
-//        cell.accessoryView = [self getCheckImageView];
         [cell.imageView setImage:[self getSelectedImage]];
-        
-//        UIImage *image = [UIImage strectchableImageName:@"select_bg_tr.png"]; 
-//        [cell setBackgroundView:image];
+        cell.backgroundView = [self getBackgoundImageView:row];    
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
 }
 
-//- (UIView*)getCheckImageView
-//{
-//    UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 32, 32)] autorelease];
-//    [selectedView setImage:[UIImage imageNamed:@"select_btn_1.png"]];
-//    return selectedView;
-//}
+- (UIView*)getBackgoundImageView:(int)row
+{
+    UIImageView *view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 310, 36)] autorelease];
+  
+    if (row == 0) {
+        [view setImage:[UIImage imageNamed:@"select_bg_top.png"]];
+    }
+    else if(row == [dataList count]-1){
+        [view setImage:[UIImage imageNamed:@"select_bg_down.png"]];
+    }
+    else {
+        [view setImage:[UIImage strectchableImageName:@"select_bg_center.png"]];
+    }
+    
+    return view;
+}
 
 - (UIImage*)getUnselectedImage
 {

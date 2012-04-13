@@ -197,16 +197,33 @@
         PPDebug(@"add Favourite successfully");
         self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
         
-        //add sucess view
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 109, 52)];
-        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
-        view.tag = FAVORITES_OK_VIEW;
+        
+        CGRect rect = CGRectMake(0, 0, 109, 52);
+        
+//        //add sucess view
+//        UIView *view = [[UIView alloc]initWithFrame:rect];
+//        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
+//        view.tag = FAVORITES_OK_VIEW;
+//        CGPoint fromPosition = CGPointMake(150, 345);
+//        CGPoint toPosition = CGPointMake(150, 345);
+//        [self.view addSubview:view];
+//        [view release];
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:rect];
+        button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
+        [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:13];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button.tag = FAVORITES_OK_VIEW;
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
+
         CGPoint fromPosition = CGPointMake(150, 345);
         CGPoint toPosition = CGPointMake(150, 345);
-
-        [self.view addSubview:view];
-        [view release];
-        [AnimationManager alertView:view fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
+    
+        [self.view addSubview:button];
+        [button release];
+        
+        [AnimationManager alertView:button fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
     }
     else {
         PPDebug(@"add Favourite failed");
