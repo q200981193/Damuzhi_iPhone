@@ -352,6 +352,7 @@
     [dataScrollView addSubview:middleLineView];
     
     self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
+        
 }
 
 #define MAX_NUM_OF_NEARBY_RECOMMEND_PLACE 5
@@ -414,7 +415,7 @@
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 135)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
-    UILabel *title = [self createTitleView:@"周边推荐"];
+    UILabel *title = [self createTitleView:NSLS(@"周边推荐")];
     [segmentView addSubview:title];
     
     [dataScrollView addSubview:segmentView];    
@@ -424,11 +425,9 @@
     NSArray *nearPlaceList = [self calculateNearby];
     
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
-//    for (int i = 0; i <= MAX_NUM_OF_NEARBY_RECOMMEND_PLACE; i++)
     int i = 0;
     for (Place *place in nearPlaceList)
     {
-//        Place *place = [nearPlaceList objectAtIndex:i];        
         CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
         CLLocationDistance distance = [loc distanceFromLocation:location];
         
@@ -468,6 +467,63 @@
         [rowView addTarget:self action:@selector(clickNearbyRow:) forControlEvents:UIControlEventTouchUpInside];
     }    
     
+}
+
+- (void)addTransportView:(Place*)place
+{
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 135)];
+    segmentView.backgroundColor = PRICE_BG_COLOR;
+    
+    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 100)];
+    [tbView setImage:[UIImage imageNamed:@"table_bg"]];
+    [segmentView addSubview:tbView];
+    [segmentView sendSubviewToBack:tbView];
+    [tbView release];
+    
+    UILabel *title = [self createTitleView:NSLS(@"交通信息")];
+    [segmentView addSubview:title];
+    
+    [dataScrollView addSubview:segmentView];    
+    self.detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
+    
+    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
+//    NSRange range = NSMakeRange(0, [transportation length]); 
+//   [transportation replaceOccurrencesOfString:@" " withString:@"" options:NSCaseInsensitiveSearch range:range];
+    [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSArray *array = [transportation componentsSeparatedByString:@";"];
+
+    if ([array count] < 1) {
+        return;
+    }
+    
+    int i = 0;
+    for (i=0; i < [array count] - 1; i++)
+    {
+        NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
+        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 25*(i), 300, 20)];
+        
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 6, 150, 14)];
+        nameLabel.text = [subArray objectAtIndex:0];
+        nameLabel.font = [UIFont boldSystemFontOfSize:12];
+        nameLabel.textColor = DESCRIPTION_COLOR;
+        nameLabel.backgroundColor = [UIColor clearColor];
+        [rowView addSubview:nameLabel];
+        [nameLabel release];
+        
+        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 6, 100, 14)];
+        
+        distanceLabel.text = [subArray objectAtIndex:1];
+        distanceLabel.font = [UIFont boldSystemFontOfSize:12];
+        distanceLabel.textColor = DESCRIPTION_COLOR;
+        distanceLabel.backgroundColor = [UIColor clearColor];
+        [rowView addSubview:distanceLabel];
+        [distanceLabel release];
+        
+        [segmentView addSubview:rowView];
+        [rowView release];
+    }
+    [segmentView release];
 }
 
 

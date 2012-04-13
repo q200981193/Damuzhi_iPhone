@@ -84,10 +84,12 @@
     
     [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[place price]];
     
-    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
-    NSRange range = NSMakeRange(0, [transportation length]); 
-    [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
+//    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
+//    NSRange range = NSMakeRange(0, [transportation length]); 
+//    [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
+//    UIView* view = [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
+    [self.commonController addTransportView:place];
+        
 }
 
 - (id)initWith:(CommonPlaceDetailController *)controller

@@ -46,21 +46,15 @@
 
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"???‰ª??") description:[place introduction]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"?®Á•®‰ª∑Ê?") description:[place price]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"Âº???∂È?") description:[place openTime]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"‰∫§È?‰ø°Ê?") description:[place transportation]];
-//    [self addSegmentViewTo:dataScrollView title:NSLS(@"Ê∏∏Ë?Ë¥¥Â£´") description:[place tips]];
-
     [self.commonController addIntroductionViewWith: NSLS(@"景点介绍") description:[place introduction]];
     [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[place price]];
     
     [self.commonController addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
-    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
-    NSRange range = NSMakeRange(0, [transportation length]); 
-    [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
     
+    NSString *transportation = [place transportation];
+
+    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
+   
     [self.commonController addSegmentViewWith: NSLS(@"旅游贴士") description:[place tips]];
 }
 
