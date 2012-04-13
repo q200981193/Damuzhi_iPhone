@@ -199,7 +199,7 @@
         
         //add sucess view
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 109, 52)];
-        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok"]];
+        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
         view.tag = FAVORITES_OK_VIEW;
         CGPoint fromPosition = CGPointMake(150, 345);
         CGPoint toPosition = CGPointMake(150, 345);
@@ -210,6 +210,7 @@
     }
     else {
         PPDebug(@"add Favourite failed");
+        [self popupMessage:NSLS(@"收藏失败") title:nil];
     }
 }
 
@@ -415,6 +416,12 @@
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 135)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
+    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 100)];
+    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
+    [segmentView addSubview:tbView];
+    [segmentView sendSubviewToBack:tbView];
+    [tbView release];
+    
     UILabel *title = [self createTitleView:NSLS(@"周边推荐")];
     [segmentView addSubview:title];
     
@@ -475,7 +482,7 @@
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 100)];
-    [tbView setImage:[UIImage imageNamed:@"table_bg"]];
+    [tbView setImage:[UIImage imageNamed:@"table4_bg.png"]];
     [segmentView addSubview:tbView];
     [segmentView sendSubviewToBack:tbView];
     [tbView release];
@@ -487,8 +494,7 @@
     self.detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
     
     NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
-//    NSRange range = NSMakeRange(0, [transportation length]); 
-//   [transportation replaceOccurrencesOfString:@" " withString:@"" options:NSCaseInsensitiveSearch range:range];
+
     [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     NSArray *array = [transportation componentsSeparatedByString:@";"];
@@ -615,11 +621,19 @@
 - (void)addBottomView
 {
      favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
-    favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg"]];
+    favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
     UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 15, 93, 29)];
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
-    favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites"]];
+    favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
+    
+    [favButton setTitle:NSLS(@"收藏本页") forState:UIControlStateNormal];
+    [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [favButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    favButton.titleLabel.shadowColor = [UIColor whiteColor];
+    favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
+    [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
+    
     [favouritesView addSubview:favButton];
     
     self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 21, 120, 15)];
@@ -638,7 +652,7 @@
 
 - (void)addHeaderView
 {
-    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"topmenu_bg2"]];
+    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage strectchableImageName:@"detail_top_bg.png"]];
     [self setRankImage:[self.place rank]];
     [self setServiceIcons];
 }

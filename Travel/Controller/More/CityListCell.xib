@@ -285,6 +285,7 @@
 								<reference key="NSNextKeyView" ref="126646383"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
+								<string key="IBUIContentStretch">{{0, 0}, {0.84999999999999987, 1}}</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>

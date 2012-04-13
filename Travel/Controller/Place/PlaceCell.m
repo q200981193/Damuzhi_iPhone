@@ -155,8 +155,6 @@
 
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
-    imageView.center = CGPointMake(imageView.center.x, imageView.center.y+0.5);
-//    imageView.center = CGPointMake(imageView.frame.origin.x+imageView.center.x, self.center.y);
     nameLabel.text = [place name];
     distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];

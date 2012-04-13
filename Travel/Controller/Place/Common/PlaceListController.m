@@ -15,6 +15,7 @@
 #import "PlaceCell.h"
 #import "PlaceStorage.h"
 #import "AppManager.h"
+#import "UIImageUtil.h"
 
 @interface PlaceListController () 
 
@@ -183,7 +184,7 @@
     PlaceCell *placeCell = (PlaceCell*)cell;
     
     UIImageView *view = [[UIImageView alloc] init];
-    [view setImage:[UIImage imageNamed:@"li_bg.png"]];
+    [view setImage:[UIImage strectchableImageName:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
     [view release];
     [placeCell setCellDataByPlace:place currentLocation:self.currentLocation];
