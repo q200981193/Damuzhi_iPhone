@@ -200,15 +200,6 @@
         
         CGRect rect = CGRectMake(0, 0, 109, 52);
         
-//        //add sucess view
-//        UIView *view = [[UIView alloc]initWithFrame:rect];
-//        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
-//        view.tag = FAVORITES_OK_VIEW;
-//        CGPoint fromPosition = CGPointMake(150, 345);
-//        CGPoint toPosition = CGPointMake(150, 345);
-//        [self.view addSubview:view];
-//        [view release];
-        
         UIButton *button = [[UIButton alloc] initWithFrame:rect];
         button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
         [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
