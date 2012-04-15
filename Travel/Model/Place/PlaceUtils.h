@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Place.pb.h"
 
 @interface PlaceUtils : NSObject
 
 + (NSString*)hotelStarToString:(int32_t)hotelStar;
++ (NSString*)getPriceString:(Place*)place;
+
 
 @end
