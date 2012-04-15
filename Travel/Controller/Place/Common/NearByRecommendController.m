@@ -136,7 +136,9 @@
 {        
     UIButton *button = sender;
     NSInteger index = button.tag;
-    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[_placeList objectAtIndex:index]];
+    
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:_placeList selectedIndex:index];
+    
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
