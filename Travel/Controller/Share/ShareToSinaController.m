@@ -87,15 +87,16 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#define WEIBO_LOGO_WIDTH    98
 #define WEIBO_LOGO_HEIGHT   30
 #define WORDSNUMBER_WIDTH   30
 #define WORDSNUMBER_HEIGHT  20
-#define CONTENT_WIDTH       280
-#define CONTENT_HEIGHT      120
+#define CONTENT_WIDTH       284
+#define CONTENT_HEIGHT      132
 
 - (void)createSendView
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, 0, 73, WEIBO_LOGO_HEIGHT)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, 0, WEIBO_LOGO_WIDTH, WEIBO_LOGO_HEIGHT)];
     imageView.image = [UIImage imageNamed:@"SinaWeibo_logo.png"];
     [self.view addSubview:imageView];
     [imageView release];
@@ -110,10 +111,16 @@
     self.wordsNumberLabel = label;
     [label release];
     
+    UIImageView *textBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"feedback_bg2.png"]];
+    textBackgroundView.frame = CGRectMake((320-CONTENT_WIDTH)/2, WEIBO_LOGO_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT);
+    [self.view addSubview:textBackgroundView];
+    [textBackgroundView release];
+    
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, WEIBO_LOGO_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT)];
     textView.delegate = self;
-    textView.font = [UIFont systemFontOfSize:13];
+    textView.font = [UIFont systemFontOfSize:14];
     textView.text = NSLS(@"朋友们，我发现了一款非常专业的旅游指南《大拇指旅游》，非常适合我们外出旅游使用，快下载来看看吧：http://xxxxxx");
+    textView.backgroundColor = [UIColor clearColor];
     self.contentTextView = textView;
     [textView release];
     
