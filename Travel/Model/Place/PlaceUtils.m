@@ -8,6 +8,7 @@
 
 #import "PlaceUtils.h"
 #import "LocaleUtils.h"
+#import "AppManager.h"
 
 @implementation PlaceUtils
 
@@ -35,5 +36,18 @@
     }
     return nil;
 }
+
++ (NSString*)getPriceString:(Place*)place
+{
+    if ([place.price intValue] > 0) {
+        
+        return [NSString stringWithFormat:@"%@ %@",
+                [[AppManager defaultManager] getCurrencySymbol:place.cityId],
+                [place price]];
+    }else {
+        return NSLS(@"免费");
+    }
+}
+
 
 @end

@@ -132,7 +132,7 @@
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
         NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
-//        PPDebug(@"place iconPath = %@", iconPath);
+        PPDebug(@"place iconPath = %@", iconPath);
         [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
     else{
@@ -140,7 +140,7 @@
 
         self.imageView.callbackOnSetImage = self;
         self.imageView.url = [NSURL URLWithString:[place icon]];
-//        PPDebug(@"load place image from URL %@", [place icon]);
+        PPDebug(@"load place image from URL %@", [place icon]);
         [GlobalGetImageCache() manage:self.imageView];
     }
 }
@@ -153,24 +153,12 @@
 {
 }
 
-- (NSString*)getPriceString:(Place*)place
-{
-    if ([place.price intValue] > 0) {
-        
-        return [NSString stringWithFormat:@"%@ %@",
-                [[AppManager defaultManager] getCurrencySymbol:place.cityId],
-                [place price]];
-    }else {
-        return NSLS(@"免费");
-    }
-}
-
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
     nameLabel.text = [place name];
     distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];
-    priceLable.text = [self getPriceString:place];
+    priceLable.text = [PlaceUtils getPriceString:place];
     
     areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
     
