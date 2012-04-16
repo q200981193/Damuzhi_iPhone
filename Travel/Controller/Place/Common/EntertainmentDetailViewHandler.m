@@ -8,6 +8,7 @@
 
 #import "CommonPlaceDetailController.h"
 #import "Place.pb.h"
+#import "PlaceUtils.h"
 
 @implementation EntertainmentDetailViewHandler
 
@@ -20,7 +21,7 @@
     
     [self.commonController addSegmentViewWith: NSLS(@"营业时间") description: [place openTime]];
     
-    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[place avgPrice]];
+    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[PlaceUtils getPriceString:place]];
     
     [self.commonController addSegmentViewWith: NSLS(@"关键词评价") description:[place.keywordsList componentsJoinedByString:@" "]];
     

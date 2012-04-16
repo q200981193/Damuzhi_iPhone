@@ -52,6 +52,10 @@
 		A3FE359315358DB7002190D7 /* GuideController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3FE359115358DB7002190D7 /* GuideController.xib */; };
 		A4034755150D998200D2B11E /* HotelListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034754150D998200D2B11E /* HotelListFilter.m */; };
 		A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */; };
+		A421C8BF153A9F3200109478 /* select_bg_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BB153A9F3200109478 /* select_bg_center@2x.png */; };
+		A421C8C0153A9F3200109478 /* select_bg_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BC153A9F3200109478 /* select_bg_down@2x.png */; };
+		A421C8C1153A9F3200109478 /* select_bg_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BD153A9F3200109478 /* select_bg_top@2x.png */; };
+		A421C8C2153A9F3200109478 /* select_btn_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BE153A9F3200109478 /* select_btn_1@2x.png */; };
 		A485784B1516DE7B00FDFE5B /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578411516DE7B00FDFE5B /* ioapi.c */; };
 		A485784C1516DE7B00FDFE5B /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578431516DE7B00FDFE5B /* mztools.c */; };
 		A485784D1516DE7B00FDFE5B /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = A48578451516DE7B00FDFE5B /* unzip.c */; };
@@ -579,6 +583,10 @@
 		A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapAnnotation.h; sourceTree = "<group>"; };
 		A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceMapAnnotation.m; sourceTree = "<group>"; };
 		A40D9DFF150C87AB00BB2D29 /* ImageName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageName.h; path = Travel/Resource/ImageName.h; sourceTree = SOURCE_ROOT; };
+		A421C8BB153A9F3200109478 /* select_bg_center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_bg_center@2x.png"; sourceTree = "<group>"; };
+		A421C8BC153A9F3200109478 /* select_bg_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_bg_down@2x.png"; sourceTree = "<group>"; };
+		A421C8BD153A9F3200109478 /* select_bg_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_bg_top@2x.png"; sourceTree = "<group>"; };
+		A421C8BE153A9F3200109478 /* select_btn_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_btn_1@2x.png"; sourceTree = "<group>"; };
 		A48578401516DE7B00FDFE5B /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		A48578411516DE7B00FDFE5B /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		A48578421516DE7B00FDFE5B /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -1745,6 +1753,10 @@
 		A48E04F71534058900B2695E /* select */ = {
 			isa = PBXGroup;
 			children = (
+				A421C8BB153A9F3200109478 /* select_bg_center@2x.png */,
+				A421C8BC153A9F3200109478 /* select_bg_down@2x.png */,
+				A421C8BD153A9F3200109478 /* select_bg_top@2x.png */,
+				A421C8BE153A9F3200109478 /* select_btn_1@2x.png */,
 				A48E04FA1534058900B2695E /* radio_1@2x.png */,
 				A48E04FB1534058900B2695E /* radio_2@2x.png */,
 			);
@@ -1996,8 +2008,8 @@
 			isa = PBXGroup;
 			children = (
 				A48E062815358FD600B2695E /* CommonWebController.h */,
-				A48E062915358FD600B2695E /* CommonWebController.m */,
 				A48E062A15358FD600B2695E /* CommonWebController.xib */,
+				A48E062915358FD600B2695E /* CommonWebController.m */,
 				A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */,
 				A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */,
 				CA238FCC14FE5EE700114175 /* SlideImageView.h */,
@@ -3399,6 +3411,10 @@
 				A48FA6591537FE1200422DB7 /* table4_bg@2x.png in Resources */,
 				A48FA65A1537FE1200422DB7 /* table5_bg@2x.png in Resources */,
 				A48FA65C153803BA00422DB7 /* detail_top_bg@2x.png in Resources */,
+				A421C8BF153A9F3200109478 /* select_bg_center@2x.png in Resources */,
+				A421C8C0153A9F3200109478 /* select_bg_down@2x.png in Resources */,
+				A421C8C1153A9F3200109478 /* select_bg_top@2x.png in Resources */,
+				A421C8C2153A9F3200109478 /* select_btn_1@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

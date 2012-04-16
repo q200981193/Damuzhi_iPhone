@@ -225,7 +225,7 @@
             UIButton *customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
             [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"map_button"];
+            UIImage *image = [UIImage imageNamed:@"green_glass"];
             annotationView.image = image;            
             
             UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            

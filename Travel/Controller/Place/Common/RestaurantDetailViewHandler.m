@@ -9,6 +9,7 @@
 #import "CommonPlaceDetailController.h"
 #import "Place.pb.h"
 #import "AppManager.h"
+#import "PlaceUtils.h"
 
 @implementation RestaurantViewHandler
 
@@ -22,7 +23,7 @@
     NSString *str = [[AppManager defaultManager] getSubCategotyName:[place categoryId] subCategoryId:[place subCategoryId]];
     [self.commonController addSegmentViewWith: NSLS(@"菜式类型") description: str];
     
-    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[place avgPrice]];
+    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[PlaceUtils getPriceString:place]];
     
     [self.commonController addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@" "]];
     
