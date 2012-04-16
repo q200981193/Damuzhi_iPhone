@@ -36,6 +36,7 @@
     frame.origin.x += WIDTH_OF_FILTER_BUTTON+DISTANCE_BETWEEN_BUTTONS;
     UIButton *button2 = [CommonListFilter createFilterButton:frame title:NSLS(@"排序")];
     [button2 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
+    button2.tag = SORT_BUTTON_TAG;
     [superView addSubview:button2];
     
     self.controller = commonPlaceController;

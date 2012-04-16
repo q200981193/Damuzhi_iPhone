@@ -200,7 +200,7 @@
 - (void)hideSomeFilterButtons
 {
     for (UIView *subView in [self.buttonHolderView subviews]) {
-        if (subView.tag !=1) {
+        if (subView.tag ==SORT_BUTTON_TAG) {
             subView.hidden = YES;
         }
     }

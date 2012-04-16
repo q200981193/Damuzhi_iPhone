@@ -16,6 +16,8 @@
 #define HEIGHT_OF_FILTER_BUTTON 27
 #define DISTANCE_BETWEEN_BUTTONS 5
 
+#define SORT_BUTTON_TAG 99
+
 @class PlaceListController;
 
 @protocol PlaceListFilterProtocol <NSObject>
