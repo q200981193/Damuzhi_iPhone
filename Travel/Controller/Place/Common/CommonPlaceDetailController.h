@@ -13,7 +13,7 @@
 @class Place;
 @class CommonPlaceDetailController;
 
-#define TITLE_VIEW_HEIGHT 35
+#define TITLE_VIEW_HEIGHT 34
 #define MIDDLE_LINE_HEIGHT 2
 #define CGRECT_TITLE CGRectMake(10, 3, 100, 20)
 #define TITLE_COLOR [UIColor colorWithRed:37/255.0 green:66/255.0 blue:80/255.0 alpha:1.0]

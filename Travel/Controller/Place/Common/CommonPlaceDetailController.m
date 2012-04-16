@@ -310,18 +310,40 @@
     }
     CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT + 10)] autorelease];
     segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
-    
-    UILabel *title = [self createTitleView:titleString];
+        
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
+    UILabel *title = [[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, TITLE_VIEW_HEIGHT)]autorelease];
+    title.backgroundColor = [UIColor clearColor];
+    title.textColor = TITLE_COLOR;
+    title.font = boldFont;
+    title.text  = titleString;
     [segmentView addSubview:title];
+    
+    UIImageView *shadowView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 34)];
+    [shadowView setImage:[UIImage strectchableImageName:@"detail_shadow"]];
+    [segmentView addSubview:shadowView];
+    [segmentView sendSubviewToBack:shadowView];
+    [shadowView release];
     
 //    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, 24, 300, 1)];
 //    lineView.backgroundColor = PRICE_BG_COLOR;
 //    [segmentView addSubview:lineView];
 //    [lineView release];
+        
+//    UILabel *introductionDescription = [self createDescriptionView:description height:size.height]; 
     
-    UILabel *introductionDescription = [self createDescriptionView:description height:size.height];    
+    UILabel *introductionDescription = [[[UILabel alloc]initWithFrame:CGRectMake(10, shadowView.frame.size.height + 4, 300, size.height)] autorelease];
+    introductionDescription.lineBreakMode = UILineBreakModeWordWrap;
+    introductionDescription.numberOfLines = 0;
+    introductionDescription.backgroundColor = [UIColor clearColor];
+    introductionDescription.textColor = DESCRIPTION_COLOR;
+    introductionDescription.font = font;
+    
+    NSString *str = [NSString stringWithFormat:@"        %@",description];
+    introductionDescription.text = str;
+        
     [segmentView addSubview:introductionDescription];
     [dataScrollView addSubview:segmentView];    
     
@@ -423,7 +445,7 @@
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 100)];
-    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
+    [tbView setImage:[UIImage imageNamed:@"table5_bg"]];
     [segmentView addSubview:tbView];
     [segmentView sendSubviewToBack:tbView];
     [tbView release];
@@ -464,7 +486,7 @@
         [rowView addSubview:nameLabel];
         [nameLabel release];
         
-        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 3, 60, 14)];
+        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 60, 14)];
         
         distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
         distanceLabel.font = [UIFont systemFontOfSize:12];
@@ -489,11 +511,11 @@
 
 - (void)addTransportView:(Place*)place
 {
-    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 135)];
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 156)];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
-    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 100)];
-    [tbView setImage:[UIImage imageNamed:@"table4_bg.png"]];
+    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 121)];
+    [tbView setImage:[UIImage imageNamed:@"table_bg"]];
     [segmentView addSubview:tbView];
     [segmentView sendSubviewToBack:tbView];
     [tbView release];
@@ -508,7 +530,8 @@
 
     [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    NSArray *array = [transportation componentsSeparatedByString:@";"];
+    NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
+    NSArray *array = [str componentsSeparatedByString:@";"];
 
     if ([array count] < 1) {
         return;
@@ -518,7 +541,7 @@
     for (i=0; i < [array count] - 1; i++)
     {
         NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
-        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 25*(i), 300, 20)];
+        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 24*(i), 300, 20)];
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
         nameLabel.text = [subArray objectAtIndex:0];
@@ -554,9 +577,10 @@
 
 - (void)addTelephoneView
 {
-    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, detailHeight, 320, 32)];
+    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 31)];
     telephoneView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 4, 250, 20)];
+    
+    UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
     telephoneLabel.backgroundColor = [UIColor clearColor];
     telephoneLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     telephoneLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -583,9 +607,9 @@
 
 - (void)addAddressView
 {
-    addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 32)];
+    addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 31)];
     addressView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 4, 250, 20)];
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
     addressLabel.backgroundColor = [UIColor clearColor];
     addressLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     addressLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -613,9 +637,9 @@
 
 - (void)addWebsiteView
 {
-     websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, addressView.frame.origin.y + addressView.frame.size.height, 320, 32)];
+     websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, addressView.frame.origin.y + addressView.frame.size.height, 320, 31)];
     websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 4, 250, 20)];
+    UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
     websiteLabel.backgroundColor = [UIColor clearColor];
     websiteLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     websiteLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -663,7 +687,7 @@
 
 - (void)addHeaderView
 {
-    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage strectchableImageName:@"detail_top_bg.png"]];
+    buttonHolerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage strectchableImageName:@"topmenu_bg2"]];
     [self setRankImage:[self.place rank]];
     [self setServiceIcons];
 }
@@ -708,14 +732,14 @@
    
     [self addSlideImageView];
            
-    [self addPaddingVew];
+//    [self addPaddingVew];
     
-    self.detailHeight = imageHolderView.frame.size.height + 3 ;
+    self.detailHeight = imageHolderView.frame.size.height;
     
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332 + 135)];
+    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332 + 132)];
     
     [self addNearbyView];
     
