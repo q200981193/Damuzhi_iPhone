@@ -36,7 +36,7 @@
 
 + (NSString*)getCityDir:(int)cityId
 {
-    return [[FileUtil getFileFullPath:DIR_OF_CITY] stringByAppendingPathComponent:[[NSString alloc] initWithFormat:@"/%d", cityId]];
+    return [[FileUtil getFileFullPath:DIR_OF_CITY] stringByAppendingPathComponent:[NSString stringWithFormat:@"/%d", cityId]];
 }
 
 + (NSString*)getCityDataDir:(int)cityId
@@ -101,9 +101,8 @@
 + (NSString*)getZipFilePath:(int)cityId
 {
     //TODO, consturct a zip file path and return 
-    NSString *zipName = [[NSString alloc] initWithFormat:@"%d.zip", cityId];
+    NSString *zipName = [NSString stringWithFormat:@"%d.zip", cityId];
     return [[AppUtils getZipDir] stringByAppendingPathComponent:zipName];
-    [zipName release];
 }
 
 + (NSString*)getAppFilePath

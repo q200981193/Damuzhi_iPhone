@@ -78,7 +78,7 @@
 {
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT)];
     label.font = [UIFont fontWithName:@"" size:0.1];
-    label.text = [[NSString alloc] initWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];
+    label.text = [NSString stringWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
     label.textAlignment = UITextAlignmentCenter;

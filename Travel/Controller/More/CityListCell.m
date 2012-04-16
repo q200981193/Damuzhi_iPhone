@@ -114,52 +114,56 @@
 {
     switch (downloadStatus) {
         case NO_DOWNLOAD:  
-            self.dataSizeLabel.hidden = NO;
-            self.downloadProgressView.hidden = YES;
-            self.downloadPersentLabel.hidden = YES;
-            self.pauseDownloadBtn.hidden = YES;
+            dataSizeLabel.hidden = NO;
+            downloadProgressView.hidden = YES;
+            downloadPersentLabel.hidden = YES;
+            pauseDownloadBtn.hidden = YES;
             
-            self.downloadButton.hidden = NO;
-            self.cancelDownloadBtn.hidden = YES;
-            self.onlineButton.hidden = NO;
+            if (_city.dataSize == 0) {
+                downloadButton.hidden = YES;
+            }
+            else {
+                downloadButton.hidden = NO;
+            }
+            cancelDownloadBtn.hidden = YES;
+            onlineButton.hidden = NO;
             
-            self.downloadDoneLabel.hidden = YES;
-//            [downloadDoneLabel setTextColor:[UIColor darkGrayColor]];
-            self.moreDetailBtn.hidden = YES;
+            downloadDoneLabel.hidden = YES;
+            moreDetailBtn.hidden = YES;
             break;
             
         case DOWNLOAD:
-            self.dataSizeLabel.hidden = YES;
-            self.downloadProgressView.hidden = NO;
-            self.downloadPersentLabel.hidden = NO;
-            self.pauseDownloadBtn.hidden = NO;
+            dataSizeLabel.hidden = YES;
+            downloadProgressView.hidden = NO;
+            downloadPersentLabel.hidden = NO;
+            pauseDownloadBtn.hidden = NO;
             
-            self.downloadButton.hidden = YES;
-            self.cancelDownloadBtn.hidden = NO;
-            self.onlineButton.hidden = NO;
+            downloadButton.hidden = YES;
+            cancelDownloadBtn.hidden = NO;
+            onlineButton.hidden = NO;
             
-            self.downloadDoneLabel.hidden = YES;
-            self.moreDetailBtn.hidden = YES;
+            downloadDoneLabel.hidden = YES;
+            moreDetailBtn.hidden = YES;
             
-            self.pauseDownloadBtn.selected = !localCity.downloadingFlag;
-            self.downloadProgressView.progress = localCity.downloadProgress;
+            pauseDownloadBtn.selected = !localCity.downloadingFlag;
+            downloadProgressView.progress = localCity.downloadProgress;
             float persent = localCity.downloadProgress*100;
-            self.downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
+            downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
             
             break;
             
         case FINISH_DOWNLOAD:
-            self.dataSizeLabel.hidden = NO;
-            self.downloadProgressView.hidden = YES;
-            self.downloadPersentLabel.hidden = YES;
-            self.pauseDownloadBtn.hidden = YES;
+            dataSizeLabel.hidden = NO;
+            downloadProgressView.hidden = YES;
+            downloadPersentLabel.hidden = YES;
+            pauseDownloadBtn.hidden = YES;
             
-            self.downloadButton.hidden = YES;
-            self.cancelDownloadBtn.hidden = YES;
-            self.onlineButton.hidden = YES;
+            downloadButton.hidden = YES;
+            cancelDownloadBtn.hidden = YES;
+            onlineButton.hidden = YES;
             
-            self.downloadDoneLabel.hidden = NO;
-            self.moreDetailBtn.hidden = NO;
+            downloadDoneLabel.hidden = NO;
+            moreDetailBtn.hidden = NO;
             
             break;
             

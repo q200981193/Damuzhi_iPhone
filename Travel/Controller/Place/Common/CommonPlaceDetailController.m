@@ -143,15 +143,15 @@
 
 - (void)clickMap:(id)sender
 {
-    NearByRecommendController* controller = [[[NearByRecommendController alloc]init]autorelease];
+    NearByRecommendController* controller = [[NearByRecommendController alloc]init];
     controller.superController = self;
     [self.navigationController pushViewController:controller animated:YES];
     [controller gotoLocation:self.place];
     
     NSArray *list = [[NSArray alloc] initWithArray:_placeList];
-//    [controller setPlaces:list];
     [controller setPlaces:list selectedIndex:[self.placeList indexOfObject:self.place]];
     [list release];
+    [controller release];
 }
 
 - (void)clickTelephone:(id)sender
@@ -244,7 +244,7 @@
 
     for (NSNumber *providedServiceId in [_place providedServiceIdList]) {
         NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
-        NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", [providedServiceId intValue]];
+        NSString *fileName = [NSString stringWithFormat:@"%d.png", [providedServiceId intValue]];
         
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:CGRectMake((i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE)];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
@@ -369,13 +369,6 @@
 {
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
     
-    //    for (Place *place in _placeList) {
-    //        CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
-    //        CLLocationDistance distance = [loc distanceFromLocation:loc2];
-    //        NSLog(@"%@     %f千米",place.name, distance/1000);
-    //        
-    //    }
-    
     NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
         if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
             Place *place1 = (Place*)obj1;
@@ -387,6 +380,9 @@
             CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
             CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
             
+            [loc1 release];
+            [loc2 release];
+            
             
             if (dis1 > dis2) {
                 return (NSComparisonResult)NSOrderedAscending;
@@ -397,6 +393,8 @@
         
         return (NSComparisonResult)NSOrderedSame;
     }];
+    
+    [loc release];
     
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
     int count = [sortedPlaceList count];
@@ -445,8 +443,9 @@
     {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
         CLLocationDistance distance = [loc distanceFromLocation:location];
+        [location release];
         
-        UIButton *rowView = [[[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*(i++), 300, 20)] autorelease];
+        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*(i++), 300, 20)];
         rowView.tag = [_placeList indexOfObject:place];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 14, 14)];
@@ -481,11 +480,11 @@
         [rowView addSubview:goView];
         [goView release];
         
-        [segmentView addSubview:rowView];
-        
         [rowView addTarget:self action:@selector(clickNearbyRow:) forControlEvents:UIControlEventTouchUpInside];
+        [segmentView addSubview:rowView];
+        [rowView release];
     }    
-    
+    [loc release];
 }
 
 - (void)addTransportView:(Place*)place

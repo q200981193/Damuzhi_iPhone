@@ -137,11 +137,10 @@
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
             if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
-                PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
+                PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
                 [self.mapAnnotations addObject:placeAnnotation];
-//                NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
+                [placeAnnotation release];
             }
-            
         } 
     }
     
@@ -231,7 +230,7 @@
             UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
    
             NSString *destinationDir = [AppUtils getCategoryImageDir];
-            NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png",placeAnnotation.place.categoryId];
+            NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
             UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
             
             [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];

@@ -17,7 +17,7 @@
 @synthesize mapView;
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
-@synthesize mapAnnotations;
+//@synthesize mapAnnotations;
 @synthesize indexOfSelectedPlace;
 @synthesize superController;
 
@@ -50,20 +50,23 @@
 
 - (void) loadAllAnnotations
 {    
-    [self.mapAnnotations removeAllObjects];
+    NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
+//    [self.mapAnnotations removeAllObjects];
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
             if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
-                PlaceMapAnnotation *placeAnnotation = [[[PlaceMapAnnotation alloc]initWithPlace:place]autorelease];
-                [self.mapAnnotations addObject:placeAnnotation];
-//                NSLog(@"******load Annotations for coordinate: %f,%f",[place latitude],[place longitude]);
+                PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
+//                [self.mapAnnotations addObject:placeAnnotation];
+                [mapAnnotations addObject:placeAnnotation];
+                [placeAnnotation release];
             }
         } 
     }
     
     [self.mapView removeAnnotations:self.mapView.annotations];
-    [self.mapView addAnnotations:self.mapAnnotations];
-    
+//    [self.mapView addAnnotations:self.mapAnnotations];
+    [self.mapView addAnnotations:mapAnnotations];
+    [mapAnnotations release];
 }
 
 - (void)setPlaces:(NSArray*)placeList
@@ -108,7 +111,8 @@
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
     //    self.mapView.showsUserLocation = YES;
-    self.mapAnnotations = [[NSMutableArray alloc]init];
+    
+//    self.mapAnnotations = [[NSMutableArray alloc]init];
     [self loadAllAnnotations];
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
@@ -116,6 +120,15 @@
                            action:@selector(clickBack:)];
     
     [self.navigationItem setTitle:NSLS(@"周边推荐")];
+}
+
+- (void)dealloc
+{
+    [_locationManager release];
+    [_placeList release];
+//    [mapAnnotations release];
+    [superController release];
+    [super dealloc];
 }
 
 - (void)viewDidUnload
@@ -172,7 +185,7 @@
                 UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
                 
                 NSString *destinationDir = [AppUtils getCategoryImageDir];
-                NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png",placeAnnotation.place.categoryId];
+                NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
                 UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
                 
                 [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];

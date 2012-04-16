@@ -106,7 +106,7 @@
     UILabel *placeCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, -8, 30, 20)];
     placeCountLabel.text = [NSString stringWithFormat:NSLS(@"(%d)"), dataList.count];
     placeCountLabel.font = [UIFont systemFontOfSize:12];
-    placeCountLabel.textColor = [UIColor colorWithRed:0xB9 green:0xDF blue:0xF3 alpha:1];
+    placeCountLabel.textColor = [UIColor colorWithRed:183 green:222 blue:243 alpha:1];
     placeCountLabel.backgroundColor = [UIColor clearColor];
     placeCountLabel.tag = 1;
 

@@ -69,7 +69,8 @@
     // create & add map view
     self.mapHolderView.hidden = YES;
     self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
-    self.mapViewController.view.frame = self.mapHolderView.bounds;
+    [self.mapViewController.view setFrame:self.mapHolderView.bounds];
+//    self.mapViewController.view.frame = self.mapHolderView.bounds;
     [self.mapHolderView addSubview:self.mapViewController.view];
     [self updateViewByMode];
     
@@ -117,7 +118,8 @@
                          superController:(PPViewController*)superController
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
-    controller.view.frame = superView.bounds;
+    [controller.view setFrame:superView.bounds];
+//    controller.view.frame = superView.bounds;
     controller.superController = superController;
     controller.mapViewController.superController = superController;
     [superView addSubview:controller.view];
