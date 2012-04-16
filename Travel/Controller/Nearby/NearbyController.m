@@ -182,7 +182,7 @@
 
 - (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
 {
-    NSMutableArray *placeList = [[NSMutableArray alloc] init];
+    NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
         CLLocationDistance distance = [self.currentLocation distanceFromLocation:placeLocation];

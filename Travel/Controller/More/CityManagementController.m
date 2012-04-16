@@ -97,7 +97,8 @@ static CityManagementController *_instance;
     
     // Customize the appearance 
     [_cityListBtn setTitle:@"城市列表" forState:UIControlStateNormal];
-    _cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_cityListBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    //_cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
     [_cityListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];

@@ -24,7 +24,7 @@
 @property (nonatomic, retain) CLLocationManager* locationManager;
 @property (nonatomic, retain) NSArray* placeList;
 @property (nonatomic, assign) NSInteger indexOfSelectedPlace;
-@property (nonatomic, retain) NSMutableArray* mapAnnotations;
+//@property (nonatomic, retain) NSMutableArray* mapAnnotations;
 @property (nonatomic, retain) UIViewController* superController;
 
 - (void)setPlaces:(NSArray*)placeList;

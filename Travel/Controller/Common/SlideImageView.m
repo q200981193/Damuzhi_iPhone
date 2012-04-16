@@ -89,22 +89,24 @@
         
         [imageView setImage:[UIImage imageNamed:IMAGE_PLACE_DETAIL]];
                 
-        NSString *image = [images objectAtIndex:i];
-        if ([image isAbsolutePath]) {
+        NSString *imagePath = [images objectAtIndex:i];
+        if ([imagePath isAbsolutePath]) {
             // Load image from file
-            [imageView setImage:[[UIImage alloc] initWithContentsOfFile:image]];
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+            [imageView setImage:image];
+            [image release];
         }
-        else if([image hasPrefix:@"http:"]){
+        else if([imagePath hasPrefix:@"http:"]){
             // Load image from url
             [imageView showLoadingWheel];
-            
+        
             imageView.callbackOnSetImage = self;
-            imageView.url = [NSURL URLWithString:image];
+            imageView.url = [NSURL URLWithString:imagePath];
             [GlobalGetImageCache() manage:imageView];
         }
         else{
             // Load image from bundle
-            [imageView setImage:[UIImage imageNamed:image]];
+            [imageView setImage:[UIImage imageNamed:imagePath]];
         }
         
         [scrollView addSubview:imageView];

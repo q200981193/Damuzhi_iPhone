@@ -36,7 +36,7 @@
     
     controller.needConfirm = needConfirm;
     
-    [controller viewDidLoad];
+//    [controller viewDidLoad];
     
     return controller;
 }
