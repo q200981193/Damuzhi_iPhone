@@ -26,6 +26,7 @@ static AppManager* _defaultAppManager = nil;
     if (_defaultAppManager == nil){
         _defaultAppManager = [[AppManager alloc] init];
     }
+    
     return _defaultAppManager;
 }
 

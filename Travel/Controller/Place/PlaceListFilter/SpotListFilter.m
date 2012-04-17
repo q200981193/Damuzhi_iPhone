@@ -7,7 +7,7 @@
 //
 
 #import "SpotListFilter.h"
-#import "PlaceManager.h"
+#import "CommonPlace.h"
 #import "PlaceService.h"
 #import "AppManager.h"
 #import "Place.pb.h"

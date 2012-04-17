@@ -23,9 +23,19 @@ static TravelTipsManager * _instance = nil;
 {
     if (_instance == nil) {
         _instance = [[TravelTipsManager alloc] init];
-        [_instance switchCity:[[AppManager defaultManager] getCurrentCityId]];
     }
+    
     return _instance;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self switchCity:[[AppManager defaultManager] getCurrentCityId]];
+    }
+    
+    return self;
 }
 
 - (void)dealloc

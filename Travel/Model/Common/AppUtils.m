@@ -11,6 +11,7 @@
 #import "FileUtil.h"
 #import "SSZipArchive.h"
 #import "PPDebug.h"
+#import "CommonPlace.h"
 
 @implementation AppUtils
 
@@ -203,19 +204,19 @@
 + (NSString*)getCategoryIcon:(int)categoryId;
 {
     switch (categoryId) {
-        case PLACE_SPOT:
+        case PLACE_TYPE_SPOT:
             return @"jd";
             break;
-        case PLACE_HOTEL:
+        case PLACE_TYPE_HOTEL:
             return @"ht";
             break;
-        case PLACE_RESTRAURANT:
+        case PLACE_TYPE_RESTAURANT:
             return @"cg";
             break;
-        case PLACE_SHOPPING:
+        case PLACE_TYPE_SHOPPING:
             return @"gw";
             break;
-        case PLACE_ENTERTAINMENT:
+        case PLACE_TYPE_ENTERTAINMENT:
             return @"yl";
             break;
         default:

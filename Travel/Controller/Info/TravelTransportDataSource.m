@@ -7,7 +7,6 @@
 //
 
 #import "TravelTransportDataSource.h"
-#import "CityOverviewManager.h"
 #import "AppManager.h"
 
 @implementation TravelTransportDataSource

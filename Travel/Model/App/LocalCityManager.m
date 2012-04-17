@@ -11,7 +11,7 @@
 
 @implementation LocalCityManager
 
-@synthesize localCities;
+@synthesize localCities = _localCities;
 
 #pragma mark -
 #pragma mark: default manager implementation
@@ -21,19 +21,27 @@ static LocalCityManager *_defaultManager = nil;
 {
     if (_defaultManager == nil) {
         _defaultManager = [[LocalCityManager alloc] init];
-        [_defaultManager loadLocalCities];
-        for (LocalCity *localCity in [_defaultManager.localCities allValues]) {
-            localCity.downloadingFlag = NO;
-        }
     }
     
     return _defaultManager;
 }
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self loadLocalCities];
+        for (LocalCity *localCity in [_localCities allValues]) {
+            localCity.downloadingFlag = NO;
+        }
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
-//    [localCities release];
-    [_defaultManager release];
+    [_localCities release];
     [super dealloc];
 }
 
@@ -41,7 +49,6 @@ static LocalCityManager *_defaultManager = nil;
 #pragma mark: load and save localcities
 - (void)loadLocalCities
 {
-//    _defaultManager.localCities = [[NSMutableDictionary alloc] init];
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSData* data = [userDefault objectForKey:KEY_LOCAL_CITIES];
     
@@ -54,7 +61,6 @@ static LocalCityManager *_defaultManager = nil;
 - (void)save
 {
     //TODO: save localcities
-    //NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.localCities];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:data forKey:KEY_LOCAL_CITIES];

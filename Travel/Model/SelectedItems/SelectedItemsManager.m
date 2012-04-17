@@ -35,23 +35,31 @@ static SelectedItemsManager *_instance = nil;
 {
     if (_instance == nil) {
         _instance = [[SelectedItemsManager alloc] init];
-        
-        _instance.selectedSubCategoryIdList = [[[NSMutableArray alloc] init] autorelease];
-        _instance.selectedSortIdList = [[[NSMutableArray alloc] init] autorelease];
-        _instance.selectedPriceIdList = [[[NSMutableArray alloc] init] autorelease];
-        _instance.selectedAreaIdList = [[[NSMutableArray alloc] init] autorelease];
-        _instance.selectedServiceIdList = [[[NSMutableArray alloc] init] autorelease];
-        _instance.selectedCuisineIdList = [[[NSMutableArray alloc] init] autorelease];
-        
-        [_instance.selectedSubCategoryIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        [_instance.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
-        [_instance.selectedPriceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        [_instance.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        [_instance.selectedServiceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        [_instance.selectedCuisineIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     }
     
     return _instance;
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.selectedSubCategoryIdList = [[[NSMutableArray alloc] init] autorelease];
+        self.selectedSortIdList = [[[NSMutableArray alloc] init] autorelease];
+        self.selectedPriceIdList = [[[NSMutableArray alloc] init] autorelease];
+        self.selectedAreaIdList = [[[NSMutableArray alloc] init] autorelease];
+        self.selectedServiceIdList = [[[NSMutableArray alloc] init] autorelease];
+        self.selectedCuisineIdList = [[[NSMutableArray alloc] init] autorelease];
+        
+        [self.selectedSubCategoryIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
+        [self.selectedPriceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedServiceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.selectedCuisineIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    }
+    
+    return self;
 }
 
 @end

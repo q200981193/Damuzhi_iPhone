@@ -742,7 +742,7 @@
 		A48E062A15358FD600B2695E /* CommonWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonWebController.xib; sourceTree = "<group>"; };
 		A48E87A4151C5FC0007954D3 /* LocalCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCity.h; sourceTree = "<group>"; };
 		A48E87A5151C5FC0007954D3 /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
-		A48E87A7151C6A3D007954D3 /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalCityManager.h; path = ../App/LocalCityManager.h; sourceTree = "<group>"; };
+		A48E87A7151C6A3D007954D3 /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCityManager.h; sourceTree = "<group>"; };
 		A48E87A8151C6A3D007954D3 /* LocalCityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCityManager.m; sourceTree = "<group>"; };
 		A48FA65B153803B900422DB7 /* detail_top_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_top_bg@2x.png"; sourceTree = "<group>"; };
 		A4BB6DA915270AFA001CEA6B /* CommonListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonListFilter.h; sourceTree = "<group>"; };
@@ -1524,7 +1524,6 @@
 		A48D6E4F1514232400507BDD /* CityOverView */ = {
 			isa = PBXGroup;
 			children = (
-				A48E87A7151C6A3D007954D3 /* LocalCityManager.h */,
 				A48D6E601514472200507BDD /* CityOverviewManager.h */,
 				A48D6E611514472200507BDD /* CityOverviewManager.m */,
 			);
@@ -1900,6 +1899,7 @@
 				A48E87A5151C5FC0007954D3 /* LocalCity.m */,
 				CA103AFA15046A3300F60C03 /* AppManager.h */,
 				CA103AFB15046A3300F60C03 /* AppManager.m */,
+				A48E87A7151C6A3D007954D3 /* LocalCityManager.h */,
 				A48E87A8151C6A3D007954D3 /* LocalCityManager.m */,
 			);
 			path = App;
@@ -1973,8 +1973,8 @@
 		CA238FA514FCCDF200114175 /* Place */ = {
 			isa = PBXGroup;
 			children = (
-				CA238FDD14FF4B5300114175 /* PlaceService.m */,
 				CA238FDE14FF4B5300114175 /* PlaceService.h */,
+				CA238FDD14FF4B5300114175 /* PlaceService.m */,
 			);
 			path = Place;
 			sourceTree = "<group>";
@@ -3780,8 +3780,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 			};
@@ -3805,8 +3805,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 				VALIDATE_PRODUCT = YES;
@@ -3817,6 +3817,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -3826,7 +3827,8 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3846,8 +3848,8 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "003E5BD6-930C-4828-938E-9D0F8F0C5200";
+				PROVISIONING_PROFILE = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0F927F0-8D31-42AE-8A31-CFE7ADDD6D93";
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
 			};
