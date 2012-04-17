@@ -21,6 +21,7 @@
 @synthesize tableView;
 @synthesize delegate;
 @synthesize selectedIds = _selectedIds;
+@synthesize beforeSelectedIds = _beforeSelectedIds;
 @synthesize multiOptions = _multiOptinos;
 @synthesize needConfirm = _needConfirm;
 
@@ -30,7 +31,9 @@
     
     controller.dataList = list;
     
-    controller.selectedIds = selectedIds;
+    controller.beforeSelectedIds = selectedIds;
+
+    controller.selectedIds = [NSMutableArray arrayWithArray:selectedIds];
     
     controller.multiOptions = multiOptions;
     
@@ -69,6 +72,7 @@
 - (void)dealloc {
     [tableView release];
     [_selectedIds release];
+    [_beforeSelectedIds release];
     [super dealloc];
 }
 
@@ -235,8 +239,15 @@
     }
     else{
         [self.navigationController popViewControllerAnimated:YES];
+        
+        [_beforeSelectedIds removeAllObjects];
+        for (NSNumber *selectId in _selectedIds) {
+            [_beforeSelectedIds addObject:selectId];
+        }
+        
         [delegate didSelectFinish:self.selectedIds];
     }
 }
+
 
 @end
