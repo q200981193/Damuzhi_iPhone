@@ -6,11 +6,11 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "CityConfigDataSource.h"
+#import "TravelPreparationDataSource.h"
 #import "CityOverviewManager.h"
 #import "AppManager.h"
 
-@implementation CityConfigDataSource
+@implementation TravelPreparationDataSource
 
 - (NSString*)getTitleName
 {
@@ -19,13 +19,13 @@
 
 - (void)requestDataWithDelegate:(PPViewController<CityOverviewServiceDelegate>*)delegate
 {
-    [[CityOverviewService defaultService]findCityConfig:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
+    [[CityOverviewService defaultService]findTravelPreparation:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
     
 }
 
 + (NSObject<CommonInfoDataSourceProtocol>*)createDataSource
 {
-    CityConfigDataSource* obj = [[[CityConfigDataSource alloc] init] autorelease];    
+    TravelPreparationDataSource* obj = [[[TravelPreparationDataSource alloc] init] autorelease];    
     return obj;
 }
 

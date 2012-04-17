@@ -16,7 +16,7 @@
 #import "FavoriteController.h"
 #import "CommonInfoController.h"
 #import "CityBasicDataSource.h"
-#import "CityConfigDataSource.h"
+#import "TravelPreparationDataSource.h"
 #import "TravelUtilityDataSource.h"
 #import "TravelTransportDataSource.h"
 #import "CommonPlace.h"
@@ -163,16 +163,16 @@
     [controller release];        
 }
 
-- (IBAction)clickCityOverviewButton:(id)sender
+- (IBAction)clickCityBasicButton:(id)sender
 {
     CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[CityBasicDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        
 }
 
-- (IBAction)clickCityConfigButton:(id)sender
+- (IBAction)clickTravelPreparationButton:(id)sender
 {
-    CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[CityConfigDataSource createDataSource]];
+    CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[TravelPreparationDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

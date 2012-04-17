@@ -66,6 +66,7 @@
 		A48782C115071BCD00A0D91E /* MoreController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48782BF15071BCD00A0D91E /* MoreController.xib */; };
 		A48782CD1507316100A0D91E /* CityManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48782CB1507316100A0D91E /* CityManagementController.m */; };
 		A48782CE1507316100A0D91E /* CityManagementController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48782CC1507316100A0D91E /* CityManagementController.xib */; };
+		A48B621D153D465B00733DF1 /* table5_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48B621C153D465B00733DF1 /* table5_bg@2x.png */; };
 		A48CE06515187DDA0094BD5D /* PackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CE06415187DDA0094BD5D /* PackageManager.m */; };
 		A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D6E611514472200507BDD /* CityOverviewManager.m */; };
 		A48E050E1534058900B2695E /* 1.zip in Resources */ = {isa = PBXBuildFile; fileRef = A48E047C1534058800B2695E /* 1.zip */; };
@@ -438,13 +439,12 @@
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
 		EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA20A060153192AE00F6F478 /* AnimationManager.m */; };
-		EA5C766A1534575B0025AFB2 /* CityConfigDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C76691534575B0025AFB2 /* CityConfigDataSource.m */; };
+		EA5C766A1534575B0025AFB2 /* TravelPreparationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */; };
 		EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */; };
 		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
 		EAE654DA153C398700AAE451 /* detail_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE654D8153C398700AAE451 /* detail_shadow@2x.png */; };
 		EAE654DB153C398700AAE451 /* topmenu_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE654D9153C398700AAE451 /* topmenu_bg2@2x.png */; };
 		EAE654E1153C44A800AAE451 /* table_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE654E0153C44A800AAE451 /* table_bg@2x.png */; };
-		EAE654E3153C471500AAE451 /* table5_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE654E2153C471500AAE451 /* table5_bg@2x.png */; };
 		EAFE21E4152855DB0013D040 /* TravelUtilityDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */; };
 		EAFE21EB152861480013D040 /* NearByRecommendController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFE21E9152861480013D040 /* NearByRecommendController.m */; };
 		EAFE21EC152861480013D040 /* NearByRecommendController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFE21EA152861480013D040 /* NearByRecommendController.xib */; };
@@ -608,6 +608,7 @@
 		A48782CA1507316100A0D91E /* CityManagementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityManagementController.h; sourceTree = "<group>"; };
 		A48782CB1507316100A0D91E /* CityManagementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityManagementController.m; sourceTree = "<group>"; };
 		A48782CC1507316100A0D91E /* CityManagementController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityManagementController.xib; sourceTree = "<group>"; };
+		A48B621C153D465B00733DF1 /* table5_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "table5_bg@2x.png"; sourceTree = "<group>"; };
 		A48CE06315187DDA0094BD5D /* PackageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageManager.h; sourceTree = "<group>"; };
 		A48CE06415187DDA0094BD5D /* PackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageManager.m; sourceTree = "<group>"; };
 		A48D6E601514472200507BDD /* CityOverviewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverviewManager.h; sourceTree = "<group>"; };
@@ -1205,15 +1206,14 @@
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
 		EA20A05F153192AE00F6F478 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		EA20A060153192AE00F6F478 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
-		EA5C76681534575B0025AFB2 /* CityConfigDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityConfigDataSource.h; path = Common/CityConfigDataSource.h; sourceTree = "<group>"; };
-		EA5C76691534575B0025AFB2 /* CityConfigDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityConfigDataSource.m; path = Common/CityConfigDataSource.m; sourceTree = "<group>"; };
+		EA5C76681534575B0025AFB2 /* TravelPreparationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; name = TravelPreparationDataSource.h; path = Common/TravelPreparationDataSource.h; sourceTree = "<group>"; };
+		EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TravelPreparationDataSource.m; path = Common/TravelPreparationDataSource.m; sourceTree = "<group>"; };
 		EA5C766B1534579A0025AFB2 /* TravelTransportDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTransportDataSource.h; sourceTree = "<group>"; };
 		EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTransportDataSource.m; sourceTree = "<group>"; };
 		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
 		EAE654D8153C398700AAE451 /* detail_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_shadow@2x.png"; sourceTree = "<group>"; };
 		EAE654D9153C398700AAE451 /* topmenu_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topmenu_bg2@2x.png"; sourceTree = "<group>"; };
 		EAE654E0153C44A800AAE451 /* table_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "table_bg@2x.png"; path = "place_detail/table_bg@2x.png"; sourceTree = "<group>"; };
-		EAE654E2153C471500AAE451 /* table5_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "table5_bg@2x.png"; path = "Travel/Resource/Images/place_list/place_detail/table5_bg@2x.png"; sourceTree = "<group>"; };
 		EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelUtilityDataSource.h; sourceTree = "<group>"; };
 		EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelUtilityDataSource.m; sourceTree = "<group>"; };
 		EAFE21E8152861480013D040 /* NearByRecommendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearByRecommendController.h; sourceTree = "<group>"; };
@@ -1735,6 +1735,7 @@
 		A48E04E61534058900B2695E /* place_detail */ = {
 			isa = PBXGroup;
 			children = (
+				A48B621C153D465B00733DF1 /* table5_bg@2x.png */,
 				EAE654D8153C398700AAE451 /* detail_shadow@2x.png */,
 				EAE654D9153C398700AAE451 /* topmenu_bg2@2x.png */,
 				A48FA65B153803B900422DB7 /* detail_top_bg@2x.png */,
@@ -2939,7 +2940,6 @@
 		CA4906E914F5F05B00228C37 = {
 			isa = PBXGroup;
 			children = (
-				EAE654E2153C471500AAE451 /* table5_bg@2x.png */,
 				A3CD5AE0152803830049D2F3 /* 3PP-SDK */,
 				A3CD5AE9152803AF0049D2F3 /* Components */,
 				CA455E7314F66EDD00DA085D /* Core */,
@@ -3036,8 +3036,8 @@
 				CA585FB314F73C0400471880 /* Common */,
 				CA238FD314FF321C00114175 /* CityBasicDataSource.h */,
 				CA238FD414FF321C00114175 /* CityBasicDataSource.m */,
-				EA5C76681534575B0025AFB2 /* CityConfigDataSource.h */,
-				EA5C76691534575B0025AFB2 /* CityConfigDataSource.m */,
+				EA5C76681534575B0025AFB2 /* TravelPreparationDataSource.h */,
+				EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */,
 				EAFE21E2152855DB0013D040 /* TravelUtilityDataSource.h */,
 				EAFE21E3152855DB0013D040 /* TravelUtilityDataSource.m */,
 				EA5C766B1534579A0025AFB2 /* TravelTransportDataSource.h */,
@@ -3422,7 +3422,7 @@
 				EAE654DA153C398700AAE451 /* detail_shadow@2x.png in Resources */,
 				EAE654DB153C398700AAE451 /* topmenu_bg2@2x.png in Resources */,
 				EAE654E1153C44A800AAE451 /* table_bg@2x.png in Resources */,
-				EAE654E3153C471500AAE451 /* table5_bg@2x.png in Resources */,
+				A48B621D153D465B00733DF1 /* table5_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3676,7 +3676,7 @@
 				A48E059115341B3A00B2695E /* FeekbackController.m in Sources */,
 				A48E05B615342BBE00B2695E /* RouteController.m in Sources */,
 				A48E05BB15342BD300B2695E /* TravelTipsManager.m in Sources */,
-				EA5C766A1534575B0025AFB2 /* CityConfigDataSource.m in Sources */,
+				EA5C766A1534575B0025AFB2 /* TravelPreparationDataSource.m in Sources */,
 				EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */,
 				A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */,
 				A48E05ED15354AC300B2695E /* TravelTipsService.m in Sources */,
@@ -3793,7 +3793,7 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;

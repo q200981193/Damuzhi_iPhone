@@ -112,16 +112,16 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
-- (void)findCityConfig:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate> *)viewController
+- (void)findTravelPreparation:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate> *)viewController
 {
     LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
         [_localCityOverViewManager switchCity:cityId];
-        return _localCityOverViewManager.travelUtility;
+        return _localCityOverViewManager.travelPrepration;
         *resultCode = 0;
     };
     
     RemoteRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_CITY_CONFIG objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_PREPARATION objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
         
@@ -173,7 +173,7 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
 {
     LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
         [_localCityOverViewManager switchCity:cityId];
-        return _localCityOverViewManager.travelUtility;
+        return _localCityOverViewManager.travelTransportation;
         *resultCode = 0;
     };
     

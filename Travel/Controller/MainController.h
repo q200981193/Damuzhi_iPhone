@@ -31,8 +31,8 @@
 - (IBAction)clickShopping:(id)sender;
 - (IBAction)clickEntertainment:(id)sender;
 
-- (IBAction)clickCityOverviewButton:(id)sender;
-- (IBAction)clickCityConfigButton:(id)sender;
+- (IBAction)clickCityBasicButton:(id)sender;
+- (IBAction)clickTravelPreparationButton:(id)sender;
 - (IBAction)clickTravelUtilityButton:(id)sender;
 - (IBAction)clickTravelTransportButton:(id)sender;
 - (IBAction)clickTraveGuideButton:(id)sender;
