@@ -27,7 +27,7 @@
 + (CityOverviewService*)defaultService;
 
 - (void)findCityBasic:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
-- (void)findCityConfig:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
+- (void)findTravelPreparation:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
 - (void)findTravelUtility:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
 - (void)findTravelTransportation:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController;
 

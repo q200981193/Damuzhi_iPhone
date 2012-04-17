@@ -1,5 +1,5 @@
 //
-//  CityConfigDataSource.h
+//  TravelPreparationDataSource.h
 //  Travel
 //
 //  Created by gckj on 12-4-10.
@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "CommonInfoController.h"
 
-@interface CityConfigDataSource : NSObject<CommonInfoDataSourceProtocol>
+@interface TravelPreparationDataSource : NSObject<CommonInfoDataSourceProtocol>
 
 @end
