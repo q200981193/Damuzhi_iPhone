@@ -8,12 +8,10 @@
 
 #import "CommonPlaceListController.h"
 #import "PlaceListController.h"
-#import "PlaceManager.h"
 #import "PlaceService.h"
 #import "PlaceMapViewController.h"
 #import "SelectController.h"
 #import "AppManager.h"
-#import "CityOverviewManager.h"
 #import "SelectedItemsManager.h"
 #import "UIImageUtil.h"
 #import "CommonWebController.h"

@@ -19,6 +19,7 @@ static UserManager* _defaultUserManager = nil;
     if (_defaultUserManager == nil){
         _defaultUserManager = [[UserManager alloc] init];
     }
+    
     return _defaultUserManager;
 }
 

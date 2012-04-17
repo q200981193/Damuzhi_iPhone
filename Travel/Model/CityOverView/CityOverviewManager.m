@@ -31,7 +31,6 @@ static CityOverViewManager *_defaultInstance = nil;
         _defaultInstance = [[CityOverViewManager alloc] init];
     }
     
-    [_defaultInstance switchCity:[[AppManager defaultManager] getCurrentCityId]];
     return _defaultInstance;
 }
 

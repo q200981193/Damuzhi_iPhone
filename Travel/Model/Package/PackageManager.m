@@ -20,7 +20,6 @@ static PackageManager *_instance = nil;
 {
     if (_instance == nil) {
         _instance = [[PackageManager alloc] init];
-        //_instance.packageList = [_instance readAllPackages];
     }
     
     _instance.packageList = [_instance readAllPackages];

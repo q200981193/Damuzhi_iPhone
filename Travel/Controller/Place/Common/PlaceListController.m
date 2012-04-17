@@ -8,7 +8,6 @@
 
 #import "PlaceListController.h"
 #import "Place.pb.h"
-#import "PlaceManager.h"
 #import "CommonPlaceDetailController.h"
 #import "PlaceMapViewController.h"
 #import "LogUtil.h"

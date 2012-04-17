@@ -7,7 +7,6 @@
 //
 
 #import "CityBasicDataSource.h"
-#import "CityOverviewManager.h"
 #import "AppManager.h"
 
 @implementation CityBasicDataSource
