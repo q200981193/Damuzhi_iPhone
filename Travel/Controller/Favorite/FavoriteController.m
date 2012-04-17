@@ -142,6 +142,7 @@
     
     UIButton *tfbtn = [[UIButton alloc] initWithFrame:CGRectMake(BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HIGHT)];
     self.topFavoriteButton = tfbtn;
+    [tfbtn release];
     self.topFavoriteButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.topFavoriteButton setTitle:NSLS(@"收藏排行") forState:UIControlStateNormal];
     [self.topFavoriteButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
