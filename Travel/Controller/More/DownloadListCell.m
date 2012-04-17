@@ -65,14 +65,7 @@
         self.defaultLabel.hidden = YES;
     }
     
-    if (![city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:city.cityId]]) {
-        CGRect rect = CGRectMake(0, 0, 16, 17);
-        UIImageView *view = [[UIImageView alloc] initWithFrame:rect];
-        [view setImage:[UIImage imageNamed:IMAGE_CITY_REFRESH_BTN]];
-        view.center = CGPointMake(updateButton.frame.size.width/2, updateButton.frame.size.height/2);
-        [self.updateButton addSubview:view];
-        [view release];
-        
+    if (![city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:city.cityId]]) {        
         self.updateButton.hidden = NO;
     }
     else {
@@ -115,6 +108,7 @@
 
 - (IBAction)clickUpdateBtn:(id)sender {
     //TODO: download a city package
+    updateButton.selected = YES;
     
     // Call delegete method to do some addition work.
     if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didUpdateCity:)]) {
