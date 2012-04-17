@@ -49,7 +49,6 @@ static AppService* _defaultAppService = nil;
 {
     if (_defaultAppService == nil){
         _defaultAppService = [[AppService alloc] init];       
-        _defaultAppService.downloadRequestList = [[NSMutableArray alloc] init]; 
     }
     
     return _defaultAppService;
@@ -58,6 +57,12 @@ static AppService* _defaultAppService = nil;
 - (id)init
 {
     self = [super init];
+    if (self) {
+        NSMutableArray *list = [[NSMutableArray alloc] init];
+        self.downloadRequestList = list;
+        [list release];
+    }
+    
     return self;
 }
 

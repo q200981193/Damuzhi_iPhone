@@ -56,7 +56,7 @@
 @synthesize mapView;
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
-@synthesize mapAnnotations;
+//@synthesize mapAnnotations;
 @synthesize indexOfSelectedPlace;
 @synthesize superController;
 
@@ -133,20 +133,20 @@
 
 - (void) loadAllAnnotations
 {    
-    [self.mapAnnotations removeAllObjects];
+    NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
             if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
                 PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-                [self.mapAnnotations addObject:placeAnnotation];
+                [mapAnnotations addObject:placeAnnotation];
                 [placeAnnotation release];
             }
         } 
     }
     
     [self.mapView removeAnnotations:self.mapView.annotations];
-    [self.mapView addAnnotations:self.mapAnnotations];
-    
+    [self.mapView addAnnotations:mapAnnotations];
+    [mapAnnotations release];
 }
 
 - (void)viewDidLoad
@@ -157,7 +157,7 @@
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
 //    self.mapView.showsUserLocation = YES;
-    self.mapAnnotations = [[NSMutableArray alloc]init];
+//    self.mapAnnotations = [[NSMutableArray alloc]init];
     [self loadAllAnnotations];
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
@@ -175,13 +175,13 @@
 - (void)viewDidUnload
 {
     self.mapView = nil;
-    self.mapAnnotations = nil;
+//    self.mapAnnotations = nil;
 }
 
 - (void)dealloc 
 {
     [mapView release];
-    [mapAnnotations release];
+//    [mapAnnotations release];
     [super dealloc];
 }
 
@@ -215,7 +215,7 @@
     {
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"mapAnnotationIdentifier";
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[[mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]]autorelease];
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]];
         if (pinView == nil)
         {
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]

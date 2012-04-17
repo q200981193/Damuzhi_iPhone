@@ -528,6 +528,7 @@
     NSArray *array = [str componentsSeparatedByString:@";"];
 
     if ([array count] < 1) {
+        [segmentView release];
         return;
     }
     
@@ -665,7 +666,9 @@
     
     [favouritesView addSubview:favButton];
     
-    self.favoriteCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, 21, 120, 15)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(180, 21, 120, 15)];
+    self.favoriteCountLabel = label;
+    [label release];
     self.favoriteCountLabel.backgroundColor = [UIColor clearColor];
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
@@ -673,7 +676,6 @@
     [favouritesView addSubview:self.favoriteCountLabel];
     
     [dataScrollView addSubview:favouritesView];
-    [self.favoriteCountLabel release];
     [favButton release];
     [favouritesView release];
 
@@ -780,6 +782,12 @@
     [praiseIcon3 release];
     [helpButton release];
     [serviceHolder release];
+    [_placeList release];
+    [favoriteCountLabel release];
+    [telephoneView release];
+    [addressView release];
+    [websiteView release];
+    [favouritesView release];
     [super dealloc];
 }
 @end
