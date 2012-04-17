@@ -19,6 +19,7 @@
 @property (assign, nonatomic) BOOL multiOptions;
 @property (assign, nonatomic) BOOL needConfirm;
 @property (retain, nonatomic) NSMutableArray *selectedIds;
+@property (retain, nonatomic) NSMutableArray *beforeSelectedIds;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (assign, nonatomic) id<SelectControllerDelegate> delegate;
 
