@@ -218,6 +218,12 @@
     }
     
     if (!_needConfirm) {
+        
+        [_beforeSelectedIds removeAllObjects];
+        for (NSNumber *selectId in _selectedIds) {
+            [_beforeSelectedIds addObject:selectId];
+        }
+        
         [self.navigationController popViewControllerAnimated:YES];
         if (delegate && [delegate respondsToSelector:@selector(didSelectFinish:)]) {
             [delegate didSelectFinish:self.selectedIds];
