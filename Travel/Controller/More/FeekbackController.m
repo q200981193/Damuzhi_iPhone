@@ -88,14 +88,18 @@
 #pragma mark -
 #pragma mark: implementation of text view delegate methods
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
     textView.tag = 1;
+//    PPDebug(@"textView.tag = 1");
+    return YES;
 }
-
-- (void)textViewDidEndEditing:(UITextView *)textView
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     textView.tag = 0;
+//    PPDebug(@"textView.tag = 0");
+    return YES;
+
 }
 
 #pragma mark -
@@ -104,12 +108,14 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     textField.tag = 1;
+    PPDebug(@"textField.tag = 1");
     return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     textField.tag = 0;
+    PPDebug(@"textField.tag = 0");
     return YES;
 }
 
@@ -200,6 +206,9 @@
                        keyboardHeight:height];
     
     CGPoint newCenter = CGPointMake(_viewCenter.x, _viewCenter.y+y);
+    
+    PPDebug(@"feekbackTextView.tag=%d, textField.tag=%d", feekbackTextView.tag, contactWayTextField.tag);
+    PPDebug(@"moveDistance=%f", y);
     
     [self moveView:self.view toCenter:newCenter needAnimation:YES];
 }

@@ -254,7 +254,6 @@
         [serviceHolder addSubview:serviceIconView];
         [icon release];
         [serviceIconView release];
-        
     }
     
 }
@@ -327,24 +326,19 @@
     [segmentView sendSubviewToBack:shadowView];
     [shadowView release];
     
-//    UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(10, 24, 300, 1)];
-//    lineView.backgroundColor = PRICE_BG_COLOR;
-//    [segmentView addSubview:lineView];
-//    [lineView release];
-        
-//    UILabel *introductionDescription = [self createDescriptionView:description height:size.height]; 
-    
-    UILabel *introductionDescription = [[[UILabel alloc]initWithFrame:CGRectMake(10, shadowView.frame.size.height + 4, 300, size.height)] autorelease];
+    UILabel *introductionDescription = [[UILabel alloc]initWithFrame:CGRectMake(10, shadowView.frame.size.height + 4, 300, size.height)];
     introductionDescription.lineBreakMode = UILineBreakModeWordWrap;
     introductionDescription.numberOfLines = 0;
     introductionDescription.backgroundColor = [UIColor clearColor];
     introductionDescription.textColor = DESCRIPTION_COLOR;
     introductionDescription.font = font;
     
-    NSString *str = [NSString stringWithFormat:@"        %@",description];
+    NSString *str = [NSString stringWithFormat:@"       %@",[description stringByReplacingOccurrencesOfString:@"\n" withString:@"\n       "]];
+    
     introductionDescription.text = str;
         
     [segmentView addSubview:introductionDescription];
+    [introductionDescription release];
     [dataScrollView addSubview:segmentView];    
     
     UIView *middleLineView = [self createMiddleLineView: self.detailHeight + segmentView.frame.size.height];
@@ -441,11 +435,11 @@
 
 - (void) addNearbyView
 {
-    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 135)] autorelease];
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 156)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
-    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 100)];
-    [tbView setImage:[UIImage imageNamed:@"table5_bg"]];
+    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 121)];
+    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
     [segmentView addSubview:tbView];
     [segmentView sendSubviewToBack:tbView];
     [tbView release];
@@ -467,7 +461,7 @@
         CLLocationDistance distance = [loc distanceFromLocation:location];
         [location release];
         
-        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 20*(i++), 300, 20)];
+        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 28 + 24*(i++), 300, 24)];
         rowView.tag = [_placeList indexOfObject:place];
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 14, 14)];
@@ -739,7 +733,7 @@
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332 + 132)];
+    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332 + 132 + 21)];
     
     [self addNearbyView];
     
