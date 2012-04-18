@@ -11,6 +11,7 @@
 #import "CityOverviewService.h"
 #import "AppManager.h"
 #import "AppUtils.h"
+#import "ImageName.h"
 
 @implementation CommonInfoController
 
@@ -117,6 +118,7 @@
     }
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
     [slideImageView setImages:imagePathList];
     [self.imageHolderView addSubview:slideImageView];
     

@@ -22,6 +22,7 @@
 #import "NearByRecommendController.h"
 #import "AnimationManager.h"
 #import "CommonWebController.h"
+#import "ImageName.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -704,6 +705,7 @@
     }
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
     [slideImageView setImages:imagePathList];
     [self.imageHolderView addSubview:slideImageView];
     

@@ -129,6 +129,7 @@
     }
     
     SlideImageView *slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
+    slideImageView.defaultImage =IMAGE_PLACE_DETAIL;
     [slideImageView setImages:imagePathList];
     [imageHolderView addSubview:slideImageView];
     [imagePathList release];
