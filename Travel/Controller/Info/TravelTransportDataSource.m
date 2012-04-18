@@ -22,7 +22,7 @@
     
 }
 
-+ (NSObject<CommonInfoDataSourceProtocol>*)createDataSource
++ (NSObject<CommonWebDataSourceProtocol>*)createDataSource
 {
     TravelTransportDataSource* obj = [[[TravelTransportDataSource alloc] init] autorelease];    
     return obj;

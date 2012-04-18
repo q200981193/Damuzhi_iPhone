@@ -8,11 +8,13 @@
 
 #import "CommonWebController.h"
 #import "AppUtils.h"
+#import "AppManager.h"
 
 @implementation CommonWebController
 
 @synthesize htmlPath = _htmlPath;
 @synthesize webView;
+@synthesize dataSource;
 
 
 - (CommonWebController*)initWithWebUrl:(NSString*)htmlPath
@@ -24,6 +26,16 @@
     return self;
 }
 
+- (id)initWithDataSource:(NSObject<CommonWebDataSourceProtocol>*)source
+{
+    self = [super init];
+    if (self) {
+        self.dataSource = source;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,15 +44,20 @@
     
     webView.delegate = self;
     
-    //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
-    
-    NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:_htmlPath];
-    
-    //request from a url, load request to web view.
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSLog(@"load webview url = %@", [request description]);
-    if (request) {
-        [self.webView loadRequest:request];        
+    if (dataSource) {
+        [self.navigationItem setTitle:[dataSource getTitleName]];
+        [dataSource requestDataWithDelegate:self];
+    }
+    else {
+        //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
+        NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:_htmlPath];
+        
+        //request from a url, load request to web view.
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSLog(@"load webview url = %@", [request description]);
+        if (request) {
+            [self.webView loadRequest:request];        
+        }
     }
 }
 
@@ -79,6 +96,25 @@
 {
     [self popupMessage:@"数据加载失败" title:nil];
     [self hideActivity];
+}
+
+#pragma mark - CityOverviewServiceDelegate
+- (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView
+{
+    NSString* htmlString = [overView html];
+    
+    //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
+    
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+    
+    NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
+    
+    //request from a url, load request to web view.
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSLog(@"load webview url = %@", [request description]);
+    if (request) {
+        [self.webView loadRequest:request];        
+    }
 }
 
 @end
