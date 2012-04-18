@@ -25,7 +25,6 @@
 - (City*)getTestCity:(int)cityId;
 
 - (NSString*)getAppDataVersion;
-- (NSString*)getHelpHtml;
 
 - (NSString*)getCategoryName:(int)categoryId;
 - (NSArray*)getCityList;

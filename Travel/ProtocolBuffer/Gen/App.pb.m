@@ -1670,11 +1670,19 @@ static CityList* defaultCityListInstance = nil;
 @end
 
 @interface HelpInfo ()
+@property (retain) NSString* version;
 @property (retain) NSString* helpHtml;
 @end
 
 @implementation HelpInfo
 
+- (BOOL) hasVersion {
+  return !!hasVersion_;
+}
+- (void) setHasVersion:(BOOL) value {
+  hasVersion_ = !!value;
+}
+@synthesize version;
 - (BOOL) hasHelpHtml {
   return !!hasHelpHtml_;
 }
@@ -1683,11 +1691,13 @@ static CityList* defaultCityListInstance = nil;
 }
 @synthesize helpHtml;
 - (void) dealloc {
+  self.version = nil;
   self.helpHtml = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
+    self.version = @"";
     self.helpHtml = @"";
   }
   return self;
@@ -1708,6 +1718,9 @@ static HelpInfo* defaultHelpInfoInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasVersion) {
+    [output writeString:1 value:self.version];
+  }
   if (self.hasHelpHtml) {
     [output writeString:11 value:self.helpHtml];
   }
@@ -1720,6 +1733,9 @@ static HelpInfo* defaultHelpInfoInstance = nil;
   }
 
   size = 0;
+  if (self.hasVersion) {
+    size += computeStringSize(1, self.version);
+  }
   if (self.hasHelpHtml) {
     size += computeStringSize(11, self.helpHtml);
   }
@@ -1798,6 +1814,9 @@ static HelpInfo* defaultHelpInfoInstance = nil;
   if (other == [HelpInfo defaultInstance]) {
     return self;
   }
+  if (other.hasVersion) {
+    [self setVersion:other.version];
+  }
   if (other.hasHelpHtml) {
     [self setHelpHtml:other.helpHtml];
   }
@@ -1822,12 +1841,32 @@ static HelpInfo* defaultHelpInfoInstance = nil;
         }
         break;
       }
+      case 10: {
+        [self setVersion:[input readString]];
+        break;
+      }
       case 90: {
         [self setHelpHtml:[input readString]];
         break;
       }
     }
   }
+}
+- (BOOL) hasVersion {
+  return result.hasVersion;
+}
+- (NSString*) version {
+  return result.version;
+}
+- (HelpInfo_Builder*) setVersion:(NSString*) value {
+  result.hasVersion = YES;
+  result.version = value;
+  return self;
+}
+- (HelpInfo_Builder*) clearVersion {
+  result.hasVersion = NO;
+  result.version = @"";
+  return self;
 }
 - (BOOL) hasHelpHtml {
   return result.hasHelpHtml;
@@ -1852,7 +1891,6 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @property (retain) NSMutableArray* mutableCitiesList;
 @property (retain) NSMutableArray* mutableTestCitiesList;
 @property (retain) NSMutableArray* mutablePlaceMetaDataListList;
-@property (retain) NSString* helpHtml;
 @end
 
 @implementation App
@@ -1867,25 +1905,16 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @synthesize mutableCitiesList;
 @synthesize mutableTestCitiesList;
 @synthesize mutablePlaceMetaDataListList;
-- (BOOL) hasHelpHtml {
-  return !!hasHelpHtml_;
-}
-- (void) setHasHelpHtml:(BOOL) value {
-  hasHelpHtml_ = !!value;
-}
-@synthesize helpHtml;
 - (void) dealloc {
   self.dataVersion = nil;
   self.mutableCitiesList = nil;
   self.mutableTestCitiesList = nil;
   self.mutablePlaceMetaDataListList = nil;
-  self.helpHtml = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
     self.dataVersion = @"";
-    self.helpHtml = @"";
   }
   return self;
 }
@@ -1956,9 +1985,6 @@ static App* defaultAppInstance = nil;
   for (PlaceMeta* element in self.placeMetaDataListList) {
     [output writeMessage:5 value:element];
   }
-  if (self.hasHelpHtml) {
-    [output writeString:11 value:self.helpHtml];
-  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -1979,9 +2005,6 @@ static App* defaultAppInstance = nil;
   }
   for (PlaceMeta* element in self.placeMetaDataListList) {
     size += computeMessageSize(5, element);
-  }
-  if (self.hasHelpHtml) {
-    size += computeStringSize(11, self.helpHtml);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -2079,9 +2102,6 @@ static App* defaultAppInstance = nil;
     }
     [result.mutablePlaceMetaDataListList addObjectsFromArray:other.mutablePlaceMetaDataListList];
   }
-  if (other.hasHelpHtml) {
-    [self setHelpHtml:other.helpHtml];
-  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -2123,10 +2143,6 @@ static App* defaultAppInstance = nil;
         PlaceMeta_Builder* subBuilder = [PlaceMeta builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addPlaceMetaDataList:[subBuilder buildPartial]];
-        break;
-      }
-      case 90: {
-        [self setHelpHtml:[input readString]];
         break;
       }
     }
@@ -2233,22 +2249,6 @@ static App* defaultAppInstance = nil;
     result.mutablePlaceMetaDataListList = [NSMutableArray array];
   }
   [result.mutablePlaceMetaDataListList addObject:value];
-  return self;
-}
-- (BOOL) hasHelpHtml {
-  return result.hasHelpHtml;
-}
-- (NSString*) helpHtml {
-  return result.helpHtml;
-}
-- (App_Builder*) setHelpHtml:(NSString*) value {
-  result.hasHelpHtml = YES;
-  result.helpHtml = value;
-  return self;
-}
-- (App_Builder*) clearHelpHtml {
-  result.hasHelpHtml = NO;
-  result.helpHtml = @"";
   return self;
 }
 @end

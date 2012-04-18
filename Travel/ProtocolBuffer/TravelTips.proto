@@ -7,10 +7,12 @@ option java_outer_classname = "TravelTipsProtos";
 message CommonTravelTip {
   optional int32  tipId = 1;  
   optional int32  cityId = 2;
-  required string name = 3;             // 攻略名称
+  required string name = 3;             // 游记攻略/线路推荐名称
   optional string html = 4;             // 对应的HTML文件名，离线为相对路径，如 html/abc/abc.html，在线为绝对URL
-  optional string briefIntro = 5;      // 攻略/游记简介(简短描述)
-  optional string image = 6;            // 攻略/游记图片，离线为相对路径，在线为绝对URL
+  optional string briefIntro = 5;       // 游记攻略/线路推荐简介(简短描述)
+  optional string icon = 6;             // 游记攻略/线路推荐图标，离线为相对路径，在线为绝对URL
+  repeated string images = 7;           // 游记攻略/线路推荐详图，离线为相对路径，在线为绝对URL
+  optional string detailIntro = 8;      // 游记攻略/线路推荐详细介绍
 }
 
 message CommonTravelTipList{

@@ -29,6 +29,8 @@
 {
     titleLabel.text = tip.name;
     briefIntroLabel.text = tip.briefIntro;
+    [imageView.layer setCornerRadius:25.0f];
+    [imageView.layer setMasksToBounds:YES];
     [self setTipImage:tip];
 }
 
@@ -38,15 +40,15 @@
     
     [imageView setImage:[UIImage imageNamed:@"heart.png"]];
     
-    if (![tip.image hasPrefix:@"http"]){
+    if (![tip.icon hasPrefix:@"http"]){
         // local files, read image locally
-        NSString *imagePath = [[AppUtils getCityDataDir:tip.cityId] stringByAppendingPathComponent:tip.image];
+        NSString *imagePath = [[AppUtils getCityDataDir:tip.cityId] stringByAppendingPathComponent:tip.icon];
         [imageView setImage:[UIImage imageWithContentsOfFile:imagePath]];
     }
     else{
         imageView.callbackOnSetImage = self;
         [imageView clear];
-        imageView.url = [NSURL URLWithString:tip.image];
+        imageView.url = [NSURL URLWithString:tip.icon];
         //        PPDebug(@"load place image from URL %@", [place icon]);
         [GlobalGetImageCache() manage:imageView];
     }

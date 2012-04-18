@@ -135,7 +135,7 @@
 - (void)clickHelpButton:(id)sender
 {
     NSLog(@"click help");
-    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[[AppManager defaultManager] getHelpHtml]];
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
     controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];

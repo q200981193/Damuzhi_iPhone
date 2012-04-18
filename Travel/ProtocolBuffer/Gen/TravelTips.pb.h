@@ -22,26 +22,33 @@
   BOOL hasName_:1;
   BOOL hasHtml_:1;
   BOOL hasBriefIntro_:1;
-  BOOL hasImage_:1;
+  BOOL hasIcon_:1;
+  BOOL hasDetailIntro_:1;
   int32_t tipId;
   int32_t cityId;
   NSString* name;
   NSString* html;
   NSString* briefIntro;
-  NSString* image;
+  NSString* icon;
+  NSString* detailIntro;
+  NSMutableArray* mutableImagesList;
 }
 - (BOOL) hasTipId;
 - (BOOL) hasCityId;
 - (BOOL) hasName;
 - (BOOL) hasHtml;
 - (BOOL) hasBriefIntro;
-- (BOOL) hasImage;
+- (BOOL) hasIcon;
+- (BOOL) hasDetailIntro;
 @property (readonly) int32_t tipId;
 @property (readonly) int32_t cityId;
 @property (readonly, retain) NSString* name;
 @property (readonly, retain) NSString* html;
 @property (readonly, retain) NSString* briefIntro;
-@property (readonly, retain) NSString* image;
+@property (readonly, retain) NSString* icon;
+@property (readonly, retain) NSString* detailIntro;
+- (NSArray*) imagesList;
+- (NSString*) imagesAtIndex:(int32_t) index;
 
 + (CommonTravelTip*) defaultInstance;
 - (CommonTravelTip*) defaultInstance;
@@ -102,10 +109,22 @@
 - (CommonTravelTip_Builder*) setBriefIntro:(NSString*) value;
 - (CommonTravelTip_Builder*) clearBriefIntro;
 
-- (BOOL) hasImage;
-- (NSString*) image;
-- (CommonTravelTip_Builder*) setImage:(NSString*) value;
-- (CommonTravelTip_Builder*) clearImage;
+- (BOOL) hasIcon;
+- (NSString*) icon;
+- (CommonTravelTip_Builder*) setIcon:(NSString*) value;
+- (CommonTravelTip_Builder*) clearIcon;
+
+- (NSArray*) imagesList;
+- (NSString*) imagesAtIndex:(int32_t) index;
+- (CommonTravelTip_Builder*) replaceImagesAtIndex:(int32_t) index with:(NSString*) value;
+- (CommonTravelTip_Builder*) addImages:(NSString*) value;
+- (CommonTravelTip_Builder*) addAllImages:(NSArray*) values;
+- (CommonTravelTip_Builder*) clearImagesList;
+
+- (BOOL) hasDetailIntro;
+- (NSString*) detailIntro;
+- (CommonTravelTip_Builder*) setDetailIntro:(NSString*) value;
+- (CommonTravelTip_Builder*) clearDetailIntro;
 @end
 
 @interface CommonTravelTipList : PBGeneratedMessage {

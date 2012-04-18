@@ -75,23 +75,28 @@ static AppService* _defaultAppService = nil;
     return @"";
 }
 
-//- (BOOL)hasUnzipCityData:(int)cityId
-//{
-//    return [[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getUnzipFlag:cityId]];
-//}
-
 - (void)copyDefaultAppDataFormBundle
 {    
     // create City Dir
     [FileUtil createDir:[AppUtils getAppDir]];
     
     // copy file from bundle to zip dir
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getAppFilePath]]) {
-        PPDebug(@"copy defalut app.dat from bundle to app dir");
-        [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_APP_DATA
-                                      appDir:[AppUtils getAppDir] 
-                                   overwrite:YES];
-    }
+    PPDebug(@"copy defalut app.dat from bundle to app dir");
+    [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_APP_DATA
+                                  appDir:[AppUtils getAppDir] 
+                               overwrite:NO];
+}
+
+- (void)copyBuildinHelpHtmlFileFormBundle
+{    
+    // create City Dir
+    [FileUtil createDir:[AppUtils getAppDir]];
+    
+    // copy file from bundle to zip dir
+    PPDebug(@"copy defalut help.html from bundle to app dir");
+    [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_HELP_HTML
+                                  appDir:[AppUtils getAppDir] 
+                               overwrite:NO];
 }
 
 - (void)copyBuildinCityZipFromBundleAndRelease
@@ -100,12 +105,10 @@ static AppService* _defaultAppService = nil;
     [FileUtil createDir:[AppUtils getZipDir]];
     
     // copy file from bundle to zip dir
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getZipFilePath:DEFAULT_CITY_ID]]) {
-        PPDebug(@"copy defalut zip from bundle to zip dir");
-        [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
-                                      appDir:[AppUtils getZipDir] 
-                                   overwrite:YES];
-    }
+    PPDebug(@"copy defalut zip from bundle to zip dir");
+    [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
+                                  appDir:[AppUtils getZipDir] 
+                               overwrite:YES];
     
     // if there has no unzip city data, unzip
     if (![AppUtils hasLocalCityData:DEFAULT_CITY_ID]) {
@@ -117,9 +120,45 @@ static AppService* _defaultAppService = nil;
 {
     [self copyDefaultAppDataFormBundle];
     [self copyBuildinCityZipFromBundleAndRelease];
+    [self copyBuildinHelpHtmlFileFormBundle];
     [[AppManager defaultManager] loadAppData];
 }
 
+- (void)updateHelpHtmlFile
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_HELP_INOF lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        HelpInfo *helpInfo = nil;
+        
+        if (output.resultCode == ERROR_SUCCESS){
+            @try{
+                helpInfo = [[TravelResponse parseFromData:output.responseData] helpInfo];
+                if (![helpInfo.version isEqualToString:[self getHelpHtmlFileVersion]]) {
+                    NSURL *url = [NSURL URLWithString:helpInfo.helpHtml];
+                    [self downloadResource:url destinationDir:[AppUtils getAppDir] fileName:FILENAME_OF_HELP_HTML];
+                    [self setHelpHtmlFileVersion:helpInfo.version];
+                }
+            }
+            
+            @catch (NSException *exception){
+                NSLog (@"Caught %@%@", [exception name], [exception reason]);
+            }
+        }
+    });    
+
+}
+
+#define KEY_HELP_HTML_FILE_VERSION @"KEY_HELP_HTML_FILE_VERSION"
+- (NSString*)getHelpHtmlFileVersion
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:KEY_HELP_HTML_FILE_VERSION];
+}
+
+- (void)setHelpHtmlFileVersion:(NSString*)version
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:version forKey:KEY_HELP_HTML_FILE_VERSION];
+}
 
 - (void)updateAppData
 {        
@@ -140,8 +179,6 @@ static AppService* _defaultAppService = nil;
                 NSLog (@"Caught %@%@", [exception name], [exception reason]);
                 parseDataFlag = NO;
             }
-
-
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -155,20 +192,25 @@ static AppService* _defaultAppService = nil;
         if (output.resultCode == ERROR_SUCCESS && parseDataFlag == YES){
             // TODO , performance can be improved by add sperate working queue for download
             NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
-            for (PlaceMeta *placeMeta in placeMetas) {
-                for (NameIdPair *providedService in [placeMeta providedServiceListList]) {
-                    // download images of each provide service icon
-                    NSURL *url = [NSURL URLWithString:providedService.image];
-                    
-                    NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
-                    NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", providedService.id]; 
-                    
-                    [self downloadResource:url destinationDir:destinationDir fileName:fileName];
-                    [fileName release];
-                }
-            }
+            [self downloadProvidedServiceIcons:placeMetas];
         }
     });    
+}
+
+- (void)downloadProvidedServiceIcons:(NSArray*)placeMetas
+{
+    for (PlaceMeta *placeMeta in placeMetas) {
+        for (NameIdPair *providedService in [placeMeta providedServiceListList]) {
+            // download images of each provide service icon
+            NSURL *url = [NSURL URLWithString:providedService.image];
+            
+            NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
+            NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", providedService.id]; 
+            
+            [self downloadResource:url destinationDir:destinationDir fileName:fileName];
+            [fileName release];
+        }
+    }
 }
 
 - (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName

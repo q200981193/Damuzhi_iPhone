@@ -112,7 +112,7 @@
     for (NSString *image in imageList) {
         NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
 
-        NSLog(@"image path = %@", imgaePath);
+//        NSLog(@"image path = %@", imgaePath);
         [imagePathList addObject:imgaePath];
     }
     

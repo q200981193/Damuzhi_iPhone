@@ -111,6 +111,11 @@
     return [[AppUtils getAppDir] stringByAppendingPathComponent:FILENAME_OF_APP_DATA];
 }
 
++ (NSString*)getHelpHtmlFilePath
+{
+    return [[AppUtils getAppDir] stringByAppendingPathComponent:FILENAME_OF_HELP_HTML];
+}
+
 
 + (NSString*)getProvidedServiceIconDir
 {

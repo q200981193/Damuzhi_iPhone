@@ -423,10 +423,14 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 
 @interface HelpInfo : PBGeneratedMessage {
 @private
+  BOOL hasVersion_:1;
   BOOL hasHelpHtml_:1;
+  NSString* version;
   NSString* helpHtml;
 }
+- (BOOL) hasVersion;
 - (BOOL) hasHelpHtml;
+@property (readonly, retain) NSString* version;
 @property (readonly, retain) NSString* helpHtml;
 
 + (HelpInfo*) defaultInstance;
@@ -463,6 +467,11 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (HelpInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (HelpInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
+- (BOOL) hasVersion;
+- (NSString*) version;
+- (HelpInfo_Builder*) setVersion:(NSString*) value;
+- (HelpInfo_Builder*) clearVersion;
+
 - (BOOL) hasHelpHtml;
 - (NSString*) helpHtml;
 - (HelpInfo_Builder*) setHelpHtml:(NSString*) value;
@@ -472,17 +481,13 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 @interface App : PBGeneratedMessage {
 @private
   BOOL hasDataVersion_:1;
-  BOOL hasHelpHtml_:1;
   NSString* dataVersion;
-  NSString* helpHtml;
   NSMutableArray* mutableCitiesList;
   NSMutableArray* mutableTestCitiesList;
   NSMutableArray* mutablePlaceMetaDataListList;
 }
 - (BOOL) hasDataVersion;
-- (BOOL) hasHelpHtml;
 @property (readonly, retain) NSString* dataVersion;
-@property (readonly, retain) NSString* helpHtml;
 - (NSArray*) citiesList;
 - (City*) citiesAtIndex:(int32_t) index;
 - (NSArray*) testCitiesList;
@@ -549,10 +554,5 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) addPlaceMetaDataList:(PlaceMeta*) value;
 - (App_Builder*) addAllPlaceMetaDataList:(NSArray*) values;
 - (App_Builder*) clearPlaceMetaDataListList;
-
-- (BOOL) hasHelpHtml;
-- (NSString*) helpHtml;
-- (App_Builder*) setHelpHtml:(NSString*) value;
-- (App_Builder*) clearHelpHtml;
 @end
 

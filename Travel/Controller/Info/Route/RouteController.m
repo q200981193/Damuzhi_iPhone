@@ -12,8 +12,8 @@
 #import "UIImageUtil.h"
 #import "PPDebug.h"
 #import "RouteCell.h"
-#import "CommonWebController.h"
 #import "AppConstants.h"
+#import "RouteDetailController.h"
 
 @implementation RouteController
 
@@ -77,12 +77,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
-    
-    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
-    controller.title = tip.name;
+    RouteDetailController *controller = [[RouteDetailController alloc] initWithDataSource:tip];
+    [controller setTitle:self.navigationItem.title];
     [self.navigationController pushViewController:controller animated:YES];
-    
     [controller release];
 }
 
@@ -99,7 +96,6 @@
     else {
         [self popupMessage:NSLS(@"加载数据失败") title:nil];
     }
-    
 }
 
 @end

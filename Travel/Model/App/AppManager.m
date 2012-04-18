@@ -84,11 +84,6 @@ static AppManager* _defaultAppManager = nil;
     return _app.dataVersion;
 }
 
-- (NSString*)getHelpHtml
-{
-    return _app.helpHtml;
-}
-
 - (NSArray*)getCityList
 {
     return _app.citiesList;

@@ -21,4 +21,5 @@
 - (void)switchCity:(int)newCityId;
 - (NSArray*)findPlacesByCategory:(int)categoryId;
 
+
 @end

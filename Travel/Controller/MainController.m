@@ -30,6 +30,7 @@
 #import "GuideController.h"
 #import "CommonWebController.h"
 #import "UIImageUtil.h"
+#import "AppUtils.h"
 
 @implementation MainController
 
@@ -228,7 +229,7 @@
 }
 
 - (IBAction)clickHelp:(id)sender {
-    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[[AppManager defaultManager] getHelpHtml]];
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
     controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];

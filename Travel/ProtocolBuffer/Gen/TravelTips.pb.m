@@ -25,7 +25,9 @@ static PBExtensionRegistry* extensionRegistry = nil;
 @property (retain) NSString* name;
 @property (retain) NSString* html;
 @property (retain) NSString* briefIntro;
-@property (retain) NSString* image;
+@property (retain) NSString* icon;
+@property (retain) NSMutableArray* mutableImagesList;
+@property (retain) NSString* detailIntro;
 @end
 
 @implementation CommonTravelTip
@@ -65,18 +67,28 @@ static PBExtensionRegistry* extensionRegistry = nil;
   hasBriefIntro_ = !!value;
 }
 @synthesize briefIntro;
-- (BOOL) hasImage {
-  return !!hasImage_;
+- (BOOL) hasIcon {
+  return !!hasIcon_;
 }
-- (void) setHasImage:(BOOL) value {
-  hasImage_ = !!value;
+- (void) setHasIcon:(BOOL) value {
+  hasIcon_ = !!value;
 }
-@synthesize image;
+@synthesize icon;
+@synthesize mutableImagesList;
+- (BOOL) hasDetailIntro {
+  return !!hasDetailIntro_;
+}
+- (void) setHasDetailIntro:(BOOL) value {
+  hasDetailIntro_ = !!value;
+}
+@synthesize detailIntro;
 - (void) dealloc {
   self.name = nil;
   self.html = nil;
   self.briefIntro = nil;
-  self.image = nil;
+  self.icon = nil;
+  self.mutableImagesList = nil;
+  self.detailIntro = nil;
   [super dealloc];
 }
 - (id) init {
@@ -86,7 +98,8 @@ static PBExtensionRegistry* extensionRegistry = nil;
     self.name = @"";
     self.html = @"";
     self.briefIntro = @"";
-    self.image = @"";
+    self.icon = @"";
+    self.detailIntro = @"";
   }
   return self;
 }
@@ -101,6 +114,13 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
 }
 - (CommonTravelTip*) defaultInstance {
   return defaultCommonTravelTipInstance;
+}
+- (NSArray*) imagesList {
+  return mutableImagesList;
+}
+- (NSString*) imagesAtIndex:(int32_t) index {
+  id value = [mutableImagesList objectAtIndex:index];
+  return value;
 }
 - (BOOL) isInitialized {
   if (!self.hasName) {
@@ -124,8 +144,14 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   if (self.hasBriefIntro) {
     [output writeString:5 value:self.briefIntro];
   }
-  if (self.hasImage) {
-    [output writeString:6 value:self.image];
+  if (self.hasIcon) {
+    [output writeString:6 value:self.icon];
+  }
+  for (NSString* element in self.mutableImagesList) {
+    [output writeString:7 value:element];
+  }
+  if (self.hasDetailIntro) {
+    [output writeString:8 value:self.detailIntro];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -151,8 +177,19 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   if (self.hasBriefIntro) {
     size += computeStringSize(5, self.briefIntro);
   }
-  if (self.hasImage) {
-    size += computeStringSize(6, self.image);
+  if (self.hasIcon) {
+    size += computeStringSize(6, self.icon);
+  }
+  {
+    int32_t dataSize = 0;
+    for (NSString* element in self.mutableImagesList) {
+      dataSize += computeStringSizeNoTag(element);
+    }
+    size += dataSize;
+    size += 1 * self.mutableImagesList.count;
+  }
+  if (self.hasDetailIntro) {
+    size += computeStringSize(8, self.detailIntro);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -244,8 +281,17 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   if (other.hasBriefIntro) {
     [self setBriefIntro:other.briefIntro];
   }
-  if (other.hasImage) {
-    [self setImage:other.image];
+  if (other.hasIcon) {
+    [self setIcon:other.icon];
+  }
+  if (other.mutableImagesList.count > 0) {
+    if (result.mutableImagesList == nil) {
+      result.mutableImagesList = [NSMutableArray array];
+    }
+    [result.mutableImagesList addObjectsFromArray:other.mutableImagesList];
+  }
+  if (other.hasDetailIntro) {
+    [self setDetailIntro:other.detailIntro];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -289,7 +335,15 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
         break;
       }
       case 50: {
-        [self setImage:[input readString]];
+        [self setIcon:[input readString]];
+        break;
+      }
+      case 58: {
+        [self addImages:[input readString]];
+        break;
+      }
+      case 66: {
+        [self setDetailIntro:[input readString]];
         break;
       }
     }
@@ -375,20 +429,67 @@ static CommonTravelTip* defaultCommonTravelTipInstance = nil;
   result.briefIntro = @"";
   return self;
 }
-- (BOOL) hasImage {
-  return result.hasImage;
+- (BOOL) hasIcon {
+  return result.hasIcon;
 }
-- (NSString*) image {
-  return result.image;
+- (NSString*) icon {
+  return result.icon;
 }
-- (CommonTravelTip_Builder*) setImage:(NSString*) value {
-  result.hasImage = YES;
-  result.image = value;
+- (CommonTravelTip_Builder*) setIcon:(NSString*) value {
+  result.hasIcon = YES;
+  result.icon = value;
   return self;
 }
-- (CommonTravelTip_Builder*) clearImage {
-  result.hasImage = NO;
-  result.image = @"";
+- (CommonTravelTip_Builder*) clearIcon {
+  result.hasIcon = NO;
+  result.icon = @"";
+  return self;
+}
+- (NSArray*) imagesList {
+  if (result.mutableImagesList == nil) {
+    return [NSArray array];
+  }
+  return result.mutableImagesList;
+}
+- (NSString*) imagesAtIndex:(int32_t) index {
+  return [result imagesAtIndex:index];
+}
+- (CommonTravelTip_Builder*) replaceImagesAtIndex:(int32_t) index with:(NSString*) value {
+  [result.mutableImagesList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (CommonTravelTip_Builder*) addImages:(NSString*) value {
+  if (result.mutableImagesList == nil) {
+    result.mutableImagesList = [NSMutableArray array];
+  }
+  [result.mutableImagesList addObject:value];
+  return self;
+}
+- (CommonTravelTip_Builder*) addAllImages:(NSArray*) values {
+  if (result.mutableImagesList == nil) {
+    result.mutableImagesList = [NSMutableArray array];
+  }
+  [result.mutableImagesList addObjectsFromArray:values];
+  return self;
+}
+- (CommonTravelTip_Builder*) clearImagesList {
+  result.mutableImagesList = nil;
+  return self;
+}
+- (BOOL) hasDetailIntro {
+  return result.hasDetailIntro;
+}
+- (NSString*) detailIntro {
+  return result.detailIntro;
+}
+- (CommonTravelTip_Builder*) setDetailIntro:(NSString*) value {
+  result.hasDetailIntro = YES;
+  result.detailIntro = value;
+  return self;
+}
+- (CommonTravelTip_Builder*) clearDetailIntro {
+  result.hasDetailIntro = NO;
+  result.detailIntro = @"";
   return self;
 }
 @end

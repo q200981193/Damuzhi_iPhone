@@ -13,10 +13,14 @@
 //                 -----zip--------001_ZhHans_1.0.zip 
 //                |
 //                |
-//                 -----city--------1--------data--------
-//                            |
-//                            |
-//                            ------2--------data--------
+//                 -----city--------1--------data--------overview.dat
+//                |           |
+//                |           |
+//                |            ------2-------data--------
+//                |  
+//                 -----app.dat
+//                |   
+//                 -----help.html
 
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
@@ -42,6 +46,7 @@
 //interface for ...
 + (NSString*)getZipFilePath:(int)cityId;
 + (NSString*)getAppFilePath;
++ (NSString*)getHelpHtmlFilePath;
 
 + (NSString*)getProvidedServiceIconDir;
 + (NSString*)getCategoryImageDir;
@@ -60,5 +65,6 @@
 + (void)enableImageShow:(BOOL)isShow;
 
 + (NSString*)getCategoryIcon:(int)categoryId;
+
 
 @end

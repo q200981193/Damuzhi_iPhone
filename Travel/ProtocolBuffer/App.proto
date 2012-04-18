@@ -54,6 +54,7 @@ message CityList {
 }
 
 message HelpInfo {
+  optional string version = 1;           // 帮助说明的版本
   optional string helpHtml = 11;         // 帮助说明的HTML文件路径  
 }
 
@@ -63,6 +64,5 @@ message App {
   repeated City cities = 2;                     // 正式启用城市列表
   repeated City testCities = 3;                 // 测试实用测试列表
   repeated PlaceMeta placeMetaDataList = 5;       // 每种地点分类的相关数据
-  optional string helpHtml = 11;                  // 帮助说明的HTML文件路径
 }
 
