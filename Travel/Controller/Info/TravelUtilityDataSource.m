@@ -21,7 +21,7 @@
     [[CityOverviewService defaultService]findTravelUtility:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
 }
 
-+ (NSObject<CommonInfoDataSourceProtocol>*)createDataSource
++ (NSObject<CommonWebDataSourceProtocol>*)createDataSource
 {
     TravelUtilityDataSource* obj = [[[TravelUtilityDataSource alloc] init] autorelease];    
     return obj;

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CommonInfoController.h"
+#import "CommonWebController.h"
 
-@interface TravelPreparationDataSource : NSObject<CommonInfoDataSourceProtocol>
+@interface TravelPreparationDataSource : NSObject<CommonWebDataSourceProtocol>
 
 @end

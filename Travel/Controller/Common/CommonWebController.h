@@ -7,13 +7,22 @@
 //
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
+#import "CityOverviewService.h"
 
-@interface CommonWebController : PPViewController <UIWebViewDelegate>
+@protocol CommonWebDataSourceProtocol <NSObject>
+- (NSString*)getTitleName;
+- (void)requestDataWithDelegate:(PPViewController<CityOverviewServiceDelegate>*)delegate;
++ (NSObject<CommonWebDataSourceProtocol>*)createDataSource;
+
+@end
+
+@interface CommonWebController : PPViewController <UIWebViewDelegate, CityOverviewServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet UIWebView *webView;
-
 @property (retain, nonatomic) NSString *htmlPath;
+@property (retain, nonatomic) NSObject<CommonWebDataSourceProtocol> *dataSource;
 
 - (CommonWebController*)initWithWebUrl:(NSString*)htmlPath;
+- (id)initWithDataSource:(NSObject<CommonWebDataSourceProtocol>*)source;
 
 @end

@@ -172,21 +172,21 @@
 
 - (IBAction)clickTravelPreparationButton:(id)sender
 {
-    CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[TravelPreparationDataSource createDataSource]];
+    CommonWebController* controller = [[CommonWebController alloc] initWithDataSource:[TravelPreparationDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
 - (IBAction)clickTravelUtilityButton:(id)sender
 {
-    CommonInfoController *controller = [[CommonInfoController alloc]initWithDataSource:[TravelUtilityDataSource createDataSource]];
+    CommonWebController *controller = [[CommonWebController alloc]initWithDataSource:[TravelUtilityDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];  
 }
 
 - (IBAction)clickTravelTransportButton:(id)sender
 {
-    CommonInfoController *controller = [[CommonInfoController alloc]initWithDataSource:[TravelTransportDataSource createDataSource]];
+    CommonWebController *controller = [[CommonWebController alloc]initWithDataSource:[TravelTransportDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];  
 }
