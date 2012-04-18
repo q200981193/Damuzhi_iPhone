@@ -30,6 +30,12 @@
     return [FileUtil getFileFullPath:DIR_OF_APP];
 }
 
++ (NSString*)getHelpHtmlDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_HELP_HTML];
+}
+
+
 + (NSString*)getZipDir
 {
     return [FileUtil getFileFullPath:DIR_OF_ZIP];

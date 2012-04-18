@@ -31,6 +31,7 @@
 + (NSString*)getDownloadDir;
 + (NSString*)getDownloadPath:(int)cityId;
 + (NSString*)getAppDir;
++ (NSString*)getHelpHtmlDir;
 + (NSString*)getZipDir;
 + (NSString*)getCityDir:(int)cityId;
 + (NSString*)getCityDataDir:(int)cityId;

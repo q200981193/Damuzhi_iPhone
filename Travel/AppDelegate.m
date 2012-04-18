@@ -66,6 +66,9 @@
     // update app data from server
     [[AppService defaultService] updateAppData];
     
+    // update help html 
+    [[AppService defaultService] updateHelpHtmlFile];
+    
     //register user
     //[[UserService defaultService] autoRegisterUser:@"123"];
     [[UserService defaultService] autoRegisterUser:[self getDeviceToken]];

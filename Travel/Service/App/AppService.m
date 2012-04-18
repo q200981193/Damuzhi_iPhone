@@ -90,12 +90,12 @@ static AppService* _defaultAppService = nil;
 - (void)copyBuildinHelpHtmlFileFormBundle
 {    
     // create City Dir
-    [FileUtil createDir:[AppUtils getAppDir]];
+    [FileUtil createDir:[AppUtils getHelpHtmlDir]];
     
     // copy file from bundle to zip dir
     PPDebug(@"copy defalut help.html from bundle to app dir");
     [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_HELP_HTML
-                                  appDir:[AppUtils getAppDir] 
+                                  appDir:[AppUtils getHelpHtmlDir] 
                                overwrite:NO];
 }
 
@@ -135,7 +135,7 @@ static AppService* _defaultAppService = nil;
                 helpInfo = [[TravelResponse parseFromData:output.responseData] helpInfo];
                 if (![helpInfo.version isEqualToString:[self getHelpHtmlFileVersion]]) {
                     NSURL *url = [NSURL URLWithString:helpInfo.helpHtml];
-                    [self downloadResource:url destinationDir:[AppUtils getAppDir] fileName:FILENAME_OF_HELP_HTML];
+                    [self downloadResource:url destinationDir:[AppUtils getHelpHtmlDir] fileName:FILENAME_OF_HELP_HTML];
                     [self setHelpHtmlFileVersion:helpInfo.version];
                 }
             }
@@ -219,6 +219,8 @@ static AppService* _defaultAppService = nil;
     NSString *destinationPath = [destinationDir stringByAppendingPathComponent:fileName];
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    PPDebug(@"download request = %@", url.description);
     [request setDownloadDestinationPath:destinationPath];
     
     [request startSynchronous];

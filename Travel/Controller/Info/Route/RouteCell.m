@@ -29,7 +29,7 @@
 {
     titleLabel.text = tip.name;
     briefIntroLabel.text = tip.briefIntro;
-    [imageView.layer setCornerRadius:25.0f];
+    [imageView.layer setCornerRadius:5.0f];
     [imageView.layer setMasksToBounds:YES];
     [self setTipImage:tip];
 }

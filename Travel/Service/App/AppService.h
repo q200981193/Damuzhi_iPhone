@@ -26,6 +26,7 @@
 
 - (void)loadAppData;
 - (void)updateAppData;
+- (void)updateHelpHtmlFile;
 
 - (void)downloadCity:(City*)city;
 - (void)pauseDownloadCity:(City*)city;

@@ -26,6 +26,7 @@
 #define Travel_AppConstants_h
 
 #define DIR_OF_APP                          @"app"
+#define DIR_OF_HELP_HTML                    @"help"
 #define DIR_OF_ZIP                          @"zip"   
 #define DIR_OF_CITY                         @"cities"
 #define DIR_OF_DOWNLOAD                     @"download"
