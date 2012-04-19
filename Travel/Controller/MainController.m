@@ -14,7 +14,7 @@
 #import "ShoppingListFilter.h"
 #import "EntertainmentListFilter.h"
 #import "FavoriteController.h"
-#import "CommonInfoController.h"
+#import "CityBasicController.h"
 #import "CityBasicDataSource.h"
 #import "TravelPreparationDataSource.h"
 #import "TravelUtilityDataSource.h"
@@ -166,7 +166,7 @@
 
 - (IBAction)clickCityBasicButton:(id)sender
 {
-    CommonInfoController* controller = [[CommonInfoController alloc] initWithDataSource:[CityBasicDataSource createDataSource]];
+    CityBasicController* controller = [[CityBasicController alloc] initWithDataSource:[CityBasicDataSource createDataSource]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];        
 }

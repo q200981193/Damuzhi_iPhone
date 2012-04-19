@@ -87,20 +87,32 @@ static AppService* _defaultAppService = nil;
                                overwrite:NO];
 }
 
-- (void)copyBuildinHelpHtmlFileFormBundle
+- (void)copyBuildinHelpHtmlFileFormBundleAndRelease
 {    
+     if ([AppUtils hasLocalHelpHtml]) {
+         return;
+     }
+
+    // copy file from bundle to zip dir
+    PPDebug(@"copy defalut help.html from bundle to app dir");
+    [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_HELP_ZIP
+                                  appDir:[AppUtils getZipDir]
+                               overwrite:NO];
+    
     // create City Dir
     [FileUtil createDir:[AppUtils getHelpHtmlDir]];
     
-    // copy file from bundle to zip dir
-    PPDebug(@"copy defalut help.html from bundle to app dir");
-    [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_HELP_HTML
-                                  appDir:[AppUtils getHelpHtmlDir] 
-                               overwrite:NO];
+    // unzip
+    [SSZipArchive unzipFileAtPath:[AppUtils getHelpZipFilePath]
+                    toDestination:[AppUtils getHelpHtmlDir]];
 }
 
 - (void)copyBuildinCityZipFromBundleAndRelease
-{    
+{       
+    if ([AppUtils hasLocalCityData:DEFAULT_CITY_ID]) { 
+        return;
+    }
+    
     // create City Dir
     [FileUtil createDir:[AppUtils getZipDir]];
     
@@ -108,19 +120,17 @@ static AppService* _defaultAppService = nil;
     PPDebug(@"copy defalut zip from bundle to zip dir");
     [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
                                   appDir:[AppUtils getZipDir] 
-                               overwrite:YES];
+                               overwrite:NO];
     
     // if there has no unzip city data, unzip
-    if (![AppUtils hasLocalCityData:DEFAULT_CITY_ID]) {
-        [AppUtils unzipCityZip:DEFAULT_CITY_ID];
-    }
+    [AppUtils unzipCityZip:DEFAULT_CITY_ID];
 }
 
 - (void)loadAppData
 {
     [self copyDefaultAppDataFormBundle];
     [self copyBuildinCityZipFromBundleAndRelease];
-    [self copyBuildinHelpHtmlFileFormBundle];
+    [self copyBuildinHelpHtmlFileFormBundleAndRelease];
     [[AppManager defaultManager] loadAppData];
 }
 
@@ -135,7 +145,9 @@ static AppService* _defaultAppService = nil;
                 helpInfo = [[TravelResponse parseFromData:output.responseData] helpInfo];
                 if (![helpInfo.version isEqualToString:[self getHelpHtmlFileVersion]]) {
                     NSURL *url = [NSURL URLWithString:helpInfo.helpHtml];
-                    [self downloadResource:url destinationDir:[AppUtils getHelpHtmlDir] fileName:FILENAME_OF_HELP_HTML];
+                    [self downloadResource:url destinationDir:[AppUtils getZipDir] fileName:FILENAME_OF_HELP_ZIP];
+                    [SSZipArchive unzipFileAtPath:[AppUtils getHelpZipFilePath] 
+                                    toDestination:[AppUtils getHelpHtmlDir]];
                     [self setHelpHtmlFileVersion:helpInfo.version];
                 }
             }
@@ -222,6 +234,7 @@ static AppService* _defaultAppService = nil;
     
     PPDebug(@"download request = %@", url.description);
     [request setDownloadDestinationPath:destinationPath];
+//    [request setResponseEncoding:NSUTF8StringEncoding];
     
     [request startSynchronous];
 }  

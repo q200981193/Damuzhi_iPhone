@@ -47,13 +47,17 @@
 //interface for ...
 + (NSString*)getZipFilePath:(int)cityId;
 + (NSString*)getAppFilePath;
+
 + (NSString*)getHelpHtmlFilePath;
++ (BOOL)hasLocalHelpHtml;
 
 + (NSString*)getProvidedServiceIconDir;
 + (NSString*)getCategoryImageDir;
 
 + (BOOL)hasLocalCityData:(int)cityId;
 + (void)unzipCityZip:(int)cityId;
++ (NSString*)getHelpZipFilePath;
+
 
 + (void)deleteCityData:(int)cityId;
 

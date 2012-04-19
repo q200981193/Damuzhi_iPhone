@@ -30,6 +30,7 @@ static LocalCityManager *_defaultManager = nil;
 {
     self = [super init];
     if (self) {
+        self.localCities = [[NSMutableDictionary alloc] init];
         [self loadLocalCities];
         for (LocalCity *localCity in [_localCities allValues]) {
             localCity.downloadingFlag = NO;
@@ -71,7 +72,7 @@ static LocalCityManager *_defaultManager = nil;
 #pragma mark: for entire localcity access
 - (LocalCity*)getLocalCity:(int)cityId
 {
-    return [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
+    return [_localCities objectForKey:[NSNumber numberWithInt:cityId]];
 }
 
 - (LocalCity*)createLocalCity:(int)cityId
@@ -79,7 +80,7 @@ static LocalCityManager *_defaultManager = nil;
     LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
     if (localCity == nil) {
         //TODO: if localCity not exist, create a localCity        
-        localCity = [LocalCity localCityWith:cityId ];
+        localCity = [LocalCity localCityWith:cityId];
         [self.localCities setObject:localCity forKey:[NSNumber numberWithInt:cityId]];
     }
     

@@ -21,7 +21,6 @@ static CityManagementController *_instance;
 @synthesize downloadList = _downloadList;
 @synthesize promptLabel = _promptLabel;
 @synthesize downloadTableView = _downloadTableView;
-@synthesize timer = _timer;
 @synthesize cityListBtn = _cityListBtn;
 @synthesize downloadListBtn = _downloadListBtn;
 
@@ -40,7 +39,6 @@ static CityManagementController *_instance;
     [_downloadList release];
     [_tipsLabel release];
     [_promptLabel release];
-    [_timer release];
     [_cityListBtn release];
     [super dealloc];
 }
@@ -206,10 +204,10 @@ static CityManagementController *_instance;
 {
     if (tableView == self.dataTableView) {
         City *city = [self.dataList objectAtIndex:indexPath.row];
-        if ([AppUtils hasLocalCityData:city.cityId]) {
+//        if ([AppUtils hasLocalCityData:city.cityId]) {
             [[AppManager defaultManager] setCurrentCityId:city.cityId];
             [self.navigationController popToRootViewControllerAnimated:YES];
-        }
+//        }
     }
 }
 
@@ -248,8 +246,9 @@ static CityManagementController *_instance;
 #pragma mark: implementation of Timer
 - (void)createTimer
 {
-    if (self.timer != nil){
-        [self.timer invalidate];
+    if (timer != nil){
+        [timer invalidate];
+        timer = nil;
     }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval: 1.0
@@ -262,12 +261,12 @@ static CityManagementController *_instance;
 - (void)killTimer
 {
     [timer invalidate];
-    self.timer = nil;
+    timer = nil; 
 }
 
 - (void)handleTimer
 {
-    [self.dataTableView reloadData];
+    [dataTableView reloadData];
 }
 
 #pragma mark -
@@ -287,12 +286,19 @@ static CityManagementController *_instance;
 - (void)didCancelDownload:(City*)city
 {
     [self killTimer];
+    [dataTableView reloadData];
 }
 
 - (void)didPauseDownload:(City*)city
 {
     [self killTimer];
 }
+
+- (void)didClickOnlineBtn:(City*)city
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 #pragma mark -
 #pragma mark: implementation of DownloadListCellDelegate
@@ -327,6 +333,7 @@ static CityManagementController *_instance;
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
     [self.dataTableView reloadData];
+    
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CommonInfoController.h"
+#import "CityBasicController.h"
 
 @interface CityBasicDataSource : NSObject<CommonInfoDataSourceProtocol>
 

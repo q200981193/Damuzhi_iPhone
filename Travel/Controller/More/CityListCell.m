@@ -72,10 +72,6 @@
 {
     self.city = city;    
     self.selectCurrentCityBtn.selected = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId); 
-//    PPDebug(@"current city id: %d", [[AppManager defaultManager] getCurrentCityId]);
-//    PPDebug(@"city id: %d", _city.cityId);
-
-    
 
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
     self.cityNameLabel.textColor = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId)?[UIColor redColor]:[UIColor darkGrayColor];
@@ -95,6 +91,8 @@
 - (void)setCellAppearance
 { 
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
+    
+    PPDebug(@"cityId = %d", _city.cityId);
 
     if(localCity == nil)
     {
@@ -119,12 +117,12 @@
             downloadPersentLabel.hidden = YES;
             pauseDownloadBtn.hidden = YES;
             
-            if (_city.dataSize == 0) {
-                downloadButton.hidden = YES;
-            }
-            else {
+//            if (_city.dataSize == 0) {
+//                downloadButton.hidden = YES;
+//            }
+//            else {
                 downloadButton.hidden = NO;
-            }
+//            }
             cancelDownloadBtn.hidden = YES;
             onlineButton.hidden = NO;
             
@@ -212,6 +210,9 @@
     if (button.selected) {
         //TODO, pause download request
         [[AppService defaultService] pauseDownloadCity:_city];
+        if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didPauseDownload:)]) {
+            [_cityListCellDelegate didPauseDownload:_city];
+        }
     }
     else {
         //TODO, resume download request
@@ -237,11 +238,17 @@
 - (IBAction)clickCancel:(id)sender {
     [[AppService defaultService] cancelDownloadCity:_city];
     self.pauseDownloadBtn.selected = NO;
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didCancelDownload:)]) {
+        [_cityListCellDelegate didCancelDownload:_city];
+    }
 }
 
 
 - (IBAction)clickOnlineBtn:(id)sender {
     [self selectCurrentCity];
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didClickOnlineBtn:)]) {
+        [_cityListCellDelegate didClickOnlineBtn:_city];
+    }
 }
 
 - (IBAction)clickCurrentCityBtn:(id)sender {
@@ -250,6 +257,10 @@
 
 - (void)selectCurrentCity
 {
+    if (_city.cityId == [[AppManager defaultManager] getCurrentCityId]) {
+        return;
+    }
+    
     // Set current cityId.
     [[AppManager defaultManager] setCurrentCityId:_city.cityId];
     

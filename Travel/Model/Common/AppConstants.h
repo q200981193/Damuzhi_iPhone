@@ -39,7 +39,8 @@
 #define FILENAME_OF_CITY_OVERVIEW_DATA      @"data/overview.dat"
 #define FILENAME_OF_PACKAGE_DATA            @"data/package.dat"
 #define FILENAME_OF_APP_DATA                @"app.dat"      // in bundle
-#define FILENAME_OF_HELP_HTML               @"help.html"    // in bundle
+#define FILENAME_OF_HELP_HTML               @"helpinfo.html"    // in bundle
+#define FILENAME_OF_HELP_ZIP                @"help.zip"
 #define DIR_OF_PLACE_DATA                   @"data/place"
 #define DIR_OF_GUIDE_DATA                   @"data/tips/guides/"
 #define DIR_OF_ROUTE_DATA                   @"data/tips/routes/"

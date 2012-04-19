@@ -437,8 +437,8 @@
 		CA585FA814F73B5800471880 /* CommonPlaceListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FA614F73B5800471880 /* CommonPlaceListController.xib */; };
 		CA585FAC14F73B6800471880 /* CommonPlaceDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FAA14F73B6800471880 /* CommonPlaceDetailController.m */; };
 		CA585FAD14F73B6800471880 /* CommonPlaceDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FAB14F73B6800471880 /* CommonPlaceDetailController.xib */; };
-		CA585FB714F73C1100471880 /* CommonInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FB514F73C1100471880 /* CommonInfoController.m */; };
-		CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FB614F73C1100471880 /* CommonInfoController.xib */; };
+		CA585FB714F73C1100471880 /* CityBasicController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FB514F73C1100471880 /* CityBasicController.m */; };
+		CA585FB814F73C1100471880 /* CityBasicController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FB614F73C1100471880 /* CityBasicController.xib */; };
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
 		EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA20A060153192AE00F6F478 /* AnimationManager.m */; };
@@ -1205,9 +1205,9 @@
 		CA585FA914F73B6800471880 /* CommonPlaceDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlaceDetailController.h; sourceTree = "<group>"; };
 		CA585FAA14F73B6800471880 /* CommonPlaceDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonPlaceDetailController.m; sourceTree = "<group>"; };
 		CA585FAB14F73B6800471880 /* CommonPlaceDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonPlaceDetailController.xib; sourceTree = "<group>"; };
-		CA585FB414F73C1100471880 /* CommonInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonInfoController.h; sourceTree = "<group>"; };
-		CA585FB514F73C1100471880 /* CommonInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonInfoController.m; sourceTree = "<group>"; };
-		CA585FB614F73C1100471880 /* CommonInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonInfoController.xib; sourceTree = "<group>"; };
+		CA585FB414F73C1100471880 /* CityBasicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityBasicController.h; path = Common/CityBasicController.h; sourceTree = "<group>"; };
+		CA585FB514F73C1100471880 /* CityBasicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityBasicController.m; path = Common/CityBasicController.m; sourceTree = "<group>"; };
+		CA585FB614F73C1100471880 /* CityBasicController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CityBasicController.xib; path = Common/CityBasicController.xib; sourceTree = "<group>"; };
 		CA585FBA14F73C4900471880 /* NearbyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyController.h; sourceTree = "<group>"; };
 		CA585FBB14F73C4900471880 /* NearbyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyController.m; sourceTree = "<group>"; };
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
@@ -2034,8 +2034,8 @@
 			isa = PBXGroup;
 			children = (
 				A48E062815358FD600B2695E /* CommonWebController.h */,
-				A48E062A15358FD600B2695E /* CommonWebController.xib */,
 				A48E062915358FD600B2695E /* CommonWebController.m */,
+				A48E062A15358FD600B2695E /* CommonWebController.xib */,
 				A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */,
 				A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */,
 				CA103AF4150467B200F60C03 /* PlaceMapViewController.h */,
@@ -3052,7 +3052,9 @@
 			children = (
 				A3FE358E15358DB7002190D7 /* Guide */,
 				A48E05B215342BBE00B2695E /* Route */,
-				CA585FB314F73C0400471880 /* Common */,
+				CA585FB414F73C1100471880 /* CityBasicController.h */,
+				CA585FB514F73C1100471880 /* CityBasicController.m */,
+				CA585FB614F73C1100471880 /* CityBasicController.xib */,
 				CA238FD314FF321C00114175 /* CityBasicDataSource.h */,
 				CA238FD414FF321C00114175 /* CityBasicDataSource.m */,
 				EA5C76681534575B0025AFB2 /* TravelPreparationDataSource.h */,
@@ -3129,16 +3131,6 @@
 				EAFE21E8152861480013D040 /* NearByRecommendController.h */,
 				EAFE21E9152861480013D040 /* NearByRecommendController.m */,
 				EAFE21EA152861480013D040 /* NearByRecommendController.xib */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		CA585FB314F73C0400471880 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				CA585FB414F73C1100471880 /* CommonInfoController.h */,
-				CA585FB514F73C1100471880 /* CommonInfoController.m */,
-				CA585FB614F73C1100471880 /* CommonInfoController.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3289,7 +3281,7 @@
 				CA585FA214F73AF700471880 /* SpotDetailController.xib in Resources */,
 				CA585FA814F73B5800471880 /* CommonPlaceListController.xib in Resources */,
 				CA585FAD14F73B6800471880 /* CommonPlaceDetailController.xib in Resources */,
-				CA585FB814F73C1100471880 /* CommonInfoController.xib in Resources */,
+				CA585FB814F73C1100471880 /* CityBasicController.xib in Resources */,
 				CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */,
 				CA238F2814FB27D800114175 /* Place.proto in Resources */,
 				CA238F2A14FB2D5700114175 /* CityOverview.proto in Resources */,
@@ -3612,7 +3604,7 @@
 				CA585FA114F73AF700471880 /* SpotDetailController.m in Sources */,
 				CA585FA714F73B5800471880 /* CommonPlaceListController.m in Sources */,
 				CA585FAC14F73B6800471880 /* CommonPlaceDetailController.m in Sources */,
-				CA585FB714F73C1100471880 /* CommonInfoController.m in Sources */,
+				CA585FB714F73C1100471880 /* CityBasicController.m in Sources */,
 				CA585FBD14F73C4900471880 /* NearbyController.m in Sources */,
 				CA238F3C14FB526C00114175 /* App.pb.m in Sources */,
 				CA238F3D14FB526C00114175 /* CityOverview.pb.m in Sources */,

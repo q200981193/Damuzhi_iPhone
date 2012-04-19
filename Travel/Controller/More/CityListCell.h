@@ -18,6 +18,7 @@
 - (void)didStartDownload:(City*)city;
 - (void)didCancelDownload:(City*)city;
 - (void)didPauseDownload:(City*)city;
+- (void)didClickOnlineBtn:(City*)city;
 @end
 
 @interface CityListCell : PPTableViewCell<PPTableViewCellProtocol>

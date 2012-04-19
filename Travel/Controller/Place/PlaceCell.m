@@ -90,8 +90,8 @@
 
 #define DESTANCE_BETWEEN_SERVICE_IMAGES_AND_CATEGORYLABEL 5
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 15
-#define WIDTH_OF_SERVICE_IMAGE 11
-#define HEIGHT_OF_SERVICE_IMAGE 11
+#define WIDTH_OF_SERVICE_IMAGE 15
+#define HEIGHT_OF_SERVICE_IMAGE 15
 -(void)setServiceIcons:(NSArray*)providedServiceIcons
 {
     NSArray* views = self.contentView.subviews;
@@ -147,20 +147,26 @@
 
 - (void) managedImageSet:(HJManagedImageV*)mi
 {
+    [mi.loadingWheel stopAnimating];
 }
 
 - (void) managedImageCancelled:(HJManagedImageV*)mi
 {
+    [mi.loadingWheel stopAnimating];
 }
 
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 { 
     nameLabel.text = [place name];
+    
+    [distanceLable setTextColor:[UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]];
     distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
     [self setPlaceIcon:place];
     priceLable.text = [PlaceUtils getPriceString:place];
     
     areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
+    
+    [categoryLable setTextColor:[UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]];
     
     if (place.categoryId == PLACE_TYPE_HOTEL) {
         categoryLable.text = [PlaceUtils hotelStarToString:place.hotelStar];

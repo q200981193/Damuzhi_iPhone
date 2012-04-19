@@ -119,9 +119,8 @@
 
 + (NSString*)getHelpHtmlFilePath
 {
-    return [[AppUtils getAppDir] stringByAppendingPathComponent:FILENAME_OF_HELP_HTML];
+    return [[AppUtils getHelpHtmlDir] stringByAppendingPathComponent:FILENAME_OF_HELP_HTML];
 }
-
 
 + (NSString*)getProvidedServiceIconDir
 {
@@ -143,6 +142,16 @@
     return hasData;
 } 
 
++ (BOOL)hasLocalHelpHtml
+{
+    BOOL hasData = NO;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[AppUtils getHelpHtmlFilePath]]) {
+        hasData = YES;
+    }
+    
+    return hasData;
+} 
+
 + (void)unzipCityZip:(int)cityId
 {
     [FileUtil createDir:[AppUtils getCityDir:cityId]];
@@ -155,6 +164,11 @@
     }
     
     return;
+}
+
++ (NSString*)getHelpZipFilePath
+{
+    return [[AppUtils getZipDir] stringByAppendingPathComponent:FILENAME_OF_HELP_ZIP];
 }
 
 + (void)deleteCityData:(int)cityId

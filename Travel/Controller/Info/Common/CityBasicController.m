@@ -6,14 +6,14 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "CommonInfoController.h"
+#import "CityBasicController.h"
 #import "SlideImageView.h"
 #import "CityOverviewService.h"
 #import "AppManager.h"
 #import "AppUtils.h"
 #import "ImageName.h"
 
-@implementation CommonInfoController
+@implementation CityBasicController
 
 @synthesize scrollView;
 @synthesize imageHolderView;
