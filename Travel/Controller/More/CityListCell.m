@@ -92,8 +92,6 @@
 { 
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
     
-    PPDebug(@"cityId = %d", _city.cityId);
-
     if(localCity == nil)
     {
         [self setCellAppearance:NO_DOWNLOAD localCity:localCity];
