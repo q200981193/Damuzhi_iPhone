@@ -64,6 +64,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.dataTableView setSeparatorColor:[UIColor clearColor]];
 
     // create & add map view
     self.mapHolderView.hidden = YES;
@@ -125,11 +126,37 @@
     return controller;
 }
 
+
+#define SHOW_NO_DATA_LABEL_TAG 100
+- (void)removeNoDataTips
+{
+    UILabel *label = (UILabel*)[self.dataTableView viewWithTag:SHOW_NO_DATA_LABEL_TAG];
+    [label removeFromSuperview];
+}
+
+- (void)addNoDataTips
+{
+    [self removeNoDataTips];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    label.tag = SHOW_NO_DATA_LABEL_TAG;
+    label.textAlignment = UITextAlignmentCenter;
+    label.text = NSLS(@"未找到相关信息");
+    label.font = [UIFont systemFontOfSize:13];
+    [self.dataTableView addSubview:label];
+    [label release];
+}
+
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
     self.dataList = list;
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
+    if ([dataList count] == 0) {
+        [self addNoDataTips];
+    }
+    else {
+        [self removeNoDataTips];
+    }
 }
 
 #pragma mark -

@@ -44,6 +44,7 @@
 @synthesize websiteView;
 @synthesize detailHeight;
 @synthesize favouritesView;
+@synthesize addFavoriteButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -195,6 +196,7 @@
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count
 {
     if (resultCode != nil) {
+        [self updateAddFavoriteButton];
         PPDebug(@"add Favourite successfully");
         self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
         
@@ -589,8 +591,13 @@
     [telephoneLabel release];
     
     if ([self.place.telephoneList count] != 0) {
-        UIButton *telButton = [[UIButton alloc]initWithFrame:CGRectMake(290, 4, 24, 24)];
-        [telButton setImage:[UIImage imageNamed:@"t_phone"] forState:UIControlStateNormal];     
+        UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 4, 24, 24)];
+        [phoneImage setImage:[UIImage imageNamed:@"t_phone"]];
+        [telephoneView addSubview:phoneImage];
+        [phoneImage release];
+        
+        UIButton *telButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, telephoneView.frame.size.width, telephoneView.frame.size.height)];
+        telButton.backgroundColor =[UIColor clearColor];
         [telButton addTarget:self action:@selector(clickTelephone:) forControlEvents:UIControlEventTouchUpInside];
         [telephoneView addSubview:telButton];
         [telButton release];
@@ -620,8 +627,13 @@
     [addressView addSubview:addressLabel];
     [addressLabel release];
     
-    UIButton *mapButton = [[UIButton alloc]initWithFrame:CGRectMake(290, 4, 24, 24)];
-    [mapButton setImage:[UIImage imageNamed:@"t_map"] forState:UIControlStateNormal];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, 4, 24, 24)];
+    [mapImageView setImage:[UIImage imageNamed:@"t_map"]];
+    [addressView addSubview:mapImageView];
+    [mapImageView release];
+    
+    UIButton *mapButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, addressView.frame.size.width, addressView.frame.size.height)];
+    mapButton.backgroundColor =[UIColor clearColor];
     [mapButton addTarget:self action:@selector(clickMap:) forControlEvents:UIControlEventTouchUpInside];
     [addressView addSubview:mapButton];
     [mapButton release];
@@ -649,35 +661,48 @@
 
 }
 
+- (void)updateAddFavoriteButton
+{
+    if ([[PlaceStorage favoriteManager] isPlaceInFavorite:self.place.placeId]) {
+        [addFavoriteButton setTitle:NSLS(@"已收藏") forState:UIControlStateNormal];
+        [addFavoriteButton setEnabled:NO];
+    }
+    else {
+        [addFavoriteButton setTitle:NSLS(@"收藏本页") forState:UIControlStateNormal];
+        [addFavoriteButton setEnabled:YES];
+    }
+}
+
 - (void)addBottomView
 {
      favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
-    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake(80, 15, 93, 29)];
+    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((320-93)/2, 5, 93, 29)];
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
-    
-    [favButton setTitle:NSLS(@"收藏本页") forState:UIControlStateNormal];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [favButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
     favButton.titleLabel.shadowColor = [UIColor whiteColor];
     favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
+    self.addFavoriteButton = favButton;
+    [favButton release];
+    [self updateAddFavoriteButton];
+    [favouritesView addSubview:addFavoriteButton];
     
-    [favouritesView addSubview:favButton];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(180, 21, 120, 15)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((320-120)/2, 40, 120, 15)];
     self.favoriteCountLabel = label;
     [label release];
     self.favoriteCountLabel.backgroundColor = [UIColor clearColor];
+    self.favoriteCountLabel.textAlignment = UITextAlignmentCenter;
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
     self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:13];
     [favouritesView addSubview:self.favoriteCountLabel];
     
     [dataScrollView addSubview:favouritesView];
-    [favButton release];
+    
     [favouritesView release];
 
 }
@@ -763,6 +788,7 @@
     [self setPraiseIcon3:nil];
     [self setHelpButton:nil];
     [self setServiceHolder:nil];
+    [self setAddFavoriteButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -790,6 +816,7 @@
     [addressView release];
     [websiteView release];
     [favouritesView release];
+    [addFavoriteButton release];
     [super dealloc];
 }
 @end

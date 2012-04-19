@@ -70,6 +70,7 @@
 @property (retain, nonatomic) UIView *addressView;
 @property (retain, nonatomic) UIView *websiteView;
 @property (retain, nonatomic) UIView *favouritesView;
+@property (retain, nonatomic) UIButton *addFavoriteButton;
 
 - (IBAction)clickHelpButton:(id)sender;
 - (id)initWithPlace:(Place*)onePlace;
