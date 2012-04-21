@@ -68,7 +68,6 @@
     self.commonController.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
 }
 
-
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
     

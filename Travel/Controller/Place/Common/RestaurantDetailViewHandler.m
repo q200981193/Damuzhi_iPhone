@@ -13,7 +13,7 @@
 
 @implementation RestaurantViewHandler
 
-@synthesize commonController;
+@synthesize commonController;   
 
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
