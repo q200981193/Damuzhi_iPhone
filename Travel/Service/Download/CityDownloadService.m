@@ -47,17 +47,18 @@ static CityDownloadService *_instance;
 {
     LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:city.cityId];
     localCity.delegate = delegate;
-    localCity.downloadType = TYPE_DOWNLOAD;
+//    localCity.downloadType = TYPE_DOWNLOAD;
     localCity.downloadStatus = DOWNLOADING;
 
     NSURL *url = [NSURL URLWithString:city.downloadUrl];
     
     ASIHTTPRequest *request = [self createRequest:url localCity:localCity];
     
-        
     //set request info, user defined
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:localCity
-                                                         forKey:KEY_LOCAL_CITY]; 
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:localCity forKey:KEY_LOCAL_CITY];
+    [userInfo setObject:[NSNumber numberWithInt:REQUEST_TYPE_DOWNLOAD] forKey:KEY_REQUEST_TYPE];
+
     
     [request setUserInfo:userInfo];
     
@@ -69,16 +70,18 @@ static CityDownloadService *_instance;
 {
     LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:city.cityId];
     localCity.delegate = delegate;
-    localCity.downloadType = TYPE_UPDATE;
-    localCity.downloadStatus = UPDATING;
+//    localCity.downloadType = TYPE_UPDATE;
+    localCity.updateStatus = UPDATING;
     
     NSURL *url = [NSURL URLWithString:city.downloadUrl];
     
     ASIHTTPRequest *request = [self createRequest:url localCity:localCity];
     
     //set request info, user defined
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:localCity
-                                                         forKey:KEY_LOCAL_CITY]; 
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    [userInfo setObject:localCity forKey:KEY_LOCAL_CITY];
+    
+    [userInfo setObject:[NSNumber numberWithInt:REQUEST_TYPE_UPDATE] forKey:KEY_REQUEST_TYPE];
     
     [request setUserInfo:userInfo];
     
@@ -142,13 +145,25 @@ static CityDownloadService *_instance;
 {
     for (ASIHTTPRequest *request in [_operationQueue operations]) {
         LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
+        int requestType = [[request.userInfo objectForKey:KEY_REQUEST_TYPE] intValue];
         if(localCity.cityId == city.cityId)
         {
             //Cancels an asynchronous request, clearing all delegates and blocks first
             [request clearDelegatesAndCancel];    
             [request cancel];
             
-            localCity.downloadStatus = DOWNLOAD_PAUSE;
+            switch (requestType) {
+                case REQUEST_TYPE_DOWNLOAD:
+                    localCity.downloadStatus = DOWNLOAD_PAUSE;
+                    break;
+                    
+                case REQUEST_TYPE_UPDATE:
+                    localCity.updateStatus = UPDATE_PAUSE;
+                    break;
+                    
+                default:
+                    break;
+            }
             return;
         }
     }

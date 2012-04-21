@@ -39,6 +39,7 @@ static AppManager* _defaultAppManager = nil;
 - (void)loadAppData
 {
     // TODO: check if there is a copy data for app in document dir, if yes, return;
+    PPDebug(@"App file path = %@", [AppUtils getAppFilePath]);
     NSData *localAppData = [NSData dataWithContentsOfFile:[AppUtils getAppFilePath]];
     if(localAppData != nil)
     {

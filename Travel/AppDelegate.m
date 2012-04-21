@@ -46,14 +46,14 @@
         GlobalSetNavBarBackground(@"top_live.png");        
     }
     
-    //juage if app is firstLaunch
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_LAUNCH];
-    }
-    else{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_LAUNCH];
-    }
+//    //juage if app is firstLaunch
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_LAUNCH];
+//    }
+//    else{
+//        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_LAUNCH];
+//    }
     
     [self initImageCacheManager];
     
@@ -83,10 +83,10 @@
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     
-    //if app is first launch, create default city info
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
-        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
-    }
+//    //if app is first launch, create default city info
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
+//        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
+//    }
 
     return YES;
 }
@@ -105,6 +105,15 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    for (LocalCity *localCity in [[[LocalCityManager defaultManager] localCities] allValues]) {
+        if (localCity.updateStatus == UPDATING) {
+            localCity.updateStatus = UPDATE_PAUSE;
+        }
+        if (localCity.downloadStatus == DOWNLOADING) {
+            localCity.downloadStatus = DOWNLOAD_PAUSE;
+        }        
+    }
+    
     [[LocalCityManager defaultManager] save];
 }
 

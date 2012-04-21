@@ -72,5 +72,8 @@
 
 + (NSString*)getCategoryIcon:(int)categoryId;
 
++ (UIAlertView*)showUsingCellNetworkAlertViewWithTag:(int)tag delegate:(id)delegate;
++ (UIAlertView*)showDeleteCityDataAlertViewWithTag:(int)tag delegate:(id)delegate;
+
 
 @end

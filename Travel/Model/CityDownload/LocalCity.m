@@ -16,7 +16,7 @@
 @synthesize downloadProgress = _downloadProgress;
 @synthesize downloadStatus = _downloadStatus;
 @synthesize updateStatus = _updateStatus;
-@synthesize downloadType = _downloadType;
+//@synthesize downloadType = _downloadType;
 @synthesize delegate = _delegate;
 
 + (LocalCity*)localCityWith:(int)cityId
@@ -43,7 +43,7 @@
     [aCoder encodeFloat:self.downloadProgress forKey:KEY_DOWNLOAD_PROGRESS];
     [aCoder encodeInt:self.downloadStatus forKey:KEY_DOWNLOADING_STATUS];
     [aCoder encodeInt:self.updateStatus forKey:KEY_UPDATE_STATUS];
-    [aCoder encodeInt:self.downloadType forKey:KEY_DOWNLOAD_TYPE];
+//    [aCoder encodeInt:self.downloadType forKey:KEY_DOWNLOAD_TYPE];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -53,7 +53,7 @@
         self.downloadProgress = [aDecoder decodeFloatForKey:KEY_DOWNLOAD_PROGRESS];
         self.downloadStatus = [aDecoder decodeIntForKey:KEY_DOWNLOADING_STATUS];
         self.updateStatus = [aDecoder decodeIntForKey:KEY_UPDATE_STATUS];
-        self.downloadType = [aDecoder decodeIntForKey:KEY_DOWNLOAD_TYPE];
+//        self.downloadType = [aDecoder decodeIntForKey:KEY_DOWNLOAD_TYPE];
     }
     
     return self;
@@ -67,42 +67,46 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {    
-    switch (_downloadType) {
-        case TYPE_DOWNLOAD:
+    switch ([[request.userInfo objectForKey:KEY_REQUEST_TYPE] intValue]) {
+        case REQUEST_TYPE_DOWNLOAD:
             _downloadStatus = DOWNLOAD_SUCCEED;
+            if (_delegate && [_delegate respondsToSelector:@selector(didFinishDownload:)]) {
+                [_delegate didFinishDownload:[[AppManager defaultManager] getCity:self.cityId]];
+            }
             break;
             
-        case TYPE_UPDATE:
+        case REQUEST_TYPE_UPDATE:
             _updateStatus = UPDATE_SUCCEED;
+            if (_delegate && [_delegate respondsToSelector:@selector(didFinishUpdate:)]) {
+                [_delegate didFinishUpdate:[[AppManager defaultManager] getCity:self.cityId]];
+            }
             break;
             
         default:
             break;
     }    
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(didFinishDownload:)]) {
-        [_delegate didFinishDownload:[[AppManager defaultManager] getCity:self.cityId]];
-    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    switch (_downloadType) {
-        case TYPE_DOWNLOAD:
+    switch ([[request.userInfo objectForKey:KEY_REQUEST_TYPE] intValue]) {
+        case REQUEST_TYPE_DOWNLOAD:
             _downloadStatus = DOWNLOAD_FAILED;
+            if (_delegate && [_delegate respondsToSelector:@selector(didFailDownload:error:)]) {
+                [_delegate didFailDownload:[[AppManager defaultManager] getCity:self.cityId] error:[request error]];
+            }
             break;
             
-        case TYPE_UPDATE:
+        case REQUEST_TYPE_UPDATE:
             _updateStatus = UPDATE_FAILED;
+            if (_delegate && [_delegate respondsToSelector:@selector(didFailUpdate:error:)]) {
+                [_delegate didFailUpdate:[[AppManager defaultManager] getCity:self.cityId] error:[request error]];
+            }
             break;
             
         default:
             break;
     }    
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(didFailDownload:error::)]) {
-        [_delegate didFailDownload:[[AppManager defaultManager] getCity:self.cityId] error:[request error]];
-    }
 }
 
 @end

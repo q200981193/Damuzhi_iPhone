@@ -267,6 +267,7 @@ static CityManagementController *_instance;
 - (void)handleTimer
 {
     [dataTableView reloadData];
+    [_downloadTableView reloadData];
 }
 
 #pragma mark -
@@ -299,6 +300,28 @@ static CityManagementController *_instance;
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (void)didFinishDownload:(City*)city
+{
+    [self killTimer];
+    
+    [[AppService defaultService] UnzipCityDataAsynchronous:city.cityId unzipDelegate:self];
+    
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [dataTableView reloadData];
+    
+}
+
+- (void)didFailDownload:(City *)city error:(NSError *)error
+{
+    [self killTimer];
+    
+    PPDebug(@"download failed, error = %@", error.description);
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [dataTableView reloadData];
+}
+
 
 #pragma mark -
 #pragma mark: implementation of DownloadListCellDelegate
@@ -308,33 +331,44 @@ static CityManagementController *_instance;
     [self.downloadTableView reloadData];
 }
 
-- (void)didUpdateCity:(City*)city
+- (void)didStartUpdate:(City *)city
 {
-    
+    [self createTimer];
 }
 
-- (void)didFailDownload:(City*)city error:(NSError *)error;
-{
-    [self killTimer];
+- (void)didCancelUpdate:(City *)city
+{}
 
-    PPDebug(@"down load failed, error = %@", error.description);
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
-    [self popupMessage:message title:nil];
-    [self.dataTableView reloadData];
-}
-
-- (void)didFinishDownload:(City*)city
+- (void)didPauseUpdate:(City *)city
 {
     [self killTimer];
-    
-    [[AppService defaultService] UnzipCityDataAsynchronous:city unzipDelegate:self];
-
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
-    [self popupMessage:message title:nil];
-    [self.dataTableView reloadData];
-    
+    [_downloadTableView reloadData];
 }
 
+- (void)didFinishUpdate:(City *)city
+{
+    [self killTimer];
+    
+    [[AppService defaultService] UnzipCityDataAsynchronous:city.cityId unzipDelegate:self];
+    
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据更新成功"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [_downloadTableView reloadData];
+}
+
+- (void)didFailUpdate:(City *)city error:(NSError *)error
+{
+    [self killTimer];
+    
+    PPDebug(@"update failed, error = %@", error.description);
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据更新失败"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [_downloadTableView reloadData];
+}
+
+
+#pragma mark - 
+#pragma mark: delegate of unzip city.
 - (void)didFailUnzip:(City*)city
 {
     [self killTimer];

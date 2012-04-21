@@ -56,4 +56,7 @@
 
 #define KEY_IS_SHOW_IMAGE                   @"KEY_IS_SHOW_IMAGE"
 
+#define ALERT_USING_CELL_NEWORK 1
+#define ALERT_DELETE_CITY 2
+
 #endif

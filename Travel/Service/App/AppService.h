@@ -28,11 +28,6 @@
 - (void)updateAppData;
 - (void)updateHelpHtmlFile;
 
-- (void)UnzipCityDataSynchronous:(City*)city;
-- (void)UnzipCityDataAsynchronous:(City*)city unzipDelegate:(id<UnzipDelegate>)unzipDelegate;
-
-//- (void)downloadCity:(City*)city;
-//- (void)pauseDownloadCity:(City*)city;
-//- (void)cancelDownloadCity:(City*)city;
+- (void)UnzipCityDataAsynchronous:(int)cityId unzipDelegate:(id<UnzipDelegate>)unzipDelegate;
 
 @end
