@@ -227,19 +227,16 @@
             UIImage *image = [UIImage imageNamed:@"green_glass"];
             annotationView.image = image;            
             
-            UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
-   
-            NSString *destinationDir = [AppUtils getCategoryImageDir];
-            NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
-            UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+            UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 17, 17)];            
+            NSString *fileName = [AppUtils getCategoryIndicatorIcon:placeAnnotation.place.categoryId];
+            UIImage *icon = [UIImage imageNamed:fileName];
             
             [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
             [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
             [customizeView addSubview:leftIndicatorButton];
             [leftIndicatorButton release];
-            [icon release];
             
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(27, 2, 80, 17)];
             label.font = [UIFont systemFontOfSize:12];
             label.text  = [placeAnnotation.place name];
             NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];

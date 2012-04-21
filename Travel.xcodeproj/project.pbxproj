@@ -443,6 +443,14 @@
 		CA585FBD14F73C4900471880 /* NearbyController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FBB14F73C4900471880 /* NearbyController.m */; };
 		CA585FBE14F73C4900471880 /* NearbyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FBC14F73C4900471880 /* NearbyController.xib */; };
 		EA20A061153192AE00F6F478 /* AnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA20A060153192AE00F6F478 /* AnimationManager.m */; };
+		EA328A0E1542A234001ACFF4 /* pin_cg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A061542A234001ACFF4 /* pin_cg@2x.png */; };
+		EA328A0F1542A234001ACFF4 /* pin_cg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A071542A234001ACFF4 /* pin_cg2@2x.png */; };
+		EA328A101542A234001ACFF4 /* pin_gw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A081542A234001ACFF4 /* pin_gw@2x.png */; };
+		EA328A111542A234001ACFF4 /* pin_gw2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A091542A234001ACFF4 /* pin_gw2@2x.png */; };
+		EA328A121542A234001ACFF4 /* pin_ht@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A0A1542A234001ACFF4 /* pin_ht@2x.png */; };
+		EA328A131542A234001ACFF4 /* pin_ht2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A0B1542A234001ACFF4 /* pin_ht2@2x.png */; };
+		EA328A141542A234001ACFF4 /* pin_jd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A0C1542A234001ACFF4 /* pin_jd@2x.png */; };
+		EA328A151542A234001ACFF4 /* pin_jd2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A0D1542A234001ACFF4 /* pin_jd2@2x.png */; };
 		EA5C766A1534575B0025AFB2 /* TravelPreparationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */; };
 		EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */; };
 		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
@@ -1217,6 +1225,14 @@
 		CA585FBC14F73C4900471880 /* NearbyController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NearbyController.xib; sourceTree = "<group>"; };
 		EA20A05F153192AE00F6F478 /* AnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationManager.h; sourceTree = "<group>"; };
 		EA20A060153192AE00F6F478 /* AnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationManager.m; sourceTree = "<group>"; };
+		EA328A061542A234001ACFF4 /* pin_cg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_cg@2x.png"; sourceTree = "<group>"; };
+		EA328A071542A234001ACFF4 /* pin_cg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_cg2@2x.png"; sourceTree = "<group>"; };
+		EA328A081542A234001ACFF4 /* pin_gw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_gw@2x.png"; sourceTree = "<group>"; };
+		EA328A091542A234001ACFF4 /* pin_gw2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_gw2@2x.png"; sourceTree = "<group>"; };
+		EA328A0A1542A234001ACFF4 /* pin_ht@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_ht@2x.png"; sourceTree = "<group>"; };
+		EA328A0B1542A234001ACFF4 /* pin_ht2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_ht2@2x.png"; sourceTree = "<group>"; };
+		EA328A0C1542A234001ACFF4 /* pin_jd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_jd@2x.png"; sourceTree = "<group>"; };
+		EA328A0D1542A234001ACFF4 /* pin_jd2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin_jd2@2x.png"; sourceTree = "<group>"; };
 		EA5C76681534575B0025AFB2 /* TravelPreparationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TravelPreparationDataSource.h; path = Common/TravelPreparationDataSource.h; sourceTree = "<group>"; };
 		EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TravelPreparationDataSource.m; path = Common/TravelPreparationDataSource.m; sourceTree = "<group>"; };
 		EA5C766B1534579A0025AFB2 /* TravelTransportDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTransportDataSource.h; sourceTree = "<group>"; };
@@ -1714,6 +1730,14 @@
 		A48E04D21534058900B2695E /* map */ = {
 			isa = PBXGroup;
 			children = (
+				EA328A061542A234001ACFF4 /* pin_cg@2x.png */,
+				EA328A071542A234001ACFF4 /* pin_cg2@2x.png */,
+				EA328A081542A234001ACFF4 /* pin_gw@2x.png */,
+				EA328A091542A234001ACFF4 /* pin_gw2@2x.png */,
+				EA328A0A1542A234001ACFF4 /* pin_ht@2x.png */,
+				EA328A0B1542A234001ACFF4 /* pin_ht2@2x.png */,
+				EA328A0C1542A234001ACFF4 /* pin_jd@2x.png */,
+				EA328A0D1542A234001ACFF4 /* pin_jd2@2x.png */,
 				A48E04D31534058900B2695E /* green_glass@2x.png */,
 				A48E04D41534058900B2695E /* locate@2x.png */,
 				A48E04D51534058900B2695E /* map_annotation_bg@2x.png */,
@@ -3461,6 +3485,14 @@
 				A48B621D153D465B00733DF1 /* table5_bg@2x.png in Resources */,
 				A48B621F153D5F0800733DF1 /* refresh_on@2x.png in Resources */,
 				A48B6292153E6A1900733DF1 /* RouteDetailController.xib in Resources */,
+				EA328A0E1542A234001ACFF4 /* pin_cg@2x.png in Resources */,
+				EA328A0F1542A234001ACFF4 /* pin_cg2@2x.png in Resources */,
+				EA328A101542A234001ACFF4 /* pin_gw@2x.png in Resources */,
+				EA328A111542A234001ACFF4 /* pin_gw2@2x.png in Resources */,
+				EA328A121542A234001ACFF4 /* pin_ht@2x.png in Resources */,
+				EA328A131542A234001ACFF4 /* pin_ht2@2x.png in Resources */,
+				EA328A141542A234001ACFF4 /* pin_jd@2x.png in Resources */,
+				EA328A151542A234001ACFF4 /* pin_jd2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
