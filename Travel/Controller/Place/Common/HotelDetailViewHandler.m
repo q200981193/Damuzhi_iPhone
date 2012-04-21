@@ -82,7 +82,7 @@
     NSLog(@"keyWords = %@", keyWords);
     [self.commonController addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@" "]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[PlaceUtils getPriceString:place]];
+    [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[place priceDescription]];
 
     [self.commonController addTransportView:place];
 }

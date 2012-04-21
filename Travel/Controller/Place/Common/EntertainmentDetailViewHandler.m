@@ -21,7 +21,7 @@
     
     [self.commonController addSegmentViewWith: NSLS(@"营业时间") description: [place openTime]];
     
-    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[PlaceUtils getPriceString:place]];
+    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[place priceDescription]];
     
     [self.commonController addSegmentViewWith: NSLS(@"关键词评价") description:[place.keywordsList componentsJoinedByString:@" "]];
     
