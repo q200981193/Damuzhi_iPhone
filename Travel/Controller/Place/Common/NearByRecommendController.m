@@ -210,10 +210,13 @@
             {
                 NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
 
-                customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,13,17)];
+                customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,35,35)];
                 [customizeView setBackgroundColor:[UIColor clearColor]];
 
-                UIImage *image = [UIImage imageNamed:@"red_star"];
+                NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
+                UIImage *image = [UIImage imageNamed:fileName];
+                
+                //                UIImage *image = [UIImage imageNamed:@"red_star"];
                 annotationView.image = image; 
                 customizeView.tag = value;
                 [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];

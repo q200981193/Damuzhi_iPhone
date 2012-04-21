@@ -72,5 +72,7 @@
 
 + (NSString*)getCategoryIcon:(int)categoryId;
 
++ (NSString*)getCategoryIndicatorIcon:(int)categoryId;
++ (NSString*)getCategoryPinIcon:(int)categoryId;
 
 @end

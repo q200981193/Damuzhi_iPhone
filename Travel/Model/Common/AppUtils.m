@@ -220,7 +220,7 @@
     [userDefaults setBool:isShow forKey:KEY_IS_SHOW_IMAGE];
 }
 
-+ (NSString*)getCategoryIcon:(int)categoryId;
++ (NSString*)getCategoryIcon:(int)categoryId
 {
     switch (categoryId) {
         case PLACE_TYPE_SPOT:
@@ -242,6 +242,56 @@
             break;
     }
     return nil;
+}
+
++ (NSString*)getCategoryIndicatorIcon:(int)categoryId
+{
+    switch (categoryId) {
+        case PLACE_TYPE_SPOT:
+            return @"pin_jd2";
+            break;
+        case PLACE_TYPE_HOTEL:
+            return @"pin_ht2";
+            break;
+        case PLACE_TYPE_RESTAURANT:
+            return @"pin_cg2";
+            break;
+        case PLACE_TYPE_SHOPPING:
+            return @"pin_gw2";
+            break;
+        case PLACE_TYPE_ENTERTAINMENT:
+            return @"pin_yl2";
+            break;
+        default:
+            break;
+    }
+    return nil;
+
+}
+
++ (NSString*)getCategoryPinIcon:(int)categoryId
+{
+    switch (categoryId) {
+        case PLACE_TYPE_SPOT:
+            return @"pin_jd";
+            break;
+        case PLACE_TYPE_HOTEL:
+            return @"pin_ht";
+            break;
+        case PLACE_TYPE_RESTAURANT:
+            return @"pin_cg";
+            break;
+        case PLACE_TYPE_SHOPPING:
+            return @"pin_gw";
+            break;
+        case PLACE_TYPE_ENTERTAINMENT:
+            return @"pin_yl";
+            break;
+        default:
+            break;
+    }
+    return nil;
+    
 }
 
 @end
