@@ -85,7 +85,7 @@
     
     //if app is first launch, create default city info
     if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
-        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadDoneFlag:YES];
+        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
     }
 
     return YES;

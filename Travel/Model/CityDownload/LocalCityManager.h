@@ -20,10 +20,6 @@
 - (void)removeLocalCity:(int)cityId;
 - (LocalCity*)createLocalCity:(int)cityId;
 
-- (void)updateLocalCity:(int)cityId downloadProgress:(float)downloadProgress;
-- (void)updateLocalCity:(int)cityId downloadingFlag:(float)downloadingFlag;
-- (void)updateLocalCity:(int)cityId downloadDoneFlag:(float)downloadDoneFlag;
-
 - (void)save;
 
 

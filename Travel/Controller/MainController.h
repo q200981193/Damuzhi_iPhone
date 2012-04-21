@@ -15,15 +15,6 @@
 
 
 @interface MainController : PPViewController<UIActionSheetDelegate>
-{
-    CommonPlaceListController *_spotListComtroller;
-    CommonPlaceListController *_hotelListComtroller;
-    CommonPlaceListController *_restaurantListComtroller;
-    CommonPlaceListController *_shoppingListComtroller;
-    CommonPlaceListController *_entertainmentListComtroller;
-    NearbyController *_nearbyController;
-    MoreController *_moreController;
-}
 
 - (IBAction)clickSpotButton:(id)sender;
 - (IBAction)clickHotelButton:(id)sender;

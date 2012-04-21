@@ -6,10 +6,10 @@
 //  Copyright (c) 2012年 甘橙软件. All rights reserved.
 //
 
-#import "SelectedItemsManager.h"
+#import "SelectedItems.h"
 #import "CommonPlace.h"
 
-@implementation SelectedItemsManager
+@implementation SelectedItems
 
 @synthesize selectedSubCategoryIdList = _selectedSubCategoryIdList;
 @synthesize selectedSortIdList = _selectedSortIdList;
@@ -26,18 +26,6 @@
     [_selectedServiceIdList release];
     [_selectedCuisineIdList release];
     [super dealloc];
-}
-
-
-static SelectedItemsManager *_instance = nil;
-
-+ (id)defaultManager
-{
-    if (_instance == nil) {
-        _instance = [[SelectedItemsManager alloc] init];
-    }
-    
-    return _instance;
 }
 
 - (id)init

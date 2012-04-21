@@ -11,6 +11,7 @@
 #import "PlaceService.h"
 #import "SelectController.h"
 #import "CityOverviewService.h"
+#import "PlaceSelectedItemsManager.h"
 
 #define WIDTH_OF_FILTER_BUTTON 52
 #define HEIGHT_OF_FILTER_BUTTON 27
@@ -46,6 +47,7 @@
     NSObject<PlaceListFilterProtocol> *_filterHandler;    
 }
 
+@property (retain, nonatomic) SelectedItems *selectedItems;
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 @property (retain, nonatomic) IBOutlet UIButton *modeButton;

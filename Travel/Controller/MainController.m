@@ -45,13 +45,6 @@
 
 - (void)dealloc
 {
-    [_moreController release];
-    [_spotListComtroller release];
-    [_hotelListComtroller release];
-    [_restaurantListComtroller release];
-    [_shoppingListComtroller release];
-    [_entertainmentListComtroller release];
-    [_nearbyController release];
     [super dealloc];
 }
 
@@ -214,11 +207,9 @@
 
 - (IBAction)clickMoreButton:(id)sender
 {
-    if (_moreController == nil) {
-        _moreController = [[MoreController alloc] init];
-    }
-    
-    [self.navigationController pushViewController:_moreController animated:YES];
+    MoreController *controller = [[MoreController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (IBAction)clickFavorite:(id)sender

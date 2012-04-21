@@ -13,7 +13,7 @@
 #import "AppService.h"
 
 
-@interface CityManagementController : PPTableViewController <CityListCellDelegate, DownloadListCellDelegate,AppServiceDelegate>
+@interface CityManagementController : PPTableViewController <CityListCellDelegate, DownloadListCellDelegate, UnzipDelegate>
 {
     UITableView *_downloadTableView;
     NSArray *_downloadList;

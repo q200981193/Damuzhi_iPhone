@@ -19,9 +19,11 @@
 - (void)didCancelDownload:(City*)city;
 - (void)didPauseDownload:(City*)city;
 - (void)didClickOnlineBtn:(City*)city;
+- (void)didFinishDownload:(City*)city;
+- (void)didFailDownload:(City*)city error:(NSError*)error;
 @end
 
-@interface CityListCell : PPTableViewCell<PPTableViewCellProtocol>
+@interface CityListCell : PPTableViewCell<PPTableViewCellProtocol, LocalCityDelegate>
 {
     City *_city;
 }

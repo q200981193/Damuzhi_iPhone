@@ -12,7 +12,7 @@
 #import "PlaceMapViewController.h"
 #import "SelectController.h"
 #import "AppManager.h"
-#import "SelectedItemsManager.h"
+#import "PlaceSelectedItemsManager.h"
 #import "UIImageUtil.h"
 #import "CommonWebController.h"
 #import "AppUtils.h"
@@ -25,6 +25,7 @@
 @synthesize placeListHolderView = _placeListHolderView;
 @synthesize placeListController = _placeListController;
 @synthesize filterHandler = _filterHandler;
+@synthesize selectedItems = _selectedItems;
 
 - (void)dealloc {
     [_filterHandler release];
@@ -32,6 +33,7 @@
     [_buttonHolderView release];
     [_placeListHolderView release];
     [_modeButton release];
+    [_selectedItems release];
     [super dealloc];
 }
 
@@ -92,6 +94,8 @@
     _buttonHolderView.backgroundColor = [UIColor colorWithPatternImage:image];
 
     [_filterHandler findAllPlaces:self];
+    
+    self.selectedItems = [[PlaceSelectedItemsManager defaultManager] getSelectedItems:[_filterHandler getCategoryId]];
 }
 
 - (void)setNavigationBarTitle
@@ -153,12 +157,12 @@
 - (NSArray*)filterAndSort:(NSArray*)placeList
 {    
     placeList = [_filterHandler filterAndSotrPlaceList:placeList
-                             selectedSubCategoryIdList:[[SelectedItemsManager defaultManager] selectedSubCategoryIdList]
-                                   selectedPriceIdList:[[SelectedItemsManager defaultManager] selectedPriceIdList]
-                                    selectedAreaIdList:[[SelectedItemsManager defaultManager] selectedAreaIdList]
-                                 selectedServiceIdList:[[SelectedItemsManager defaultManager] selectedServiceIdList]
-                                 selectedCuisineIdList:[[SelectedItemsManager defaultManager] selectedCuisineIdList]
-                                                sortBy:[[[SelectedItemsManager defaultManager] selectedSortIdList] objectAtIndex:0]
+                             selectedSubCategoryIdList:[_selectedItems selectedSubCategoryIdList]
+                                   selectedPriceIdList:[_selectedItems selectedPriceIdList]
+                                    selectedAreaIdList:[_selectedItems selectedAreaIdList]
+                                 selectedServiceIdList:[_selectedItems selectedServiceIdList]
+                                 selectedCuisineIdList:[_selectedItems selectedCuisineIdList]
+                                                sortBy:[[_selectedItems selectedSortIdList] objectAtIndex:0]
                                        currentLocation:self.currentLocation];
     
     return placeList;
@@ -220,7 +224,7 @@
     NSArray *subCategoryList = [[AppManager defaultManager] getSubCategoryList:[_filterHandler getCategoryId]];
     
     SelectController* selectController = [SelectController createController:subCategoryList                                                           
-                                                                selectedIds:[[SelectedItemsManager defaultManager] selectedSubCategoryIdList] 
+                                                                selectedIds:[_selectedItems selectedSubCategoryIdList] 
                                                                multiOptions:YES
                                                                 needConfirm:YES];
     
@@ -236,7 +240,7 @@
 {    
     NSArray *sortOptionList = [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]];
     SelectController* selectController = [SelectController createController:sortOptionList
-                                                                selectedIds:[[SelectedItemsManager defaultManager] selectedSortIdList] 
+                                                                selectedIds:[_selectedItems selectedSortIdList] 
                                                                multiOptions:NO
                                                                 needConfirm:NO];
 
@@ -249,7 +253,7 @@
 {    
     NSArray *hotelPriceList = [[AppManager defaultManager] getPriceList:[[AppManager defaultManager] getCurrentCityId]];
     SelectController* selectController = [SelectController createController:hotelPriceList
-                                                                selectedIds:[[SelectedItemsManager defaultManager] selectedPriceIdList]
+                                                                selectedIds:[_selectedItems selectedPriceIdList]
                                                                multiOptions:YES
                                                                 needConfirm:YES];
     
@@ -262,7 +266,7 @@
 {
     NSArray *areaList = [[AppManager defaultManager] getAreaNameList:[[AppManager defaultManager] getCurrentCityId]];
     SelectController* selectController = [SelectController createController:areaList
-                                                                selectedIds:[[SelectedItemsManager defaultManager] selectedAreaIdList]
+                                                                selectedIds:[_selectedItems selectedAreaIdList]
                                                                multiOptions:YES 
                                                                 needConfirm:YES];
 
@@ -277,7 +281,7 @@
     NSArray *serviceList = [[AppManager defaultManager] getProvidedServiceList:[_filterHandler getCategoryId]];
     
     SelectController* selectController = [SelectController createController:serviceList
-                                                                selectedIds:[[SelectedItemsManager defaultManager] selectedServiceIdList]
+                                                                selectedIds:[_selectedItems selectedServiceIdList]
                                                                multiOptions:YES
                                                                 needConfirm:YES];
     

@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CommonService.h"
 
-@interface SelectedItemsManager : NSObject <CommonManagerProtocol>
+@interface SelectedItems : NSObject
 
 @property (retain, nonatomic) NSMutableArray *selectedSubCategoryIdList;
 @property (retain, nonatomic) NSMutableArray *selectedSortIdList;

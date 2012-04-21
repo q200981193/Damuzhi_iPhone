@@ -140,7 +140,7 @@
     }
     
     return hasData;
-} 
+}
 
 + (BOOL)hasLocalHelpHtml
 {
@@ -152,18 +152,12 @@
     return hasData;
 } 
 
-+ (void)unzipCityZip:(int)cityId
++ (BOOL)unzipCityZip:(int)cityId
 {
     [FileUtil createDir:[AppUtils getCityDir:cityId]];
-    
-    if ([SSZipArchive unzipFileAtPath:[AppUtils getZipFilePath:cityId]
-                        toDestination:[AppUtils getCityDir:cityId]]) {
-        [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:cityId]
-                                                contents:nil
-                                              attributes:nil];
-    }
-    
-    return;
+
+    return [SSZipArchive unzipFileAtPath:[AppUtils getZipFilePath:cityId]
+                           toDestination:[AppUtils getCityDir:cityId]];;
 }
 
 + (NSString*)getHelpZipFilePath

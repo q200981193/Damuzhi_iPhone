@@ -45,6 +45,7 @@
 + (NSArray*)getRouteFilePathList:(int)cityId;
 
 //interface for ...
++ (NSString*)getUnzipFlag:(int)cityId;
 + (NSString*)getZipFilePath:(int)cityId;
 + (NSString*)getAppFilePath;
 
@@ -55,7 +56,7 @@
 + (NSString*)getCategoryImageDir;
 
 + (BOOL)hasLocalCityData:(int)cityId;
-+ (void)unzipCityZip:(int)cityId;
++ (BOOL)unzipCityZip:(int)cityId;
 + (NSString*)getHelpZipFilePath;
 
 

@@ -26,7 +26,6 @@
 
 @synthesize downloadRequestList = _downloadRequestList;
 @synthesize queue = _queue;
-@synthesize appServiceDelegate = _appServiceDelegate;
 
 static AppService* _defaultAppService = nil;
 
@@ -41,7 +40,6 @@ static AppService* _defaultAppService = nil;
     }
     [_downloadRequestList release];
     [_queue release];
-    [_appServiceDelegate release];
     [super dealloc];
 }
 
@@ -123,13 +121,13 @@ static AppService* _defaultAppService = nil;
                                overwrite:NO];
     
     // if there has no unzip city data, unzip
-    [AppUtils unzipCityZip:DEFAULT_CITY_ID];
+    [self UnzipCityDataSynchronous:[[AppManager defaultManager] getCity:DEFAULT_CITY_ID]];
 }
 
 - (void)loadAppData
 {
     [self copyDefaultAppDataFormBundle];
-    [self copyBuildinCityZipFromBundleAndRelease];
+//    [self copyBuildinCityZipFromBundleAndRelease];
     [self copyBuildinHelpHtmlFileFormBundleAndRelease];
     [[AppManager defaultManager] loadAppData];
 }
@@ -239,132 +237,184 @@ static AppService* _defaultAppService = nil;
     [request startSynchronous];
 }  
 
-#define KEY_LOCAL_CITY @"KEY_LOCAL_CITY"
-- (void)downloadCity:(City*)city
+- (void)UnzipCityDataSynchronous:(City*)city
 {
-    if(self.queue == nil)
-    {
-        self.queue = [[[NSOperationQueue alloc] init] autorelease];
+    // if there has no unzip city data, unzip
+    if ([AppUtils unzipCityZip:city.cityId]) {
+        [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:city.cityId]
+                                                contents:nil
+                                              attributes:nil];
     }
-    
-    LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:city.cityId];
-    localCity.downloadingFlag = YES;
-    
-    //specify destination path and temp path
-    NSString *destinationPath = [AppUtils getZipFilePath:city.cityId];
-    NSString *tempPath = [AppUtils getDownloadPath:city.cityId];
-    
-    [FileUtil createDir:[AppUtils getDownloadDir]];
-    [FileUtil createDir:[AppUtils getZipDir]];
-    
-    //create a request
-    NSURL *url = [NSURL URLWithString:city.downloadUrl];
-    NSLog(@"url = %@", url);
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url]; 
-    
-    [request setTemporaryFileDownloadPath:tempPath];
-    [request setDownloadDestinationPath:destinationPath];
-    [request setAllowResumeForFileDownloads:YES];
-    
-    PPDebug(@"Download to %@ (%@)", destinationPath, tempPath);
-    
-    //set request delegate
-    [request setDelegate:self];
-    [request setDownloadProgressDelegate:localCity];
-    
-    //add request into queue and run
-    [self.queue addOperation:request];
-    
-    //set request info, user defined
-    NSDictionary *dic = [NSDictionary dictionaryWithObject:localCity
-                                                    forKey:KEY_LOCAL_CITY]; 
-    
-    [request setUserInfo:dic];
-    
-    //add request to request list
-    [self.downloadRequestList addObject:request];
+    else {
+        [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
+    }
 }
 
-- (void)cancelDownloadCity:(City*)city
+- (void)UnzipCityDataAsynchronous:(City*)city unzipDelegate:(id<UnzipDelegate>)unzipDelegate
 {
-    // remove temp download file
-    NSString *cityZipPath = [AppUtils getDownloadPath:city.cityId];
-    [[NSFileManager defaultManager] removeItemAtPath:cityZipPath error:nil];
-    
-    // remove localCity
-    [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
-    
-    // remove request
-    for (ASIHTTPRequest *request in _downloadRequestList) {
-        LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-        if(localCity.cityId == city.cityId)
-        {
-            // Cancels an asynchronous request, clearing all delegates and blocks first
-            [request clearDelegatesAndCancel];    
-            [request cancel];
-            
-            [_downloadRequestList removeObject:request];
-            
-            NSLog(@"cancelDownload");
-            return;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // if there has no unzip city data, unzip
+        if ([AppUtils unzipCityZip:city.cityId]) {
+            [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:city.cityId]
+                                                    contents:nil
+                                                  attributes:nil];
+            if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
+                [unzipDelegate didFinishUnzip:city];
+            }
         }
-    }
-}
-
-- (void)pauseDownloadCity:(City*)city
-{
-    for (ASIHTTPRequest *request in _downloadRequestList) {
-        LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-        if(localCity.cityId == city.cityId)
-        {
-            //Cancels an asynchronous request, clearing all delegates and blocks first
-            [request clearDelegatesAndCancel];    
-            [request cancel];
-            
-            [_downloadRequestList removeObject:request];
-            localCity.downloadingFlag = NO;
-            NSLog(@"pauseDownload");
-            return;
+        else {
+            [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
+            if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFailUnzip:)]) {
+                [unzipDelegate didFailUnzip:city];
+            }
         }
-    }
+    });    
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-//    // Use when fetching text data
-//    NSString *responseString = [request responseString];
+
+//#define KEY_LOCAL_CITY @"KEY_LOCAL_CITY"
+//
+//- (void)downloadCity:(City*)city
+//{
+//    if(self.queue == nil)
+//    {
+//        self.queue = [[[NSOperationQueue alloc] init] autorelease];
+//    }
 //    
-//    // Use when fetching binary data
-//    NSData *responseData = [request responseData];
-    
-    //update download city info.
-    LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-    localCity.downloadDoneFlag = YES;
+//    LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:city.cityId];
+//    localCity.downloadStatus = DOWNLOADING;
+//    
+//    // Get destination path and temp path
+//    NSString *destinationPath = [AppUtils getZipFilePath:city.cityId];
+//    NSString *tempPath = [AppUtils getDownloadPath:city.cityId];
+//    
+//    // Create dir for download
+//    [FileUtil createDir:[AppUtils getDownloadDir]];
+//    [FileUtil createDir:[AppUtils getZipDir]];
+//    
+//    //create a request
+//    NSURL *url = [NSURL URLWithString:city.downloadUrl];
+//    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url]; 
+//    
+//    // Set temporary download path and download destination path
+//    [request setTemporaryFileDownloadPath:tempPath];
+//    [request setDownloadDestinationPath:destinationPath];
+//    
+//    // Allow partial download
+//    [request setAllowResumeForFileDownloads:YES];
+//    
+//    PPDebug(@"Download to %@ (%@)", destinationPath, tempPath);
+//    
+//    //set request delegate
+//    [request setDelegate:localCity];
+//    [request setDownloadProgressDelegate:localCity];
+//    
+//    //add request into queue and run
+//    [self.queue addOperation:request];
+//    
+//    //set request info, user defined
+//    NSDictionary *dic = [NSDictionary dictionaryWithObject:localCity
+//                                                    forKey:KEY_LOCAL_CITY]; 
+//    
+//    [request setUserInfo:dic];
+//    
+//    //add request to request list
+//    [self.downloadRequestList addObject:request];
+//}
+//
+//- (void)cancelDownloadCity:(City*)city
+//{
+//    // Remove download file
+//    NSString *cityZipPath = [AppUtils getDownloadPath:city.cityId];
+//    [[NSFileManager defaultManager] removeItemAtPath:cityZipPath error:nil];
+//    
+//    // Remove localCity
+//    [[LocalCityManager defaultManager] removeLocalCity:city.cityId];
+//    
+//    // Remove request
+//    for (ASIHTTPRequest *request in _downloadRequestList) {
+//        LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
+//        if(localCity.cityId == city.cityId)
+//        {
+//            // Cancels an asynchronous request, clearing all delegates and blocks first
+//            [request clearDelegatesAndCancel];    
+//            [request cancel];
+//            
+//            [_downloadRequestList removeObject:request];
+//            
+//            NSLog(@"cancelDownload");
+//            return;
+//        }
+//    }
+//}
+//
+//- (void)pauseDownloadCity:(City*)city
+//{
+//    for (ASIHTTPRequest *request in _downloadRequestList) {
+//        LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
+//        if(localCity.cityId == city.cityId)
+//        {
+//            //Cancels an asynchronous request, clearing all delegates and blocks first
+//            [request clearDelegatesAndCancel];    
+//            [request cancel];
+//            
+//            [_downloadRequestList removeObject:request];
+//            localCity.downloadStatus = DOWNLOAD_PAUSE;
+//            NSLog(@"pauseDownload");
+//            return;
+//        }
+//    }
+//}
 
-    [_downloadRequestList removeObject:request];
-    [AppUtils unzipCityZip:localCity.cityId];
-    
-    //call delegate method to do addition work 
-    if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFinishDownload:)]) {
-        [_appServiceDelegate didFinishDownload:[[AppManager defaultManager] getCity:localCity.cityId]];
-    }
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    //remove download city info.
-    LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
-    [[LocalCityManager defaultManager] removeLocalCity:localCity.cityId];
-
-    //remove failed request.
-    [_downloadRequestList removeObject:request];
-    
-    //call delegate method to do addition work 
-    NSError *error = [request error];
-    if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFailDownload:error:)]) {
-        [_appServiceDelegate didFailDownload:[[AppManager defaultManager] getCity:localCity.cityId] error:error];
-    }
-}
-
+//- (void)requestFinished:(ASIHTTPRequest *)request
+//{
+////    // Use when fetching text data
+////    NSString *responseString = [request responseString];
+////    
+////    // Use when fetching binary data
+////    NSData *responseData = [request responseData];
+//    
+//    // update download city info.
+//    LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
+//    [_downloadRequestList removeObject:request];
+//    localCity.downloadStatus = DOWNLOAD_SUCCEED;
+//    
+//    // call delegate method to do addition work 
+//    if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFinishDownload:)]) {
+//        [_appServiceDelegate didFinishDownload:[[AppManager defaultManager] getCity:localCity.cityId]];
+//    }
+//    
+//    // unzip city data
+//    if ([AppUtils unzipCityZip:localCity.cityId]) {
+//        [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:localCity.cityId]
+//                                                contents:nil
+//                                              attributes:nil];        
+//        if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
+//            [_appServiceDelegate didFinishUnzip:[[AppManager defaultManager] getCity:localCity.cityId]];
+//        }
+//    }
+//    else {
+//        [[LocalCityManager defaultManager] removeLocalCity:localCity.cityId];
+//        if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFailUnzip:)]) {
+//            [_appServiceDelegate didFailUnzip:[[AppManager defaultManager] getCity:localCity.cityId]];
+//        }
+//    }
+//}
+//
+//- (void)requestFailed:(ASIHTTPRequest *)request
+//{
+//    //remove download city info.
+//    LocalCity *localCity = [request.userInfo objectForKey:KEY_LOCAL_CITY];
+//    [[LocalCityManager defaultManager] removeLocalCity:localCity.cityId];
+//
+//    //remove failed request.
+//    [_downloadRequestList removeObject:request];
+//    
+//    //call delegate method to do addition work 
+//    NSError *error = [request error];
+//    if (_appServiceDelegate && [_appServiceDelegate respondsToSelector:@selector(didFailDownload:error:)]) {
+//        [_appServiceDelegate didFailDownload:[[AppManager defaultManager] getCity:localCity.cityId] error:error];
+//    }
+//}
 
 @end

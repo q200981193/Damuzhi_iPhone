@@ -13,10 +13,8 @@
 #import "LocalCityManager.h"
 #import "LocaleUtils.h"
 #import "Reachability.h"
-
-#define NO_DOWNLOAD 0
-#define DOWNLOAD 1
-#define FINISH_DOWNLOAD 2
+#import "CityDownloadService.h"
+#import "SSZipArchive.h"
 
 @implementation CityListCell
 
@@ -72,10 +70,8 @@
 {
     self.city = city;    
     self.selectCurrentCityBtn.selected = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId); 
-
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
     self.cityNameLabel.textColor = ([[AppManager defaultManager] getCurrentCityId] == _city.cityId)?[UIColor redColor]:[UIColor darkGrayColor];
-
     self.dataSizeLabel.text = [self getCityDataSizeString];
     self.downloadDoneLabel.textColor = [UIColor darkGrayColor];
     
@@ -92,80 +88,106 @@
 { 
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
     
-    if(localCity == nil)
+    if(localCity==nil)
     {
-        [self setCellAppearance:NO_DOWNLOAD localCity:localCity];
+        [self setDefaultAppearance];
         return;
     }
-    
-    if (localCity.downloadDoneFlag == NO) {
-        [self setCellAppearance:DOWNLOAD localCity:localCity];
-    }
     else {
-        [self setCellAppearance:FINISH_DOWNLOAD localCity:localCity];
+        [self setDownloadAppearance:localCity];
     }
 }
 
-- (void)setCellAppearance:(int)downloadStatus localCity:(LocalCity*)localCity
+- (void)setDefaultAppearance
 {
-    switch (downloadStatus) {
-        case NO_DOWNLOAD:  
-            dataSizeLabel.hidden = NO;
-            downloadProgressView.hidden = YES;
-            downloadPersentLabel.hidden = YES;
-            pauseDownloadBtn.hidden = YES;
-            
-//            if (_city.dataSize == 0) {
-//                downloadButton.hidden = YES;
-//            }
-//            else {
-                downloadButton.hidden = NO;
-//            }
-            cancelDownloadBtn.hidden = YES;
-            onlineButton.hidden = NO;
-            
-            downloadDoneLabel.hidden = YES;
-            moreDetailBtn.hidden = YES;
+    dataSizeLabel.hidden = NO;
+    downloadProgressView.hidden = YES;
+    downloadPersentLabel.hidden = YES;
+    pauseDownloadBtn.hidden = YES;
+    
+    //            if (_city.dataSize == 0) {
+    //                downloadButton.hidden = YES;
+    //            }
+    //            else {
+    downloadButton.hidden = NO;
+    //            }
+    cancelDownloadBtn.hidden = YES;
+    onlineButton.hidden = NO;
+    
+    downloadDoneLabel.hidden = YES;
+    moreDetailBtn.hidden = YES;
+}
+
+- (void)setDownloadAppearance:(LocalCity*)localCity
+{
+    switch (localCity.downloadStatus) {
+        case DOWNLOADING:
+        case DOWNLOAD_PAUSE:
+            [self setDownloadingAppearance:localCity];
             break;
             
-        case DOWNLOAD:
-            dataSizeLabel.hidden = YES;
-            downloadProgressView.hidden = NO;
-            downloadPersentLabel.hidden = NO;
-            pauseDownloadBtn.hidden = NO;
-            
-            downloadButton.hidden = YES;
-            cancelDownloadBtn.hidden = NO;
-            onlineButton.hidden = NO;
-            
-            downloadDoneLabel.hidden = YES;
-            moreDetailBtn.hidden = YES;
-            
-            pauseDownloadBtn.selected = !localCity.downloadingFlag;
-            downloadProgressView.progress = localCity.downloadProgress;
-            float persent = localCity.downloadProgress*100;
-            downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
-            
+        case DOWNLOAD_SUCCEED:
+            if ([AppUtils hasLocalCityData:localCity.cityId]) {
+                [self setDownloadSuccessAppearance];
+            }
+            else {
+                [self setDefaultAppearance];
+            }
             break;
             
-        case FINISH_DOWNLOAD:
-            dataSizeLabel.hidden = NO;
-            downloadProgressView.hidden = YES;
-            downloadPersentLabel.hidden = YES;
-            pauseDownloadBtn.hidden = YES;
-            
-            downloadButton.hidden = YES;
-            cancelDownloadBtn.hidden = YES;
-            onlineButton.hidden = YES;
-            
-            downloadDoneLabel.hidden = NO;
-            moreDetailBtn.hidden = NO;
-            
+        case DOWNLOAD_FAILED:
+            [self setDefaultAppearance];
             break;
             
         default:
             break;
     }
+}
+
+- (void)setDownloadingAppearance:(LocalCity*)localCity
+{
+    dataSizeLabel.hidden = YES;
+    downloadProgressView.hidden = NO;
+    downloadPersentLabel.hidden = NO;
+    pauseDownloadBtn.hidden = NO;
+    
+    downloadButton.hidden = YES;
+    cancelDownloadBtn.hidden = NO;
+    onlineButton.hidden = NO;
+    
+    downloadDoneLabel.hidden = YES;
+    moreDetailBtn.hidden = YES;
+    
+    if (localCity.downloadStatus == DOWNLOADING) {
+        pauseDownloadBtn.selected = NO;
+    }
+    else if(localCity.downloadStatus = DOWNLOAD_PAUSE){
+        pauseDownloadBtn.selected = YES;
+    }
+    
+    [self setDownloadProgress:localCity.downloadProgress];
+}
+
+- (void)setDownloadProgress:(float)downloadProgress
+{
+    downloadProgressView.progress = downloadProgress;
+    float persent = downloadProgress*100;
+    downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
+}
+
+- (void)setDownloadSuccessAppearance
+{
+    dataSizeLabel.hidden = NO;
+    downloadProgressView.hidden = YES;
+    downloadPersentLabel.hidden = YES;
+    pauseDownloadBtn.hidden = YES;
+    
+    downloadButton.hidden = YES;
+    cancelDownloadBtn.hidden = YES;
+    onlineButton.hidden = YES;
+    
+    downloadDoneLabel.hidden = NO;
+    moreDetailBtn.hidden = NO;
 }
 
 #pragma mark -
@@ -180,7 +202,7 @@
     }
     else {
         // Download city data.
-        [[AppService defaultService] downloadCity:_city];
+        [[CityDownloadService defaultService] download:_city delegate:self];
         
         // Call delegate method to do some addition work.
         if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
@@ -193,7 +215,7 @@
 {
     if (buttonIndex == 1) {
         // Download city data.
-        [[AppService defaultService] downloadCity:_city];
+        [[CityDownloadService defaultService] download:_city delegate:self];
         
         // Call delegate method to do some addition work.
         if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
@@ -207,7 +229,7 @@
     button.selected = !button.selected;
     if (button.selected) {
         //TODO, pause download request
-        [[AppService defaultService] pauseDownloadCity:_city];
+        [[CityDownloadService defaultService] pause:_city];
         if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didPauseDownload:)]) {
             [_cityListCellDelegate didPauseDownload:_city];
         }
@@ -223,7 +245,7 @@
         }
         else {
             // Download city data.
-            [[AppService defaultService] downloadCity:_city];
+            [[CityDownloadService defaultService] download:_city delegate:self];
             
             // Call delegate method to do some addition work.
             if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
@@ -234,7 +256,7 @@
 }
 
 - (IBAction)clickCancel:(id)sender {
-    [[AppService defaultService] cancelDownloadCity:_city];
+    [[CityDownloadService defaultService] cancel:_city];
     self.pauseDownloadBtn.selected = NO;
     if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didCancelDownload:)]) {
         [_cityListCellDelegate didCancelDownload:_city];
@@ -265,6 +287,20 @@
     // Call delegate metchod to do some addition work.
     if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didSelectCurrendCity:)]) {
         [_cityListCellDelegate didSelectCurrendCity:_city];
+    }
+}
+
+- (void)didFinishDownload:(City*) city
+{
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didFinishDownload:)]) {
+        [_cityListCellDelegate didFinishDownload:city];
+    }    
+}
+
+- (void)didFailDownload:(City*)city error:(NSError *)error;
+{
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didFailDownload:error:)]) {
+        [_cityListCellDelegate didFailDownload:city error:error];
     }
 }
 

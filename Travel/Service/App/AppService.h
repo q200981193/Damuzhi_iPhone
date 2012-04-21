@@ -10,16 +10,16 @@
 #import "AppManager.h"
 #import "ASINetworkQueue.h"
 
-@protocol AppServiceDelegate <NSObject>
+@protocol UnzipDelegate <NSObject>
 
 @optional
-- (void)didFailDownload:(City*)city error:(NSError *)error;
-- (void)didFinishDownload:(City*) city;
+- (void)didFinishUnzip:(City*)city;
+- (void)didFailUnzip:(City*)city;
+
 @end
 
 @interface AppService : CommonService
 
-@property (retain, nonatomic) NSObject<AppServiceDelegate>* appServiceDelegate;
 @property (retain, nonatomic) NSMutableArray *downloadRequestList;
 @property (retain, nonatomic) NSOperationQueue *queue;
 + (AppService*)defaultService;
@@ -28,8 +28,11 @@
 - (void)updateAppData;
 - (void)updateHelpHtmlFile;
 
-- (void)downloadCity:(City*)city;
-- (void)pauseDownloadCity:(City*)city;
-- (void)cancelDownloadCity:(City*)city;
+- (void)UnzipCityDataSynchronous:(City*)city;
+- (void)UnzipCityDataAsynchronous:(City*)city unzipDelegate:(id<UnzipDelegate>)unzipDelegate;
+
+//- (void)downloadCity:(City*)city;
+//- (void)pauseDownloadCity:(City*)city;
+//- (void)cancelDownloadCity:(City*)city;
 
 @end

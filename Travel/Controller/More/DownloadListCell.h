@@ -9,23 +9,32 @@
 #import <UIKit/UIKit.h>
 #import "PPTableViewCell.h"
 #import "App.pb.h"
+#import "CityDownloadService.h"
 
 @protocol  DownloadListCellDelegate <NSObject>
 @optional
 - (void)didDeleteCity:(City*)city;
-- (void)didUpdateCity:(City*)city;
+- (void)didStartUpdate:(City*)city;
+- (void)didCancelUpdate:(City*)city;
+- (void)didPauseUpdate:(City*)city;
+- (void)didFinishUpdate:(City*)city;
+- (void)didFailUpdate:(City*)city error:(NSError*)error;
 @end
 
-@interface DownloadListCell : PPTableViewCell<PPTableViewCellProtocol>
+@interface DownloadListCell : PPTableViewCell<PPTableViewCellProtocol, LocalCityDelegate>
 
 @property (retain, nonatomic) City *city;
-@property (assign, nonatomic) NSObject<DownloadListCellDelegate>* downloadListCellDelegate;
+@property (assign, nonatomic) id<DownloadListCellDelegate> downloadListCellDelegate;
 
 @property (retain, nonatomic) IBOutlet UILabel *cityNameLabel;
 @property (retain, nonatomic) IBOutlet UIButton *updateButton;
 @property (retain, nonatomic) IBOutlet UIButton *deleteButton;
 @property (retain, nonatomic) IBOutlet UILabel *dataSizeLabel;
 @property (retain, nonatomic) IBOutlet UILabel *defaultLabel;
+@property (retain, nonatomic) IBOutlet UIProgressView *updateProgressView;
+@property (retain, nonatomic) IBOutlet UILabel *updatePercentLabel;
+@property (retain, nonatomic) IBOutlet UIButton *pauseBtn;
+@property (retain, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 - (void)setCellData:(City*)city;
 

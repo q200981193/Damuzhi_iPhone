@@ -33,7 +33,7 @@ static LocalCityManager *_defaultManager = nil;
         self.localCities = [[NSMutableDictionary alloc] init];
         [self loadLocalCities];
         for (LocalCity *localCity in [_localCities allValues]) {
-            localCity.downloadingFlag = NO;
+            localCity.downloadStatus = DOWNLOAD_PAUSE;
         }
     }
     
@@ -90,39 +90,6 @@ static LocalCityManager *_defaultManager = nil;
 - (void)removeLocalCity:(int)cityId
 {
     [self.localCities removeObjectForKey:[NSNumber numberWithInt:cityId]];
-}
-
-#pragma mark -
-#pragma mark: access a localCity's property
-
-- (void)updateLocalCity:(int)cityId downloadProgress:(float)downloadProgress
-{
-    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
-    if (localCity != nil) {
-        localCity.downloadProgress = downloadProgress;
-    }
-    
-    return;
-}
-
-- (void)updateLocalCity:(int)cityId downloadingFlag:(float)downloadingFlag
-{
-    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
-    if (localCity != nil) {
-        localCity.downloadingFlag = downloadingFlag;
-    }
-    
-    return;
-}
-
-- (void)updateLocalCity:(int)cityId downloadDoneFlag:(float)downloadDoneFlag
-{
-    LocalCity *localCity = [self.localCities objectForKey:[NSNumber numberWithInt:cityId]];
-    if (localCity != nil) {
-        localCity.downloadDoneFlag = downloadDoneFlag;
-    }
-    
-    return;
 }
 
 @end

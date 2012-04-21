@@ -69,7 +69,7 @@ static CityManagementController *_instance;
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
-    [[AppService defaultService] setAppServiceDelegate:self];
+//    [[LocalCity defaultService] setAppServiceDelegate:self];
 } 
 
 - (void)viewDidUnload
@@ -310,12 +310,9 @@ static CityManagementController *_instance;
 
 - (void)didUpdateCity:(City*)city
 {
-    // TODO: 
-//    [self.dataTableView reloadData];
+    
 }
 
-#pragma mark -
-#pragma mark: implementation of AppServiceDelegate
 - (void)didFailDownload:(City*)city error:(NSError *)error;
 {
     [self killTimer];
@@ -326,14 +323,34 @@ static CityManagementController *_instance;
     [self.dataTableView reloadData];
 }
 
-- (void)didFinishDownload:(City*) city
+- (void)didFinishDownload:(City*)city
 {
     [self killTimer];
+    
+    [[AppService defaultService] UnzipCityDataAsynchronous:city unzipDelegate:self];
 
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
     [self.dataTableView reloadData];
     
+}
+
+- (void)didFailUnzip:(City*)city
+{
+    [self killTimer];
+    
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据安装失败"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [self.dataTableView reloadData];
+}
+
+- (void)didFinishUnzip:(City*)city
+{
+    [self killTimer];
+    
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据安装成功"), city.countryName, city.cityName];
+    [self popupMessage:message title:nil];
+    [self.dataTableView reloadData];
 }
 
 @end
