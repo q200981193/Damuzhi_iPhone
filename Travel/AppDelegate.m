@@ -46,14 +46,14 @@
         GlobalSetNavBarBackground(@"top_live.png");        
     }
     
-    //juage if app is firstLaunch
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_LAUNCH];
-    }
-    else{
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_LAUNCH];
-    }
+//    //juage if app is firstLaunch
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];
+//        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:FIRST_LAUNCH];
+//    }
+//    else{
+//        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:FIRST_LAUNCH];
+//    }
     
     [self initImageCacheManager];
     
@@ -83,10 +83,10 @@
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     
-    //if app is first launch, create default city info
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
-        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
-    }
+//    //if app is first launch, create default city info
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
+//        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
+//    }
 
     return YES;
 }

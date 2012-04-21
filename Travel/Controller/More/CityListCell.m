@@ -15,6 +15,7 @@
 #import "Reachability.h"
 #import "CityDownloadService.h"
 #import "SSZipArchive.h"
+#import "AppConstants.h"
 
 @implementation CityListCell
 
@@ -161,7 +162,7 @@
     if (localCity.downloadStatus == DOWNLOADING) {
         pauseDownloadBtn.selected = NO;
     }
-    else if(localCity.downloadStatus = DOWNLOAD_PAUSE){
+    else if(localCity.downloadStatus == DOWNLOAD_PAUSE){
         pauseDownloadBtn.selected = YES;
     }
     
@@ -194,33 +195,24 @@
 #pragma mark: Imlementation for buttons event.
 - (IBAction)clickDownload:(id)sender {
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-        // user is using Mobile Network
-        NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
-        [alert show];
-        [alert release];
+        [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
     }
     else {
-        // Download city data.
-        [[CityDownloadService defaultService] download:_city delegate:self];
-        
-        // Call delegate method to do some addition work.
-        if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
-            [_cityListCellDelegate didStartDownload:_city];
-        } 
+        [self download];
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        // Download city data.
-        [[CityDownloadService defaultService] download:_city delegate:self];
-        
-        // Call delegate method to do some addition work.
-        if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
-            [_cityListCellDelegate didStartDownload:_city];
-        } 
+    switch (alertView.tag) {
+        case ALERT_USING_CELL_NEWORK:
+            if (buttonIndex == 1) {
+                [self download];
+            }
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -228,44 +220,53 @@
     UIButton *button = (UIButton *)sender;
     button.selected = !button.selected;
     if (button.selected) {
-        //TODO, pause download request
-        [[CityDownloadService defaultService] pause:_city];
-        if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didPauseDownload:)]) {
-            [_cityListCellDelegate didPauseDownload:_city];
-        }
+        [self pause];
     }
     else {
         //TODO, resume download request
         if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
             // user is using Mobile Network
-            NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
-            [alert show];
-            [alert release];
+            [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
         }
         else {
-            // Download city data.
-            [[CityDownloadService defaultService] download:_city delegate:self];
-            
-            // Call delegate method to do some addition work.
-            if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
-                [_cityListCellDelegate didStartDownload:_city];
-            } 
+            [self download];
         }
     }
 }
 
+- (void)pause
+{
+    //TODO, pause download request
+    [[CityDownloadService defaultService] pause:_city];
+    
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didPauseDownload:)]) {
+        [_cityListCellDelegate didPauseDownload:_city];
+    }
+}
+
+- (void)download
+{
+    // Download city data.
+    [[CityDownloadService defaultService] download:_city delegate:self];
+    
+    // Call delegate method to do some addition work.
+    if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didStartDownload:)]) {
+        [_cityListCellDelegate didStartDownload:_city];
+    } 
+}
+
 - (IBAction)clickCancel:(id)sender {
     [[CityDownloadService defaultService] cancel:_city];
+    
     self.pauseDownloadBtn.selected = NO;
     if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didCancelDownload:)]) {
         [_cityListCellDelegate didCancelDownload:_city];
     }
 }
 
-
 - (IBAction)clickOnlineBtn:(id)sender {
     [self selectCurrentCity];
+    
     if (_cityListCellDelegate && [_cityListCellDelegate respondsToSelector:@selector(didClickOnlineBtn:)]) {
         [_cityListCellDelegate didClickOnlineBtn:_city];
     }

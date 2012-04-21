@@ -12,6 +12,8 @@
 #import "SSZipArchive.h"
 #import "PPDebug.h"
 #import "CommonPlace.h"
+#import "LocaleUtils.h"
+#import "AppConstants.h"
 
 @implementation AppUtils
 
@@ -292,6 +294,26 @@
     }
     return nil;
     
+}
+
++ (UIAlertView*)showUsingCellNetworkAlertViewWithTag:(int)tag delegate:(id)delegate
+{
+    NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:delegate cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"),nil] autorelease];
+    alert.tag = tag;
+    [alert show];
+    
+    return alert;
+}
+
++ (UIAlertView*)showDeleteCityDataAlertViewWithTag:(int)tag delegate:(id)delegate
+{
+    NSString *message = NSLS(@"删除城市数据后再次打开需要重新下载，确认删除?");
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:delegate cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"),nil] autorelease];
+    alert.tag = tag;
+    [alert show];
+    
+    return alert;
 }
 
 @end

@@ -304,9 +304,10 @@
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
     UIFont *font = [UIFont systemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(300, 100000);
+    CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
-    NSString *description = descriptionString;
+    NSString *description = [NSString stringWithFormat:@"       %@",[descriptionString stringByReplacingOccurrencesOfString:@"\n" withString:@"\n       "]];
+    
     if ([description length] == 0) {
         description = NO_DETAIL_DATA;
     }
@@ -336,9 +337,7 @@
     introductionDescription.textColor = DESCRIPTION_COLOR;
     introductionDescription.font = font;
     
-    NSString *str = [NSString stringWithFormat:@"       %@",[description stringByReplacingOccurrencesOfString:@"\n" withString:@"\n       "]];
-    
-    introductionDescription.text = str;
+    introductionDescription.text = description;
         
     [segmentView addSubview:introductionDescription];
     [introductionDescription release];
@@ -353,7 +352,7 @@
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
     UIFont *font = [UIFont systemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(300, 100000);
+    CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
     NSString *description = descriptionString;
     if ([description length] == 0) {
@@ -616,11 +615,7 @@
     addressLabel.backgroundColor = [UIColor clearColor];
     addressLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     addressLabel.font = [UIFont boldSystemFontOfSize:12];
-//    NSString *addr = [[[NSString alloc]initWithFormat:NSLS(@"地址:")] autorelease];
-//    NSArray *addressList = [self.place addressList];
-//    for (NSString* address in addressList) {
-//        addr = [addr stringByAppendingFormat:@" ", address];
-//    }
+
     NSString *addr = [NSString stringWithFormat:NSLS(@"地址: %@"),[[_place addressList] componentsJoinedByString:@" "]];
     
     addressLabel.text = addr;

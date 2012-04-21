@@ -33,7 +33,12 @@ static LocalCityManager *_defaultManager = nil;
         self.localCities = [[NSMutableDictionary alloc] init];
         [self loadLocalCities];
         for (LocalCity *localCity in [_localCities allValues]) {
-            localCity.downloadStatus = DOWNLOAD_PAUSE;
+            if (localCity.updateStatus == UPDATING) {
+                localCity.updateStatus = UPDATE_PAUSE;
+            }
+            if (localCity.downloadStatus == DOWNLOADING) {
+                localCity.downloadStatus = DOWNLOAD_PAUSE;
+            }   
         }
     }
     

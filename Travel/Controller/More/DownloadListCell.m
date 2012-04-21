@@ -96,7 +96,8 @@
     dataSizeLabel.hidden = NO;
     self.dataSizeLabel.text = [self getCityDataSizeString];
     
-    if ([_city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:_city.cityId]]) {
+//    if ([_city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:_city.cityId]]) {
+    if (NO) {
         updateButton.hidden = YES;
     }
     else {
@@ -106,6 +107,7 @@
     updateProgressView.hidden = YES;
     updatePercentLabel.hidden = YES;
     pauseBtn.hidden = YES;
+    [activityIndicator stopAnimating];
     activityIndicator.hidden = YES;   
 }
 
@@ -123,10 +125,12 @@
     if (localCity.updateStatus == UPDATING) {
         pauseBtn.selected = NO;
         activityIndicator.hidden = NO;  
+        [activityIndicator startAnimating];
     }
     else {
         pauseBtn.selected = YES;
-        activityIndicator.hidden = YES;            
+        activityIndicator.hidden = YES; 
+        [activityIndicator stopAnimating];
     }
 }
 
@@ -143,71 +147,113 @@
     return [NSString stringWithFormat:@"%0.2fM", _city.dataSize/1024.0/1024.0];
 }
 
-#define DELETE_BTN_ALERT 1
-#define UPDATE_BTN_ALERT 2
+#pragma mark -
+#pragma mark: implementation of button action.
 
-- (IBAction)clickDeleteBtn:(id)sender {
-    //TODO: delete city
-    NSString *message = NSLS(@"删除城市数据后再次打开需要重新下载，确认删除?");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
-    alert.tag = DELETE_BTN_ALERT;
-    [alert show];
-    [alert release];
+- (IBAction)clickDeleteBtn:(id)sender {    
+    [AppUtils showDeleteCityDataAlertViewWithTag:ALERT_DELETE_CITY delegate:self];
 }
+
+- (IBAction)clickUpdateBtn:(id)sender {
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
+        [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+    }
+    else {
+        [self updateCity];
+    }
+}
+
+- (IBAction)clickPauseBtn:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected;
+    if (button.selected) {
+        [self pause];
+    }
+    else {
+        //TODO, resume download request
+        if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
+            [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+        }
+        else {
+            [self updateCity];
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark: implementation of alert view delegate.
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (alertView.tag) {
-        case DELETE_BTN_ALERT:
+        case ALERT_DELETE_CITY:
             if (buttonIndex == 1) {
-                [self dealWithDeleteAlert];
+                [self deleteCity];
             }
             break;
             
-        case UPDATE_BTN_ALERT:
-            
+        case ALERT_USING_CELL_NEWORK:
+            if (buttonIndex == 1) {
+                [self updateCity];
+            }
             break;
+            
         default:
             break;
     }
 }
 
-- (void)dealWithDeleteAlert
-{
+#pragma mark -
+#pragma mark: implementation of functions.
+
+- (void)deleteCity
+{           
+    // Delete city data.
+    [AppUtils deleteCityData:_city.cityId];
+    // Remove local city info.
+    [[LocalCityManager defaultManager] removeLocalCity:_city.cityId];
+    
+    // Call delegete method to do some addition work.
     if ([_downloadListCellDelegate respondsToSelector:@selector(didDeleteCity:)]) {
-        // Delete city data.
-        [AppUtils deleteCityData:_city.cityId];
-        // Remove local city info.
-        [[LocalCityManager defaultManager] removeLocalCity:_city.cityId];
-        
-        // Call delegete method to do some addition work.
         if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didDeleteCity:)]) {
             [_downloadListCellDelegate didDeleteCity:_city];
         }
     }
-    else {
-        PPDebug(@"[_downloadListCellDelegate respondsToSelector:@selector(didDeleteCity:)]");
+}
+
+- (void)updateCity
+{
+    // Update city data.
+    [[CityDownloadService defaultService] update:_city delegate:self];
+    
+    // Call delegate method to do some addition work.
+    if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didStartUpdate:)]) {
+        [_downloadListCellDelegate didStartUpdate:_city];
+    } 
+}
+
+- (void)pause
+{
+    // Pause update request
+    [[CityDownloadService defaultService] pause:_city];
+    
+    if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didPauseUpdate:)]) {
+        [_downloadListCellDelegate didPauseUpdate:_city];
     }
 }
 
-- (IBAction)clickUpdateBtn:(id)sender {
-    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-        // user is using Mobile Network
-        NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:NSLS(message) delegate:self cancelButtonTitle:NSLS(@"取消") otherButtonTitles:@"确定",nil];
-        [alert show];
-        [alert release];
-    }
-    else {
-        // Download city data.
-        [[CityDownloadService defaultService] update:_city delegate:self];
-        
-        // Call delegate method to do some addition work.
-        if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didStartUpdate:)]) {
-            [_downloadListCellDelegate didStartUpdate:_city];
-        } 
-    }
+- (void)didFinishUpdate:(City*)city
+{
+    if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didFinishUpdate:)]) {
+        [_downloadListCellDelegate didFinishUpdate:city];
+    }   
 }
 
+- (void)didFailUpdate:(City*)city error:(NSError*)error
+{
+    if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didFailUpdate:error:)]) {
+        [_downloadListCellDelegate didFailUpdate:city error:error];
+    }
+}
 
 @end

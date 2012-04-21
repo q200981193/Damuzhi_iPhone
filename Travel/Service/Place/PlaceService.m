@@ -70,7 +70,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         NSArray* list = nil;
         int resultCode = 0;
         if ([AppUtils hasLocalCityData:[[AppManager defaultManager] getCurrentCityId]] == YES){
-//        if (NO){
             // read local data firstly               
             PPDebug(@"Has Local Data For City %@, Read Data Locally", [[AppManager defaultManager] getCurrentCityName]);
             if (localHandler != NULL){
@@ -146,13 +145,14 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         // TODO, send network request here
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:[self getObjectTypeByPlaceCategoryId:categoryId] 
                                                                cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-        
-        _onlinePlaceManager.placeList = [[travelResponse placeList] listList];   
-        
-        NSArray* list = [_onlinePlaceManager findPlacesByCategory:categoryId];   
-        
-        *resultCode = 0;
+        NSArray *list = nil;
+        if (output.resultCode == ERROR_SUCCESS) {
+            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+            _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
+            list = [_onlinePlaceManager findPlacesByCategory:categoryId];   
+            
+            *resultCode = 0;
+        }
         
         return list;
     };
@@ -160,16 +160,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     [self processLocalRemoteQuery:viewController
                      localHandler:localHandler
                     remoteHandler:remoteHandler];
-}
-
-- (void)findMyPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
-{
-    
-}
-
-- (void)findHistoryPlaces:(PPViewController<PlaceServiceDelegate>*)viewController
-{
-    
 }
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
@@ -194,7 +184,6 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             if ([viewController respondsToSelector:@selector(finishAddFavourite:count:)]){
                 [viewController finishAddFavourite:result count:placeFavoriteCount];
             }
-            
         });
     }); 
 }
