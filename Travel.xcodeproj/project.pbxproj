@@ -75,7 +75,6 @@
 		A48B6337154165A500733DF1 /* CityDownloadService.m in Sources */ = {isa = PBXBuildFile; fileRef = A48B6336154165A500733DF1 /* CityDownloadService.m */; };
 		A48CE06515187DDA0094BD5D /* PackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48CE06415187DDA0094BD5D /* PackageManager.m */; };
 		A48D6E621514472200507BDD /* CityOverviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A48D6E611514472200507BDD /* CityOverviewManager.m */; };
-		A48E050E1534058900B2695E /* 1.zip in Resources */ = {isa = PBXBuildFile; fileRef = A48E047C1534058800B2695E /* 1.zip */; };
 		A48E050F1534058900B2695E /* app.dat in Resources */ = {isa = PBXBuildFile; fileRef = A48E047D1534058800B2695E /* app.dat */; };
 		A48E05101534058900B2695E /* all_page_bg2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48E04801534058800B2695E /* all_page_bg2@2x.jpg */; };
 		A48E05111534058900B2695E /* all_page_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A48E04811534058800B2695E /* all_page_bg@2x.jpg */; };
@@ -628,7 +627,6 @@
 		A48CE06415187DDA0094BD5D /* PackageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageManager.m; sourceTree = "<group>"; };
 		A48D6E601514472200507BDD /* CityOverviewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityOverviewManager.h; sourceTree = "<group>"; };
 		A48D6E611514472200507BDD /* CityOverviewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityOverviewManager.m; sourceTree = "<group>"; };
-		A48E047C1534058800B2695E /* 1.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = 1.zip; sourceTree = "<group>"; };
 		A48E047D1534058800B2695E /* app.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = app.dat; sourceTree = "<group>"; };
 		A48E047E1534058800B2695E /* ImageName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageName.h; sourceTree = "<group>"; };
 		A48E04801534058800B2695E /* all_page_bg2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "all_page_bg2@2x.jpg"; sourceTree = "<group>"; };
@@ -1574,7 +1572,6 @@
 		A48E047B1534058800B2695E /* data */ = {
 			isa = PBXGroup;
 			children = (
-				A48E047C1534058800B2695E /* 1.zip */,
 				A48E047D1534058800B2695E /* app.dat */,
 			);
 			path = data;
@@ -3336,7 +3333,6 @@
 				A3EB73E4152E965C003BA8B8 /* IOS SDK Readme 2.0.0.docx in Resources */,
 				A313DE5E152F02EB004E0964 /* ShareToSinaController.xib in Resources */,
 				A3DE351F153285B80034C6D5 /* ShareToQQController.xib in Resources */,
-				A48E050E1534058900B2695E /* 1.zip in Resources */,
 				A48E050F1534058900B2695E /* app.dat in Resources */,
 				A48E05101534058900B2695E /* all_page_bg2@2x.jpg in Resources */,
 				A48E05111534058900B2695E /* all_page_bg@2x.jpg in Resources */,

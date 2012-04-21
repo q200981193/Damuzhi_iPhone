@@ -97,12 +97,13 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_CITY_BASIC objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
+        CommonOverview *commonOverView = nil;
         
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-
-        CommonOverview *commonOverView = [travelResponse overview];
-
-        *resultCode = 0;
+        if (output.resultCode == ERROR_SUCCESS) {
+            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+            commonOverView = [travelResponse overview];
+            *resultCode = 0;
+        }
         
         return commonOverView;
     };
@@ -124,13 +125,13 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_PREPARATION objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
-        
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-        
-        CommonOverview *commonOverView = [travelResponse overview];
-        
-        *resultCode = 0;
-        
+        CommonOverview *commonOverView = nil;
+        if (output.resultCode == 0) {
+            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+            commonOverView = [travelResponse overview];
+            *resultCode = 0;
+        }
+
         return commonOverView;
     };
     

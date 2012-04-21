@@ -129,7 +129,7 @@ static AppService* _defaultAppService = nil;
     [self copyDefaultAppDataFormBundle];
     [[AppManager defaultManager] loadAppData];
 
-    [self copyBuildinCityZipFromBundleAndRelease];
+//    [self copyBuildinCityZipFromBundleAndRelease];
     [self copyBuildinHelpHtmlFileFormBundleAndRelease];
 }
 
