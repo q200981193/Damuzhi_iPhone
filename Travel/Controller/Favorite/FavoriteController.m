@@ -29,9 +29,12 @@
 
 @implementation FavoriteController
 @synthesize buttonHolderView;
-@synthesize placeListHolderView;
-@synthesize placeListController;
-@synthesize placeList = _placeList;
+@synthesize myFavPlaceListView;
+@synthesize myFavPlaceListController;
+@synthesize showMyList = _showMyList;
+@synthesize topFavPlaceListView;
+@synthesize topFavPlaceListController;
+@synthesize showTopList = _showTopList;
 @synthesize canDelete;
 @synthesize myFavoriteButton;
 @synthesize topFavoriteButton;
@@ -46,9 +49,12 @@
 
 - (void)dealloc {
     [buttonHolderView release];
-    [placeListHolderView release];
-    [placeListController release];
-    [_placeList release];
+    [myFavPlaceListView release];
+    [myFavPlaceListController release];
+    [_showMyList release];
+    [topFavPlaceListView release];
+    [topFavPlaceListController release];
+    [_showTopList release];
     [myFavoriteButton release];
     [topFavoriteButton release];
     [deleteButton release];
@@ -90,20 +96,40 @@
 }
 
 - (void)showPlaces{
-    if (self.placeListController == nil) {
-        self.placeListController = [PlaceListController createController:self.placeList 
-                                                               superView:placeListHolderView
-                                                         superController:self];
+    if (self.myFavoriteButton.selected == YES) {
+        self.myFavPlaceListView.hidden = NO;
+        self.topFavPlaceListView.hidden = YES;
+        
+        if (self.myFavPlaceListController == nil) {
+            self.myFavPlaceListController = [PlaceListController createController:self.showMyList 
+                                                                        superView:myFavPlaceListView
+                                                                  superController:self];
+        }
+        [self.myFavPlaceListController setAndReloadPlaceList:self.showMyList];
     }
-    [self.placeListController setAndReloadPlaceList:self.placeList];
+    else {
+        self.myFavPlaceListView.hidden = YES;
+        self.topFavPlaceListView.hidden = NO;
+        
+        if (self.topFavPlaceListController == nil) {
+            self.topFavPlaceListController = [PlaceListController createController:self.showTopList 
+                                                                        superView:topFavPlaceListView
+                                                                  superController:self];
+        }
+        [self.topFavPlaceListController setAndReloadPlaceList:self.showTopList];
+    }
 }
 
 - (void)viewDidUnload
 {
     [self setButtonHolderView:nil];
-    [self setPlaceListHolderView:nil];
-    [self setPlaceListController:nil];
-    [self setPlaceList:nil];
+    [self setMyFavPlaceListView:nil];
+    [self setMyFavPlaceListController:nil];
+    [self setTopFavPlaceListController:nil];
+    [self setShowMyList:nil];
+    [self setTopFavPlaceListView:nil];
+    [self setTopFavPlaceListController:nil];
+    [self setShowTopList:nil];
     [self setMyFavoriteButton:nil];
     [self setTopFavoriteButton:nil];
     [self setDeleteButton:nil];
@@ -218,7 +244,7 @@
             break;
     }
     
-    self.placeList = list;
+    self.showTopList = list;
     [self showPlaces];
 }
 
@@ -226,7 +252,7 @@
 - (void)clickDelete:(id)sender
 {
     canDelete = !canDelete;
-    [self.placeListController canDeletePlace:canDelete delegate:self];
+    [self.myFavPlaceListController canDeletePlace:canDelete delegate:self];
     
 //    UIButton *button = (UIButton*)sender;
 //    if (canDelete) {
@@ -239,9 +265,14 @@
 
 - (void)clickMyFavorite:(id)sender
 {
+    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    
     myFavoriteButton.selected = YES;
     topFavoriteButton.selected = NO;
     deleteButton.hidden = NO;
+    
+    self.myFavPlaceListView.hidden = NO;
+    self.topFavPlaceListView.hidden = YES;
     
     [self clickAll:nil];
 }
@@ -252,7 +283,10 @@
     topFavoriteButton.selected = YES;
     deleteButton.hidden = YES;
     
-    [self.placeListController canDeletePlace:NO delegate:nil];
+    self.myFavPlaceListView.hidden = YES;
+    self.topFavPlaceListView.hidden = NO;
+    
+    [self.myFavPlaceListController canDeletePlace:NO delegate:nil];
 //    [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
     [self clickAll:nil];
 }
@@ -263,7 +297,7 @@
     [self setSelectedBtn:PLACE_TYPE_ALL];
 
     if (self.myFavoriteButton.selected == YES) {
-        self.placeList = myAllFavoritePlaceList;
+        self.showMyList = myAllFavoritePlaceList;
         [self showPlaces];
     }
     else {
@@ -271,7 +305,7 @@
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ALL];
         }
         else {
-            self.placeList = topAllFavoritePlaceList;
+            self.showTopList = topAllFavoritePlaceList;
             [self showPlaces];
         }
     }
@@ -282,14 +316,14 @@
     [self setSelectedBtn:PLACE_TYPE_SPOT];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SPOT];
+        self.showMyList = [self filterFromMyFavorite:PLACE_TYPE_SPOT];
         [self showPlaces];
     }
     else {
         if(topSpotFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SPOT];
         }else {
-            self.placeList = topSpotFavoritePlaceList;
+            self.showTopList = topSpotFavoritePlaceList;
             [self showPlaces];
         }
     }
@@ -300,7 +334,7 @@
     [self setSelectedBtn:PLACE_TYPE_HOTEL];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_HOTEL];
+        self.showMyList = [self filterFromMyFavorite:PLACE_TYPE_HOTEL];
         [self showPlaces];
     }
     
@@ -308,7 +342,7 @@
         if(topHotelFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_HOTEL];
         }else {
-            self.placeList = topHotelFavoritePlaceList;
+            self.showTopList = topHotelFavoritePlaceList;
             [self showPlaces];
         }
     }
@@ -319,7 +353,7 @@
     [self setSelectedBtn:PLACE_TYPE_RESTAURANT];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_RESTAURANT];
+        self.showMyList = [self filterFromMyFavorite:PLACE_TYPE_RESTAURANT];
         [self showPlaces];
     }
     
@@ -328,7 +362,7 @@
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_RESTAURANT];
         }
         else {
-            self.placeList = topRestaurantFavoritePlaceList;
+            self.showTopList = topRestaurantFavoritePlaceList;
             [self showPlaces]; 
         }
     }
@@ -339,7 +373,7 @@
     [self setSelectedBtn:PLACE_TYPE_SHOPPING];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SHOPPING];
+        self.showMyList = [self filterFromMyFavorite:PLACE_TYPE_SHOPPING];
         [self showPlaces];
     }
     
@@ -347,7 +381,7 @@
         if(topShoppingFavoritePlaceList == nil){
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SHOPPING];
         }else {
-            self.placeList = topShoppingFavoritePlaceList;
+            self.showTopList = topShoppingFavoritePlaceList;
             [self showPlaces];
         }
     }
@@ -358,7 +392,7 @@
     [self setSelectedBtn:PLACE_TYPE_ENTERTAINMENT];
     
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_ENTERTAINMENT];
+        self.showMyList = [self filterFromMyFavorite:PLACE_TYPE_ENTERTAINMENT];
         [self showPlaces];
     }
     
@@ -367,7 +401,7 @@
             [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT];
         }
         else {
-            self.placeList = topEntertainmentFavoritePlaceList;
+            self.showTopList = topEntertainmentFavoritePlaceList;
             [self showPlaces];
         }
     }

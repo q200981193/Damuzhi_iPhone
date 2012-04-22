@@ -302,4 +302,9 @@
     [_filterHandler findAllPlaces:self];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [_placeListController.dataTableView reloadData];
+}
+
 @end
