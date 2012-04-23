@@ -16,6 +16,7 @@ enum PlaceCategoryType{
   PLACE_RESTRAURANT = 3;
   PLACE_SHOPPING = 4;
   PLACE_ENTERTAINMENT = 5;  
+  PLACE_ALL = 20;
 }
 
 message PlaceMeta {       

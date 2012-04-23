@@ -11,15 +11,6 @@
 #define ALL_CATEGORY   (-1)
 
 enum{
-    PLACE_TYPE_ALL = 0,
-    PLACE_TYPE_SPOT = 1,
-    PLACE_TYPE_HOTEL = 2,
-    PLACE_TYPE_RESTAURANT = 3,
-    PLACE_TYPE_SHOPPING = 4,
-    PLACE_TYPE_ENTERTAINMENT = 5
-};
-
-enum{
     SORT_BY_RECOMMEND = 1,
     SORT_BY_DESTANCE_FROM_NEAR_TO_FAR = 2,
     SORT_BY_DESTANCE_FROM_FAR_TO_NEAR = 3,
@@ -35,9 +26,6 @@ enum{
     PRICE_MORE_THAN_1500 = 4
 };
 
-
 @interface CommonPlace : NSObject
-
-
 
 @end

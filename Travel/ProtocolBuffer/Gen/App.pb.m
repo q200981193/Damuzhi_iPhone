@@ -26,6 +26,7 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value) {
     case PlaceCategoryTypePlaceRestraurant:
     case PlaceCategoryTypePlaceShopping:
     case PlaceCategoryTypePlaceEntertainment:
+    case PlaceCategoryTypePlaceAll:
       return YES;
     default:
       return NO;

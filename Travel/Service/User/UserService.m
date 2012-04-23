@@ -63,13 +63,14 @@ static UserService* _defaultUserService = nil;
         CommonNetworkOutput *output = [TravelNetworkRequest queryVersion];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            NSDictionary* jsonDict = [output.textData JSONValue];
-            NSString *app_version = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_APP_VERSION];
-            NSString *app_data_version = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_APP_DATA_VERSION];
-            
-            if (delegate && [delegate respondsToSelector:@selector(queryVersionFinish:dataVersion:)]) {
-                [delegate queryVersionFinish:app_version dataVersion:app_data_version];
+            if (output.resultCode == ERROR_SUCCESS) {
+                NSDictionary* jsonDict = [output.textData JSONValue];
+                NSString *app_version = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_APP_VERSION];
+                NSString *app_data_version = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_APP_DATA_VERSION];
+                
+                if (delegate && [delegate respondsToSelector:@selector(queryVersionFinish:dataVersion:)]) {
+                    [delegate queryVersionFinish:app_version dataVersion:app_data_version];
+                }
             }
         });                        
     });
@@ -79,11 +80,9 @@ static UserService* _defaultUserService = nil;
 - (void)submitFeekback:(id<UserServiceDelegate>)delegate feekback:(NSString*)feekback contact:(NSString*)contact
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         CommonNetworkOutput *output = [TravelNetworkRequest submitFeekback:feekback contact:contact];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-             if (delegate && [delegate respondsToSelector:@selector(submitFeekbackDidFinish:)]) {
+            if (delegate && [delegate respondsToSelector:@selector(submitFeekbackDidFinish:)]) {
                  [delegate submitFeekbackDidFinish:(!output.resultCode)];
             }
         });                        

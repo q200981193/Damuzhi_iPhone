@@ -100,27 +100,27 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 {
     int objectType = 0;
     switch (categoryId) {
-        case PLACE_TYPE_ALL:
+        case PlaceCategoryTypePlaceAll:
             objectType = OBJECT_LIST_TYPE_ALL_PLACE;
             break;
             
-        case PLACE_TYPE_SPOT:
+        case PlaceCategoryTypePlaceSpot:
             objectType = OBJECT_LIST_TYPE_SPOT;
             break;
             
-        case PLACE_TYPE_HOTEL:
+        case PlaceCategoryTypePlaceHotel:
             objectType = OBJECT_LIST_TYPE_HOTEL;
             break;
             
-        case PLACE_TYPE_RESTAURANT:
+        case PlaceCategoryTypePlaceRestraurant:
             objectType = OBJECT_LIST_TYPE_RESTAURANT;
             break;
             
-        case PLACE_TYPE_SHOPPING:
+        case PlaceCategoryTypePlaceShopping:
             objectType = OBJECT_LIST_TYPE_SHOPPING;
             break;
             
-        case PLACE_TYPE_ENTERTAINMENT:
+        case PlaceCategoryTypePlaceEntertainment:
             objectType = OBJECT_LIST_TYPE_ENTERTAINMENT;
             break;
     
@@ -146,6 +146,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:[self getObjectTypeByPlaceCategoryId:categoryId] 
                                                                cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         NSArray *list = nil;
+        
         if (output.resultCode == ERROR_SUCCESS) {
             TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
             _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
@@ -170,19 +171,20 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]  longitude:[NSString stringWithFormat:@"%f",place.longitude] latitude:[NSString stringWithFormat:@"%f",place.latitude]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            NSDictionary* jsonDict = [output.textData JSONValue];
-            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
-            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
-            if (0 == result.intValue){
+            if (output.resultCode == ERROR_SUCCESS) {
+                NSDictionary* jsonDict = [output.textData JSONValue];
+                NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+                NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+                if (0 == result.intValue){
                     //[[PlaceStorage favoriteManager] addPlace:place];
-            }else {
-                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
-            }
-            [[PlaceStorage favoriteManager] addPlace:place];
-            
-            if ([viewController respondsToSelector:@selector(finishAddFavourite:count:)]){
-                [viewController finishAddFavourite:result count:placeFavoriteCount];
+                }else {
+                    PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
+                }
+                [[PlaceStorage favoriteManager] addPlace:place];
+                
+                if ([viewController respondsToSelector:@selector(finishAddFavourite:count:)]){
+                    [viewController finishAddFavourite:result count:placeFavoriteCount];
+                }
             }
         });
     }); 
@@ -198,20 +200,21 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            NSDictionary* jsonDict = [output.textData JSONValue];
-            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
-            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
-            if (0 == result.intValue){
+            if (output.resultCode == ERROR_SUCCESS) {
+                NSDictionary* jsonDict = [output.textData JSONValue];
+                NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+                NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+                if (0 == result.intValue){
+                    
+                }else {
+                    PPDebug(@"<PlaceService> deletePlaceIntoFavorite faild,result:%d", result.intValue);
+                }
+                [[PlaceStorage favoriteManager] deletePlace:place];
                 
-            }else {
-                PPDebug(@"<PlaceService> deletePlaceIntoFavorite faild,result:%d", result.intValue);
+                if ([viewController respondsToSelector:@selector(finishDeleteFavourite:count:)]){
+                    [viewController finishDeleteFavourite:result count:placeFavoriteCount];
+                }
             }
-            [[PlaceStorage favoriteManager] deletePlace:place];
-            
-            if ([viewController respondsToSelector:@selector(finishDeleteFavourite:count:)]){
-                [viewController finishDeleteFavourite:result count:placeFavoriteCount];
-            }
-            
         });
     }); 
 }
@@ -223,20 +226,21 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryPlace:[[UserManager defaultManager] userId] placeId:[NSString stringWithFormat:@"%d",placeId]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            NSDictionary* jsonDict = [output.textData JSONValue];
-            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
-            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
-            
-            if (0 == result.intValue){
+            if (output.resultCode == ERROR_SUCCESS) {
+                NSDictionary* jsonDict = [output.textData JSONValue];
+                NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+                NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
                 
-            }else {
-                PPDebug(@"<PlaceService> getPlaceFavoriteCount faild,result:%d", result.intValue);
-            }
-            
-            if ([viewController respondsToSelector:@selector(didGetPlaceData:count:)]){
-                PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, placeFavoriteCount.intValue);
-                [viewController didGetPlaceData:placeId count:placeFavoriteCount.intValue];
+                if (0 == result.intValue){
+                    
+                }else {
+                    PPDebug(@"<PlaceService> getPlaceFavoriteCount faild,result:%d", result.intValue);
+                }
+                
+                if ([viewController respondsToSelector:@selector(didGetPlaceData:count:)]){
+                    PPDebug(@"<getPlaceFavoriteCount> placeId=%d, count=%d", placeId, placeFavoriteCount.intValue);
+                    [viewController didGetPlaceData:placeId count:placeFavoriteCount.intValue];
+                }
             }
         });
     }); 
@@ -249,12 +253,13 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput *output = [TravelNetworkRequest queryList:type cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-            
-            NSArray *favoritPlaceList = [[travelResponse placeList] listList];   
-            
-            if ([viewController respondsToSelector:@selector(finishFindTopFavoritePlaces:type:)]){
-                [viewController finishFindTopFavoritePlaces:favoritPlaceList type:type];
+            if (output.resultCode == ERROR_SUCCESS) {
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                NSArray *favoritPlaceList = [[travelResponse placeList] listList];   
+                
+                if ([viewController respondsToSelector:@selector(finishFindTopFavoritePlaces:type:)]){
+                    [viewController finishFindTopFavoritePlaces:favoritPlaceList type:type];
+                }
             }
         });
     }); 

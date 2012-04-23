@@ -57,22 +57,22 @@
 
 - (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace superController:(CommonPlaceDetailController *)controller
 {
-    if ([onePlace categoryId] == PLACE_TYPE_SPOT){
+    if ([onePlace categoryId] == PlaceCategoryTypePlaceSpot){
         return [[[SpotDetailViewHandler alloc] initWith:controller] autorelease];
     }
-    else if ([onePlace categoryId] == PLACE_TYPE_HOTEL)
+    else if ([onePlace categoryId] == PlaceCategoryTypePlaceHotel)
     {
         return [[[HotelDetailViewHandler alloc] initWith:controller] autorelease];
     }
-    else if ([onePlace categoryId] == PLACE_TYPE_RESTAURANT)
+    else if ([onePlace categoryId] == PlaceCategoryTypePlaceRestraurant)
     {
         return [[[RestaurantViewHandler alloc] initWith:controller] autorelease];
     }
-    else if ([onePlace categoryId] == PLACE_TYPE_SHOPPING)
+    else if ([onePlace categoryId] == PlaceCategoryTypePlaceShopping)
     {
         return [[[ShoppingDetailViewHandler alloc] initWith:controller] autorelease];
     }
-    else if ([onePlace categoryId] == PLACE_TYPE_ENTERTAINMENT)
+    else if ([onePlace categoryId] == PlaceCategoryTypePlaceEntertainment)
     {
         return [[[EntertainmentDetailViewHandler alloc] initWith:controller] autorelease];
     }

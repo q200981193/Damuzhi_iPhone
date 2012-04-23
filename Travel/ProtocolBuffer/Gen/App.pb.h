@@ -22,6 +22,7 @@ typedef enum {
   PlaceCategoryTypePlaceRestraurant = 3,
   PlaceCategoryTypePlaceShopping = 4,
   PlaceCategoryTypePlaceEntertainment = 5,
+  PlaceCategoryTypePlaceAll = 20,
 } PlaceCategoryType;
 
 BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);

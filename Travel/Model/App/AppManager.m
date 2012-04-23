@@ -466,23 +466,23 @@ static AppManager* _defaultAppManager = nil;
 {
     NSArray *array = nil;
     switch (categoryId) {
-        case PLACE_TYPE_SPOT:            
+        case PlaceCategoryTypePlaceSpot:            
             array = [self buildSpotSortOptionList];
             break;
             
-        case PLACE_TYPE_HOTEL:
+        case PlaceCategoryTypePlaceHotel:
             array = [self buildHotelSortOptionList];
             break;
             
-        case PLACE_TYPE_RESTAURANT:
+        case PlaceCategoryTypePlaceRestraurant:
             array = [self buildRestaurantSortOptionList];
             break;
             
-        case PLACE_TYPE_SHOPPING:
+        case PlaceCategoryTypePlaceShopping:
             array = [self buildShoppingSortOptionList];
             break;
             
-        case PLACE_TYPE_ENTERTAINMENT:
+        case PlaceCategoryTypePlaceEntertainment:
             array = [self buildEntertainmentSortOptionList];
             break;
             

@@ -150,9 +150,8 @@ static AppService* _defaultAppService = nil;
                     [self setHelpHtmlFileVersion:helpInfo.version];
                 }
             }
-            
             @catch (NSException *exception){
-                NSLog (@"Caught %@%@", [exception name], [exception reason]);
+                NSLog (@"<updateHelpHtmlFile> Caught %@%@", [exception name], [exception reason]);
             }
         }
     });    
@@ -176,34 +175,22 @@ static AppService* _defaultAppService = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_APP_DATA lang:LANGUAGE_SIMPLIFIED_CHINESE];
         TravelResponse *travelResponse = nil;
-        BOOL parseDataFlag = NO;
+
         if (output.resultCode == ERROR_SUCCESS){
             @try{
                 travelResponse = [TravelResponse parseFromData:output.responseData];
-                parseDataFlag = YES;
 
-                //save data to app file
-                [output.responseData writeToFile:[AppUtils getAppFilePath] atomically:YES];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[AppManager defaultManager] updateAppData:[travelResponse appInfo]];
+                });
+                
+                // TODO , performance can be improved by add sperate working queue for download
+                NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
+                [self downloadProvidedServiceIcons:placeMetas];
             }
-            
             @catch (NSException *exception){
-                NSLog (@"Caught %@%@", [exception name], [exception reason]);
-                parseDataFlag = NO;
+                NSLog (@"<updateAppData> Caught %@%@", [exception name], [exception reason]);
             }
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(travelResponse.resultCode == 0 && parseDataFlag == YES)
-            {
-                [[AppManager defaultManager] updateAppData:[travelResponse appInfo]];
-            }
-        });
-        
-        
-        if (output.resultCode == ERROR_SUCCESS && parseDataFlag == YES){
-            // TODO , performance can be improved by add sperate working queue for download
-            NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
-            [self downloadProvidedServiceIcons:placeMetas];
         }
     });    
 }

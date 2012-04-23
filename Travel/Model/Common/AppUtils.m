@@ -14,6 +14,7 @@
 #import "CommonPlace.h"
 #import "LocaleUtils.h"
 #import "AppConstants.h"
+#import "App.pb.h"
 
 @implementation AppUtils
 
@@ -225,19 +226,19 @@
 + (NSString*)getCategoryIcon:(int)categoryId
 {
     switch (categoryId) {
-        case PLACE_TYPE_SPOT:
+        case PlaceCategoryTypePlaceSpot:
             return @"jd";
             break;
-        case PLACE_TYPE_HOTEL:
+        case PlaceCategoryTypePlaceHotel:
             return @"ht";
             break;
-        case PLACE_TYPE_RESTAURANT:
+        case PlaceCategoryTypePlaceRestraurant:
             return @"cg";
             break;
-        case PLACE_TYPE_SHOPPING:
+        case PlaceCategoryTypePlaceShopping:
             return @"gw";
             break;
-        case PLACE_TYPE_ENTERTAINMENT:
+        case PlaceCategoryTypePlaceEntertainment:
             return @"yl";
             break;
         default:
@@ -249,19 +250,19 @@
 + (NSString*)getCategoryIndicatorIcon:(int)categoryId
 {
     switch (categoryId) {
-        case PLACE_TYPE_SPOT:
+        case PlaceCategoryTypePlaceSpot:
             return @"pin_jd2";
             break;
-        case PLACE_TYPE_HOTEL:
+        case PlaceCategoryTypePlaceHotel:
             return @"pin_ht2";
             break;
-        case PLACE_TYPE_RESTAURANT:
+        case PlaceCategoryTypePlaceRestraurant:
             return @"pin_cg2";
             break;
-        case PLACE_TYPE_SHOPPING:
+        case PlaceCategoryTypePlaceShopping:
             return @"pin_gw2";
             break;
-        case PLACE_TYPE_ENTERTAINMENT:
+        case PlaceCategoryTypePlaceEntertainment:
             return @"pin_yl2";
             break;
         default:
@@ -274,19 +275,19 @@
 + (NSString*)getCategoryPinIcon:(int)categoryId
 {
     switch (categoryId) {
-        case PLACE_TYPE_SPOT:
+        case PlaceCategoryTypePlaceSpot:
             return @"pin_jd";
             break;
-        case PLACE_TYPE_HOTEL:
+        case PlaceCategoryTypePlaceHotel:
             return @"pin_ht";
             break;
-        case PLACE_TYPE_RESTAURANT:
+        case PlaceCategoryTypePlaceRestraurant:
             return @"pin_cg";
             break;
-        case PLACE_TYPE_SHOPPING:
+        case PlaceCategoryTypePlaceShopping:
             return @"pin_gw";
             break;
-        case PLACE_TYPE_ENTERTAINMENT:
+        case PlaceCategoryTypePlaceEntertainment:
             return @"pin_yl";
             break;
         default:

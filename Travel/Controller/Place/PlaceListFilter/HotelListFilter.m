@@ -11,6 +11,7 @@
 #import "PlaceService.h"
 #import "LogUtil.h"
 #import "CommonListFilter.h"
+#import "App.pb.h"
 
 @implementation HotelListFilter
 @synthesize controller;
@@ -63,7 +64,7 @@
 
 - (int)getCategoryId
 {
-    return PLACE_TYPE_HOTEL;
+    return PlaceCategoryTypePlaceHotel;
 }
 
 - (NSString*)getCategoryName

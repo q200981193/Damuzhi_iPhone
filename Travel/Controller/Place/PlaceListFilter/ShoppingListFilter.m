@@ -11,6 +11,7 @@
 #import "PlaceService.h"
 #import "LogUtil.h"
 #import "CommonListFilter.h"
+#import "App.pb.h"
 
 @implementation ShoppingListFilter
 @synthesize controller;
@@ -55,7 +56,7 @@
 
 - (int)getCategoryId
 {
-    return PLACE_TYPE_SHOPPING;
+    return PlaceCategoryTypePlaceShopping;
 }
 
 - (NSString*)getCategoryName

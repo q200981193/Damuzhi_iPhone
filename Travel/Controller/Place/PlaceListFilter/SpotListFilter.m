@@ -15,6 +15,7 @@
 #import "ImageName.h"
 #import "UIImageUtil.h"
 #import "CommonListFilter.h"
+#import "App.pb.h"
 
 @implementation SpotListFilter
 @synthesize controller;
@@ -29,7 +30,7 @@
 
 - (int)getCategoryId
 {
-    return PLACE_TYPE_SPOT; // TODO change to constants
+    return PlaceCategoryTypePlaceSpot; // TODO change to constants
 }
 
 - (NSString*)getCategoryName

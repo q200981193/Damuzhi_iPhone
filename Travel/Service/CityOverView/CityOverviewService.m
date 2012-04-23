@@ -126,7 +126,8 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         
         // TODO check output result code
         CommonOverview *commonOverView = nil;
-        if (output.resultCode == 0) {
+        
+        if (output.resultCode == ERROR_SUCCESS) {
             TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
             commonOverView = [travelResponse overview];
             *resultCode = 0;
@@ -154,13 +155,14 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_UTILITY objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
+        CommonOverview *commonOverView = nil;
         
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-        
-        CommonOverview *commonOverView = [travelResponse overview];
-        
-        *resultCode = 0;
-        
+        if (output.resultCode == ERROR_SUCCESS) {
+            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+            commonOverView = [travelResponse overview];
+            *resultCode = 0;
+        }
+
         return commonOverView;
     };
     
@@ -182,12 +184,13 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_TRANSPORTATION objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         
         // TODO check output result code
+        CommonOverview *commonOverView = nil;
         
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-        
-        CommonOverview *commonOverView = [travelResponse overview];
-        
-        *resultCode = 0;
+        if (output.resultCode == ERROR_SUCCESS) {
+            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+            commonOverView = [travelResponse overview];
+            *resultCode = 0;
+        }
         
         return commonOverView;
     };

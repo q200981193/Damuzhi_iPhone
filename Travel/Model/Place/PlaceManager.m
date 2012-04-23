@@ -64,7 +64,7 @@ static PlaceManager *_placeDefaultManager;
 
 - (NSArray*)findPlacesByCategory:(int)categoryId
 {
-    if (categoryId == PLACE_TYPE_ALL) {
+    if (categoryId == PlaceCategoryTypePlaceAll) {
         return _placeList;
     }
     

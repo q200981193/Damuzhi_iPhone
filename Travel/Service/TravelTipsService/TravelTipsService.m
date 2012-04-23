@@ -106,12 +106,22 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_LIST_TYPE_TRAVEL_GUIDE                                                               
                                                                cityId:cityId
                                                                  lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
-        _onlineTravelTipsManager.guideList = [[travelResponse travelTipList] tipListList];
-        NSArray* list = [_onlineTravelTipsManager getTravelGuideList];   
+        NSArray* list = nil;
+        
+        if (output.resultCode == ERROR_SUCCESS) {
+            @try {
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
                 
-        *resultCode = 0;
+                _onlineTravelTipsManager.guideList = [[travelResponse travelTipList] tipListList];
+                list = [_onlineTravelTipsManager getTravelGuideList];   
+                
+                *resultCode = 0;
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<findTravelGuideList> Caught %@%@", [exception name], [exception reason]);
+            }
+        }
         
         return list;
     };
@@ -137,11 +147,16 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_LIST_TYPE_TRAVEL_ROUTE                                                               
                                                                cityId:cityId
                                                                  lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
         
-        _onlineTravelTipsManager.routeList = [[travelResponse travelTipList] tipListList];
-        NSArray* list = [_onlineTravelTipsManager getTravelRouteList];           
-        *resultCode = 0;
+        NSArray* list = nil;
+        
+        if (output.resultCode == ERROR_SUCCESS) {
+            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+            
+            _onlineTravelTipsManager.routeList = [[travelResponse travelTipList] tipListList];
+            list = [_onlineTravelTipsManager getTravelRouteList];           
+            *resultCode = 0;
+        }
         
         return list;
     };

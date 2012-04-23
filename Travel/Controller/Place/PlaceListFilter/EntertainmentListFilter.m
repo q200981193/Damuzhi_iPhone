@@ -11,6 +11,7 @@
 #import "PlaceService.h"
 #import "LogUtil.h"
 #import "CommonListFilter.h"
+#import "App.pb.h"
 
 @implementation EntertainmentListFilter
 @synthesize controller;
@@ -61,7 +62,7 @@
 
 - (int)getCategoryId
 {
-    return PLACE_TYPE_ENTERTAINMENT;
+    return PlaceCategoryTypePlaceEntertainment;
 }
 
 - (NSString*)getCategoryName

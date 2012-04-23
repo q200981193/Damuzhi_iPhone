@@ -16,6 +16,7 @@
 #import "PlaceService.h"
 #import "TravelNetworkConstants.h"
 #import "UIImageUtil.h"
+#import "App.pb.h"
 
 @interface FavoriteController ()
 
@@ -260,7 +261,7 @@
 #pragma mark - filter button action
 - (IBAction)clickAll:(id)sender
 {
-    [self setSelectedBtn:PLACE_TYPE_ALL];
+    [self setSelectedBtn:PlaceCategoryTypePlaceAll];
 
     if (self.myFavoriteButton.selected == YES) {
         self.placeList = myAllFavoritePlaceList;
@@ -279,10 +280,10 @@
 
 - (IBAction)clickSpot:(id)sender
 { 
-    [self setSelectedBtn:PLACE_TYPE_SPOT];
+    [self setSelectedBtn:PlaceCategoryTypePlaceSpot];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SPOT];
+        self.placeList = [self filterFromMyFavorite:PlaceCategoryTypePlaceSpot];
         [self showPlaces];
     }
     else {
@@ -297,10 +298,10 @@
 
 - (IBAction)clickHotel:(id)sender
 {
-    [self setSelectedBtn:PLACE_TYPE_HOTEL];
+    [self setSelectedBtn:PlaceCategoryTypePlaceHotel];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_HOTEL];
+        self.placeList = [self filterFromMyFavorite:PlaceCategoryTypePlaceHotel];
         [self showPlaces];
     }
     
@@ -316,10 +317,10 @@
 
 - (IBAction)clickRestaurant:(id)sender
 {    
-    [self setSelectedBtn:PLACE_TYPE_RESTAURANT];
+    [self setSelectedBtn:PlaceCategoryTypePlaceRestraurant];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_RESTAURANT];
+        self.placeList = [self filterFromMyFavorite:PlaceCategoryTypePlaceRestraurant];
         [self showPlaces];
     }
     
@@ -336,10 +337,10 @@
 
 - (IBAction)clickShopping:(id)sender
 {
-    [self setSelectedBtn:PLACE_TYPE_SHOPPING];
+    [self setSelectedBtn:PlaceCategoryTypePlaceShopping];
 
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_SHOPPING];
+        self.placeList = [self filterFromMyFavorite:PlaceCategoryTypePlaceShopping];
         [self showPlaces];
     }
     
@@ -355,10 +356,10 @@
 
 - (IBAction)clickEntertainment:(id)sender
 {
-    [self setSelectedBtn:PLACE_TYPE_ENTERTAINMENT];
+    [self setSelectedBtn:PlaceCategoryTypePlaceEntertainment];
     
     if (myFavoriteButton.selected == YES) {
-        self.placeList = [self filterFromMyFavorite:PLACE_TYPE_ENTERTAINMENT];
+        self.placeList = [self filterFromMyFavorite:PlaceCategoryTypePlaceEntertainment];
         [self showPlaces];
     }
     

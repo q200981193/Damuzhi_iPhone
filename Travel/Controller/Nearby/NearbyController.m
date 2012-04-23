@@ -14,6 +14,7 @@
 #import "Place.pb.h"
 #import "ImageName.h"
 #import "UIImageUtil.h"
+#import "App.pb.h"
 
 
 @implementation NearbyController
@@ -131,7 +132,7 @@
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
-    self.categoryId = PLACE_TYPE_ALL;
+    self.categoryId = PlaceCategoryTypePlaceAll;
         
     [self setSelectedBtn:_categoryId];
     
@@ -279,48 +280,48 @@
 }
 
 - (IBAction)clickSpotBtn:(id)sender {
-    if (_categoryId != PLACE_TYPE_SPOT) {
-        self.categoryId = PLACE_TYPE_SPOT;
+    if (_categoryId != PlaceCategoryTypePlaceSpot) {
+        self.categoryId = PlaceCategoryTypePlaceSpot;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
         [self setSelectedBtn:_categoryId];
     }
 }
 
 - (IBAction)clickHotelBtn:(id)sender {
-    if (_categoryId != PLACE_TYPE_HOTEL) {
-        self.categoryId = PLACE_TYPE_HOTEL;
+    if (_categoryId != PlaceCategoryTypePlaceHotel) {
+        self.categoryId = PlaceCategoryTypePlaceHotel;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
         [self setSelectedBtn:_categoryId];
     }
 }
 
 - (IBAction)clickAllBtn:(id)sender {
-    if (_categoryId != PLACE_TYPE_ALL) {
-        self.categoryId = PLACE_TYPE_ALL;
+    if (_categoryId != PlaceCategoryTypePlaceAll) {
+        self.categoryId = PlaceCategoryTypePlaceAll;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
     }
 }
 
 - (IBAction)clickRestaurantBtn:(id)sender {
-    if (_categoryId != PLACE_TYPE_RESTAURANT) {
-        self.categoryId = PLACE_TYPE_RESTAURANT;
+    if (_categoryId != PlaceCategoryTypePlaceRestraurant) {
+        self.categoryId = PlaceCategoryTypePlaceRestraurant;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
     }
 }
 
 - (IBAction)clickShoppingBtn:(id)sender {
-    if (_categoryId != PLACE_TYPE_SHOPPING) {
-        self.categoryId = PLACE_TYPE_SHOPPING;
+    if (_categoryId != PlaceCategoryTypePlaceShopping) {
+        self.categoryId = PlaceCategoryTypePlaceShopping;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
     }
 }
 
 - (IBAction)clickEntertainmentBtn:(id)sender {
-    if (_categoryId != PLACE_TYPE_ENTERTAINMENT) {
-        self.categoryId = PLACE_TYPE_ENTERTAINMENT;
+    if (_categoryId != PlaceCategoryTypePlaceEntertainment) {
+        self.categoryId = PlaceCategoryTypePlaceEntertainment;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
     }

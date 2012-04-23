@@ -8,6 +8,7 @@
 
 #import "PlaceSelectedItemsManager.h"
 #import "CommonPlace.h"
+#import "App.pb.h"
 
 @implementation PlaceSelectedItemsManager
 
@@ -56,26 +57,25 @@ static PlaceSelectedItemsManager *_instance = nil;
 {
     SelectedItems *selectedItems = nil;
     switch (categoryId) {
-        case PLACE_TYPE_SPOT:
+        case PlaceCategoryTypePlaceSpot:
             selectedItems = _spotSelectedItems;
             break;
             
-        case PLACE_TYPE_HOTEL:
+        case PlaceCategoryTypePlaceHotel:
             selectedItems = _hotelSelectedItems;
             break;
             
-        case PLACE_TYPE_RESTAURANT:
+        case PlaceCategoryTypePlaceRestraurant:
             selectedItems = _restaurantSelectedItems;
             break;
             
-        case PLACE_TYPE_SHOPPING:
+        case PlaceCategoryTypePlaceShopping:
             selectedItems = _shoppingSelectedItems;
             break;
             
-        case PLACE_TYPE_ENTERTAINMENT:
+        case PlaceCategoryTypePlaceEntertainment:
             selectedItems = _entertainmentSelectedItems;
             break;
-            
             
         default:
             break;

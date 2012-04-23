@@ -168,7 +168,7 @@
     
     [categoryLable setTextColor:[UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]];
     
-    if (place.categoryId == PLACE_TYPE_HOTEL) {
+    if (place.categoryId == PlaceCategoryTypePlaceHotel) {
         categoryLable.text = [PlaceUtils hotelStarToString:place.hotelStar];
     }else {
         categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
