@@ -31,14 +31,7 @@
 - (int)getCategoryId;
 - (NSString*)getCategoryName;
 
-- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
-         selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList 
-               selectedPriceIdList:(NSArray*)selectedPriceIdList 
-                selectedAreaIdList:(NSArray*)selectedAreaIdList 
-             selectedServiceIdList:(NSArray*)selectedServiceIdList
-             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
-                            sortBy:(NSNumber*)selectedSortId
-                   currentLocation:(CLLocation*)currentLocation;
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList selectedItems:(SelectedItems*)selectedItems;
 
 @end
 
@@ -47,6 +40,7 @@
     NSObject<PlaceListFilterProtocol> *_filterHandler;    
 }
 
+@property (retain, nonatomic) NSArray *placeList;
 @property (retain, nonatomic) SelectedItems *selectedItems;
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;

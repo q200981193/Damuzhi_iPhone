@@ -20,4 +20,6 @@
 
 - (void)switchCity:(int)newCity;
 
+- (CommonOverview*)getCommonOverview:(CommonOverviewType)type;
+
 @end

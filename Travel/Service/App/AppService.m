@@ -24,9 +24,7 @@
 
 @implementation AppService
 
-@synthesize downloadRequestList = _downloadRequestList;
-@synthesize queue = _queue;
-
+@synthesize currentLocation = _currentLocation;
 static AppService* _defaultAppService = nil;
 
 #pragma mark - 
@@ -34,19 +32,14 @@ static AppService* _defaultAppService = nil;
 
 - (void)dealloc
 {
-    for (ASIHTTPRequest *request in _downloadRequestList) {
-        [request clearDelegatesAndCancel];
-        [request release];
-    }
-    [_downloadRequestList release];
-    [_queue release];
+    [_currentLocation release];
     [super dealloc];
 }
 
 + (AppService*)defaultService
 {
     if (_defaultAppService == nil){
-        _defaultAppService = [[AppService alloc] init];       
+        _defaultAppService = [[AppService alloc] init];
     }
     
     return _defaultAppService;
@@ -56,9 +49,7 @@ static AppService* _defaultAppService = nil;
 {
     self = [super init];
     if (self) {
-        NSMutableArray *list = [[NSMutableArray alloc] init];
-        self.downloadRequestList = list;
-        [list release];
+        
     }
     
     return self;

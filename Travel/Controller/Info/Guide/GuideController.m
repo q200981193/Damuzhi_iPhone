@@ -13,6 +13,7 @@
 #import "LocaleUtils.h"
 #import "AppUtils.h"
 #import "CommonWebController.h"
+#import "PPNetworkRequest.h"
 
 @implementation GuideController
 
@@ -25,7 +26,7 @@
                            action:@selector(clickBack:)];
     [self.navigationItem setTitle:NSLS(@"游记攻略")];
     
-    [[TravelTipsService defaultService] findTravelGuideList:[[AppManager defaultManager] getCurrentCityId] viewController:self];
+    [[TravelTipsService defaultService] findTravelTipList:[[AppManager defaultManager] getCurrentCityId] type:TravelTipTypeGuide viewController:self];
 }
 
 - (void)viewDidUnload
@@ -43,8 +44,30 @@
 #pragma mark - TravelTipsServiceDelegate
 - (void)findRequestDone:(int)resulteCode tipList:(NSArray*)tipList
 {
-    self.dataList = tipList;
-    [self.dataTableView reloadData];
+    switch (resulteCode) {
+        case ERROR_SUCCESS:
+            self.dataList = tipList;
+            [self.dataTableView reloadData];
+            break;
+        case ERROR_NETWORK:
+            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            break;
+            
+        case ERROR_CLIENT_URL_NULL:
+            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_REQUEST_NULL:
+            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_PARSE_JSON:
+            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            break;
+            
+        default:
+            break;
+    }
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

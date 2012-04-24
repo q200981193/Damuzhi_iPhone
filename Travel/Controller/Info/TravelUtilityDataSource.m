@@ -18,7 +18,10 @@
 
 - (void)requestDataWithDelegate:(PPViewController<CityOverviewServiceDelegate>*)delegate
 {
-    [[CityOverviewService defaultService]findTravelUtility:[[AppManager defaultManager] getCurrentCityId] delegate:delegate];
+    int currentyCityId = [[AppManager defaultManager] getCurrentCityId];
+    [[CityOverviewService defaultService] findCommonOverView:currentyCityId 
+                                                        type:CommonOverviewTypeTravelUtility 
+                                                    delegate:delegate];
 }
 
 + (NSObject<CommonWebDataSourceProtocol>*)createDataSource

@@ -16,6 +16,7 @@
 #import "UIImageUtil.h"
 #import "CommonListFilter.h"
 #import "App.pb.h"
+#import "AppService.h"
 
 @implementation SpotListFilter
 @synthesize controller;
@@ -145,16 +146,11 @@
     return array;
 }
 
-- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
-         selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList 
-               selectedPriceIdList:(NSArray*)selectedPriceIdList 
-                selectedAreaIdList:(NSArray*)selectedAreaIdList 
-             selectedServiceIdList:(NSArray*)selectedServiceIdList
-             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
-                            sortBy:(NSNumber*)selectedSortId
-                   currentLocation:(CLLocation*)currentLocation
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList selectedItems:(SelectedItems *)selectedItems
 {
-    return [self sortBySelectedSortId:[self filterBySubCategoryIdList:placeList selectedSubCategoryIdList:selectedSubCategoryIdList] selectedSortId:selectedSortId currentLocation:currentLocation];
+    CLLocation *currentLocation = [[AppService defaultService] currentLocation];
+    
+    return [self sortBySelectedSortId:[self filterBySubCategoryIdList:placeList selectedSubCategoryIdList:selectedItems.selectedSubCategoryIdList] selectedSortId:[selectedItems.selectedSortIdList objectAtIndex:0] currentLocation:currentLocation];
 }
 
 @end

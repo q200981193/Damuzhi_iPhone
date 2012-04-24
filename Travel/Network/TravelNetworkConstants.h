@@ -91,8 +91,8 @@
 #define OBJECT_TYPE_TRAVEL_PREPARATION          3
 #define OBJECT_TYPE_TRAVEL_TRANSPORTATION       4     
 #define OBJECT_TYPE_TRAVEL_UTILITY              5
-#define OBJECT_TYPE_TRAVEL_GUIDE                6
-#define OBJECT_TYPE_TRAVEL_TOURIST              7
+//#define OBJECT_TYPE_TRAVEL_GUIDE                6
+//#define OBJECT_TYPE_TRAVEL_TOURIST              7
 #define OBJECT_TYPE_HELP_INOF                   8
 
 // for app

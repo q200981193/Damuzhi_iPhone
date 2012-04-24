@@ -11,12 +11,12 @@ message NameIdPair {
 }
 
 enum PlaceCategoryType{
+  PLACE_ALL = 0;
   PLACE_SPOT = 1;
   PLACE_HOTEL = 2;
   PLACE_RESTRAURANT = 3;
   PLACE_SHOPPING = 4;
   PLACE_ENTERTAINMENT = 5;  
-  PLACE_ALL = 20;
 }
 
 message PlaceMeta {       

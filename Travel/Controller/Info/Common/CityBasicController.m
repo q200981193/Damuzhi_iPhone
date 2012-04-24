@@ -12,6 +12,7 @@
 #import "AppManager.h"
 #import "AppUtils.h"
 #import "ImageName.h"
+#import "PPNetworkRequest.h"
 
 @implementation CityBasicController
 
@@ -88,17 +89,44 @@
     scrollView.contentSize = sz;
 }
 
-- (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView;
+- (void)findRequestDone:(int)result overview:(CommonOverview*)overview;
 {
-    NSString* htmlString = [overView html];
-    NSArray *imageList = [overView imagesList];
+    switch (result) {
+        case ERROR_SUCCESS:
+            [self initDataSource:overview];
+            break;
+        case ERROR_NETWORK:
+            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            break;
+            
+        case ERROR_CLIENT_URL_NULL:
+            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_REQUEST_NULL:
+            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_PARSE_JSON:
+            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)initDataSource:(CommonOverview*)overview
+{
+    NSString* htmlString = [overview html];
+    NSArray *imageList = [overview imagesList];
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     
     NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
-        
+    
     NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
-        
+    
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSLog(@"load webview url = %@", [request description]);
@@ -106,14 +134,12 @@
         [self.dataWebview loadRequest:request];        
     }
     
-   
-    
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
     for (NSString *image in imageList) {
         NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
-
-//        NSLog(@"image path = %@", imgaePath);
+        
+        //        NSLog(@"image path = %@", imgaePath);
         [imagePathList addObject:imgaePath];
     }
     

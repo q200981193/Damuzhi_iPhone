@@ -79,30 +79,40 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [viewController hideActivity];             
-            [viewController findOverviewRequestDone:resultCode overview:overview];
+            [viewController hideActivity];   
+            if (viewController && [viewController respondsToSelector:@selector(findRequestDone:overview:)]) {
+                [viewController findRequestDone:resultCode overview:overview];
+            }
         });
     }];
 }
 
-- (void)findCityBasic:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController 
+- (void)findCommonOverView:(int)cityId type:(CommonOverviewType)type delegate:(PPViewController<CityOverviewServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
         [_localCityOverViewManager switchCity:cityId];
         *resultCode = 0;
-        return _localCityOverViewManager.cityBasic;
+        return [_localCityOverViewManager getCommonOverview:type];
     };
     
     RemoteRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_CITY_BASIC objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        int objectType = [self getObjectTypeByCommonOverviewType:type];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:objectType
+                                                                  objId:cityId
+                                                                   lang:LanguageTypeZhHans]; 
         
         // TODO check output result code
         CommonOverview *commonOverView = nil;
         
+        *resultCode = output.resultCode;
         if (output.resultCode == ERROR_SUCCESS) {
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-            commonOverView = [travelResponse overview];
-            *resultCode = 0;
+            @try {
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                commonOverView = [travelResponse overview];
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<findCommonOverView:%d> Caught %@%@", objectType, [exception name], [exception reason]);
+            }
         }
         
         return commonOverView;
@@ -113,93 +123,32 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
-- (void)findTravelPreparation:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate> *)viewController
+- (int)getObjectTypeByCommonOverviewType:(CommonOverviewType)type
 {
-    LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
-        [_localCityOverViewManager switchCity:cityId];
-        return _localCityOverViewManager.travelPrepration;
-        *resultCode = 0;
-    };
+    int objectType = 0;
     
-    RemoteRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_PREPARATION objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        
-        // TODO check output result code
-        CommonOverview *commonOverView = nil;
-        
-        if (output.resultCode == ERROR_SUCCESS) {
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-            commonOverView = [travelResponse overview];
-            *resultCode = 0;
-        }
+    switch (type) {
+        case CommonOverviewTypeCityBasic:
+            objectType = OBJECT_TYPE_CITY_BASIC;
+            break;
+            
+        case CommonOverviewTypeTravelPrepration:
+            objectType = OBJECT_TYPE_TRAVEL_PREPARATION;
+            break;
 
-        return commonOverView;
-    };
-    
-    [self processLocalRemoteQuery:viewController
-                     localHandler:localHandler
-                    remoteHandler:remoteHandler];
-    
+        case CommonOverviewTypeTravelUtility:
+            objectType = OBJECT_TYPE_TRAVEL_UTILITY;
+            break;
 
+        case CommonOverviewTypeTravelTransportation:
+            objectType = OBJECT_TYPE_TRAVEL_TRANSPORTATION;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return objectType;
 }
-
-- (void)findTravelUtility:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate> *)viewController
-{
-    LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
-        [_localCityOverViewManager switchCity:cityId];
-        return _localCityOverViewManager.travelUtility;
-        *resultCode = 0;
-    };
-    
-    RemoteRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_UTILITY objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        
-        // TODO check output result code
-        CommonOverview *commonOverView = nil;
-        
-        if (output.resultCode == ERROR_SUCCESS) {
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-            commonOverView = [travelResponse overview];
-            *resultCode = 0;
-        }
-
-        return commonOverView;
-    };
-    
-    [self processLocalRemoteQuery:viewController
-                     localHandler:localHandler
-                    remoteHandler:remoteHandler];
-    
-}
-
-- (void)findTravelTransportation:(int)cityId delegate:(PPViewController<CityOverviewServiceDelegate> *)viewController
-{
-    LocalRequestHandler localHandler = ^CommonOverview *(int* resultCode) {
-        [_localCityOverViewManager switchCity:cityId];
-        return _localCityOverViewManager.travelTransportation;
-        *resultCode = 0;
-    };
-    
-    RemoteRequestHandler remoteHandler = ^CommonOverview *(int* resultCode) {
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_TRAVEL_TRANSPORTATION objId:[[AppManager defaultManager]getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        
-        // TODO check output result code
-        CommonOverview *commonOverView = nil;
-        
-        if (output.resultCode == ERROR_SUCCESS) {
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-            commonOverView = [travelResponse overview];
-            *resultCode = 0;
-        }
-        
-        return commonOverView;
-    };
-    
-    [self processLocalRemoteQuery:viewController
-                     localHandler:localHandler
-                    remoteHandler:remoteHandler];
-    
-}
-
 
 @end

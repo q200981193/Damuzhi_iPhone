@@ -60,18 +60,19 @@ static PackageManager *_instance = nil;
     NSMutableArray * packageList = [[[NSMutableArray alloc] init] autorelease];
     NSArray *cityIdList = [[AppManager defaultManager] getCityIdList];
     
-    //for all city, loop
     for (NSNumber *cityId in cityIdList) {
         //a city is exist when a unzip flag and the city packagefile both exist;
         if ([AppUtils hasLocalCityData:[cityId intValue]]) {
-            NSString *packageFilePath = [AppUtils getPackageFilePath:[cityId intValue]];
-            
-//            NSLog(@"path = %@", packageFilePath);
-            if ([[NSFileManager defaultManager] fileExistsAtPath:packageFilePath]) {
-                NSData *packageData = [NSData dataWithContentsOfFile:packageFilePath];
-                Package *package = [Package parseFromData:packageData]; 
-                [packageList addObject:package];
-                
+            NSString *filePath = [AppUtils getPackageFilePath:[cityId intValue]];
+            NSData *data = [NSData dataWithContentsOfFile:filePath];
+            if (data != nil) {
+                @try {
+                    Package *package = [Package parseFromData:data]; 
+                    [packageList addObject:package];
+                }
+                @catch (NSException *exception) {
+                    NSLog (@"<readAllPackages:%@> Caught %@%@", filePath, [exception name], [exception reason]);
+                }
             }
         }
     }

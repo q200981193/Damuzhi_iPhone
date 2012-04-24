@@ -82,44 +82,50 @@ static TravelTipsManager * _instance = nil;
     NSMutableArray *list = [[[NSMutableArray alloc] init] autorelease];
     for (NSString *filePath in filePathList) {
         NSData *data = [NSData dataWithContentsOfFile:filePath];
-        CommonTravelTip *tip = [CommonTravelTip parseFromData:data];
-        [list addObject:tip];
+        if (data != nil) {
+            @try {
+                CommonTravelTip *tip = [CommonTravelTip parseFromData:data];
+                [list addObject:tip];
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<readTipDataFromFile:%@> Caught %@%@", filePath, [exception name], [exception reason]);
+            }
+        }
     }
     
     return list; 
 }
 
-
-- (NSArray*)getTravelGuideList
+- (NSArray*)getTravelTipList:(TravelTipType)type
 {
-    return _guideList;
+    NSArray *array = nil;
+    
+    switch (type) {
+        case TravelTipTypeGuide:
+            array = _guideList;
+            break;
+            
+        case TravelTipTypeRoute:
+            array = _routeList;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return array;
 }
 
-- (NSArray*)getTravelRouteList
+- (CommonTravelTip*)getTravelTip:(TravelTipType)type tipId:(int)tipId
 {
-    return _routeList;
-}
-
-- (NSString*)getTravelGuideHtml:(int)guideId
-{
-    for (CommonTravelTip *tip in _guideList) {
-        if (tip.tipId == guideId) {
-            return tip.html;
+    for (CommonTravelTip *tip in [self getTravelTipList:type]) {
+        if (tip.tipId == tipId) {
+            return tip;
         }
     }
     
     return nil;
 }
 
-- (NSString*)getTravelRouteHtml:(int)routeId
-{
-    for (CommonTravelTip *tip in _guideList) {
-        if (tip.tipId == routeId) {
-            return tip.html;
-        }
-    }
-    
-    return nil;
-}
 
 @end

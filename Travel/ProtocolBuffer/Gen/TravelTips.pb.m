@@ -19,6 +19,15 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @end
 
+BOOL TravelTipTypeIsValidValue(TravelTipType value) {
+  switch (value) {
+    case TravelTipTypeGuide:
+    case TravelTipTypeRoute:
+      return YES;
+    default:
+      return NO;
+  }
+}
 @interface CommonTravelTip ()
 @property int32_t tipId;
 @property int32_t cityId;

@@ -67,7 +67,14 @@ static PlaceStorage* _historyManager = nil;
 - (void)loadPlaceList
 {
     NSData* data = [NSData dataWithContentsOfFile:[self getFilePath]];
-    self.placeList = [PlaceList parseFromData:data];
+    if (data != nil) {
+        @try {
+            self.placeList = [PlaceList parseFromData:data];
+        }
+        @catch (NSException *exception) {
+            NSLog (@"<loadPlaceList> Caught %@%@", [exception name], [exception reason]);
+        }
+    }
 }
 
 - (NSArray*)allPlaces

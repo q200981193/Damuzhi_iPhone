@@ -40,12 +40,17 @@ static PlaceManager *_placeDefaultManager;
     }
     
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
-    for (NSString *placeFilePath in [AppUtils getPlaceFilePathList:cityId]) {
-//        PPDebug(@"placeFilePath = %@", placeFilePath);
-        NSData *placeData = [NSData dataWithContentsOfFile:placeFilePath];
-        PlaceList *places = [PlaceList parseFromData:placeData];
-        //PPDebug(@"%d places read", [[places listList] count]);
-        [placeList addObjectsFromArray:[places listList]];
+    for (NSString *filePath in [AppUtils getPlaceFilePathList:cityId]) {
+        NSData *data = [NSData dataWithContentsOfFile:filePath];
+        if (data != nil) {
+            @try {
+                PlaceList *places = [PlaceList parseFromData:data];
+                [placeList addObjectsFromArray:[places listList]];
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<readCityPlaceData:%@> Caught %@%@", filePath, [exception name], [exception reason]);
+            }
+        }
     }
     
     return placeList;

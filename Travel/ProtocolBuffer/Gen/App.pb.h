@@ -17,12 +17,12 @@
 @class PlaceMeta;
 @class PlaceMeta_Builder;
 typedef enum {
+  PlaceCategoryTypePlaceAll = 0,
   PlaceCategoryTypePlaceSpot = 1,
   PlaceCategoryTypePlaceHotel = 2,
   PlaceCategoryTypePlaceRestraurant = 3,
   PlaceCategoryTypePlaceShopping = 4,
   PlaceCategoryTypePlaceEntertainment = 5,
-  PlaceCategoryTypePlaceAll = 20,
 } PlaceCategoryType;
 
 BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);

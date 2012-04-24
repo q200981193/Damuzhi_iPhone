@@ -15,6 +15,8 @@
 #import "ImageName.h"
 #import "UIImageUtil.h"
 #import "App.pb.h"
+#import "PPNetworkRequest.h"
+#import "AppService.h"
 
 
 @implementation NearbyController
@@ -39,10 +41,10 @@
 #define POINT_OF_DISTANCE_5KM   CGPointMake(164, 18)
 #define POINT_OF_DISTANCE_10KM   CGPointMake(287, 18)
 
-#define DISTANCE_500M 6000000
-#define DISTANCE_1KM  8000000
-#define DISTANCE_5KM 12000000
-#define DISTANCE_10KM 15000000
+#define DISTANCE_500M 500
+#define DISTANCE_1KM  1000
+#define DISTANCE_5KM 5000
+#define DISTANCE_10KM 10000
 
 - (void)dealloc
 {
@@ -78,24 +80,15 @@
 
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-	
-    // save to current location
-    self.currentLocation = newLocation;
-	
-	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
-	
-	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
-	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
-    
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];  
-}
-
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList
 {
-    self.placeList = [self filterByDistance:placeList distance:_distance];
-    [self createAndReloadPlaceListController];
+    if (result == ERROR_SUCCESS) {
+        self.placeList = [self filterByDistance:placeList distance:_distance];
+        [self createAndReloadPlaceListController];
+    }
+    else {
+        [self popupMessage:@"数据加载失败" title:nil];
+    }
 }
 
 - (void)createAndReloadPlaceListController
@@ -130,15 +123,14 @@
     [distanceView addSubview:imageRedStartView];
     
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
+    
     // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PlaceCategoryTypePlaceAll;
         
     [self setSelectedBtn:_categoryId];
     
-    [self initLocationManager] ;
-    
-    [self startUpdatingLocation] ;
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
 }
 
 - (void)setSelectedBtn:(int)categoryId
@@ -186,11 +178,10 @@
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-        CLLocationDistance distance = [self.currentLocation distanceFromLocation:placeLocation];
+        CLLocation *myLocation = [[AppService defaultService] currentLocation];
+        CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
         [placeLocation release];
-        
-        NSLog(@"distance = %lf", distance);
-        
+                
         if (distance <= self.distance) {
             [placeList addObject:place];
         }

@@ -15,6 +15,7 @@
 #import "PlaceStorage.h"
 #import "AppManager.h"
 #import "UIImageUtil.h"
+#import "AppService.h"
 
 @interface PlaceListController () 
 
@@ -70,27 +71,9 @@
     self.mapHolderView.hidden = YES;
     self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
     [self.mapViewController.view setFrame:self.mapHolderView.bounds];
-//    self.mapViewController.view.frame = self.mapHolderView.bounds;
     [self.mapHolderView addSubview:self.mapViewController.view];
     [self updateViewByMode];
-    
-    [self initLocationManager];
-    [self startUpdatingLocation];
 }
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    // save to current location
-    self.currentLocation = newLocation;
-	
-	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
-	
-	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
-	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
-	
-    [self.dataTableView reloadData];
-}
-
 
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
 {
@@ -113,16 +96,17 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-+ (PlaceListController*)createController:placeList
++ (PlaceListController*)createController:(NSArray*)placeList
                                superView:(UIView*)superView
                          superController:(PPViewController*)superController
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
     [controller.view setFrame:superView.bounds];
-//    controller.view.frame = superView.bounds;
     controller.superController = superController;
     controller.mapViewController.superController = superController;
+    
     [superView addSubview:controller.view];
+    
     return controller;
 }
 
@@ -149,6 +133,7 @@
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
     self.dataList = list;
+
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
     if ([dataList count] == 0) {
@@ -215,7 +200,7 @@
     [view setImage:[UIImage strectchableImageName:@"li_bg.png"]];
     [placeCell setBackgroundView:view];
     [view release];
-    [placeCell setCellDataByPlace:place currentLocation:self.currentLocation];
+    [placeCell setCellDataByPlace:place currentLocation:[[AppService defaultService] currentLocation]];
     
     if (canDelete) {
         placeCell.priceLable.hidden = YES;
@@ -240,7 +225,6 @@
     
     [self.superController.navigationController pushViewController:controller animated:YES];
     [controller release];
-
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

@@ -19,6 +19,12 @@ message CommonTravelTipList{
   repeated CommonTravelTip tipList = 1;
 }
 
+enum TravelTipType
+{
+    GUIDE = 1;
+    ROUTE = 2;
+}
+
 message TravelTips {
   repeated CommonTravelTip guideList = 1;         // 所有攻略
   repeated CommonTravelTip routeList = 2;         // 所有推荐线路  

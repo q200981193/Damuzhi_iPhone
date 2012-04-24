@@ -92,34 +92,32 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     }];
 }
 
-- (void)findTravelGuideList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController
+- (void)findTravelTipList:(int)cityId type:(TravelTipType)type viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
         [_localTravelTipsManager switchCity:cityId];
-        NSArray* list = [_localTravelTipsManager getTravelGuideList];   
+        NSArray* list = [_localTravelTipsManager getTravelTipList:type];   
         *resultCode = 0;
         return list;
     };
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_LIST_TYPE_TRAVEL_GUIDE                                                               
+        int listType = [self getListTypeByTravelTipType:type];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType                                                               
                                                                cityId:cityId
-                                                                 lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+                                                                 lang:LanguageTypeZhHans]; 
         
         NSArray* list = nil;
         
+        *resultCode = output.resultCode;
         if (output.resultCode == ERROR_SUCCESS) {
             @try {
-                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-                
-                _onlineTravelTipsManager.guideList = [[travelResponse travelTipList] tipListList];
-                list = [_onlineTravelTipsManager getTravelGuideList];   
-                
-                *resultCode = 0;
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];                
+                list = [[travelResponse travelTipList] tipListList];
             }
             @catch (NSException *exception) {
-                NSLog (@"<findTravelGuideList> Caught %@%@", [exception name], [exception reason]);
+                NSLog (@"<findTravelTipList: %d> Caught %@%@", type, [exception name], [exception reason]);
             }
         }
         
@@ -130,41 +128,25 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                      localHandler:localHandler
                     remoteHandler:remoteHandler
                            cityId:cityId];
-    
 }
 
-- (void)findTravelRouteList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController
+- (int)getListTypeByTravelTipType:(TravelTipType)type
 {
-    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localTravelTipsManager switchCity:cityId];
-        NSArray* list = [_localTravelTipsManager getTravelRouteList];   
-        *resultCode = 0;
-        return list;
-    };
-    
-    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-        // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_LIST_TYPE_TRAVEL_ROUTE                                                               
-                                                               cityId:cityId
-                                                                 lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
-        
-        NSArray* list = nil;
-        
-        if (output.resultCode == ERROR_SUCCESS) {
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+    int listType = 0;
+    switch (type) {
+        case TravelTipTypeGuide:
+            listType = OBJECT_LIST_TYPE_TRAVEL_GUIDE;
+            break;
             
-            _onlineTravelTipsManager.routeList = [[travelResponse travelTipList] tipListList];
-            list = [_onlineTravelTipsManager getTravelRouteList];           
-            *resultCode = 0;
-        }
-        
-        return list;
-    };
+        case TravelTipTypeRoute:
+            listType = OBJECT_LIST_TYPE_TRAVEL_ROUTE;
+            break;
+            
+        default:
+            break;
+    }
     
-    [self processLocalRemoteQuery:viewController
-                     localHandler:localHandler
-                    remoteHandler:remoteHandler
-                            cityId:cityId];
+    return listType;
 }
 
 @end
