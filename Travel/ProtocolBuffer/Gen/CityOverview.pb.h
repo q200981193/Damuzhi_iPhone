@@ -6,6 +6,15 @@
 @class CityOverview_Builder;
 @class CommonOverview;
 @class CommonOverview_Builder;
+typedef enum {
+  CommonOverviewTypeCityBasic = 1,
+  CommonOverviewTypeTravelPrepration = 2,
+  CommonOverviewTypeTravelUtility = 3,
+  CommonOverviewTypeTravelTransportation = 4,
+} CommonOverviewType;
+
+BOOL CommonOverviewTypeIsValidValue(CommonOverviewType value);
+
 
 @interface CityOverviewRoot : NSObject {
 }

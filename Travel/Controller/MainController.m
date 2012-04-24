@@ -32,6 +32,8 @@
 #import "UIImageUtil.h"
 #import "AppUtils.h"
 
+#import "PPDebug.h"
+
 @implementation MainController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -101,7 +103,23 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    //[self createButtonView];
+    [self initLocationManager];
+    [self startUpdatingLocation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    // save to current location
+    self.currentLocation = newLocation;
+	
+	// we can also cancel our previous performSelector:withObject:afterDelay: - it's no longer necessary
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(stopUpdatingLocation:) object:kTimeOutObjectString];
+	
+	// IMPORTANT!!! Minimize power usage by stopping the location manager as soon as possible.
+	[self stopUpdatingLocation:NSLocalizedString(@"Acquired Location", @"Acquired Location")];
+	
+    // TODO:
+    PPDebug(@"current location: %f, %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    [[AppService defaultService] setCurrentLocation:newLocation];
 }
 
 - (void)viewWillAppear:(BOOL)animated

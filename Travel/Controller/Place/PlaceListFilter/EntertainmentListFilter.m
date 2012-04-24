@@ -12,6 +12,7 @@
 #import "LogUtil.h"
 #import "CommonListFilter.h"
 #import "App.pb.h"
+#import "AppService.h"
 
 @implementation EntertainmentListFilter
 @synthesize controller;
@@ -70,18 +71,13 @@
     return NSLS(@"娱乐");
 }
 
-- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
-        selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList 
-               selectedPriceIdList:(NSArray*)selectedPriceIdList 
-                selectedAreaIdList:(NSArray*)selectedAreaIdList 
-             selectedServiceIdList:(NSArray*)selectedServiceIdList
-             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
-                            sortBy:(NSNumber*)selectedSortId
-                   currentLocation:(CLLocation*)currentLocation
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList selectedItems:(SelectedItems *)selectedItems
 {
-    NSArray *afterCategoryFilter = [CommonListFilter filterBySelectedSubCategoryIdList:placeList selectedSubCategoryIdList:selectedSubCategoryIdList ];
-    NSArray *afterAreaFilter = [CommonListFilter filterBySelectedAreaIdList:afterCategoryFilter selectedAreaIdList:selectedAreaIdList];
-    NSArray *resultList = [CommonListFilter sortBySelectedSortId:afterAreaFilter selectedSortId:selectedSortId currentLocation:currentLocation];
+    CLLocation *currentLocation = [[AppService defaultService] currentLocation];
+    
+    NSArray *afterCategoryFilter = [CommonListFilter filterBySelectedSubCategoryIdList:placeList selectedSubCategoryIdList:selectedItems.selectedSubCategoryIdList ];
+    NSArray *afterAreaFilter = [CommonListFilter filterBySelectedAreaIdList:afterCategoryFilter selectedAreaIdList:selectedItems.selectedAreaIdList];
+    NSArray *resultList = [CommonListFilter sortBySelectedSortId:afterAreaFilter selectedSortId:[selectedItems.selectedSortIdList objectAtIndex:0] currentLocation:currentLocation];
     return resultList;
 }
 

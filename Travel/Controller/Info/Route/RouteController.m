@@ -14,6 +14,7 @@
 #import "RouteCell.h"
 #import "AppConstants.h"
 #import "RouteDetailController.h"
+#import "PPNetworkRequest.h"
 
 @implementation RouteController
 
@@ -26,7 +27,7 @@
     
     [self.navigationItem setTitle:NSLS(@"线路推荐")];
         
-    [[TravelTipsService defaultService] findTravelRouteList:[[AppManager defaultManager] getCurrentCityId] viewController:self];
+    [[TravelTipsService defaultService] findTravelTipList:[[AppManager defaultManager] getCurrentCityId] type:TravelTipTypeRoute viewController:self];
 }
 
 - (void)viewDidUnload
@@ -89,12 +90,29 @@
 
 - (void)findRequestDone:(int)resulteCode tipList:(NSArray*)tipList
 {
-    if (resulteCode == 0) {
-        self.dataList = tipList;
-        [self.dataTableView reloadData];
-    }
-    else {
-        [self popupMessage:NSLS(@"加载数据失败") title:nil];
+    switch (resulteCode) {
+        case ERROR_SUCCESS:
+            self.dataList = tipList;
+            [self.dataTableView reloadData];
+            break;
+        case ERROR_NETWORK:
+            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            break;
+            
+        case ERROR_CLIENT_URL_NULL:
+            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_REQUEST_NULL:
+            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_PARSE_JSON:
+            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            break;
+            
+        default:
+            break;
     }
 }
 

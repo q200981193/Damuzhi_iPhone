@@ -12,6 +12,7 @@
 #import "LogUtil.h"
 #import "CommonListFilter.h"
 #import "App.pb.h"
+#import "AppService.h"
 
 @implementation RestaurantListFilter
 @synthesize controller;
@@ -73,19 +74,14 @@
     return NSLS(@"餐馆");
 }
 
-- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList
-         selectedSubCategoryIdList:(NSArray*)selectedSubCategoryIdList 
-               selectedPriceIdList:(NSArray*)selectedPriceIdList 
-                selectedAreaIdList:(NSArray*)selectedAreaIdList 
-             selectedServiceIdList:(NSArray*)selectedServiceIdList
-             selectedCuisineIdList:(NSArray*)selectedCuisineIdList
-                            sortBy:(NSNumber*)selectedSortId
-                   currentLocation:(CLLocation*)currentLocation
+- (NSArray*)filterAndSotrPlaceList:(NSArray*)placeList selectedItems:(SelectedItems *)selectedItems
 {
-    NSArray *afterCategoryFilter = [CommonListFilter filterBySelectedSubCategoryIdList:placeList selectedSubCategoryIdList:selectedSubCategoryIdList];
-    NSArray *afterAreaFilter = [CommonListFilter filterBySelectedAreaIdList:afterCategoryFilter selectedAreaIdList:selectedAreaIdList];
-    NSArray *afterServiceFilter = [CommonListFilter filterBySelectedServiceIdList:afterAreaFilter selectedServiceIdList:selectedServiceIdList];
-    NSArray *resultList = [CommonListFilter sortBySelectedSortId:afterServiceFilter selectedSortId:selectedSortId currentLocation:currentLocation];
+    CLLocation *currentLocation = [[AppService defaultService] currentLocation];
+    
+    NSArray *afterCategoryFilter = [CommonListFilter filterBySelectedSubCategoryIdList:placeList selectedSubCategoryIdList:selectedItems.selectedSubCategoryIdList];
+    NSArray *afterAreaFilter = [CommonListFilter filterBySelectedAreaIdList:afterCategoryFilter selectedAreaIdList:selectedItems.selectedAreaIdList];
+    NSArray *afterServiceFilter = [CommonListFilter filterBySelectedServiceIdList:afterAreaFilter selectedServiceIdList:selectedItems.selectedServiceIdList];
+    NSArray *resultList = [CommonListFilter sortBySelectedSortId:afterServiceFilter selectedSortId:[selectedItems.selectedSortIdList objectAtIndex:0] currentLocation:currentLocation];
     return resultList;
 }
 

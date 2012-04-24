@@ -16,7 +16,8 @@
 #import "UIImageUtil.h"
 #import "CommonWebController.h"
 #import "AppUtils.h"
-
+#import "PPNetworkRequest.h"
+#import "PPDebug.h"
 
 @implementation CommonPlaceListController
 
@@ -26,6 +27,7 @@
 @synthesize placeListController = _placeListController;
 @synthesize filterHandler = _filterHandler;
 @synthesize selectedItems = _selectedItems;
+@synthesize placeList = _placeList;
 
 - (void)dealloc {
     [_filterHandler release];
@@ -34,6 +36,7 @@
     [_placeListHolderView release];
     [_modeButton release];
     [_selectedItems release];
+    [_placeList release];
     [super dealloc];
 }
 
@@ -93,9 +96,9 @@
     UIImage *image = [UIImage imageNamed:@"select_tr_bg.png"];
     _buttonHolderView.backgroundColor = [UIColor colorWithPatternImage:image];
 
-    [_filterHandler findAllPlaces:self];
-    
     self.selectedItems = [[PlaceSelectedItemsManager defaultManager] getSelectedItems:[_filterHandler getCategoryId]];
+    
+    [_filterHandler findAllPlaces:self];
 }
 
 - (void)setNavigationBarTitle
@@ -141,33 +144,31 @@
 
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
-    placeList = [self filterAndSort:placeList];
-    
+    if (result == ERROR_SUCCESS) {
+        self.placeList = [self filterAndSort:placeList];
+        [self createAndReloadPlaceListController];
+    }
+    else {
+        [self popupMessage:@"数据加载失败" title:nil];
+    }
+}
+
+- (void)createAndReloadPlaceListController
+{
     if (self.placeListController == nil){
-        self.placeListController = [PlaceListController createController:placeList 
+        self.placeListController = [PlaceListController createController:_placeList 
                                                                superView:_placeListHolderView
                                                          superController:self];  
     }
     
-    [self.placeListController setAndReloadPlaceList:placeList];
-    
-    [self updateNavigationBarTitle:placeList.count];
+    [self.placeListController setAndReloadPlaceList:_placeList];
+    [self updateNavigationBarTitle:_placeList.count];
 }
 
 - (NSArray*)filterAndSort:(NSArray*)placeList
 {    
-    placeList = [_filterHandler filterAndSotrPlaceList:placeList
-                             selectedSubCategoryIdList:[_selectedItems selectedSubCategoryIdList]
-                                   selectedPriceIdList:[_selectedItems selectedPriceIdList]
-                                    selectedAreaIdList:[_selectedItems selectedAreaIdList]
-                                 selectedServiceIdList:[_selectedItems selectedServiceIdList]
-                                 selectedCuisineIdList:[_selectedItems selectedCuisineIdList]
-                                                sortBy:[[_selectedItems selectedSortIdList] objectAtIndex:0]
-                                       currentLocation:self.currentLocation];
-    
-    return placeList;
+    return [_filterHandler filterAndSotrPlaceList:placeList selectedItems:_selectedItems];
 }
-
 
 - (void)updateModeButton
 {
@@ -292,7 +293,6 @@
 
 - (void)setSelectControllerNavigationTitle:(SelectController*)controller title:(NSString*)title
 {
-//    controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[[AppManager defaultManager] getCategoryName:[_filterHandler getCategoryId]], title];
     NSLog(@"cagegory name : %@", [_filterHandler getCategoryName]);
     controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[_filterHandler getCategoryName],title];
 }

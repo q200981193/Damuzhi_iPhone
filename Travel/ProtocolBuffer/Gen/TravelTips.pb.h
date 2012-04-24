@@ -8,6 +8,13 @@
 @class CommonTravelTip_Builder;
 @class TravelTips;
 @class TravelTips_Builder;
+typedef enum {
+  TravelTipTypeGuide = 1,
+  TravelTipTypeRoute = 2,
+} TravelTipType;
+
+BOOL TravelTipTypeIsValidValue(TravelTipType value);
+
 
 @interface TravelTipsRoot : NSObject {
 }

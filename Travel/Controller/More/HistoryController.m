@@ -54,13 +54,14 @@
     self.placeListController = [PlaceListController createController:_placeList 
                                                            superView:placeListHolderView
                                                      superController:self];
-    [self.placeListController setAndReloadPlaceList:self.placeList];
+    
+    [self.placeListController setAndReloadPlaceList:_placeList];
 }
+
 
 - (void)viewDidUnload
 {
     [self setPlaceListHolderView:nil];
-    [self setPlaceList:nil];
     [self setPlaceListController:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.

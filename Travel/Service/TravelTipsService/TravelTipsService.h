@@ -24,7 +24,6 @@
 
 + (TravelTipsService*)defaultService;
 
-- (void)findTravelGuideList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController;
-- (void)findTravelRouteList:(int)cityId viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController;
+- (void)findTravelTipList:(int)cityId type:(TravelTipType)type viewController:(PPViewController<TravelTipsServiceDelegate>*)viewController;
 
 @end

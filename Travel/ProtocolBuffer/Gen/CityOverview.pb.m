@@ -19,6 +19,17 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @end
 
+BOOL CommonOverviewTypeIsValidValue(CommonOverviewType value) {
+  switch (value) {
+    case CommonOverviewTypeCityBasic:
+    case CommonOverviewTypeTravelPrepration:
+    case CommonOverviewTypeTravelUtility:
+    case CommonOverviewTypeTravelTransportation:
+      return YES;
+    default:
+      return NO;
+  }
+}
 @interface CommonOverview ()
 @property (retain) NSMutableArray* mutableImagesList;
 @property (retain) NSString* html;

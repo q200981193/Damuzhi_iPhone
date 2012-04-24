@@ -9,6 +9,7 @@
 #import "CommonService.h"
 #import "AppManager.h"
 #import "ASINetworkQueue.h"
+#import <CoreLocation/CoreLocation.h>
 
 @protocol UnzipDelegate <NSObject>
 
@@ -20,9 +21,9 @@
 
 @interface AppService : CommonService
 
-@property (retain, nonatomic) NSMutableArray *downloadRequestList;
-@property (retain, nonatomic) NSOperationQueue *queue;
 + (AppService*)defaultService;
+
+@property (retain, nonatomic) CLLocation *currentLocation;
 
 - (void)loadAppData;
 - (void)updateAppData;

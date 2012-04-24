@@ -85,8 +85,11 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         }
             
         dispatch_async(dispatch_get_main_queue(), ^{
-            [viewController hideActivity];     
-            if (viewController && [viewController respondsToSelector:@selector(findRequestDone:placeList:)]) {
+            if (viewController != nil) {
+                [viewController hideActivity];     
+            }
+            
+            if (viewController && [viewController respondsToSelector:@selector(findRequestDone:placeList:)]){
                 [viewController findRequestDone:resultCode placeList:list];
             }
         });
@@ -96,32 +99,33 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 #pragma mark - 
 #pragma mark Place Life Cycle Management
 
-- (int)getObjectTypeByPlaceCategoryId:(int)categoryId
+- (int)getListTypeByPlaceCategoryId:(int)categoryId
 {
-    int objectType = 0;
+    int listType = 0;
+    
     switch (categoryId) {
         case PlaceCategoryTypePlaceAll:
-            objectType = OBJECT_LIST_TYPE_ALL_PLACE;
+            listType = OBJECT_LIST_TYPE_ALL_PLACE;
             break;
             
         case PlaceCategoryTypePlaceSpot:
-            objectType = OBJECT_LIST_TYPE_SPOT;
+            listType = OBJECT_LIST_TYPE_SPOT;
             break;
             
         case PlaceCategoryTypePlaceHotel:
-            objectType = OBJECT_LIST_TYPE_HOTEL;
+            listType = OBJECT_LIST_TYPE_HOTEL;
             break;
             
         case PlaceCategoryTypePlaceRestraurant:
-            objectType = OBJECT_LIST_TYPE_RESTAURANT;
+            listType = OBJECT_LIST_TYPE_RESTAURANT;
             break;
             
         case PlaceCategoryTypePlaceShopping:
-            objectType = OBJECT_LIST_TYPE_SHOPPING;
+            listType = OBJECT_LIST_TYPE_SHOPPING;
             break;
             
         case PlaceCategoryTypePlaceEntertainment:
-            objectType = OBJECT_LIST_TYPE_ENTERTAINMENT;
+            listType = OBJECT_LIST_TYPE_ENTERTAINMENT;
             break;
     
         
@@ -129,7 +133,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             break;
     }
     
-    return objectType;
+    return listType;
 }
 
 - (void)findPlaces:(int)categoryId viewController:(PPViewController<PlaceServiceDelegate>*)viewController
@@ -143,16 +147,21 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     
     LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:[self getObjectTypeByPlaceCategoryId:categoryId] 
+        int listType = [self getListTypeByPlaceCategoryId:categoryId];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
                                                                cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
         NSArray *list = nil;
         
+        *resultCode = output.resultCode;
         if (output.resultCode == ERROR_SUCCESS) {
-            TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-            _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
-            list = [_onlinePlaceManager findPlacesByCategory:categoryId];   
-            
-            *resultCode = 0;
+            @try {
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
+                list = [_onlinePlaceManager findPlacesByCategory:categoryId]; 
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<findPlaces:%d> Caught %@%@", categoryId, [exception name], [exception reason]);
+            } 
         }
         
         return list;
@@ -211,7 +220,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                 }
                 [[PlaceStorage favoriteManager] deletePlace:place];
                 
-                if ([viewController respondsToSelector:@selector(finishDeleteFavourite:count:)]){
+                if (viewController && [viewController respondsToSelector:@selector(finishDeleteFavourite:count:)]){
                     [viewController finishDeleteFavourite:result count:placeFavoriteCount];
                 }
             }
@@ -249,13 +258,21 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 - (void)findTopFavoritePlaces:(PPViewController<PlaceServiceDelegate>*)viewController type:(int)type
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-        
-        CommonNetworkOutput *output = [TravelNetworkRequest queryList:type cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        int currentyCityId = [[AppManager defaultManager] getCurrentCityId];
+        CommonNetworkOutput *output = [TravelNetworkRequest queryList:type 
+                                                               cityId:currentyCityId 
+                                                                 lang:LanguageTypeZhHans];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (output.resultCode == ERROR_SUCCESS) {
-                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-                NSArray *favoritPlaceList = [[travelResponse placeList] listList];   
+                NSArray *favoritPlaceList = nil;
+                @try {
+                    TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                    favoritPlaceList = [[travelResponse placeList] listList];   
+                }
+                @catch (NSException *exception) {
+                    NSLog (@"<findTopFavoritePlaces:%d> Caught %@%@", type, [exception name], [exception reason]);
+                }  
                 
                 if ([viewController respondsToSelector:@selector(finishFindTopFavoritePlaces:type:)]){
                     [viewController finishFindTopFavoritePlaces:favoritPlaceList type:type];

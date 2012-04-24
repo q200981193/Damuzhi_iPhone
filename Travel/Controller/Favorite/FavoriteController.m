@@ -96,6 +96,7 @@
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 }
 
+
 - (void)showPlaces{
     if (self.myFavoriteButton.selected == YES) {
         self.myFavPlaceListView.hidden = NO;
@@ -183,8 +184,7 @@
     self.deleteButton = dbtn;
     [dbtn release];
     self.deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    //[self.deleteButton setBackgroundImage:[UIImage imageNamed:@"topmenu_btn_right.png"] forState:UIControlStateNormal];
-    //[self.deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
+
     [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"delete@2x.png"] forState:UIControlStateNormal];
     [self.deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.deleteButton];
@@ -288,7 +288,6 @@
     self.topFavPlaceListView.hidden = NO;
     
     [self.myFavPlaceListController canDeletePlace:NO delegate:nil];
-//    [deleteButton setTitle:NSLS(@"删除") forState:UIControlStateNormal];
     [self clickAll:nil];
 }
 

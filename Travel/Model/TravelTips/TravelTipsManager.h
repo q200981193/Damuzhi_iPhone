@@ -17,11 +17,7 @@
 @property (retain, nonatomic) NSArray *routeList;
 
 - (void)switchCity:(int)cityId;
-
-- (NSArray*)getTravelGuideList;
-- (NSArray*)getTravelRouteList;
-
-- (NSString*)getTravelGuideHtml:(int)guideId;
-- (NSString*)getTravelRouteHtml:(int)guideId;
+- (NSArray*)getTravelTipList:(TravelTipType)type;
+- (CommonTravelTip*)getTravelTip:(TravelTipType)type tipId:(int)tipId;
 
 @end

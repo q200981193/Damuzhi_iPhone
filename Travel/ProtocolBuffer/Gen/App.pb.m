@@ -21,12 +21,12 @@ static PBExtensionRegistry* extensionRegistry = nil;
 
 BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value) {
   switch (value) {
+    case PlaceCategoryTypePlaceAll:
     case PlaceCategoryTypePlaceSpot:
     case PlaceCategoryTypePlaceHotel:
     case PlaceCategoryTypePlaceRestraurant:
     case PlaceCategoryTypePlaceShopping:
     case PlaceCategoryTypePlaceEntertainment:
-    case PlaceCategoryTypePlaceAll:
       return YES;
     default:
       return NO;
@@ -326,7 +326,7 @@ static NameIdPair* defaultNameIdPairInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.categoryId = PlaceCategoryTypePlaceSpot;
+    self.categoryId = PlaceCategoryTypePlaceAll;
     self.name = @"";
   }
   return self;
@@ -565,7 +565,7 @@ static PlaceMeta* defaultPlaceMetaInstance = nil;
 }
 - (PlaceMeta_Builder*) clearCategoryId {
   result.hasCategoryId = NO;
-  result.categoryId = PlaceCategoryTypePlaceSpot;
+  result.categoryId = PlaceCategoryTypePlaceAll;
   return self;
 }
 - (BOOL) hasName {

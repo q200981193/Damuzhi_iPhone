@@ -9,6 +9,13 @@ message CommonOverview {
   required string html = 2;        // 对应的HTML文件名，离线返回相对路径，如 html/abc/abc.html，在线返回网站的绝对URL
 }
 
+enum CommonOverviewType{
+    CITY_BASIC = 1;
+    TRAVEL_PREPRATION = 2;
+    TRAVEL_UTILITY = 3;
+    TRAVEL_TRANSPORTATION = 4;
+}
+
 message CityOverview {
   optional CommonOverview cityBasic = 1;               // 城市概况
   optional CommonOverview travelPrepration = 2;        // 旅行准备

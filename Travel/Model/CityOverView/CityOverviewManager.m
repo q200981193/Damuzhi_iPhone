@@ -50,10 +50,21 @@ static CityOverViewManager *_defaultInstance = nil;
         return nil;
     }
     
-    NSString *cityOverviewFilePath = [AppUtils getCityoverViewFilePath:cityId];
-    NSData *cityOverviewData = [NSData dataWithContentsOfFile:cityOverviewFilePath];
+    NSString *filePath = [AppUtils getCityoverViewFilePath:cityId];
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
     
-    return [CityOverview parseFromData:cityOverviewData];
+    CityOverview *cityOveriew = nil;
+    
+    if (data != nil) {
+        @try {
+            cityOveriew = [CityOverview parseFromData:data];
+        }
+        @catch (NSException *exception) {
+            NSLog (@"<readCityOverviewData> Caught %@%@", [exception name], [exception reason]);
+        }
+    }
+    
+    return cityOveriew;
 }
 
 - (void)switchCity:(int)newCityId
@@ -70,6 +81,34 @@ static CityOverViewManager *_defaultInstance = nil;
     self.travelPrepration = cityOverView.travelPrepration;          
     self.travelUtility = cityOverView.travelUtility;              
     self.travelTransportation = cityOverView.travelTransportation;       
+}
+
+- (CommonOverview*)getCommonOverview:(CommonOverviewType)type
+{
+    CommonOverview *overview = nil;
+    
+    switch (type) {
+        case CommonOverviewTypeCityBasic:
+            overview = _cityBasic;
+            break;
+            
+        case CommonOverviewTypeTravelPrepration:
+            overview = _travelPrepration;
+            break;
+            
+        case CommonOverviewTypeTravelUtility:
+            overview = _travelUtility;
+            break;
+            
+        case CommonOverviewTypeTravelTransportation:
+            overview = _travelTransportation;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return overview;
 }
 
 @end

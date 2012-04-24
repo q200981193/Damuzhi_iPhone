@@ -10,6 +10,7 @@
 #import "AppUtils.h"
 #import "AppManager.h"
 #import "PPDebug.h"
+#import "PPNetworkRequest.h"
 
 @implementation CommonWebController
 
@@ -95,14 +96,41 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [self popupMessage:@"数据加载失败" title:nil];
+    [self popupMessage:@"web页面加载失败" title:nil];
     [self hideActivity];
 }
 
 #pragma mark - CityOverviewServiceDelegate
-- (void)findOverviewRequestDone:(int)result overview:(CommonOverview*)overView
+- (void)findRequestDone:(int)result overview:(CommonOverview*)overview
 {
-    NSString* htmlString = [overView html];
+    switch (result) {
+        case ERROR_SUCCESS:
+            [self loadHtml:overview];
+            break;
+        case ERROR_NETWORK:
+            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            break;
+            
+        case ERROR_CLIENT_URL_NULL:
+            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_REQUEST_NULL:
+            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            break;
+            
+        case ERROR_CLIENT_PARSE_JSON:
+            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)loadHtml:(CommonOverview*)overview
+{
+    NSString* htmlString = [overview html];
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     
