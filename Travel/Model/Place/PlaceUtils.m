@@ -40,7 +40,6 @@
 + (NSString*)getPriceString:(Place*)place
 {
     if ([place.price intValue] > 0) {
-        
         return [NSString stringWithFormat:@"%@%@",
                 [[AppManager defaultManager] getCurrencySymbol:place.cityId],
                 [place price]];
