@@ -609,20 +609,40 @@
 
 - (void)addAddressView
 {
-    addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 31)];
-    addressView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
+    UIFont *font = [UIFont boldSystemFontOfSize:12];
+    CGSize withinSize = CGSizeMake(220, CGFLOAT_MAX);
+    
+    CGSize size = [[[_place addressList] componentsJoinedByString:@" "] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, size.height + 16)];
+    
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, size.height + 16)];
+    bgImageView.image = [UIImage strectchableImageName:@"t_bg" topCapHeight:30];
+    [addressView addSubview:bgImageView];
+    [addressView sendSubviewToBack:bgImageView];
+    [bgImageView release];
+    
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, ceilf((size.height + 16 - 20)/2) , 40, 20)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
+    label.font = [UIFont boldSystemFontOfSize:12];
+    label.text = NSLS(@"地址: ");
+    [addressView addSubview:label];
+    [label release];
+    
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 6, 220, size.height+5)];
     addressLabel.backgroundColor = [UIColor clearColor];
+    addressLabel.lineBreakMode = UILineBreakModeWordWrap;
+    addressLabel.numberOfLines = 0;
     addressLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     addressLabel.font = [UIFont boldSystemFontOfSize:12];
-
-    NSString *addr = [NSString stringWithFormat:NSLS(@"地址: %@"),[[_place addressList] componentsJoinedByString:@" "]];
-    
+    NSString *addr = [[_place addressList] componentsJoinedByString:@" "];
     addressLabel.text = addr;
     [addressView addSubview:addressLabel];
     [addressLabel release];
     
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, 4, 24, 24)];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (size.height + 16 - 20)/2, 24, 24)];
     [mapImageView setImage:[UIImage imageNamed:@"t_map"]];
     [addressView addSubview:mapImageView];
     [mapImageView release];
@@ -755,10 +775,7 @@
     self.detailHeight = imageHolderView.frame.size.height;
     
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
-    
-    dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 332 + 132 + 21)];
-    
+        
     [self addNearbyView];
     
     [self addTelephoneView];
@@ -766,6 +783,9 @@
     [self addAddressView];
     
     [self addWebsiteView];
+    
+    dataScrollView.backgroundColor = [UIColor whiteColor];
+    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 330)];
         
     [self addBottomView];
     

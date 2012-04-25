@@ -23,7 +23,7 @@
     
     [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[place priceDescription]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"关键词评价") description:[place.keywordsList componentsJoinedByString:@" "]];
+    [self.commonController addSegmentViewWith: NSLS(@"关键词评价") description:[place.keywordsList componentsJoinedByString:@"、"]];
     
     [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:[place transportation]];
     
