@@ -12,6 +12,8 @@
 
 @interface HistoryController ()
 
+- (void)updateDeleteButton;
+
 @end
 
 @implementation HistoryController
@@ -53,6 +55,7 @@
                                                      superController:self];
     
     [self.placeListController setAndReloadPlaceList:_placeList];
+    [self updateDeleteButton];
 }
 
 
@@ -87,8 +90,15 @@
         [[PlaceStorage historyManager] deleteAllPlaces];
          self.placeList = [[PlaceStorage historyManager] allPlaces];
         [self.placeListController setAndReloadPlaceList:_placeList];
+        [self updateDeleteButton];
     }
 }
 
+- (void)updateDeleteButton
+{
+    if ([_placeList count] == 0) {
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
+}
 
 @end
