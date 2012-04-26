@@ -12,15 +12,12 @@
 
 @interface HistoryController ()
 
-@property (assign, nonatomic) BOOL canDelete;
-
 @end
 
 @implementation HistoryController
 @synthesize placeListHolderView;
 @synthesize placeList = _placeList;
 @synthesize placeListController;
-@synthesize canDelete;
 
 - (void)dealloc {
     [placeListHolderView release];
@@ -75,23 +72,22 @@
 
 - (void)clickDelete:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
-    canDelete = !canDelete;
-    [self.placeListController canDeletePlace:canDelete delegate:self];
-    if (canDelete) {
-        [button setTitle:NSLS(@"完成") forState:UIControlStateNormal];
-    }
-    else {
-        [button setTitle:NSLS(@"清空") forState:UIControlStateNormal];
-    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil 
+                                                    message:NSLS(@"确定要清空所有浏览记录")
+                                                   delegate:self 
+                                          cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"), nil];
+    [alert show];
+    [alert release];
 }
 
-#pragma mark - DeletePlaceDelegate 
-- (void)deletedPlace:(Place *)place
+#pragma -mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    PlaceStorage *manager = [PlaceStorage historyManager];
-    [manager deletePlace:place];
-    self.placeList = [manager allPlaces];
+    if (buttonIndex == 1) {
+        [[PlaceStorage historyManager] deleteAllPlaces];
+         self.placeList = [[PlaceStorage historyManager] allPlaces];
+        [self.placeListController setAndReloadPlaceList:_placeList];
+    }
 }
 
 

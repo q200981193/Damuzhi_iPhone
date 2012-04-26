@@ -23,6 +23,7 @@
 - (NSArray*)allPlaces;
 - (void)addPlace:(Place*)place;
 - (void)deletePlace:(Place*)place;
+- (void)deleteAllPlaces;
 - (BOOL)isPlaceInFavorite:(int)placeId;
 
 @end

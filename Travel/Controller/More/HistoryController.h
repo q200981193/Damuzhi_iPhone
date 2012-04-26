@@ -11,7 +11,7 @@
 #import "PlaceListController.h"
 
 
-@interface HistoryController : PPViewController<DeletePlaceDelegate>
+@interface HistoryController : PPViewController
 
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 @property (retain, nonatomic) NSArray *placeList;

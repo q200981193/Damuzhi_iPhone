@@ -129,6 +129,11 @@ static PlaceStorage* _historyManager = nil;
     }
 }
 
+- (void)deleteAllPlaces
+{
+    [self writeToFileWithList:nil];
+}
+
 - (BOOL)isPlaceInFavorite:(int)placeId
 {
     [self loadPlaceList];
