@@ -199,9 +199,12 @@
                 
                 UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
                 
-                NSString *destinationDir = [AppUtils getCategoryImageDir];
-                NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
-                UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+//                NSString *destinationDir = [AppUtils getCategoryImageDir];
+//                NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
+//                UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
+                
+                NSString *fileName = [AppUtils getCategoryIndicatorIcon:placeAnnotation.place.categoryId];
+                UIImage *icon = [UIImage imageNamed:fileName];
                 
                 [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
                 [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
