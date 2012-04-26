@@ -11,6 +11,7 @@
 #import "Place.pb.h"
 #import "CommonPlaceDetailController.h"
 #import "AppUtils.h"
+#import "UIImageUtil.h"
 
 @implementation NearByRecommendController
 
@@ -174,13 +175,27 @@
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
             UIButton *customizeView ;            
-            
-            if ([self.placeList indexOfObject:placeAnnotation.place] == indexOfSelectedPlace ) {
-                customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
-                [customizeView setBackgroundColor:[UIColor clearColor]];
+            UILabel *label;
 
-                UIImage *image = [UIImage imageNamed:@"red_glass"];
-                annotationView.image = image;            
+            if ([self.placeList indexOfObject:placeAnnotation.place] == indexOfSelectedPlace ) {
+                if ([[placeAnnotation.place name] length] <= 6) {
+                    customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
+                    [customizeView setBackgroundColor:[UIColor clearColor]];
+                    UIImage *image = [UIImage imageNamed:@"red_glass"];
+                    annotationView.image = image; 
+                    label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
+                } else {
+                    UIFont *font = [UIFont systemFontOfSize:12];
+                    CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
+                    CGSize size = [[placeAnnotation.place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+                    customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)];
+                    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)];
+                    UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
+                    [imageView setImage:img];
+                    [customizeView addSubview:imageView];
+                    label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, size.width, 17)];
+                }
+         
                 
                 UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
                 
@@ -194,7 +209,6 @@
                 [leftIndicatorButton release];
                 [icon release];
                 
-                UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
                 label.font = [UIFont systemFontOfSize:12];
                 label.text  = [placeAnnotation.place name];
                 NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
