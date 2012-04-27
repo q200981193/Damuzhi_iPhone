@@ -12,5 +12,6 @@
 
 @interface ShareToSinaController : PPViewController<WBEngineDelegate, UITextViewDelegate>
 
+- (IBAction)backgroundTap:(id)sender;
 
 @end

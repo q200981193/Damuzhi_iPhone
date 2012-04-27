@@ -11,4 +11,6 @@
 
 @interface ShareToQQController : PPViewController<UIWebViewDelegate, UITextViewDelegate>
 
+- (IBAction)backgroundTap:(id)sender;
+
 @end
