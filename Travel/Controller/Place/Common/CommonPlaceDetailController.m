@@ -214,8 +214,8 @@
         button.tag = FAVORITES_OK_VIEW;
         [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
 
-        CGPoint fromPosition = CGPointMake(150, 345);
-        CGPoint toPosition = CGPointMake(150, 345);
+        CGPoint fromPosition = CGPointMake(320/2, 345);
+        CGPoint toPosition = CGPointMake(320/2, 345);
     
         [self.view addSubview:button];
         [button release];

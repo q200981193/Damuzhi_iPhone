@@ -120,6 +120,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)backgroundTap:(id)sender
+{
+    [contentTextView resignFirstResponder];
+}
+
 #pragma -mark Custom methods
 #define WEIBO_LOGO_WIDTH   112
 #define WEIBO_LOGO_HEIGHT   30
