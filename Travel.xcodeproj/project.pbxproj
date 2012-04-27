@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A306522B154A3EED0074B175 /* GeocoderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A306522A154A3EED0074B175 /* GeocoderManager.m */; };
+		A3065279154A50000074B175 /* GeocoderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3065278154A50000074B175 /* GeocoderManager.m */; };
 		A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A30D610915354943007CE0F4 /* PlaceUtils.m */; };
 		A31115161532DBEB00E33BB2 /* NSData+QBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115041532DBEB00E33BB2 /* NSData+QBase64.m */; };
 		A31115171532DBEB00E33BB2 /* NSString+QEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115061532DBEB00E33BB2 /* NSString+QEncoding.m */; };
@@ -516,8 +516,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A3065229154A3EED0074B175 /* GeocoderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GeocoderManager.h; path = ../../../../../oc_workspace/TestMap/TestMap/GeocoderManager.h; sourceTree = "<group>"; };
-		A306522A154A3EED0074B175 /* GeocoderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GeocoderManager.m; path = ../../../../../oc_workspace/TestMap/TestMap/GeocoderManager.m; sourceTree = "<group>"; };
+		A3065277154A50000074B175 /* GeocoderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocoderManager.h; sourceTree = "<group>"; };
+		A3065278154A50000074B175 /* GeocoderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocoderManager.m; sourceTree = "<group>"; };
 		A30D610815354943007CE0F4 /* PlaceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceUtils.h; sourceTree = "<group>"; };
 		A30D610915354943007CE0F4 /* PlaceUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceUtils.m; sourceTree = "<group>"; };
 		A31115031532DBEB00E33BB2 /* NSData+QBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+QBase64.h"; path = "../NSData+QBase64.h"; sourceTree = "<group>"; };
@@ -1948,8 +1948,8 @@
 		A4FCE23D1516FF360077A333 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				A3065229154A3EED0074B175 /* GeocoderManager.h */,
-				A306522A154A3EED0074B175 /* GeocoderManager.m */,
+				A3065277154A50000074B175 /* GeocoderManager.h */,
+				A3065278154A50000074B175 /* GeocoderManager.m */,
 				A4FCE23E1516FF9F0077A333 /* AppConstants.h */,
 				A4FCE23F15170A830077A333 /* AppUtils.h */,
 				A4FCE24015170A830077A333 /* AppUtils.m */,
@@ -3762,7 +3762,7 @@
 				A48B6337154165A500733DF1 /* CityDownloadService.m in Sources */,
 				A4A5CEF91541CC740001A72D /* LocalCity.m in Sources */,
 				A4A5CEFA1541CC740001A72D /* LocalCityManager.m in Sources */,
-				A306522B154A3EED0074B175 /* GeocoderManager.m in Sources */,
+				A3065279154A50000074B175 /* GeocoderManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
