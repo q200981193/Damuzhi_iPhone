@@ -70,6 +70,8 @@
 @property (retain, nonatomic) UIView *addressView;
 @property (retain, nonatomic) UIView *websiteView;
 @property (retain, nonatomic) UIView *favouritesView;
+@property (retain, nonatomic) UIView *nearbyView;
+@property (retain, nonatomic) UIView *selectedBgView;
 @property (retain, nonatomic) UIButton *addFavoriteButton;
 
 - (IBAction)clickHelpButton:(id)sender;

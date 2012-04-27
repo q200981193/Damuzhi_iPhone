@@ -11,6 +11,7 @@
 #import "LogUtil.h"
 #import "AppManager.h"
 #import "AppUtils.h"
+#import <CoreLocation/CoreLocation.h>
 
 @implementation PlaceManager
 
@@ -83,9 +84,46 @@ static PlaceManager *_placeDefaultManager;
     return placeList;
 }
 
-- (NSArray*)findPlacesNearby:(Place*)place num:(int)num
+- (NSArray*)findPlacesNearby:(Place*)place 
 {
-    return nil;
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    
+    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
+        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
+            Place *place1 = (Place*)obj1;
+            Place *place2 = (Place*)obj2;
+            
+            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
+            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
+            
+            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
+            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
+            
+            [loc1 release];
+            [loc2 release];
+            
+            if (dis1 > dis2) {
+                return (NSComparisonResult)NSOrderedAscending;
+            } else if (dis1 < dis2) {
+                return (NSComparisonResult)NSOrderedDescending;
+            }
+        }
+        
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
+    [loc release];
+    
+    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    int count = [sortedPlaceList count];
+    int loopCount = (count<5) ? count : 5;
+    
+    for (int i = 0; i < loopCount; i++)
+    {
+        [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
+    }
+    return retArray;
+
 }
 
 @end

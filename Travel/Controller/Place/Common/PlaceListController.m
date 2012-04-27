@@ -219,7 +219,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
+//    NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
     
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:dataList selectedIndex:[indexPath row]];
     
@@ -238,6 +238,10 @@
     self.dataList = mutableDataList;
     
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    if ([dataList count] == 0) {
+        [self addNoDataTips];
+    }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath

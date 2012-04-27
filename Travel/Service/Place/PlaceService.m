@@ -145,7 +145,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         return list;
     };
     
-    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+    RemoteRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
         int listType = [self getListTypeByPlaceCategoryId:categoryId];
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
@@ -172,16 +172,16 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
-- (void)findPlacesNearby:(Place*)place num:(int)num viewController:(PPViewController<PlaceServiceDelegate>*)viewController
+- (void)findPlacesNearby:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
         [_localPlaceManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
-        NSArray* list = [_localPlaceManager findPlacesNearby:place num:num];   
+        NSArray* list = [_localPlaceManager findPlacesNearby:place];   
         *resultCode = 0;
         return list;
     };
     
-    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+    RemoteRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
         int listType = [self getListTypeByPlaceCategoryId:PlaceCategoryTypePlaceAll];
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
@@ -193,7 +193,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             @try {
                 TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
                 _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
-                list = [_onlinePlaceManager findPlacesNearby:place num:num]; 
+                list = [_onlinePlaceManager findPlacesNearby:place]; 
             }
             @catch (NSException *exception) {
                 NSLog (@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
