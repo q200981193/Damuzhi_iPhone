@@ -197,6 +197,10 @@
 
 - (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation *)currentLocation
 {
+    if (currentLocation == nil) {
+        return @"";
+    }
+    
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     [placeLocation release];
@@ -206,7 +210,10 @@
     NSLog(@"current location = %@", currentLocation.description);
     NSLog(@"distance = %lf", distance);
 
-    if (distance >1000.0) {
+    if (distance > 100000.0) {
+        return @"";
+    }
+    else if (distance >1000.0) {
         long long temp = (long long)distance / 1000;
         return [NSString stringWithFormat:NSLS(@"%lldKM"), temp];
     }

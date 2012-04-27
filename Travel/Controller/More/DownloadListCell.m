@@ -96,8 +96,7 @@
     dataSizeLabel.hidden = NO;
     self.dataSizeLabel.text = [self getCityDataSizeString];
     
-//    if ([_city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:_city.cityId]]) {
-    if (NO) {
+    if ([_city.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:_city.cityId]]) {
         updateButton.hidden = YES;
     }
     else {

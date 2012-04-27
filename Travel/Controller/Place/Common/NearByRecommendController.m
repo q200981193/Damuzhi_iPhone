@@ -188,6 +188,7 @@
                 NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
                 UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
                 
+                NSLog(@"icon file  = %@", [destinationDir stringByAppendingPathComponent:fileName]);                
                 [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
                 [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
                 [customizeView addSubview:leftIndicatorButton];
