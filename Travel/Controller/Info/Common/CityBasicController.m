@@ -70,6 +70,8 @@
     scrollView.backgroundColor = [UIColor whiteColor];
     
     [dataSource requestDataWithDelegate:self];
+    
+    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

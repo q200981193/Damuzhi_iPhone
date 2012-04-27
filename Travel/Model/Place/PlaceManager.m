@@ -83,4 +83,9 @@ static PlaceManager *_placeDefaultManager;
     return placeList;
 }
 
+- (NSArray*)findPlacesNearby:(Place*)place num:(int)num
+{
+    return nil;
+}
+
 @end
