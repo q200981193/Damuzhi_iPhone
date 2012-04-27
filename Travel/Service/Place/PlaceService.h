@@ -36,6 +36,8 @@
 
 - (void)findPlacesNearby:(Place*)place num:(int)num viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
 
+- (void)findPlacesNearby:(Place*)place distance:(int)distance viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
+
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
                        place:(Place*)place;
 - (void)deletePlaceFromFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 

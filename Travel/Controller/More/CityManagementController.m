@@ -307,7 +307,6 @@ static CityManagementController *_instance;
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
     [dataTableView reloadData];
-    
 }
 
 - (void)didFailDownload:(City *)city error:(NSError *)error

@@ -208,6 +208,11 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
+- (void)findPlacesNearby:(Place*)place distance:(int)distance viewController:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    
+}
+
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
                        place:(Place*)place
 {

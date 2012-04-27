@@ -46,6 +46,8 @@
         GlobalSetNavBarBackground(@"top_live.png");        
     }
     
+    [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    
 //    //juage if app is firstLaunch
 //    if (![[NSUserDefaults standardUserDefaults] boolForKey:EVER_LAUNCHED]) {
 //        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:EVER_LAUNCHED];

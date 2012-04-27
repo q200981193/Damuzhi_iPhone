@@ -106,12 +106,12 @@
     downloadPersentLabel.hidden = YES;
     pauseDownloadBtn.hidden = YES;
     
-    //            if (_city.dataSize == 0) {
-    //                downloadButton.hidden = YES;
-    //            }
-    //            else {
-    downloadButton.hidden = NO;
-    //            }
+    if (_city.dataSize == 0) {
+        downloadButton.hidden = YES;
+    }
+    else {
+        downloadButton.hidden = NO;
+    }
     cancelDownloadBtn.hidden = YES;
     onlineButton.hidden = NO;
     

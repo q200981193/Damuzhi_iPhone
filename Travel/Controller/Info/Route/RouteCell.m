@@ -29,6 +29,7 @@
 {
     titleLabel.text = tip.name;
     briefIntroLabel.text = tip.briefIntro;
+    briefIntroLabel.textColor = [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255 alpha:1];
     [imageView.layer setCornerRadius:5.0f];
     [imageView.layer setMasksToBounds:YES];
     [self setTipImage:tip];
