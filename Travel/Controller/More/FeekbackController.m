@@ -10,6 +10,7 @@
 #import "PPDebug.h"
 #import "ImageName.h"
 #import "UIImageUtil.h"
+#import "StringUtil.h"
 
 @implementation FeekbackController
 @synthesize viewCenter = _viewCenter;
@@ -129,7 +130,16 @@
     NSString *contact = [self.contactWayTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString *feekback = [self.feekbackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    if ([feekback compare:@""] == 0) {
+//    if ([feekback compare:@""] == 0) {
+//        [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
+//        return;
+//    }
+//    
+//    if ([contact compare:@""] == 0) {
+//        [self popupMessage:NSLS(@"请输入联系方式") title:nil];
+//        return;
+//    }
+    if (!NSStringIsValidEmail(feekback)) {
         [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
         return;
     }
@@ -138,6 +148,7 @@
         [self popupMessage:NSLS(@"请输入联系方式") title:nil];
         return;
     }
+
     
     if ([feekback lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > MAX_LENGTH_OF_FEEKBACK) {
         [self popupMessage:NSLS(@"反馈意见字数太长") title:nil];
@@ -148,6 +159,7 @@
         [self popupMessage:NSLS(@"联系方式字数太长") title:nil];
         return;
     }
+
     
     [self hideKeyboard];
     PPDebug(@"contact = %@, feekback = %@", contact, feekback);

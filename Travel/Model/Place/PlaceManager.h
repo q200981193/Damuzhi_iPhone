@@ -20,6 +20,7 @@
 
 - (void)switchCity:(int)newCityId;
 - (NSArray*)findPlacesByCategory:(int)categoryId;
+- (NSArray*)findPlacesNearby:(Place*)place num:(int)num;
 
 
 @end

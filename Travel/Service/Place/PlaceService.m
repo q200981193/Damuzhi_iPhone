@@ -172,6 +172,42 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
+- (void)findPlacesNearby:(Place*)place num:(int)num viewController:(PPViewController<PlaceServiceDelegate>*)viewController
+{
+    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
+        [_localPlaceManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
+        NSArray* list = [_localPlaceManager findPlacesNearby:place num:num];   
+        *resultCode = 0;
+        return list;
+    };
+    
+    LocalRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+        // TODO, send network request here
+        int listType = [self getListTypeByPlaceCategoryId:PlaceCategoryTypePlaceAll];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
+                                                               cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+        NSArray *list = nil;
+        
+        *resultCode = output.resultCode;
+        if (output.resultCode == ERROR_SUCCESS) {
+            @try {
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
+                list = [_onlinePlaceManager findPlacesNearby:place num:num]; 
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
+            } 
+        }
+        
+        return list;
+    };
+    
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
+}
+
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
                        place:(Place*)place
 {
