@@ -53,6 +53,9 @@
 		A3FE359315358DB7002190D7 /* GuideController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3FE359115358DB7002190D7 /* GuideController.xib */; };
 		A4034755150D998200D2B11E /* HotelListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034754150D998200D2B11E /* HotelListFilter.m */; };
 		A4034764150DA8BF00D2B11E /* PlaceMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */; };
+		A418D732154BD94E00D6AC73 /* table5_bg2_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A418D72F154BD94E00D6AC73 /* table5_bg2_center@2x.png */; };
+		A418D733154BD94E00D6AC73 /* table5_bg2_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A418D730154BD94E00D6AC73 /* table5_bg2_down@2x.png */; };
+		A418D734154BD94E00D6AC73 /* table5_bg2_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A418D731154BD94E00D6AC73 /* table5_bg2_top@2x.png */; };
 		A421C8BF153A9F3200109478 /* select_bg_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BB153A9F3200109478 /* select_bg_center@2x.png */; };
 		A421C8C0153A9F3200109478 /* select_bg_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BC153A9F3200109478 /* select_bg_down@2x.png */; };
 		A421C8C1153A9F3200109478 /* select_bg_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A421C8BD153A9F3200109478 /* select_bg_top@2x.png */; };
@@ -600,6 +603,9 @@
 		A4034762150DA8BF00D2B11E /* PlaceMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapAnnotation.h; sourceTree = "<group>"; };
 		A4034763150DA8BF00D2B11E /* PlaceMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceMapAnnotation.m; sourceTree = "<group>"; };
 		A40D9DFF150C87AB00BB2D29 /* ImageName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageName.h; path = Travel/Resource/ImageName.h; sourceTree = SOURCE_ROOT; };
+		A418D72F154BD94E00D6AC73 /* table5_bg2_center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "table5_bg2_center@2x.png"; path = "place_detail/table5_bg2_center@2x.png"; sourceTree = "<group>"; };
+		A418D730154BD94E00D6AC73 /* table5_bg2_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "table5_bg2_down@2x.png"; path = "place_detail/table5_bg2_down@2x.png"; sourceTree = "<group>"; };
+		A418D731154BD94E00D6AC73 /* table5_bg2_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "table5_bg2_top@2x.png"; path = "place_detail/table5_bg2_top@2x.png"; sourceTree = "<group>"; };
 		A421C8BB153A9F3200109478 /* select_bg_center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_bg_center@2x.png"; sourceTree = "<group>"; };
 		A421C8BC153A9F3200109478 /* select_bg_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_bg_down@2x.png"; sourceTree = "<group>"; };
 		A421C8BD153A9F3200109478 /* select_bg_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_bg_top@2x.png"; sourceTree = "<group>"; };
@@ -1771,6 +1777,9 @@
 		A48E04E01534058900B2695E /* place_list */ = {
 			isa = PBXGroup;
 			children = (
+				A418D72F154BD94E00D6AC73 /* table5_bg2_center@2x.png */,
+				A418D730154BD94E00D6AC73 /* table5_bg2_down@2x.png */,
+				A418D731154BD94E00D6AC73 /* table5_bg2_top@2x.png */,
 				EAE654E0153C44A800AAE451 /* table_bg@2x.png */,
 				A4FB94CB1536B73400DDC76E /* default_s@2x.png */,
 				A4FB94CC1536B73400DDC76E /* heart@2x.png */,
@@ -3498,6 +3507,9 @@
 				EA328A131542A234001ACFF4 /* pin_ht2@2x.png in Resources */,
 				EA328A141542A234001ACFF4 /* pin_jd@2x.png in Resources */,
 				EA328A151542A234001ACFF4 /* pin_jd2@2x.png in Resources */,
+				A418D732154BD94E00D6AC73 /* table5_bg2_center@2x.png in Resources */,
+				A418D733154BD94E00D6AC73 /* table5_bg2_down@2x.png in Resources */,
+				A418D734154BD94E00D6AC73 /* table5_bg2_top@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

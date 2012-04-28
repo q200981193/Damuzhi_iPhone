@@ -61,7 +61,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *praiseIcon3;
 @property (retain, nonatomic) IBOutlet UIView *serviceHolder;
 @property (retain, nonatomic) Place *place;
-@property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) NSArray *nearbyPlaceList;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
 
 @property (assign, nonatomic) float detailHeight;
@@ -75,8 +75,7 @@
 @property (retain, nonatomic) UIButton *addFavoriteButton;
 
 - (IBAction)clickHelpButton:(id)sender;
-- (id)initWithPlace:(Place*)onePlace;
-- (id)initWithPlaceList:(NSArray *)placeList selectedIndex:(NSInteger)row;
+- (id)initWithPlace:(Place*)place;
 
 - (UILabel*)createTitleView:(NSString*)title;
 - (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height;

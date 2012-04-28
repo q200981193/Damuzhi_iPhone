@@ -15,10 +15,10 @@
 #define LANGUAGE_ENGLISH                3
 
 // for test service
-//#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
+#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
 // for formal service
-#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
 
 // URL
@@ -58,9 +58,12 @@
 #define PARA_TRAVEL_ID              @"id"
 #define PARA_TRAVEL_LANG            @"lang"
 
-#define PARA_TRAVEL_PLACEID         @"placeId"
+#define PARA_TRAVEL_PLACE_ID         @"placeId"
 #define PARA_TRAVEL_LONGITUDE       @"longitude"
 #define PARA_TRAVEL_LATITUDE        @"latitude"
+
+#define PARA_TRAVEL_DISTANCE         @"distance"
+
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT  @"placeFavoriteCount"
 #define PARA_TRAVEL_APP_VERSION           @"app_version"
@@ -74,6 +77,20 @@
 #define OBJECT_LIST_TYPE_RESTAURANT      23
 #define OBJECT_LIST_TYPE_SHOPPING        24
 #define OBJECT_LIST_TYPE_ENTERTAINMENT   25
+
+#define OBJECT_LIST_TYPE_ALL_NEARBY_PLACE       50
+#define OBJECT_LIST_TYPE_NEARBY_SPOT            51
+#define OBJECT_LIST_TYPE_NEARBY_HOTEL           52
+#define OBJECT_LIST_TYPE_NEARBY_RESTAURANT      53
+#define OBJECT_LIST_TYPE_NEARBY_SHOPPING        54
+#define OBJECT_LIST_TYPE_NEARBY_ENTERTAINMENT   55
+
+#define OBJECT_LIST_TYPE_ALL_NEARBY_10KM_PLACE       60
+#define OBJECT_LIST_TYPE_NEARBY_10KM_SPOT            61
+#define OBJECT_LIST_TYPE_NEARBY_10KM_HOTEL           62
+#define OBJECT_LIST_TYPE_NEARBY_10KM_RESTAURANT      63
+#define OBJECT_LIST_TYPE_NEARBY_10KM_SHOPPING        64
+#define OBJECT_LIST_TYPE_NEARBY_10KM_ENTERTAINMENT   65
 
 #define OBJECT_LIST_TYPE_TRAVEL_GUIDE    5
 #define OBJECT_LIST_TYPE_TRAVEL_ROUTE    6

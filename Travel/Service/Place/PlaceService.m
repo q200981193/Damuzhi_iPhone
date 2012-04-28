@@ -136,10 +136,86 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     return listType;
 }
 
+- (int)getNearbyListTypeByPlaceCategoryId:(int)categoryId
+{
+    int listType = 0;
+    
+    switch (categoryId) {
+        case PlaceCategoryTypePlaceAll:
+            listType = OBJECT_LIST_TYPE_ALL_NEARBY_PLACE;
+            break;
+            
+        case PlaceCategoryTypePlaceSpot:
+            listType = OBJECT_LIST_TYPE_NEARBY_SPOT;
+            break;
+            
+        case PlaceCategoryTypePlaceHotel:
+            listType = OBJECT_LIST_TYPE_NEARBY_HOTEL;
+            break;
+            
+        case PlaceCategoryTypePlaceRestraurant:
+            listType = OBJECT_LIST_TYPE_NEARBY_RESTAURANT;
+            break;
+            
+        case PlaceCategoryTypePlaceShopping:
+            listType = OBJECT_LIST_TYPE_NEARBY_SHOPPING;
+            break;
+            
+        case PlaceCategoryTypePlaceEntertainment:
+            listType = OBJECT_LIST_TYPE_NEARBY_ENTERTAINMENT;
+            break;
+            
+            
+        default:
+            break;
+    }
+    
+    return listType;
+}
+
+- (int)getNearby10KMListTypeByPlaceCategoryId:(int)categoryId
+{
+    int listType = 0;
+    
+    switch (categoryId) {
+        case PlaceCategoryTypePlaceAll:
+            listType = OBJECT_LIST_TYPE_ALL_NEARBY_PLACE;
+            break;
+            
+        case PlaceCategoryTypePlaceSpot:
+            listType = OBJECT_LIST_TYPE_NEARBY_SPOT;
+            break;
+            
+        case PlaceCategoryTypePlaceHotel:
+            listType = OBJECT_LIST_TYPE_NEARBY_HOTEL;
+            break;
+            
+        case PlaceCategoryTypePlaceRestraurant:
+            listType = OBJECT_LIST_TYPE_NEARBY_RESTAURANT;
+            break;
+            
+        case PlaceCategoryTypePlaceShopping:
+            listType = OBJECT_LIST_TYPE_NEARBY_SHOPPING;
+            break;
+            
+        case PlaceCategoryTypePlaceEntertainment:
+            listType = OBJECT_LIST_TYPE_NEARBY_ENTERTAINMENT;
+            break;
+            
+            
+        default:
+            break;
+    }
+    
+    return listType;
+}
+
 - (void)findPlaces:(int)categoryId viewController:(PPViewController<PlaceServiceDelegate>*)viewController
 {
+    int currentCityId = [[AppManager defaultManager] getCurrentCityId];
+
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localPlaceManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
+        [_localPlaceManager switchCity:currentCityId];
         NSArray* list = [_localPlaceManager findPlacesByCategory:categoryId];   
         *resultCode = 0;
         return list;
@@ -149,7 +225,8 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         // TODO, send network request here
         int listType = [self getListTypeByPlaceCategoryId:categoryId];
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
-                                                               cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+                                                               cityId:currentCityId
+                                                                 lang:LanguageTypeZhHans]; 
         NSArray *list = nil;
         
         *resultCode = output.resultCode;
@@ -172,28 +249,29 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
-- (void)findPlacesNearby:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController
+- (void)findPlacesNearby:(int)categoryId place:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
-        [_localPlaceManager switchCity:[[AppManager defaultManager] getCurrentCityId]];
-        NSArray* list = [_localPlaceManager findPlacesNearby:place];   
+        int currentCityId = [[AppManager defaultManager] getCurrentCityId];
+        [_localPlaceManager switchCity:currentCityId];
+        NSArray* list = [_localPlaceManager findPlacesNearby:categoryId place:place];   
         *resultCode = 0;
         return list;
     };
     
     RemoteRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
         // TODO, send network request here
-        int listType = [self getListTypeByPlaceCategoryId:PlaceCategoryTypePlaceAll];
+        int listType = [self getNearbyListTypeByPlaceCategoryId:categoryId];
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
-                                                               cityId:[[AppManager defaultManager] getCurrentCityId] lang:LANGUAGE_SIMPLIFIED_CHINESE]; 
+                                                              placeId:place.placeId
+                                                                 lang:LanguageTypeZhHans];
         NSArray *list = nil;
         
         *resultCode = output.resultCode;
         if (output.resultCode == ERROR_SUCCESS) {
             @try {
                 TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-                _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
-                list = [_onlinePlaceManager findPlacesNearby:place]; 
+                list = [[travelResponse placeList] listList]; 
             }
             @catch (NSException *exception) {
                 NSLog (@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
@@ -208,9 +286,43 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
-- (void)findPlacesNearby:(Place*)place distance:(int)distance viewController:(PPViewController<PlaceServiceDelegate>*)viewController
+- (void)findPlacesNearby:(int)categoryId place:(Place*)place distance:(double)distance viewController:(PPViewController<PlaceServiceDelegate> *)viewController;
 {
+    LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
+        int currentCityId = [[AppManager defaultManager] getCurrentCityId];
+        [_localPlaceManager switchCity:currentCityId];
+        NSArray* list = [_localPlaceManager findPlacesNearby:categoryId place:place distance:distance];   
+        *resultCode = 0;
+        return list;
+    };
     
+    RemoteRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
+        // TODO, send network request here
+        int listType = [self getNearby10KMListTypeByPlaceCategoryId:categoryId];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
+                                                              placeId:place.placeId
+                                                             distance:distance
+                                                                 lang:LanguageTypeZhHans];
+        NSArray *list = nil;
+
+        *resultCode = output.resultCode;
+
+        if (output.resultCode == ERROR_SUCCESS) {
+            @try {
+                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                list = [[travelResponse placeList] listList]; 
+            }
+            @catch (NSException *exception) {
+                NSLog (@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
+            } 
+        }
+        
+        return list;
+    };
+    
+    [self processLocalRemoteQuery:viewController
+                     localHandler:localHandler
+                    remoteHandler:remoteHandler];
 }
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 

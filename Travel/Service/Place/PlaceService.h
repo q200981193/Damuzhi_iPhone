@@ -34,9 +34,9 @@
 
 - (void)findPlaces:(int)categoryId viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
 
-- (void)findPlacesNearby:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
+- (void)findPlacesNearby:(int)categoryId place:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
 
-- (void)findPlacesNearby:(Place*)place distance:(int)distance viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
+- (void)findPlacesNearby:(int)categoryId place:(Place*)place distance:(double)distance viewController:(PPViewController<PlaceServiceDelegate> *)viewController;
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
                        place:(Place*)place;

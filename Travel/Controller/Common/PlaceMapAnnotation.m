@@ -10,20 +10,23 @@
 
 @implementation PlaceMapAnnotation
 
-@synthesize place;
+@synthesize place = _place;
 @synthesize coordinate;
-@synthesize title;
+@synthesize title = _title;
+
 - (void)dealloc
 {
+    [_place release];
+    [_title release];
     [super dealloc];
 }
 
-- (id)initWithPlace:(Place *)a_place
+- (id)initWithPlace:(Place *)place
 {
-    self.place = a_place;
-    coordinate.longitude = a_place.longitude;
-    coordinate.latitude = a_place.latitude;
-    title = a_place.name;
+    self.place = place;
+    self.title = place.name;
+    coordinate.longitude = place.longitude;
+    coordinate.latitude = place.latitude;
     return self;
 }
 
@@ -33,14 +36,6 @@
     coordinate.latitude = coord.latitude;
     return self;
 }
-
-//- (CLLocationCoordinate2D)coordinate;
-//{
-//    CLLocationCoordinate2D theCoordinate;
-//    theCoordinate.latitude = 37.810000;
-//    theCoordinate.longitude = -122.477989;
-//    return theCoordinate; 
-//}
 
 
 @end

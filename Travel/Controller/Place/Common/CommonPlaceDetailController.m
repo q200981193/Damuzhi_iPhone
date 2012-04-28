@@ -33,7 +33,7 @@
 @synthesize imageHolderView;
 @synthesize dataScrollView;
 @synthesize place = _place;
-@synthesize placeList = _placeList;
+@synthesize nearbyPlaceList = _nearbyPlaceList;
 @synthesize praiseIcon1;
 @synthesize praiseIcon2;
 @synthesize praiseIcon3;
@@ -82,20 +82,11 @@
     return nil;
 }
 
-- (id)initWithPlace:(Place *)onePlace
+- (id)initWithPlace:(Place *)place
 {
     self = [super init];
-    self.place = onePlace;    
-    self.handler = [self createPlaceHandler:onePlace superController:self];     
-    return self;
-}
-
-- (id)initWithPlaceList:(NSArray *)placeList selectedIndex:(NSInteger)row
-{
-    self = [super init];
-    self.placeList = placeList;
-    self.place = [placeList objectAtIndex:row];    
-    self.handler = [self createPlaceHandler:self.place superController:self];     
+    self.place = place;    
+    self.handler = [self createPlaceHandler:place superController:self];     
     return self;
 }
 
@@ -148,14 +139,14 @@
 
 - (void)clickMap:(id)sender
 {
-    NearByRecommendController* controller = [[NearByRecommendController alloc]init];
-    controller.superController = self;
+    NearByRecommendController* controller = [[NearByRecommendController alloc] initWithPlace:_place];
+//    controller.superController = self;
     [self.navigationController pushViewController:controller animated:YES];
-    [controller gotoLocation:self.place];
+    [controller gotoLocation:_place];
     
-    NSArray *list = [[NSArray alloc] initWithArray:_placeList];
-    [controller setPlaces:list selectedIndex:[self.placeList indexOfObject:self.place]];
-    [list release];
+//    NSArray *list = [[NSArray alloc] initWithArray:_nearbyPlaceList];
+//    [controller setPlaces:list selectedIndex:[_nearbyPlaceList indexOfObject:_place]];
+//    [list release];
     [controller release];
 }
 
@@ -380,60 +371,16 @@
         
 }
 
-#define MAX_NUM_OF_NEARBY_RECOMMEND_PLACE 5
-//- (NSArray*) calculateNearby
-//{
-//    CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
-//    
-//    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
-//        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
-//            Place *place1 = (Place*)obj1;
-//            Place *place2 = (Place*)obj2;
-//            
-//            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
-//            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
-//            
-//            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
-//            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
-//            
-//            [loc1 release];
-//            [loc2 release];
-//            
-//            
-//            if (dis1 > dis2) {
-//                return (NSComparisonResult)NSOrderedAscending;
-//            } else if (dis1 < dis2) {
-//                return (NSComparisonResult)NSOrderedDescending;
-//            }
-//        }
-//        
-//        return (NSComparisonResult)NSOrderedSame;
-//    }];
-//    
-//    [loc release];
-//    
-//    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-//    int count = [sortedPlaceList count];
-//    int loopCount = (count<MAX_NUM_OF_NEARBY_RECOMMEND_PLACE) ? count : MAX_NUM_OF_NEARBY_RECOMMEND_PLACE;
-//    
-//    for (int i = 0; i < loopCount; i++)
-//    {
-//        [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
-//    }
-//    return retArray;
-//    
-//}
-
 - (void) clickNearbyRow:(id)sender
 {
     UIButton *button = sender;
     NSInteger index = button.tag;
     
     selectedBgView = [[UIButton alloc] initWithFrame:CGRectMake(12, _nearbyView.frame.origin.y +30*(index+1), 275, 24)];
-    selectedBgView.backgroundColor = INTRODUCTION_BG_COLOR;
     [dataScrollView addSubview:selectedBgView];
     
-    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:_placeList selectedIndex:index];
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[_nearbyPlaceList objectAtIndex:index]];
+    
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -456,39 +403,39 @@
     self.detailHeight = _nearbyView.frame.origin.y + _nearbyView.frame.size.height;
     
     //get nearby placelist data
-    [[PlaceService defaultService] findPlacesNearby:_place viewController:self];
-    
-    }
+    [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place viewController:self];
+}
 
 //request done after get nearby placelist
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
     if (result == ERROR_SUCCESS) {
-//        self.placeList = placeList;
+        self.nearbyPlaceList = placeList;
         
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
         int i = 0;
-        for (Place *place in placeList)
+        for (Place *nearbyPlace in _nearbyPlaceList)
         {
-            CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
             CLLocationDistance distance = [loc distanceFromLocation:location];
             [location release];
             
             UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 30 + 30*(i++), 300, 24)];
-            rowView.tag = [_placeList indexOfObject:place];
+            rowView.tag = [_nearbyPlaceList indexOfObject:nearbyPlace];
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 14, 14)];
             
-            NSString *imageName = [AppUtils getCategoryIcon:[place categoryId]];
+            NSString *imageName = [AppUtils getCategoryIcon:[nearbyPlace categoryId]];
             UIImage *image = [UIImage imageNamed:imageName];
             [imageView setImage:image];
             [rowView addSubview:imageView];
             [imageView release];
             
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 3, 150, 14)];
-            nameLabel.text = [place name];
+            nameLabel.text = [nearbyPlace name];
             nameLabel.font = [UIFont systemFontOfSize:12];
             nameLabel.textColor = DESCRIPTION_COLOR;
+            
             nameLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:nameLabel];
             [nameLabel release];
@@ -514,8 +461,6 @@
             [rowView release];
         }    
         [loc release];
-
-        
     }
     else {
     }
@@ -578,7 +523,6 @@
     }
     [segmentView release];
 }
-
 
 - (void)addPaddingVew
 {
@@ -864,7 +808,7 @@
     [praiseIcon3 release];
     [helpButton release];
     [serviceHolder release];
-    [_placeList release];
+    [_nearbyPlaceList release];
     [favoriteCountLabel release];
     [telephoneView release];
     [addressView release];

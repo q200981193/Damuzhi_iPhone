@@ -84,11 +84,13 @@ static PlaceManager *_placeDefaultManager;
     return placeList;
 }
 
-- (NSArray*)findPlacesNearby:(Place*)place 
+- (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
 {
     CLLocation *loc = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
     
-    NSArray *sortedPlaceList = [_placeList sortedArrayUsingComparator:^(id obj1, id obj2){
+    NSArray *list = [self findPlacesByCategory:categoryId];
+    
+    NSArray *sortedPlaceList = [list sortedArrayUsingComparator:^(id obj1, id obj2){
         if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
             Place *place1 = (Place*)obj1;
             Place *place2 = (Place*)obj2;
@@ -123,7 +125,34 @@ static PlaceManager *_placeDefaultManager;
         [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
     }
     return retArray;
+}
 
+- (NSArray*)findPlacesNearby:(int)categoryId place:(Place *)place distance:(double)distance
+{
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    
+    NSArray *list = [self findPlacesByCategory:categoryId];
+    
+    NSMutableArray *retArray = [[NSMutableArray alloc] init];
+    
+    for (Place *place1 in list) {
+        if (place1.placeId == place.placeId) {
+            continue;
+        }
+        
+        CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
+        // Caculate distance between two places, unit is KM.
+        CLLocationDistance dis = [loc1 distanceFromLocation:loc]/1000.0;
+        [loc1 release];
+        
+        if (dis < distance) {
+            [retArray addObject:place1];
+        }
+    }
+    
+    [loc release];
+    
+    return retArray;
 }
 
 @end

@@ -12,17 +12,24 @@
 #import "CommonPlaceDetailController.h"
 #import "AppUtils.h"
 #import "UIImageUtil.h"
+#import "App.pb.h"
 
 @implementation NearByRecommendController
 
 @synthesize mapView;
-@synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
-//@synthesize mapAnnotations;
-@synthesize indexOfSelectedPlace;
-@synthesize superController;
+@synthesize place = _place;
 
-- (BOOL)isRightLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude
+- (NearByRecommendController*)initWithPlace:(Place*)place
+{
+    if (self = [super init]) {
+        self.place = place;
+    }
+    
+    return self;
+}
+
+- (BOOL)isValidLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude
 {
     if (-90.0 <= latitude && latitude <= 90.0 &&  -180.0 <= longitude && longitude <= 180.0){
         return  YES;
@@ -33,7 +40,7 @@
 
 - (void)gotoLocation:(Place*)place
 {
-    if (![self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
+    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
         return;
     }
     
@@ -50,56 +57,20 @@
 }
 
 - (void) loadAllAnnotations
-{    
+{ 
     NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
-//    [self.mapAnnotations removeAllObjects];
-    if (_placeList && _placeList.count > 0) {
-        for (Place *place in _placeList) {
-            if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
-                PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-//                [self.mapAnnotations addObject:placeAnnotation];
-                [mapAnnotations addObject:placeAnnotation];
-                [placeAnnotation release];
-            }
-        } 
-    }
     
-    [self.mapView removeAnnotations:self.mapView.annotations];
-//    [self.mapView addAnnotations:self.mapAnnotations];
+    for (Place *place in _placeList) {
+        if ([self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+            PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc] initWithPlace:place];
+            [mapAnnotations addObject:placeAnnotation];
+            [placeAnnotation release];
+        }
+    } 
+    
+    [self.mapView removeAnnotations:mapView.annotations];
     [self.mapView addAnnotations:mapAnnotations];
     [mapAnnotations release];
-}
-
-- (void)setPlaces:(NSArray*)placeList
-{
-    self.placeList = placeList;
-    [self loadAllAnnotations];
-}
-
-- (void)setPlaces:(NSArray*)placeList selectedIndex:(NSInteger)index
-{
-    self.placeList = placeList;
-    self.indexOfSelectedPlace = index;
-    [self loadAllAnnotations];
-}
-
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -109,26 +80,38 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    self.mapView.delegate = self;
-    self.mapView.mapType = MKMapTypeStandard;   
-    //    self.mapView.showsUserLocation = YES;
-    
-//    self.mapAnnotations = [[NSMutableArray alloc]init];
-    [self loadAllAnnotations];
-    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
     [self.navigationItem setTitle:NSLS(@"周边推荐")];
+    
+    mapView.delegate = self;
+    mapView.mapType = MKMapTypeStandard;      
+    
+    // Find places nearby.
+    [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
+                                              place:_place distance:10.0     
+                                     viewController:self];
+    
+    self.placeList = [[NSMutableArray alloc] init];
+}
+
+- (void)findRequestDone:(int)result placeList:(NSArray *)placeList
+{
+    [_placeList addObject:_place];
+
+    for (Place *place in placeList) {
+        [_placeList addObject:place];
+    }
+    
+    [self loadAllAnnotations];
 }
 
 - (void)dealloc
 {
-    [_locationManager release];
     [_placeList release];
-//    [mapAnnotations release];
-    [superController release];
+    [_place release];
     [super dealloc];
 }
 
@@ -137,12 +120,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    mapView = nil;
 }
 
 //The event handling method
@@ -151,9 +129,9 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     
-    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:_placeList selectedIndex:index];
+    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[_placeList objectAtIndex:index]];
     
-    [self.superController.navigationController pushViewController:controller animated:YES];
+    [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
@@ -177,14 +155,15 @@
             UIButton *customizeView ;            
             UILabel *label;
 
-            if ([self.placeList indexOfObject:placeAnnotation.place] == indexOfSelectedPlace ) {
+            if (placeAnnotation.place == _place ) {
                 if ([[placeAnnotation.place name] length] <= 6) {
                     customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
                     [customizeView setBackgroundColor:[UIColor clearColor]];
                     UIImage *image = [UIImage imageNamed:@"red_glass"];
                     annotationView.image = image; 
                     label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, 80, 17)];
-                } else {
+                } 
+                else {
                     UIFont *font = [UIFont systemFontOfSize:12];
                     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
                     CGSize size = [[placeAnnotation.place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
@@ -199,14 +178,9 @@
                 
                 UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
                 
-//                NSString *destinationDir = [AppUtils getCategoryImageDir];
-//                NSString *fileName = [NSString stringWithFormat:@"%d.png",placeAnnotation.place.categoryId];
-//                UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
-                
                 NSString *fileName = [AppUtils getCategoryIndicatorIcon:placeAnnotation.place.categoryId];
                 UIImage *icon = [UIImage imageNamed:fileName];
                 
-//                NSLog(@"icon file  = %@", [destinationDir stringByAppendingPathComponent:fileName]);                
                 [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
                 [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
                 [customizeView addSubview:leftIndicatorButton];
@@ -215,7 +189,7 @@
                 
                 label.font = [UIFont systemFontOfSize:12];
                 label.text  = [placeAnnotation.place name];
-                NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
+                NSInteger value = [_placeList indexOfObject:placeAnnotation.place];
                 label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
                 label.backgroundColor = [UIColor clearColor];
                 [customizeView addSubview:label];
@@ -234,12 +208,9 @@
                 NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
                 UIImage *image = [UIImage imageNamed:fileName];
                 
-                //                UIImage *image = [UIImage imageNamed:@"red_star"];
                 annotationView.image = image; 
                 customizeView.tag = value;
                 [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
-                
-
             }
                         
             [annotationView addSubview:customizeView];
@@ -249,7 +220,6 @@
         else
         {
             pinView.annotation = annotation;
-            
         }
         return pinView;
         
@@ -257,6 +227,7 @@
     
     return nil;
 }
+
 
 
 @end

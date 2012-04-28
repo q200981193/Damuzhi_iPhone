@@ -205,6 +205,60 @@
                                       output:output];
 }
 
++ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID intValue:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId distance:(double)distance lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID intValue:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_DISTANCE doubleValue:distance];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
 
 + (CommonNetworkOutput*)queryObject:(int)type objId:(int)objId lang:(int)lang
 {
@@ -271,7 +325,7 @@
         NSString* str = [NSString stringWithString:baseURL];        
         
         str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACEID value:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID value:placeId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_LONGITUDE value:longitude];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_LATITUDE value:latitude];
         
@@ -299,7 +353,7 @@
         NSString* str = [NSString stringWithString:baseURL];        
         
         str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACEID value:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID value:placeId];
         
         return str;
     };
@@ -345,7 +399,7 @@
         NSString* str = [NSString stringWithString:baseURL];        
         
         str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACEID value:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID value:placeId];
         
         return str;
     };

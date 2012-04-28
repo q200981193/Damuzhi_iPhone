@@ -10,25 +10,17 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "PPViewController.h"
+#import "PlaceService.h"
 
 @class Place;
 
-@interface NearByRecommendController : PPViewController <MKMapViewDelegate,CLLocationManagerDelegate>
-{
-    MKMapView *mapView;
-    NSArray* _placeList;
-    CLLocationManager* _locationManager;
-}
+@interface NearByRecommendController : PPViewController <MKMapViewDelegate,PlaceServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) CLLocationManager* locationManager;
-@property (nonatomic, retain) NSArray* placeList;
-@property (nonatomic, assign) NSInteger indexOfSelectedPlace;
-//@property (nonatomic, retain) NSMutableArray* mapAnnotations;
-@property (nonatomic, retain) UIViewController* superController;
+@property (retain, nonatomic) Place *place;
+@property (nonatomic, retain) NSMutableArray *placeList;
 
-- (void)setPlaces:(NSArray*)placeList;
-- (void)setPlaces:(NSArray*)placeList selectedIndex:(NSInteger)index;
+- (NearByRecommendController*)initWithPlace:(Place*)place;
 - (void)gotoLocation:(Place*)place;
 
 @end
