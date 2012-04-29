@@ -48,5 +48,30 @@
     }
 }
 
++ (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation*)currentLocation
+{
+    if (currentLocation == nil) {
+        return @"";
+    }
+    
+    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+    [placeLocation release];
+    
+    //    NSLog(@"place name = %@", place.name);
+    //    NSLog(@"place latitude = %lf, place longitude ＝ %lf", place.latitude, place.longitude);
+    //    NSLog(@"current location = %@", currentLocation.description);
+    //    NSLog(@"distance = %lf", distance);
+    
+//    if (distance > 100000.0) {
+//        return @"";
+//    }
+    if (distance >1000.0) {
+        return [NSString stringWithFormat:NSLS(@"%0.1lfKM"), distance/1000.0];
+    }
+    else { 
+        return [NSString stringWithFormat:NSLS(@"%dM"), (int)distance];
+    }
+}
 
 @end
