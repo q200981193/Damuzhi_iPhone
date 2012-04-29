@@ -86,37 +86,12 @@ static PlaceManager *_placeDefaultManager;
 
 - (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
 {
-    CLLocation *loc = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
-    
     NSArray *list = [self findPlacesByCategory:categoryId];
     
-    NSArray *sortedPlaceList = [list sortedArrayUsingComparator:^(id obj1, id obj2){
-        if ([obj1 isKindOfClass:[Place class]] && [obj2 isKindOfClass:[Place class]]) {
-            Place *place1 = (Place*)obj1;
-            Place *place2 = (Place*)obj2;
-            
-            CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
-            CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
-            
-            CLLocationDistance dis1 = [loc1 distanceFromLocation:loc];
-            CLLocationDistance dis2 = [loc2 distanceFromLocation:loc];
-            
-            [loc1 release];
-            [loc2 release];
-            
-            if (dis1 > dis2) {
-                return (NSComparisonResult)NSOrderedAscending;
-            } else if (dis1 < dis2) {
-                return (NSComparisonResult)NSOrderedDescending;
-            }
-        }
-        
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
-    [loc release];
+    NSArray *sortedPlaceList = [self sortPlacesFromNearToFar:place placeList:list];
     
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+        
     int count = [sortedPlaceList count];
     int loopCount = (count<5) ? count : 5;
     
@@ -127,32 +102,87 @@ static PlaceManager *_placeDefaultManager;
     return retArray;
 }
 
-- (NSArray*)findPlacesNearby:(int)categoryId place:(Place *)place distance:(double)distance
+- (NSArray*)sortPlacesFromNearToFar:(Place*)place placeList:(NSArray*)placeList
 {
-    CLLocation *loc = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+
+    NSMutableArray *list = [NSMutableArray arrayWithArray:[NSArray arrayWithArray:placeList]];
     
-    NSArray *list = [self findPlacesByCategory:categoryId];
+    [list sortedArrayUsingComparator:^(id obj1, id obj2){
+        Place *place1 = (Place*)obj1;
+        Place *place2 = (Place*)obj2;
+        
+        CLLocationDistance dis1 = [self distanceBetween:place1 location:location];
+        CLLocationDistance dis2 = [self distanceBetween:place2 location:location];
+        
+        if (dis1 > dis2) {
+            return (NSComparisonResult)NSOrderedAscending;
+        } else if (dis1 < dis2) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        return (NSComparisonResult)NSOrderedSame;
+    }];
     
-    NSMutableArray *retArray = [[NSMutableArray alloc] init];
+    [location release];
     
+    // remove place
     for (Place *place1 in list) {
         if (place1.placeId == place.placeId) {
+            [list removeObject:place1];
+        }
+    }
+    
+    return list;
+}
+
+- (NSArray*)findPlacesNearby:(int)categoryId place:(Place *)place distance:(double)distance
+{    
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    NSArray *list = [self findPlacesByCategory:categoryId];
+    
+    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    for (Place *place1 in list) {
+        if(place.placeId == place1.placeId)
+        {
             continue;
         }
         
-        CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
-        // Caculate distance between two places, unit is KM.
-        CLLocationDistance dis = [loc1 distanceFromLocation:loc]/1000.0;
-        [loc1 release];
+        double dis = [self distanceBetween:place1 location:location];
         
-        if (dis < distance) {
+        if (dis < distance*1000.0) {
             [retArray addObject:place1];
         }
     }
     
-    [loc release];
+    [location release];
     
     return retArray;
 }
+
+- (double)distanceBetween:(Place*)place1 place2:(Place*)place2
+{
+    CLLocation *location1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
+    CLLocation *location2 = [[CLLocation alloc] initWithLatitude:place2.latitude longitude:place2.longitude];
+    
+    CLLocationDistance distance = [location1 distanceFromLocation:location2];
+    
+    [location1 release];
+    [location2 release];
+    
+    return distance;
+}
+
+- (double)distanceBetween:(Place*)place location:(CLLocation*)location
+{
+    CLLocation *loc = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    
+    CLLocationDistance distance = [loc distanceFromLocation:location];
+    
+    [loc release];
+    
+    return distance;
+}
+
 
 @end
