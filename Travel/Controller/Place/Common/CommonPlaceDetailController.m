@@ -43,7 +43,7 @@
 @synthesize telephoneView;
 @synthesize addressView;
 @synthesize websiteView;
-@synthesize detailHeight;
+@synthesize detailHeight = _detailHeight;
 @synthesize favouritesView;
 @synthesize addFavoriteButton;
 @synthesize nearbyView = _nearbyView;
@@ -337,10 +337,10 @@
     [introductionDescription release];
     [dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [self createMiddleLineView: self.detailHeight + segmentView.frame.size.height];
+    UIView *middleLineView = [self createMiddleLineView: _detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
     
-    self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
+    _detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
 }
 
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
@@ -354,7 +354,7 @@
     }
     CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
     UILabel *title = [self createTitleView:titleString];
@@ -364,10 +364,10 @@
     [segmentView addSubview:introductionDescription];
     [dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [self createMiddleLineView2: self.detailHeight + segmentView.frame.size.height];
+    UIView *middleLineView = [self createMiddleLineView2: _detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
     
-    self.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
+    _detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
         
 }
 
@@ -387,7 +387,7 @@
 
 - (void) addNearbyView
 {
-    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 186)] autorelease];
+    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 186)] autorelease];
     _nearbyView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 151)];
@@ -400,7 +400,7 @@
     [_nearbyView addSubview:title];
     
     [dataScrollView addSubview:_nearbyView];    
-    self.detailHeight = _nearbyView.frame.origin.y + _nearbyView.frame.size.height;
+    _detailHeight = _nearbyView.frame.origin.y + _nearbyView.frame.size.height;
     
     //get nearby placelist data
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place viewController:self];
@@ -468,7 +468,7 @@
 
 - (void)addTransportView:(Place*)place
 {
-    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 156)];
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 156)];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 121)];
@@ -481,7 +481,7 @@
     [segmentView addSubview:title];
     
     [dataScrollView addSubview:segmentView];    
-    self.detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
+    _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
     
     NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
 
@@ -534,7 +534,7 @@
 
 - (void)addTelephoneView
 {
-    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, 31)];
+    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
     telephoneView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
     
     UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
@@ -568,23 +568,24 @@
     
     [dataScrollView addSubview:telephoneView];
     [telephoneView release];
+    _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
 
 }
 
 - (void)addAddressView
 {
     UIFont *font = [UIFont boldSystemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(240, CGFLOAT_MAX);
+    CGSize withinSize = CGSizeMake(230, CGFLOAT_MAX);
     
     CGSize size = [[[_place addressList] componentsJoinedByString:@" "] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     int height = 0;
     if ([[_place addressList] count] == 0) {
-        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 31)];
+        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
         height = 31;
     }
     else
     {
-        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, size.height + 16)];
+        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 16)];
         height = size.height + 16;
     }
     
@@ -604,7 +605,7 @@
     [addressView addSubview:label];
     [label release];
     
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 240, height)];
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 230, height)];
     addressLabel.backgroundColor = [UIColor clearColor];
     addressLabel.lineBreakMode = UILineBreakModeWordWrap;
     addressLabel.numberOfLines = 0;
@@ -633,12 +634,15 @@
     
     [dataScrollView addSubview:addressView];
     [addressView release];
+    
+    _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
+
 
 }
 
 - (void)addWebsiteView
 {
-     websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, addressView.frame.origin.y + addressView.frame.size.height, 320, 31)];
+     websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
     websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
     UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
     websiteLabel.backgroundColor = [UIColor clearColor];
@@ -658,6 +662,7 @@
     
     [dataScrollView addSubview:websiteView];
     [websiteView release];
+    _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
 
 }
 
@@ -770,7 +775,7 @@
     [self addWebsiteView];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, detailHeight + 330)];
+    [dataScrollView setContentSize:CGSizeMake(320, _detailHeight + 235)];
         
     [self addBottomView];
     
