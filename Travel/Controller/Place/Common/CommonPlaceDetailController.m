@@ -24,6 +24,8 @@
 #import "CommonWebController.h"
 #import "ImageName.h"
 #import "PPNetworkRequest.h"
+#import "PlaceUtils.h"
+#import "AppService.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -440,9 +442,11 @@
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 60, 14)];
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 50, 14)];
             
-            distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
+            NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:[[AppService defaultService] currentLocation]];
+                                  
+            distanceLabel.text = distanceString;
             distanceLabel.font = [UIFont systemFontOfSize:12];
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];
