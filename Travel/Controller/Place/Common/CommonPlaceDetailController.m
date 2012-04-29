@@ -642,7 +642,7 @@
 
 - (void)addWebsiteView
 {
-     websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
+    websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
     websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
     UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
     websiteLabel.backgroundColor = [UIColor clearColor];
@@ -761,12 +761,11 @@
     [self addSlideImageView];
            
     
-    self.detailHeight = imageHolderView.frame.size.height;
+    _detailHeight = imageHolderView.frame.size.height;
     
     [self.handler addDetailViews:dataScrollView WithPlace:self.place];
         
     [self addNearbyView];
-     
     
     [self addTelephoneView];
     
