@@ -204,8 +204,9 @@ static CityManagementController *_instance;
 {
     if (tableView == self.dataTableView) {
         City *city = [self.dataList objectAtIndex:indexPath.row];
-            [[AppManager defaultManager] setCurrentCityId:city.cityId];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+        [[AppManager defaultManager] setCurrentCityId:city.cityId];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self didSelectCurrendCity:[dataList objectAtIndex:indexPath.row]];
     }
 }
 

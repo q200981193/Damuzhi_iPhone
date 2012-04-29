@@ -91,7 +91,8 @@
     
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
-                                              place:_place distance:10.0     
+                                              place:_place 
+                                           distance:10.0     
                                      viewController:self];
     
     self.placeList = [[NSMutableArray alloc] init];

@@ -84,82 +84,6 @@ static PlaceManager *_placeDefaultManager;
     return placeList;
 }
 
-- (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
-{
-    NSArray *list = [self findPlacesByCategory:categoryId];
-    
-    NSArray *sortedPlaceList = [self sortPlacesFromNearToFar:place placeList:list];
-    
-    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-        
-    int count = [sortedPlaceList count];
-    int loopCount = (count<5) ? count : 5;
-    
-    for (int i = 0; i < loopCount; i++)
-    {
-        [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
-    }
-    return retArray;
-}
-
-- (NSArray*)sortPlacesFromNearToFar:(Place*)place placeList:(NSArray*)placeList
-{
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
-
-    NSMutableArray *list = [NSMutableArray arrayWithArray:[NSArray arrayWithArray:placeList]];
-    
-    [list sortedArrayUsingComparator:^(id obj1, id obj2){
-        Place *place1 = (Place*)obj1;
-        Place *place2 = (Place*)obj2;
-        
-        CLLocationDistance dis1 = [self distanceBetween:place1 location:location];
-        CLLocationDistance dis2 = [self distanceBetween:place2 location:location];
-        
-        if (dis1 > dis2) {
-            return (NSComparisonResult)NSOrderedAscending;
-        } else if (dis1 < dis2) {
-            return (NSComparisonResult)NSOrderedDescending;
-        }
-        
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
-    [location release];
-    
-    // remove place
-    for (Place *place1 in list) {
-        if (place1.placeId == place.placeId) {
-            [list removeObject:place1];
-        }
-    }
-    
-    return list;
-}
-
-- (NSArray*)findPlacesNearby:(int)categoryId place:(Place *)place distance:(double)distance
-{    
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
-    NSArray *list = [self findPlacesByCategory:categoryId];
-    
-    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-    for (Place *place1 in list) {
-        if(place.placeId == place1.placeId)
-        {
-            continue;
-        }
-        
-        double dis = [self distanceBetween:place1 location:location];
-        
-        if (dis < distance*1000.0) {
-            [retArray addObject:place1];
-        }
-    }
-    
-    [location release];
-    
-    return retArray;
-}
-
 - (double)distanceBetween:(Place*)place1 place2:(Place*)place2
 {
     CLLocation *location1 = [[CLLocation alloc] initWithLatitude:place1.latitude longitude:place1.longitude];
@@ -183,6 +107,98 @@ static PlaceManager *_placeDefaultManager;
     
     return distance;
 }
+
+#define NUM_OF_PLACE_NEARBY 5
+- (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
+{
+//    NSArray *list = [self findPlacesByCategory:categoryId];
+    
+    NSArray *list = [self findPlacesByCategory:PlaceCategoryTypePlaceSpot];
+
+    
+    NSArray *sortedPlaceList = [self sortPlacesFromNearToFar:place placeList:list];
+    
+    for (Place *pl in sortedPlaceList) {
+        CLLocationDistance dis1 = [self distanceBetween:pl place2:place];
+        PPDebug(@"place name = %@, distance = %f", pl.name, dis1);
+    }
+    
+    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+        
+    int count = [sortedPlaceList count];
+    int loopCount = (count<NUM_OF_PLACE_NEARBY) ? count : NUM_OF_PLACE_NEARBY;
+    
+    for (int i = 0; i < loopCount; i++)
+    {
+        [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
+    }
+    return retArray;
+}
+
+- (NSArray*)sortPlacesFromNearToFar:(Place*)place placeList:(NSArray*)placeList
+{
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+
+    NSMutableArray *list = [[[NSMutableArray alloc] init] autorelease];
+
+    for (Place *pl in placeList) {
+        if (pl.placeId == place.placeId) {
+            continue;
+        }
+        [list addObject:pl];
+    }
+    
+    [list sortedArrayUsingComparator:^(id obj1, id obj2){
+        Place *place1 = (Place*)obj1;
+        Place *place2 = (Place*)obj2;
+        
+        CLLocationDistance dis1 = [self distanceBetween:place1 location:location];
+        CLLocationDistance dis2 = [self distanceBetween:place2 location:location];
+        
+//        PPDebug(@"place1: %@, dis1 = %f, place2: %@ dis2 = %f", place1.name, dis1, place2.name, dis2);
+        
+        if (dis1 > dis2) {
+            return NSOrderedAscending;
+        } 
+        else if (dis1 < dis2) {
+            return NSOrderedDescending;
+        }
+        else {
+            return NSOrderedSame;
+        }
+    }];
+    
+    [location release];
+    
+    return list;
+}
+
+- (NSArray*)findPlacesNearby:(int)categoryId place:(Place *)place distance:(double)distance
+{    
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:place.latitude longitude:place.longitude];
+    NSArray *list = [self findPlacesByCategory:categoryId];
+    
+    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    for (Place *place1 in list) {
+        if(place.placeId == place1.placeId)
+        {
+            continue;
+        }
+        
+        double dis = [self distanceBetween:place1 location:location];
+        
+        if (dis < distance*1000.0) {
+//            PPDebug(@"place = %@, distance = %f", place1.name, dis);
+            [retArray addObject:place1];
+        }
+    }
+    
+    [location release];
+    
+    return retArray;
+}
+
+
 
 
 @end
