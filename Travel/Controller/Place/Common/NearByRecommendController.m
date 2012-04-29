@@ -142,10 +142,11 @@
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     CGSize size = [[place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)] autorelease];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)];
-    UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
-    [imageView setImage:img];
-    [customizeView addSubview:imageView];
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)];
+//    UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
+//    [imageView setImage:img];
+//    [customizeView addSubview:imageView];
+    
     
     NSString *fileName = [AppUtils getCategoryIndicatorIcon:place.categoryId];
     UIImage *icon = [UIImage imageNamed:fileName];
@@ -167,6 +168,8 @@
     [label release];
     
     customizeView.tag = value;
+    
+    [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
     
     return customizeView;
 }
@@ -195,6 +198,9 @@
             if (placeAnnotation.place == _place )
             {
                 customizeView = [self createAnnotationViewWith:placeAnnotation.place];
+                UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
+                annotationView.image = img;
+                [annotationView setFrame:customizeView.frame];
             }
             else
             {
@@ -209,8 +215,7 @@
                 annotationView.image = image; 
                 customizeView.tag = value;
             }
-            
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];           
+                   
             [annotationView addSubview:customizeView];
             return annotationView;
         }
