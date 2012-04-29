@@ -61,6 +61,7 @@ static CityDownloadService *_instance;
 
     
     [request setUserInfo:userInfo];
+    [userInfo release];
     
     //add request into queue and run
     [_operationQueue addOperation:request];
@@ -84,6 +85,7 @@ static CityDownloadService *_instance;
     [userInfo setObject:[NSNumber numberWithInt:REQUEST_TYPE_UPDATE] forKey:KEY_REQUEST_TYPE];
     
     [request setUserInfo:userInfo];
+    [userInfo release];
     
     //add request into queue and run
     [_operationQueue addOperation:request];

@@ -13,6 +13,7 @@
 #import "AppUtils.h"
 #import "UIImageUtil.h"
 #import "App.pb.h"
+#import "PPDebug.h"
 
 @implementation NearByRecommendController
 
@@ -130,6 +131,12 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     
+    int count = [_placeList count];
+    if (index<0 || index>count-1) {
+        PPDebug(@"WARRING:index you click is out of range!");
+        return;
+    }
+    
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[_placeList objectAtIndex:index]];
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -155,7 +162,6 @@
     [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
     [customizeView addSubview:leftIndicatorButton];
     [leftIndicatorButton release];
-    [icon release];
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, size.width, 17)];
     label.font = [UIFont systemFontOfSize:12];
@@ -198,7 +204,7 @@
             }
             else
             {
-                NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
+                NSInteger value = [_placeList indexOfObject:placeAnnotation.place];
 
                 customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,35,35)] autorelease];
                 [customizeView setBackgroundColor:[UIColor clearColor]];
@@ -210,7 +216,10 @@
                 customizeView.tag = value;
             }
             
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];           
+            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside]; 
+//            for (UIView *view in [annotationView subviews]) {
+//                [view removeFromSuperview];
+//            }
             [annotationView addSubview:customizeView];
             return annotationView;
         }

@@ -111,28 +111,22 @@ static PlaceManager *_placeDefaultManager;
 #define NUM_OF_PLACE_NEARBY 5
 - (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
 {
-//    NSArray *list = [self findPlacesByCategory:categoryId];
-    
-    NSArray *list = [self findPlacesByCategory:PlaceCategoryTypePlaceSpot];
+    NSArray *list = [self findPlacesByCategory:categoryId];
 
-    
     NSArray *sortedPlaceList = [self sortPlacesFromNearToFar:place placeList:list];
     
-    for (Place *pl in sortedPlaceList) {
-        CLLocationDistance dis1 = [self distanceBetween:pl place2:place];
-        PPDebug(@"place name = %@, distance = %f", pl.name, dis1);
-    }
+//    for (Place *pl in sortedPlaceList) {
+//        CLLocationDistance dis1 = [self distanceBetween:pl place2:place];
+//        PPDebug(@"place name = %@, distance = %f", pl.name, dis1);
+//    }
     
-    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-        
-    int count = [sortedPlaceList count];
-    int loopCount = (count<NUM_OF_PLACE_NEARBY) ? count : NUM_OF_PLACE_NEARBY;
+    int sortedListCount = [sortedPlaceList count];
     
-    for (int i = 0; i < loopCount; i++)
-    {
-        [retArray addObject:[sortedPlaceList objectAtIndex:(loopCount - i -1)]];
-    }
-    return retArray;
+    NSRange range;
+    range.location = 0;
+    range.length = (sortedListCount >= NUM_OF_PLACE_NEARBY) ? NUM_OF_PLACE_NEARBY : sortedListCount;
+    
+    return [sortedPlaceList subarrayWithRange:range];
 }
 
 - (NSArray*)sortPlacesFromNearToFar:(Place*)place placeList:(NSArray*)placeList
@@ -147,8 +141,8 @@ static PlaceManager *_placeDefaultManager;
         }
         [list addObject:pl];
     }
-    
-    [list sortedArrayUsingComparator:^(id obj1, id obj2){
+
+    NSArray *sortedList = [list sortedArrayUsingComparator:^(id obj1, id obj2){
         Place *place1 = (Place*)obj1;
         Place *place2 = (Place*)obj2;
         
@@ -157,10 +151,10 @@ static PlaceManager *_placeDefaultManager;
         
 //        PPDebug(@"place1: %@, dis1 = %f, place2: %@ dis2 = %f", place1.name, dis1, place2.name, dis2);
         
-        if (dis1 > dis2) {
+        if (dis1 < dis2) {
             return NSOrderedAscending;
         } 
-        else if (dis1 < dis2) {
+        else if (dis1 > dis2) {
             return NSOrderedDescending;
         }
         else {
@@ -170,7 +164,7 @@ static PlaceManager *_placeDefaultManager;
     
     [location release];
     
-    return list;
+    return sortedList;
 }
 
 - (NSArray*)findPlacesNearby:(int)categoryId place:(Place *)place distance:(double)distance

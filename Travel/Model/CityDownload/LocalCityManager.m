@@ -30,7 +30,6 @@ static LocalCityManager *_defaultManager = nil;
 {
     self = [super init];
     if (self) {
-        self.localCities = [[NSMutableDictionary alloc] init];
         [self loadLocalCities];
         for (LocalCity *localCity in [_localCities allValues]) {
             if (localCity.updateStatus == UPDATING) {
@@ -55,6 +54,8 @@ static LocalCityManager *_defaultManager = nil;
 #pragma mark: load and save localcities
 - (void)loadLocalCities
 {
+    self.localCities = [[NSMutableDictionary alloc] init];
+
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSData* data = [userDefault objectForKey:KEY_LOCAL_CITIES];
     
