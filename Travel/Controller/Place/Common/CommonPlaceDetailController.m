@@ -574,20 +574,29 @@
 - (void)addAddressView
 {
     UIFont *font = [UIFont boldSystemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(220, CGFLOAT_MAX);
+    CGSize withinSize = CGSizeMake(240, CGFLOAT_MAX);
     
     CGSize size = [[[_place addressList] componentsJoinedByString:@" "] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    int height = 0;
+    if ([[_place addressList] count] == 0) {
+        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, 31)];
+        height = 31;
+    }
+    else
+    {
+        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, size.height + 16)];
+        height = size.height + 16;
+    }
     
-    addressView = [[UIView alloc]initWithFrame:CGRectMake(0, telephoneView.frame.origin.y + telephoneView.frame.size.height, 320, size.height + 16)];
     
-    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, size.height + 16)];
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     bgImageView.image = [UIImage strectchableImageName:@"t_bg" topCapHeight:30];
     [addressView addSubview:bgImageView];
     [addressView sendSubviewToBack:bgImageView];
     [bgImageView release];
     
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, ceilf((size.height + 16 - 20)/2) , 40, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 5 , 40, 20)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
     label.font = [UIFont boldSystemFontOfSize:12];
@@ -595,7 +604,7 @@
     [addressView addSubview:label];
     [label release];
     
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 6, 220, size.height+5)];
+    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 240, height)];
     addressLabel.backgroundColor = [UIColor clearColor];
     addressLabel.lineBreakMode = UILineBreakModeWordWrap;
     addressLabel.numberOfLines = 0;
@@ -611,7 +620,7 @@
     [addressView addSubview:addressLabel];
     [addressLabel release];
     
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (size.height + 16 - 20)/2, 24, 24)];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 24, 24)];
     [mapImageView setImage:[UIImage imageNamed:@"t_map"]];
     [addressView addSubview:mapImageView];
     [mapImageView release];
