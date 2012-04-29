@@ -149,11 +149,6 @@
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     CGSize size = [[place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)] autorelease];
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)];
-//    UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
-//    [imageView setImage:img];
-//    [customizeView addSubview:imageView];
-    
     
     NSString *fileName = [AppUtils getCategoryIndicatorIcon:place.categoryId];
     UIImage *icon = [UIImage imageNamed:fileName];

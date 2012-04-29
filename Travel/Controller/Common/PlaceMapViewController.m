@@ -50,6 +50,7 @@
 #import "Place.pb.h"
 #import "CommonPlaceDetailController.h"
 #import "AppUtils.h"
+#import "UIImageUtil.h"
 
 @implementation PlaceMapViewController
 
@@ -204,6 +205,36 @@
     [controller release];
 }
 
+- (UIButton*)createAnnotationViewWith:(Place*)place
+{
+    UIFont *font = [UIFont systemFontOfSize:12];
+    CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
+    CGSize size = [[place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)] autorelease];
+    
+    NSString *fileName = [AppUtils getCategoryIndicatorIcon:place.categoryId];
+    UIImage *icon = [UIImage imageNamed:fileName];
+    
+    UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
+    [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
+    [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+    [customizeView addSubview:leftIndicatorButton];
+    [leftIndicatorButton release];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, size.width, 17)];
+    label.font = [UIFont systemFontOfSize:12];
+    label.text  = [place name];
+    NSInteger value = [_placeList indexOfObject:place];
+    label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
+    label.backgroundColor = [UIColor clearColor];
+    [customizeView addSubview:label];
+    [label release];
+    
+    customizeView.tag = value;
+    
+    return customizeView;
+}
+
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // if it's the user location, just return nil.
@@ -221,35 +252,15 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-            UIButton *customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
-            [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"green_glass"];
-            annotationView.image = image;            
-            
-            UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 17, 17)];            
-            NSString *fileName = [AppUtils getCategoryIndicatorIcon:placeAnnotation.place.categoryId];
-            UIImage *icon = [UIImage imageNamed:fileName];
-            
-            [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
-            [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
-            [customizeView addSubview:leftIndicatorButton];
-            [leftIndicatorButton release];
-            
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(27, 2, 80, 17)];
-            label.font = [UIFont systemFontOfSize:12];
-            label.text  = [placeAnnotation.place name];
-            NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
-            label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
-            label.backgroundColor = [UIColor clearColor];
-            [customizeView addSubview:label];
-            [label release];
-            
-            customizeView.tag = value;
+            UIButton *customizeView = [self createAnnotationViewWith:placeAnnotation.place];
+            UIImage *img = [UIImage strectchableImageName:@"green_glass" leftCapWidth:20];
+            annotationView.image = img;
+            [annotationView setFrame:customizeView.frame];
+                        
             [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];            
             
             [annotationView addSubview:customizeView];
-            [customizeView release];
             return annotationView;
         }
         else
