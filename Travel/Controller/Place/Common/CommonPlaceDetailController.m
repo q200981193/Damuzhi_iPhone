@@ -26,6 +26,7 @@
 #import "PPNetworkRequest.h"
 #import "PlaceUtils.h"
 #import "AppService.h"
+#import "MapUtils.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -144,7 +145,7 @@
     NearByRecommendController* controller = [[NearByRecommendController alloc] initWithPlace:_place];
 //    controller.superController = self;
     [self.navigationController pushViewController:controller animated:YES];
-    [controller gotoLocation:_place];
+    [MapUtils gotoLocation:_place mapView:controller.mapView];
     
 //    NSArray *list = [[NSArray alloc] initWithArray:_nearbyPlaceList];
 //    [controller setPlaces:list selectedIndex:[_nearbyPlaceList indexOfObject:_place]];
