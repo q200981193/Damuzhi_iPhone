@@ -172,8 +172,8 @@
 - (void)setDownloadProgress:(float)downloadProgress
 {
     downloadProgressView.progress = downloadProgress;
-    float persent = downloadProgress*100;
-    downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
+    int persent = downloadProgress*100.0;
+    downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
 }
 
 - (void)setDownloadSuccessAppearance
