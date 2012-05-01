@@ -21,6 +21,5 @@
 @property (nonatomic, retain) NSMutableArray *placeList;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place;
-- (void)gotoLocation:(Place*)place;
 
 @end
