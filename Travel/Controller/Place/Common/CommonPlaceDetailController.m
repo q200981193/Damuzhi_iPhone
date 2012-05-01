@@ -24,6 +24,9 @@
 #import "CommonWebController.h"
 #import "ImageName.h"
 #import "PPNetworkRequest.h"
+#import "PlaceUtils.h"
+#import "AppService.h"
+#import "MapUtils.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -142,7 +145,7 @@
     NearByRecommendController* controller = [[NearByRecommendController alloc] initWithPlace:_place];
 //    controller.superController = self;
     [self.navigationController pushViewController:controller animated:YES];
-    [controller gotoLocation:_place];
+    [MapUtils gotoLocation:_place mapView:controller.mapView];
     
 //    NSArray *list = [[NSArray alloc] initWithArray:_nearbyPlaceList];
 //    [controller setPlaces:list selectedIndex:[_nearbyPlaceList indexOfObject:_place]];
@@ -440,9 +443,11 @@
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 60, 14)];
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 50, 14)];
             
-            distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
+            NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:[[AppService defaultService] currentLocation]];
+                                  
+            distanceLabel.text = distanceString;
             distanceLabel.font = [UIFont systemFontOfSize:12];
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];

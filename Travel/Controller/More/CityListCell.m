@@ -145,6 +145,14 @@
     }
 }
 
+- (void)setDownloadProgress:(float)downloadProgress
+{
+    downloadProgressView.progress = downloadProgress;
+    int persent = downloadProgress*100.0;
+    PPDebug(@"text progress = %@", [NSString stringWithFormat:@"%d%%", persent]);
+    downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
+}
+
 - (void)setDownloadingAppearance:(LocalCity*)localCity
 {
     dataSizeLabel.hidden = YES;
@@ -167,13 +175,6 @@
     }
     
     [self setDownloadProgress:localCity.downloadProgress];
-}
-
-- (void)setDownloadProgress:(float)downloadProgress
-{
-    downloadProgressView.progress = downloadProgress;
-    int persent = downloadProgress*100.0;
-    downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
 }
 
 - (void)setDownloadSuccessAppearance
