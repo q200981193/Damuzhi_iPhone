@@ -144,13 +144,12 @@
 
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
-    if (result == ERROR_SUCCESS) {
-        self.placeList = [self filterAndSort:placeList];
-        [self createAndReloadPlaceListController];
-    }
-    else {
+    if (result != ERROR_SUCCESS) {
         [self popupMessage:@"数据加载失败" title:nil];
     }
+
+    self.placeList = [self filterAndSort:placeList];
+    [self createAndReloadPlaceListController];
 }
 
 - (void)createAndReloadPlaceListController
