@@ -6,7 +6,6 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "NearByRecommendController.h"
 #import "PlaceMapAnnotation.h"
 #import "Place.pb.h"
 #import "CommonPlaceDetailController.h"
@@ -64,13 +63,18 @@
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard;      
     
+    self.placeList = [[NSMutableArray alloc] init];
+    
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
                                               place:_place 
                                            distance:10.0     
                                      viewController:self];
-    
-    self.placeList = [[NSMutableArray alloc] init];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+
 }
 
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList

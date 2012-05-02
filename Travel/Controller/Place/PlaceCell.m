@@ -154,7 +154,10 @@
     nameLabel.text = [place name];
     
     [distanceLable setTextColor:[UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]];
+    
+    
     distanceLable.text = [PlaceUtils getDistanceString:place currentLocation:currentLocation];
+    
     [self setPlaceIcon:place];
     priceLable.text = [PlaceUtils getPriceString:place];
     

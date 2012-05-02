@@ -48,6 +48,7 @@
     }
 }
 
+
 + (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation*)currentLocation
 {
     if (currentLocation == nil) {
@@ -55,23 +56,28 @@
     }
     
     CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+    CLLocationDistance distance = [placeLocation distanceFromLocation:currentLocation];
     [placeLocation release];
     
-    //    NSLog(@"place name = %@", place.name);
-    //    NSLog(@"place latitude = %lf, place longitude ＝ %lf", place.latitude, place.longitude);
-    //    NSLog(@"current location = %@", currentLocation.description);
-    //    NSLog(@"distance = %lf", distance);
+    return[PlaceUtils getDistanceStringFrom:distance];
+}
+
++ (NSString*)getDistanceStringFrom:(float)distance
+{    
+    // 单位统一为KM，大于1KM的，采用四舍五入，不用小数点; 小于1KM的，以小数点后一位为标准，如:0.9KM，小于0.1KM的，用“<0.1KM”
+    double distanceInKM = distance/1000.0;
     
-//    if (distance > 100000.0) {
-//        return @"";
-//    }
     if (distance >1000.0) {
-        return [NSString stringWithFormat:NSLS(@"%0.1lfKM"), distance/1000.0];
+        long long temp = distanceInKM + 0.5;
+        return [NSString stringWithFormat:NSLS(@"%lldKM"), temp];
     }
-    else { 
-        return [NSString stringWithFormat:NSLS(@"%dM"), (int)distance];
+    else if (distance > 100.0){ 
+        return [NSString stringWithFormat:NSLS(@"%.1fKM"), distanceInKM];
+    }
+    else {
+        return [NSString stringWithFormat:NSLS(@"<0.1KM")];
     }
 }
+
 
 @end

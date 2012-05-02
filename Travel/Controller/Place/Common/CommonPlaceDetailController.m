@@ -51,6 +51,7 @@
 @synthesize addFavoriteButton;
 @synthesize nearbyView = _nearbyView;
 @synthesize selectedBgView;
+@synthesize nearbyRecommendController = _nearbyRecommendController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -142,15 +143,9 @@
 
 - (void)clickMap:(id)sender
 {
-    NearByRecommendController* controller = [[NearByRecommendController alloc] initWithPlace:_place];
-//    controller.superController = self;
-    [self.navigationController pushViewController:controller animated:YES];
-    [MapUtils gotoLocation:_place mapView:controller.mapView];
-    
-//    NSArray *list = [[NSArray alloc] initWithArray:_nearbyPlaceList];
-//    [controller setPlaces:list selectedIndex:[_nearbyPlaceList indexOfObject:_place]];
-//    [list release];
-    [controller release];
+    _nearbyRecommendController = [[NearByRecommendController alloc] initWithPlace:_place];
+    [self.navigationController pushViewController:_nearbyRecommendController animated:YES];
+    [MapUtils gotoLocation:_place mapView:_nearbyRecommendController.mapView];
 }
 
 - (void)clickTelephone:(id)sender
@@ -420,7 +415,6 @@
         for (Place *nearbyPlace in _nearbyPlaceList)
         {
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
-            CLLocationDistance distance = [loc distanceFromLocation:location];
             [location release];
             
             UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 30 + 30*(i++), 300, 24)];
@@ -445,7 +439,7 @@
             
             UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 50, 14)];
             
-            NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:[[AppService defaultService] currentLocation]];
+            NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
                                   
             distanceLabel.text = distanceString;
             distanceLabel.font = [UIFont systemFontOfSize:12];
@@ -806,6 +800,7 @@
     [self setNearbyView:nil];
     [self setSelectedBgView:nil];
     [super viewDidUnload];
+    [self setNearbyRecommendController:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -834,6 +829,7 @@
     [favouritesView release];
     [addFavoriteButton release];
     [selectedBgView release];
+    [_nearbyRecommendController release];
     [super dealloc];
 }
 @end

@@ -67,6 +67,6 @@
 @property (nonatomic, retain) UIViewController* superController;
 
 - (void)setPlaces:(NSArray*)placeList;
-- (void)gotoLocation:(Place*)place;
+//- (void)gotoLocation:(Place*)place;
 
 @end

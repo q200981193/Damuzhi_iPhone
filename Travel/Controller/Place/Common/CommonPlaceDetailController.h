@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
 #import "PlaceService.h"
+#import "NearByRecommendController.h"
 
 @class Place;
 @class CommonPlaceDetailController;
@@ -63,6 +64,7 @@
 @property (retain, nonatomic) Place *place;
 @property (retain, nonatomic) NSArray *nearbyPlaceList;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
+@property (retain, nonatomic) NearByRecommendController *nearbyRecommendController;
 
 @property (assign, nonatomic) float detailHeight;
 @property (retain, nonatomic) UILabel *favoriteCountLabel;
