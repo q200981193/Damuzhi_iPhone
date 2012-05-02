@@ -32,7 +32,7 @@
     UILabel *title = [self.commonController createTitleView:titleString];
     [segmentView addSubview:title];
     
-    UIView *starIconView = [[[UIView alloc]initWithFrame:CGRectMake(10, 26, 10 + 15 * starCount, 12.5)] autorelease];
+    UIView *starIconView = [[[UIView alloc]initWithFrame:CGRectMake(10, 26, 15 * starCount, 12.5)] autorelease];
 
     int32_t i = 0;
     CGRect rect = CGRectMake(0, 0, 12.5, 12);
@@ -49,8 +49,15 @@
 
     [segmentView addSubview:starIconView];
 
+    UILabel *introductionDescription;
+    if (starCount != 0) {
+        introductionDescription= [[[UILabel alloc]initWithFrame:CGRectMake(starIconView.frame.origin.x + starIconView.frame.size.width + 10, 26, 300, size.height)] autorelease];
+    }
+    else
+    {
+        introductionDescription= [[[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, size.height)] autorelease];
+    }
     
-    UILabel *introductionDescription = [[[UILabel alloc]initWithFrame:CGRectMake(starIconView.frame.origin.x + starIconView.frame.size.width + 10, 26, 300, size.height)] autorelease];
     introductionDescription.lineBreakMode = UILineBreakModeWordWrap;
     introductionDescription.numberOfLines = 0;
     introductionDescription.backgroundColor = [UIColor clearColor];

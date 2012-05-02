@@ -523,34 +523,60 @@
     [segmentView release];
 }
 
-- (void)addPaddingVew
+//创建电话、地址、网站 的通用方法
+- (UIView*)createRowView:(NSString*) title detail:(NSString*)detail
 {
-    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHolderView.frame.size.height, 320, 3)];
-    paddingView.backgroundColor = [UIColor colorWithRed:40/255.0 green:123/255.0 blue:181/255.0 alpha:1.0];
-    [dataScrollView addSubview:paddingView];
-    [paddingView release];
+    
+    UIFont *font = [UIFont boldSystemFontOfSize:12];
+    CGSize withinSize = CGSizeMake(230, CGFLOAT_MAX);
+    UIView* rowView;
+    CGSize size = [detail sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    int height = 0;
+    if ([detail length] == 0) {
+        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)] autorelease];
+        height = 31;
+    }
+    else
+    {
+        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 16)] autorelease];
+        height = size.height + 16;
+    }
+    
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+    bgImageView.image = [UIImage imageNamed:@"t_bg.png"];
+    [rowView addSubview:bgImageView];
+    [rowView sendSubviewToBack:bgImageView];
+    [bgImageView release];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, ceilf((height - 20)/2), 40, 20)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
+    label.font = [UIFont boldSystemFontOfSize:12];
+    label.text = title;
+    [rowView addSubview:label];
+    [label release];
+    
+    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 230, height)];
+    detailLabel.backgroundColor = [UIColor clearColor];
+    detailLabel.lineBreakMode = UILineBreakModeWordWrap;
+    detailLabel.numberOfLines = 0;
+    detailLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
+    detailLabel.font = [UIFont boldSystemFontOfSize:12];
+    if ([detail length] == 0) {
+        detailLabel.text = NSLS(@" 暂无");
+    }else
+    {
+        detailLabel.text = detail;
+    }
+    [rowView addSubview:detailLabel];
+    [detailLabel release];
+    
+    return rowView;
 }
 
 - (void)addTelephoneView
 {
-    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
-    telephoneView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    
-    UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
-    telephoneLabel.backgroundColor = [UIColor clearColor];
-    telephoneLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    telephoneLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *telephoneString = @"";
-    if ([self.place.telephoneList count] > 0) {
-        telephoneString = [self.place.telephoneList componentsJoinedByString:@" "];
-        telephoneLabel.text = [[NSString stringWithString:NSLS(@"电话: ")] stringByAppendingString:telephoneString];
-    }
-    else{
-        telephoneLabel.text = [[NSString stringWithString:NSLS(@"电话: ")] stringByAppendingString:NSLS(@" 暂无")];
-    }
-    
-    [telephoneView addSubview:telephoneLabel];
-    [telephoneLabel release];
+    telephoneView = [self createRowView:NSLS(@"电话: ") detail:[self.place.telephoneList componentsJoinedByString:@" "]];
     
     if ([self.place.telephoneList count] != 0) {
         UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 4, 24, 24)];
@@ -566,59 +592,14 @@
     }
     
     [dataScrollView addSubview:telephoneView];
-    [telephoneView release];
     _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
 
 }
 
 - (void)addAddressView
 {
-    UIFont *font = [UIFont boldSystemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(230, CGFLOAT_MAX);
-    
-    CGSize size = [[[_place addressList] componentsJoinedByString:@" "] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
-    int height = 0;
-    if ([[_place addressList] count] == 0) {
-        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
-        height = 31;
-    }
-    else
-    {
-        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 16)];
-        height = size.height + 16;
-    }
-    
-    
-    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
-    bgImageView.image = [UIImage strectchableImageName:@"t_bg" topCapHeight:30];
-    [addressView addSubview:bgImageView];
-    [addressView sendSubviewToBack:bgImageView];
-    [bgImageView release];
-    
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 5 , 40, 20)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    label.font = [UIFont boldSystemFontOfSize:12];
-    label.text = NSLS(@"地址: ");
-    [addressView addSubview:label];
-    [label release];
-    
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 230, height)];
-    addressLabel.backgroundColor = [UIColor clearColor];
-    addressLabel.lineBreakMode = UILineBreakModeWordWrap;
-    addressLabel.numberOfLines = 0;
-    addressLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    addressLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *addr = [[_place addressList] componentsJoinedByString:@" "];
-    if ([addr length] == 0) {
-        addressLabel.text = NSLS(@" 暂无");
-    }else
-    {
-        addressLabel.text = addr;
-    }
-    [addressView addSubview:addressLabel];
-    [addressLabel release];
+    addressView = [self createRowView:NSLS(@"地址: ") detail:[[_place addressList] componentsJoinedByString:@" "]];
+    int height = addressView.frame.size.height;
     
     UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 24, 24)];
     [mapImageView setImage:[UIImage imageNamed:@"t_map"]];
@@ -632,7 +613,6 @@
     [mapButton release];
     
     [dataScrollView addSubview:addressView];
-    [addressView release];
     
     _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
 
@@ -641,26 +621,9 @@
 
 - (void)addWebsiteView
 {
-    websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
-    websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
-    websiteLabel.backgroundColor = [UIColor clearColor];
-    websiteLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    websiteLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *website = NSLS(@"网站: ");
-    NSString *site = [self.place website];
-    if ([site length] == 0) {
-        websiteLabel.text = [website stringByAppendingString:NSLS(@" 暂无")];
-    }
-    else
-    {
-        websiteLabel.text = [website stringByAppendingString:site];
-    }
-    [websiteView addSubview:websiteLabel];
-    [websiteLabel release];
+    websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
     
     [dataScrollView addSubview:websiteView];
-    [websiteView release];
     _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
 
 }
