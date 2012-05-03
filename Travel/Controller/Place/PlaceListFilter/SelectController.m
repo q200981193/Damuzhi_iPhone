@@ -92,7 +92,7 @@
     int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
-		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return nil;
 	}
     

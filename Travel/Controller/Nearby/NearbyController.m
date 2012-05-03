@@ -193,7 +193,6 @@
 
 - (void )clickMapBtn:(id)sender
 {
-    NSLog(@"clickMapBtn");
     [UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.75];
 	

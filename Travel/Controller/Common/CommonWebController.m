@@ -56,7 +56,7 @@
         
         //request from a url, load request to web view.
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        NSLog(@"load webview url = %@", [request description]);
+        PPDebug(@"load webview url = %@", [request description]);
         if (request) {
             [self.webView loadRequest:request];        
         }
@@ -140,7 +140,7 @@
     
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSLog(@"load webview url = %@", [request description]);
+    PPDebug(@"load webview url = %@", [request description]);
     if (request) {
         [self.webView loadRequest:request];        
     }

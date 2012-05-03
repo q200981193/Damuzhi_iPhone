@@ -13,6 +13,7 @@
 #import "AppUtils.h"
 #import "ImageName.h"
 #import "PPNetworkRequest.h"
+#import "PPDebug.h"
 
 @implementation CityBasicController
 
@@ -79,7 +80,7 @@
 {
 
     NSString *heightString = [webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"];
-    NSLog(@"webview document body scrollHeight is %@ high",heightString);
+    PPDebug(@"webview document body scrollHeight is %@ high",heightString);
 
     //set webview frame
     CGRect webViewFrame = webView.frame;
@@ -132,7 +133,7 @@
     
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSLog(@"load webview url = %@", [request description]);
+    PPDebug(@"load webview url = %@", [request description]);
     if (request) {
         [self.dataWebview loadRequest:request];        
     }

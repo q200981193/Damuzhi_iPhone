@@ -132,8 +132,6 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-//    self.mapView.showsUserLocation = YES;
-//    self.mapAnnotations = [[NSMutableArray alloc]init];
     [self loadAllAnnotations];
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
@@ -144,20 +142,17 @@
 
 - (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
 {
-//    NSLog(@"didAddAnnotationViews");
     [MapUtils gotoLocation:[_placeList objectAtIndex:0] mapView:mapview];
 }
 
 - (void)viewDidUnload
 {
     self.mapView = nil;
-//    self.mapAnnotations = nil;
 }
 
 - (void)dealloc 
 {
     [mapView release];
-//    [mapAnnotations release];
     [super dealloc];
 }
 

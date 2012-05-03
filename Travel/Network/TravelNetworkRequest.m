@@ -12,7 +12,7 @@
 #import "JSON.h"
 #import "UIDevice+IdentifierAddition.h"
 #import "UserManager.h"
-//#import "Package.pb.h"
+#import "PPDebug.h"
 
 @implementation TravelNetworkRequest
 
@@ -39,7 +39,7 @@
     
 #ifdef DEBUG    
     int startTime = time(0);
-    NSLog(@"[SEND] URL=%@", [url description]);    
+    PPDebug(@"[SEND] URL=%@", [url description]);    
 #endif
     
     [request startSynchronous];
@@ -51,7 +51,7 @@
     int statusCode = [request responseStatusCode];
     
 #ifdef DEBUG    
-    NSLog(@"[RECV] : status=%d, error=%@", [request responseStatusCode], [error description]);
+    PPDebug(@"[RECV] : status=%d, error=%@", [request responseStatusCode], [error description]);
 #endif    
     
     if (error != nil){
@@ -64,7 +64,7 @@
 
 #ifdef DEBUG
         int endTime = time(0);
-        NSLog(@"[RECV] data (len=%d bytes, latency=%d seconds, raw=%d bytes, real=%d bytes)", 
+        PPDebug(@"[RECV] data (len=%d bytes, latency=%d seconds, raw=%d bytes, real=%d bytes)", 
               [[request responseData] length], (endTime - startTime),
               [[request rawResponseData] length], [[request responseData] length]);
 #endif         
@@ -81,7 +81,7 @@
                 jsonDictionary = [text JSONValue];
             }
 #ifdef DEBUG
-            NSLog(@"[RECV] JSON string data : %@", text);
+            PPDebug(@"[RECV] JSON string data : %@", text);
 #endif            
 
             responseHandler(jsonDictionary, nil, output.resultCode);       

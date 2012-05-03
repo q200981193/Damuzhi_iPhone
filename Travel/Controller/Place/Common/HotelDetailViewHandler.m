@@ -82,10 +82,6 @@
     
     [self addStarLevelViewWith: NSLS(@"酒店星级") description:[PlaceUtils hotelStarToString:[place hotelStar]] starCount:[place hotelStar]];
     
-    //NSString *keyWords = [[place keywordsList] componentsJoinedByString:@" "];
-    NSString *keyWords = [[place keywordsList] objectAtIndex:0];
-
-    NSLog(@"keyWords = %@", keyWords);
     [self.commonController addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@"、"]];
     
     [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[place priceDescription]];

@@ -60,7 +60,7 @@ static CityOverViewManager *_defaultInstance = nil;
             cityOveriew = [CityOverview parseFromData:data];
         }
         @catch (NSException *exception) {
-            NSLog (@"<readCityOverviewData> Caught %@%@", [exception name], [exception reason]);
+            PPDebug(@"<readCityOverviewData> Caught %@%@", [exception name], [exception reason]);
         }
     }
     

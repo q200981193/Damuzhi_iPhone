@@ -9,6 +9,7 @@
 #import "LocalCity.h"
 #import "ASIHTTPRequest.h"
 #import "AppManager.h"
+#import "PPDebug.h"
 
 @implementation LocalCity
 
@@ -61,7 +62,7 @@
 
 - (void)setProgress:(float)newProgress
 {
-    NSLog(@"progress = %f", newProgress);
+    PPDebug(@"progress = %f", newProgress);
     self.downloadProgress = newProgress;
 }
 

@@ -88,7 +88,7 @@ static TravelTipsManager * _instance = nil;
                 [list addObject:tip];
             }
             @catch (NSException *exception) {
-                NSLog (@"<readTipDataFromFile:%@> Caught %@%@", filePath, [exception name], [exception reason]);
+                PPDebug(@"<readTipDataFromFile:%@> Caught %@%@", filePath, [exception name], [exception reason]);
             }
         }
     }

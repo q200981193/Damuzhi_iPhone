@@ -49,7 +49,7 @@ static PlaceManager *_placeDefaultManager;
                 [placeList addObjectsFromArray:[places listList]];
             }
             @catch (NSException *exception) {
-                NSLog (@"<readCityPlaceData:%@> Caught %@%@", filePath, [exception name], [exception reason]);
+                PPDebug(@"<readCityPlaceData:%@> Caught %@%@", filePath, [exception name], [exception reason]);
             }
         }
     }

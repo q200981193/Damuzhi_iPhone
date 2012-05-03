@@ -48,7 +48,7 @@ static AppManager* _defaultAppManager = nil;
             PPDebug(@"loading local app data %@...... done!", [AppUtils getAppFilePath]);
         }
         @catch (NSException *exception) {
-            NSLog (@"<loadAppData> Caught %@%@", [exception name], [exception reason]);
+            PPDebug (@"<loadAppData> Caught %@%@", [exception name], [exception reason]);
         }
     }
 }

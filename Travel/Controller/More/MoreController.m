@@ -13,6 +13,7 @@
 #import "FeekbackController.h"
 #import "CommonWebController.h"
 #import "AppUtils.h"
+#import "PPDebug.h"
 
 @interface MoreController ()
 
@@ -138,7 +139,7 @@
 	int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
-		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return cell;
 	}
     
@@ -220,7 +221,6 @@
 {
     NSInteger row = indexPath.row;
     if (row == 0) {
-        NSLog(@"点击了cell右边按钮");
         [self showCityManagment];
     }
 }

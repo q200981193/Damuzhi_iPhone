@@ -70,7 +70,6 @@
 
 - (void)clickHelp:(id)sender
 {
-    NSLog(@"click help");
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
     controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
@@ -232,8 +231,6 @@
     
     [self.navigationController pushViewController:selectController animated:YES];
     selectController.delegate = self;
-        
-    NSLog(@"<clickCategoryButton>");
 }
 
 - (void)clickSortButton:(id)sender
@@ -292,7 +289,7 @@
 
 - (void)setSelectControllerNavigationTitle:(SelectController*)controller title:(NSString*)title
 {
-    NSLog(@"cagegory name : %@", [_filterHandler getCategoryName]);
+    PPDebug(@"cagegory name : %@", [_filterHandler getCategoryName]);
     controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[_filterHandler getCategoryName],title];
 }
 

@@ -9,6 +9,7 @@
 #import "PackageManager.h"
 #import "AppUtils.h"
 #import "AppManager.h"
+#import "PPDebug.h"
 
 @implementation PackageManager
 
@@ -71,7 +72,7 @@ static PackageManager *_instance = nil;
                     [packageList addObject:package];
                 }
                 @catch (NSException *exception) {
-                    NSLog (@"<readAllPackages:%@> Caught %@%@", filePath, [exception name], [exception reason]);
+                    PPDebug (@"<readAllPackages:%@> Caught %@%@", filePath, [exception name], [exception reason]);
                 }
             }
         }

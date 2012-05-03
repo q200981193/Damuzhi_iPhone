@@ -117,7 +117,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                 list = [[travelResponse travelTipList] tipListList];
             }
             @catch (NSException *exception) {
-                NSLog (@"<findTravelTipList: %d> Caught %@%@", type, [exception name], [exception reason]);
+                PPDebug(@"<findTravelTipList: %d> Caught %@%@", type, [exception name], [exception reason]);
             }
         }
         

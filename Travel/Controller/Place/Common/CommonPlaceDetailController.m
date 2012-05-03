@@ -135,7 +135,6 @@
 
 - (void)clickHelpButton:(id)sender
 {
-    NSLog(@"click help");
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
     controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
@@ -174,7 +173,7 @@
     if (buttonIndex == [actionSheet cancelButtonIndex]) {
         return;
     }
-    NSLog(@"make call number:%@",[self.place.telephoneList objectAtIndex:buttonIndex]);
+    PPDebug(@"make call number:%@",[self.place.telephoneList objectAtIndex:buttonIndex]);
     [self performSelector:@selector(makeCall:) withObject:[self.place.telephoneList objectAtIndex:buttonIndex]];
 }
 

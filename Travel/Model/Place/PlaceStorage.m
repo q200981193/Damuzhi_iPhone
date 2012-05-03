@@ -72,7 +72,7 @@ static PlaceStorage* _historyManager = nil;
             self.placeList = [PlaceList parseFromData:data];
         }
         @catch (NSException *exception) {
-            NSLog (@"<loadPlaceList> Caught %@%@", [exception name], [exception reason]);
+            PPDebug(@"<loadPlaceList> Caught %@%@", [exception name], [exception reason]);
         }
     }
 }

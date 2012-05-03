@@ -21,6 +21,7 @@
 #import "PlaceService.h"
 #import "PlaceStorage.h"
 #import "PlaceUtils.h"
+#import "PPDebug.h"
 
 @implementation PlaceCell
 @synthesize nameLabel;
@@ -39,7 +40,7 @@
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PlaceCell" owner:self options:nil];
     // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).  
     if (topLevelObjects == nil || [topLevelObjects count] <= 0){
-        NSLog(@"create <PlaceCell> but cannot find cell object from Nib");
+        PPDebug(@"create <PlaceCell> but cannot find cell object from Nib");
         return nil;
     }
     

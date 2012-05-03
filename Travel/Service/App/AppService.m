@@ -142,7 +142,7 @@ static AppService* _defaultAppService = nil;
                 }
             }
             @catch (NSException *exception){
-                NSLog (@"<updateHelpHtmlFile> Caught %@%@", [exception name], [exception reason]);
+                PPDebug (@"<updateHelpHtmlFile> Caught %@%@", [exception name], [exception reason]);
             }
         }
     });    
@@ -180,7 +180,7 @@ static AppService* _defaultAppService = nil;
                 [self downloadProvidedServiceIcons:placeMetas];
             }
             @catch (NSException *exception){
-                NSLog (@"<updateAppData> Caught %@%@", [exception name], [exception reason]);
+                PPDebug (@"<updateAppData> Caught %@%@", [exception name], [exception reason]);
             }
         }
     });    

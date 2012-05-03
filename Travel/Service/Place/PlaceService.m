@@ -237,7 +237,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                 list = [_onlinePlaceManager findPlacesByCategory:categoryId]; 
             }
             @catch (NSException *exception) {
-                NSLog (@"<findPlaces:%d> Caught %@%@", categoryId, [exception name], [exception reason]);
+                PPDebug(@"<findPlaces:%d> Caught %@%@", categoryId, [exception name], [exception reason]);
             } 
         }
         
@@ -274,7 +274,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                 list = [[travelResponse placeList] listList]; 
             }
             @catch (NSException *exception) {
-                NSLog (@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
+                PPDebug(@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
             } 
         }
         
@@ -313,7 +313,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                 list = [[travelResponse placeList] listList]; 
             }
             @catch (NSException *exception) {
-                NSLog (@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
+                PPDebug(@"<findPlacesNearby> Caught %@%@", [exception name], [exception reason]);
             } 
         }
         
@@ -424,7 +424,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     favoritPlaceList = [[travelResponse placeList] listList];   
                 }
                 @catch (NSException *exception) {
-                    NSLog (@"<findTopFavoritePlaces:%d> Caught %@%@", type, [exception name], [exception reason]);
+                    PPDebug(@"<findTopFavoritePlaces:%d> Caught %@%@", type, [exception name], [exception reason]);
                 }  
                 
                 if ([viewController respondsToSelector:@selector(finishFindTopFavoritePlaces:type:)]){
