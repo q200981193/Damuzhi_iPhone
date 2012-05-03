@@ -34,7 +34,7 @@
     self.feekbackTextView.placeholderColor = [UIColor lightGrayColor];
     
     // Set navigation bar buttons
-    [self setNavigationLeftButton:NSLS(@"返回") imageName:IMAGE_NAVIGATIONBAR_BACK_BTN action:@selector(clickBack:)];
+    [self setNavigationLeftButton:NSLS(@" 返回") imageName:IMAGE_NAVIGATIONBAR_BACK_BTN action:@selector(clickBack:)];
     [self setNavigationRightButton:NSLS(@"提交") imageName:@"topmenu_btn_right.png" action:@selector(clickSubmit:)];
         
     // Add a single tap Recognizer

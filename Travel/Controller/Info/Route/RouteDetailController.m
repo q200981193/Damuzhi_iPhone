@@ -23,11 +23,12 @@
 
 - (void)viewDidLoad
 {
+//    [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:239.0/255.0 blue:248.0/255.0 alpha:1]];
     
-    [self setNavigationLeftButton:@"返回" imageName:@"back.png" action:@selector(clickBack:)];
+    [self setNavigationLeftButton:@" 返回" imageName:@"back.png" action:@selector(clickBack:)];
 
     [self addSlideImageView];
     
@@ -46,7 +47,7 @@
     [label setLineBreakMode:UILineBreakModeWordWrap];
 
     [label setBackgroundColor:[UIColor clearColor]];
-    [label setFont:[UIFont systemFontOfSize:15]];
+    [label setFont:[UIFont systemFontOfSize:14]];
     [label setTextColor:[UIColor colorWithRed:101/255.0 green:101/255.0 blue:101/255.0 alpha:1]];
     
     NSString *detailIntro = [NSString stringWithFormat:@"       %@", [_tip.detailIntro stringByReplacingOccurrencesOfString:@"\n" withString:@"       \n"]];

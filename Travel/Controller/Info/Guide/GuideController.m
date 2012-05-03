@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad
 {
-    [self setBackgroundImageName:@"all_page_bg.jpg"];
+    [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
