@@ -27,6 +27,7 @@
 #import "PlaceUtils.h"
 #import "AppService.h"
 #import "MapUtils.h"
+#import "UIImageUtil.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
@@ -389,7 +390,7 @@
     _nearbyView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 151)];
-    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
+//    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
     [_nearbyView addSubview:tbView];
     [_nearbyView sendSubviewToBack:tbView];
     [tbView release];
@@ -402,6 +403,31 @@
     
     //get nearby placelist data
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place viewController:self];
+}
+
+- (void)setNearbyTaleRowBgImage:(UIButton*)button row:(int)row
+{
+    switch (row) {
+        case 1:
+            [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            break;
+            
+        case 2:
+        case 3:
+        case 4:
+            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg1_center.png"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_center.png"] forState:UIControlStateHighlighted];
+            break;
+            
+        case 5:
+            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg1_down.png"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 //request done after get nearby placelist
@@ -417,10 +443,12 @@
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
             [location release];
             
-            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 30 + 30*(i++), 300, 24)];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 30 + 30*(i++), 300, 30)];
             rowView.tag = [_nearbyPlaceList indexOfObject:nearbyPlace];
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 14, 14)];
+            [self setNearbyTaleRowBgImage:rowView row:i];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 14, 14)];
             
             NSString *imageName = [AppUtils getCategoryIcon:[nearbyPlace categoryId]];
             UIImage *image = [UIImage imageNamed:imageName];
@@ -428,7 +456,7 @@
             [rowView addSubview:imageView];
             [imageView release];
             
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 3, 150, 14)];
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8, 150, 14)];
             nameLabel.text = [nearbyPlace name];
             nameLabel.font = [UIFont systemFontOfSize:12];
             nameLabel.textColor = DESCRIPTION_COLOR;
@@ -437,7 +465,7 @@
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 50, 14)];
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 8, 50, 14)];
             
             NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
                                   
@@ -448,7 +476,7 @@
             [rowView addSubview:distanceLabel];
             [distanceLabel release];
             
-            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 6, 7, 7)];
+            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 8, 7, 14)];
             
             UIImage *goImage = [UIImage imageNamed:@"go_btn"];
             [goView setImage:goImage];
@@ -543,6 +571,12 @@
     }
     
     UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+    [bgImageView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1]];
+    
+    UIImageView *gotoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"go_btn.png"]];
+    [gotoImageView setCenter:CGPointMake(20, height/2)];
+    
+    [bgImageView addSubview:gotoImageView];
     bgImageView.image = [UIImage imageNamed:@"t_bg.png"];
     [rowView addSubview:bgImageView];
     [rowView sendSubviewToBack:bgImageView];
