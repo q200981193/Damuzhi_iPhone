@@ -9,6 +9,7 @@
 #import "PlaceUtils.h"
 #import "LocaleUtils.h"
 #import "AppManager.h"
+#import "CommonPlace.h"
 
 @implementation PlaceUtils
 
@@ -77,6 +78,81 @@
     else {
         return [NSString stringWithFormat:NSLS(@"<0.1KM")];
     }
+}
+
++ (int)getPlacesCountInSameType:(int)type typeId:(int)typeId placeList:(NSArray*)placeList
+{
+    int count = 0;
+    switch (type) {
+        case TYPE_SUBCATEGORY:
+            count = [PlaceUtils getPlacesOfSameSubcategory:typeId placeList:placeList];
+            break;
+            
+        case TYPE_PROVIDED_SERVICE:
+            count = [PlaceUtils getPlacesHaveSameProvidedService:typeId placeList:placeList];
+            break;
+            
+        case TYPE_AREA:
+            count = [PlaceUtils getPlacesInSameArea:typeId placeList:placeList];
+            break;
+            
+        default:
+            break;
+    }
+    
+    return count;
+}
+
++ (int)getPlacesHaveSameProvidedService:(int)providedServiceId placeList:(NSArray*)placeList
+{
+    if (providedServiceId == ALL_CATEGORY) {
+        return [placeList count];
+    }
+    
+    int count = 0;
+    for (Place *place in placeList) {
+        for(NSNumber *serviceId in place.providedServiceIdList)
+        {
+            if ([serviceId intValue] == providedServiceId) {
+                count++;
+                break;
+            }
+        }
+    }
+    
+    return count;
+}
+
++ (int)getPlacesOfSameSubcategory:(int)subcategoryId placeList:(NSArray*)placeList
+{
+    if (subcategoryId == ALL_CATEGORY) {
+        return [placeList count];
+    }
+    
+    int count = 0;
+    for (Place *place in placeList) {
+        if (place.subCategoryId == subcategoryId) {
+            count++;
+        }
+    }
+    
+    return count;
+}
+
++ (int)getPlacesInSameArea:(int)areaId placeList:(NSArray*)placeList
+{
+    if (areaId == ALL_CATEGORY) {
+        return [placeList count];
+    }
+    
+    int count = 0;
+    for (Place *place in placeList) {
+        if (place.areaId == areaId) {
+            count++;
+        }
+    }
+    
+    return count;
 }
 
 

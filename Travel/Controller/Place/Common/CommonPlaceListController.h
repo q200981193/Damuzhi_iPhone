@@ -40,6 +40,7 @@
     NSObject<PlaceListFilterProtocol> *_filterHandler;    
 }
 
+@property (retain, nonatomic) NSArray *allPlaceList;
 @property (retain, nonatomic) NSArray *placeList;
 @property (retain, nonatomic) SelectedItems *selectedItems;
 @property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
@@ -47,6 +48,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *modeButton;
 
 @property (retain, nonatomic) PlaceListController* placeListController;
+@property (retain, nonatomic) SelectController* selectController;
 @property (retain, nonatomic) NSObject<PlaceListFilterProtocol> *filterHandler;
 
 - (id)initWithFilterHandler:(NSObject<PlaceListFilterProtocol>*)handler;

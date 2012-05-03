@@ -1,4 +1,4 @@
-//
+
 //  CommonPlaceListController.m
 //  Travel
 //
@@ -18,6 +18,7 @@
 #import "AppUtils.h"
 #import "PPNetworkRequest.h"
 #import "PPDebug.h"
+#import "PlaceUtils.h"
 
 @implementation CommonPlaceListController
 
@@ -25,18 +26,22 @@
 @synthesize buttonHolderView = _buttonHolderView;
 @synthesize placeListHolderView = _placeListHolderView;
 @synthesize placeListController = _placeListController;
+@synthesize selectController = _selectController;
 @synthesize filterHandler = _filterHandler;
 @synthesize selectedItems = _selectedItems;
 @synthesize placeList = _placeList;
+@synthesize allPlaceList = _allPlaceList;
 
 - (void)dealloc {
     [_filterHandler release];
     [_placeListController release];
+    [_selectController release];
     [_buttonHolderView release];
     [_placeListHolderView release];
     [_modeButton release];
     [_selectedItems release];
     [_placeList release];
+    [_allPlaceList release];
     [super dealloc];
 }
 
@@ -146,8 +151,11 @@
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"数据加载失败" title:nil];
     }
-
-    self.placeList = [self filterAndSort:placeList];
+    
+    self.allPlaceList = placeList;
+//    [_selectController setAndReload:placeList];
+    
+    self.placeList = [self filterAndSort:_allPlaceList];
     [self createAndReloadPlaceListController];
 }
 
@@ -222,54 +230,62 @@
 {
     NSArray *subCategoryList = [[AppManager defaultManager] getSubCategoryList:[_filterHandler getCategoryId]];
     
-    SelectController* selectController = [SelectController createController:subCategoryList                                                           
+    _selectController = [SelectController createController:subCategoryList                                                           
                                                                 selectedIds:[_selectedItems selectedSubCategoryIdList] 
                                                                multiOptions:YES
-                                                                needConfirm:YES];
+                                                                needConfirm:YES
+                                                                       type:TYPE_SUBCATEGORY];
+    [_selectController setAndReload:_allPlaceList];
+
+    [self setSelectControllerNavigationTitle:_selectController title:((UIButton*)sender).titleLabel.text];
     
-    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
-    
-    [self.navigationController pushViewController:selectController animated:YES];
-    selectController.delegate = self;
+    [self.navigationController pushViewController:_selectController animated:YES];
+    _selectController.delegate = self;
 }
 
 - (void)clickSortButton:(id)sender
 {    
     NSArray *sortOptionList = [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]];
-    SelectController* selectController = [SelectController createController:sortOptionList
+    _selectController = [SelectController createController:sortOptionList
                                                                 selectedIds:[_selectedItems selectedSortIdList] 
                                                                multiOptions:NO
-                                                                needConfirm:NO];
+                                                                needConfirm:NO
+                                                                       type:TYPE_SORT];
+    [_selectController setAndReload:_allPlaceList];
 
-    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];    
-    [self.navigationController pushViewController:selectController animated:YES];
-    selectController.delegate = self;
+    [self setSelectControllerNavigationTitle:_selectController title:((UIButton*)sender).titleLabel.text];    
+    [self.navigationController pushViewController:_selectController animated:YES];
+    _selectController.delegate = self;
 }
 
 - (void)clickPrice:(id)sender
 {    
     NSArray *hotelPriceList = [[AppManager defaultManager] getPriceList:[[AppManager defaultManager] getCurrentCityId]];
-    SelectController* selectController = [SelectController createController:hotelPriceList
+    _selectController = [SelectController createController:hotelPriceList
                                                                 selectedIds:[_selectedItems selectedPriceIdList]
                                                                multiOptions:YES
-                                                                needConfirm:YES];
-    
-    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
-    [self.navigationController pushViewController:selectController animated:YES];
-    selectController.delegate = self;
+                                                                needConfirm:YES
+                                                                       type:TYPE_PRICE];
+    [_selectController setAndReload:_allPlaceList];
+
+    [self setSelectControllerNavigationTitle:_selectController title:((UIButton*)sender).titleLabel.text];
+    [self.navigationController pushViewController:_selectController animated:YES];
+    _selectController.delegate = self;
 }
 
 - (void)clickArea:(id)sender
 {
     NSArray *areaList = [[AppManager defaultManager] getAreaNameList:[[AppManager defaultManager] getCurrentCityId]];
-    SelectController* selectController = [SelectController createController:areaList
+    _selectController = [SelectController createController:areaList
                                                                 selectedIds:[_selectedItems selectedAreaIdList]
                                                                multiOptions:YES 
-                                                                needConfirm:YES];
+                                                                needConfirm:YES
+                                                                       type:TYPE_AREA];
+    [_selectController setAndReload:_allPlaceList];
 
-    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
-    [self.navigationController pushViewController:selectController animated:YES];
-    selectController.delegate = self;
+    [self setSelectControllerNavigationTitle:_selectController title:((UIButton*)sender).titleLabel.text];
+    [self.navigationController pushViewController:_selectController animated:YES];
+    _selectController.delegate = self;
 }
 
 - (void)clickService:(id)sender
@@ -277,14 +293,15 @@
     
     NSArray *serviceList = [[AppManager defaultManager] getProvidedServiceList:[_filterHandler getCategoryId]];
     
-    SelectController* selectController = [SelectController createController:serviceList
+    _selectController = [SelectController createController:serviceList
                                                                 selectedIds:[_selectedItems selectedServiceIdList]
                                                                multiOptions:YES
-                                                                needConfirm:YES];
-    
-    [self setSelectControllerNavigationTitle:selectController title:((UIButton*)sender).titleLabel.text];
-    [self.navigationController pushViewController:selectController animated:YES];
-    selectController.delegate = self;
+                                                                needConfirm:YES
+                                                                       type:TYPE_PROVIDED_SERVICE];
+    [_selectController setAndReload:_allPlaceList];
+    [self setSelectControllerNavigationTitle:_selectController title:((UIButton*)sender).titleLabel.text];
+    [self.navigationController pushViewController:_selectController animated:YES];
+    _selectController.delegate = self;
 }
 
 - (void)setSelectControllerNavigationTitle:(SelectController*)controller title:(NSString*)title
@@ -293,9 +310,15 @@
     controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[_filterHandler getCategoryName],title];
 }
 
+//- (void)didSelectFinish:(NSArray*)selectedList
+//{ 
+//    [_filterHandler findAllPlaces:self];
+//}
+
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
-    [_filterHandler findAllPlaces:self];
+    self.placeList = [self filterAndSort:_allPlaceList];
+    [self createAndReloadPlaceListController];
 }
 
 - (void)viewWillAppear:(BOOL)animated

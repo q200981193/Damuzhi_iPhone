@@ -489,6 +489,7 @@
         [loc release];
     }
     else {
+        [self popupMessage:@"加载周边推荐数据失败！" title:nil];
     }
 }
 
