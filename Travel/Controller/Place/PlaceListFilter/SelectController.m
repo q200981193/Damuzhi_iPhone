@@ -251,7 +251,12 @@
             [_beforeSelectedIds addObject:selectId];
         }
         
-        [delegate didSelectFinish:self.selectedIds];
+        if (delegate && [delegate respondsToSelector:@selector(didSelectFinish:)]) {
+            [delegate didSelectFinish:self.selectedIds];
+        }
+        else {
+            PPDebug(@"[delegate respondsToSelector:@selector(didSelectFinish:)]");
+        }
     }
 }
 

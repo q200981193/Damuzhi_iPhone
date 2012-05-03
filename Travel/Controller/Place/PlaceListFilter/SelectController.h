@@ -9,7 +9,7 @@
 #import "PPTableViewController.h"
 
 @protocol SelectControllerDelegate <NSObject>
-
+@optional
 - (void)didSelectFinish:(NSArray*)selectedList;
 
 @end
