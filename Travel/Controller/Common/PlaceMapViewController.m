@@ -52,6 +52,7 @@
 #import "AppUtils.h"
 #import "UIImageUtil.h"
 #import "MapUtils.h"
+#import "AppUtils.h"
 
 @implementation PlaceMapViewController
 
@@ -102,7 +103,6 @@
 
 - (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
 {
-//    [MapUtils gotoLocation:[_placeList objectAtIndex:0] mapView:mapview];
 }
 
 - (void)viewDidUnload
@@ -157,14 +157,10 @@
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
             
-            UIButton *customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
-            UIImage *img = [UIImage strectchableImageName:@"green_glass" leftCapWidth:20];
-            annotationView.image = img;
-            [annotationView setFrame:customizeView.frame];
-                        
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];            
-            
-            [annotationView addSubview:customizeView];
+            NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+            NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
+            [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
+
             return annotationView;
         }
         else
