@@ -66,8 +66,6 @@
 
 - (void)viewDidLoad
 {
-    self.supportRefreshHeader = YES;
-
     [super viewDidLoad];
      
     [self.dataTableView setSeparatorColor:[UIColor clearColor]];
@@ -113,8 +111,11 @@
 + (PlaceListController*)createController:(NSArray*)placeList
                                superView:(UIView*)superView
                          superController:(PPViewController*)superController
+                          pullToRreflash:(BOOL)pullToRreflash
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
+    controller.supportRefreshHeader = pullToRreflash;
+
     [controller.view setFrame:superView.bounds];
     controller.superController = superController;
     controller.mapViewController.superController = superController;
@@ -123,6 +124,7 @@
     
     return controller;
 }
+
 
 
 #define SHOW_NO_DATA_LABEL_TAG 100

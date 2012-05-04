@@ -52,7 +52,8 @@
     self.placeList = [[PlaceStorage historyManager] allPlaces];
     self.placeListController = [PlaceListController createController:_placeList 
                                                            superView:placeListHolderView
-                                                     superController:self];
+                                                     superController:self
+                                                      pullToRreflash:NO];
     
     [self.placeListController setAndReloadPlaceList:_placeList];
     [self updateDeleteButton];

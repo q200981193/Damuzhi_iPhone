@@ -40,9 +40,10 @@
 @property (assign, nonatomic) id<PullToRefrshDelegate> pullDownDelegate;
 
 - (void)setAndReloadPlaceList:(NSArray*)list;
-+ (PlaceListController*)createController:(NSArray*)list 
++ (PlaceListController*)createController:(NSArray*)placeList
                                superView:(UIView*)superView
-                         superController:(PPViewController*)superController;
+                         superController:(PPViewController*)superController
+                          pullToRreflash:(BOOL)pullToRreflash;
 
 - (void)switchToMapMode;
 - (void)switchToListMode;

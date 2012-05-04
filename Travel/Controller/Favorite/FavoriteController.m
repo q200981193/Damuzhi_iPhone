@@ -105,7 +105,8 @@
         if (self.myFavPlaceListController == nil) {
             self.myFavPlaceListController = [PlaceListController createController:self.showMyList 
                                                                         superView:myFavPlaceListView
-                                                                  superController:self];
+                                                                  superController:self
+                                                                   pullToRreflash:NO];
         }
         [self.myFavPlaceListController setAndReloadPlaceList:self.showMyList];
     }
@@ -116,7 +117,8 @@
         if (self.topFavPlaceListController == nil) {
             self.topFavPlaceListController = [PlaceListController createController:self.showTopList 
                                                                         superView:topFavPlaceListView
-                                                                  superController:self];
+                                                                  superController:self
+                                                                    pullToRreflash:NO];
         }
         [self.topFavPlaceListController setAndReloadPlaceList:self.showTopList];
     }

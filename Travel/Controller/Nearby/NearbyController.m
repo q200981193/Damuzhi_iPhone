@@ -100,7 +100,8 @@
     if (self.placeListController == nil){
         self.placeListController = [PlaceListController createController:_placeList 
                                                                superView:placeListHolderView
-                                                         superController:self];
+                                                         superController:self
+                                                          pullToRreflash:YES];
         [placeListController setPullDownDelegate:self];
     }
     
