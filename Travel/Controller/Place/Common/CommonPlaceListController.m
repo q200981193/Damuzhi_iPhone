@@ -153,7 +153,6 @@
     }
     
     self.allPlaceList = placeList;
-//    [_selectController setAndReload:placeList];
     
     self.placeList = [self filterAndSort:_allPlaceList];
     [self createAndReloadPlaceListController];
@@ -165,10 +164,16 @@
         self.placeListController = [PlaceListController createController:_placeList 
                                                                superView:_placeListHolderView
                                                          superController:self];  
+        [_placeListController setPullDownDelegate:self];
     }
     
     [self.placeListController setAndReloadPlaceList:_placeList];
     [self updateNavigationBarTitle:_placeList.count];
+}
+
+- (void)didPullDown
+{
+    [_filterHandler findAllPlaces:self];
 }
 
 - (NSArray*)filterAndSort:(NSArray*)placeList

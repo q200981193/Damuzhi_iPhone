@@ -38,12 +38,54 @@
     return nil;
 }
 
-+ (NSString*)getPriceString:(Place*)place
++ (NSString*)getDetailPrice:(Place*)place
 {
-    if ([place.price intValue] > 0) {
-        return [NSString stringWithFormat:@"%@%@",
-                [[AppManager defaultManager] getCurrencySymbol:place.cityId],
-                [place price]];
+    NSString *price = @"";
+    NSString *currencySymbol = [[AppManager defaultManager] getCurrencySymbol:place.cityId];
+    switch (place.categoryId) {
+        case PlaceCategoryTypePlaceSpot:
+        case PlaceCategoryTypePlaceHotel:
+            price = place.priceDescription;
+            break;
+            
+        case PlaceCategoryTypePlaceRestraurant:
+        case PlaceCategoryTypePlaceEntertainment:
+            price = [self priceStringWithSymbol:currencySymbol price:[place.avgPrice intValue]];
+            break;
+            
+        default:
+            break;
+    }
+
+    return price;
+}
+
++ (NSString*)getPrice:(Place*)place
+{
+    NSString *price = @"";
+    NSString *currencySymbol = [[AppManager defaultManager] getCurrencySymbol:place.cityId];
+    switch (place.categoryId) {
+        case PlaceCategoryTypePlaceSpot:
+        case PlaceCategoryTypePlaceHotel:
+            price = [self priceStringWithSymbol:currencySymbol price:[place.price intValue]];
+            break;
+            
+        case PlaceCategoryTypePlaceRestraurant:
+        case PlaceCategoryTypePlaceEntertainment:
+            price = [self priceStringWithSymbol:currencySymbol price:[place.avgPrice intValue]];
+            break;
+            
+        default:
+            break;
+    }
+
+    return price;
+}
+
++ (NSString*)priceStringWithSymbol:(NSString*)symbol price:(int)price
+{
+    if (price > 0) {
+        return [NSString stringWithFormat:@"%@%d", symbol, price];
     }else {
         return NSLS(@"免费");
     }

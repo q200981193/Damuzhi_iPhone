@@ -31,8 +31,9 @@
 @synthesize mapHolderView = _mapHolderView;
 @synthesize superController = _superController;
 @synthesize mapViewController = _mapViewController;
-@synthesize canDelete;
-@synthesize deletePlaceDelegate;
+@synthesize canDelete = _canDelete;
+@synthesize deletePlaceDelegate = _deletePlaceDelegate;
+@synthesize pullDownDelegate = _pullDownDelegate;
 
 - (void)dealloc
 {
@@ -64,6 +65,8 @@
 
 - (void)viewDidLoad
 {
+    self.supportRefreshHeader = YES;
+
     [super viewDidLoad];
     [self.dataTableView setSeparatorColor:[UIColor clearColor]];
 
@@ -73,6 +76,15 @@
     [self.mapViewController.view setFrame:self.mapHolderView.bounds];
     [self.mapHolderView addSubview:self.mapViewController.view];
     [self updateViewByMode];
+}
+
+#pragma mark For Sub Class to override and implement
+- (void) reloadTableViewDataSource
+{
+	NSLog(@"Please override reloadTableViewDataSource"); 
+    if (_pullDownDelegate && [_pullDownDelegate respondsToSelector:@selector(didPullDown)]) {
+        [_pullDownDelegate didPullDown];
+    }
 }
 
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
@@ -142,6 +154,10 @@
     else {
         [self removeNoDataTips];
     }
+    
+    // after finish loading data, please call the following codes
+	[refreshHeaderView setCurrentDate];  	
+	[self dataSourceDidFinishLoadingNewData];
 }
 
 #pragma mark -
@@ -202,7 +218,7 @@
     [view release];
     [placeCell setCellDataByPlace:place currentLocation:[[AppService defaultService] currentLocation]];
     
-    if (canDelete) {
+    if (_canDelete) {
         placeCell.priceLable.hidden = YES;
         placeCell.favoritesView.hidden = YES;
         placeCell.areaLable.hidden= YES;
@@ -227,8 +243,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (deletePlaceDelegate && [deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
-        [deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
+    if (_deletePlaceDelegate && [_deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
+        [_deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
     }
     
     NSMutableArray *mutableDataList = [NSMutableArray arrayWithArray:dataList];
@@ -244,7 +260,7 @@
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (canDelete) {
+    if (_canDelete) {
         return UITableViewCellEditingStyleDelete;
     }
     else {

@@ -12,6 +12,7 @@
 #import "SelectController.h"
 #import "CityOverviewService.h"
 #import "PlaceSelectedItemsManager.h"
+#import "PlaceListController.h"
 
 #define WIDTH_OF_FILTER_BUTTON 52
 #define HEIGHT_OF_FILTER_BUTTON 27
@@ -35,7 +36,7 @@
 
 @end
 
-@interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, CityOverviewServiceDelegate, SelectControllerDelegate>
+@interface CommonPlaceListController : PPTableViewController <PlaceServiceDelegate, CityOverviewServiceDelegate, SelectControllerDelegate, PullToRefrshDelegate>
 {
     NSObject<PlaceListFilterProtocol> *_filterHandler;    
 }

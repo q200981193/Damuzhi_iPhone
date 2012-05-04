@@ -84,7 +84,7 @@
     
     [self.commonController addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@"、"]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[place priceDescription]];
+    [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[PlaceUtils getDetailPrice:place]];
 
     [self.commonController addTransportView:place];
 }

@@ -160,7 +160,7 @@
     distanceLable.text = [PlaceUtils getDistanceString:place currentLocation:currentLocation];
     
     [self setPlaceIcon:place];
-    priceLable.text = [PlaceUtils getPriceString:place];
+    priceLable.text = [PlaceUtils getPrice:place];
     
     areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
     

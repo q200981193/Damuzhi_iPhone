@@ -19,7 +19,8 @@
 @interface PlaceUtils : NSObject
 
 + (NSString*)hotelStarToString:(int32_t)hotelStar;
-+ (NSString*)getPriceString:(Place*)place;
++ (NSString*)getDetailPrice:(Place*)place;
++ (NSString*)getPrice:(Place*)place;
 + (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation*)currentLocation;
 + (int)getPlacesCountInSameType:(int)type typeId:(int)typeId placeList:(NSArray*)placeList;
 
