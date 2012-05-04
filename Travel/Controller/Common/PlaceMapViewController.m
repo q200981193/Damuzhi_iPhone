@@ -52,6 +52,7 @@
 #import "AppUtils.h"
 #import "UIImageUtil.h"
 #import "MapUtils.h"
+#import "AppUtils.h"
 
 @implementation PlaceMapViewController
 
@@ -59,47 +60,7 @@
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
 //@synthesize mapAnnotations;
-@synthesize indexOfSelectedPlace;
 @synthesize superController;
-
-
-- (void)gotoPlaceWithCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = coordinate.latitude ;
-    newRegion.center.longitude = coordinate.longitude;
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-    [self.mapView setRegion:newRegion animated:YES];
-}
-
-
-- (void)gotoCurrentPosition
-{
-    //开始探测自己的位置  
-    if (_locationManager==nil)   
-    {  
-        _locationManager =[[CLLocationManager alloc] init];  
-    }  
-    
-    
-    if ([CLLocationManager locationServicesEnabled])   
-    {  
-        _locationManager.delegate=self;  
-        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;  
-        _locationManager.distanceFilter=10.0f;  
-        [_locationManager startUpdatingLocation];  
-    }  
-    
-    MKCoordinateRegion theRegion = { {0.0, 0.0 }, { 0.0, 0.0 } };
-    theRegion.center = [[_locationManager location] coordinate];
-    [_mapView setZoomEnabled:YES];
-    [_mapView setScrollEnabled:YES];
-    theRegion.span.latitudeDelta = 0.112872;
-    theRegion.span.longitudeDelta = 0.109863;
-    [_mapView setRegion:theRegion animated:YES];
-}
-
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -120,7 +81,7 @@
         } 
     }
     
-    [_mapView removeAnnotations:self.mapView.annotations];
+    [_mapView removeAnnotations:_mapView.annotations];
     [_mapView addAnnotations:mapAnnotations];
     [mapAnnotations release];
 }
@@ -142,17 +103,20 @@
 
 - (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
 {
-    [MapUtils gotoLocation:[_placeList objectAtIndex:0] mapView:mapview];
 }
 
 - (void)viewDidUnload
 {
-    self.mapView = nil;
+    _mapView = nil;
+    _placeList = nil;
+    _locationManager = nil;
 }
 
 - (void)dealloc 
 {
-    [mapView release];
+    [_mapView release];
+    [_placeList release];
+    [_locationManager release];
     [super dealloc];
 }
 
@@ -193,14 +157,10 @@
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
             
-            UIButton *customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
-            UIImage *img = [UIImage strectchableImageName:@"green_glass" leftCapWidth:20];
-            annotationView.image = img;
-            [annotationView setFrame:customizeView.frame];
-                        
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];            
-            
-            [annotationView addSubview:customizeView];
+            NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+            NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
+            [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
+
             return annotationView;
         }
         else

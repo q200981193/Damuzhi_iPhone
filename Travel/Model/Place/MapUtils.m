@@ -34,6 +34,7 @@
     newRegion.span.longitudeDelta = 0.025;
 //    newRegion.span.latitudeDelta = 0.112872;
 //    newRegion.span.longitudeDelta = 0.109863;
+
     
     [mapView setRegion:newRegion animated:YES];
 }
@@ -66,6 +67,20 @@
     customizeView.tag = value;
     
     return customizeView;
+}
+
++ (void) showCallout:(MKAnnotationView*)annotationView imageName:(NSString*)imageName tag:(NSInteger)tag target:(id)target
+{
+    annotationView.canShowCallout = YES;
+
+    UIImage *image = [UIImage imageNamed:imageName];
+    annotationView.image = image; 
+    
+    UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    [rightButton addTarget:target action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+    annotationView.rightCalloutAccessoryView = rightButton;           
+    
+    rightButton.tag = tag;
 }
 
 @end

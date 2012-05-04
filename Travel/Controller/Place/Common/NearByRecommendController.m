@@ -149,22 +149,19 @@
                 UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
                 annotationView.image = img;
                 [annotationView setFrame:customizeView.frame];
+                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
+                [annotationView addSubview:customizeView];
             }
             else
-            {
-                NSInteger value = [_placeList indexOfObject:placeAnnotation.place];
-
-                customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,35,35)] autorelease];
-                [customizeView setBackgroundColor:[UIColor clearColor]];
-
-                NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
-                UIImage *image = [UIImage imageNamed:fileName];
+            {                
                 
-                annotationView.image = image; 
-                customizeView.tag = value;
+                NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+                NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
+                [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
+
+                            
             }
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
-            [annotationView addSubview:customizeView];
+            
             return annotationView;
         }
         else

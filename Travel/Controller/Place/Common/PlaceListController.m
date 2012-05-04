@@ -16,6 +16,7 @@
 #import "AppManager.h"
 #import "UIImageUtil.h"
 #import "AppService.h"
+#import "MapUtils.h"
 
 @interface PlaceListController () 
 
@@ -148,7 +149,10 @@
 
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
-    if ([dataList count] == 0) {
+    if ([list count] > 0) {
+        [MapUtils gotoLocation:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
+    }
+        if ([dataList count] == 0) {
         [self addNoDataTips];
     }
     else {
