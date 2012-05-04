@@ -104,7 +104,7 @@
         case TYPE_SUBCATEGORY:
         case TYPE_PROVIDED_SERVICE:
         case TYPE_AREA:
-            text = [name stringByAppendingFormat:@"(%d)", [PlaceUtils getPlacesCountInSameType:_type typeId:typeId placeList:_placeList]];
+            text = [name stringByAppendingFormat:@" (%d)", [PlaceUtils getPlacesCountInSameType:_type typeId:typeId placeList:_placeList]];
             break;
             
         default:
