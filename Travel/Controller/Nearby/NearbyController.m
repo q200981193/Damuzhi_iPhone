@@ -82,13 +82,17 @@
 
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList
 {
-    if (result == ERROR_SUCCESS) {
-        self.placeList = [self filterByDistance:placeList distance:_distance];
-        [self createAndReloadPlaceListController];
-    }
-    else {
+    if (result != ERROR_SUCCESS) {
         [self popupMessage:@"数据加载失败" title:nil];
     }
+    
+    self.placeList = [self filterByDistance:placeList distance:_distance];
+    [self createAndReloadPlaceListController];
+}
+
+- (void)deletedPlace:(Place *)place
+{
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
 }
 
 - (void)createAndReloadPlaceListController
@@ -96,7 +100,8 @@
     if (self.placeListController == nil){
         self.placeListController = [PlaceListController createController:_placeList 
                                                                superView:placeListHolderView
-                                                         superController:self];  
+                                                         superController:self];
+        [placeListController setPullDownDelegate:self];
     }
     
     [self.placeListController setAndReloadPlaceList:_placeList];
@@ -172,6 +177,12 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+- (void)didPullDown
+{
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
+}
+
 
 - (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
 {

@@ -69,6 +69,7 @@
     self.supportRefreshHeader = YES;
 
     [super viewDidLoad];
+     
     [self.dataTableView setSeparatorColor:[UIColor clearColor]];
 
     // create & add map view

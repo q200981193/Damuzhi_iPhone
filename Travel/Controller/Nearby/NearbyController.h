@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "PlaceService.h"
 #import "PPTableViewController.h"
+#import "PlaceListController.h"
 
 @class PlaceListController;
 
-@interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate>
+@interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate,PullToRefrshDelegate>
 
 @property (assign, nonatomic) int distance;
 @property (assign, nonatomic) int categoryId;

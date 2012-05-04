@@ -84,6 +84,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [self.view setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1]];
 
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") 
