@@ -68,7 +68,7 @@
 }
 
 
-- (void) loadAllAnnotations
+- (void)loadAllAnnotations
 {    
     NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
     if (_placeList && _placeList.count > 0) {
@@ -93,7 +93,6 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-    [self loadAllAnnotations];
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
