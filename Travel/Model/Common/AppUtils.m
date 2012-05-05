@@ -282,12 +282,12 @@
 
 + (NSString*)getFavoriteFilePath:(int)cityId
 {
-    return [[AppUtils getFavoriteDir] stringByAppendingFormat:@"%d.dat",cityId];
+    return [[AppUtils getFavoriteDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.dat",cityId]];
 }
 
 + (NSString*)getHistoryFilePath:(int)cityId
 {
-    return [[AppUtils getHistoryDir] stringByAppendingFormat:@"%d.dat",cityId];
+    return [[AppUtils getHistoryDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.dat",cityId]];
 }
 
 + (BOOL)isShowImage

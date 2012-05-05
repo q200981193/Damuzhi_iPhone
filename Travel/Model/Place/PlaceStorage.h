@@ -22,7 +22,7 @@
 + (PlaceStorage*)favoriteManager;
 + (PlaceStorage*)historyManager;
 
-- (id)initWithFileName:(NSString*)fileName;
+- (id)initWithType:(NSString*)typeValue;
 - (NSArray*)allPlaces;
 - (void)addPlace:(Place*)place;
 - (void)deletePlace:(Place*)place;

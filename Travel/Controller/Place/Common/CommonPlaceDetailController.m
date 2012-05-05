@@ -684,8 +684,8 @@
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [favButton.titleLabel setFont:[UIFont systemFontOfSize:BIG_FONT_SIZE]];
-    favButton.titleLabel.shadowColor = [UIColor whiteColor];
-    favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
+    //favButton.titleLabel.shadowColor = [UIColor whiteColor];
+    //favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
     self.addFavoriteButton = favButton;
     [favButton release];

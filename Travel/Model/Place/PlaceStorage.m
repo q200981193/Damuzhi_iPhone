@@ -28,7 +28,7 @@ static PlaceStorage* _historyManager = nil;
     [super dealloc];
 }
 
-- (id)initWithFileName:(NSString*)typeValue
+- (id)initWithType:(NSString*)typeValue
 {
     self = [super init];
     if (self) {
@@ -44,7 +44,7 @@ static PlaceStorage* _historyManager = nil;
 + (PlaceStorage*)favoriteManager
 {
     if (_favoriteManager == nil) {
-        _favoriteManager = [[PlaceStorage alloc] initWithFileName:FAVORITE_STORAGE];
+        _favoriteManager = [[PlaceStorage alloc] initWithType:FAVORITE_STORAGE];
     }
     return _favoriteManager;
 }
@@ -52,7 +52,7 @@ static PlaceStorage* _historyManager = nil;
 + (PlaceStorage*)historyManager
 {
     if (_historyManager == nil) {
-        _historyManager = [[PlaceStorage alloc] initWithFileName:HISTORY_STORAGE];
+        _historyManager = [[PlaceStorage alloc] initWithType:HISTORY_STORAGE];
     }
     return _historyManager;
 }
@@ -69,6 +69,7 @@ static PlaceStorage* _historyManager = nil;
     else {
         filePath = [AppUtils getHistoryFilePath:[[AppManager defaultManager] getCurrentCityId]];
     }
+    PPDebug(@"%@",filePath);
     
     return filePath;
 }
