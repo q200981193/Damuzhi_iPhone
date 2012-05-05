@@ -97,10 +97,6 @@ static CityDownloadService *_instance;
     NSString *tempPath = [AppUtils getDownloadPath:localCity.cityId];
     NSString *destinationPath = [AppUtils getZipFilePath:localCity.cityId];
 
-    // Create dir
-    [FileUtil createDir:[AppUtils getDownloadDir]];
-    [FileUtil createDir:[AppUtils getZipDir]];
-
     // Create a request
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url]; 
 

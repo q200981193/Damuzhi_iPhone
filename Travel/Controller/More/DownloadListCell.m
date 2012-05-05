@@ -63,14 +63,14 @@
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
     [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
 
-    if (DEFAULT_CITY_ID == _city.cityId) {
-        self.deleteButton.hidden = YES;
-        self.defaultLabel.hidden = NO;
-     }
-    else {
-        self.deleteButton.hidden = NO;
-        self.defaultLabel.hidden = YES;
-    }
+//    if (DEFAULT_CITY_ID == _city.cityId) {
+//        self.deleteButton.hidden = YES;
+//        self.defaultLabel.hidden = NO;
+//     }
+//    else {
+//        self.deleteButton.hidden = NO;
+//        self.defaultLabel.hidden = YES;
+//    }
         
     [self setApperance:city];
 }

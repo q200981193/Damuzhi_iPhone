@@ -115,7 +115,7 @@
 //    CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
 //    NSLog(@"%@",tip.html);
     CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
     
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
     controller.title = tip.name;

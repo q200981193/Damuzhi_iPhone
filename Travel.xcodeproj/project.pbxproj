@@ -3077,9 +3077,9 @@
 		CA4906FE14F5F05B00228C37 /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				CA585F8C14F7376300471880 /* Controller */,
 				A48E047A1534058800B2695E /* Resource */,
 				CA238F2514FB27B600114175 /* ProtocolBuffer */,
-				CA585F8C14F7376300471880 /* Controller */,
 				CA585F9114F7376300471880 /* Model */,
 				CA103AFD15047D2800F60C03 /* Network */,
 				CA585F9214F7376300471880 /* Service */,

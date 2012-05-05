@@ -238,7 +238,7 @@
     int i = 0;
 
     for (NSNumber *providedServiceId in [_place providedServiceIdList]) {
-        NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
+        NSString *destinationDir = [AppUtils getProvidedServiceIconsDir];
         NSString *fileName = [NSString stringWithFormat:@"%d.png", [providedServiceId intValue]];
         
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:CGRectMake((i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE)];
@@ -722,7 +722,7 @@
     if ([AppUtils isShowImage]) {
         //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
         for (NSString *image in self.place.imagesList) {
-            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
             [imagePathList addObject:path];
         }
     }

@@ -10,7 +10,6 @@
 #import "App.pb.h"
 #import "ImageName.h"
 #import "LogUtil.h"
-#import "FileUtil.h"
 #import "CommonPlace.h"
 #import "LocaleUtils.h"
 #import "AppConstants.h"

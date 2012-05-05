@@ -134,7 +134,7 @@
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
     
     NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
     

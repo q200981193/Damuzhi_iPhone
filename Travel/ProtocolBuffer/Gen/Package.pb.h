@@ -35,6 +35,8 @@
 @class PlaceMeta;
 @class PlaceMeta_Builder;
 @class Place_Builder;
+@class RecommendedApp;
+@class RecommendedApp_Builder;
 @class TravelResponse;
 @class TravelResponse_Builder;
 @class TravelTips;

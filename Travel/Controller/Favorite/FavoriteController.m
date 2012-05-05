@@ -219,27 +219,27 @@
 - (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type
 {
     switch (type) {
-        case OBJECT_TYPE_TOP_FAVORITE_ALL:
+        case OBJECT_LIST_TOP_FAVORITE_ALL:
             self.topAllFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_SPOT:
+        case OBJECT_LIST_TOP_FAVORITE_SPOT:
             self.topSpotFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_HOTEL:
+        case OBJECT_LIST_TOP_FAVORITE_HOTEL:
             self.topHotelFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_RESTAURANT:
+        case OBJECT_LIST_TOP_FAVORITE_RESTAURANT:
             self.topRestaurantFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_SHOPPING:
+        case OBJECT_LIST_TOP_FAVORITE_SHOPPING:
             self.topShoppingFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT:
+        case OBJECT_LIST_TOP_FAVORITE_ENTERTAINMENT:
             self.topEntertainmentFavoritePlaceList = list;
             break;
         
@@ -304,7 +304,7 @@
     }
     else {
         if (topAllFavoritePlaceList == nil) {
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ALL];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_ALL];
         }
         else {
             self.showTopList = topAllFavoritePlaceList;
@@ -323,7 +323,7 @@
     }
     else {
         if(topSpotFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SPOT];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_SPOT];
         }else {
             self.showTopList = topSpotFavoritePlaceList;
             [self showPlaces];
@@ -342,7 +342,7 @@
     
     else {
         if(topHotelFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_HOTEL];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_HOTEL];
         }else {
             self.showTopList = topHotelFavoritePlaceList;
             [self showPlaces];
@@ -361,7 +361,7 @@
     
     else {
         if(topRestaurantFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_RESTAURANT];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_RESTAURANT];
         }
         else {
             self.showTopList = topRestaurantFavoritePlaceList;
@@ -381,7 +381,7 @@
     
     else {
         if(topShoppingFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SHOPPING];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_SHOPPING];
         }else {
             self.showTopList = topShoppingFavoritePlaceList;
             [self showPlaces];
@@ -400,7 +400,7 @@
     
     else {
         if(topEntertainmentFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_ENTERTAINMENT];
         }
         else {
             self.showTopList = topEntertainmentFavoritePlaceList;

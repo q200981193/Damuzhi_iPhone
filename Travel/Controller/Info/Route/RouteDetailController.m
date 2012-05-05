@@ -121,7 +121,7 @@
     if ([AppUtils isShowImage]) {
         //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
         for (NSString *image in _tip.imagesList) {
-            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
             [imagePathList addObject:path];
         }
     }

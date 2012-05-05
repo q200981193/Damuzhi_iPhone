@@ -125,8 +125,6 @@
     return controller;
 }
 
-
-
 #define SHOW_NO_DATA_LABEL_TAG 100
 - (void)removeNoDataTips
 {

@@ -16,6 +16,7 @@
 #import "LocalCityManager.h"
 #import "AppConstants.h"
 #import "MobClick.h"
+#import "AppUtils.h"
 
 #define UMENG_KEY @"4f76a1c15270157f7700004d"
 
@@ -61,6 +62,8 @@
     
 //    //–insert a delay of 5 seconds before the splash screen disappears–
 //    [NSThread sleepForTimeInterval:1.0];
+    
+    [AppUtils createAllNeededDir];
         
     // init app data
     [[AppService defaultService] loadAppData]; 
@@ -84,11 +87,6 @@
     
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
-    
-//    //if app is first launch, create default city info
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
-//        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
-//    }
 
     return YES;
 }

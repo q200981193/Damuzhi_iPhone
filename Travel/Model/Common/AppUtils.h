@@ -6,6 +6,7 @@
 //  Copyright (c) 2012年 甘橙软件. All rights reserved.
 //
 
+//
 // App dir struct 
 // -----document--------download--------001_ZhHans_1.0.zip
 //                |
@@ -13,69 +14,112 @@
 //                 -----zip--------001_ZhHans_1.0.zip 
 //                |
 //                |
-//                 -----city--------1--------data--------overview.dat
+//                 -----cities--------1--------xxxx(这里的目录结构参考接口文档)
 //                |           |
 //                |           |
-//                |            ------2-------data--------
+//                |            -------2--------xxxx
 //                |  
-//                 -----app.dat
+//                 -----app---------app.dat
+//                |           |
+//                |           |
+//                |            -----icon-------providedService-------xxx.icon
+//                |                        |
+//                |                        |
+//                |                         ---recommendApp----------xxx.icon
+//                |                        |
+//                |                        |
+//                |                         ---category--------------xxx.icon
 //                |   
-//                 -----help.html
+//                 -----help---------helpinfo.html
+//                |   
+//                 -----user---------favorite--------xxx.dat
+//                            |
+//                            |
+//                             ------history---------xxx.dat
 
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
 
 @interface AppUtils
 
-//interface for create dir
-+ (NSString*)getDownloadDir;
-+ (NSString*)getDownloadPath:(int)cityId;
-+ (NSString*)getAppDir;
-+ (NSString*)getHelpHtmlDir;
-+ (NSString*)getZipDir;
-+ (NSString*)getCityDir:(int)cityId;
-+ (NSString*)getCityDataDir:(int)cityId;
++ (BOOL)createAllNeededDir;
 
-//interface for file path
+// For getting app dir.
++ (NSString*)getDownloadDir;
++ (NSString*)getZipDir;
++ (NSString*)getCitiesDir;
++ (NSString*)getAppDir;
++ (NSString*)getHelpDir;
++ (NSString*)getUserDir;
+
+// For getting icons dir
++ (NSString*)getProvidedServiceIconsDir;
++ (NSString*)getRecommendedAppIconsDir;
++ (NSString*)getCategoryIconsDir;
+
+// For favorate data dir
++ (NSString*)getFavoriteDir;
+
+// For history data dir
++ (NSString*)getHistoryDir;
+
+// Interface for app data file.
++ (NSString*)getAppFilePath;
+
+// For getting city download path.
++ (NSString*)getDownloadPath:(int)cityId;
++ (NSString*)getZipFilePath:(int)cityId;
+
+// Interface to determine if there has local city data.
++ (BOOL)hasLocalCityData:(int)cityId;
+
+// For unzip city data.
++ (BOOL)unzipCityZip:(int)cityId;
+
+// For delete city data.
++ (void)deleteCityData:(int)cityId;
+
+// Interface for unzip flag
++ (NSString*)getUnzipFlag:(int)cityId;
+
+// For getting city data dir.
++ (NSString*)getCityDir:(int)cityId;
+
+// For getting city data file path
 + (NSString*)getCityoverViewFilePath:(int)cityId;
 + (NSString*)getPackageFilePath:(int)cityId;
 + (NSArray*)getPlaceFilePathList:(int)cityId;
-
 + (NSArray*)getGuideFilePathList:(int)cityId;
 + (NSArray*)getRouteFilePathList:(int)cityId;
 
-//interface for ...
-+ (NSString*)getUnzipFlag:(int)cityId;
-+ (NSString*)getZipFilePath:(int)cityId;
-+ (NSString*)getAppFilePath;
-
-+ (NSString*)getHelpHtmlFilePath;
+// Interface for help file
 + (BOOL)hasLocalHelpHtml;
-
-+ (NSString*)getProvidedServiceIconDir;
-+ (NSString*)getCategoryImageDir;
-
-+ (BOOL)hasLocalCityData:(int)cityId;
-+ (BOOL)unzipCityZip:(int)cityId;
 + (NSString*)getHelpZipFilePath;
++ (NSString*)getHelpHtmlFilePath;
 
-
-+ (void)deleteCityData:(int)cityId;
-
-
-+ (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string;
-+ (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL;
+// For getting icon file path.
 + (NSString*)getProvidedServiceIconPath:(int)providedServiceId;
++ (NSString*)getCategoryIcon:(int)categoryId;
++ (NSString*)getCategoryIndicatorIcon:(int)categoryId;
++ (NSString*)getCategoryPinIcon:(int)categoryId;
++ (NSString*)getRecommendedAppIconPath:(int)appId;
 
+// For getting favorite file path
++ (NSString*)getFavoriteFilePath:(int)cityId;
+
+// For getting history file path
++ (NSString*)getHistoryFilePath:(int)cityId;
+
+// For place image showable.
 + (BOOL)isShowImage;
 + (void)enableImageShow:(BOOL)isShow;
 
-+ (NSString*)getCategoryIcon:(int)categoryId;
-
-+ (NSString*)getCategoryIndicatorIcon:(int)categoryId;
-+ (NSString*)getCategoryPinIcon:(int)categoryId;
+// For showing Alert message.
 + (UIAlertView*)showUsingCellNetworkAlertViewWithTag:(int)tag delegate:(id)delegate;
 + (UIAlertView*)showDeleteCityDataAlertViewWithTag:(int)tag delegate:(id)delegate;
 
+// for other ...
++ (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string;
++ (NSURL*)getNSURLFromHtmlFileOrURL:(NSString*)fileOrURL;
 
 @end

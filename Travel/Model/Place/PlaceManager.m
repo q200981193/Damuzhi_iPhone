@@ -108,17 +108,12 @@ static PlaceManager *_placeDefaultManager;
     return distance;
 }
 
-#define NUM_OF_PLACE_NEARBY 5
+#define NUM_OF_PLACE_NEARBY 8
 - (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
 {
     NSArray *list = [self findPlacesByCategory:categoryId];
 
     NSArray *sortedPlaceList = [self sortPlacesFromNearToFar:place placeList:list];
-    
-//    for (Place *pl in sortedPlaceList) {
-//        CLLocationDistance dis1 = [self distanceBetween:pl place2:place];
-//        PPDebug(@"place name = %@, distance = %f", pl.name, dis1);
-//    }
     
     int sortedListCount = [sortedPlaceList count];
     

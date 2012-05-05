@@ -127,7 +127,7 @@
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
     
     NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
     
@@ -141,7 +141,7 @@
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
     for (NSString *image in imageList) {
-        NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+        NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
         
         //        NSLog(@"image path = %@", imgaePath);
         [imagePathList addObject:imgaePath];

@@ -13,7 +13,6 @@
 #import "ImageName.h"
 #import "LogUtil.h"
 #import "ASIHTTPRequest.h"
-#import "FileUtil.h"
 #import "PPApplication.h"
 #import "AppManager.h"
 #import "AppUtils.h"
@@ -126,7 +125,7 @@
     
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
-        NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
+        NSString *iconPath = [[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
         PPDebug(@"place iconPath = %@", iconPath);
         [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
