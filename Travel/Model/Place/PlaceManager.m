@@ -108,7 +108,7 @@ static PlaceManager *_placeDefaultManager;
     return distance;
 }
 
-#define NUM_OF_PLACE_NEARBY 5
+#define NUM_OF_PLACE_NEARBY 8
 - (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
 {
     NSArray *list = [self findPlacesByCategory:categoryId];

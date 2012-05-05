@@ -30,6 +30,8 @@
 #import "UIImageUtil.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
+#define BIG_FONT_SIZE  14
+#define SMALL_FONT_SIZE 13
 
 @implementation CommonPlaceDetailController
 @synthesize helpButton;
@@ -198,7 +200,7 @@
         UIButton *button = [[UIButton alloc] initWithFrame:rect];
         button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
         [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:13];
+        button.titleLabel.font = [UIFont systemFontOfSize:BIG_FONT_SIZE];
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button.tag = FAVORITES_OK_VIEW;
         [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
@@ -255,7 +257,7 @@
 
 - (UILabel*)createTitleView:(NSString*)title
 {
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];    
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRECT_TITLE]autorelease];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = TITLE_COLOR;
@@ -266,7 +268,7 @@
 
 - (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
+    UIFont *font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, height)] autorelease];
     label.lineBreakMode = UILineBreakModeWordWrap;
     label.numberOfLines = 0;
@@ -285,17 +287,9 @@
     return middleLineView;
 }
 
-- (UIView*)createMiddleLineView2:(CGFloat)y
-{
-    
-    UIView *middleLineView = [[[UIView alloc]initWithFrame:CGRectMake(0, y, 320, MIDDLE_LINE_HEIGHT)] autorelease];
-    middleLineView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"middle_line"]];
-    return middleLineView;
-}
-
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
+    UIFont *font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
     NSString *description = [NSString stringWithFormat:@"       %@",[descriptionString stringByReplacingOccurrencesOfString:@"\n" withString:@"\n       "]];
@@ -308,7 +302,7 @@
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT + 10)] autorelease];
     segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
         
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
+    UIFont *boldFont = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];    
     UILabel *title = [[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, TITLE_VIEW_HEIGHT)]autorelease];
     title.backgroundColor = [UIColor clearColor];
     title.textColor = TITLE_COLOR;
@@ -343,7 +337,7 @@
 
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
+    UIFont *font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
     NSString *description = descriptionString;
@@ -362,7 +356,7 @@
     [segmentView addSubview:introductionDescription];
     [dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [self createMiddleLineView2: _detailHeight + segmentView.frame.size.height];
+    UIView *middleLineView = [self createMiddleLineView: _detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
     
     _detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
@@ -385,7 +379,7 @@
 
 - (void) addNearbyView
 {
-    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 186)] autorelease];
+    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 276)] autorelease];
     _nearbyView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 151)];
@@ -415,11 +409,14 @@
         case 2:
         case 3:
         case 4:
+        case 5:
+        case 6:
+        case 7:
             [button setBackgroundImage:[UIImage imageNamed:@"table5_bg1_center.png"] forState:UIControlStateNormal];
             [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_center.png"] forState:UIControlStateHighlighted];
             break;
             
-        case 5:
+        case 8:
             [button setBackgroundImage:[UIImage imageNamed:@"table5_bg1_down.png"] forState:UIControlStateNormal];
             [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
             break;
@@ -457,25 +454,25 @@
             
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8, 150, 14)];
             nameLabel.text = [nearbyPlace name];
-            nameLabel.font = [UIFont systemFontOfSize:12];
+            nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
             nameLabel.textColor = DESCRIPTION_COLOR;
             
             nameLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 8, 50, 14)];
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(225, 8, 50, 14)];
             
             NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
                                   
             distanceLabel.text = distanceString;
-            distanceLabel.font = [UIFont systemFontOfSize:12];
+            distanceLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:distanceLabel];
             [distanceLabel release];
             
-            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 8, 7, 14)];
+            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(285, 8, 7, 14)];
             
             UIImage *goImage = [UIImage imageNamed:@"go_btn"];
             [goView setImage:goImage];
@@ -495,10 +492,10 @@
 
 - (void)addTransportView:(Place*)place
 {
-    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 156)];
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 186)];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
-    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 121)];
+    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 300, 151)];
     [tbView setImage:[UIImage imageNamed:@"table_bg"]];
     [segmentView addSubview:tbView];
     [segmentView sendSubviewToBack:tbView];
@@ -526,20 +523,20 @@
     for (i=0; i < [array count] - 1; i++)
     {
         NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
-        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 24*(i), 300, 20)];
+        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 30 + 30*(i), 300, 30)];
         
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
         nameLabel.text = [subArray objectAtIndex:0];
-        nameLabel.font = [UIFont systemFontOfSize:12];
+        nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
         nameLabel.textColor = DESCRIPTION_COLOR;
         nameLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:nameLabel];
         [nameLabel release];
         
-        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 6, 100, 14)];
+        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(245, 6, 60, 14)];
         
         distanceLabel.text = [subArray objectAtIndex:1];
-        distanceLabel.font = [UIFont systemFontOfSize:12];
+        distanceLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
         distanceLabel.textColor = DESCRIPTION_COLOR;
         distanceLabel.backgroundColor = [UIColor clearColor];
         [rowView addSubview:distanceLabel];
@@ -555,47 +552,49 @@
 - (UIView*)createRowView:(NSString*) title detail:(NSString*)detail
 {
     
-    UIFont *font = [UIFont boldSystemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(230, CGFLOAT_MAX);
+    UIFont *font = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];
+    int width = 235;
+    CGSize withinSize = CGSizeMake(width, CGFLOAT_MAX);
     UIView* rowView;
     CGSize size = [detail sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     int height = 0;
     if ([detail length] == 0) {
-        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)] autorelease];
-        height = 31;
+        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 42)] autorelease];
+        height = 42;
     }
     else
     {
-        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 16)] autorelease];
-        height = size.height + 16;
+        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 26)] autorelease];
+        height = size.height + 26;
+        NSLog(@"########%d",height);
     }
     
     UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     [bgImageView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1]];
     
-    UIImageView *gotoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"go_btn.png"]];
-    [gotoImageView setCenter:CGPointMake(20, height/2)];
+//    UIImageView *gotoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"go_btn.png"]];
+//    [gotoImageView setCenter:CGPointMake(20, height/2)];
+//    [bgImageView addSubview:gotoImageView];
     
-    [bgImageView addSubview:gotoImageView];
     bgImageView.image = [UIImage imageNamed:@"t_bg.png"];
     [rowView addSubview:bgImageView];
     [rowView sendSubviewToBack:bgImageView];
     [bgImageView release];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, ceilf((height - 20)/2), 40, 20)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, ceilf((height - 20)/2), 40, 20)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    label.font = [UIFont boldSystemFontOfSize:12];
+    label.font = font;
     label.text = title;
     [rowView addSubview:label];
     [label release];
     
-    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 230, height)];
+    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(48, 0, width, height)];
     detailLabel.backgroundColor = [UIColor clearColor];
     detailLabel.lineBreakMode = UILineBreakModeWordWrap;
     detailLabel.numberOfLines = 0;
     detailLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    detailLabel.font = [UIFont boldSystemFontOfSize:12];
+    detailLabel.font = font;
     if ([detail length] == 0) {
         detailLabel.text = NSLS(@" 暂无");
     }else
@@ -613,8 +612,9 @@
     telephoneView = [self createRowView:NSLS(@"电话: ") detail:[self.place.telephoneList componentsJoinedByString:@" "]];
     
     if ([self.place.telephoneList count] != 0) {
-        UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 4, 24, 24)];
+        UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 6, 29, 29)];
         [phoneImage setImage:[UIImage imageNamed:@"t_phone"]];
+        [phoneImage setCenter:CGPointMake(300, telephoneView.frame.size.height/2)];
         [telephoneView addSubview:phoneImage];
         [phoneImage release];
         
@@ -635,8 +635,9 @@
     addressView = [self createRowView:NSLS(@"地址: ") detail:[[_place addressList] componentsJoinedByString:@" "]];
     int height = addressView.frame.size.height;
     
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 24, 24)];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 29, 29)];
     [mapImageView setImage:[UIImage imageNamed:@"t_map"]];
+    [mapImageView setCenter:CGPointMake(300, addressView.frame.size.height/2)];
     [addressView addSubview:mapImageView];
     [mapImageView release];
     
@@ -683,7 +684,7 @@
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [favButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [favButton.titleLabel setFont:[UIFont systemFontOfSize:BIG_FONT_SIZE]];
     favButton.titleLabel.shadowColor = [UIColor whiteColor];
     favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
@@ -699,7 +700,7 @@
     self.favoriteCountLabel.textAlignment = UITextAlignmentCenter;
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
-    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:13];
+    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];
     [favouritesView addSubview:self.favoriteCountLabel];
     
     [dataScrollView addSubview:favouritesView];

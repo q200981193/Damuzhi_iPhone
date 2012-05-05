@@ -81,7 +81,7 @@
 
 - (UILabel*)createTitleView:(NSString*)title;
 - (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height;
-- (UIView*)createMiddleLineView2:(CGFloat)y;
+- (UIView*)createMiddleLineView:(CGFloat)y;
 
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;

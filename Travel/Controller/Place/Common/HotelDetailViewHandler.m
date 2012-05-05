@@ -69,7 +69,7 @@
     [segmentView addSubview:introductionDescription];
     [commonController.dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [self.commonController createMiddleLineView2: self.commonController.detailHeight + segmentView.frame.size.height];
+    UIView *middleLineView = [self.commonController createMiddleLineView: self.commonController.detailHeight + segmentView.frame.size.height];
     [commonController.dataScrollView addSubview:middleLineView];
     
     self.commonController.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
