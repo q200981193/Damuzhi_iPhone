@@ -566,7 +566,6 @@
     {
         rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 26)] autorelease];
         height = size.height + 26;
-        NSLog(@"########%d",height);
     }
     
     UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
@@ -583,7 +582,7 @@
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, ceilf((height - 20)/2), 40, 20)];
     label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
+    label.textColor = [UIColor colorWithRed:79/255.0 green:102/255.0 blue:119/255.0 alpha:1.0];
     label.font = font;
     label.text = title;
     [rowView addSubview:label];

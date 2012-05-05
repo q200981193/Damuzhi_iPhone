@@ -18,7 +18,7 @@
 #define MIDDLE_LINE_HEIGHT 2
 #define CGRECT_TITLE CGRectMake(10, 3, 100, 20)
 #define TITLE_COLOR [UIColor colorWithRed:37/255.0 green:66/255.0 blue:80/255.0 alpha:1.0]
-#define DESCRIPTION_COLOR [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0]
+#define DESCRIPTION_COLOR [UIColor colorWithRed:92/255.0 green:92/255.0 blue:92/255.0 alpha:1.0]
 #define INTRODUCTION_BG_COLOR [UIColor colorWithRed:222/255.0 green:239/255.0 blue:247/255.0 alpha:1.0]
 #define PRICE_BG_COLOR [UIColor colorWithRed:235/255.0 green:241/255.0 blue:241/255.0 alpha:1.0]
 
