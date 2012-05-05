@@ -209,7 +209,7 @@
 	[UIView setAnimationDuration:0.75];
 	
 	[UIView setAnimationTransition:(_showMap ?
-									UIViewAnimationTransitionCurlUp : UIViewAnimationTransitionCurlUp)
+									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
 						   forView:self.view cache:YES];
     [UIView commitAnimations];
     
