@@ -61,6 +61,8 @@
         [view setImage:[UIImage imageNamed:@"list_tr_bg2.png"]];
         [cell setBackgroundView:view];
         [view release];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
     
     int row = [indexPath row];	
@@ -71,7 +73,6 @@
     }
     RouteCell* routeCell = (RouteCell*)cell;
     [routeCell setCellData:[dataList objectAtIndex:row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
 }
 

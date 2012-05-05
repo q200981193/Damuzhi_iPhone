@@ -14,6 +14,7 @@
 #import "LocaleUtils.h"
 #import "AppConstants.h"
 #import "AppUtils.h"
+#import "SelectedItemsManager.h"
 
 @implementation AppManager
 
@@ -360,9 +361,15 @@ static AppManager* _defaultAppManager = nil;
 
 - (void)setCurrentCityId:(int)newCityId
 {
+    int currentCityId = [self getCurrentCityId];
+    if (newCityId == currentCityId) {
+        return;
+    }
+    
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults]; 
     [userDefault setObject:[NSNumber numberWithInt:newCityId] forKey:KEY_CURRENT_CITY];
     [userDefault synchronize];
+    [[SelectedItemsManager defaultManager] resetAllSelectedItems];
 }
 
 - (NSArray*)buildSpotSortOptionList

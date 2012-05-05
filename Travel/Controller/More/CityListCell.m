@@ -88,15 +88,7 @@
 - (void)setCellAppearance
 { 
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
-    
-    if(localCity==nil)
-    {
-        [self setDefaultAppearance];
-        return;
-    }
-    else {
-        [self setDownloadAppearance:localCity];
-    }
+    [self setDownloadAppearance:localCity];
 }
 
 - (void)setDefaultAppearance
@@ -123,8 +115,13 @@
 {
     switch (localCity.downloadStatus) {
         case DOWNLOADING:
+            [self setDownloadingAppearance];
+            [self setDownloadProgress:localCity.downloadProgress];
+            break;
+            
         case DOWNLOAD_PAUSE:
-            [self setDownloadingAppearance:localCity];
+            [self setDownloadPauseAppearance];
+            [self setDownloadProgress:localCity.downloadProgress];
             break;
             
         case DOWNLOAD_SUCCEED:
@@ -141,6 +138,7 @@
             break;
             
         default:
+            [self setDefaultAppearance];
             break;
     }
 }
@@ -153,7 +151,7 @@
     downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
 }
 
-- (void)setDownloadingAppearance:(LocalCity*)localCity
+- (void)setDownloadingAppearance
 {
     dataSizeLabel.hidden = YES;
     downloadProgressView.hidden = NO;
@@ -167,14 +165,24 @@
     downloadDoneLabel.hidden = YES;
     moreDetailBtn.hidden = YES;
     
-    if (localCity.downloadStatus == DOWNLOADING) {
-        pauseDownloadBtn.selected = NO;
-    }
-    else if(localCity.downloadStatus == DOWNLOAD_PAUSE){
-        pauseDownloadBtn.selected = YES;
-    }
+    pauseDownloadBtn.selected = NO;
+}
+
+- (void)setDownloadPauseAppearance
+{
+    dataSizeLabel.hidden = YES;
+    downloadProgressView.hidden = NO;
+    downloadPersentLabel.hidden = NO;
+    pauseDownloadBtn.hidden = NO;
     
-    [self setDownloadProgress:localCity.downloadProgress];
+    downloadButton.hidden = YES;
+    cancelDownloadBtn.hidden = NO;
+    onlineButton.hidden = NO;
+    
+    downloadDoneLabel.hidden = YES;
+    moreDetailBtn.hidden = YES;
+    
+    pauseDownloadBtn.selected = YES;
 }
 
 - (void)setDownloadSuccessAppearance
@@ -194,7 +202,7 @@
 
 #pragma mark -
 #pragma mark: Imlementation for buttons event.
-- (IBAction)clickDownload:(id)sender {
+- (IBAction)clickDownload:(id)sender {    
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
         [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
     }

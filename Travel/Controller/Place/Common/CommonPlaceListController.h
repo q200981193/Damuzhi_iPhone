@@ -11,7 +11,7 @@
 #import "PlaceService.h"
 #import "SelectController.h"
 #import "CityOverviewService.h"
-#import "PlaceSelectedItemsManager.h"
+#import "SelectedItemsManager.h"
 #import "PlaceListController.h"
 
 #define WIDTH_OF_FILTER_BUTTON 52

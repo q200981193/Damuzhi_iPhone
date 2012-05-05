@@ -8,7 +8,6 @@
 
 #import "CityDownloadService.h"
 #import "AppUtils.h"
-#import "FileUtil.h"
 #import "PPDebug.h"
 
 @implementation CityDownloadService

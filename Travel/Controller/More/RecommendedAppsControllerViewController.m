@@ -1,0 +1,94 @@
+//
+//  RecommendedAppsControllerViewController.m
+//  Travel
+//
+//  Created by 小涛 王 on 12-5-5.
+//  Copyright (c) 2012年 甘橙软件. All rights reserved.
+//
+
+#import "RecommendedAppsControllerViewController.h"
+#import "RecommendedAppCell.h"
+#import "AppService.h"
+#import "PPDebug.h"
+#import "CommonWebController.h"
+
+@implementation RecommendedAppsControllerViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [self setBackgroundImageName:@"all_page_bg2.jpg"];
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@" 返回") imageName:@"back.png" action:@selector(clickBack:)];
+    
+    [self.navigationItem setTitle:TITLE_RECOMMENDED_APP];
+    
+    self.dataList = [[[AppManager defaultManager] app] recommendedAppsList];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+#pragma mark Table View Delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 75;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;		// default implementation
+}
+
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    cell = [theTableView dequeueReusableCellWithIdentifier:[RecommendedAppCell getCellIdentifier]];
+    if (cell == nil) {
+        cell = [RecommendedAppCell createCell:self];				
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        // Customize the appearance of table view cells at first time
+        UIImageView *view = [[UIImageView alloc] init];
+        [view setImage:[UIImage imageNamed:@"list_tr_bg2.png"]];
+        [cell setBackgroundView:view];
+        [view release];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    }
+    
+    int row = [indexPath row];	
+    int count = [dataList count];
+    if (row >= count){
+        PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+        return cell;
+    }
+    RecommendedAppCell* appCell = (RecommendedAppCell*)cell;
+    [appCell setCellData:[dataList objectAtIndex:row]];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RecommendedApp *app = [dataList objectAtIndex:indexPath.row];
+    NSString *htmlPath = app.url;
+    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
+    controller.title = app.name;
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+@end

@@ -14,6 +14,7 @@
 #import "CommonWebController.h"
 #import "AppUtils.h"
 #import "PPDebug.h"
+#import "RecommendedAppsControllerViewController.h"
 
 @interface MoreController ()
 
@@ -22,6 +23,7 @@
 @end
 
 @implementation MoreController
+@synthesize dataDictionary;
 @synthesize showImageSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,20 +35,14 @@
     return self;
 }
 
-#define OPENED_CITY         NSLS(@"已开通城市")
-#define BROWSE_HISTORY      NSLS(@"浏览记录")
-#define FEEDBACK            NSLS(@"意见反馈")
-#define VERSION_UPDATE      NSLS(@"版本更新")
-#define ABOUT_APP           NSLS(@"关于大拇指旅行")
+#define CITIES              NSLS(@"已开通城市")
+#define VERSION             NSLS(@"版本更新")
+#define TITLE_ABOUT         NSLS(@"关于大拇指旅行")
 #define PRAISE              NSLS(@"给我一个好评吧")
-#define SHOW_IMAGE_IN_LIST  NSLS(@"列表中显示图片")
-#define APP_RECOMMENDATION  NSLS(@"精彩应用推荐")
-
+#define SHOW_IMAGE          NSLS(@"列表中显示图片")
 
 - (void)viewDidLoad
 {
-
-    
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
@@ -55,16 +51,16 @@
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
     
-    self.dataList = [NSArray arrayWithObjects:
-                     OPENED_CITY, 
-                     BROWSE_HISTORY,
-                     FEEDBACK,
-                     VERSION_UPDATE,
-                     ABOUT_APP,
-                     PRAISE,
-                     SHOW_IMAGE_IN_LIST,
-                     APP_RECOMMENDATION,
-                     nil];
+    self.dataDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                           CITIES, [NSNumber numberWithInt:0],
+                           TITLE_HISTORY, [NSNumber numberWithInt:1],
+                           TITLE_FEEDBACK, [NSNumber numberWithInt:2],
+                           VERSION, [NSNumber numberWithInt:3],
+                           TITLE_ABOUT, [NSNumber numberWithInt:4],
+                           PRAISE, [NSNumber numberWithInt:5],
+                           SHOW_IMAGE, [NSNumber numberWithInt:6],
+                           TITLE_RECOMMENDED_APP, [NSNumber numberWithInt:7],
+                           nil];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
     
@@ -116,7 +112,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [dataList count];			// default implementation
+	return [dataDictionary count];			// default implementation
 }
 
 
@@ -137,7 +133,7 @@
 	
 	// set text label
 	int row = [indexPath row];	
-	int count = [dataList count];
+	int count = [dataDictionary count];
 	if (row >= count){
 		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return cell;
@@ -159,7 +155,7 @@
         [cell.contentView addSubview:showImageSwitch];
     }
     
-    cell.textLabel.text = [dataList objectAtIndex:row];
+    cell.textLabel.text = [dataDictionary objectForKey:[NSNumber numberWithInt:row]];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
 	
 	return cell;
@@ -175,7 +171,6 @@
 - (void)showHistory
 {
     HistoryController *hc = [[HistoryController alloc] init];
-    hc.navigationItem.title = BROWSE_HISTORY;
     [self.navigationController pushViewController:hc animated:YES];
     [hc release];
 }
@@ -183,7 +178,6 @@
 - (void)showFeekback
 {
     FeekbackController *controller = [[FeekbackController alloc] init];
-    controller.navigationItem.title = FEEDBACK;
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -212,7 +206,14 @@
 - (void)showAbout
 {
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
-    controller.navigationItem.title = NSLS(@"关于大拇指");
+    controller.navigationItem.title = TITLE_ABOUT;
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+- (void)showRecommendedApps
+{
+    RecommendedAppsControllerViewController *controller = [[RecommendedAppsControllerViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -227,31 +228,31 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    switch (row) {
-        case 0:
-            [self showCityManagment];
-            break;
-        case 1:
-            [self showHistory];
-            break;
-        case 2:
-            [self showFeekback];
-            break;
-        case 3:
-            [self queryVersion];
-            break;
-        case 4:
-            [self showAbout];
-            break;
-        case 5:
-            [UIUtils gotoReview:kAppId];
-            break;
-        default:
-            break;
-    }
+    NSString *title = [dataDictionary objectForKey:[NSNumber numberWithInt:indexPath.row]];
     
-
+    if ([title isEqualToString:CITIES]) {
+        [self showCityManagment];
+    }
+    else if ([title isEqualToString:TITLE_HISTORY]) {
+        [self showHistory];
+    }
+    else if ([title isEqualToString:TITLE_FEEDBACK]) {
+        [self showFeekback];
+    }
+    else if ([title isEqualToString:VERSION]) {
+        [self queryVersion];
+    }
+    else if ([title isEqualToString:TITLE_ABOUT]) {
+        [self showAbout];
+    }
+    else if ([title isEqualToString:PRAISE]) {
+        [UIUtils gotoReview:kAppId];
+    }
+    else if ([title isEqualToString:TITLE_RECOMMENDED_APP]) {
+        [self showRecommendedApps];
+    }
+    else {
+    }
 }
 
 - (void)clickSwitch:(id)sender

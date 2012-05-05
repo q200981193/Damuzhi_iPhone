@@ -82,21 +82,23 @@ static CityManagementController *_instance;
     [super viewDidUnload];
 }
 
+#define WIDTH_BUTTON  80
+#define HEIGHT_BUTTON  30
+
 -(void)addCityManageButtons
 {
-    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 180, 30)];
+    UIView *buttonView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, WIDTH_BUTTON*2, HEIGHT_BUTTON)];
     
     // set position of the two button
     self.cityListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _cityListBtn.frame = CGRectMake(0, 0, 80, 30);
+    _cityListBtn.frame = CGRectMake(0, 0, WIDTH_BUTTON, HEIGHT_BUTTON);
     
     self.downloadListBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _downloadListBtn.frame = CGRectMake(80, 0, 80, 30);
+    _downloadListBtn.frame = CGRectMake(WIDTH_BUTTON, 0, WIDTH_BUTTON, HEIGHT_BUTTON);
     
     // Customize the appearance 
     [_cityListBtn setTitle:@"城市列表" forState:UIControlStateNormal];
     [_cityListBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    //_cityListBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_cityListBtn setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];    
     [_cityListBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [_cityListBtn setBackgroundImage:[UIImage imageNamed:IMAGE_CITY_LEFT_BTN_OFF] forState:UIControlStateNormal];
@@ -116,11 +118,12 @@ static CityManagementController *_instance;
     [buttonView addSubview:_cityListBtn];
     [buttonView addSubview:_downloadListBtn];
     
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
+//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
+    
+    self.navigationItem.titleView = buttonView;
     [buttonView release];
     
-    self.navigationItem.rightBarButtonItem = barButton;
-    [barButton release];
+//    [barButton release];
 }
 
 
@@ -168,7 +171,7 @@ static CityManagementController *_instance;
             return cell;
         }
         DownloadListCell* downloadCell = (DownloadListCell*)cell;
-        [downloadCell setCellData:[self.downloadList objectAtIndex:row]];
+        [downloadCell setCellData:[_downloadList objectAtIndex:row]];
         downloadCell.downloadListCellDelegate = self;
     }
     else {
@@ -233,12 +236,11 @@ static CityManagementController *_instance;
     _cityListBtn.selected = NO;
     
     // Show download management table view.
-    self.dataTableView.hidden = YES;
-    self.downloadTableView.hidden = NO;
+    dataTableView.hidden = YES;
+    _downloadTableView.hidden = NO;
     
-    // load downloadList and reload download table view
-    self.downloadList = [[PackageManager defaultManager] getLocalCityList];
-    [self.downloadTableView reloadData];
+    // Reload download table view
+    [_downloadTableView reloadData];
 }
 
 #pragma mark -
@@ -273,7 +275,7 @@ static CityManagementController *_instance;
 #pragma mark: implementation of CityListCellDelegate
 - (void)didSelectCurrendCity:(City*)city
 {
-    NSString *message = [NSString stringWithFormat:NSLS(@"您已把%@.%@设为默认访问城市!"), city.cityName, city.countryName];
+    NSString *message = [NSString stringWithFormat:NSLS(@"已设置查看%@.%@!"), city.cityName, city.countryName];
     [self popupMessage:message title:NSLS(@"提示")];
     [self.dataTableView reloadData];
 }
@@ -281,6 +283,7 @@ static CityManagementController *_instance;
 - (void)didStartDownload:(City*)city
 {
     [self createTimer];
+    [dataTableView reloadData];
 }
 
 - (void)didCancelDownload:(City*)city
@@ -292,6 +295,7 @@ static CityManagementController *_instance;
 - (void)didPauseDownload:(City*)city
 {
     [self killTimer];
+    [dataTableView reloadData];
 }
 
 - (void)didClickOnlineBtn:(City*)city
@@ -307,7 +311,6 @@ static CityManagementController *_instance;
     
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
-    [dataTableView reloadData];
 }
 
 - (void)didFailDownload:(City *)city error:(NSError *)error
@@ -332,10 +335,13 @@ static CityManagementController *_instance;
 - (void)didStartUpdate:(City *)city
 {
     [self createTimer];
+    [_downloadTableView reloadData];
 }
 
 - (void)didCancelUpdate:(City *)city
-{}
+{
+    
+}
 
 - (void)didPauseUpdate:(City *)city
 {
@@ -351,7 +357,6 @@ static CityManagementController *_instance;
     
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据更新成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
-    [_downloadTableView reloadData];
 }
 
 - (void)didFailUpdate:(City *)city error:(NSError *)error
@@ -373,16 +378,22 @@ static CityManagementController *_instance;
     
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据安装失败"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
-    [self.dataTableView reloadData];
+    
+    [dataTableView reloadData];
+    [_downloadTableView reloadData];
 }
 
-- (void)didFinishUnzip:(City*)city
+- (void)didFinishUnzip:(City*)city 
 {
     [self killTimer];
-    
+
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据安装成功"), city.countryName, city.cityName];
     [self popupMessage:message title:nil];
-    [self.dataTableView reloadData];
+    
+    [dataTableView reloadData];
+    
+    self.downloadList = [[PackageManager defaultManager] getLocalCityList];
+    [_downloadTableView reloadData];
 }
 
 @end

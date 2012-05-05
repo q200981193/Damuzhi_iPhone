@@ -9,7 +9,6 @@
 #import "PlaceStorage.h"
 #import "Place.pb.h"
 #import "LogUtil.h"
-#import "FileUtil.h"
 #import "AppManager.h"
 #import "AppUtils.h"
 
@@ -32,14 +31,10 @@ static PlaceStorage* _historyManager = nil;
 {
     self = [super init];
     if (self) {
-//        [FileUtil createDir:[FileUtil getFileFullPath:PLACE_STORAGE_DEFAULT_DIR]];
         self.type = typeValue;
     }
     return self;
 }
-
-//#define FAVORITE_STORAGE @"FAVORITE_STORAGE"
-//#define HISTORY_STORAGE @"HISTORY_STORAGE"
 
 + (PlaceStorage*)favoriteManager
 {
@@ -59,9 +54,6 @@ static PlaceStorage* _historyManager = nil;
 
 - (NSString*)getFilePath
 {
-//    NSString* fileWithDir = [NSString stringWithFormat:@"%@/%d_%@", PLACE_STORAGE_DEFAULT_DIR, [[AppManager defaultManager] getCurrentCityId], _fileName];
-//    NSString *filePath = [FileUtil getFileFullPath:fileWithDir];
-    
     NSString *filePath = nil;
     if (_type == FAVORITE_STORAGE) {
         filePath = [AppUtils getFavoriteFilePath:[[AppManager defaultManager] getCurrentCityId]];

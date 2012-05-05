@@ -66,33 +66,32 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+#define WIDTH_TOP_ARRAW 14
+#define HEIGHT_TOP_ARRAW 7
+#define WIDTH_BLANK_OF_TITLE 14
 
-#define APP_TITLE @"大拇指旅行 - "
-#define BUTTON_VIEW_WIDTH 200
-#define BUTTON_VIEW_HEIGHT 30
 - (void)createButtonView
 {
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT)];
-    label.font = [UIFont fontWithName:@"" size:0.1];
-    label.text = [NSString stringWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor whiteColor];
-    label.textAlignment = UITextAlignmentCenter;
+    UIFont *font = [UIFont systemFontOfSize:17];
+    CGSize withinSize = CGSizeMake(320, CGFLOAT_MAX);
     
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT/2-3, 14, 7)];
-    [imageView setImage:[UIImage imageNamed:@"top_arrow.png"]];
+    NSString *title = [NSString stringWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];    
+    CGSize titleSize = [title sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeTailTruncation];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH, BUTTON_VIEW_HEIGHT)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleSize.width+WIDTH_TOP_ARRAW+WIDTH_BLANK_OF_TITLE, titleSize.height)];
     
-    [button addSubview:label];
-    [button addSubview:imageView];
+    [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    
+    [button setImage:[UIImage imageNamed:@"top_arrow.png"] forState:UIControlStateNormal];
+    
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width+WIDTH_BLANK_OF_TITLE, 0, 0);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, -WIDTH_TOP_ARRAW-WIDTH_BLANK_OF_TITLE, 0, 0);
     
     [button addTarget:self action:@selector(clickTitle:) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.titleView = button;
     
-    [label release];
-    [imageView release];
     [button release];
 }
 

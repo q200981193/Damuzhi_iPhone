@@ -71,16 +71,24 @@
     switch ([[request.userInfo objectForKey:KEY_REQUEST_TYPE] intValue]) {
         case REQUEST_TYPE_DOWNLOAD:
             _downloadStatus = DOWNLOAD_SUCCEED;
-            if (_delegate && [_delegate respondsToSelector:@selector(didFinishDownload:)]) {
-                [_delegate didFinishDownload:[[AppManager defaultManager] getCity:self.cityId]];
-            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_delegate && [_delegate respondsToSelector:@selector(didFinishDownload:)]) {
+                    [_delegate didFinishDownload:[[AppManager defaultManager] getCity:self.cityId]];
+                }
+            });
+            
             break;
             
         case REQUEST_TYPE_UPDATE:
             _updateStatus = UPDATE_SUCCEED;
-            if (_delegate && [_delegate respondsToSelector:@selector(didFinishUpdate:)]) {
-                [_delegate didFinishUpdate:[[AppManager defaultManager] getCity:self.cityId]];
-            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_delegate && [_delegate respondsToSelector:@selector(didFinishUpdate:)]) {
+                    [_delegate didFinishUpdate:[[AppManager defaultManager] getCity:self.cityId]];
+                }
+            });
+
             break;
             
         default:

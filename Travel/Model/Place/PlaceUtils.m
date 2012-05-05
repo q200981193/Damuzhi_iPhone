@@ -107,18 +107,15 @@
 
 + (NSString*)getDistanceStringFrom:(float)distance
 {    
-    // 单位统一为KM，大于1KM的，采用四舍五入，不用小数点; 小于1KM的，以小数点后一位为标准，如:0.9KM，小于0.1KM的，用“<0.1KM”
-    double distanceInKM = distance/1000.0;
+    // 单位统一为KM，大于1KM的，采用四舍五入，不用小数点; 22. 小于1KM的用M，精确到十位。
     
     if (distance >1000.0) {
-        long long temp = distanceInKM + 0.5;
+        long long temp = distance/1000.0 + 0.5;
         return [NSString stringWithFormat:NSLS(@"%lldKM"), temp];
     }
-    else if (distance > 100.0){ 
-        return [NSString stringWithFormat:NSLS(@"%.1fKM"), distanceInKM];
-    }
     else {
-        return [NSString stringWithFormat:NSLS(@"<0.1KM")];
+        int temp = (int)distance > 10? (int)distance : 10;
+        return [NSString stringWithFormat:NSLS(@"%dM"), temp];
     }
 }
 

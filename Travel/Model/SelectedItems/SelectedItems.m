@@ -50,4 +50,21 @@
     return self;
 }
 
+- (void)resetAll
+{
+    [self.selectedSubCategoryIdList removeAllObjects];
+    [self.selectedSortIdList removeAllObjects];
+    [self.selectedPriceIdList removeAllObjects];
+    [self.selectedAreaIdList removeAllObjects];  
+    [self.selectedServiceIdList removeAllObjects];
+    
+    [self.selectedSubCategoryIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.selectedSortIdList addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
+    [self.selectedPriceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.selectedAreaIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.selectedServiceIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.selectedCuisineIdList addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+
+}
+
 @end

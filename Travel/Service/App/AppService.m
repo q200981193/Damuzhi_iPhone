@@ -237,16 +237,21 @@ static AppService* _defaultAppService = nil;
             [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:cityId]
                                                     contents:nil
                                                   attributes:nil];
-            if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
-                [unzipDelegate didFinishUnzip:[[AppManager defaultManager] getCity:cityId]];
-            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
+                    [unzipDelegate didFinishUnzip:[[AppManager defaultManager] getCity:cityId]];
+                }     
+            });
         }
         else {
             [[LocalCityManager defaultManager] removeLocalCity:cityId];
             
-            if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFailUnzip:)]) {
-                [unzipDelegate didFailUnzip:[[AppManager defaultManager] getCity:cityId]];
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFailUnzip:)]) {
+                    [unzipDelegate didFailUnzip:[[AppManager defaultManager] getCity:cityId]];
+                }
+            });
         }
     });    
 }

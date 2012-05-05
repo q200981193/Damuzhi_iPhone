@@ -185,22 +185,10 @@
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
-							<object class="IBUIProgressView" id="543794430">
-								<reference key="NSNextResponder" ref="535391295"/>
-								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{41, 35}, {90, 9}}</string>
-								<reference key="NSSuperview" ref="535391295"/>
-								<reference key="NSNextKeyView" ref="643228543"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<string key="IBUIContentStretch">{{1, 0}, {1, 1}}</string>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIProgress">0.40000000596046448</float>
-							</object>
 							<object class="IBUILabel" id="643228543">
 								<reference key="NSNextResponder" ref="535391295"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{138, 26}, {29, 22}}</string>
+								<string key="NSFrame">{{136, 28}, {29, 22}}</string>
 								<reference key="NSSuperview" ref="535391295"/>
 								<reference key="NSNextKeyView" ref="75717447"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -233,7 +221,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{41, 31}, {58, 17}}</string>
 								<reference key="NSSuperview" ref="535391295"/>
-								<reference key="NSNextKeyView" ref="543794430"/>
+								<reference key="NSNextKeyView" ref="643228543"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -254,7 +242,7 @@
 							<object class="IBUIButton" id="75717447">
 								<reference key="NSNextResponder" ref="535391295"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{172, 33}, {17, 14}}</string>
+								<string key="NSFrame">{{159.5, 27}, {34, 28}}</string>
 								<reference key="NSSuperview" ref="535391295"/>
 								<reference key="NSNextKeyView" ref="355442117"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -268,13 +256,13 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="596751867"/>
-								<object class="NSCustomResource" key="IBUISelectedBackgroundImage">
+								<object class="NSCustomResource" key="IBUISelectedImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">play@2x.png</string>
+									<string key="NSResourceName">play.png</string>
 								</object>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">stop@2x.png</string>
+									<string key="NSResourceName">stop.png</string>
 								</object>
 								<reference key="IBUIFontDescription" ref="909578082"/>
 								<reference key="IBUIFont" ref="860976100"/>
@@ -330,6 +318,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{302, 20}, {7, 14}}</string>
 								<reference key="NSSuperview" ref="535391295"/>
+								<reference key="NSNextKeyView" ref="543794430"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -347,6 +336,21 @@
 								</object>
 								<reference key="IBUIFontDescription" ref="909578082"/>
 								<reference key="IBUIFont" ref="860976100"/>
+							</object>
+							<object class="IBUIProgressView" id="543794430">
+								<reference key="NSNextResponder" ref="535391295"/>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{41, 37}, {90, 9}}</string>
+								<reference key="NSSuperview" ref="535391295"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="IBUIContentStretch">{{1, 0}, {1, 1}}</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<float key="IBUIProgress">0.40000000596046448</float>
+								<object class="NSColor" key="IBUIProgressTintColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MCAwLjUwMTk2MDgxNCAxAA</bytes>
+								</object>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 54}</string>
@@ -535,7 +539,6 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="390226681"/>
 							<reference ref="505372721"/>
-							<reference ref="543794430"/>
 							<reference ref="669685700"/>
 							<reference ref="355442117"/>
 							<reference ref="643228543"/>
@@ -543,6 +546,7 @@
 							<reference ref="75717447"/>
 							<reference ref="811365441"/>
 							<reference ref="126646383"/>
+							<reference ref="543794430"/>
 							<reference ref="675870005"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -614,7 +618,7 @@
 				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="52.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="52.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="2" key="52.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -646,8 +650,8 @@
 			<string key="go_btn@2x.png">{15, 29}</string>
 			<string key="no_s@2x.png">{53, 70}</string>
 			<string key="online_btn@2x.png">{96, 52}</string>
-			<string key="play@2x.png">{35, 28}</string>
-			<string key="stop@2x.png">{35, 28}</string>
+			<string key="play.png">{16, 16}</string>
+			<string key="stop.png">{16, 16}</string>
 			<string key="yes_s@2x.png">{53, 70}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>

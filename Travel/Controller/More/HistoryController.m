@@ -41,6 +41,8 @@
 {
     [super viewDidLoad];
     
+    [self.navigationItem setTitle:TITLE_HISTORY];
+    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];

@@ -12,7 +12,7 @@
 #import "PlaceMapViewController.h"
 #import "SelectController.h"
 #import "AppManager.h"
-#import "PlaceSelectedItemsManager.h"
+#import "SelectedItemsManager.h"
 #import "UIImageUtil.h"
 #import "CommonWebController.h"
 #import "AppUtils.h"
@@ -101,7 +101,7 @@
     UIImage *image = [UIImage imageNamed:@"select_tr_bg.png"];
     _buttonHolderView.backgroundColor = [UIColor colorWithPatternImage:image];
 
-    self.selectedItems = [[PlaceSelectedItemsManager defaultManager] getSelectedItems:[_filterHandler getCategoryId]];
+    self.selectedItems = [[SelectedItemsManager defaultManager] getSelectedItems:[_filterHandler getCategoryId]];
     
     [_filterHandler findAllPlaces:self];
 }
@@ -256,7 +256,7 @@
     _selectController = [SelectController createController:sortOptionList
                                                                 selectedIds:[_selectedItems selectedSortIdList] 
                                                                multiOptions:NO
-                                                                needConfirm:NO
+                                                                needConfirm:YES
                                                                        type:TYPE_SORT];
     [_selectController setAndReload:_allPlaceList];
 
