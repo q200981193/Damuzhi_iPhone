@@ -19,7 +19,7 @@
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList;
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
 - (void)finishDeleteFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
-- (void)finishFindTopFavoritePlaces:(NSArray*)list type:(int)type;
+- (void)finishFindTopFavoritePlaces:(NSArray*)list type:(int)type result:(int)result;
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
 
 @end

@@ -17,6 +17,7 @@
 #import "TravelNetworkConstants.h"
 #import "UIImageUtil.h"
 #import "App.pb.h"
+#import "PPNetworkRequest.h"
 
 @interface FavoriteController ()
 
@@ -151,8 +152,8 @@
 #define RIGHT_BUTTON_VIEW_HIGHT     30
 #define BUTTON_WIDTH                80
 #define BUTTON_HIGHT                30
-#define DELETE_BUTTON_WIDTH         22
-#define DELETE_BUTTON_HIGHT         22
+#define DELETE_IMAGE_WIDTH         22
+#define DELETE_IMAGE_HIGHT         22
 - (void)createRightBarButton
 {
     UIView *rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RIGHT_BUTTON_VIEW_WIDTH, RIGHT_BUTTON_VIEW_HIGHT)];
@@ -182,12 +183,15 @@
     [self.topFavoriteButton addTarget:self action:@selector(clickTopFavorite:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.topFavoriteButton];
     
-    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 4, DELETE_BUTTON_WIDTH, DELETE_BUTTON_HIGHT)];
+    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - 46, 0, 50, 34)];
     self.deleteButton = dbtn;
     [dbtn release];
-    self.deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-
-    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"delete@2x.png"] forState:UIControlStateNormal];
+    
+    UIImageView *delImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"delete.png"]];
+    delImageView.frame = CGRectMake(14, 4, DELETE_IMAGE_WIDTH, DELETE_IMAGE_HIGHT);
+    [self.deleteButton addSubview:delImageView];
+    [delImageView release];
+    //deleteButton.backgroundColor = [UIColor blueColor];
     [self.deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.deleteButton];
     
@@ -216,8 +220,12 @@
     
 }
 
-- (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type
+- (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type result:(int)result
 {
+    if (result != ERROR_SUCCESS ) {
+        [self popupMessage:@"数据加载失败" title:nil];
+    }
+    
     switch (type) {
         case OBJECT_LIST_TOP_FAVORITE_ALL:
             self.topAllFavoritePlaceList = list;

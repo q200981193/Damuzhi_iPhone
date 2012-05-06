@@ -12,8 +12,6 @@
 
 @interface HistoryController ()
 
-- (void)updateDeleteButton;
-
 @end
 
 @implementation HistoryController
@@ -58,7 +56,6 @@
                                                       pullToRreflash:NO];
     
     [self.placeListController setAndReloadPlaceList:_placeList];
-    [self updateDeleteButton];
 }
 
 
@@ -78,6 +75,9 @@
 
 - (void)clickDelete:(id)sender
 {
+    if ([_placeList count] == 0) 
+        return ;
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil 
                                                     message:NSLS(@"确定要清空所有浏览记录")
                                                    delegate:self 
@@ -93,14 +93,6 @@
         [[PlaceStorage historyManager] deleteAllPlaces];
          self.placeList = [[PlaceStorage historyManager] allPlaces];
         [self.placeListController setAndReloadPlaceList:_placeList];
-        [self updateDeleteButton];
-    }
-}
-
-- (void)updateDeleteButton
-{
-    if ([_placeList count] == 0) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
     }
 }
 
