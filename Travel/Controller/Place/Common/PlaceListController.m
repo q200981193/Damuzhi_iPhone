@@ -90,7 +90,7 @@
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
 {
     self.canDelete = isCan;
-    [self.dataTableView setEditing:isCan];
+    [self.dataTableView setEditing:isCan animated:YES];
     self.deletePlaceDelegate = delegateValue;
     [self.dataTableView reloadData];
 }
@@ -223,16 +223,21 @@
     [view release];
     [placeCell setCellDataByPlace:place currentLocation:[[AppService defaultService] currentLocation]];
     
+    placeCell.frame = CGRectMake(100, 0, placeCell.frame.size.width, placeCell.frame.size.height);
+    placeCell.contentView.frame = CGRectMake(100, 0, placeCell.contentView.frame.size.width, placeCell.contentView.frame.size.height);
+    
     if (_canDelete) {
         placeCell.priceLable.hidden = YES;
         placeCell.favoritesView.hidden = YES;
         placeCell.areaLable.hidden= YES;
         placeCell.distanceLable.hidden = YES;
+        placeCell.summaryView.frame = CGRectOffset(placeCell.summaryView.frame, 10, 0);
     }else {
         placeCell.priceLable.hidden = NO;
         placeCell.favoritesView.hidden = NO;
         placeCell.areaLable.hidden= NO;
         placeCell.distanceLable.hidden = NO;
+        placeCell.summaryView.frame = (CGRect){CGPointMake(0, 0), placeCell.summaryView.frame.size};
     }
     
 	return cell;	

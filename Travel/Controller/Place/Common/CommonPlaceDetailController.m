@@ -194,34 +194,29 @@
 #define FAVORITES_OK_VIEW 2012040817
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count
 {
-    if (resultCode != nil) {
-        [self updateAddFavoriteButton];
-        PPDebug(@"add Favourite successfully");
-        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
-        
-        
-        CGRect rect = CGRectMake(0, 0, 109, 52);
-        
-        UIButton *button = [[UIButton alloc] initWithFrame:rect];
-        button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
-        [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:BIG_FONT_SIZE];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.tag = FAVORITES_OK_VIEW;
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
-
-        CGPoint fromPosition = CGPointMake(320/2, 345);
-        CGPoint toPosition = CGPointMake(320/2, 345);
+    [self updateAddFavoriteButton];
     
-        [self.view addSubview:button];
-        [button release];
-        
-        [AnimationManager alertView:button fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
+    if (count != nil) {
+        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
     }
-    else {
-        PPDebug(@"add Favourite failed");
-        [self popupMessage:NSLS(@"收藏失败") title:nil];
-    }
+    
+    CGRect rect = CGRectMake(0, 0, 109, 52);
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:rect];
+    button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
+    [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:BIG_FONT_SIZE];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.tag = FAVORITES_OK_VIEW;
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
+    
+    CGPoint fromPosition = CGPointMake(320/2, 345);
+    CGPoint toPosition = CGPointMake(320/2, 345);
+    
+    [self.view addSubview:button];
+    [button release];
+    
+    [AnimationManager alertView:button fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
