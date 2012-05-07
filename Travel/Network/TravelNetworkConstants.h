@@ -57,6 +57,7 @@
 #define PARA_TRAVEL_LONGITUDE       @"longitude"
 #define PARA_TRAVEL_LATITUDE        @"latitude"
 
+#define PARA_TRAVEL_NUM             @"num"
 #define PARA_TRAVEL_DISTANCE        @"distance"
 
 

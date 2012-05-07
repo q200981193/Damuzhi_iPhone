@@ -11,6 +11,7 @@
 #import "AppService.h"
 #import "PPDebug.h"
 #import "CommonWebController.h"
+#import "UIUtils.h"
 
 @implementation RecommendedAppsControllerViewController
 
@@ -84,11 +85,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RecommendedApp *app = [dataList objectAtIndex:indexPath.row];
-    NSString *htmlPath = app.url;
-    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
-    controller.title = app.name;
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+//    PPDebug(@"appId ＝ %@", app.appId);
+    [UIUtils openApp:app.appId];
 }
 
 @end

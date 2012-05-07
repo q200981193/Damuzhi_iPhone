@@ -485,22 +485,26 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 @private
   BOOL hasId_:1;
   BOOL hasName_:1;
+  BOOL hasAppId_:1;
   BOOL hasDescription_:1;
   BOOL hasIcon_:1;
   BOOL hasUrl_:1;
   int32_t id;
   NSString* name;
+  NSString* appId;
   NSString* description;
   NSString* icon;
   NSString* url;
 }
 - (BOOL) hasName;
 - (BOOL) hasId;
+- (BOOL) hasAppId;
 - (BOOL) hasDescription;
 - (BOOL) hasIcon;
 - (BOOL) hasUrl;
 @property (readonly, retain) NSString* name;
 @property (readonly) int32_t id;
+@property (readonly, retain) NSString* appId;
 @property (readonly, retain) NSString* description;
 @property (readonly, retain) NSString* icon;
 @property (readonly, retain) NSString* url;
@@ -548,6 +552,11 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (int32_t) id;
 - (RecommendedApp_Builder*) setId:(int32_t) value;
 - (RecommendedApp_Builder*) clearId;
+
+- (BOOL) hasAppId;
+- (NSString*) appId;
+- (RecommendedApp_Builder*) setAppId:(NSString*) value;
+- (RecommendedApp_Builder*) clearAppId;
 
 - (BOOL) hasDescription;
 - (NSString*) description;

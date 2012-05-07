@@ -1890,6 +1890,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @interface RecommendedApp ()
 @property (retain) NSString* name;
 @property int32_t id;
+@property (retain) NSString* appId;
 @property (retain) NSString* description;
 @property (retain) NSString* icon;
 @property (retain) NSString* url;
@@ -1911,6 +1912,13 @@ static HelpInfo* defaultHelpInfoInstance = nil;
   hasId_ = !!value;
 }
 @synthesize id;
+- (BOOL) hasAppId {
+  return !!hasAppId_;
+}
+- (void) setHasAppId:(BOOL) value {
+  hasAppId_ = !!value;
+}
+@synthesize appId;
 - (BOOL) hasDescription {
   return !!hasDescription_;
 }
@@ -1934,6 +1942,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @synthesize url;
 - (void) dealloc {
   self.name = nil;
+  self.appId = nil;
   self.description = nil;
   self.icon = nil;
   self.url = nil;
@@ -1943,6 +1952,7 @@ static HelpInfo* defaultHelpInfoInstance = nil;
   if ((self = [super init])) {
     self.name = @"";
     self.id = 0;
+    self.appId = @"";
     self.description = @"";
     self.icon = @"";
     self.url = @"";
@@ -1977,14 +1987,17 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
   if (self.hasId) {
     [output writeInt32:2 value:self.id];
   }
+  if (self.hasAppId) {
+    [output writeString:3 value:self.appId];
+  }
   if (self.hasDescription) {
-    [output writeString:3 value:self.description];
+    [output writeString:4 value:self.description];
   }
   if (self.hasIcon) {
-    [output writeString:4 value:self.icon];
+    [output writeString:5 value:self.icon];
   }
   if (self.hasUrl) {
-    [output writeString:5 value:self.url];
+    [output writeString:6 value:self.url];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -2001,14 +2014,17 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
   if (self.hasId) {
     size += computeInt32Size(2, self.id);
   }
+  if (self.hasAppId) {
+    size += computeStringSize(3, self.appId);
+  }
   if (self.hasDescription) {
-    size += computeStringSize(3, self.description);
+    size += computeStringSize(4, self.description);
   }
   if (self.hasIcon) {
-    size += computeStringSize(4, self.icon);
+    size += computeStringSize(5, self.icon);
   }
   if (self.hasUrl) {
-    size += computeStringSize(5, self.url);
+    size += computeStringSize(6, self.url);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -2091,6 +2107,9 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
   if (other.hasId) {
     [self setId:other.id];
   }
+  if (other.hasAppId) {
+    [self setAppId:other.appId];
+  }
   if (other.hasDescription) {
     [self setDescription:other.description];
   }
@@ -2130,14 +2149,18 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
         break;
       }
       case 26: {
-        [self setDescription:[input readString]];
+        [self setAppId:[input readString]];
         break;
       }
       case 34: {
-        [self setIcon:[input readString]];
+        [self setDescription:[input readString]];
         break;
       }
       case 42: {
+        [self setIcon:[input readString]];
+        break;
+      }
+      case 50: {
         [self setUrl:[input readString]];
         break;
       }
@@ -2174,6 +2197,22 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
 - (RecommendedApp_Builder*) clearId {
   result.hasId = NO;
   result.id = 0;
+  return self;
+}
+- (BOOL) hasAppId {
+  return result.hasAppId;
+}
+- (NSString*) appId {
+  return result.appId;
+}
+- (RecommendedApp_Builder*) setAppId:(NSString*) value {
+  result.hasAppId = YES;
+  result.appId = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearAppId {
+  result.hasAppId = NO;
+  result.appId = @"";
   return self;
 }
 - (BOOL) hasDescription {

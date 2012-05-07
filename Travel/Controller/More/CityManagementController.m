@@ -69,6 +69,15 @@ static CityManagementController *_instance;
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:IMAGE_NAVIGATIONBAR_BACK_BTN
                            action:@selector(clickBack:)];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 250, 50)];
+    label.text = NSLS(@"更多城市即将开通");
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = UITextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
+    
+    dataTableView.tableFooterView = label;
+    [label release];
 //    [[LocalCity defaultService] setAppServiceDelegate:self];
 } 
 

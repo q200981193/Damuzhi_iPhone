@@ -32,6 +32,11 @@
 #define NO_DETAIL_DATA NSLS(@"暂无")
 #define BIG_FONT_SIZE  14
 #define SMALL_FONT_SIZE 13
+#define WIDTH_BUTTON  300
+#define HEIGHT_BUTTON 30
+#define WIDTH_NAME_LABEL 200
+#define HEIGHT_NAME_LABEL 14
+#define MAX_NUM_PLACES_NEARBY 2
 
 @implementation CommonPlaceDetailController
 @synthesize helpButton;
@@ -379,11 +384,10 @@
 
 - (void) addNearbyView
 {
-    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 276)] autorelease];
+    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width , MAX_NUM_PLACES_NEARBY*HEIGHT_BUTTON+30+10)] autorelease];
     _nearbyView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 151)];
-//    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
     [_nearbyView addSubview:tbView];
     [_nearbyView sendSubviewToBack:tbView];
     [tbView release];
@@ -395,36 +399,49 @@
     _detailHeight = _nearbyView.frame.origin.y + _nearbyView.frame.size.height;
     
     //get nearby placelist data
-    [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place viewController:self];
+    [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place num:MAX_NUM_PLACES_NEARBY viewController:self];
 }
 
-- (void)setNearbyTaleRowBgImage:(UIButton*)button row:(int)row
+- (void)setNearbyTaleRowBgImage:(UIButton*)button row:(int)row totoalRows:(int)totoalRows
 {
-    switch (row) {
+    if (row < 1 || totoalRows <1 || row > totoalRows) {
+        return;
+    }
+    
+    switch (totoalRows) {
         case 1:
             [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
-            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
             break;
             
         case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg1_center.png"] forState:UIControlStateNormal];
-            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_center.png"] forState:UIControlStateHighlighted];
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_down.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
+            }
             break;
-            
-        case 8:
-            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg1_down.png"] forState:UIControlStateNormal];
-            [button setBackgroundImage:[UIImage imageNamed:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
-            break;
-            
+
         default:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            }
+            else if (row >1 && row <totoalRows) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_center.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_center.png"] forState:UIControlStateHighlighted];
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_down.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
+            }
             break;
     }
 }
+
 
 //request done after get nearby placelist
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
@@ -439,10 +456,10 @@
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
             [location release];
             
-            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 30 + 30*(i++), 300, 30)];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-WIDTH_BUTTON)/2, 30 + HEIGHT_BUTTON*(i++), WIDTH_BUTTON, HEIGHT_BUTTON)];
             rowView.tag = [_nearbyPlaceList indexOfObject:nearbyPlace];
             
-            [self setNearbyTaleRowBgImage:rowView row:i];
+            [self setNearbyTaleRowBgImage:rowView row:i totoalRows:[_nearbyPlaceList count]];
             
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 14, 14)];
             
@@ -452,7 +469,7 @@
             [rowView addSubview:imageView];
             [imageView release];
             
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8, 150, 14)];
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 8, WIDTH_NAME_LABEL, HEIGHT_NAME_LABEL)];
             nameLabel.text = [nearbyPlace name];
             nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
             nameLabel.textColor = DESCRIPTION_COLOR;
@@ -461,7 +478,7 @@
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(225, 8, 50, 14)];
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 8, 50, 14)];
             
             NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
                                   
@@ -490,9 +507,17 @@
     }
 }
 
+#define HEIGHT_TRANSPORTATION_ROW 24
 - (void)addTransportView:(Place*)place
 {
-    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 186)];
+    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
+    
+    [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
+    NSArray *array = [str componentsSeparatedByString:@";"];
+
+    
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, [array count]*HEIGHT_TRANSPORTATION_ROW+30+10)];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
     UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 30, 300, 151)];
@@ -507,12 +532,6 @@
     [dataScrollView addSubview:segmentView];    
     _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
     
-    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
-
-    [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
-    NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
-    NSArray *array = [str componentsSeparatedByString:@";"];
 
     if ([array count] < 1) {
         [segmentView release];
@@ -732,6 +751,8 @@
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
+//    slideImageView.pageControl.imagePageStateHighted = [UIImage imageNamed:@"point_pic.png"];
+    [slideImageView.pageControl setPageIndicatorImageForCurrentPage:[UIImage strectchableImageName:@"point_pic.png"] forNotCurrentPage:nil];
     [slideImageView setImages:imagePathList];
     [self.imageHolderView addSubview:slideImageView];
     

@@ -249,12 +249,12 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                     remoteHandler:remoteHandler];
 }
 
-- (void)findPlacesNearby:(int)categoryId place:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController
+- (void)findPlacesNearby:(int)categoryId place:(Place*)place num:(int)num viewController:(PPViewController<PlaceServiceDelegate>*)viewController
 {
     LocalRequestHandler localHandler = ^NSArray *(int* resultCode) {
         int currentCityId = [[AppManager defaultManager] getCurrentCityId];
         [_localPlaceManager switchCity:currentCityId];
-        NSArray* list = [_localPlaceManager findPlacesNearby:categoryId place:place];   
+        NSArray* list = [_localPlaceManager findPlacesNearby:categoryId place:place num:num];   
         *resultCode = 0;
         return list;
     };
@@ -264,6 +264,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         int listType = [self getNearbyListTypeByPlaceCategoryId:categoryId];
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
                                                               placeId:place.placeId
+                                                                  num:num
                                                                  lang:LanguageTypeZhHans];
         NSArray *list = nil;
         

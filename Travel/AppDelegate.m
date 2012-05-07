@@ -19,6 +19,7 @@
 #import "AppUtils.h"
 
 #define UMENG_KEY @"4f76a1c15270157f7700004d"
+#define SPLASH_VIEW_TAG 20120506
 
 @implementation AppDelegate
 
@@ -86,9 +87,32 @@
     self.mainController.navigationItem.title = NSLS(@"大拇指旅行");
     
     self.window.rootViewController = navigationController;
+    
+    UIView* splashView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+    splashView.frame = [self.window bounds];
+    splashView.tag = SPLASH_VIEW_TAG;
+    [self.window.rootViewController.view addSubview:splashView];
+    [splashView release];
+    
+    [self performSelector:@selector(removeSplashView) withObject:nil afterDelay:2.0f];
+    
     [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void)removeSplashView
+{
+    [UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:1.0f];
+	
+	[UIView setAnimationTransition:UIViewAnimationTransitionCurlUp
+						   forView:self.window.rootViewController.view 
+                             cache:YES];
+    [UIView commitAnimations];
+    [[self.window.rootViewController.view viewWithTag:SPLASH_VIEW_TAG] removeFromSuperview];
+    
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

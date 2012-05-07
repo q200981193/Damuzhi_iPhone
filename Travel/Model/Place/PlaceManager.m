@@ -108,8 +108,7 @@ static PlaceManager *_placeDefaultManager;
     return distance;
 }
 
-#define NUM_OF_PLACE_NEARBY 8
-- (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place
+- (NSArray*)findPlacesNearby:(int)categoryId place:(Place*)place num:(int)num
 {
     NSArray *list = [self findPlacesByCategory:categoryId];
 
@@ -119,7 +118,7 @@ static PlaceManager *_placeDefaultManager;
     
     NSRange range;
     range.location = 0;
-    range.length = (sortedListCount >= NUM_OF_PLACE_NEARBY) ? NUM_OF_PLACE_NEARBY : sortedListCount;
+    range.length = (sortedListCount >= num) ? num : sortedListCount;
     
     return [sortedPlaceList subarrayWithRange:range];
 }

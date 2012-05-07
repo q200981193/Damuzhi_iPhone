@@ -232,7 +232,7 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId num:(int)num lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -243,6 +243,7 @@
         
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID intValue:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_NUM intValue:num];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
         
         return str;
