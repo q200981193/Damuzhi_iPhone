@@ -18,6 +18,7 @@
 #import "UserManager.h"
 #import "JSON.h"
 #import "PlaceStorage.h"
+#import "ResendManager.h"
 
 @implementation PlaceService
 
@@ -336,10 +337,11 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             NSDictionary* jsonDict = [output.textData JSONValue];
             NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
             NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
-            if (0 == result.intValue){
-                //[[PlaceStorage favoriteManager] addPlace:place];
+            if (result != nil && 0 == result.intValue){
+                PPDebug(@"<PlaceService> addPlaceIntoFavorite success!");
             }else {
-                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild,result:%d", result.intValue);
+                [[ResendManager defaultManager] addPlaceToResendFavoriteLists:place.placeId longitude:place.longitude latitude:place.latitude type:AddFavorite];
+                PPDebug(@"<PlaceService> addPlaceIntoFavorite faild, resultCode:%d,result:%d", output.resultCode, result.intValue);
             }
             [[PlaceStorage favoriteManager] addPlace:place];
             
@@ -359,21 +361,19 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
         CommonNetworkOutput *output = [TravelNetworkRequest deleteFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
+            NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
+            if (result != nil && 0 == result.intValue){
+                PPDebug(@"<PlaceService> deletePlaceFromFavorite success!");
+            }else {
+                [[ResendManager defaultManager] addPlaceToResendFavoriteLists:place.placeId longitude:place.longitude latitude:place.latitude type:RemoveFavorite];
+                PPDebug(@"<PlaceService> deletePlaceFromFavorite faild,resultCode:%d,result:%d", output.resultCode, result.intValue);
+            }
+            [[PlaceStorage favoriteManager] deletePlace:place];
             
-            if (output.resultCode == ERROR_SUCCESS) {
-                NSDictionary* jsonDict = [output.textData JSONValue];
-                NSNumber *result = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_RESULT];
-                NSNumber *placeFavoriteCount = (NSNumber*)[jsonDict objectForKey:PARA_TRAVEL_PLACE_FAVORITE_COUNT];
-                if (0 == result.intValue){
-                    
-                }else {
-                    PPDebug(@"<PlaceService> deletePlaceIntoFavorite faild,result:%d", result.intValue);
-                }
-                [[PlaceStorage favoriteManager] deletePlace:place];
-                
-                if (viewController && [viewController respondsToSelector:@selector(finishDeleteFavourite:count:)]){
-                    [viewController finishDeleteFavourite:result count:placeFavoriteCount];
-                }
+            if (viewController && [viewController respondsToSelector:@selector(finishDeleteFavourite:count:)]){
+                [viewController finishDeleteFavourite:result count:placeFavoriteCount];
             }
         });
     }); 

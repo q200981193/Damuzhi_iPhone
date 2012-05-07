@@ -23,6 +23,7 @@
 #import "PPDebug.h"
 
 @implementation PlaceCell
+@synthesize summaryView;
 @synthesize nameLabel;
 @synthesize priceLable;
 @synthesize distanceLable;
@@ -209,6 +210,7 @@
     [praise2View release];
     [praise3View release];
     [favoritesView release];
+    [summaryView release];
     [super dealloc];
 }
 @end

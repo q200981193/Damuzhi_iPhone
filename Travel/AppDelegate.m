@@ -17,6 +17,7 @@
 #import "AppConstants.h"
 #import "MobClick.h"
 #import "AppUtils.h"
+#import "ResendService.h"
 
 #define UMENG_KEY @"4f76a1c15270157f7700004d"
 
@@ -77,6 +78,9 @@
     //register user
     //[[UserService defaultService] autoRegisterUser:@"123"];
     [[UserService defaultService] autoRegisterUser:[self getDeviceToken]];
+    
+    //resend favorete place
+    [[ResendService defaultService] resendFavorite];
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
