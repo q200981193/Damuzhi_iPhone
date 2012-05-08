@@ -529,10 +529,8 @@
         [self addSegmentViewWith:NSLS(@"交通信息") description:@"暂无"];
     }
     else {
-        NSLog(@"---%@",transportation);
         NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
         NSArray *array = [str componentsSeparatedByString:@";"];
-        NSLog(@"---transport data length: %d",[array count]-1);
 
         UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_BUTTON+10)];
         segmentView.backgroundColor = PRICE_BG_COLOR;
@@ -546,7 +544,6 @@
         int i;
         for (i=1; i < [array count]; i++)
         {
-            NSMutableString * temp = [array objectAtIndex:i-1];
             NSArray *subArray = [[array objectAtIndex:i-1] componentsSeparatedByString:@":"];
             UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, HEIGHT_BUTTON*i, WIDTH_BUTTON, HEIGHT_BUTTON)];
             [rowView setUserInteractionEnabled:NO];
