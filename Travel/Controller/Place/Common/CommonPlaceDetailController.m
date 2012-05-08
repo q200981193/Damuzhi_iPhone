@@ -32,10 +32,20 @@
 #define NO_DETAIL_DATA NSLS(@"暂无")
 #define BIG_FONT_SIZE  14
 #define SMALL_FONT_SIZE 13
-#define WIDTH_BUTTON  300
-#define HEIGHT_BUTTON 30
-#define WIDTH_NAME_LABEL 190
-#define HEIGHT_NAME_LABEL 14
+#define WIDTH_NEARBY_PLACE_BUTTON  300
+#define HEIGHT_NEARBY_PLACE_BUTTON 30
+#define WIDTH_NEARBY_PLACE_NAME_LABEL 190
+#define HEIGHT_NEARBY_PLACE_NAME_LABEL 14
+
+#define WIDTH_TRANSPORTATION_TABLE_ROW 300
+#define HEIGHT_TRANSPORTATION_TABLE_ROW 24
+
+#define WIDTH_TRANSPORTATION_NAME_LABEL 150
+#define HEIGHT_TRANSPORTATION_NAME_LABEL 14
+
+#define WIDTH_TRANSPORTATION_DISTANCE_LABEL 60
+#define HEIGHT_TRANSPORTATION_DISTANCE_LABEL 14
+
 #define MAX_NUM_PLACES_NEARBY 8
 
 @implementation CommonPlaceDetailController
@@ -375,7 +385,7 @@
 
 - (void) addNearbyView
 {
-    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width , MAX_NUM_PLACES_NEARBY*HEIGHT_BUTTON+30+10)] autorelease];
+    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width , MAX_NUM_PLACES_NEARBY*HEIGHT_NEARBY_PLACE_BUTTON+30+10)] autorelease];
     _nearbyView.backgroundColor = PRICE_BG_COLOR;
     
     UILabel *title = [self createTitleView:NSLS(@"周边推荐")];
@@ -428,20 +438,45 @@
     }
 }
 
+- (void)reLayoutViewBelowView:(UIView*)view
+{
+    _detailHeight = view.frame.origin.y + view.frame.size.height;
+    [telephoneView setFrame:CGRectMake(telephoneView.frame.origin.x, _detailHeight, telephoneView.frame.size.width, telephoneView.frame.size.height)];
+    _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
+    
+    [addressView setFrame:CGRectMake(addressView.frame.origin.x, _detailHeight, addressView.frame.size.width, addressView.frame.size.height)];
+    _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
+    
+    [websiteView setFrame:CGRectMake(websiteView.frame.origin.x, _detailHeight, websiteView.frame.size.width, websiteView.frame.size.height)];
+    _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
+
+    [favouritesView setFrame:CGRectMake(favouritesView.frame.origin.x, _detailHeight, favouritesView.frame.size.width, favouritesView.frame.size.height)];
+    _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
+
+    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight + 175)];
+}
+
 //request done after get nearby placelist
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
     if (result == ERROR_SUCCESS) {
+
+        
         self.nearbyPlaceList = placeList;
         
+        [_nearbyView setFrame:CGRectMake(_nearbyView.frame.origin.x, _nearbyView.frame.origin.y, self.view.frame.size.width, [placeList count]*HEIGHT_NEARBY_PLACE_BUTTON+30+10)];
+        [self reLayoutViewBelowView:_nearbyView];
+
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
         int i = 0;
         for (Place *nearbyPlace in _nearbyPlaceList)
         {
+
+            
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
             [location release];
             
-            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-WIDTH_BUTTON)/2, 30 + HEIGHT_BUTTON*(i++), WIDTH_BUTTON, HEIGHT_BUTTON)];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-WIDTH_NEARBY_PLACE_BUTTON)/2, 30 + HEIGHT_NEARBY_PLACE_BUTTON*(i++), WIDTH_NEARBY_PLACE_BUTTON, HEIGHT_NEARBY_PLACE_BUTTON)];
             rowView.tag = [_nearbyPlaceList indexOfObject:nearbyPlace];
             
             [self setNearbyTaleRowBgImage:rowView row:i totoalRows:[_nearbyPlaceList count]];
@@ -454,7 +489,7 @@
             [rowView addSubview:imageView];
             [imageView release];
             
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.frame.origin.x+imageView.frame.size.width+6, 8, WIDTH_NAME_LABEL, HEIGHT_NAME_LABEL)];
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.frame.origin.x+imageView.frame.size.width+6, 8, WIDTH_NEARBY_PLACE_NAME_LABEL, HEIGHT_NEARBY_PLACE_NAME_LABEL)];
             nameLabel.text = [nearbyPlace name];
             nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
             nameLabel.textColor = DESCRIPTION_COLOR;
@@ -490,7 +525,6 @@
     }
 }
 
-#define HEIGHT_TRANSPORTATION_ROW 24
 - (void)addTransportView:(Place*)place
 {
     NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
@@ -503,7 +537,7 @@
         NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
         NSArray *array = [str componentsSeparatedByString:@";"];
         
-        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_TRANSPORTATION_ROW+30+10)];
+        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_TRANSPORTATION_TABLE_ROW+30+10)];
         segmentView.backgroundColor = PRICE_BG_COLOR;
         
         UILabel *title = [self createTitleView:NSLS(@"交通信息")];
@@ -516,9 +550,9 @@
         for (i=0; i < [array count] - 1; i++)
         {
             NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
-            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 30 + 30*(i), 300, 30)];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 30 + HEIGHT_TRANSPORTATION_TABLE_ROW*(i), WIDTH_TRANSPORTATION_TABLE_ROW, HEIGHT_TRANSPORTATION_TABLE_ROW)];
             
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
             nameLabel.text = [subArray objectAtIndex:0];
             nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
             nameLabel.textColor = DESCRIPTION_COLOR;
@@ -526,7 +560,7 @@
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(245, 6, 60, 14)];
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rowView.frame.size.width-6-WIDTH_TRANSPORTATION_DISTANCE_LABEL, 6, WIDTH_TRANSPORTATION_DISTANCE_LABEL, HEIGHT_TRANSPORTATION_DISTANCE_LABEL)];
             
             distanceLabel.text = [subArray objectAtIndex:1];
             distanceLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
@@ -620,7 +654,6 @@
     
     [dataScrollView addSubview:telephoneView];
     _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
-
 }
 
 - (void)addAddressView
@@ -670,16 +703,14 @@
 
 - (void)addBottomView
 {
-     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
+     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, 60)];
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
-    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((320-93)/2, 5, 93, 29)];
+    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-93)/2, 5, 93, 29)];
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [favButton.titleLabel setFont:[UIFont systemFontOfSize:BIG_FONT_SIZE]];
-    //favButton.titleLabel.shadowColor = [UIColor whiteColor];
-    //favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
     self.addFavoriteButton = favButton;
     [favButton release];
@@ -699,7 +730,8 @@
     [dataScrollView addSubview:favouritesView];
     
     [favouritesView release];
-
+    
+    _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
 }
 
 - (void)addHeaderView
@@ -750,7 +782,6 @@
     [self addHeaderView];
    
     [self addSlideImageView];
-           
     
     _detailHeight = imageHolderView.frame.size.height;
     
@@ -765,9 +796,10 @@
     [self addWebsiteView];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, _detailHeight + 235)];
         
     [self addBottomView];
+    
+    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight+175)];
     
     [[PlaceStorage historyManager] addPlace:self.place];
 }
