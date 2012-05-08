@@ -62,7 +62,7 @@
 
 - (void)setProgress:(float)newProgress
 {
-    PPDebug(@"progress = %f", newProgress);
+//    PPDebug(@"progress = %f", newProgress);
     self.downloadProgress = newProgress;
 }
 

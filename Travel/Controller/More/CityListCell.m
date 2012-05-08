@@ -147,7 +147,7 @@
 {
     downloadProgressView.progress = downloadProgress;
     int persent = downloadProgress*100.0;
-    PPDebug(@"text progress = %@", [NSString stringWithFormat:@"%d%%", persent]);
+//    PPDebug(@"text progress = %@", [NSString stringWithFormat:@"%d%%", persent]);
     downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
 }
 
