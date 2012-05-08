@@ -108,15 +108,13 @@
 - (void)removeSplashView
 {
     [UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDuration:1.0f];
+	[UIView setAnimationDuration:2.0f];
 	
 	[UIView setAnimationTransition:UIViewAnimationTransitionCurlUp
 						   forView:self.window.rootViewController.view 
                              cache:YES];
     [UIView commitAnimations];
     [[self.window.rootViewController.view viewWithTag:SPLASH_VIEW_TAG] removeFromSuperview];
-    
-    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
