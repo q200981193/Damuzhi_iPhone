@@ -490,7 +490,36 @@
     }
 }
 
-#define HEIGHT_TRANSPORTATION_ROW 24
+- (void)setTransportTaleRowBgImage:(UIButton*)button row:(int)row totoalRows:(int)totoalRows
+{
+    if (row < 1 || totoalRows < 2 || row > totoalRows) {
+        return;
+    }
+    
+    switch (totoalRows) {
+        case 2:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_top.png"] forState:UIControlStateNormal];
+                
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_down.png"] forState:UIControlStateNormal];
+            }
+            break;
+            
+        default:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_top.png"] forState:UIControlStateNormal];
+            }
+            else if (row >1 && row <totoalRows-1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_center.png"] forState:UIControlStateNormal];
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_down.png"] forState:UIControlStateNormal];            }
+            break;
+    }
+}
+
 - (void)addTransportView:(Place*)place
 {
     NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
@@ -500,10 +529,12 @@
         [self addSegmentViewWith:NSLS(@"交通信息") description:@"暂无"];
     }
     else {
+        NSLog(@"---%@",transportation);
         NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
         NSArray *array = [str componentsSeparatedByString:@";"];
-        
-        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_TRANSPORTATION_ROW+30+10)];
+        NSLog(@"---transport data length: %d",[array count]-1);
+
+        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_BUTTON+10)];
         segmentView.backgroundColor = PRICE_BG_COLOR;
         
         UILabel *title = [self createTitleView:NSLS(@"交通信息")];
@@ -512,12 +543,16 @@
         [dataScrollView addSubview:segmentView];    
         _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
         
-        int i = 0;
-        for (i=0; i < [array count] - 1; i++)
+        int i;
+        for (i=1; i < [array count]; i++)
         {
-            NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
-            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 30 + 30*(i), 300, 30)];
+            NSMutableString * temp = [array objectAtIndex:i-1];
+            NSArray *subArray = [[array objectAtIndex:i-1] componentsSeparatedByString:@":"];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, HEIGHT_BUTTON*i, WIDTH_BUTTON, HEIGHT_BUTTON)];
+            [rowView setUserInteractionEnabled:NO];
             
+            [self setTransportTaleRowBgImage:rowView row:i totoalRows:[array count]];
+
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
             nameLabel.text = [subArray objectAtIndex:0];
             nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
@@ -539,6 +574,10 @@
             [rowView release];
         }
         [segmentView release];
+        
+        UIView *middleLineView = [self createMiddleLineView: _detailHeight];
+        [dataScrollView addSubview:middleLineView];
+        _detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
     }
 }
 
@@ -619,7 +658,7 @@
     }
     
     [dataScrollView addSubview:telephoneView];
-    _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
+    _detailHeight = _detailHeight + telephoneView.frame.size.height;
 
 }
 
@@ -642,18 +681,18 @@
     
     [dataScrollView addSubview:addressView];
     
-    _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
-
-
+    _detailHeight = _detailHeight + addressView.frame.size.height;
 }
 
 - (void)addWebsiteView
 {
-    websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
-    
-    [dataScrollView addSubview:websiteView];
-    _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
+    NSString* websiteUrl = [self.place website];
+    if ([websiteUrl length] > 0) {
+        websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
+        [dataScrollView addSubview:websiteView];
+        _detailHeight = _detailHeight + websiteView.frame.size.height;
 
+    }
 }
 
 - (void)updateAddFavoriteButton
@@ -670,7 +709,7 @@
 
 - (void)addBottomView
 {
-     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
+     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 60)];
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
     UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((320-93)/2, 5, 93, 29)];
