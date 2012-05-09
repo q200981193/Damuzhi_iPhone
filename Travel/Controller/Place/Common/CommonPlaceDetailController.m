@@ -550,10 +550,6 @@
         int i;
         for (i=1; i < [array count]; i++)
         {
-            if ([[array objectAtIndex:i-1] length] == 1 && [[array objectAtIndex:i-1] isEqualToString:@":"]) 
-            {
-                continue;
-            }
             NSArray *subArray = [[array objectAtIndex:i-1] componentsSeparatedByString:@":"];
             UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, HEIGHT_BUTTON*i, WIDTH_BUTTON, HEIGHT_BUTTON)];
             [rowView setUserInteractionEnabled:NO];
