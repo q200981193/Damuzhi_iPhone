@@ -530,8 +530,14 @@
     }
     else {
         NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
-        NSArray *array = [str componentsSeparatedByString:@";"];
+        NSArray *array1 = [str componentsSeparatedByString:@";"];
 
+        // remove unused ":" data
+        //香港国际机场:约35公里;:;:;:; 
+        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:array1];
+        NSRange range=NSMakeRange(0,[array count]);
+        [array removeObject:@":" inRange:(range)];
+        
         UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_BUTTON+10)];
         segmentView.backgroundColor = PRICE_BG_COLOR;
         
@@ -544,6 +550,10 @@
         int i;
         for (i=1; i < [array count]; i++)
         {
+            if ([[array objectAtIndex:i-1] length] == 1 && [[array objectAtIndex:i-1] isEqualToString:@":"]) 
+            {
+                continue;
+            }
             NSArray *subArray = [[array objectAtIndex:i-1] componentsSeparatedByString:@":"];
             UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, HEIGHT_BUTTON*i, WIDTH_BUTTON, HEIGHT_BUTTON)];
             [rowView setUserInteractionEnabled:NO];
