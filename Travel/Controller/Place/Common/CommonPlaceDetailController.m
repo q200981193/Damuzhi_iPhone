@@ -590,10 +590,6 @@
         [dataScrollView addSubview:segmentView];    
         _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
         
-        for (int i=0; i < [array count]; i++) {
-            NSLog(@"------%@",[array objectAtIndex:i]);
-        }
-        
         for (int i=1; i <= [array count]; i++)
         {
             NSArray *subArray = [[array objectAtIndex:(i-1)] componentsSeparatedByString:@":"];
