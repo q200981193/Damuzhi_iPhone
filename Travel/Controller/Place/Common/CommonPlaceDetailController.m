@@ -552,7 +552,7 @@
             if (row == 1) {
                 [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_top.png"] forState:UIControlStateNormal];
             }
-            else if (row >1 && row <totoalRows-1) {
+            else if (row >1 && row <totoalRows) {
                 [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_center.png"] forState:UIControlStateNormal];
             }
             else {
@@ -563,7 +563,7 @@
 
 - (void)addTransportView:(Place*)place
 {
-    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
+    NSMutableString * transportation = [NSMutableString stringWithString:place.transportation];
     [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     if ([transportation length] == 0) {
@@ -577,9 +577,10 @@
         //香港国际机场:约35公里;:;:;:; 
         NSMutableArray *array = [[NSMutableArray alloc] initWithArray:array1];
         NSRange range=NSMakeRange(0,[array count]);
-        [array removeObject:@":" inRange:(range)];
+        [array removeObject:@":" inRange:range];
+        [array removeObject:@"" inRange:range];
         
-        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count])*HEIGHT_TRANSPORTATION_TABLE_ROW+10)];
+        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count]+1)*HEIGHT_TRANSPORTATION_TABLE_ROW+10)];
 
         segmentView.backgroundColor = PRICE_BG_COLOR;
         
@@ -589,7 +590,7 @@
         [dataScrollView addSubview:segmentView];    
         _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
         
-        for (int i=1; i < [array count]; i++)
+        for (int i=1; i <= [array count]; i++)
         {
             NSArray *subArray = [[array objectAtIndex:(i-1)] componentsSeparatedByString:@":"];
             UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 30 + HEIGHT_TRANSPORTATION_TABLE_ROW*(i-1), WIDTH_TRANSPORTATION_TABLE_ROW, HEIGHT_TRANSPORTATION_TABLE_ROW)];
