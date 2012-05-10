@@ -53,7 +53,7 @@
     
     UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
     [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
-    [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+    [leftIndicatorButton setUserInteractionEnabled:NO];
     [customizeView addSubview:leftIndicatorButton];
     [leftIndicatorButton release];
     
