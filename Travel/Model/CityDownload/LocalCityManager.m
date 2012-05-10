@@ -8,6 +8,7 @@
 
 #import "LocalCityManager.h"
 #import "AppUtils.h"
+#import "AppUtils.h"
 
 @implementation LocalCityManager
 
@@ -38,6 +39,12 @@ static LocalCityManager *_defaultManager = nil;
             if (localCity.downloadStatus == DOWNLOADING) {
                 localCity.downloadStatus = DOWNLOAD_PAUSE;
             }   
+        }
+        
+        for (LocalCity* localCity in _localCities) {
+            if (![AppUtils hasLocalCityData:localCity.cityId] &&localCity.downloadStatus==DOWNLOAD_FAILED) {
+                [self removeLocalCity:localCity.cityId];
+            }
         }
     }
     
@@ -89,7 +96,7 @@ static LocalCityManager *_defaultManager = nil;
         localCity = [LocalCity localCityWith:cityId];
         [self.localCities setObject:localCity forKey:[NSNumber numberWithInt:cityId]];
     }
-    
+        
     return localCity;
 }
 

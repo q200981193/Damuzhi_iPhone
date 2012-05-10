@@ -229,31 +229,4 @@ static AppService* _defaultAppService = nil;
 //    }
 //}
 
-- (void)UnzipCityDataAsynchronous:(int)cityId unzipDelegate:(id<UnzipDelegate>)unzipDelegate
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // if there has no unzip city data, unzip
-        if ([AppUtils unzipCityZip:cityId]) {
-            [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:cityId]
-                                                    contents:nil
-                                                  attributes:nil];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
-                    [unzipDelegate didFinishUnzip:[[AppManager defaultManager] getCity:cityId]];
-                }     
-            });
-        }
-        else {
-            [[LocalCityManager defaultManager] removeLocalCity:cityId];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFailUnzip:)]) {
-                    [unzipDelegate didFailUnzip:[[AppManager defaultManager] getCity:cityId]];
-                }
-            });
-        }
-    });    
-}
-
 @end

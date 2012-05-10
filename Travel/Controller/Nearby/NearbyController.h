@@ -18,6 +18,7 @@
 @property (assign, nonatomic) int distance;
 @property (assign, nonatomic) int categoryId;
 @property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) NSArray *allPlaceList;
 @property (assign, nonatomic) BOOL showMap;
 
 @property (retain, nonatomic) PlaceListController* placeListController;

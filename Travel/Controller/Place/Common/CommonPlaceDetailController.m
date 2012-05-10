@@ -512,13 +512,14 @@
             UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 8, 40, 14)];            
             NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
             distanceLabel.text = distanceString;
+            distanceLabel.textAlignment = UITextAlignmentRight;
             distanceLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:distanceLabel];
             [distanceLabel release];
             
-            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(distanceLabel.frame.origin.x+distanceLabel.frame.size.width+6, 8, 7, 14)];
+            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(distanceLabel.frame.origin.x+distanceLabel.frame.size.width+8, 8, 7, 14)];
             
             UIImage *goImage = [UIImage imageNamed:@"go_btn"];
             [goView setImage:goImage];
@@ -601,7 +602,7 @@
             
             [rowView setUserInteractionEnabled:NO];
             
-            [self setTransportTaleRowBgImage:rowView row:(i+1) totoalRows:[array count]];
+            [self setTransportTaleRowBgImage:rowView row:i totoalRows:[array count]];
 
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
 

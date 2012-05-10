@@ -35,6 +35,7 @@
 @synthesize categoryId = _categoryId;
 @synthesize showMap = _showMap;
 @synthesize placeList = _placeList;
+@synthesize allPlaceList = _allPlaceList;
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -58,6 +59,7 @@
     [findEntertainmentButton release];
     [findRestaurantButton release];
     [_placeList release];
+    [_allPlaceList release];
     [buttonHolderView release];
     [super dealloc];
 }
@@ -85,14 +87,10 @@
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"数据加载失败" title:nil];
     }
+    self.allPlaceList = placeList;
     
-    self.placeList = [self filterByDistance:placeList distance:_distance];
+    self.placeList = [self filterByDistance:_allPlaceList distance:_distance];
     [self createAndReloadPlaceListController];
-}
-
-- (void)deletedPlace:(Place *)place
-{
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
 }
 
 - (void)createAndReloadPlaceListController

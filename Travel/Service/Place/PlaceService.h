@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "CommonService.h"
+#import <CoreLocation/CoreLocation.h>
+
 
 @class PlaceManager;
 @class PPViewController;
@@ -37,6 +39,8 @@
 - (void)findPlacesNearby:(int)categoryId place:(Place*)place num:(int)num viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
 
 - (void)findPlacesNearby:(int)categoryId place:(Place*)place distance:(double)distance viewController:(PPViewController<PlaceServiceDelegate> *)viewController;
+
+//- (void)findPlacesNearby:(int)categoryId CLLocation:(CLLocation*)location distance:(double)distance viewController:(PPViewController<PlaceServiceDelegate> *)viewController;
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
                        place:(Place*)place;
