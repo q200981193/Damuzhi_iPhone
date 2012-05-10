@@ -30,9 +30,11 @@
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.025;
-    newRegion.span.longitudeDelta = 0.025;
+//    newRegion.span.latitudeDelta = 0.025;
+//    newRegion.span.longitudeDelta = 0.025;
 //    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.latitudeDelta = 0;
+    newRegion.span.longitudeDelta = 0;
 //    newRegion.span.longitudeDelta = 0.109863;
 
     

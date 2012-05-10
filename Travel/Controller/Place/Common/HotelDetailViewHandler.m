@@ -17,14 +17,13 @@
 
 -(void)addStarLevelViewWith:(NSString*)titleString description:(NSString*)descriptionString starCount:(int32_t)starCount
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
     CGSize withinSize = CGSizeMake(300, 100000);
     
     NSString *description = descriptionString;
     if ([description length] == 0) {
         description = NO_DETAIL_DATA;
     }
-    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.commonController.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
@@ -62,7 +61,7 @@
     introductionDescription.numberOfLines = 0;
     introductionDescription.backgroundColor = [UIColor clearColor];
     introductionDescription.textColor = DESCRIPTION_COLOR;
-    introductionDescription.font = font;
+    introductionDescription.font = SEGAMENT_DESCRIPTION_FONT;
     introductionDescription.text = description;  
     
     

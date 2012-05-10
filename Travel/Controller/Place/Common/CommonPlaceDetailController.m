@@ -30,8 +30,7 @@
 #import "UIImageUtil.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
-#define BIG_FONT_SIZE  14
-#define SMALL_FONT_SIZE 13
+
 #define WIDTH_NEARBY_PLACE_BUTTON  300
 #define HEIGHT_NEARBY_PLACE_BUTTON 30
 
@@ -216,7 +215,7 @@
     UIButton *button = [[UIButton alloc] initWithFrame:rect];
     button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
     [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:BIG_FONT_SIZE];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     button.tag = FAVORITES_OK_VIEW;
     [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
@@ -263,24 +262,22 @@
 
 - (UILabel*)createTitleView:(NSString*)title
 {
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];    
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRECT_TITLE]autorelease];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = TITLE_COLOR;
-    label.font = boldFont;
+    label.font = SEGAMENT_TITLE_FONT;
     label.text  = title;
     return label;
 }
 
 - (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height
 {
-    UIFont *font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, height)] autorelease];
     label.lineBreakMode = UILineBreakModeWordWrap;
     label.numberOfLines = 0;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = DESCRIPTION_COLOR;
-    label.font = font;
+    label.font = SEGAMENT_DESCRIPTION_FONT;
     label.text = description; 
     return label;
 }
@@ -295,7 +292,6 @@
 
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
-    UIFont *font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
     NSString *description = [NSString stringWithFormat:@"       %@",[descriptionString stringByReplacingOccurrencesOfString:@"\n" withString:@"\n       "]];
@@ -303,16 +299,15 @@
     if ([description length] == 0) {
         description = NO_DETAIL_DATA;
     }
-    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT + 10)] autorelease];
     segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
         
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];    
     UILabel *title = [[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, TITLE_VIEW_HEIGHT)]autorelease];
     title.backgroundColor = [UIColor clearColor];
     title.textColor = TITLE_COLOR;
-    title.font = boldFont;
+    title.font = SEGAMENT_TITLE_FONT;
     title.text  = titleString;
     [segmentView addSubview:title];
     
@@ -327,7 +322,7 @@
     introductionDescription.numberOfLines = 0;
     introductionDescription.backgroundColor = [UIColor clearColor];
     introductionDescription.textColor = DESCRIPTION_COLOR;
-    introductionDescription.font = font;
+    introductionDescription.font = SEGAMENT_DESCRIPTION_FONT;
     
     introductionDescription.text = description;
         
@@ -343,7 +338,6 @@
 
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
-    UIFont *font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
     NSString *description = [descriptionString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -351,7 +345,7 @@
         description = NO_DETAIL_DATA;
     }
     
-    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
@@ -502,7 +496,7 @@
             
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.frame.origin.x+imageView.frame.size.width+6, 8, WIDTH_NEARBY_PLACE_NAME_LABEL, HEIGHT_NEARBY_PLACE_NAME_LABEL)];
             nameLabel.text = [nearbyPlace name];
-            nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+            nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
             nameLabel.textColor = DESCRIPTION_COLOR;
             
             nameLabel.backgroundColor = [UIColor clearColor];
@@ -513,7 +507,7 @@
             NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
             distanceLabel.text = distanceString;
             distanceLabel.textAlignment = UITextAlignmentRight;
-            distanceLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+            distanceLabel.font = SEGAMENT_DESCRIPTION_FONT;
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:distanceLabel];
@@ -607,7 +601,7 @@
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
 
             nameLabel.text = [subArray objectAtIndex:0];
-            nameLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+            nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
             nameLabel.textColor = DESCRIPTION_COLOR;
             nameLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:nameLabel];
@@ -616,7 +610,7 @@
             UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rowView.frame.size.width-6-WIDTH_TRANSPORTATION_DISTANCE_LABEL, 6, WIDTH_TRANSPORTATION_DISTANCE_LABEL, HEIGHT_TRANSPORTATION_DISTANCE_LABEL)];
             
             distanceLabel.text = [subArray objectAtIndex:1];
-            distanceLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+            distanceLabel.font = SEGAMENT_DESCRIPTION_FONT;
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:distanceLabel];
@@ -635,13 +629,11 @@
 
 //创建电话、地址、网站 的通用方法
 - (UIView*)createRowView:(NSString*) title detail:(NSString*)detail
-{
-    
-    UIFont *font = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];
+{    
     int width = 235;
     CGSize withinSize = CGSizeMake(width, CGFLOAT_MAX);
     UIView* rowView;
-    CGSize size = [detail sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [detail sizeWithFont:SEGAMENT_TITLE_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     int height = 0;
     if ([detail length] == 0) {
         rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 42)] autorelease];
@@ -668,7 +660,7 @@
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, ceilf((height - 20)/2), 40, 20)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:79/255.0 green:102/255.0 blue:119/255.0 alpha:1.0];
-    label.font = font;
+    label.font = SEGAMENT_TITLE_FONT;
     label.text = title;
     [rowView addSubview:label];
     [label release];
@@ -678,7 +670,7 @@
     detailLabel.lineBreakMode = UILineBreakModeWordWrap;
     detailLabel.numberOfLines = 0;
     detailLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    detailLabel.font = font;
+    detailLabel.font = SEGAMENT_TITLE_FONT;
     if ([detail length] == 0) {
         detailLabel.text = NSLS(@" 暂无");
     }else
@@ -768,7 +760,7 @@
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [favButton.titleLabel setFont:[UIFont systemFontOfSize:BIG_FONT_SIZE]];
+    [favButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
     self.addFavoriteButton = favButton;
     [favButton release];
@@ -782,7 +774,7 @@
     self.favoriteCountLabel.textAlignment = UITextAlignmentCenter;
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
-    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:BIG_FONT_SIZE];
+    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:14];
     [favouritesView addSubview:self.favoriteCountLabel];
     
     [dataScrollView addSubview:favouritesView];
