@@ -61,7 +61,8 @@
     [self.navigationItem setTitle:NSLS(@"周边推荐")];
     
     mapView.delegate = self;
-    mapView.mapType = MKMapTypeStandard;      
+    mapView.mapType = MKMapTypeStandard; 
+    self.mapView.ShowsUserLocation = YES;
     
     self.placeList = [[NSMutableArray alloc] init];
     
@@ -120,8 +121,8 @@
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // if it's the user location, just return nil.
-    if ([annotation isKindOfClass:[MKUserLocation class]])
-        return nil;
+//    if ([annotation isKindOfClass:[MKUserLocation class]])
+//        return nil;
     
     // handle our custom annotations
     if([annotation isKindOfClass:[PlaceMapAnnotation class]])

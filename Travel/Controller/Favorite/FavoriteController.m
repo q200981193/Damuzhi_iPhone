@@ -97,7 +97,6 @@
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 }
 
-
 - (void)showPlaces{
     if (self.myFavoriteButton.selected == YES) {
         self.myFavPlaceListView.hidden = NO;
@@ -110,6 +109,12 @@
                                                                    pullToRreflash:NO];
         }
         [self.myFavPlaceListController setAndReloadPlaceList:self.showMyList];
+        if ([self.showMyList count] == 0 ) {
+            [self.myFavPlaceListController hideTipsOnTableView];
+            [self.myFavPlaceListController showTipsOnTableView:NSLS(@"暂无收藏信息")];
+        }else {
+            [self.myFavPlaceListController hideTipsOnTableView];
+        }
     }
     else {
         self.myFavPlaceListView.hidden = YES;

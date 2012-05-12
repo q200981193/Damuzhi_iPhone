@@ -43,7 +43,7 @@
 #define WIDTH_TRANSPORTATION_NAME_LABEL 150
 #define HEIGHT_TRANSPORTATION_NAME_LABEL 14
 
-#define WIDTH_TRANSPORTATION_DISTANCE_LABEL 60
+#define WIDTH_TRANSPORTATION_DISTANCE_LABEL 65
 #define HEIGHT_TRANSPORTATION_DISTANCE_LABEL 14
 
 #define MAX_NUM_PLACES_NEARBY 10
@@ -575,6 +575,7 @@
 
         // remove unused ":" and last object which is whitespace
         //香港国际机场:约35公里;:;:;:; 
+        PPDebug(@"-------%@", str);
         NSMutableArray *array = [[NSMutableArray alloc] initWithArray:array1];
         NSRange range=NSMakeRange(0,[array count]);
         [array removeObject:@":" inRange:range];
@@ -599,9 +600,8 @@
             
             [self setTransportTaleRowBgImage:rowView row:i totoalRows:[array count]];
 
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
-
             if ([subArray objectAtIndex:0] != nil) {
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
                 nameLabel.text = [subArray objectAtIndex:0];
                 nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
                 nameLabel.textColor = DESCRIPTION_COLOR;
