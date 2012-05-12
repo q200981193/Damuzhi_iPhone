@@ -14,8 +14,6 @@
 #import "PackageManager.h"
 #import "AppUtils.h"
 
-#define NOTE_NO_DOWNLOAD_CITY 2012515
-
 @implementation CityManagementController 
 
 static CityManagementController *_instance;
@@ -84,19 +82,18 @@ static CityManagementController *_instance;
     [imageView setImage:[UIImage imageNamed:@"city_ing.png"]];
     dataTableView.tableFooterView = imageView; 
     
-    [_downloadTableView addSubview:[self labelWithTitle:NSLS(@"您暂未下载离线城市数据")]];
+    _downloadTableView.tableFooterView = [self labelWithTitle:NSLS(@"您暂未下载离线城市数据")];
+//    [_downloadTableView addSubview:[self labelWithTitle:NSLS(@"您暂未下载离线城市数据")]];
 }
 
 - (UILabel *)labelWithTitle:(NSString*)title
 {
-    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, _downloadTableView.frame.size.width, 13)] autorelease];
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, _downloadTableView.frame.size.width, 30)] autorelease];
     label.font = [UIFont systemFontOfSize:15];
     label.textColor = [UIColor whiteColor];
     label.textAlignment = UITextAlignmentCenter;
     label.backgroundColor = [UIColor clearColor];
     label.text = title;
-    [_downloadTableView addSubview:label];
-    label.tag = NOTE_NO_DOWNLOAD_CITY;
     label.hidden = YES;
     return label;
 }
@@ -171,10 +168,11 @@ static CityManagementController *_instance;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.downloadTableView) {
         if ([_downloadList count] == 0) {
-            [[_downloadTableView viewWithTag:NOTE_NO_DOWNLOAD_CITY] setHidden:NO];
+            _downloadTableView.tableFooterView.hidden = NO;
         }
         else {
-            [[_downloadTableView viewWithTag:NOTE_NO_DOWNLOAD_CITY] setHidden:YES];
+            _downloadTableView.tableFooterView.hidden = YES;
+
         }
         
         return [_downloadList count];
