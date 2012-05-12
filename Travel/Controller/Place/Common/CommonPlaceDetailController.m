@@ -573,12 +573,12 @@
         NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
         NSArray *array1 = [str componentsSeparatedByString:@";"];
 
-        // remove unused ":" data
+        // remove unused ":" and last object which is whitespace
         //香港国际机场:约35公里;:;:;:; 
         NSMutableArray *array = [[NSMutableArray alloc] initWithArray:array1];
         NSRange range=NSMakeRange(0,[array count]);
         [array removeObject:@":" inRange:range];
-        [array removeObject:@"" inRange:range];
+        [array removeLastObject];
         
         UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count]+1)*HEIGHT_TRANSPORTATION_TABLE_ROW+10)];
 
@@ -601,22 +601,26 @@
 
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
 
-            nameLabel.text = [subArray objectAtIndex:0];
-            nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
-            nameLabel.textColor = DESCRIPTION_COLOR;
-            nameLabel.backgroundColor = [UIColor clearColor];
-            [rowView addSubview:nameLabel];
-            [nameLabel release];
+            if ([subArray objectAtIndex:0] != nil) {
+                nameLabel.text = [subArray objectAtIndex:0];
+                nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
+                nameLabel.textColor = DESCRIPTION_COLOR;
+                nameLabel.backgroundColor = [UIColor clearColor];
+                [rowView addSubview:nameLabel];
+                [nameLabel release];
+            }
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rowView.frame.size.width-6-WIDTH_TRANSPORTATION_DISTANCE_LABEL, 6, WIDTH_TRANSPORTATION_DISTANCE_LABEL, HEIGHT_TRANSPORTATION_DISTANCE_LABEL)];
-            
-            distanceLabel.text = [subArray objectAtIndex:1];
-            distanceLabel.font = SEGAMENT_DESCRIPTION_FONT;
-            distanceLabel.textColor = DESCRIPTION_COLOR;
-            distanceLabel.backgroundColor = [UIColor clearColor];
-            [rowView addSubview:distanceLabel];
-            [distanceLabel release];
-            
+            if ([subArray objectAtIndex:1] != nil) {
+                UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rowView.frame.size.width-6-WIDTH_TRANSPORTATION_DISTANCE_LABEL, 6, WIDTH_TRANSPORTATION_DISTANCE_LABEL, HEIGHT_TRANSPORTATION_DISTANCE_LABEL)];
+                
+                distanceLabel.text = [subArray objectAtIndex:1];
+                distanceLabel.font = SEGAMENT_DESCRIPTION_FONT;
+                distanceLabel.textColor = DESCRIPTION_COLOR;
+                distanceLabel.backgroundColor = [UIColor clearColor];
+                [rowView addSubview:distanceLabel];
+                [distanceLabel release];
+            }
+                        
             [segmentView addSubview:rowView];
             [rowView release];
         }
