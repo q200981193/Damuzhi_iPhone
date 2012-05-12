@@ -61,7 +61,8 @@
     [self.navigationItem setTitle:NSLS(@"周边推荐")];
     
     mapView.delegate = self;
-    mapView.mapType = MKMapTypeStandard;      
+    mapView.mapType = MKMapTypeStandard; 
+    [self.mapView showsUserLocation];
     
     self.placeList = [[NSMutableArray alloc] init];
     
@@ -70,11 +71,6 @@
                                               place:_place 
                                            distance:10.0     
                                      viewController:self];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-
 }
 
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
@@ -120,7 +116,7 @@
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
-
+#define  RED_GLASS_VIEW 20120510
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -150,6 +146,9 @@
                 annotationView.image = img;
                 [annotationView setFrame:customizeView.frame];
                 [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
+//                customizeView.tag = RED_GLASS_VIEW;
+//                annotationView.tag = RED_GLASS_VIEW;
+                buttomView = annotationView;
                 [annotationView addSubview:customizeView];
             }
             else
@@ -159,9 +158,9 @@
                 NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
                 [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
 
-                            
             }
-            
+//            UIView *view = [annotationView viewWithTag:RED_GLASS_VIEW];
+//            [annotationView bringSubviewToFront:view];
             return annotationView;
         }
         else
@@ -174,6 +173,16 @@
     
     return nil;
 }
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    for (UIView *view in views) {
+        if (view == buttomView) {
+            [view.superview bringSubviewToFront:buttomView];
+        }
+    }
+}
+
 
 
 

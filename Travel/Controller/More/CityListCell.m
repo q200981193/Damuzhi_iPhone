@@ -86,9 +86,14 @@
 }
 
 - (void)setCellAppearance
-{ 
-    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
-    [self setDownloadAppearance:localCity];
+{
+    if ([AppUtils hasLocalCityData:_city.cityId]) {
+        [self setDownloadSuccessAppearance];
+    }
+    else {
+        LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
+        [self setDownloadAppearance:localCity];
+    }
 }
 
 - (void)setDefaultAppearance
@@ -125,12 +130,7 @@
             break;
             
         case DOWNLOAD_SUCCEED:
-            if ([AppUtils hasLocalCityData:localCity.cityId]) {
-                [self setDownloadSuccessAppearance];
-            }
-            else {
-                [self setDefaultAppearance];
-            }
+            [self setUnzipingAppearance];
             break;
             
         case DOWNLOAD_FAILED:
@@ -197,7 +197,24 @@
     onlineButton.hidden = YES;
     
     downloadDoneLabel.hidden = NO;
+    downloadDoneLabel.text = NSLS(@"已下载");
     moreDetailBtn.hidden = NO;
+}
+
+- (void)setUnzipingAppearance
+{
+    dataSizeLabel.hidden = NO;
+    downloadProgressView.hidden = YES;
+    downloadPersentLabel.hidden = YES;
+    pauseDownloadBtn.hidden = YES;
+    
+    downloadButton.hidden = YES;
+    cancelDownloadBtn.hidden = YES;
+    onlineButton.hidden = YES;
+    
+    downloadDoneLabel.hidden = NO;
+    downloadDoneLabel.text = NSLS(@"安装中...");
+    moreDetailBtn.hidden = YES;
 }
 
 #pragma mark -

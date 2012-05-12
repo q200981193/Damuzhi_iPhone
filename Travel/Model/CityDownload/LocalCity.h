@@ -11,6 +11,8 @@
 
 #define KEY_LOCAL_CITY @"KEY_LOCAL_CITY"
 
+#define STATUS_NONE -1
+
 #define DOWNLOADING 1
 #define DOWNLOAD_PAUSE 2
 #define DOWNLOAD_SUCCEED 3
@@ -28,6 +30,7 @@
 #define KEY_DOWNLOAD_PROGRESS @"KEY_DOWNLOAD_PROGRESS"
 #define KEY_DOWNLOADING_STATUS @"KEY_DOWNLOADING_STATUS"
 #define KEY_UPDATE_STATUS @"KEY_UPDATE_STATUS"
+
 #define KEY_REQUEST_TYPE @"KEY_REQUEST_TYPE"
 
 @protocol LocalCityDelegate <NSObject>
@@ -47,7 +50,6 @@
 @property (assign, nonatomic) float downloadProgress;
 @property (assign, nonatomic) int downloadStatus;
 @property (assign, nonatomic) int updateStatus;
-//@property (assign, nonatomic) int downloadType;
 
 + (LocalCity*)localCityWith:(int)cityId;
 - (NSString*)description;

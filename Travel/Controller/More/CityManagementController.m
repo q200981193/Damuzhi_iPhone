@@ -317,11 +317,12 @@ static CityManagementController *_instance;
 - (void)didFinishDownload:(City*)city
 {
     [self killTimer];
+    [dataTableView reloadData];
     
-    [[AppService defaultService] UnzipCityDataAsynchronous:city.cityId unzipDelegate:self];
+    [[CityDownloadService defaultService] UnzipCityDataAsynchronous:city.cityId unzipDelegate:self];
     
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
-    [self popupMessage:message title:nil];
+//    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载成功"), city.countryName, city.cityName];
+//    [self popupMessage:message title:nil];
 }
 
 - (void)didFailDownload:(City *)city error:(NSError *)error
@@ -364,10 +365,10 @@ static CityManagementController *_instance;
 {
     [self killTimer];
     
-    [[AppService defaultService] UnzipCityDataAsynchronous:city.cityId unzipDelegate:self];
+    [[CityDownloadService defaultService] UnzipCityDataAsynchronous:city.cityId unzipDelegate:self];
     
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据更新成功"), city.countryName, city.cityName];
-    [self popupMessage:message title:nil];
+//    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据更新成功"), city.countryName, city.cityName];
+//    [self popupMessage:message title:nil];
 }
 
 - (void)didFailUpdate:(City *)city error:(NSError *)error
@@ -385,9 +386,11 @@ static CityManagementController *_instance;
 #pragma mark: delegate of unzip city.
 - (void)didFailUnzip:(City*)city
 {
-    [self killTimer];
+    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:city.cityId];
+    NSString *type = @"";
+    (localCity.updateStatus == UPDATE_FAILED) ? (type=NSLS(@"更新")) : (type=NSLS(@"下载"));
     
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据安装失败"), city.countryName, city.cityName];
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据%@失败"), city.countryName, city.cityName, type];
     [self popupMessage:message title:nil];
     
     [dataTableView reloadData];
@@ -396,9 +399,11 @@ static CityManagementController *_instance;
 
 - (void)didFinishUnzip:(City*)city 
 {
-    [self killTimer];
-
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据安装成功"), city.countryName, city.cityName];
+    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:city.cityId];
+    NSString *type = @"";
+    (localCity.updateStatus == UPDATE_FAILED) ? (type=NSLS(@"更新")) : (type=NSLS(@"下载"));
+    
+    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据%@成功"), city.countryName, city.cityName,type];
     [self popupMessage:message title:nil];
     
     [dataTableView reloadData];

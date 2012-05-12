@@ -30,12 +30,30 @@
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.025;
-    newRegion.span.longitudeDelta = 0.025;
+//    newRegion.span.latitudeDelta = 0.025;
+//    newRegion.span.longitudeDelta = 0.025;
 //    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.latitudeDelta = 0;
+    newRegion.span.longitudeDelta = 0;
 //    newRegion.span.longitudeDelta = 0.109863;
 
     
+    [mapView setRegion:newRegion animated:YES];
+}
+
++ (void)gotoCenterRegion:(Place*)place mapView:(MKMapView*)mapView
+{
+    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+        return;
+    }
+    
+    MKCoordinateRegion newRegion;
+    newRegion.center.latitude = [place latitude];
+    newRegion.center.longitude = [place longitude];
+    //设置地图的范围，越小越精确  
+    newRegion.span.latitudeDelta = 0.0065;
+    newRegion.span.longitudeDelta = 0.0065;
+        
     [mapView setRegion:newRegion animated:YES];
 }
 
@@ -51,7 +69,7 @@
     
     UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
     [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
-    [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
+    [leftIndicatorButton setUserInteractionEnabled:NO];
     [customizeView addSubview:leftIndicatorButton];
     [leftIndicatorButton release];
     

@@ -279,6 +279,10 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
+								<double key="IBUIContentEdgeInsets.top">-2</double>
+								<double key="IBUIContentEdgeInsets.bottom">0.0</double>
+								<double key="IBUIContentEdgeInsets.left">0.0</double>
+								<double key="IBUIContentEdgeInsets.right">0.0</double>
 								<string key="IBUINormalTitle">取消</string>
 								<reference key="IBUIHighlightedTitleColor" ref="292786283"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
@@ -296,7 +300,7 @@
 							<object class="IBUILabel" id="126646383">
 								<reference key="NSNextResponder" ref="535391295"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{248, 14}, {49, 26}}</string>
+								<string key="NSFrame">{{205, 14}, {92, 26}}</string>
 								<reference key="NSSuperview" ref="535391295"/>
 								<reference key="NSNextKeyView" ref="390226681"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -310,6 +314,7 @@
 								<reference key="IBUIHighlightedColor" ref="292786283"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
+								<int key="IBUITextAlignment">2</int>
 								<reference key="IBUIFontDescription" ref="654805284"/>
 								<reference key="IBUIFont" ref="665344324"/>
 							</object>

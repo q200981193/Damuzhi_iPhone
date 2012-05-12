@@ -9,3 +9,5 @@
 */
 
 "isNewVersion" = "已經是最新版本";
+"kCallNotSupportOnIPod" = "iPod上不支持通話功能";
+"kSmsNotSupportOnIPod" = "iPod上不支持簡訊功能";	

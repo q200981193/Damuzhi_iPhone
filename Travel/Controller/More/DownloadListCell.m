@@ -16,6 +16,7 @@
 #import "AppUtils.h"
 #import "Reachability.h"
 #import "SSZipArchive.h"
+#import "TKAlertCenter.h"
 
 @implementation DownloadListCell
 @synthesize cityNameLabel;
@@ -61,16 +62,6 @@
     self.city = city;
     
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
-//    [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
-
-//    if (DEFAULT_CITY_ID == _city.cityId) {
-//        self.deleteButton.hidden = YES;
-//        self.defaultLabel.hidden = NO;
-//     }
-//    else {
-//        self.deleteButton.hidden = NO;
-//        self.defaultLabel.hidden = YES;
-//    }
         
     [self setApperance:city];
 }
@@ -260,6 +251,8 @@
 
 - (void)didFailUpdate:(City*)city error:(NSError*)error
 {
+    [[TKAlertCenter defaultCenter] postAlertWithMessage:@""];
+    
     if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didFailUpdate:error:)]) {
         [_downloadListCellDelegate didFailUpdate:city error:error];
     }
