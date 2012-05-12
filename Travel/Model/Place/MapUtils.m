@@ -59,7 +59,7 @@
 
 + (UIButton*)createAnnotationViewWith:(Place*)place placeList:(NSArray*)placeList
 {
-    UIFont *font = [UIFont systemFontOfSize:14];
+    UIFont *font = [UIFont boldSystemFontOfSize:15];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     CGSize size = [[place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+45,37)] autorelease];
