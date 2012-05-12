@@ -14,6 +14,8 @@
 #import "PackageManager.h"
 #import "AppUtils.h"
 
+#define NOTE_NO_DOWNLOAD_CITY 2012515
+
 @implementation CityManagementController 
 
 static CityManagementController *_instance;
@@ -81,6 +83,22 @@ static CityManagementController *_instance;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 26)];
     [imageView setImage:[UIImage imageNamed:@"city_ing.png"]];
     dataTableView.tableFooterView = imageView; 
+    
+    [_downloadTableView addSubview:[self labelWithTitle:NSLS(@"您暂未下载离线城市数据")]];
+}
+
+- (UILabel *)labelWithTitle:(NSString*)title
+{
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(0, 10, _downloadTableView.frame.size.width, 13)] autorelease];
+    label.font = [UIFont systemFontOfSize:15];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = UITextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
+    label.text = title;
+    [_downloadTableView addSubview:label];
+    label.tag = NOTE_NO_DOWNLOAD_CITY;
+    label.hidden = YES;
+    return label;
 }
 
 - (void)viewDidUnload
@@ -152,12 +170,20 @@ static CityManagementController *_instance;
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.downloadTableView) {
+        if ([_downloadList count] == 0) {
+            [[_downloadTableView viewWithTag:NOTE_NO_DOWNLOAD_CITY] setHidden:NO];
+        }
+        else {
+            [[_downloadTableView viewWithTag:NOTE_NO_DOWNLOAD_CITY] setHidden:YES];
+        }
+        
         return [_downloadList count];
     }
     else{
         return [dataList count];			// default implementation
     }
 }
+
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -177,6 +203,7 @@ static CityManagementController *_instance;
         
         int row = [indexPath row];	
         int count = [_downloadList count];
+        
         if (row >= count){
             PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
             return cell;
@@ -331,7 +358,11 @@ static CityManagementController *_instance;
     
     PPDebug(@"download failed, error = %@", error.description);
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
-    [self popupMessage:message title:nil];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+//    [self popupMessage:message title:nil];
     [dataTableView reloadData];
 }
 
@@ -377,7 +408,12 @@ static CityManagementController *_instance;
     
     PPDebug(@"update failed, error = %@", error.description);
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据更新失败"), city.countryName, city.cityName];
-    [self popupMessage:message title:nil];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    
+//    [self popupMessage:message title:nil];
     [_downloadTableView reloadData];
 }
 
@@ -391,6 +427,11 @@ static CityManagementController *_instance;
     (localCity.updateStatus == UPDATE_FAILED) ? (type=NSLS(@"更新")) : (type=NSLS(@"下载"));
     
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据%@失败"), city.countryName, city.cityName, type];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    
     [self popupMessage:message title:nil];
     
     [dataTableView reloadData];
@@ -399,12 +440,12 @@ static CityManagementController *_instance;
 
 - (void)didFinishUnzip:(City*)city 
 {
-    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:city.cityId];
-    NSString *type = @"";
-    (localCity.updateStatus == UPDATE_FAILED) ? (type=NSLS(@"更新")) : (type=NSLS(@"下载"));
-    
-    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据%@成功"), city.countryName, city.cityName,type];
-    [self popupMessage:message title:nil];
+//    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:city.cityId];
+//    NSString *type = @"";
+//    (localCity.updateStatus == UPDATE_FAILED) ? (type=NSLS(@"更新")) : (type=NSLS(@"下载"));
+//    
+//    NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据%@成功"), city.countryName, city.cityName,type];
+//    [self popupMessage:message title:nil];
     
     [dataTableView reloadData];
     

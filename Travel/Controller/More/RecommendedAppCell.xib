@@ -43,8 +43,9 @@
 							<object class="IBUILabel" id="784839249">
 								<reference key="NSNextResponder" ref="299711316"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{79, 12}, {210, 17}}</string>
+								<string key="NSFrame">{{67, 12}, {210, 17}}</string>
 								<reference key="NSSuperview" ref="299711316"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="960319056"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -76,8 +77,10 @@
 							<object class="IBUILabel" id="960319056">
 								<reference key="NSNextResponder" ref="299711316"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{79, 32}, {210, 30}}</string>
+								<string key="NSFrame">{{67, 29}, {210, 33}}</string>
 								<reference key="NSSuperview" ref="299711316"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -104,8 +107,9 @@
 							<object class="IBUIView" id="706915264">
 								<reference key="NSNextResponder" ref="299711316"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{6, 12}, {65, 50}}</string>
+								<string key="NSFrame">{{11, 12}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="299711316"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="784839249"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -118,8 +122,9 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 74}</string>
+						<string key="NSFrameSize">{336, 74}</string>
 						<reference key="NSSuperview" ref="184505642"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="706915264"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -133,8 +138,9 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 75}</string>
+				<string key="NSFrameSize">{336, 75}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="299711316"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -195,8 +201,8 @@
 						<reference key="object" ref="184505642"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="960319056"/>
-							<reference ref="706915264"/>
 							<reference ref="784839249"/>
+							<reference ref="706915264"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -235,7 +241,80 @@
 			<nil key="sourceID"/>
 			<int key="maxID">28</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">HJManagedImageV</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/HJManagedImageV.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">PPTableViewCell</string>
+					<string key="superclassName">UITableViewCell</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/PPTableViewCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RecommendedAppCell</string>
+					<string key="superclassName">PPTableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="briefIntroLabel">UILabel</string>
+						<string key="imageView">HJManagedImageV</string>
+						<string key="titleLabel">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="briefIntroLabel">
+							<string key="name">briefIntroLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageView">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">HJManagedImageV</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="titleLabel">
+							<string key="name">titleLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/RecommendedAppCell.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RouteCell</string>
+					<string key="superclassName">PPTableViewCell</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="briefIntroLabel">UILabel</string>
+						<string key="imageView">HJManagedImageV</string>
+						<string key="titleLabel">UILabel</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="briefIntroLabel">
+							<string key="name">briefIntroLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageView">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">HJManagedImageV</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="titleLabel">
+							<string key="name">titleLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/RouteCell.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">

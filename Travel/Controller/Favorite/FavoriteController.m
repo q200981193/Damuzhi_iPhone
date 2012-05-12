@@ -223,7 +223,7 @@
 - (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type result:(int)result
 {
     if (result != ERROR_SUCCESS ) {
-        [self popupMessage:@"数据加载失败" title:nil];
+        [self popupMessage:@"网络弱，数据加载失败" title:nil];
     }
     
     switch (type) {
