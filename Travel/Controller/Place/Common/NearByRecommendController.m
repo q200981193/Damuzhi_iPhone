@@ -61,7 +61,8 @@
     [self.navigationItem setTitle:NSLS(@"周边推荐")];
     
     mapView.delegate = self;
-    mapView.mapType = MKMapTypeStandard;      
+    mapView.mapType = MKMapTypeStandard; 
+    [self.mapView showsUserLocation];
     
     self.placeList = [[NSMutableArray alloc] init];
     
