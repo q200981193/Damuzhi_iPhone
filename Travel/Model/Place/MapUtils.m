@@ -59,22 +59,22 @@
 
 + (UIButton*)createAnnotationViewWith:(Place*)place placeList:(NSArray*)placeList
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
+    UIFont *font = [UIFont systemFontOfSize:14];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     CGSize size = [[place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
-    UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)] autorelease];
+    UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+45,37)] autorelease];
     
     NSString *fileName = [AppUtils getCategoryIndicatorIcon:place.categoryId];
     UIImage *icon = [UIImage imageNamed:fileName];
     
-    UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
+    UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 4.5, 17, 17)];            
     [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
     [leftIndicatorButton setUserInteractionEnabled:NO];
     [customizeView addSubview:leftIndicatorButton];
     [leftIndicatorButton release];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, size.width, 17)];
-    label.font = [UIFont systemFontOfSize:12];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(25, 5, size.width, 17)];
+    label.font = font;
     label.text  = [place name];
     NSInteger value = [placeList indexOfObject:place];
     label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
