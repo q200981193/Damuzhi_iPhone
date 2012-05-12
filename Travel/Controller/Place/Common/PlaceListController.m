@@ -213,7 +213,7 @@
         placeCell.favoritesView.hidden = YES;
         placeCell.areaLable.hidden= YES;
         placeCell.distanceLable.hidden = YES;
-        placeCell.summaryView.frame = CGRectOffset(placeCell.summaryView.frame, 10, 0);
+        placeCell.summaryView.frame = (CGRect){CGPointMake(10, 0), placeCell.summaryView.frame.size};
     }else {
         placeCell.priceLable.hidden = NO;
         placeCell.favoritesView.hidden = NO;
@@ -235,21 +235,15 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_deletePlaceDelegate && [_deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
-        [_deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
-    }
-    
+    Place *delPlace = (Place *)[dataList objectAtIndex:indexPath.row];
     NSMutableArray *mutableDataList = [NSMutableArray arrayWithArray:dataList];
     [mutableDataList removeObjectAtIndex:indexPath.row];
     self.dataList = mutableDataList;
     
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
-    if ([dataList count] == 0) {
-        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
-    }
-    else {
-        [self hideTipsOnTableView];
+    if (_deletePlaceDelegate && [_deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
+        [_deletePlaceDelegate deletedPlace:delPlace];
     }
 }
 
