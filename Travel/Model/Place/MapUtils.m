@@ -67,13 +67,13 @@
     NSString *fileName = [AppUtils getCategoryIndicatorIcon:place.categoryId];
     UIImage *icon = [UIImage imageNamed:fileName];
     
-    UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 4.5, 17, 17)];            
+    UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(7, 4, 17, 17)];            
     [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
     [leftIndicatorButton setUserInteractionEnabled:NO];
     [customizeView addSubview:leftIndicatorButton];
     [leftIndicatorButton release];
     
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(25, 5, size.width, 17)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(26, 4, size.width, 17)];
     label.font = font;
     label.text  = [place name];
     NSInteger value = [placeList indexOfObject:place];
