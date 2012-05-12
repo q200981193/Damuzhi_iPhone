@@ -67,7 +67,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     
+    [self.tipsLabel setFont:[UIFont systemFontOfSize:13]]; 
+    
     [self.dataTableView setSeparatorColor:[UIColor clearColor]];
 
     // create & add map view
@@ -125,25 +126,6 @@
     return controller;
 }
 
-#define SHOW_NO_DATA_LABEL_TAG 100
-- (void)removeNoDataTips
-{
-    UILabel *label = (UILabel*)[self.dataTableView viewWithTag:SHOW_NO_DATA_LABEL_TAG];
-    [label removeFromSuperview];
-}
-
-- (void)addNoDataTips
-{
-    [self removeNoDataTips];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    label.tag = SHOW_NO_DATA_LABEL_TAG;
-    label.textAlignment = UITextAlignmentCenter;
-    label.text = NSLS(@"未找到相关信息");
-    label.font = [UIFont systemFontOfSize:13];
-    [self.dataTableView addSubview:label];
-    [label release];
-}
-
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
     self.dataList = list;
@@ -153,11 +135,11 @@
     if ([list count] > 0) {
         [MapUtils gotoLocation:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
     }
-        if ([dataList count] == 0) {
-        [self addNoDataTips];
+    if ([dataList count] == 0) {
+        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
     }
     else {
-        [self removeNoDataTips];
+        [self hideTipsOnTableView];
     }
     
     // after finish loading data, please call the following codes
@@ -264,7 +246,10 @@
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
     if ([dataList count] == 0) {
-        [self addNoDataTips];
+        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
+    }
+    else {
+        [self hideTipsOnTableView];
     }
 }
 
