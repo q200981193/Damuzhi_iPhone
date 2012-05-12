@@ -31,6 +31,7 @@
 #import "CommonWebController.h"
 #import "UIImageUtil.h"
 #import "AppUtils.h"
+#import "PackageManager.h"
 
 #import "PPDebug.h"
 
@@ -95,6 +96,7 @@
     [button release];
 }
 
+#define TAG_CITY_UPDATE_ALERT 123
 - (void)viewDidLoad
 {
     [self setBackgroundImageName:@"index_bg.png"];
@@ -104,7 +106,11 @@
     // Do any additional setup after loading the view from its nib.
     [self initLocationManager];
     [self startUpdatingLocation];
+    
+    [self checkCurrentCityVersion];
 }
+
+
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     // save to current location
@@ -275,6 +281,42 @@
         }
         case 3:
             break;
+        default:
+            break;
+    }
+}
+
+- (void)checkCurrentCityVersion
+{
+    City *currentCity = [[AppManager defaultManager] getCity:[[AppManager defaultManager] getCurrentCityId]];
+    if (![AppUtils hasLocalCityData:currentCity.cityId]) {
+        return;
+    }
+        
+    if (![currentCity.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:currentCity.cityId]]){
+        NSString *message = NSLS(@"离线数据有更新，是否现在更新？");
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:self cancelButtonTitle:NSLS(@"以后再说") otherButtonTitles:NSLS(@"现在更新"),nil] autorelease];
+        alert.tag = TAG_CITY_UPDATE_ALERT;
+        [alert show];
+    }
+}
+
+#pragma mark -
+#pragma mark: implementation of alert view delegate.
+
+- (void)alertView:(UIAlertView *)alertView1 clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView1.tag) {
+        case TAG_CITY_UPDATE_ALERT:
+            if (buttonIndex == 1) {
+                CityManagementController *controller = [CityManagementController getInstance];
+
+                [self.navigationController pushViewController:controller animated:YES];
+                
+                [controller clickDownloadListButton:controller.downloadListBtn];
+            }
+            break;
+            
         default:
             break;
     }

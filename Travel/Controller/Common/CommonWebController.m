@@ -108,19 +108,19 @@
             [self loadHtml:overview];
             break;
         case ERROR_NETWORK:
-            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            [self popupMessage:NSLS(@"网络弱，数据加载失败") title:nil];
             break;
             
         case ERROR_CLIENT_URL_NULL:
-            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_URL_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_REQUEST_NULL:
-            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_REQUEST_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_PARSE_JSON:
-            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_PARSE_JSON") title:nil];
             break;
             
         default:
