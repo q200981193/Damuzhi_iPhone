@@ -151,7 +151,7 @@
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
     if ([list count] > 0) {
-        [MapUtils gotoLocation:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
+        [MapUtils gotoCenterRegion:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
     }
         if ([dataList count] == 0) {
         [self addNoDataTips];
