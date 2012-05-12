@@ -217,6 +217,13 @@
     [[PlaceService defaultService] deletePlaceFromFavorite:self place:place];
     [[PlaceStorage favoriteManager] deletePlace:place];
     self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    
+    if ([self.myFavPlaceListController.dataList count] == 0) {
+        [self.myFavPlaceListController hideTipsOnTableView];
+        [self.myFavPlaceListController showTipsOnTableView:NSLS(@"暂无收藏信息")];
+    }else {
+        [self.myFavPlaceListController hideTipsOnTableView];
+    }
 }
 
 #pragma mark - PlaceServiceDelegate 
