@@ -62,7 +62,7 @@
     
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard; 
-    [self.mapView showsUserLocation];
+    self.mapView.ShowsUserLocation = YES;
     
     self.placeList = [[NSMutableArray alloc] init];
     
