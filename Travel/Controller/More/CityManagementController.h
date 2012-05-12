@@ -27,5 +27,6 @@
 @property (retain, nonatomic) UIButton *downloadListBtn;
 
 + (CityManagementController*)getInstance;
+- (void)clickDownloadListButton:(id)sender;
 
 @end

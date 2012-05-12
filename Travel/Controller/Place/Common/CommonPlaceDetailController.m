@@ -46,7 +46,7 @@
 #define WIDTH_TRANSPORTATION_DISTANCE_LABEL 65
 #define HEIGHT_TRANSPORTATION_DISTANCE_LABEL 14
 
-#define MAX_NUM_PLACES_NEARBY 8
+#define MAX_NUM_PLACES_NEARBY 10
 
 @implementation CommonPlaceDetailController
 @synthesize helpButton;

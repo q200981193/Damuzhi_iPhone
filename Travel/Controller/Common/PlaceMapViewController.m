@@ -93,7 +93,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-    [self.mapView showsUserLocation];
+    self.mapView.ShowsUserLocation = YES;
 
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"

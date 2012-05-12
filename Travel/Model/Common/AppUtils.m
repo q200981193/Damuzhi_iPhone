@@ -391,7 +391,7 @@
 
 + (UIAlertView*)showDeleteCityDataAlertViewWithTag:(int)tag delegate:(id)delegate
 {
-    NSString *message = NSLS(@"删除城市数据后再次打开需要重新下载，确认删除?");
+    NSString *message = NSLS(@"是否确认删除?");
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:delegate cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"),nil] autorelease];
     alert.tag = tag;
     [alert show];
