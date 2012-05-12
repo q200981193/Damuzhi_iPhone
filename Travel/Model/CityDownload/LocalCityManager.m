@@ -41,15 +41,22 @@ static LocalCityManager *_defaultManager = nil;
             }   
         }
         
-        for (LocalCity* localCity in _localCities) {
-            if (![AppUtils hasLocalCityData:localCity.cityId] &&localCity.downloadStatus==DOWNLOAD_FAILED) {
-                [self removeLocalCity:localCity.cityId];
-            }
-        }
+        [self setUnzipNotDoneBeforeLastAppExitToFail];
     }
     
     return self;
 }
+
+- (void)setUnzipNotDoneBeforeLastAppExitToFail
+{
+    for (NSNumber* cityId in [_localCities allKeys]) {
+        LocalCity *localCity = [self getLocalCity:[cityId intValue]];
+        if (![AppUtils hasLocalCityData:[cityId intValue]] && (localCity.downloadStatus==DOWNLOAD_SUCCEED)) {
+            localCity.downloadStatus = DOWNLOAD_FAILED;
+        }
+    }
+}
+
 
 - (void)dealloc
 {
