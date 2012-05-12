@@ -49,6 +49,17 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.mapView.ShowsUserLocation = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.mapView.ShowsUserLocation = NO;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,7 +73,6 @@
     
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard; 
-    self.mapView.ShowsUserLocation = YES;
     
     self.placeList = [[NSMutableArray alloc] init];
     
@@ -88,6 +98,7 @@
 {
     [_placeList release];
     [_place release];
+    [mapView release];
     [super dealloc];
 }
 

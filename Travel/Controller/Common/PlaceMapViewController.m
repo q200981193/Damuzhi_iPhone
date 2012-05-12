@@ -65,8 +65,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.mapView.ShowsUserLocation = YES;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.mapView.ShowsUserLocation = NO;
+}
 
 - (void)loadAllAnnotations
 {    
@@ -93,7 +98,6 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-    self.mapView.ShowsUserLocation = YES;
 
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
