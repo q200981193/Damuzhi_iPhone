@@ -625,6 +625,7 @@
             [rowView release];
         }
         [segmentView release];
+        [array release];
         
         UIView *middleLineView = [self createMiddleLineView: _detailHeight];
         [dataScrollView addSubview:middleLineView];
