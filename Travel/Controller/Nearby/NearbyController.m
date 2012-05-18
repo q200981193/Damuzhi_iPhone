@@ -17,6 +17,7 @@
 #import "App.pb.h"
 #import "PPNetworkRequest.h"
 #import "AppService.h"
+#import <CoreLocation/CoreLocation.h>
 
 
 @implementation NearbyController
@@ -46,6 +47,7 @@
 #define DISTANCE_1KM  1000
 #define DISTANCE_5KM 5000
 #define DISTANCE_10KM 10000
+#define TEST_FOR_SIMULATE__LOCATION
 
 - (void)dealloc
 {
@@ -182,6 +184,65 @@
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
 }
 
+#ifdef TEST_FOR_SIMULATE__LOCATION
+int currentCityId;
+UITextField * alertTextField;
+CLLocation *testLocation;
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //set HongKong
+    currentCityId = [[AppManager defaultManager] getCurrentCityId];
+    [[AppManager defaultManager] setCurrentCityId:1];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture release];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[AppManager defaultManager] setCurrentCityId:currentCityId];
+}
+
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"输入香港范围内经纬度数值" message:@"格式:22.254087 113.905029" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alertTextField = [alert textFieldAtIndex:0];
+        alertTextField.keyboardType = UIKeyboardTypeDefault;
+        alertTextField.placeholder = @"";
+        [alert show];
+        [alert release];  
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    switch (buttonIndex) {
+        case 0:
+            break;
+        case 1:{
+            NSMutableString *text = [[NSMutableString alloc] initWithString:[alertTextField text]];
+            NSString *latitude = [[text componentsSeparatedByString:@" "] objectAtIndex:0];
+            NSString *logtitude = [[text componentsSeparatedByString:@" "] objectAtIndex:1];
+            double lat = [latitude doubleValue];
+            double log = [logtitude doubleValue];
+             testLocation = [[CLLocation alloc] initWithLatitude:lat longitude:log];
+            
+        }
+            break;  
+        default:
+            break;
+    }
+
+    
+}
+
+
+#endif
+
 
 - (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
 {
@@ -189,6 +250,11 @@
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
         CLLocation *myLocation = [[AppService defaultService] currentLocation];
+        
+#ifdef TEST_FOR_SIMULATE__LOCATION
+        myLocation = testLocation;
+#endif
+        
         CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
         [placeLocation release];
                 
