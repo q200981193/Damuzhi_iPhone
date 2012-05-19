@@ -19,6 +19,17 @@
 #import "AppService.h"
 #import <CoreLocation/CoreLocation.h>
 
+//#define TEST_FOR_SIMULATE__LOCATION
+
+
+@interface NearbyController ()
+
+#ifdef TEST_FOR_SIMULATE__LOCATION
+@property (retain, nonatomic) CLLocation *testLocation;
+#endif
+
+@end
+
 
 @implementation NearbyController
 @synthesize imageRedStartView;
@@ -37,6 +48,9 @@
 @synthesize showMap = _showMap;
 @synthesize placeList = _placeList;
 @synthesize allPlaceList = _allPlaceList;
+#ifdef TEST_FOR_SIMULATE__LOCATION
+@synthesize testLocation;
+#endif
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -47,7 +61,6 @@
 #define DISTANCE_1KM  1000
 #define DISTANCE_5KM 5000
 #define DISTANCE_10KM 10000
-#define TEST_FOR_SIMULATE__LOCATION
 
 - (void)dealloc
 {
@@ -63,6 +76,10 @@
     [_placeList release];
     [_allPlaceList release];
     [buttonHolderView release];
+#ifdef TEST_FOR_SIMULATE__LOCATION
+    [testLocation release];
+#endif
+
     [super dealloc];
 }
 
@@ -137,6 +154,10 @@
     [self setSelectedBtn:_categoryId];
     
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
+    
+#ifdef TEST_FOR_SIMULATE__LOCATION
+    self.testLocation = [[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease];
+#endif
 }
 
 - (void)setSelectedBtn:(int)categoryId
@@ -185,30 +206,19 @@
 }
 
 #ifdef TEST_FOR_SIMULATE__LOCATION
-int currentCityId;
 UITextField * alertTextField;
-CLLocation *testLocation;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //set HongKong
-    currentCityId = [[AppManager defaultManager] getCurrentCityId];
-    [[AppManager defaultManager] setCurrentCityId:1];
-    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     tapGesture.numberOfTapsRequired = 2;
     [self.view addGestureRecognizer:tapGesture];
     [tapGesture release];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [[AppManager defaultManager] setCurrentCityId:currentCityId];
-}
-
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"输入香港范围内经纬度数值" message:@"格式:22.254087 113.905029" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"输入经纬度数值" message:@"格式:22.254087 113.905029" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alertTextField = [alert textFieldAtIndex:0];
         alertTextField.keyboardType = UIKeyboardTypeDefault;
@@ -240,7 +250,6 @@ CLLocation *testLocation;
     
 }
 
-
 #endif
 
 
@@ -249,16 +258,16 @@ CLLocation *testLocation;
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-        CLLocation *myLocation = [[AppService defaultService] currentLocation];
         
 #ifdef TEST_FOR_SIMULATE__LOCATION
-        myLocation = testLocation;
+        [[AppService defaultService] setCurrentLocation:testLocation];
 #endif
-        
+        CLLocation *myLocation = [[AppService defaultService] currentLocation];
+
         CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
         [placeLocation release];
                 
-        if (distance <= self.distance) {
+        if (distance <= _distance) {
             [placeList addObject:place];
         }
     }
