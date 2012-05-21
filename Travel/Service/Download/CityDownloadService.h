@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "LocalCityManager.h"
 
+@protocol CityDownloadServiceDelegate <NSObject>
+@optional
+- (void)didFinishUnzip:(City*)city;
+- (void)didFailUnzip:(City*)city;
+
+@end
+
 @interface CityDownloadService : NSObject
 
 @property (retain, nonatomic) NSOperationQueue *operationQueue;
@@ -19,5 +26,7 @@
 - (void)update:(City*)city  delegate:(NSObject<LocalCityDelegate>*)delegate;
 - (void)cancel:(City*)city;
 - (void)pause:(City*)city;
+
+- (void)UnzipCityDataAsynchronous:(int)cityId unzipDelegate:(id<CityDownloadServiceDelegate>)unzipDelegate;
 
 @end

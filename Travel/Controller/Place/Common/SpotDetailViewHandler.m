@@ -16,7 +16,7 @@
 - (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
 {
     [self.commonController addIntroductionViewWith: NSLS(@"景点介绍") description:[place introduction]];
-    [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[place priceDescription]];
+    [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[PlaceUtils getDetailPrice:place]];
     
     [self.commonController addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
     

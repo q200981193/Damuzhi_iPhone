@@ -9,34 +9,29 @@
 #import "PlaceStorage.h"
 #import "Place.pb.h"
 #import "LogUtil.h"
-#import "FileUtil.h"
 #import "AppManager.h"
-
-#define FAVORITE_PLACE_FILE         @"favorite_place.dat"
-#define HISTORY_PLACE_FILE          @"history_place.dat"
-#define PLACE_STORAGE_DEFAULT_DIR   @"save_place_data"
+#import "AppUtils.h"
 
 static PlaceStorage* _favoriteManager = nil;
 static PlaceStorage* _historyManager = nil;
 
 @implementation PlaceStorage
 
-@synthesize fileName = _fileName;
+@synthesize type = _type;
 @synthesize placeList = _placeList;
 
 - (void)dealloc
 {
-    [_fileName release];
+    [_type release];
     [_placeList release];
     [super dealloc];
 }
 
-- (id)initWithFileName:(NSString*)fileName
+- (id)initWithType:(NSString*)typeValue
 {
     self = [super init];
     if (self) {
-        [FileUtil createDir:[FileUtil getFileFullPath:PLACE_STORAGE_DEFAULT_DIR]];
-        self.fileName = fileName;
+        self.type = typeValue;
     }
     return self;
 }
@@ -44,7 +39,7 @@ static PlaceStorage* _historyManager = nil;
 + (PlaceStorage*)favoriteManager
 {
     if (_favoriteManager == nil) {
-        _favoriteManager = [[PlaceStorage alloc] initWithFileName:FAVORITE_PLACE_FILE];
+        _favoriteManager = [[PlaceStorage alloc] initWithType:FAVORITE_STORAGE];
     }
     return _favoriteManager;
 }
@@ -52,15 +47,22 @@ static PlaceStorage* _historyManager = nil;
 + (PlaceStorage*)historyManager
 {
     if (_historyManager == nil) {
-        _historyManager = [[PlaceStorage alloc] initWithFileName:HISTORY_PLACE_FILE];
+        _historyManager = [[PlaceStorage alloc] initWithType:HISTORY_STORAGE];
     }
     return _historyManager;
 }
 
 - (NSString*)getFilePath
 {
-    NSString* fileWithDir = [NSString stringWithFormat:@"%@/%d_%@", PLACE_STORAGE_DEFAULT_DIR, [[AppManager defaultManager] getCurrentCityId], _fileName];
-    NSString *filePath = [FileUtil getFileFullPath:fileWithDir];
+    NSString *filePath = nil;
+    if (_type == FAVORITE_STORAGE) {
+        filePath = [AppUtils getFavoriteFilePath:[[AppManager defaultManager] getCurrentCityId]];
+    }
+    else {
+        filePath = [AppUtils getHistoryFilePath:[[AppManager defaultManager] getCurrentCityId]];
+    }
+    PPDebug(@"%@",filePath);
+    
     return filePath;
 }
 
@@ -72,7 +74,7 @@ static PlaceStorage* _historyManager = nil;
             self.placeList = [PlaceList parseFromData:data];
         }
         @catch (NSException *exception) {
-            NSLog (@"<loadPlaceList> Caught %@%@", [exception name], [exception reason]);
+            PPDebug(@"<loadPlaceList> Caught %@%@", [exception name], [exception reason]);
         }
     }
 }

@@ -9,15 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "PPViewController.h"
 #import "PlaceService.h"
+#import "NearByRecommendController.h"
 
 @class Place;
 @class CommonPlaceDetailController;
+
+#define SEGAMENT_TITLE_FONT [UIFont systemFontOfSize:14]
+#define SEGAMENT_DESCRIPTION_FONT [UIFont systemFontOfSize:13]
 
 #define TITLE_VIEW_HEIGHT 34
 #define MIDDLE_LINE_HEIGHT 2
 #define CGRECT_TITLE CGRectMake(10, 3, 100, 20)
 #define TITLE_COLOR [UIColor colorWithRed:37/255.0 green:66/255.0 blue:80/255.0 alpha:1.0]
-#define DESCRIPTION_COLOR [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0]
+#define DESCRIPTION_COLOR [UIColor colorWithRed:92/255.0 green:92/255.0 blue:92/255.0 alpha:1.0]
 #define INTRODUCTION_BG_COLOR [UIColor colorWithRed:222/255.0 green:239/255.0 blue:247/255.0 alpha:1.0]
 #define PRICE_BG_COLOR [UIColor colorWithRed:235/255.0 green:241/255.0 blue:241/255.0 alpha:1.0]
 
@@ -63,6 +67,7 @@
 @property (retain, nonatomic) Place *place;
 @property (retain, nonatomic) NSArray *nearbyPlaceList;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
+@property (retain, nonatomic) NearByRecommendController *nearbyRecommendController;
 
 @property (assign, nonatomic) float detailHeight;
 @property (retain, nonatomic) UILabel *favoriteCountLabel;
@@ -79,7 +84,7 @@
 
 - (UILabel*)createTitleView:(NSString*)title;
 - (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height;
-- (UIView*)createMiddleLineView2:(CGFloat)y;
+- (UIView*)createMiddleLineView:(CGFloat)y;
 
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;

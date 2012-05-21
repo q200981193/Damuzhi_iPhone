@@ -16,16 +16,69 @@
 #import "AppConstants.h"
 #import "App.pb.h"
 
+//
+// App dir struct 
+// -----document--------download--------001_ZhHans_1.0.zip
+//                |
+//                |
+//                 -----zip--------001_ZhHans_1.0.zip 
+//                |
+//                |
+//                 -----cities--------1--------xxxx(这里的目录结构参考接口文档)
+//                |           |
+//                |           |
+//                |            -------2--------xxxx
+//                |  
+//                 -----app---------app.dat
+//                |           |
+//                |           |
+//                |            -----icon-------providedService-------xxx.icon
+//                |                        |
+//                |                        |
+//                |                         ---recommendApp----------xxx.icon
+//                |                        |
+//                |                        |
+//                |                         ---category--------------xxx.icon
+//                |   
+//                 -----help---------helpinfo.html
+//                |   
+//                 -----user---------favorite--------xxx.dat
+//                            |
+//                            |
+//                             ------history---------xxx.dat
+
 @implementation AppUtils
+
++ (BOOL)createAllNeededDir
+{
+    BOOL success = [FileUtil createDir:[self getDownloadDir]]
+    && [FileUtil createDir:[self getZipDir]]
+    && [FileUtil createDir:[self getCitiesDir]]
+    && [FileUtil createDir:[self getAppDir]]
+    && [FileUtil createDir:[self getHelpDir]]
+    && [FileUtil createDir:[self getUserDir]]
+    && [FileUtil createDir:[self getProvidedServiceIconsDir]]
+    && [FileUtil createDir:[self getRecommendedAppIconsDir]]
+    && [FileUtil createDir:[self getCategoryIconsDir]]
+    && [FileUtil createDir:[self getFavoriteDir]]
+    && [FileUtil createDir:[self getHistoryDir]];
+    
+    return success;
+}
 
 + (NSString*)getDownloadDir
 {
     return [FileUtil getFileFullPath:DIR_OF_DOWNLOAD];
 }
 
-+ (NSString*)getDownloadPath:(int)cityId
++ (NSString*)getZipDir
 {
-    return [[AppUtils getDownloadDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.zip", cityId]];
+    return [FileUtil getFileFullPath:DIR_OF_ZIP];
+}
+
++ (NSString*)getCitiesDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_CITIES];
 }
 
 + (NSString*)getAppDir
@@ -33,25 +86,49 @@
     return [FileUtil getFileFullPath:DIR_OF_APP];
 }
 
-+ (NSString*)getHelpHtmlDir
++ (NSString*)getHelpDir
 {
-    return [FileUtil getFileFullPath:DIR_OF_HELP_HTML];
+    return [FileUtil getFileFullPath:DIR_OF_HELP];
 }
 
-
-+ (NSString*)getZipDir
++ (NSString*)getUserDir
 {
-    return [FileUtil getFileFullPath:DIR_OF_ZIP];
+    return [FileUtil getFileFullPath:DIR_OF_USER];
+}
+
++ (NSString*)getProvidedServiceIconsDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_PROVIDED_SERVICE_ICON];
+}
+
++ (NSString*)getRecommendedAppIconsDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_RECOMMENDED_APP_ICON];
+}
+
++ (NSString*)getCategoryIconsDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_CATEGORY_ICON];
+}
+
++ (NSString*)getFavoriteDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_FAVORITE];
+}
+
++ (NSString*)getHistoryDir
+{
+    return [FileUtil getFileFullPath:DIR_OF_HISTORY];
+}
+
++ (NSString*)getDownloadPath:(int)cityId
+{
+    return [[AppUtils getDownloadDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.zip", cityId]];
 }
 
 + (NSString*)getCityDir:(int)cityId
 {
-    return [[FileUtil getFileFullPath:DIR_OF_CITY] stringByAppendingPathComponent:[NSString stringWithFormat:@"/%d", cityId]];
-}
-
-+ (NSString*)getCityDataDir:(int)cityId
-{
-    return [[AppUtils getCityDir:cityId] stringByAppendingPathComponent:DIR_OF_CITY_DATA];
+    return [[FileUtil getFileFullPath:DIR_OF_CITIES] stringByAppendingPathComponent:[NSString stringWithFormat:@"/%d", cityId]];
 }
 
 + (NSString*)getCityoverViewFilePath:(int)cityId
@@ -122,17 +199,7 @@
 
 + (NSString*)getHelpHtmlFilePath
 {
-    return [[AppUtils getHelpHtmlDir] stringByAppendingPathComponent:FILENAME_OF_HELP_HTML];
-}
-
-+ (NSString*)getProvidedServiceIconDir
-{
-    return [FileUtil getFileFullPath:DIR_OF_PROVIDED_SERVICE_IMAGE];
-}
-
-+ (NSString*)getCategoryImageDir
-{
-    return [FileUtil getFileFullPath:DIR_OF_CATEGORY_IMAGE];
+    return [[AppUtils getHelpDir] stringByAppendingPathComponent:FILENAME_OF_HELP_HTML];
 }
 
 + (BOOL)hasLocalCityData:(int)cityId
@@ -201,12 +268,27 @@
 
 + (NSString*)getProvidedServiceIconPath:(int)providedServiceId
 {
-    NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
+    NSString *destinationDir = [AppUtils getProvidedServiceIconsDir];
     NSString *fileName = [NSString stringWithFormat:@"%d.png", providedServiceId];
     return [destinationDir stringByAppendingPathComponent:fileName];
 }
 
++ (NSString*)getRecommendedAppIconPath:(int)appId
+{
+    NSString *destinationDir = [AppUtils getRecommendedAppIconsDir];
+    NSString *fileName = [NSString stringWithFormat:@"%d.png", appId];
+    return [destinationDir stringByAppendingPathComponent:fileName];
+}
 
++ (NSString*)getFavoriteFilePath:(int)cityId
+{
+    return [[AppUtils getFavoriteDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.dat",cityId]];
+}
+
++ (NSString*)getHistoryFilePath:(int)cityId
+{
+    return [[AppUtils getHistoryDir] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.dat",cityId]];
+}
 
 + (BOOL)isShowImage
 {
@@ -309,7 +391,7 @@
 
 + (UIAlertView*)showDeleteCityDataAlertViewWithTag:(int)tag delegate:(id)delegate
 {
-    NSString *message = NSLS(@"删除城市数据后再次打开需要重新下载，确认删除?");
+    NSString *message = NSLS(@"是否确认删除?");
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:delegate cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"),nil] autorelease];
     alert.tag = tag;
     [alert show];

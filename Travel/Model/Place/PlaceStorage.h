@@ -8,18 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#define FAVORITE_STORAGE @"FAVORITE_STORAGE"
+#define HISTORY_STORAGE @"HISTORY_STORAGE"
+
 @class Place;
 @class PlaceList;
 
 @interface PlaceStorage : NSObject
 
-@property (nonatomic, retain) NSString * fileName;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) PlaceList* placeList;
 
 + (PlaceStorage*)favoriteManager;
 + (PlaceStorage*)historyManager;
 
-- (id)initWithFileName:(NSString*)fileName;
+- (id)initWithType:(NSString*)typeValue;
 - (NSArray*)allPlaces;
 - (void)addPlace:(Place*)place;
 - (void)deletePlace:(Place*)place;

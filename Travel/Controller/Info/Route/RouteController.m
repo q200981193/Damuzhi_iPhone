@@ -23,7 +23,7 @@
     [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setNavigationLeftButton:NSLS(@"返回") imageName:@"back.png" action:@selector(clickBack:)];
+    [self setNavigationLeftButton:NSLS(@" 返回") imageName:@"back.png" action:@selector(clickBack:)];
     
     [self.navigationItem setTitle:NSLS(@"线路推荐")];
         
@@ -61,6 +61,8 @@
         [view setImage:[UIImage imageNamed:@"list_tr_bg2.png"]];
         [cell setBackgroundView:view];
         [view release];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
     
     int row = [indexPath row];	
@@ -71,7 +73,6 @@
     }
     RouteCell* routeCell = (RouteCell*)cell;
     [routeCell setCellData:[dataList objectAtIndex:row]];
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
 }
 
@@ -96,19 +97,19 @@
             [self.dataTableView reloadData];
             break;
         case ERROR_NETWORK:
-            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            [self popupMessage:NSLS(@"网络弱，数据加载失败") title:nil];
             break;
             
         case ERROR_CLIENT_URL_NULL:
-            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_URL_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_REQUEST_NULL:
-            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_REQUEST_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_PARSE_JSON:
-            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_PARSE_JSON") title:nil];
             break;
             
         default:

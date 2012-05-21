@@ -1887,11 +1887,390 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 }
 @end
 
+@interface RecommendedApp ()
+@property (retain) NSString* name;
+@property int32_t id;
+@property (retain) NSString* appId;
+@property (retain) NSString* description;
+@property (retain) NSString* icon;
+@property (retain) NSString* url;
+@end
+
+@implementation RecommendedApp
+
+- (BOOL) hasName {
+  return !!hasName_;
+}
+- (void) setHasName:(BOOL) value {
+  hasName_ = !!value;
+}
+@synthesize name;
+- (BOOL) hasId {
+  return !!hasId_;
+}
+- (void) setHasId:(BOOL) value {
+  hasId_ = !!value;
+}
+@synthesize id;
+- (BOOL) hasAppId {
+  return !!hasAppId_;
+}
+- (void) setHasAppId:(BOOL) value {
+  hasAppId_ = !!value;
+}
+@synthesize appId;
+- (BOOL) hasDescription {
+  return !!hasDescription_;
+}
+- (void) setHasDescription:(BOOL) value {
+  hasDescription_ = !!value;
+}
+@synthesize description;
+- (BOOL) hasIcon {
+  return !!hasIcon_;
+}
+- (void) setHasIcon:(BOOL) value {
+  hasIcon_ = !!value;
+}
+@synthesize icon;
+- (BOOL) hasUrl {
+  return !!hasUrl_;
+}
+- (void) setHasUrl:(BOOL) value {
+  hasUrl_ = !!value;
+}
+@synthesize url;
+- (void) dealloc {
+  self.name = nil;
+  self.appId = nil;
+  self.description = nil;
+  self.icon = nil;
+  self.url = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.name = @"";
+    self.id = 0;
+    self.appId = @"";
+    self.description = @"";
+    self.icon = @"";
+    self.url = @"";
+  }
+  return self;
+}
+static RecommendedApp* defaultRecommendedAppInstance = nil;
++ (void) initialize {
+  if (self == [RecommendedApp class]) {
+    defaultRecommendedAppInstance = [[RecommendedApp alloc] init];
+  }
+}
++ (RecommendedApp*) defaultInstance {
+  return defaultRecommendedAppInstance;
+}
+- (RecommendedApp*) defaultInstance {
+  return defaultRecommendedAppInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasName) {
+    return NO;
+  }
+  if (!self.hasId) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasName) {
+    [output writeString:1 value:self.name];
+  }
+  if (self.hasId) {
+    [output writeInt32:2 value:self.id];
+  }
+  if (self.hasAppId) {
+    [output writeString:3 value:self.appId];
+  }
+  if (self.hasDescription) {
+    [output writeString:4 value:self.description];
+  }
+  if (self.hasIcon) {
+    [output writeString:5 value:self.icon];
+  }
+  if (self.hasUrl) {
+    [output writeString:6 value:self.url];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasName) {
+    size += computeStringSize(1, self.name);
+  }
+  if (self.hasId) {
+    size += computeInt32Size(2, self.id);
+  }
+  if (self.hasAppId) {
+    size += computeStringSize(3, self.appId);
+  }
+  if (self.hasDescription) {
+    size += computeStringSize(4, self.description);
+  }
+  if (self.hasIcon) {
+    size += computeStringSize(5, self.icon);
+  }
+  if (self.hasUrl) {
+    size += computeStringSize(6, self.url);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (RecommendedApp*) parseFromData:(NSData*) data {
+  return (RecommendedApp*)[[[RecommendedApp builder] mergeFromData:data] build];
+}
++ (RecommendedApp*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RecommendedApp*)[[[RecommendedApp builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (RecommendedApp*) parseFromInputStream:(NSInputStream*) input {
+  return (RecommendedApp*)[[[RecommendedApp builder] mergeFromInputStream:input] build];
+}
++ (RecommendedApp*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RecommendedApp*)[[[RecommendedApp builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RecommendedApp*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (RecommendedApp*)[[[RecommendedApp builder] mergeFromCodedInputStream:input] build];
+}
++ (RecommendedApp*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RecommendedApp*)[[[RecommendedApp builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RecommendedApp_Builder*) builder {
+  return [[[RecommendedApp_Builder alloc] init] autorelease];
+}
++ (RecommendedApp_Builder*) builderWithPrototype:(RecommendedApp*) prototype {
+  return [[RecommendedApp builder] mergeFrom:prototype];
+}
+- (RecommendedApp_Builder*) builder {
+  return [RecommendedApp builder];
+}
+@end
+
+@interface RecommendedApp_Builder()
+@property (retain) RecommendedApp* result;
+@end
+
+@implementation RecommendedApp_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[RecommendedApp alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (RecommendedApp_Builder*) clear {
+  self.result = [[[RecommendedApp alloc] init] autorelease];
+  return self;
+}
+- (RecommendedApp_Builder*) clone {
+  return [RecommendedApp builderWithPrototype:result];
+}
+- (RecommendedApp*) defaultInstance {
+  return [RecommendedApp defaultInstance];
+}
+- (RecommendedApp*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (RecommendedApp*) buildPartial {
+  RecommendedApp* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (RecommendedApp_Builder*) mergeFrom:(RecommendedApp*) other {
+  if (other == [RecommendedApp defaultInstance]) {
+    return self;
+  }
+  if (other.hasName) {
+    [self setName:other.name];
+  }
+  if (other.hasId) {
+    [self setId:other.id];
+  }
+  if (other.hasAppId) {
+    [self setAppId:other.appId];
+  }
+  if (other.hasDescription) {
+    [self setDescription:other.description];
+  }
+  if (other.hasIcon) {
+    [self setIcon:other.icon];
+  }
+  if (other.hasUrl) {
+    [self setUrl:other.url];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (RecommendedApp_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (RecommendedApp_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setName:[input readString]];
+        break;
+      }
+      case 16: {
+        [self setId:[input readInt32]];
+        break;
+      }
+      case 26: {
+        [self setAppId:[input readString]];
+        break;
+      }
+      case 34: {
+        [self setDescription:[input readString]];
+        break;
+      }
+      case 42: {
+        [self setIcon:[input readString]];
+        break;
+      }
+      case 50: {
+        [self setUrl:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasName {
+  return result.hasName;
+}
+- (NSString*) name {
+  return result.name;
+}
+- (RecommendedApp_Builder*) setName:(NSString*) value {
+  result.hasName = YES;
+  result.name = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearName {
+  result.hasName = NO;
+  result.name = @"";
+  return self;
+}
+- (BOOL) hasId {
+  return result.hasId;
+}
+- (int32_t) id {
+  return result.id;
+}
+- (RecommendedApp_Builder*) setId:(int32_t) value {
+  result.hasId = YES;
+  result.id = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearId {
+  result.hasId = NO;
+  result.id = 0;
+  return self;
+}
+- (BOOL) hasAppId {
+  return result.hasAppId;
+}
+- (NSString*) appId {
+  return result.appId;
+}
+- (RecommendedApp_Builder*) setAppId:(NSString*) value {
+  result.hasAppId = YES;
+  result.appId = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearAppId {
+  result.hasAppId = NO;
+  result.appId = @"";
+  return self;
+}
+- (BOOL) hasDescription {
+  return result.hasDescription;
+}
+- (NSString*) description {
+  return result.description;
+}
+- (RecommendedApp_Builder*) setDescription:(NSString*) value {
+  result.hasDescription = YES;
+  result.description = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearDescription {
+  result.hasDescription = NO;
+  result.description = @"";
+  return self;
+}
+- (BOOL) hasIcon {
+  return result.hasIcon;
+}
+- (NSString*) icon {
+  return result.icon;
+}
+- (RecommendedApp_Builder*) setIcon:(NSString*) value {
+  result.hasIcon = YES;
+  result.icon = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearIcon {
+  result.hasIcon = NO;
+  result.icon = @"";
+  return self;
+}
+- (BOOL) hasUrl {
+  return result.hasUrl;
+}
+- (NSString*) url {
+  return result.url;
+}
+- (RecommendedApp_Builder*) setUrl:(NSString*) value {
+  result.hasUrl = YES;
+  result.url = value;
+  return self;
+}
+- (RecommendedApp_Builder*) clearUrl {
+  result.hasUrl = NO;
+  result.url = @"";
+  return self;
+}
+@end
+
 @interface App ()
 @property (retain) NSString* dataVersion;
 @property (retain) NSMutableArray* mutableCitiesList;
 @property (retain) NSMutableArray* mutableTestCitiesList;
 @property (retain) NSMutableArray* mutablePlaceMetaDataListList;
+@property (retain) NSMutableArray* mutableRecommendedAppsList;
 @end
 
 @implementation App
@@ -1906,11 +2285,13 @@ static HelpInfo* defaultHelpInfoInstance = nil;
 @synthesize mutableCitiesList;
 @synthesize mutableTestCitiesList;
 @synthesize mutablePlaceMetaDataListList;
+@synthesize mutableRecommendedAppsList;
 - (void) dealloc {
   self.dataVersion = nil;
   self.mutableCitiesList = nil;
   self.mutableTestCitiesList = nil;
   self.mutablePlaceMetaDataListList = nil;
+  self.mutableRecommendedAppsList = nil;
   [super dealloc];
 }
 - (id) init {
@@ -1952,6 +2333,13 @@ static App* defaultAppInstance = nil;
   id value = [mutablePlaceMetaDataListList objectAtIndex:index];
   return value;
 }
+- (NSArray*) recommendedAppsList {
+  return mutableRecommendedAppsList;
+}
+- (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index {
+  id value = [mutableRecommendedAppsList objectAtIndex:index];
+  return value;
+}
 - (BOOL) isInitialized {
   if (!self.hasDataVersion) {
     return NO;
@@ -1971,6 +2359,11 @@ static App* defaultAppInstance = nil;
       return NO;
     }
   }
+  for (RecommendedApp* element in self.recommendedAppsList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
@@ -1985,6 +2378,9 @@ static App* defaultAppInstance = nil;
   }
   for (PlaceMeta* element in self.placeMetaDataListList) {
     [output writeMessage:5 value:element];
+  }
+  for (RecommendedApp* element in self.recommendedAppsList) {
+    [output writeMessage:10 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -2006,6 +2402,9 @@ static App* defaultAppInstance = nil;
   }
   for (PlaceMeta* element in self.placeMetaDataListList) {
     size += computeMessageSize(5, element);
+  }
+  for (RecommendedApp* element in self.recommendedAppsList) {
+    size += computeMessageSize(10, element);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -2103,6 +2502,12 @@ static App* defaultAppInstance = nil;
     }
     [result.mutablePlaceMetaDataListList addObjectsFromArray:other.mutablePlaceMetaDataListList];
   }
+  if (other.mutableRecommendedAppsList.count > 0) {
+    if (result.mutableRecommendedAppsList == nil) {
+      result.mutableRecommendedAppsList = [NSMutableArray array];
+    }
+    [result.mutableRecommendedAppsList addObjectsFromArray:other.mutableRecommendedAppsList];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -2144,6 +2549,12 @@ static App* defaultAppInstance = nil;
         PlaceMeta_Builder* subBuilder = [PlaceMeta builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addPlaceMetaDataList:[subBuilder buildPartial]];
+        break;
+      }
+      case 82: {
+        RecommendedApp_Builder* subBuilder = [RecommendedApp builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addRecommendedApps:[subBuilder buildPartial]];
         break;
       }
     }
@@ -2250,6 +2661,35 @@ static App* defaultAppInstance = nil;
     result.mutablePlaceMetaDataListList = [NSMutableArray array];
   }
   [result.mutablePlaceMetaDataListList addObject:value];
+  return self;
+}
+- (NSArray*) recommendedAppsList {
+  if (result.mutableRecommendedAppsList == nil) { return [NSArray array]; }
+  return result.mutableRecommendedAppsList;
+}
+- (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index {
+  return [result recommendedAppsAtIndex:index];
+}
+- (App_Builder*) replaceRecommendedAppsAtIndex:(int32_t) index with:(RecommendedApp*) value {
+  [result.mutableRecommendedAppsList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (App_Builder*) addAllRecommendedApps:(NSArray*) values {
+  if (result.mutableRecommendedAppsList == nil) {
+    result.mutableRecommendedAppsList = [NSMutableArray array];
+  }
+  [result.mutableRecommendedAppsList addObjectsFromArray:values];
+  return self;
+}
+- (App_Builder*) clearRecommendedAppsList {
+  result.mutableRecommendedAppsList = nil;
+  return self;
+}
+- (App_Builder*) addRecommendedApps:(RecommendedApp*) value {
+  if (result.mutableRecommendedAppsList == nil) {
+    result.mutableRecommendedAppsList = [NSMutableArray array];
+  }
+  [result.mutableRecommendedAppsList addObject:value];
   return self;
 }
 @end

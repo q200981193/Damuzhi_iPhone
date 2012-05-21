@@ -12,8 +12,6 @@
 
 @interface HistoryController ()
 
-- (void)updateDeleteButton;
-
 @end
 
 @implementation HistoryController
@@ -41,6 +39,8 @@
 {
     [super viewDidLoad];
     
+    [self.navigationItem setTitle:TITLE_HISTORY];
+    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
@@ -52,10 +52,10 @@
     self.placeList = [[PlaceStorage historyManager] allPlaces];
     self.placeListController = [PlaceListController createController:_placeList 
                                                            superView:placeListHolderView
-                                                     superController:self];
+                                                     superController:self
+                                                      pullToRreflash:NO];
     
     [self.placeListController setAndReloadPlaceList:_placeList];
-    [self updateDeleteButton];
 }
 
 
@@ -75,6 +75,9 @@
 
 - (void)clickDelete:(id)sender
 {
+    if ([_placeList count] == 0) 
+        return ;
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil 
                                                     message:NSLS(@"确定要清空所有浏览记录")
                                                    delegate:self 
@@ -90,14 +93,6 @@
         [[PlaceStorage historyManager] deleteAllPlaces];
          self.placeList = [[PlaceStorage historyManager] allPlaces];
         [self.placeListController setAndReloadPlaceList:_placeList];
-        [self updateDeleteButton];
-    }
-}
-
-- (void)updateDeleteButton
-{
-    if ([_placeList count] == 0) {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
     }
 }
 

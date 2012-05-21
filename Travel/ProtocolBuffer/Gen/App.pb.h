@@ -16,6 +16,8 @@
 @class NameIdPair_Builder;
 @class PlaceMeta;
 @class PlaceMeta_Builder;
+@class RecommendedApp;
+@class RecommendedApp_Builder;
 typedef enum {
   PlaceCategoryTypePlaceAll = 0,
   PlaceCategoryTypePlaceSpot = 1,
@@ -479,6 +481,99 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (HelpInfo_Builder*) clearHelpHtml;
 @end
 
+@interface RecommendedApp : PBGeneratedMessage {
+@private
+  BOOL hasId_:1;
+  BOOL hasName_:1;
+  BOOL hasAppId_:1;
+  BOOL hasDescription_:1;
+  BOOL hasIcon_:1;
+  BOOL hasUrl_:1;
+  int32_t id;
+  NSString* name;
+  NSString* appId;
+  NSString* description;
+  NSString* icon;
+  NSString* url;
+}
+- (BOOL) hasName;
+- (BOOL) hasId;
+- (BOOL) hasAppId;
+- (BOOL) hasDescription;
+- (BOOL) hasIcon;
+- (BOOL) hasUrl;
+@property (readonly, retain) NSString* name;
+@property (readonly) int32_t id;
+@property (readonly, retain) NSString* appId;
+@property (readonly, retain) NSString* description;
+@property (readonly, retain) NSString* icon;
+@property (readonly, retain) NSString* url;
+
++ (RecommendedApp*) defaultInstance;
+- (RecommendedApp*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (RecommendedApp_Builder*) builder;
++ (RecommendedApp_Builder*) builder;
++ (RecommendedApp_Builder*) builderWithPrototype:(RecommendedApp*) prototype;
+
++ (RecommendedApp*) parseFromData:(NSData*) data;
++ (RecommendedApp*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RecommendedApp*) parseFromInputStream:(NSInputStream*) input;
++ (RecommendedApp*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RecommendedApp*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (RecommendedApp*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface RecommendedApp_Builder : PBGeneratedMessage_Builder {
+@private
+  RecommendedApp* result;
+}
+
+- (RecommendedApp*) defaultInstance;
+
+- (RecommendedApp_Builder*) clear;
+- (RecommendedApp_Builder*) clone;
+
+- (RecommendedApp*) build;
+- (RecommendedApp*) buildPartial;
+
+- (RecommendedApp_Builder*) mergeFrom:(RecommendedApp*) other;
+- (RecommendedApp_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (RecommendedApp_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasName;
+- (NSString*) name;
+- (RecommendedApp_Builder*) setName:(NSString*) value;
+- (RecommendedApp_Builder*) clearName;
+
+- (BOOL) hasId;
+- (int32_t) id;
+- (RecommendedApp_Builder*) setId:(int32_t) value;
+- (RecommendedApp_Builder*) clearId;
+
+- (BOOL) hasAppId;
+- (NSString*) appId;
+- (RecommendedApp_Builder*) setAppId:(NSString*) value;
+- (RecommendedApp_Builder*) clearAppId;
+
+- (BOOL) hasDescription;
+- (NSString*) description;
+- (RecommendedApp_Builder*) setDescription:(NSString*) value;
+- (RecommendedApp_Builder*) clearDescription;
+
+- (BOOL) hasIcon;
+- (NSString*) icon;
+- (RecommendedApp_Builder*) setIcon:(NSString*) value;
+- (RecommendedApp_Builder*) clearIcon;
+
+- (BOOL) hasUrl;
+- (NSString*) url;
+- (RecommendedApp_Builder*) setUrl:(NSString*) value;
+- (RecommendedApp_Builder*) clearUrl;
+@end
+
 @interface App : PBGeneratedMessage {
 @private
   BOOL hasDataVersion_:1;
@@ -486,6 +581,7 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   NSMutableArray* mutableCitiesList;
   NSMutableArray* mutableTestCitiesList;
   NSMutableArray* mutablePlaceMetaDataListList;
+  NSMutableArray* mutableRecommendedAppsList;
 }
 - (BOOL) hasDataVersion;
 @property (readonly, retain) NSString* dataVersion;
@@ -495,6 +591,8 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (City*) testCitiesAtIndex:(int32_t) index;
 - (NSArray*) placeMetaDataListList;
 - (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
+- (NSArray*) recommendedAppsList;
+- (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index;
 
 + (App*) defaultInstance;
 - (App*) defaultInstance;
@@ -555,5 +653,12 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) addPlaceMetaDataList:(PlaceMeta*) value;
 - (App_Builder*) addAllPlaceMetaDataList:(NSArray*) values;
 - (App_Builder*) clearPlaceMetaDataListList;
+
+- (NSArray*) recommendedAppsList;
+- (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index;
+- (App_Builder*) replaceRecommendedAppsAtIndex:(int32_t) index with:(RecommendedApp*) value;
+- (App_Builder*) addRecommendedApps:(RecommendedApp*) value;
+- (App_Builder*) addAllRecommendedApps:(NSArray*) values;
+- (App_Builder*) clearRecommendedAppsList;
 @end
 

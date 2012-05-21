@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad
 {
-    [self setBackgroundImageName:@"all_page_bg.jpg"];
+    [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
@@ -50,19 +50,19 @@
             [self.dataTableView reloadData];
             break;
         case ERROR_NETWORK:
-            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            [self popupMessage:NSLS(@"网络弱，数据加载失败") title:nil];
             break;
             
         case ERROR_CLIENT_URL_NULL:
-            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_URL_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_REQUEST_NULL:
-            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_REQUEST_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_PARSE_JSON:
-            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_PARSE_JSON") title:nil];
             break;
             
         default:
@@ -115,7 +115,7 @@
 //    CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
 //    NSLog(@"%@",tip.html);
     CommonTravelTip *tip = [dataList objectAtIndex:indexPath.row];
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:tip.html];
     
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:htmlPath];
     controller.title = tip.name;

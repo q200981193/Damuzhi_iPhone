@@ -13,7 +13,6 @@
 #import "ImageName.h"
 #import "LogUtil.h"
 #import "ASIHTTPRequest.h"
-#import "FileUtil.h"
 #import "PPApplication.h"
 #import "AppManager.h"
 #import "AppUtils.h"
@@ -21,8 +20,10 @@
 #import "PlaceService.h"
 #import "PlaceStorage.h"
 #import "PlaceUtils.h"
+#import "PPDebug.h"
 
 @implementation PlaceCell
+@synthesize summaryView;
 @synthesize nameLabel;
 @synthesize priceLable;
 @synthesize distanceLable;
@@ -39,7 +40,7 @@
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PlaceCell" owner:self options:nil];
     // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).  
     if (topLevelObjects == nil || [topLevelObjects count] <= 0){
-        NSLog(@"create <PlaceCell> but cannot find cell object from Nib");
+        PPDebug(@"create <PlaceCell> but cannot find cell object from Nib");
         return nil;
     }
     
@@ -125,7 +126,7 @@
     
     if (![place.icon hasPrefix:@"http"]){
         // local files, read image locally
-        NSString *iconPath = [[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
+        NSString *iconPath = [[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
         PPDebug(@"place iconPath = %@", iconPath);
         [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
     }
@@ -154,9 +155,12 @@
     nameLabel.text = [place name];
     
     [distanceLable setTextColor:[UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]];
-    distanceLable.text = [self getDistanceString:place currentLocation:currentLocation];
+    
+    
+    distanceLable.text = [PlaceUtils getDistanceString:place currentLocation:currentLocation];
+    
     [self setPlaceIcon:place];
-    priceLable.text = [PlaceUtils getPriceString:place];
+    priceLable.text = [PlaceUtils getPrice:place];
     
     areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
     
@@ -195,36 +199,6 @@
 
 }
 
-- (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation *)currentLocation
-{
-    if (currentLocation == nil) {
-        return @"";
-    }
-    
-    CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
-    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    [placeLocation release];
-    
-//    NSLog(@"place name = %@", place.name);
-//    NSLog(@"place latitude = %lf, place longitude ＝ %lf", place.latitude, place.longitude);
-//    NSLog(@"current location = %@", currentLocation.description);
-//    NSLog(@"distance = %lf", distance);
-
-    if (distance > 100000.0) {
-        return @"";
-    }
-    else if (distance >1000.0) {
-        long long temp = (long long)distance / 1000;
-        return [NSString stringWithFormat:NSLS(@"%lldKM"), temp];
-    }
-    else if (distance > 100.0) {
-        return [NSString stringWithFormat:NSLS(@"%0.1fM"), (float)distance];
-    }
-    else {
-        return [NSString stringWithFormat:NSLS(@"0.1KM")];
-    }
-}
-
 - (void)dealloc {
     [nameLabel release];
     [priceLable release];
@@ -236,6 +210,7 @@
     [praise2View release];
     [praise3View release];
     [favoritesView release];
+    [summaryView release];
     [super dealloc];
 }
 @end

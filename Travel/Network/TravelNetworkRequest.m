@@ -12,7 +12,7 @@
 #import "JSON.h"
 #import "UIDevice+IdentifierAddition.h"
 #import "UserManager.h"
-//#import "Package.pb.h"
+#import "PPDebug.h"
 
 @implementation TravelNetworkRequest
 
@@ -39,7 +39,7 @@
     
 #ifdef DEBUG    
     int startTime = time(0);
-    NSLog(@"[SEND] URL=%@", [url description]);    
+    PPDebug(@"[SEND] URL=%@", [url description]);    
 #endif
     
     [request startSynchronous];
@@ -51,7 +51,7 @@
     int statusCode = [request responseStatusCode];
     
 #ifdef DEBUG    
-    NSLog(@"[RECV] : status=%d, error=%@", [request responseStatusCode], [error description]);
+    PPDebug(@"[RECV] : status=%d, error=%@", [request responseStatusCode], [error description]);
 #endif    
     
     if (error != nil){
@@ -64,7 +64,7 @@
 
 #ifdef DEBUG
         int endTime = time(0);
-        NSLog(@"[RECV] data (len=%d bytes, latency=%d seconds, raw=%d bytes, real=%d bytes)", 
+        PPDebug(@"[RECV] data (len=%d bytes, latency=%d seconds, raw=%d bytes, real=%d bytes)", 
               [[request responseData] length], (endTime - startTime),
               [[request rawResponseData] length], [[request responseData] length]);
 #endif         
@@ -81,7 +81,7 @@
                 jsonDictionary = [text JSONValue];
             }
 #ifdef DEBUG
-            NSLog(@"[RECV] JSON string data : %@", text);
+            PPDebug(@"[RECV] JSON string data : %@", text);
 #endif            
 
             responseHandler(jsonDictionary, nil, output.resultCode);       
@@ -205,7 +205,34 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type lang:(int)lang os:(int)os
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_OS intValue:os];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode){  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId num:(int)num lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -216,6 +243,7 @@
         
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_PLACE_ID intValue:placeId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_NUM intValue:num];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
         
         return str;
@@ -313,6 +341,7 @@
                                 outputFormat:FORMAT_TRAVEL_PB
                                       output:output];
 }
+
 
 
 + (CommonNetworkOutput*)addFavoriteByUserId:(NSString *)userId placeId:(NSString *)placeId longitude:(NSString *)longitude latitude:(NSString *)latitude

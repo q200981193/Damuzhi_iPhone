@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "CommonService.h"
+#import <CoreLocation/CoreLocation.h>
+
 
 @class PlaceManager;
 @class PPViewController;
@@ -19,7 +21,7 @@
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList;
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
 - (void)finishDeleteFavourite:(NSNumber*)resultCode count:(NSNumber*)count;
-- (void)finishFindTopFavoritePlaces:(NSArray*)list type:(int)type;
+- (void)finishFindTopFavoritePlaces:(NSArray*)list type:(int)type result:(int)result;
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
 
 @end
@@ -34,9 +36,11 @@
 
 - (void)findPlaces:(int)categoryId viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
 
-- (void)findPlacesNearby:(int)categoryId place:(Place*)place viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
+- (void)findPlacesNearby:(int)categoryId place:(Place*)place num:(int)num viewController:(PPViewController<PlaceServiceDelegate>*)viewController;
 
 - (void)findPlacesNearby:(int)categoryId place:(Place*)place distance:(double)distance viewController:(PPViewController<PlaceServiceDelegate> *)viewController;
+
+//- (void)findPlacesNearby:(int)categoryId CLLocation:(CLLocation*)location distance:(double)distance viewController:(PPViewController<PlaceServiceDelegate> *)viewController;
 
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController
                        place:(Place*)place;

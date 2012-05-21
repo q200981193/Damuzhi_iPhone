@@ -9,3 +9,5 @@
 */
 
 "isNewVersion" = "this is last version";
+"kCallNotSupportOnIPod" = "iPod does not support the call function";
+"kSmsNotSupportOnIPod" = "iPod does not support SMS function";

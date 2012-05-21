@@ -15,12 +15,13 @@
 @class Place;
 
 @interface NearByRecommendController : PPViewController <MKMapViewDelegate,PlaceServiceDelegate>
-
+{
+    UIView *buttomView;
+}
 @property (retain, nonatomic) IBOutlet MKMapView *mapView;
 @property (retain, nonatomic) Place *place;
 @property (nonatomic, retain) NSMutableArray *placeList;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place;
-- (void)gotoLocation:(Place*)place;
 
 @end

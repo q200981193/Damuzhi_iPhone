@@ -86,15 +86,12 @@
 }
 
 - (void)setCellAppearance
-{ 
-    LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
-    
-    if(localCity==nil)
-    {
-        [self setDefaultAppearance];
-        return;
+{
+    if ([AppUtils hasLocalCityData:_city.cityId]) {
+        [self setDownloadSuccessAppearance];
     }
     else {
+        LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:_city.cityId];
         [self setDownloadAppearance:localCity];
     }
 }
@@ -123,17 +120,17 @@
 {
     switch (localCity.downloadStatus) {
         case DOWNLOADING:
+            [self setDownloadingAppearance];
+            [self setDownloadProgress:localCity.downloadProgress];
+            break;
+            
         case DOWNLOAD_PAUSE:
-            [self setDownloadingAppearance:localCity];
+            [self setDownloadPauseAppearance];
+            [self setDownloadProgress:localCity.downloadProgress];
             break;
             
         case DOWNLOAD_SUCCEED:
-            if ([AppUtils hasLocalCityData:localCity.cityId]) {
-                [self setDownloadSuccessAppearance];
-            }
-            else {
-                [self setDefaultAppearance];
-            }
+            [self setUnzipingAppearance];
             break;
             
         case DOWNLOAD_FAILED:
@@ -141,11 +138,20 @@
             break;
             
         default:
+            [self setDefaultAppearance];
             break;
     }
 }
 
-- (void)setDownloadingAppearance:(LocalCity*)localCity
+- (void)setDownloadProgress:(float)downloadProgress
+{
+    downloadProgressView.progress = downloadProgress;
+    int persent = downloadProgress*100.0;
+//    PPDebug(@"text progress = %@", [NSString stringWithFormat:@"%d%%", persent]);
+    downloadPersentLabel.text = [NSString stringWithFormat:@"%d%%", persent];
+}
+
+- (void)setDownloadingAppearance
 {
     dataSizeLabel.hidden = YES;
     downloadProgressView.hidden = NO;
@@ -159,21 +165,24 @@
     downloadDoneLabel.hidden = YES;
     moreDetailBtn.hidden = YES;
     
-    if (localCity.downloadStatus == DOWNLOADING) {
-        pauseDownloadBtn.selected = NO;
-    }
-    else if(localCity.downloadStatus == DOWNLOAD_PAUSE){
-        pauseDownloadBtn.selected = YES;
-    }
-    
-    [self setDownloadProgress:localCity.downloadProgress];
+    pauseDownloadBtn.selected = NO;
 }
 
-- (void)setDownloadProgress:(float)downloadProgress
+- (void)setDownloadPauseAppearance
 {
-    downloadProgressView.progress = downloadProgress;
-    float persent = downloadProgress*100;
-    downloadPersentLabel.text = [NSString stringWithFormat:@"%2.f%%", persent];
+    dataSizeLabel.hidden = YES;
+    downloadProgressView.hidden = NO;
+    downloadPersentLabel.hidden = NO;
+    pauseDownloadBtn.hidden = NO;
+    
+    downloadButton.hidden = YES;
+    cancelDownloadBtn.hidden = NO;
+    onlineButton.hidden = NO;
+    
+    downloadDoneLabel.hidden = YES;
+    moreDetailBtn.hidden = YES;
+    
+    pauseDownloadBtn.selected = YES;
 }
 
 - (void)setDownloadSuccessAppearance
@@ -188,12 +197,29 @@
     onlineButton.hidden = YES;
     
     downloadDoneLabel.hidden = NO;
+    downloadDoneLabel.text = NSLS(@"已下载");
     moreDetailBtn.hidden = NO;
+}
+
+- (void)setUnzipingAppearance
+{
+    dataSizeLabel.hidden = NO;
+    downloadProgressView.hidden = YES;
+    downloadPersentLabel.hidden = YES;
+    pauseDownloadBtn.hidden = YES;
+    
+    downloadButton.hidden = YES;
+    cancelDownloadBtn.hidden = YES;
+    onlineButton.hidden = YES;
+    
+    downloadDoneLabel.hidden = NO;
+    downloadDoneLabel.text = NSLS(@"安装中...");
+    moreDetailBtn.hidden = YES;
 }
 
 #pragma mark -
 #pragma mark: Imlementation for buttons event.
-- (IBAction)clickDownload:(id)sender {
+- (IBAction)clickDownload:(id)sender {    
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
         [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
     }

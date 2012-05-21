@@ -17,6 +17,7 @@
 #import "TravelNetworkConstants.h"
 #import "UIImageUtil.h"
 #import "App.pb.h"
+#import "PPNetworkRequest.h"
 
 @interface FavoriteController ()
 
@@ -96,7 +97,6 @@
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 }
 
-
 - (void)showPlaces{
     if (self.myFavoriteButton.selected == YES) {
         self.myFavPlaceListView.hidden = NO;
@@ -105,9 +105,16 @@
         if (self.myFavPlaceListController == nil) {
             self.myFavPlaceListController = [PlaceListController createController:self.showMyList 
                                                                         superView:myFavPlaceListView
-                                                                  superController:self];
+                                                                  superController:self
+                                                                   pullToRreflash:NO];
         }
         [self.myFavPlaceListController setAndReloadPlaceList:self.showMyList];
+        if ([self.showMyList count] == 0 ) {
+            [self.myFavPlaceListController hideTipsOnTableView];
+            [self.myFavPlaceListController showTipsOnTableView:NSLS(@"暂无收藏信息")];
+        }else {
+            [self.myFavPlaceListController hideTipsOnTableView];
+        }
     }
     else {
         self.myFavPlaceListView.hidden = YES;
@@ -116,7 +123,8 @@
         if (self.topFavPlaceListController == nil) {
             self.topFavPlaceListController = [PlaceListController createController:self.showTopList 
                                                                         superView:topFavPlaceListView
-                                                                  superController:self];
+                                                                  superController:self
+                                                                    pullToRreflash:NO];
         }
         [self.topFavPlaceListController setAndReloadPlaceList:self.showTopList];
     }
@@ -149,8 +157,8 @@
 #define RIGHT_BUTTON_VIEW_HIGHT     30
 #define BUTTON_WIDTH                80
 #define BUTTON_HIGHT                30
-#define DELETE_BUTTON_WIDTH         22
-#define DELETE_BUTTON_HIGHT         22
+#define DELETE_IMAGE_WIDTH         22
+#define DELETE_IMAGE_HIGHT         22
 - (void)createRightBarButton
 {
     UIView *rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, RIGHT_BUTTON_VIEW_WIDTH, RIGHT_BUTTON_VIEW_HIGHT)];
@@ -180,12 +188,15 @@
     [self.topFavoriteButton addTarget:self action:@selector(clickTopFavorite:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.topFavoriteButton];
     
-    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - DELETE_BUTTON_WIDTH, 4, DELETE_BUTTON_WIDTH, DELETE_BUTTON_HIGHT)];
+    UIButton *dbtn = [[UIButton alloc] initWithFrame:CGRectMake(RIGHT_BUTTON_VIEW_WIDTH - 46, 0, 50, 34)];
     self.deleteButton = dbtn;
     [dbtn release];
-    self.deleteButton.titleLabel.font = [UIFont systemFontOfSize:14];
-
-    [self.deleteButton setBackgroundImage:[UIImage imageNamed:@"delete@2x.png"] forState:UIControlStateNormal];
+    
+    UIImageView *delImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"delete.png"]];
+    delImageView.frame = CGRectMake(14, 4, DELETE_IMAGE_WIDTH, DELETE_IMAGE_HIGHT);
+    [self.deleteButton addSubview:delImageView];
+    [delImageView release];
+    //deleteButton.backgroundColor = [UIColor blueColor];
     [self.deleteButton addTarget:self action:@selector(clickDelete:) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:self.deleteButton];
     
@@ -206,6 +217,13 @@
     [[PlaceService defaultService] deletePlaceFromFavorite:self place:place];
     [[PlaceStorage favoriteManager] deletePlace:place];
     self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    
+    if ([self.myFavPlaceListController.dataList count] == 0) {
+        [self.myFavPlaceListController hideTipsOnTableView];
+        [self.myFavPlaceListController showTipsOnTableView:NSLS(@"暂无收藏信息")];
+    }else {
+        [self.myFavPlaceListController hideTipsOnTableView];
+    }
 }
 
 #pragma mark - PlaceServiceDelegate 
@@ -214,30 +232,34 @@
     
 }
 
-- (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type
+- (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type result:(int)result
 {
+    if (result != ERROR_SUCCESS ) {
+        [self popupMessage:@"网络弱，数据加载失败" title:nil];
+    }
+    
     switch (type) {
-        case OBJECT_TYPE_TOP_FAVORITE_ALL:
+        case OBJECT_LIST_TOP_FAVORITE_ALL:
             self.topAllFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_SPOT:
+        case OBJECT_LIST_TOP_FAVORITE_SPOT:
             self.topSpotFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_HOTEL:
+        case OBJECT_LIST_TOP_FAVORITE_HOTEL:
             self.topHotelFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_RESTAURANT:
+        case OBJECT_LIST_TOP_FAVORITE_RESTAURANT:
             self.topRestaurantFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_SHOPPING:
+        case OBJECT_LIST_TOP_FAVORITE_SHOPPING:
             self.topShoppingFavoritePlaceList = list;
             break;
             
-        case OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT:
+        case OBJECT_LIST_TOP_FAVORITE_ENTERTAINMENT:
             self.topEntertainmentFavoritePlaceList = list;
             break;
         
@@ -302,7 +324,7 @@
     }
     else {
         if (topAllFavoritePlaceList == nil) {
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ALL];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_ALL];
         }
         else {
             self.showTopList = topAllFavoritePlaceList;
@@ -321,7 +343,7 @@
     }
     else {
         if(topSpotFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SPOT];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_SPOT];
         }else {
             self.showTopList = topSpotFavoritePlaceList;
             [self showPlaces];
@@ -340,7 +362,7 @@
     
     else {
         if(topHotelFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_HOTEL];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_HOTEL];
         }else {
             self.showTopList = topHotelFavoritePlaceList;
             [self showPlaces];
@@ -359,7 +381,7 @@
     
     else {
         if(topRestaurantFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_RESTAURANT];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_RESTAURANT];
         }
         else {
             self.showTopList = topRestaurantFavoritePlaceList;
@@ -379,7 +401,7 @@
     
     else {
         if(topShoppingFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_SHOPPING];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_SHOPPING];
         }else {
             self.showTopList = topShoppingFavoritePlaceList;
             [self showPlaces];
@@ -398,7 +420,7 @@
     
     else {
         if(topEntertainmentFavoritePlaceList == nil){
-            [self loadTopFavorite:OBJECT_TYPE_TOP_FAVORITE_ENTERTAINMENT];
+            [self loadTopFavorite:OBJECT_LIST_TOP_FAVORITE_ENTERTAINMENT];
         }
         else {
             self.showTopList = topEntertainmentFavoritePlaceList;

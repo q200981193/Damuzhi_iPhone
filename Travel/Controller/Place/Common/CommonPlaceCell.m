@@ -7,6 +7,7 @@
 //
 
 #import "CommonPlaceCell.h"
+#import "PPDebug.h"
 
 @implementation CommonPlaceCell
 
@@ -32,7 +33,7 @@
     NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"PPTableViewCell" owner:self options:nil];
     // Grab a pointer to the first object (presumably the custom cell, as that's all the XIB should contain).  
     if (topLevelObjects == nil || [topLevelObjects count] <= 0){
-        NSLog(@"create <PPTableViewCell> but cannot find cell object from Nib");
+        PPDebug(@"create <PPTableViewCell> but cannot find cell object from Nib");
         return nil;
     }
     
@@ -53,7 +54,7 @@
 
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
 {
-    NSLog(@"<setCellDataByPlace> NOT IMPLEMENTED!!!");
+    PPDebug(@"<setCellDataByPlace> NOT IMPLEMENTED!!!");
 }
 
 

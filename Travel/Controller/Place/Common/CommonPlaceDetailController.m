@@ -24,8 +24,29 @@
 #import "CommonWebController.h"
 #import "ImageName.h"
 #import "PPNetworkRequest.h"
+#import "PlaceUtils.h"
+#import "AppService.h"
+#import "MapUtils.h"
+#import "UIImageUtil.h"
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
+
+#define WIDTH_NEARBY_PLACE_BUTTON  300
+#define HEIGHT_NEARBY_PLACE_BUTTON 30
+
+#define WIDTH_NEARBY_PLACE_NAME_LABEL 150
+#define HEIGHT_NEARBY_PLACE_NAME_LABEL 14
+
+#define WIDTH_TRANSPORTATION_TABLE_ROW 300
+#define HEIGHT_TRANSPORTATION_TABLE_ROW 30
+
+#define WIDTH_TRANSPORTATION_NAME_LABEL 150
+#define HEIGHT_TRANSPORTATION_NAME_LABEL 14
+
+#define WIDTH_TRANSPORTATION_DISTANCE_LABEL 65
+#define HEIGHT_TRANSPORTATION_DISTANCE_LABEL 14
+
+#define MAX_NUM_PLACES_NEARBY 10
 
 @implementation CommonPlaceDetailController
 @synthesize helpButton;
@@ -48,6 +69,7 @@
 @synthesize addFavoriteButton;
 @synthesize nearbyView = _nearbyView;
 @synthesize selectedBgView;
+@synthesize nearbyRecommendController = _nearbyRecommendController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -130,7 +152,6 @@
 
 - (void)clickHelpButton:(id)sender
 {
-    NSLog(@"click help");
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
     controller.navigationItem.title = NSLS(@"帮助");
     [self.navigationController pushViewController:controller animated:YES];
@@ -139,15 +160,9 @@
 
 - (void)clickMap:(id)sender
 {
-    NearByRecommendController* controller = [[NearByRecommendController alloc] initWithPlace:_place];
-//    controller.superController = self;
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller gotoLocation:_place];
-    
-//    NSArray *list = [[NSArray alloc] initWithArray:_nearbyPlaceList];
-//    [controller setPlaces:list selectedIndex:[_nearbyPlaceList indexOfObject:_place]];
-//    [list release];
-    [controller release];
+    _nearbyRecommendController = [[NearByRecommendController alloc] initWithPlace:_place];
+    [self.navigationController pushViewController:_nearbyRecommendController animated:YES];
+    [MapUtils gotoLocation:_place mapView:_nearbyRecommendController.mapView];
 }
 
 - (void)clickTelephone:(id)sender
@@ -175,7 +190,7 @@
     if (buttonIndex == [actionSheet cancelButtonIndex]) {
         return;
     }
-    NSLog(@"make call number:%@",[self.place.telephoneList objectAtIndex:buttonIndex]);
+    PPDebug(@"make call number:%@",[self.place.telephoneList objectAtIndex:buttonIndex]);
     [self performSelector:@selector(makeCall:) withObject:[self.place.telephoneList objectAtIndex:buttonIndex]];
 }
 
@@ -189,34 +204,29 @@
 #define FAVORITES_OK_VIEW 2012040817
 - (void)finishAddFavourite:(NSNumber*)resultCode count:(NSNumber*)count
 {
-    if (resultCode != nil) {
-        [self updateAddFavoriteButton];
-        PPDebug(@"add Favourite successfully");
-        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
-        
-        
-        CGRect rect = CGRectMake(0, 0, 109, 52);
-        
-        UIButton *button = [[UIButton alloc] initWithFrame:rect];
-        button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
-        [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:13];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        button.tag = FAVORITES_OK_VIEW;
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
-
-        CGPoint fromPosition = CGPointMake(320/2, 345);
-        CGPoint toPosition = CGPointMake(320/2, 345);
+    [self updateAddFavoriteButton];
     
-        [self.view addSubview:button];
-        [button release];
-        
-        [AnimationManager alertView:button fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
+    if (count != nil) {
+        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
     }
-    else {
-        PPDebug(@"add Favourite failed");
-        [self popupMessage:NSLS(@"收藏失败") title:nil];
-    }
+    
+    CGRect rect = CGRectMake(0, 0, 109, 52);
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:rect];
+    button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
+    [button setTitle:NSLS(@"收藏成功") forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    button.tag = FAVORITES_OK_VIEW;
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
+    
+    CGPoint fromPosition = CGPointMake(320/2, 345);
+    CGPoint toPosition = CGPointMake(320/2, 345);
+    
+    [self.view addSubview:button];
+    [button release];
+    
+    [AnimationManager alertView:button fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
@@ -240,14 +250,9 @@
     int i = 0;
 
     for (NSNumber *providedServiceId in [_place providedServiceIdList]) {
-        NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
-        NSString *fileName = [NSString stringWithFormat:@"%d.png", [providedServiceId intValue]];
-        
         UIImageView *serviceIconView = [[UIImageView alloc] initWithFrame:CGRectMake((i++)*DESTANCE_BETWEEN_SERVICE_IMAGES, 0, WIDTH_OF_SERVICE_IMAGE, HEIGHT_OF_SERVICE_IMAGE)];
-        UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[destinationDir stringByAppendingPathComponent:fileName]];
-        
+        UIImage *icon = [[UIImage alloc] initWithContentsOfFile:[AppUtils getProvidedServiceIconPath:[providedServiceId intValue]]];
         [serviceIconView setImage:icon];
-        
         [serviceHolder addSubview:serviceIconView];
         [icon release];
         [serviceIconView release];
@@ -257,24 +262,22 @@
 
 - (UILabel*)createTitleView:(NSString*)title
 {
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRECT_TITLE]autorelease];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = TITLE_COLOR;
-    label.font = boldFont;
+    label.font = SEGAMENT_TITLE_FONT;
     label.text  = title;
     return label;
 }
 
 - (UILabel*)createDescriptionView:(NSString*)description height:(CGFloat)height
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
     UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(10, 26, 300, height)] autorelease];
     label.lineBreakMode = UILineBreakModeWordWrap;
     label.numberOfLines = 0;
     label.backgroundColor = [UIColor clearColor];
     label.textColor = DESCRIPTION_COLOR;
-    label.font = font;
+    label.font = SEGAMENT_DESCRIPTION_FONT;
     label.text = description; 
     return label;
 }
@@ -287,17 +290,8 @@
     return middleLineView;
 }
 
-- (UIView*)createMiddleLineView2:(CGFloat)y
-{
-    
-    UIView *middleLineView = [[[UIView alloc]initWithFrame:CGRectMake(0, y, 320, MIDDLE_LINE_HEIGHT)] autorelease];
-    middleLineView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"middle_line"]];
-    return middleLineView;
-}
-
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
     NSString *description = [NSString stringWithFormat:@"       %@",[descriptionString stringByReplacingOccurrencesOfString:@"\n" withString:@"\n       "]];
@@ -305,16 +299,15 @@
     if ([description length] == 0) {
         description = NO_DETAIL_DATA;
     }
-    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT + 10)] autorelease];
     segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
         
-    UIFont *boldFont = [UIFont boldSystemFontOfSize:13];    
     UILabel *title = [[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, TITLE_VIEW_HEIGHT)]autorelease];
     title.backgroundColor = [UIColor clearColor];
     title.textColor = TITLE_COLOR;
-    title.font = boldFont;
+    title.font = SEGAMENT_TITLE_FONT;
     title.text  = titleString;
     [segmentView addSubview:title];
     
@@ -329,7 +322,7 @@
     introductionDescription.numberOfLines = 0;
     introductionDescription.backgroundColor = [UIColor clearColor];
     introductionDescription.textColor = DESCRIPTION_COLOR;
-    introductionDescription.font = font;
+    introductionDescription.font = SEGAMENT_DESCRIPTION_FONT;
     
     introductionDescription.text = description;
         
@@ -345,14 +338,14 @@
 
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString
 {
-    UIFont *font = [UIFont systemFontOfSize:12];
     CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
     
-    NSString *description = descriptionString;
+    NSString *description = [descriptionString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if ([description length] == 0) {
         description = NO_DETAIL_DATA;
     }
-    CGSize size = [description sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    
+    CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
     UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
@@ -364,7 +357,7 @@
     [segmentView addSubview:introductionDescription];
     [dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [self createMiddleLineView2: _detailHeight + segmentView.frame.size.height];
+    UIView *middleLineView = [self createMiddleLineView: _detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
     
     _detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
@@ -387,14 +380,8 @@
 
 - (void) addNearbyView
 {
-    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 186)] autorelease];
+    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width , MAX_NUM_PLACES_NEARBY*HEIGHT_NEARBY_PLACE_BUTTON+30+10)] autorelease];
     _nearbyView.backgroundColor = PRICE_BG_COLOR;
-    
-    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 151)];
-    [tbView setImage:[UIImage imageNamed:@"table5_bg.png"]];
-    [_nearbyView addSubview:tbView];
-    [_nearbyView sendSubviewToBack:tbView];
-    [tbView release];
     
     UILabel *title = [self createTitleView:NSLS(@"周边推荐")];
     [_nearbyView addSubview:title];
@@ -403,27 +390,101 @@
     _detailHeight = _nearbyView.frame.origin.y + _nearbyView.frame.size.height;
     
     //get nearby placelist data
-    [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place viewController:self];
+    [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place num:MAX_NUM_PLACES_NEARBY viewController:self];
+}
+
+- (void)setNearbyTaleRowBgImage:(UIButton*)button row:(int)row totoalRows:(int)totoalRows
+{
+    if (row < 1 || totoalRows <1 || row > totoalRows) {
+        return;
+    }
+    
+    switch (totoalRows) {
+        case 1:
+            [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
+            [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            break;
+            
+        case 2:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_down.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
+            }
+            break;
+
+        default:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_top.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_top.png"] forState:UIControlStateHighlighted];
+            }
+            else if (row >1 && row <totoalRows) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_center.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_center.png"] forState:UIControlStateHighlighted];
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg1_down.png"] forState:UIControlStateNormal];
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table5_bg2_down.png"] forState:UIControlStateHighlighted];
+            }
+            break;
+    }
+}
+
+- (void)reLayoutViewBelowView:(UIView*)view
+{
+    _detailHeight = view.frame.origin.y + view.frame.size.height;
+    
+    if (telephoneView != nil) {
+        [telephoneView setFrame:CGRectMake(telephoneView.frame.origin.x, _detailHeight, telephoneView.frame.size.width, telephoneView.frame.size.height)];
+        _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
+    }
+
+    if (addressView != nil) {
+        [addressView setFrame:CGRectMake(addressView.frame.origin.x, _detailHeight, addressView.frame.size.width, addressView.frame.size.height)];
+        _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
+    }
+
+    
+    if (websiteView != nil) {
+        [websiteView setFrame:CGRectMake(websiteView.frame.origin.x, _detailHeight, websiteView.frame.size.width, websiteView.frame.size.height)];
+        _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
+    }
+
+    if (favouritesView != nil) {
+        [favouritesView setFrame:CGRectMake(favouritesView.frame.origin.x, _detailHeight, favouritesView.frame.size.width, favouritesView.frame.size.height)];
+        _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
+    }
+
+    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight + 175)];
 }
 
 //request done after get nearby placelist
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
     if (result == ERROR_SUCCESS) {
+
+        
         self.nearbyPlaceList = placeList;
         
+        [_nearbyView setFrame:CGRectMake(_nearbyView.frame.origin.x, _nearbyView.frame.origin.y, self.view.frame.size.width, [placeList count]*HEIGHT_NEARBY_PLACE_BUTTON+30+10)];
+        [self reLayoutViewBelowView:_nearbyView];
+
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
         int i = 0;
         for (Place *nearbyPlace in _nearbyPlaceList)
-        {
+        {            
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
-            CLLocationDistance distance = [loc distanceFromLocation:location];
             [location release];
             
-            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(12, 30 + 30*(i++), 300, 24)];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-WIDTH_NEARBY_PLACE_BUTTON)/2, 30 + HEIGHT_NEARBY_PLACE_BUTTON*(i++), WIDTH_NEARBY_PLACE_BUTTON, HEIGHT_NEARBY_PLACE_BUTTON)];
             rowView.tag = [_nearbyPlaceList indexOfObject:nearbyPlace];
             
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 3, 14, 14)];
+            [self setNearbyTaleRowBgImage:rowView row:i totoalRows:[_nearbyPlaceList count]];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 14, 14)];
             
             NSString *imageName = [AppUtils getCategoryIcon:[nearbyPlace categoryId]];
             UIImage *image = [UIImage imageNamed:imageName];
@@ -431,25 +492,41 @@
             [rowView addSubview:imageView];
             [imageView release];
             
-            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 3, 150, 14)];
+            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageView.frame.origin.x+imageView.frame.size.width+6, 8, WIDTH_NEARBY_PLACE_NAME_LABEL, HEIGHT_NEARBY_PLACE_NAME_LABEL)];
             nameLabel.text = [nearbyPlace name];
-            nameLabel.font = [UIFont systemFontOfSize:12];
+            nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
             nameLabel.textColor = DESCRIPTION_COLOR;
             
             nameLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 3, 60, 14)];
+            //add rankImage
+            UIView *rankView = [[UIView alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 8, 40, 14)];
             
-            distanceLabel.text = [NSString stringWithFormat:NSLS(@"%d千米"), lround(distance/1000)];
-            distanceLabel.font = [UIFont systemFontOfSize:12];
+            for (int i=0;i<[nearbyPlace rank];i++) {
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*i, 0, 10, 14)];
+                UIImage *image = [UIImage imageNamed:IMAGE_GOOD2];
+                [imageView setImage:image];
+                [rankView addSubview:imageView];
+                [imageView release];
+            }
+            rankView.backgroundColor = [UIColor clearColor];
+            [rowView addSubview:rankView];
+            [rankView release];
+
+            
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rankView.frame.origin.x+rankView.frame.size.width+8, 8, 40, 14)];            
+            NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
+            distanceLabel.text = distanceString;
+            distanceLabel.textAlignment = UITextAlignmentRight;
+            distanceLabel.font = SEGAMENT_DESCRIPTION_FONT;
             distanceLabel.textColor = DESCRIPTION_COLOR;
             distanceLabel.backgroundColor = [UIColor clearColor];
             [rowView addSubview:distanceLabel];
             [distanceLabel release];
             
-            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(260, 6, 7, 7)];
+            UIImageView *goView = [[UIImageView alloc] initWithFrame:CGRectMake(distanceLabel.frame.origin.x+distanceLabel.frame.size.width+8, 8, 7, 14)];
             
             UIImage *goImage = [UIImage imageNamed:@"go_btn"];
             [goView setImage:goImage];
@@ -463,99 +540,175 @@
         [loc release];
     }
     else {
+        [self popupMessage:@"加载周边推荐数据失败！" title:nil];
+    }
+}
+
+- (void)setTransportTaleRowBgImage:(UIButton*)button row:(int)row totoalRows:(int)totoalRows
+{
+    if (row < 1 || totoalRows < 2 || row > totoalRows) {
+        return;
+    }
+    
+    switch (totoalRows) {
+        case 2:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_top.png"] forState:UIControlStateNormal];
+                
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_down.png"] forState:UIControlStateNormal];
+            }
+            break;
+            
+        default:
+            if (row == 1) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_top.png"] forState:UIControlStateNormal];
+            }
+            else if (row >1 && row <totoalRows) {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_center.png"] forState:UIControlStateNormal];
+            }
+            else {
+                [button setBackgroundImage:[UIImage strectchableImageName:@"table4_bg_down.png"] forState:UIControlStateNormal];            }
+            break;
     }
 }
 
 - (void)addTransportView:(Place*)place
 {
-    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 156)];
-    segmentView.backgroundColor = PRICE_BG_COLOR;
-    
-    UIImageView *tbView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 275, 121)];
-    [tbView setImage:[UIImage imageNamed:@"table_bg"]];
-    [segmentView addSubview:tbView];
-    [segmentView sendSubviewToBack:tbView];
-    [tbView release];
-    
-    UILabel *title = [self createTitleView:NSLS(@"交通信息")];
-    [segmentView addSubview:title];
-    
-    [dataScrollView addSubview:segmentView];    
-    _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
-    
-    NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
-
+    NSMutableString * transportation = [NSMutableString stringWithString:place.transportation];
     [transportation stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
-    NSArray *array = [str componentsSeparatedByString:@";"];
+    if ([transportation length] == 0) {
+        [self addSegmentViewWith:NSLS(@"交通信息") description:@"暂无"];
+    }
+    else {
+        NSString *str = [NSString stringWithFormat:@"位置:距酒店;%@",transportation];
+        NSArray *array1 = [str componentsSeparatedByString:@";"];
 
-    if ([array count] < 1) {
+        // remove unused ":" and last object which is whitespace
+        //香港国际机场:约35公里;:;:;:; 
+        PPDebug(@"-------%@", str);
+        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:array1];
+        NSRange range=NSMakeRange(0,[array count]);
+        [array removeObject:@":" inRange:range];
+        [array removeLastObject];
+        
+        UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, ([array count]+1)*HEIGHT_TRANSPORTATION_TABLE_ROW+10)];
+
+        segmentView.backgroundColor = PRICE_BG_COLOR;
+        
+        UILabel *title = [self createTitleView:NSLS(@"交通信息")];
+        [segmentView addSubview:title];
+        
+        [dataScrollView addSubview:segmentView];    
+        _detailHeight = segmentView.frame.origin.y + segmentView.frame.size.height;
+        
+        for (int i=1; i <= [array count]; i++)
+        {
+            NSArray *subArray = [[array objectAtIndex:(i-1)] componentsSeparatedByString:@":"];
+            UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 30 + HEIGHT_TRANSPORTATION_TABLE_ROW*(i-1), WIDTH_TRANSPORTATION_TABLE_ROW, HEIGHT_TRANSPORTATION_TABLE_ROW)];
+            
+            [rowView setUserInteractionEnabled:NO];
+            
+            [self setTransportTaleRowBgImage:rowView row:i totoalRows:[array count]];
+
+            if ([subArray objectAtIndex:0] != nil) {
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, WIDTH_TRANSPORTATION_NAME_LABEL, HEIGHT_TRANSPORTATION_NAME_LABEL)];
+                nameLabel.text = [subArray objectAtIndex:0];
+                nameLabel.font = SEGAMENT_DESCRIPTION_FONT;
+                nameLabel.textColor = DESCRIPTION_COLOR;
+                nameLabel.backgroundColor = [UIColor clearColor];
+                [rowView addSubview:nameLabel];
+                [nameLabel release];
+            }
+            
+            if ([subArray objectAtIndex:1] != nil) {
+                UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rowView.frame.size.width-6-WIDTH_TRANSPORTATION_DISTANCE_LABEL, 6, WIDTH_TRANSPORTATION_DISTANCE_LABEL, HEIGHT_TRANSPORTATION_DISTANCE_LABEL)];
+                
+                distanceLabel.text = [subArray objectAtIndex:1];
+                distanceLabel.font = SEGAMENT_DESCRIPTION_FONT;
+                distanceLabel.textColor = DESCRIPTION_COLOR;
+                distanceLabel.backgroundColor = [UIColor clearColor];
+                [rowView addSubview:distanceLabel];
+                [distanceLabel release];
+            }
+                        
+            [segmentView addSubview:rowView];
+            [rowView release];
+        }
         [segmentView release];
-        return;
+        
+        UIView *middleLineView = [self createMiddleLineView: _detailHeight];
+        [dataScrollView addSubview:middleLineView];
+        _detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
     }
-    
-    int i = 0;
-    for (i=0; i < [array count] - 1; i++)
-    {
-        NSArray *subArray = [[array objectAtIndex:i] componentsSeparatedByString:@":"];
-        UIButton *rowView = [[UIButton alloc] initWithFrame:CGRectMake(10, 25 + 24*(i), 300, 20)];
-        
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, 150, 14)];
-        nameLabel.text = [subArray objectAtIndex:0];
-        nameLabel.font = [UIFont systemFontOfSize:12];
-        nameLabel.textColor = DESCRIPTION_COLOR;
-        nameLabel.backgroundColor = [UIColor clearColor];
-        [rowView addSubview:nameLabel];
-        [nameLabel release];
-        
-        UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 6, 100, 14)];
-        
-        distanceLabel.text = [subArray objectAtIndex:1];
-        distanceLabel.font = [UIFont systemFontOfSize:12];
-        distanceLabel.textColor = DESCRIPTION_COLOR;
-        distanceLabel.backgroundColor = [UIColor clearColor];
-        [rowView addSubview:distanceLabel];
-        [distanceLabel release];
-        
-        [segmentView addSubview:rowView];
-        [rowView release];
-    }
-    [segmentView release];
 }
 
-- (void)addPaddingVew
-{
-    UIView *paddingView = [[UIView alloc]initWithFrame:CGRectMake(0, imageHolderView.frame.size.height, 320, 3)];
-    paddingView.backgroundColor = [UIColor colorWithRed:40/255.0 green:123/255.0 blue:181/255.0 alpha:1.0];
-    [dataScrollView addSubview:paddingView];
-    [paddingView release];
+//创建电话、地址、网站 的通用方法
+- (UIView*)createRowView:(NSString*) title detail:(NSString*)detail
+{    
+    int width = 235;
+    CGSize withinSize = CGSizeMake(width, CGFLOAT_MAX);
+    UIView* rowView;
+    CGSize size = [detail sizeWithFont:SEGAMENT_TITLE_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
+    int height = 0;
+    if ([detail length] == 0) {
+        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 42)] autorelease];
+        height = 42;
+    }
+    else
+    {
+        rowView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 26)] autorelease];
+        height = size.height + 26;
+    }
+    
+    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+    [bgImageView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1]];
+    
+//    UIImageView *gotoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"go_btn.png"]];
+//    [gotoImageView setCenter:CGPointMake(20, height/2)];
+//    [bgImageView addSubview:gotoImageView];
+    
+    bgImageView.image = [UIImage imageNamed:@"t_bg.png"];
+    [rowView addSubview:bgImageView];
+    [rowView sendSubviewToBack:bgImageView];
+    [bgImageView release];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, ceilf((height - 20)/2), 40, 20)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:79/255.0 green:102/255.0 blue:119/255.0 alpha:1.0];
+    label.font = SEGAMENT_TITLE_FONT;
+    label.text = title;
+    [rowView addSubview:label];
+    [label release];
+    
+    UILabel *detailLabel = [[UILabel alloc]initWithFrame:CGRectMake(48, 0, width, height)];
+    detailLabel.backgroundColor = [UIColor clearColor];
+    detailLabel.lineBreakMode = UILineBreakModeWordWrap;
+    detailLabel.numberOfLines = 0;
+    detailLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
+    detailLabel.font = SEGAMENT_TITLE_FONT;
+    if ([detail length] == 0) {
+        detailLabel.text = NSLS(@" 暂无");
+    }else
+    {
+        detailLabel.text = detail;
+    }
+    [rowView addSubview:detailLabel];
+    [detailLabel release];
+    
+    return rowView;
 }
 
 - (void)addTelephoneView
 {
-    telephoneView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
-    telephoneView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    
-    UILabel *telephoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
-    telephoneLabel.backgroundColor = [UIColor clearColor];
-    telephoneLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    telephoneLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *telephoneString = @"";
-    if ([self.place.telephoneList count] > 0) {
-        telephoneString = [self.place.telephoneList componentsJoinedByString:@" "];
-        telephoneLabel.text = [[NSString stringWithString:NSLS(@"电话: ")] stringByAppendingString:telephoneString];
-    }
-    else{
-        telephoneLabel.text = [[NSString stringWithString:NSLS(@"电话: ")] stringByAppendingString:NSLS(@" 暂无")];
-    }
-    
-    [telephoneView addSubview:telephoneLabel];
-    [telephoneLabel release];
+    telephoneView = [self createRowView:NSLS(@"电话: ") detail:[self.place.telephoneList componentsJoinedByString:@" "]];
     
     if ([self.place.telephoneList count] != 0) {
-        UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 4, 24, 24)];
+        UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 6, 29, 29)];
         [phoneImage setImage:[UIImage imageNamed:@"t_phone"]];
+        [phoneImage setCenter:CGPointMake(300, telephoneView.frame.size.height/2)];
         [telephoneView addSubview:phoneImage];
         [phoneImage release];
         
@@ -567,62 +720,17 @@
     }
     
     [dataScrollView addSubview:telephoneView];
-    [telephoneView release];
     _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
-
 }
 
 - (void)addAddressView
 {
-    UIFont *font = [UIFont boldSystemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(230, CGFLOAT_MAX);
+    addressView = [self createRowView:NSLS(@"地址: ") detail:[[_place addressList] componentsJoinedByString:@" "]];
+    int height = addressView.frame.size.height;
     
-    CGSize size = [[[_place addressList] componentsJoinedByString:@" "] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
-    int height = 0;
-    if ([[_place addressList] count] == 0) {
-        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
-        height = 31;
-    }
-    else
-    {
-        addressView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + 16)];
-        height = size.height + 16;
-    }
-    
-    
-    UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
-    bgImageView.image = [UIImage strectchableImageName:@"t_bg" topCapHeight:30];
-    [addressView addSubview:bgImageView];
-    [addressView sendSubviewToBack:bgImageView];
-    [bgImageView release];
-    
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(30, 5 , 40, 20)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    label.font = [UIFont boldSystemFontOfSize:12];
-    label.text = NSLS(@"地址: ");
-    [addressView addSubview:label];
-    [label release];
-    
-    UILabel *addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(62, 0, 230, height)];
-    addressLabel.backgroundColor = [UIColor clearColor];
-    addressLabel.lineBreakMode = UILineBreakModeWordWrap;
-    addressLabel.numberOfLines = 0;
-    addressLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    addressLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *addr = [[_place addressList] componentsJoinedByString:@" "];
-    if ([addr length] == 0) {
-        addressLabel.text = NSLS(@" 暂无");
-    }else
-    {
-        addressLabel.text = addr;
-    }
-    [addressView addSubview:addressLabel];
-    [addressLabel release];
-    
-    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 24, 24)];
+    UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 29, 29)];
     [mapImageView setImage:[UIImage imageNamed:@"t_map"]];
+    [mapImageView setCenter:CGPointMake(300, addressView.frame.size.height/2)];
     [addressView addSubview:mapImageView];
     [mapImageView release];
     
@@ -633,37 +741,19 @@
     [mapButton release];
     
     [dataScrollView addSubview:addressView];
-    [addressView release];
     
-    _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
-
-
+    _detailHeight = _detailHeight + addressView.frame.size.height;
 }
 
 - (void)addWebsiteView
 {
-    websiteView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, 31)];
-    websiteView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"t_bg"]];
-    UILabel *websiteLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 5, 250, 20)];
-    websiteLabel.backgroundColor = [UIColor clearColor];
-    websiteLabel.textColor = [UIColor colorWithRed:89/255.0 green:112/255.0 blue:129/255.0 alpha:1.0];
-    websiteLabel.font = [UIFont boldSystemFontOfSize:12];
-    NSString *website = NSLS(@"网站: ");
-    NSString *site = [self.place website];
-    if ([site length] == 0) {
-        websiteLabel.text = [website stringByAppendingString:NSLS(@" 暂无")];
-    }
-    else
-    {
-        websiteLabel.text = [website stringByAppendingString:site];
-    }
-    [websiteView addSubview:websiteLabel];
-    [websiteLabel release];
-    
-    [dataScrollView addSubview:websiteView];
-    [websiteView release];
-    _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
+    NSString* websiteUrl = [self.place website];
+    if ([websiteUrl length] > 0) {
+        websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
+        [dataScrollView addSubview:websiteView];
+        _detailHeight = _detailHeight + websiteView.frame.size.height;
 
+    }
 }
 
 - (void)updateAddFavoriteButton
@@ -680,16 +770,15 @@
 
 - (void)addBottomView
 {
-     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, websiteView.frame.origin.y + websiteView.frame.size.height, 320, 60)];
+     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, 60)];
+
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
-    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((320-93)/2, 5, 93, 29)];
+    UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-93)/2, 5, 93, 29)];
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [favButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    favButton.titleLabel.shadowColor = [UIColor whiteColor];
-    favButton.titleLabel.shadowOffset = CGSizeMake(0, 1);
+    [favButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
     self.addFavoriteButton = favButton;
     [favButton release];
@@ -703,13 +792,14 @@
     self.favoriteCountLabel.textAlignment = UITextAlignmentCenter;
     self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
-    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:13];
+    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:14];
     [favouritesView addSubview:self.favoriteCountLabel];
     
     [dataScrollView addSubview:favouritesView];
     
     [favouritesView release];
-
+    
+    _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
 }
 
 - (void)addHeaderView
@@ -726,7 +816,7 @@
     if ([AppUtils isShowImage]) {
         //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
         for (NSString *image in self.place.imagesList) {
-            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+            NSString *path = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
             [imagePathList addObject:path];
         }
     }
@@ -736,6 +826,7 @@
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
+    [slideImageView.pageControl setPageIndicatorImageForCurrentPage:[UIImage strectchableImageName:@"point_pic3.png"] forNotCurrentPage:[UIImage strectchableImageName:@"point_pic4.png"]];
     [slideImageView setImages:imagePathList];
     [self.imageHolderView addSubview:slideImageView];
     
@@ -759,7 +850,6 @@
     [self addHeaderView];
    
     [self addSlideImageView];
-           
     
     _detailHeight = imageHolderView.frame.size.height;
     
@@ -774,9 +864,10 @@
     [self addWebsiteView];
     
     dataScrollView.backgroundColor = [UIColor whiteColor];
-    [dataScrollView setContentSize:CGSizeMake(320, _detailHeight + 235)];
         
     [self addBottomView];
+    
+    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight+175)];
     
     [[PlaceStorage historyManager] addPlace:self.place];
 }
@@ -801,6 +892,7 @@
     [self setNearbyView:nil];
     [self setSelectedBgView:nil];
     [super viewDidUnload];
+    [self setNearbyRecommendController:nil];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
@@ -829,6 +921,7 @@
     [favouritesView release];
     [addFavoriteButton release];
     [selectedBgView release];
+    [_nearbyRecommendController release];
     [super dealloc];
 }
 @end

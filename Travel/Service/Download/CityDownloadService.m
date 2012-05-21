@@ -9,6 +9,9 @@
 #import "CityDownloadService.h"
 #import "AppUtils.h"
 #import "FileUtil.h"
+#import "AppUtils.h"
+#import "SSZipArchive.h"
+#import "AppManager.h"
 #import "PPDebug.h"
 
 @implementation CityDownloadService
@@ -47,7 +50,6 @@ static CityDownloadService *_instance;
 {
     LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:city.cityId];
     localCity.delegate = delegate;
-//    localCity.downloadType = TYPE_DOWNLOAD;
     localCity.downloadStatus = DOWNLOADING;
 
     NSURL *url = [NSURL URLWithString:city.downloadUrl];
@@ -61,6 +63,7 @@ static CityDownloadService *_instance;
 
     
     [request setUserInfo:userInfo];
+    [userInfo release];
     
     //add request into queue and run
     [_operationQueue addOperation:request];
@@ -70,7 +73,6 @@ static CityDownloadService *_instance;
 {
     LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:city.cityId];
     localCity.delegate = delegate;
-//    localCity.downloadType = TYPE_UPDATE;
     localCity.updateStatus = UPDATING;
     
     NSURL *url = [NSURL URLWithString:city.downloadUrl];
@@ -84,6 +86,7 @@ static CityDownloadService *_instance;
     [userInfo setObject:[NSNumber numberWithInt:REQUEST_TYPE_UPDATE] forKey:KEY_REQUEST_TYPE];
     
     [request setUserInfo:userInfo];
+    [userInfo release];
     
     //add request into queue and run
     [_operationQueue addOperation:request];
@@ -94,10 +97,6 @@ static CityDownloadService *_instance;
     // Get destination path and temp path.
     NSString *tempPath = [AppUtils getDownloadPath:localCity.cityId];
     NSString *destinationPath = [AppUtils getZipFilePath:localCity.cityId];
-
-    // Create dir
-    [FileUtil createDir:[AppUtils getDownloadDir]];
-    [FileUtil createDir:[AppUtils getZipDir]];
 
     // Create a request
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url]; 
@@ -167,6 +166,43 @@ static CityDownloadService *_instance;
             return;
         }
     }
+}
+
+- (void)UnzipCityDataAsynchronous:(int)cityId unzipDelegate:(id<CityDownloadServiceDelegate>)unzipDelegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if ([AppUtils unzipCityZip:cityId]) {
+            [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:cityId]
+                                                    contents:nil
+                                                  attributes:nil];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)])
+                {                    
+                    if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
+                        [unzipDelegate didFinishUnzip:[[AppManager defaultManager] getCity:cityId]];
+                    }
+                }     
+            });
+        }
+        else {
+            [[LocalCityManager defaultManager] removeLocalCity:cityId];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFailUnzip:)]) {
+                    [unzipDelegate didFailUnzip:[[AppManager defaultManager] getCity:cityId]];
+                }
+            });
+        }
+    });    
+}
+
+- (BOOL)unzipCityZip:(int)cityId
+{
+    [FileUtil createDir:[AppUtils getCityDir:cityId]];
+    
+    return [SSZipArchive unzipFileAtPath:[AppUtils getZipFilePath:cityId]
+                           toDestination:[AppUtils getCityDir:cityId]];;
 }
 
 @end

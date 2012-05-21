@@ -16,6 +16,7 @@
 #import "AppManager.h"
 #import "UIImageUtil.h"
 #import "AppService.h"
+#import "MapUtils.h"
 
 @interface PlaceListController () 
 
@@ -31,8 +32,9 @@
 @synthesize mapHolderView = _mapHolderView;
 @synthesize superController = _superController;
 @synthesize mapViewController = _mapViewController;
-@synthesize canDelete;
-@synthesize deletePlaceDelegate;
+@synthesize canDelete = _canDelete;
+@synthesize deletePlaceDelegate = _deletePlaceDelegate;
+@synthesize pullDownDelegate = _pullDownDelegate;
 
 - (void)dealloc
 {
@@ -65,6 +67,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tipsLabel setFont:[UIFont systemFontOfSize:13]]; 
+    
     [self.dataTableView setSeparatorColor:[UIColor clearColor]];
 
     // create & add map view
@@ -75,10 +79,19 @@
     [self updateViewByMode];
 }
 
+#pragma mark For Sub Class to override and implement
+- (void) reloadTableViewDataSource
+{
+	NSLog(@"Please override reloadTableViewDataSource"); 
+    if (_pullDownDelegate && [_pullDownDelegate respondsToSelector:@selector(didPullDown)]) {
+        [_pullDownDelegate didPullDown];
+    }
+}
+
 - (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
 {
     self.canDelete = isCan;
-    [self.dataTableView setEditing:isCan];
+    [self.dataTableView setEditing:isCan animated:YES];
     self.deletePlaceDelegate = delegateValue;
     [self.dataTableView reloadData];
 }
@@ -99,8 +112,11 @@
 + (PlaceListController*)createController:(NSArray*)placeList
                                superView:(UIView*)superView
                          superController:(PPViewController*)superController
+                          pullToRreflash:(BOOL)pullToRreflash
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
+    controller.supportRefreshHeader = pullToRreflash;
+
     [controller.view setFrame:superView.bounds];
     controller.superController = superController;
     controller.mapViewController.superController = superController;
@@ -110,38 +126,25 @@
     return controller;
 }
 
-
-#define SHOW_NO_DATA_LABEL_TAG 100
-- (void)removeNoDataTips
-{
-    UILabel *label = (UILabel*)[self.dataTableView viewWithTag:SHOW_NO_DATA_LABEL_TAG];
-    [label removeFromSuperview];
-}
-
-- (void)addNoDataTips
-{
-    [self removeNoDataTips];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    label.tag = SHOW_NO_DATA_LABEL_TAG;
-    label.textAlignment = UITextAlignmentCenter;
-    label.text = NSLS(@"未找到相关信息");
-    label.font = [UIFont systemFontOfSize:13];
-    [self.dataTableView addSubview:label];
-    [label release];
-}
-
 - (void)setAndReloadPlaceList:(NSArray*)list
 {
     self.dataList = list;
 
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
+    if ([list count] > 0) {
+        [MapUtils gotoCenterRegion:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
+    }
     if ([dataList count] == 0) {
-        [self addNoDataTips];
+        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
     }
     else {
-        [self removeNoDataTips];
+        [self hideTipsOnTableView];
     }
+    
+    // after finish loading data, please call the following codes
+	[refreshHeaderView setCurrentDate];  	
+	[self dataSourceDidFinishLoadingNewData];
 }
 
 #pragma mark -
@@ -181,7 +184,7 @@
     int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
-		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return nil;
 	}
     
@@ -202,16 +205,21 @@
     [view release];
     [placeCell setCellDataByPlace:place currentLocation:[[AppService defaultService] currentLocation]];
     
-    if (canDelete) {
+    placeCell.frame = CGRectMake(100, 0, placeCell.frame.size.width, placeCell.frame.size.height);
+    placeCell.contentView.frame = CGRectMake(100, 0, placeCell.contentView.frame.size.width, placeCell.contentView.frame.size.height);
+    
+    if (_canDelete) {
         placeCell.priceLable.hidden = YES;
         placeCell.favoritesView.hidden = YES;
         placeCell.areaLable.hidden= YES;
         placeCell.distanceLable.hidden = YES;
+        placeCell.summaryView.frame = (CGRect){CGPointMake(10, 0), placeCell.summaryView.frame.size};
     }else {
         placeCell.priceLable.hidden = NO;
         placeCell.favoritesView.hidden = NO;
         placeCell.areaLable.hidden= NO;
         placeCell.distanceLable.hidden = NO;
+        placeCell.summaryView.frame = (CGRect){CGPointMake(0, 0), placeCell.summaryView.frame.size};
     }
     
 	return cell;	
@@ -219,10 +227,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"%@",[[dataList objectAtIndex:[indexPath row]]name]);
-    
-    
-//    CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlaceList:dataList selectedIndex:[indexPath row]];
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[dataList objectAtIndex:indexPath.row]];
     
     [self.superController.navigationController pushViewController:controller animated:YES];
@@ -231,24 +235,21 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (deletePlaceDelegate && [deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
-        [deletePlaceDelegate deletedPlace:[dataList objectAtIndex:[indexPath row]]];
-    }
-    
+    Place *delPlace = (Place *)[dataList objectAtIndex:indexPath.row];
     NSMutableArray *mutableDataList = [NSMutableArray arrayWithArray:dataList];
     [mutableDataList removeObjectAtIndex:indexPath.row];
     self.dataList = mutableDataList;
     
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
-    if ([dataList count] == 0) {
-        [self addNoDataTips];
+    if (_deletePlaceDelegate && [_deletePlaceDelegate respondsToSelector:@selector(deletedPlace:)]){
+        [_deletePlaceDelegate deletedPlace:delPlace];
     }
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (canDelete) {
+    if (_canDelete) {
         return UITableViewCellEditingStyleDelete;
     }
     else {

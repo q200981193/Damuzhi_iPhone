@@ -7,7 +7,7 @@ option java_outer_classname = "AppProtos";
 message NameIdPair {
   required string name = 1;             // 名称
   required int32  id = 2;               // ID
-  optional string image = 3;            // 对应数据图片的网络URL地址，用于本地未找到系统内置图片时，从服务器获取
+  optional string image = 3;            // 对应数据图片的网络URL地址，每次启动时从服务器上下载
 }
 
 enum PlaceCategoryType{
@@ -55,15 +55,25 @@ message CityList {
 }
 
 message HelpInfo {
-  optional string version = 1;           // 帮助说明的版本
-  optional string helpHtml = 11;         // 帮助说明的HTML文件路径  
+  optional string version = 1;              // 帮助说明的版本
+  optional string helpHtml = 11;            // 帮助说明的HTML文件路径  
+}
+
+message RecommendedApp {
+  required string name = 1;                 // app名字
+  required int32 id = 2;                    // app的id，全局唯一
+  optional string appId = 3;                 // appId，给iOS系统用
+  optional string description = 4;          // app描述
+  optional string icon = 5;                 // app图标的网络URL地址，每次启动时从服务器上下载
+  optional string url = 6;                  // app的链接，给安卓系统用
 }
 
 // 应用相关的基础数据，和城市无关
 message App {
-  required string dataVersion = 1;                // 数据的版本，如1.0
-  repeated City cities = 2;                     // 正式启用城市列表
-  repeated City testCities = 3;                 // 测试实用测试列表
-  repeated PlaceMeta placeMetaDataList = 5;       // 每种地点分类的相关数据
+  required string dataVersion = 1;                  // 数据的版本，如1.0
+  repeated City cities = 2;                         // 正式启用城市列表
+  repeated City testCities = 3;                     // 测试实用测试列表
+  repeated PlaceMeta placeMetaDataList = 5;         // 每种地点分类的相关数据
+  repeated RecommendedApp recommendedApps = 10;     // 应用推荐
 }
 

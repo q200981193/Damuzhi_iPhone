@@ -6,13 +6,14 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "NearByRecommendController.h"
 #import "PlaceMapAnnotation.h"
 #import "Place.pb.h"
 #import "CommonPlaceDetailController.h"
 #import "AppUtils.h"
 #import "UIImageUtil.h"
 #import "App.pb.h"
+#import "PPDebug.h"
+#import "MapUtils.h"
 
 @implementation NearByRecommendController
 
@@ -29,39 +30,12 @@
     return self;
 }
 
-- (BOOL)isValidLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude
-{
-    if (-90.0 <= latitude && latitude <= 90.0 &&  -180.0 <= longitude && longitude <= 180.0){
-        return  YES;
-    }else {
-        return NO;
-    }
-}
-
-- (void)gotoLocation:(Place*)place
-{
-    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
-        return;
-    }
-    
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = [place latitude];
-    newRegion.center.longitude = [place longitude];
-    //设置地图的范围，越小越精确  
-    //    newRegion.span.latitudeDelta = 0.05;
-    //    newRegion.span.longitudeDelta = 0.05;
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-    
-    [self.mapView setRegion:newRegion animated:YES];
-}
-
 - (void) loadAllAnnotations
 { 
     NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
     
     for (Place *place in _placeList) {
-        if ([self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+        if ([MapUtils isValidLatitude:[place latitude] Longitude:[place longitude]]) {
             PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc] initWithPlace:place];
             [mapAnnotations addObject:placeAnnotation];
             [placeAnnotation release];
@@ -75,6 +49,17 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.mapView.ShowsUserLocation = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.mapView.ShowsUserLocation = NO;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -87,15 +72,15 @@
     [self.navigationItem setTitle:NSLS(@"周边推荐")];
     
     mapView.delegate = self;
-    mapView.mapType = MKMapTypeStandard;      
+    mapView.mapType = MKMapTypeStandard; 
+    
+    self.placeList = [[NSMutableArray alloc] init];
     
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
                                               place:_place 
                                            distance:10.0     
                                      viewController:self];
-    
-    self.placeList = [[NSMutableArray alloc] init];
 }
 
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
@@ -113,6 +98,7 @@
 {
     [_placeList release];
     [_place release];
+    [mapView release];
     [super dealloc];
 }
 
@@ -130,52 +116,24 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     
+    int count = [_placeList count];
+    if (index<0 || index>count-1) {
+        PPDebug(@"WARRING:index you click is out of range!");
+        return;
+    }
+    
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[_placeList objectAtIndex:index]];
     
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
-
-- (UIButton*)createAnnotationViewWith:(Place*)place
-{
-    UIFont *font = [UIFont systemFontOfSize:12];
-    CGSize withinSize = CGSizeMake(300, CGFLOAT_MAX);
-    CGSize size = [[place name] sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
-    UIButton *customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)] autorelease];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,size.width+40,27)];
-    UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
-    [imageView setImage:img];
-    [customizeView addSubview:imageView];
-    
-    NSString *fileName = [AppUtils getCategoryIndicatorIcon:place.categoryId];
-    UIImage *icon = [UIImage imageNamed:fileName];
-    
-    UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 13, 17)];            
-    [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
-    [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
-    [customizeView addSubview:leftIndicatorButton];
-    [leftIndicatorButton release];
-    [icon release];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 2, size.width, 17)];
-    label.font = [UIFont systemFontOfSize:12];
-    label.text  = [place name];
-    NSInteger value = [_placeList indexOfObject:place];
-    label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
-    label.backgroundColor = [UIColor clearColor];
-    [customizeView addSubview:label];
-    [label release];
-    
-    customizeView.tag = value;
-    
-    return customizeView;
-}
+#define  RED_GLASS_VIEW 20120510
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // if it's the user location, just return nil.
-    if ([annotation isKindOfClass:[MKUserLocation class]])
-        return nil;
+//    if ([annotation isKindOfClass:[MKUserLocation class]])
+//        return nil;
     
     // handle our custom annotations
     if([annotation isKindOfClass:[PlaceMapAnnotation class]])
@@ -194,24 +152,39 @@
             //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
             if (placeAnnotation.place == _place )
             {
-                customizeView = [self createAnnotationViewWith:placeAnnotation.place];
+//                customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
+//                UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
+//                annotationView.image = img;
+//                [annotationView setFrame:customizeView.frame];
+//                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
+//                buttomView = annotationView;
+//                [annotationView addSubview:customizeView];
+                
+                MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+                                                       initWithAnnotation:annotation reuseIdentifier:[annotation title]] autorelease];
+                customPinView.pinColor = MKPinAnnotationColorRed;
+                customPinView.animatesDrop = YES;
+                customPinView.canShowCallout = YES;
+                
+                UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+                [rightButton addTarget:self
+                                action:@selector(notationAction:)
+                      forControlEvents:UIControlEventTouchUpInside];
+                customPinView.rightCalloutAccessoryView = rightButton;
+                
+                NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+                customizeView.tag = tag;
+
+                return customPinView;
             }
             else
-            {
-                NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
-
-                customizeView = [[[UIButton alloc] initWithFrame:CGRectMake(0,0,35,35)] autorelease];
-                [customizeView setBackgroundColor:[UIColor clearColor]];
-
-                NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
-                UIImage *image = [UIImage imageNamed:fileName];
+            {                
                 
-                annotationView.image = image; 
-                customizeView.tag = value;
+                NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+                NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
+                [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
+
             }
-            
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];           
-            [annotationView addSubview:customizeView];
             return annotationView;
         }
         else
@@ -224,6 +197,16 @@
     
     return nil;
 }
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    for (UIView *view in views) {
+        if (view == buttomView) {
+            [view.superview bringSubviewToFront:buttomView];
+        }
+    }
+}
+
 
 
 

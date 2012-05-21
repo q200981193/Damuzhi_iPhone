@@ -42,7 +42,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [self setNavigationLeftButton:NSLS(@"返回") imageName:@"back.png" action:@selector(clickBack:)];
+    [self setNavigationLeftButton:NSLS(@" 返回") imageName:@"back.png" action:@selector(clickBack:)];
     
     webView.delegate = self;
     
@@ -56,7 +56,7 @@
         
         //request from a url, load request to web view.
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        NSLog(@"load webview url = %@", [request description]);
+        PPDebug(@"load webview url = %@", [request description]);
         if (request) {
             [self.webView loadRequest:request];        
         }
@@ -108,19 +108,19 @@
             [self loadHtml:overview];
             break;
         case ERROR_NETWORK:
-            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            [self popupMessage:NSLS(@"网络弱，数据加载失败") title:nil];
             break;
             
         case ERROR_CLIENT_URL_NULL:
-            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_URL_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_REQUEST_NULL:
-            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_REQUEST_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_PARSE_JSON:
-            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_PARSE_JSON") title:nil];
             break;
             
         default:
@@ -134,13 +134,13 @@
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
     
     NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
     
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSLog(@"load webview url = %@", [request description]);
+    PPDebug(@"load webview url = %@", [request description]);
     if (request) {
         [self.webView loadRequest:request];        
     }

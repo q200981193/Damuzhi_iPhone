@@ -17,4 +17,6 @@
 @property (retain, nonatomic) NSMutableArray *selectedServiceIdList;
 @property (retain, nonatomic) NSMutableArray *selectedCuisineIdList;
 
+- (void)resetAll;
+
 @end

@@ -16,8 +16,11 @@
 #import "LocalCityManager.h"
 #import "AppConstants.h"
 #import "MobClick.h"
+#import "AppUtils.h"
+#import "ResendService.h"
 
 #define UMENG_KEY @"4f76a1c15270157f7700004d"
+#define SPLASH_VIEW_TAG 20120506
 
 @implementation AppDelegate
 
@@ -61,6 +64,8 @@
     
 //    //–insert a delay of 5 seconds before the splash screen disappears–
 //    [NSThread sleepForTimeInterval:1.0];
+    
+    [AppUtils createAllNeededDir];
         
     // init app data
     [[AppService defaultService] loadAppData]; 
@@ -75,6 +80,9 @@
     //[[UserService defaultService] autoRegisterUser:@"123"];
     [[UserService defaultService] autoRegisterUser:[self getDeviceToken]];
     
+    //resend favorete place
+    [[ResendService defaultService] resendFavorite];
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
     self.mainController = [[[MainController alloc] initWithNibName:@"MainController" bundle:nil] autorelease];
@@ -83,14 +91,30 @@
     self.mainController.navigationItem.title = NSLS(@"大拇指旅行");
     
     self.window.rootViewController = navigationController;
-    [self.window makeKeyAndVisible];
     
-//    //if app is first launch, create default city info
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:FIRST_LAUNCH]) {
-//        [[[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID] setDownloadStatus:DOWNLOAD_SUCCEED];
-//    }
+    UIView* splashView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Default.png"]];
+    splashView.frame = [self.window bounds];
+    splashView.tag = SPLASH_VIEW_TAG;
+    [self.window.rootViewController.view addSubview:splashView];
+    [splashView release];
+    
+    [self performSelector:@selector(removeSplashView) withObject:nil afterDelay:2.0f];
+    
+    [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void)removeSplashView
+{
+    [UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDuration:2.0f];
+	
+	[UIView setAnimationTransition:UIViewAnimationTransitionCurlUp
+						   forView:self.window.rootViewController.view 
+                             cache:YES];
+    [UIView commitAnimations];
+    [[self.window.rootViewController.view viewWithTag:SPLASH_VIEW_TAG] removeFromSuperview];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -132,6 +156,8 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    
+    
 }
 
 @end

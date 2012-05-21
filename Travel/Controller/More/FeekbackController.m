@@ -27,6 +27,7 @@
     [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.navigationItem setTitle:TITLE_FEEDBACK];
     
     // Set feekback text view delegate.
     self.feekbackTextView.delegate = self;
@@ -34,7 +35,7 @@
     self.feekbackTextView.placeholderColor = [UIColor lightGrayColor];
     
     // Set navigation bar buttons
-    [self setNavigationLeftButton:NSLS(@"返回") imageName:IMAGE_NAVIGATIONBAR_BACK_BTN action:@selector(clickBack:)];
+    [self setNavigationLeftButton:NSLS(@" 返回") imageName:IMAGE_NAVIGATIONBAR_BACK_BTN action:@selector(clickBack:)];
     [self setNavigationRightButton:NSLS(@"提交") imageName:@"topmenu_btn_right.png" action:@selector(clickSubmit:)];
         
     // Add a single tap Recognizer

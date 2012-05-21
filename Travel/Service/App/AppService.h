@@ -11,14 +11,6 @@
 #import "ASINetworkQueue.h"
 #import <CoreLocation/CoreLocation.h>
 
-@protocol UnzipDelegate <NSObject>
-
-@optional
-- (void)didFinishUnzip:(City*)city;
-- (void)didFailUnzip:(City*)city;
-
-@end
-
 @interface AppService : CommonService
 
 + (AppService*)defaultService;
@@ -28,7 +20,5 @@
 - (void)loadAppData;
 - (void)updateAppData;
 - (void)updateHelpHtmlFile;
-
-- (void)UnzipCityDataAsynchronous:(int)cityId unzipDelegate:(id<UnzipDelegate>)unzipDelegate;
 
 @end

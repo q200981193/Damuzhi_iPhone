@@ -43,7 +43,7 @@
     
     if (![tip.icon hasPrefix:@"http"]){
         // local files, read image locally
-        NSString *imagePath = [[AppUtils getCityDataDir:tip.cityId] stringByAppendingPathComponent:tip.icon];
+        NSString *imagePath = [[AppUtils getCityDir:tip.cityId] stringByAppendingPathComponent:tip.icon];
         [imageView setImage:[UIImage imageWithContentsOfFile:imagePath]];
     }
     else{

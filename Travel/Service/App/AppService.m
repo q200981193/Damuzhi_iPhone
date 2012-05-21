@@ -65,10 +65,7 @@ static AppService* _defaultAppService = nil;
 }
 
 - (void)copyDefaultAppDataFormBundle
-{    
-    // create City Dir
-    [FileUtil createDir:[AppUtils getAppDir]];
-    
+{        
     // copy file from bundle to zip dir
     PPDebug(@"copy defalut app.dat from bundle to app dir");
     [FileUtil copyFileFromBundleToAppDir:FILENAME_OF_APP_DATA
@@ -88,32 +85,29 @@ static AppService* _defaultAppService = nil;
                                   appDir:[AppUtils getZipDir]
                                overwrite:NO];
     
-    // create City Dir
-    [FileUtil createDir:[AppUtils getHelpHtmlDir]];
-    
     // unzip
     [SSZipArchive unzipFileAtPath:[AppUtils getHelpZipFilePath]
-                    toDestination:[AppUtils getHelpHtmlDir]];
+                    toDestination:[AppUtils getHelpDir]];
 }
 
-- (void)copyBuildinCityZipFromBundleAndRelease
-{       
-    if ([AppUtils hasLocalCityData:DEFAULT_CITY_ID]) { 
-        return;
-    }
-    
-    // create City Dir
-    [FileUtil createDir:[AppUtils getZipDir]];
-    
-    // copy file from bundle to zip dir
-    PPDebug(@"copy defalut zip from bundle to zip dir");
-    [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
-                                  appDir:[AppUtils getZipDir] 
-                               overwrite:NO];
-    
-    // if there has no unzip city data, unzip
-    [self UnzipDefaultCity];
-}
+//- (void)copyBuildinCityZipFromBundleAndRelease
+//{       
+//    if ([AppUtils hasLocalCityData:DEFAULT_CITY_ID]) { 
+//        return;
+//    }
+//    
+//    // create City Dir
+//    [FileUtil createDir:[AppUtils getZipDir]];
+//    
+//    // copy file from bundle to zip dir
+//    PPDebug(@"copy defalut zip from bundle to zip dir");
+//    [FileUtil copyFileFromBundleToAppDir:DEFAULT_CITY_ZIP
+//                                  appDir:[AppUtils getZipDir] 
+//                               overwrite:NO];
+//    
+//    // if there has no unzip city data, unzip
+//    [self UnzipDefaultCity];
+//}
 
 - (void)loadAppData
 {
@@ -127,7 +121,7 @@ static AppService* _defaultAppService = nil;
 - (void)updateHelpHtmlFile
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_HELP_INOF lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryObject:OBJECT_TYPE_HELP_INOF lang:LanguageTypeZhHans];
         HelpInfo *helpInfo = nil;
         
         if (output.resultCode == ERROR_SUCCESS){
@@ -135,18 +129,17 @@ static AppService* _defaultAppService = nil;
                 helpInfo = [[TravelResponse parseFromData:output.responseData] helpInfo];
                 if (![helpInfo.version isEqualToString:[self getHelpHtmlFileVersion]]) {
                     NSURL *url = [NSURL URLWithString:helpInfo.helpHtml];
-                    [self downloadResource:url destinationDir:[AppUtils getZipDir] fileName:FILENAME_OF_HELP_ZIP];
+                    [self downloadResource:url destinationPath:[AppUtils getHelpZipFilePath]];
                     [SSZipArchive unzipFileAtPath:[AppUtils getHelpZipFilePath] 
-                                    toDestination:[AppUtils getHelpHtmlDir]];
+                                    toDestination:[AppUtils getHelpDir]];
                     [self setHelpHtmlFileVersion:helpInfo.version];
                 }
             }
             @catch (NSException *exception){
-                NSLog (@"<updateHelpHtmlFile> Caught %@%@", [exception name], [exception reason]);
+                PPDebug (@"<updateHelpHtmlFile> Caught %@%@", [exception name], [exception reason]);
             }
         }
     });    
-
 }
 
 #define KEY_HELP_HTML_FILE_VERSION @"KEY_HELP_HTML_FILE_VERSION"
@@ -164,7 +157,7 @@ static AppService* _defaultAppService = nil;
 - (void)updateAppData
 {        
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_APP_DATA lang:LANGUAGE_SIMPLIFIED_CHINESE];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryList:OBJECT_TYPE_APP_DATA lang:LanguageTypeZhHans os:OS_IOS];
         TravelResponse *travelResponse = nil;
 
         if (output.resultCode == ERROR_SUCCESS){
@@ -178,9 +171,11 @@ static AppService* _defaultAppService = nil;
                 // TODO , performance can be improved by add sperate working queue for download
                 NSArray *placeMetas = [[travelResponse appInfo] placeMetaDataListList];
                 [self downloadProvidedServiceIcons:placeMetas];
+                NSArray *recommendApps = [[travelResponse appInfo] recommendedAppsList];
+                [self downloadRecommendedAppIcons:recommendApps];
             }
             @catch (NSException *exception){
-                NSLog (@"<updateAppData> Caught %@%@", [exception name], [exception reason]);
+                PPDebug (@"<updateAppData> Caught %@%@", [exception name], [exception reason]);
             }
         }
     });    
@@ -190,23 +185,26 @@ static AppService* _defaultAppService = nil;
 {
     for (PlaceMeta *placeMeta in placeMetas) {
         for (NameIdPair *providedService in [placeMeta providedServiceListList]) {
-            // download images of each provide service icon
+            // download icons of each provide service icon
             NSURL *url = [NSURL URLWithString:providedService.image];
-            
-            NSString *destinationDir = [AppUtils getProvidedServiceIconDir];
-            NSString *fileName = [[NSString alloc] initWithFormat:@"%d.png", providedService.id]; 
-            
-            [self downloadResource:url destinationDir:destinationDir fileName:fileName];
-            [fileName release];
+            NSString *destinationPath = [AppUtils getProvidedServiceIconPath:providedService.id];
+            [self downloadResource:url destinationPath:destinationPath];
         }
     }
 }
 
-- (void)downloadResource:(NSURL*)url destinationDir:(NSString*)destinationDir fileName:(NSString*)fileName
+- (void)downloadRecommendedAppIcons:(NSArray*)appRecommendList
 {
-    [FileUtil createDir:destinationDir];
-    NSString *destinationPath = [destinationDir stringByAppendingPathComponent:fileName];
-    
+    for (RecommendedApp *app in appRecommendList) {
+        // download icons of each provide service icon
+        NSURL *url = [NSURL URLWithString:app.icon];
+        NSString *destinationPath = [AppUtils getRecommendedAppIconPath:app.id];
+        [self downloadResource:url destinationPath:destinationPath];
+    }
+}
+
+- (void)downloadResource:(NSURL*)url destinationPath:(NSString*)destinationPath
+{
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     PPDebug(@"download request = %@", url.description);
@@ -216,41 +214,19 @@ static AppService* _defaultAppService = nil;
     [request startSynchronous];
 }  
 
-- (void)UnzipDefaultCity
-{
-    // if there has no unzip city data, unzip
-    if ([AppUtils unzipCityZip:DEFAULT_CITY_ID]) {
-        [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:DEFAULT_CITY_ID]
-                                                contents:nil
-                                              attributes:nil];
-        LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID];
-        localCity.downloadStatus = DOWNLOAD_SUCCEED;
-    }
-    else {
-        PPDebug(@"解压默认城市失败");
-    }
-}
-
-- (void)UnzipCityDataAsynchronous:(int)cityId unzipDelegate:(id<UnzipDelegate>)unzipDelegate
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // if there has no unzip city data, unzip
-        if ([AppUtils unzipCityZip:cityId]) {
-            [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:cityId]
-                                                    contents:nil
-                                                  attributes:nil];
-            if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFinishUnzip:)]) {
-                [unzipDelegate didFinishUnzip:[[AppManager defaultManager] getCity:cityId]];
-            }
-        }
-        else {
-            [[LocalCityManager defaultManager] removeLocalCity:cityId];
-            
-            if (unzipDelegate && [unzipDelegate respondsToSelector:@selector(didFailUnzip:)]) {
-                [unzipDelegate didFailUnzip:[[AppManager defaultManager] getCity:cityId]];
-            }
-        }
-    });    
-}
+//- (void)UnzipDefaultCity
+//{
+//    // if there has no unzip city data, unzip
+//    if ([AppUtils unzipCityZip:DEFAULT_CITY_ID]) {
+//        [[NSFileManager defaultManager] createFileAtPath:[AppUtils getUnzipFlag:DEFAULT_CITY_ID]
+//                                                contents:nil
+//                                              attributes:nil];
+//        LocalCity *localCity = [[LocalCityManager defaultManager] createLocalCity:DEFAULT_CITY_ID];
+//        localCity.downloadStatus = DOWNLOAD_SUCCEED;
+//    }
+//    else {
+//        PPDebug(@"解压默认城市失败");
+//    }
+//}
 
 @end

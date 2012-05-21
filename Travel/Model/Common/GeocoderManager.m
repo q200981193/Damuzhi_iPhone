@@ -7,6 +7,7 @@
 //
 
 #import "GeocoderManager.h"
+#import "PPDebug.h"
 
 @implementation GeocoderManager
 @synthesize geocoder = _geocoder;
@@ -29,7 +30,7 @@
 - (void)findCityName:(CLLocation *)location delegate:(id<GeocoderManagerDelegate>)delegate
 {
     [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        NSLog(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
+        PPDebug(@"reverseGeocodeLocation:completionHandler: Completion Handler called!");
         if (error){
             if (delegate && [delegate respondsToSelector:@selector(failFindCityName:)]) {
                 [delegate failFindCityName:error];

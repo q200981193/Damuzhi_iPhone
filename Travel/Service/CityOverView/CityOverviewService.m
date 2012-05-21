@@ -111,7 +111,7 @@ typedef CommonOverview* (^RemoteRequestHandler)(int* resultCode);
                 commonOverView = [travelResponse overview];
             }
             @catch (NSException *exception) {
-                NSLog (@"<findCommonOverView:%d> Caught %@%@", objectType, [exception name], [exception reason]);
+                PPDebug(@"<findCommonOverView:%d> Caught %@%@", objectType, [exception name], [exception reason]);
             }
         }
         

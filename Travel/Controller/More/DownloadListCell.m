@@ -16,13 +16,14 @@
 #import "AppUtils.h"
 #import "Reachability.h"
 #import "SSZipArchive.h"
+#import "TKAlertCenter.h"
 
 @implementation DownloadListCell
 @synthesize cityNameLabel;
 @synthesize updateButton;
 @synthesize deleteButton;
 @synthesize dataSizeLabel;
-@synthesize defaultLabel;
+//@synthesize defaultLabel;
 @synthesize updateProgressView;
 @synthesize updatePercentLabel;
 @synthesize pauseBtn;
@@ -46,7 +47,7 @@
     [updateButton release];
     [deleteButton release];
     [dataSizeLabel release];
-    [defaultLabel release];
+//    [defaultLabel release];
     [_city release];
     
     [updateProgressView release];
@@ -61,16 +62,6 @@
     self.city = city;
     
     self.cityNameLabel.text = [NSString stringWithFormat:NSLS(@"%@.%@"), _city.countryName, _city.cityName];
-    [self.defaultLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:IMAGE_CITY_DEFAULT_BTN]]];
-
-    if (DEFAULT_CITY_ID == _city.cityId) {
-        self.deleteButton.hidden = YES;
-        self.defaultLabel.hidden = NO;
-     }
-    else {
-        self.deleteButton.hidden = NO;
-        self.defaultLabel.hidden = YES;
-    }
         
     [self setApperance:city];
 }
@@ -80,9 +71,13 @@
     LocalCity *localCity = [[LocalCityManager defaultManager] getLocalCity:city.cityId];
     
     switch (localCity.updateStatus) {
-        case UPDATING:            
+        case UPDATING:   
+            [self setUpdatingAppearance];
+            [self setUpdateProgress:localCity.downloadProgress];
+            break;
         case UPDATE_PAUSE:
-            [self setUpdateAppearance:localCity];
+            [self setUpdatePauseAppearance];
+            [self setUpdateProgress:localCity.downloadProgress];
             break;
             
         default:
@@ -110,31 +105,37 @@
     activityIndicator.hidden = YES;   
 }
 
-- (void)setUpdateAppearance:(LocalCity*)localCity
+- (void)setUpdatingAppearance
 {
     dataSizeLabel.hidden = YES;
     updateButton.hidden = YES;
     
     updateProgressView.hidden = NO;
     updatePercentLabel.hidden = NO;
-    [self setupdateProgress:localCity.downloadProgress];
     
     pauseBtn.hidden = NO;
     
-    if (localCity.updateStatus == UPDATING) {
-        pauseBtn.selected = NO;
-        activityIndicator.hidden = NO;  
-        [activityIndicator startAnimating];
-    }
-    else {
-        pauseBtn.selected = YES;
-        activityIndicator.hidden = YES; 
-        [activityIndicator stopAnimating];
-    }
+    pauseBtn.selected = NO;
+    activityIndicator.hidden = NO;  
+    [activityIndicator startAnimating];
 }
 
+- (void)setUpdatePauseAppearance
+{
+    dataSizeLabel.hidden = YES;
+    updateButton.hidden = YES;
+    
+    updateProgressView.hidden = NO;
+    updatePercentLabel.hidden = NO;
+    
+    pauseBtn.hidden = NO;
+    
+    pauseBtn.selected = YES;
+    activityIndicator.hidden = YES; 
+    [activityIndicator stopAnimating];
+}
                                        
-- (void)setupdateProgress:(float)progress
+- (void)setUpdateProgress:(float)progress
 {
     updateProgressView.progress = progress;
     float persent = progress*100;
@@ -250,6 +251,8 @@
 
 - (void)didFailUpdate:(City*)city error:(NSError*)error
 {
+    [[TKAlertCenter defaultCenter] postAlertWithMessage:@""];
+    
     if (_downloadListCellDelegate && [_downloadListCellDelegate respondsToSelector:@selector(didFailUpdate:error:)]) {
         [_downloadListCellDelegate didFailUpdate:city error:error];
     }

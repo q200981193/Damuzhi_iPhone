@@ -9,14 +9,16 @@
 #import "LocalCity.h"
 #import "ASIHTTPRequest.h"
 #import "AppManager.h"
+#import "PPDebug.h"
 
 @implementation LocalCity
+
+
 
 @synthesize cityId= _cityId;
 @synthesize downloadProgress = _downloadProgress;
 @synthesize downloadStatus = _downloadStatus;
 @synthesize updateStatus = _updateStatus;
-//@synthesize downloadType = _downloadType;
 @synthesize delegate = _delegate;
 
 + (LocalCity*)localCityWith:(int)cityId
@@ -43,7 +45,6 @@
     [aCoder encodeFloat:self.downloadProgress forKey:KEY_DOWNLOAD_PROGRESS];
     [aCoder encodeInt:self.downloadStatus forKey:KEY_DOWNLOADING_STATUS];
     [aCoder encodeInt:self.updateStatus forKey:KEY_UPDATE_STATUS];
-//    [aCoder encodeInt:self.downloadType forKey:KEY_DOWNLOAD_TYPE];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -53,7 +54,6 @@
         self.downloadProgress = [aDecoder decodeFloatForKey:KEY_DOWNLOAD_PROGRESS];
         self.downloadStatus = [aDecoder decodeIntForKey:KEY_DOWNLOADING_STATUS];
         self.updateStatus = [aDecoder decodeIntForKey:KEY_UPDATE_STATUS];
-//        self.downloadType = [aDecoder decodeIntForKey:KEY_DOWNLOAD_TYPE];
     }
     
     return self;
@@ -61,7 +61,7 @@
 
 - (void)setProgress:(float)newProgress
 {
-    NSLog(@"progress = %f", newProgress);
+//    PPDebug(@"progress = %f", newProgress);
     self.downloadProgress = newProgress;
 }
 
@@ -70,16 +70,24 @@
     switch ([[request.userInfo objectForKey:KEY_REQUEST_TYPE] intValue]) {
         case REQUEST_TYPE_DOWNLOAD:
             _downloadStatus = DOWNLOAD_SUCCEED;
-            if (_delegate && [_delegate respondsToSelector:@selector(didFinishDownload:)]) {
-                [_delegate didFinishDownload:[[AppManager defaultManager] getCity:self.cityId]];
-            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_delegate && [_delegate respondsToSelector:@selector(didFinishDownload:)]) {
+                    [_delegate didFinishDownload:[[AppManager defaultManager] getCity:self.cityId]];
+                }
+            });
+            
             break;
             
         case REQUEST_TYPE_UPDATE:
             _updateStatus = UPDATE_SUCCEED;
-            if (_delegate && [_delegate respondsToSelector:@selector(didFinishUpdate:)]) {
-                [_delegate didFinishUpdate:[[AppManager defaultManager] getCity:self.cityId]];
-            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_delegate && [_delegate respondsToSelector:@selector(didFinishUpdate:)]) {
+                    [_delegate didFinishUpdate:[[AppManager defaultManager] getCity:self.cityId]];
+                }
+            });
+
             break;
             
         default:

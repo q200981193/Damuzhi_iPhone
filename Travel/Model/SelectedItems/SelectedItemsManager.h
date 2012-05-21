@@ -1,5 +1,5 @@
 //
-//  PlaceItemsManager.h
+//  SelectedItemsManager.h
 //  Travel
 //
 //  Created by 小涛 王 on 12-4-20.
@@ -10,7 +10,7 @@
 #import "CommonService.h"
 #import "SelectedItems.h"
 
-@interface PlaceSelectedItemsManager : NSObject <CommonManagerProtocol>
+@interface SelectedItemsManager : NSObject <CommonManagerProtocol>
 
 @property (retain, nonatomic) SelectedItems *spotSelectedItems;
 @property (retain, nonatomic) SelectedItems *hotelSelectedItems;
@@ -19,5 +19,6 @@
 @property (retain, nonatomic) SelectedItems *entertainmentSelectedItems;
 
 - (SelectedItems*)getSelectedItems:(int)categoryId;
+- (void)resetAllSelectedItems;
 
 @end

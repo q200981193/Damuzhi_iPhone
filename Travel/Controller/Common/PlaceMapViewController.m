@@ -50,93 +50,35 @@
 #import "Place.pb.h"
 #import "CommonPlaceDetailController.h"
 #import "AppUtils.h"
+#import "UIImageUtil.h"
+#import "MapUtils.h"
+#import "AppUtils.h"
 
 @implementation PlaceMapViewController
 
-@synthesize mapView;
+@synthesize mapView = _mapView;
 @synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
 //@synthesize mapAnnotations;
-@synthesize indexOfSelectedPlace;
 @synthesize superController;
-
-- (BOOL)isRightLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude
-{
-    if (-90.0 <= latitude && latitude <= 90.0 &&  -180.0 <= longitude && longitude <= 180.0){
-        return  YES;
-    }else {
-        return NO;
-    }
-}
-
-- (void)gotoLocation:(Place*)place
-{
-    if (![self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
-        return;
-    }
-    
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = [place latitude];
-    newRegion.center.longitude = [place longitude];
-    //设置地图的范围，越小越精确  
-//    newRegion.span.latitudeDelta = 0.05;
-//    newRegion.span.longitudeDelta = 0.05;
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-
-    [self.mapView setRegion:newRegion animated:YES];
-}
-
-- (void)gotoPlaceWithCoordinate:(CLLocationCoordinate2D)coordinate
-{
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = coordinate.latitude ;
-    newRegion.center.longitude = coordinate.longitude;
-    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.longitudeDelta = 0.109863;
-    [self.mapView setRegion:newRegion animated:YES];
-}
-
-
-- (void)gotoCurrentPosition
-{
-    //开始探测自己的位置  
-    if (_locationManager==nil)   
-    {  
-        _locationManager =[[CLLocationManager alloc] init];  
-    }  
-    
-    
-    if ([CLLocationManager locationServicesEnabled])   
-    {  
-        _locationManager.delegate=self;  
-        _locationManager.desiredAccuracy=kCLLocationAccuracyBest;  
-        _locationManager.distanceFilter=10.0f;  
-        [_locationManager startUpdatingLocation];  
-    }  
-    
-    MKCoordinateRegion theRegion = { {0.0, 0.0 }, { 0.0, 0.0 } };
-    theRegion.center = [[_locationManager location] coordinate];
-    [mapView setZoomEnabled:YES];
-    [mapView setScrollEnabled:YES];
-    theRegion.span.latitudeDelta = 0.112872;
-    theRegion.span.longitudeDelta = 0.109863;
-    [mapView setRegion:theRegion animated:YES];
-}
-
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    self.mapView.ShowsUserLocation = YES;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.mapView.ShowsUserLocation = NO;
+}
 
-- (void) loadAllAnnotations
+- (void)loadAllAnnotations
 {    
     NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
     if (_placeList && _placeList.count > 0) {
         for (Place *place in _placeList) {
-            if ([self isRightLatitude:[place latitude] Longitude:[place longitude]]) {
+            if ([MapUtils isValidLatitude:[place latitude] Longitude:[place longitude]]) {
                 PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
                 [mapAnnotations addObject:placeAnnotation];
                 [placeAnnotation release];
@@ -144,8 +86,8 @@
         } 
     }
     
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    [self.mapView addAnnotations:mapAnnotations];
+    [_mapView removeAnnotations:_mapView.annotations];
+    [_mapView addAnnotations:mapAnnotations];
     [mapAnnotations release];
 }
 
@@ -156,32 +98,29 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-//    self.mapView.showsUserLocation = YES;
-//    self.mapAnnotations = [[NSMutableArray alloc]init];
-    [self loadAllAnnotations];
-    
+
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
 
 }
 
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
 {
-//    NSLog(@"didAddAnnotationViews");
-    [self gotoLocation:[_placeList objectAtIndex:0]];
 }
 
 - (void)viewDidUnload
 {
-    self.mapView = nil;
-//    self.mapAnnotations = nil;
+    _mapView = nil;
+    _placeList = nil;
+    _locationManager = nil;
 }
 
 - (void)dealloc 
 {
-    [mapView release];
-//    [mapAnnotations release];
+    [_mapView release];
+    [_placeList release];
+    [_locationManager release];
     [super dealloc];
 }
 
@@ -221,35 +160,11 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-            UIButton *customizeView = [[UIButton alloc] initWithFrame:CGRectMake(0,0,102,27)];
-            [customizeView setBackgroundColor:[UIColor clearColor]];
             
-            UIImage *image = [UIImage imageNamed:@"green_glass"];
-            annotationView.image = image;            
-            
-            UIButton *leftIndicatorButton = [[UIButton alloc]initWithFrame:CGRectMake(5, 1.5, 17, 17)];            
-            NSString *fileName = [AppUtils getCategoryIndicatorIcon:placeAnnotation.place.categoryId];
-            UIImage *icon = [UIImage imageNamed:fileName];
-            
-            [leftIndicatorButton setBackgroundImage:icon forState:UIControlStateNormal];
-            [leftIndicatorButton addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];
-            [customizeView addSubview:leftIndicatorButton];
-            [leftIndicatorButton release];
-            
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(27, 2, 80, 17)];
-            label.font = [UIFont systemFontOfSize:12];
-            label.text  = [placeAnnotation.place name];
-            NSInteger value = [self.placeList indexOfObject:placeAnnotation.place];
-            label.textColor = [UIColor colorWithWhite:255.0 alpha:1.0];
-            label.backgroundColor = [UIColor clearColor];
-            [customizeView addSubview:label];
-            [label release];
-            
-            customizeView.tag = value;
-            [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];            
-            
-            [annotationView addSubview:customizeView];
-            [customizeView release];
+            NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+            NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
+            [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
+
             return annotationView;
         }
         else

@@ -13,6 +13,8 @@
 #import "AppUtils.h"
 #import "ImageName.h"
 #import "PPNetworkRequest.h"
+#import "PPDebug.h"
+#import "UIImageUtil.h"
 
 @implementation CityBasicController
 
@@ -67,7 +69,8 @@
                            action:@selector(clickBack:)];
         
     dataWebview.delegate = self;
-    scrollView.backgroundColor = [UIColor whiteColor];
+
+    scrollView.backgroundColor = [UIColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:230.0/255.0 alpha:1];
     
     [dataSource requestDataWithDelegate:self];
     
@@ -78,7 +81,7 @@
 {
 
     NSString *heightString = [webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"];
-    NSLog(@"webview document body scrollHeight is %@ high",heightString);
+    PPDebug(@"webview document body scrollHeight is %@ high",heightString);
 
     //set webview frame
     CGRect webViewFrame = webView.frame;
@@ -98,19 +101,19 @@
             [self initDataSource:overview];
             break;
         case ERROR_NETWORK:
-            [self popupMessage:@"请检查您的网络连接是否存在问题！" title:nil];
+            [self popupMessage:NSLS(@"网络弱，数据加载失败") title:nil];
             break;
             
         case ERROR_CLIENT_URL_NULL:
-            [self popupMessage:@"ERROR_CLIENT_URL_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_URL_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_REQUEST_NULL:
-            [self popupMessage:@"ERROR_CLIENT_REQUEST_NULL" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_REQUEST_NULL") title:nil];
             break;
             
         case ERROR_CLIENT_PARSE_JSON:
-            [self popupMessage:@"ERROR_CLIENT_PARSE_JSON" title:nil];
+            [self popupMessage:NSLS(@"ERROR_CLIENT_PARSE_JSON") title:nil];
             break;
             
         default:
@@ -125,13 +128,13 @@
     
     //handle urlString, if there has local data, urlString is a relative path, otherwise, it is a absolute URL.
     
-    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
+    NSString *htmlPath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:htmlString];
     
     NSURL *url = [AppUtils getNSURLFromHtmlFileOrURL:htmlPath];
     
     //request from a url, load request to web view.
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSLog(@"load webview url = %@", [request description]);
+    PPDebug(@"load webview url = %@", [request description]);
     if (request) {
         [self.dataWebview loadRequest:request];        
     }
@@ -139,7 +142,7 @@
     //handle imageList, if there has local data, each image is a relative path, otherwise, it is a absolute URL.
     NSMutableArray *imagePathList = [[NSMutableArray alloc] init];
     for (NSString *image in imageList) {
-        NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDataDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
+        NSString *imgaePath = [AppUtils getAbsolutePath:[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] string:image];
         
         //        NSLog(@"image path = %@", imgaePath);
         [imagePathList addObject:imgaePath];
@@ -147,6 +150,7 @@
     
     SlideImageView* slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
     slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
+    [slideImageView.pageControl setPageIndicatorImageForCurrentPage:[UIImage strectchableImageName:@"point_pic3.png"] forNotCurrentPage:[UIImage strectchableImageName:@"point_pic4.png"]];
     [slideImageView setImages:imagePathList];
     [self.imageHolderView addSubview:slideImageView];
     

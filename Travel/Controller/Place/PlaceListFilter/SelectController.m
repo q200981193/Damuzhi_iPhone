@@ -12,6 +12,7 @@
 #import "AppManager.h"
 #import "CommonPlace.h"
 #import "UIImageUtil.h"
+#import "PlaceUtils.h"
 
 @interface SelectController ()
 
@@ -20,14 +21,18 @@
 @implementation SelectController
 @synthesize tableView;
 @synthesize delegate;
+@synthesize type = _type;
 @synthesize selectedIds = _selectedIds;
 @synthesize beforeSelectedIds = _beforeSelectedIds;
 @synthesize multiOptions = _multiOptinos;
 @synthesize needConfirm = _needConfirm;
+@synthesize placeList = _placeList;
 
-+ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions needConfirm:(BOOL)needConfirm
++ (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions needConfirm:(BOOL)needConfirm type:(int)type
 {
     SelectController* controller = [[[SelectController alloc] init] autorelease];  
+    
+    controller.type = type;
     
     controller.dataList = list;
     
@@ -38,11 +43,16 @@
     controller.multiOptions = multiOptions;
     
     controller.needConfirm = needConfirm;
-    
-//    [controller viewDidLoad];
-    
+        
     return controller;
 }
+
+- (void)setAndReload:(NSArray*)placeList
+{
+    self.placeList = placeList;
+    [tableView reloadData];
+}
+
 
 - (void)viewDidLoad
 {        
@@ -58,7 +68,7 @@
                                 action:@selector(clickFinish:)];
     }
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg.jpg"]]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
 }
 
 - (void)viewDidUnload
@@ -73,6 +83,7 @@
     [tableView release];
     [_selectedIds release];
     [_beforeSelectedIds release];
+    [_placeList release];
     [super dealloc];
 }
 
@@ -86,13 +97,31 @@
 	return [dataList count];			// default implementation
 }
 
+- (void)setCellTextLabel:(UITableViewCell*)cell typeId:(int)typeId typeName:(NSString*)name
+{
+    NSString *text = nil;
+    switch (_type) {
+        case TYPE_SUBCATEGORY:
+        case TYPE_PROVIDED_SERVICE:
+        case TYPE_AREA:
+            text = [name stringByAppendingFormat:@" (%d)", [PlaceUtils getPlacesCountInSameType:_type typeId:typeId placeList:_placeList]];
+            break;
+            
+        default:
+            text = name;
+            break;
+    }
+    
+    [[cell textLabel] setText:text];
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     int row = [indexPath row];	
 	int count = [dataList count];
 	if (row >= count){
-		NSLog(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
+		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return nil;
 	}
     
@@ -101,29 +130,31 @@
     NSString *currentName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
     NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
     
-    [[cell textLabel] setText:currentName];
+//    [[cell textLabel] setText:currentName];
+    [self setCellTextLabel:cell typeId:[currentId intValue] typeName:currentName];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     
-    BOOL found = NO;
-    for(NSNumber *selectedId in self.selectedIds)
-    {
-        if ([currentId intValue] == [selectedId intValue]) {
-            found = YES;
-            break;
-        }
-    }
-    
-    if (!found) {
-        [cell.imageView setImage:[self getUnselectedImage]];
-        cell.accessoryView = nil;
-    }else 
-    {
+//    BOOL found = NO;
+//    for(NSNumber *selectedId in self.selectedIds)
+//    {
+//        if ([currentId intValue] == [selectedId intValue]) {
+//            found = YES;
+//            break;
+//        }
+//    }
+//    
+//    if (!found) {
+    if ([_selectedIds containsObject:currentId]) {
         [cell.imageView setImage:[self getSelectedImage]];
         cell.backgroundView = [self getBackgoundImageView:row];
         if (!_multiOptinos) {
             cell.accessoryView =[self getCheckedImageView];
         }
+    }else 
+    {
+        [cell.imageView setImage:[self getUnselectedImage]];
+        cell.accessoryView = nil;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	return cell;	
@@ -157,22 +188,12 @@
 
 - (UIImage*)getUnselectedImage
 {
-    if (_multiOptinos) {
-        return [UIImage imageNamed:@"no_s.png"];
-    }
-    else {
-        return [UIImage imageNamed:@"radio_1.png"];
-    }
+    return _multiOptinos ? [UIImage imageNamed:@"no_s.png"] : [UIImage imageNamed:@"radio_1.png"];
 }
 
 - (UIImage*)getSelectedImage
 {
-    if (_multiOptinos) {
-        return [UIImage imageNamed:@"yes_s.png"];
-    }
-    else {
-        return [UIImage imageNamed:@"radio_2.png"];
-    }
+    return _multiOptinos ? [UIImage imageNamed:@"yes_s.png"] : [UIImage imageNamed:@"radio_2.png"];
 }
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -181,16 +202,17 @@
     NSNumber *currentSelectedId = [[selectedDictionary allKeys] objectAtIndex:0];
 
     if(self.multiOptions == YES){
-        BOOL found = NO;
-        for(NSNumber *selectedId in self.selectedIds)
-        {
-            if ([currentSelectedId intValue] == [selectedId intValue]) {
-                found = YES;
-                break;
-            }
-        }
-        
-        if(!found)
+//        BOOL found = NO;
+//        for(NSNumber *selectedId in self.selectedIds)
+//        {
+//            if ([currentSelectedId intValue] == [selectedId intValue]) {
+//                found = YES;
+//                break;
+//            }
+//        }
+//        
+//        if(!found)
+        if (![_selectedIds containsObject:currentSelectedId])
         {
             if([currentSelectedId intValue] == ALL_CATEGORY)
             {
@@ -251,7 +273,12 @@
             [_beforeSelectedIds addObject:selectId];
         }
         
-        [delegate didSelectFinish:self.selectedIds];
+        if (delegate && [delegate respondsToSelector:@selector(didSelectFinish:)]) {
+            [delegate didSelectFinish:self.selectedIds];
+        }
+        else {
+            PPDebug(@"[delegate respondsToSelector:@selector(didSelectFinish:)]");
+        }
     }
 }
 

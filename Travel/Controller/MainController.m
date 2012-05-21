@@ -31,6 +31,7 @@
 #import "CommonWebController.h"
 #import "UIImageUtil.h"
 #import "AppUtils.h"
+#import "PackageManager.h"
 
 #import "PPDebug.h"
 
@@ -66,36 +67,36 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+#define WIDTH_TOP_ARRAW 14
+#define HEIGHT_TOP_ARRAW 7
+#define WIDTH_BLANK_OF_TITLE 14
 
-#define APP_TITLE @"大拇指旅行 - "
-#define BUTTON_VIEW_WIDTH 200
-#define BUTTON_VIEW_HEIGHT 30
 - (void)createButtonView
 {
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT)];
-    label.font = [UIFont fontWithName:@"" size:0.1];
-    label.text = [NSString stringWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor whiteColor];
-    label.textAlignment = UITextAlignmentCenter;
+    UIFont *font = [UIFont systemFontOfSize:17];
+    CGSize withinSize = CGSizeMake(320, CGFLOAT_MAX);
     
-    UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(BUTTON_VIEW_WIDTH-50, BUTTON_VIEW_HEIGHT/2-3, 14, 7)];
-    [imageView setImage:[UIImage imageNamed:@"top_arrow.png"]];
+    NSString *title = [NSString stringWithFormat:@"大拇指旅行 — %@", [[AppManager defaultManager] getCurrentCityName]];    
+    CGSize titleSize = [title sizeWithFont:font constrainedToSize:withinSize lineBreakMode:UILineBreakModeTailTruncation];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, BUTTON_VIEW_WIDTH, BUTTON_VIEW_HEIGHT)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, titleSize.width+WIDTH_TOP_ARRAW+WIDTH_BLANK_OF_TITLE, titleSize.height)];
     
-    [button addSubview:label];
-    [button addSubview:imageView];
+    [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    
+    [button setImage:[UIImage imageNamed:@"top_arrow.png"] forState:UIControlStateNormal];
+    
+    button.imageEdgeInsets = UIEdgeInsetsMake(0, titleSize.width+WIDTH_BLANK_OF_TITLE, 0, 0);
+    button.titleEdgeInsets = UIEdgeInsetsMake(0, -WIDTH_TOP_ARRAW-WIDTH_BLANK_OF_TITLE, 0, 0);
     
     [button addTarget:self action:@selector(clickTitle:) forControlEvents:UIControlEventTouchUpInside];
     
     self.navigationItem.titleView = button;
     
-    [label release];
-    [imageView release];
     [button release];
 }
 
+#define TAG_CITY_UPDATE_ALERT 123
 - (void)viewDidLoad
 {
     [self setBackgroundImageName:@"index_bg.png"];
@@ -103,8 +104,12 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
+    [[AppService defaultService] setCurrentLocation:[[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease]];
+
     [self initLocationManager];
     [self startUpdatingLocation];
+    
+    [self checkCurrentCityVersion];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
@@ -276,6 +281,42 @@
         }
         case 3:
             break;
+        default:
+            break;
+    }
+}
+
+- (void)checkCurrentCityVersion
+{
+    City *currentCity = [[AppManager defaultManager] getCity:[[AppManager defaultManager] getCurrentCityId]];
+    if (![AppUtils hasLocalCityData:currentCity.cityId]) {
+        return;
+    }
+        
+    if (![currentCity.latestVersion isEqualToString:[[PackageManager defaultManager] getCityVersion:currentCity.cityId]]){
+        NSString *message = NSLS(@"离线数据有更新，是否现在更新？");
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:self cancelButtonTitle:NSLS(@"以后再说") otherButtonTitles:NSLS(@"现在更新"),nil] autorelease];
+        alert.tag = TAG_CITY_UPDATE_ALERT;
+        [alert show];
+    }
+}
+
+#pragma mark -
+#pragma mark: implementation of alert view delegate.
+
+- (void)alertView:(UIAlertView *)alertView1 clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView1.tag) {
+        case TAG_CITY_UPDATE_ALERT:
+            if (buttonIndex == 1) {
+                CityManagementController *controller = [CityManagementController getInstance];
+
+                [self.navigationController pushViewController:controller animated:YES];
+                
+                [controller clickDownloadListButton:controller.downloadListBtn];
+            }
+            break;
+            
         default:
             break;
     }
