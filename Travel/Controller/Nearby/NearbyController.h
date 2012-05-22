@@ -13,7 +13,7 @@
 
 @class PlaceListController;
 
-@interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate,PullToRefrshDelegate>
+@interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate,PullToRefrshDelegate, UIAlertViewDelegate>
 
 @property (assign, nonatomic) int distance;
 @property (assign, nonatomic) int categoryId;

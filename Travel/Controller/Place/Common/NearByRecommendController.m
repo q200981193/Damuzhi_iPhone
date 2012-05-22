@@ -49,6 +49,17 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.mapView.ShowsUserLocation = YES;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.mapView.ShowsUserLocation = NO;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,7 +73,6 @@
     
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard; 
-    self.mapView.ShowsUserLocation = YES;
     
     self.placeList = [[[NSMutableArray alloc] init] autorelease];
     
@@ -88,6 +98,7 @@
 {
     [_placeList release];
     [_place release];
+    [mapView release];
     [super dealloc];
 }
 
@@ -141,15 +152,30 @@
             //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
             if (placeAnnotation.place == _place )
             {
-                customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
-                UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
-                annotationView.image = img;
-                [annotationView setFrame:customizeView.frame];
-                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
-//                customizeView.tag = RED_GLASS_VIEW;
-//                annotationView.tag = RED_GLASS_VIEW;
-                buttomView = annotationView;
-                [annotationView addSubview:customizeView];
+//                customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
+//                UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
+//                annotationView.image = img;
+//                [annotationView setFrame:customizeView.frame];
+//                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
+//                buttomView = annotationView;
+//                [annotationView addSubview:customizeView];
+                
+                MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+                                                       initWithAnnotation:annotation reuseIdentifier:[annotation title]] autorelease];
+                customPinView.pinColor = MKPinAnnotationColorRed;
+                customPinView.animatesDrop = YES;
+                customPinView.canShowCallout = YES;
+                
+                UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+                [rightButton addTarget:self
+                                action:@selector(notationAction:)
+                      forControlEvents:UIControlEventTouchUpInside];
+                customPinView.rightCalloutAccessoryView = rightButton;
+                
+                NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
+                customizeView.tag = tag;
+
+                return customPinView;
             }
             else
             {                
@@ -159,8 +185,6 @@
                 [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
 
             }
-//            UIView *view = [annotationView viewWithTag:RED_GLASS_VIEW];
-//            [annotationView bringSubviewToFront:view];
             return annotationView;
         }
         else

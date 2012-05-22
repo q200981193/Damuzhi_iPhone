@@ -34,7 +34,7 @@
 #define WIDTH_NEARBY_PLACE_BUTTON  300
 #define HEIGHT_NEARBY_PLACE_BUTTON 30
 
-#define WIDTH_NEARBY_PLACE_NAME_LABEL 190
+#define WIDTH_NEARBY_PLACE_NAME_LABEL 150
 #define HEIGHT_NEARBY_PLACE_NAME_LABEL 14
 
 #define WIDTH_TRANSPORTATION_TABLE_ROW 300
@@ -475,9 +475,7 @@
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
         int i = 0;
         for (Place *nearbyPlace in _nearbyPlaceList)
-        {
-
-            
+        {            
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
             [location release];
             
@@ -503,7 +501,22 @@
             [rowView addSubview:nameLabel];
             [nameLabel release];
             
-            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 8, 40, 14)];            
+            //add rankImage
+            UIView *rankView = [[UIView alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 8, 40, 14)];
+            
+            for (int i=0;i<[nearbyPlace rank];i++) {
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*i, 0, 10, 14)];
+                UIImage *image = [UIImage imageNamed:IMAGE_GOOD2];
+                [imageView setImage:image];
+                [rankView addSubview:imageView];
+                [imageView release];
+            }
+            rankView.backgroundColor = [UIColor clearColor];
+            [rowView addSubview:rankView];
+            [rankView release];
+
+            
+            UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(rankView.frame.origin.x+rankView.frame.size.width+8, 8, 40, 14)];            
             NSString* distanceString = [PlaceUtils getDistanceString:nearbyPlace currentLocation:loc];
             distanceLabel.text = distanceString;
             distanceLabel.textAlignment = UITextAlignmentRight;

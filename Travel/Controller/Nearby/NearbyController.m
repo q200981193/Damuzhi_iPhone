@@ -17,6 +17,18 @@
 #import "App.pb.h"
 #import "PPNetworkRequest.h"
 #import "AppService.h"
+#import <CoreLocation/CoreLocation.h>
+
+//#define TEST_FOR_SIMULATE__LOCATION
+
+
+@interface NearbyController ()
+
+#ifdef TEST_FOR_SIMULATE__LOCATION
+@property (retain, nonatomic) CLLocation *testLocation;
+#endif
+
+@end
 
 
 @implementation NearbyController
@@ -36,6 +48,9 @@
 @synthesize showMap = _showMap;
 @synthesize placeList = _placeList;
 @synthesize allPlaceList = _allPlaceList;
+#ifdef TEST_FOR_SIMULATE__LOCATION
+@synthesize testLocation;
+#endif
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -61,6 +76,10 @@
     [_placeList release];
     [_allPlaceList release];
     [buttonHolderView release];
+#ifdef TEST_FOR_SIMULATE__LOCATION
+    [testLocation release];
+#endif
+
     [super dealloc];
 }
 
@@ -135,6 +154,10 @@
     [self setSelectedBtn:_categoryId];
     
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
+    
+#ifdef TEST_FOR_SIMULATE__LOCATION
+    self.testLocation = [[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease];
+#endif
 }
 
 - (void)setSelectedBtn:(int)categoryId
@@ -182,17 +205,69 @@
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
 }
 
+#ifdef TEST_FOR_SIMULATE__LOCATION
+UITextField * alertTextField;
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:tapGesture];
+    [tapGesture release];
+}
+
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"输入经纬度数值" message:@"格式:22.254087 113.905029" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alertTextField = [alert textFieldAtIndex:0];
+        alertTextField.keyboardType = UIKeyboardTypeDefault;
+        alertTextField.placeholder = @"";
+        [alert show];
+        [alert release];  
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    switch (buttonIndex) {
+        case 0:
+            break;
+        case 1:{
+            NSMutableString *text = [[NSMutableString alloc] initWithString:[alertTextField text]];
+            NSString *latitude = [[text componentsSeparatedByString:@" "] objectAtIndex:0];
+            NSString *logtitude = [[text componentsSeparatedByString:@" "] objectAtIndex:1];
+            double lat = [latitude doubleValue];
+            double log = [logtitude doubleValue];
+             testLocation = [[CLLocation alloc] initWithLatitude:lat longitude:log];
+            
+        }
+            break;  
+        default:
+            break;
+    }
+
+    
+}
+
+#endif
+
 
 - (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
 {
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
+        
+#ifdef TEST_FOR_SIMULATE__LOCATION
+        [[AppService defaultService] setCurrentLocation:testLocation];
+#endif
         CLLocation *myLocation = [[AppService defaultService] currentLocation];
+
         CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
         [placeLocation release];
                 
-        if (distance <= self.distance) {
+        if (distance <= _distance) {
             [placeList addObject:place];
         }
     }
