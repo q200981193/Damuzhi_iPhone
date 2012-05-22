@@ -118,8 +118,12 @@
     controller.supportRefreshHeader = pullToRreflash;
 
     [controller.view setFrame:superView.bounds];
+    
     controller.superController = superController;
-    controller.mapViewController.superController = superController;
+    
+//    controller.mapViewController.superController = superController;
+    PlaceMapViewController *mapViewController = controller.mapViewController;
+    mapViewController.superController = superController;
     
     [superView addSubview:controller.view];
     
