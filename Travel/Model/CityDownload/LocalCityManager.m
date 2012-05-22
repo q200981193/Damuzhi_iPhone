@@ -68,7 +68,7 @@ static LocalCityManager *_defaultManager = nil;
 #pragma mark: load and save localcities
 - (void)loadLocalCities
 {
-    self.localCities = [[NSMutableDictionary alloc] init];
+    self.localCities = [[[NSMutableDictionary alloc] init] autorelease];
 
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     NSData* data = [userDefault objectForKey:KEY_LOCAL_CITIES];

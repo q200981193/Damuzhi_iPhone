@@ -27,6 +27,18 @@
 @synthesize multiOptions = _multiOptinos;
 @synthesize needConfirm = _needConfirm;
 @synthesize placeList = _placeList;
+@synthesize allItems = _allItems;
+@synthesize meaningfulItems = _meaningfulItems;
+
+- (void)dealloc {
+    [tableView release];
+    [_selectedIds release];
+    [_beforeSelectedIds release];
+    [_placeList release];
+    [_allItems release];
+    [_meaningfulItems release];
+    [super dealloc];
+}
 
 + (SelectController*)createController:(NSArray*)list selectedIds:(NSMutableArray*)selectedIds multiOptions:(BOOL)multiOptions needConfirm:(BOOL)needConfirm type:(int)type
 {
@@ -34,7 +46,7 @@
     
     controller.type = type;
     
-    controller.dataList = list;
+    controller.allItems = list;
     
     controller.beforeSelectedIds = selectedIds;
 
@@ -50,9 +62,30 @@
 - (void)setAndReload:(NSArray*)placeList
 {
     self.placeList = placeList;
+
+    if (_type == TYPE_SUBCATEGORY || _type == TYPE_PROVIDED_SERVICE || _type == TYPE_AREA) {
+        [self setMeaningfulItemsAccordingToPlaceList];
+    }else {
+        self.meaningfulItems = _allItems;
+    }
+    
     [tableView reloadData];
 }
 
+- (void)setMeaningfulItemsAccordingToPlaceList
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (NSDictionary *dic in _allItems) {
+        int typeId =  [[[dic allKeys] objectAtIndex:0] intValue];
+        int count = [PlaceUtils getPlacesCountInSameType:_type typeId:typeId  placeList:_placeList];
+        if (count != 0) {
+            [array addObject:dic];
+        }
+    }
+    
+    self.meaningfulItems = array;
+    [array release];
+}
 
 - (void)viewDidLoad
 {        
@@ -79,13 +112,16 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)dealloc {
-    [tableView release];
-    [_selectedIds release];
-    [_beforeSelectedIds release];
-    [_placeList release];
-    [super dealloc];
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+    
 }
+
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -94,7 +130,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [dataList count];			// default implementation
+	return [_meaningfulItems count];			// default implementation
 }
 
 - (void)setCellTextLabel:(UITableViewCell*)cell typeId:(int)typeId typeName:(NSString*)name
@@ -119,7 +155,7 @@
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     int row = [indexPath row];	
-	int count = [dataList count];
+	int count = [_meaningfulItems count];
 	if (row >= count){
 		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return nil;
@@ -127,24 +163,14 @@
     
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellForCategory"] autorelease];
     
-    NSString *currentName = [[[self.dataList objectAtIndex:row] allValues] objectAtIndex:0];
-    NSNumber *currentId = [[[self.dataList objectAtIndex:row] allKeys] objectAtIndex:0];
+    NSString *currentName = [[[_meaningfulItems objectAtIndex:row] allValues] objectAtIndex:0];
+    NSNumber *currentId = [[[_meaningfulItems objectAtIndex:row] allKeys] objectAtIndex:0];
     
 //    [[cell textLabel] setText:currentName];
     [self setCellTextLabel:cell typeId:[currentId intValue] typeName:currentName];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     
-//    BOOL found = NO;
-//    for(NSNumber *selectedId in self.selectedIds)
-//    {
-//        if ([currentId intValue] == [selectedId intValue]) {
-//            found = YES;
-//            break;
-//        }
-//    }
-//    
-//    if (!found) {
     if ([_selectedIds containsObject:currentId]) {
         [cell.imageView setImage:[self getSelectedImage]];
         cell.backgroundView = [self getBackgoundImageView:row];
@@ -176,7 +202,7 @@
     if (row == 0) {
         [view setImage:[UIImage imageNamed:@"select_bg_top.png"]];
     }
-    else if(row == [dataList count]-1){
+    else if(row == [_meaningfulItems count]-1){
         [view setImage:[UIImage imageNamed:@"select_bg_down.png"]];
     }
     else {
@@ -198,7 +224,7 @@
 
 - (void)tableView:(UITableView *)tableView1 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *selectedDictionary = [self.dataList objectAtIndex:indexPath.row];
+    NSDictionary *selectedDictionary = [_meaningfulItems objectAtIndex:indexPath.row];
     NSNumber *currentSelectedId = [[selectedDictionary allKeys] objectAtIndex:0];
 
     if(self.multiOptions == YES){

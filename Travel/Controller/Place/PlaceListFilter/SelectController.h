@@ -21,6 +21,8 @@
 @property (assign, nonatomic) BOOL needConfirm;
 @property (retain, nonatomic) NSArray *placeList;
 
+@property (retain, nonatomic) NSArray *meaningfulItems;
+@property (retain, nonatomic) NSArray *allItems;
 @property (retain, nonatomic) NSMutableArray *selectedIds;
 @property (retain, nonatomic) NSMutableArray *beforeSelectedIds;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;

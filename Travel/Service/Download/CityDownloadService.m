@@ -33,7 +33,7 @@ static CityDownloadService *_instance;
 {
     self = [super init];
     if (self) {
-        self.operationQueue = [[NSOperationQueue alloc] init];
+        self.operationQueue = [[[NSOperationQueue alloc] init] autorelease];
     }
     
     return self;

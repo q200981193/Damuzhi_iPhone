@@ -153,6 +153,15 @@
     [super viewDidUnload];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+    
+}
+
 #define RIGHT_BUTTON_VIEW_WIDTH     230
 #define RIGHT_BUTTON_VIEW_HIGHT     30
 #define BUTTON_WIDTH                80

@@ -33,11 +33,11 @@ static SelectedItemsManager *_instance = nil;
 {
     self = [super init];
     if (self) {
-        self.spotSelectedItems = [[SelectedItems alloc] init];
-        self.hotelSelectedItems = [[SelectedItems alloc] init];
-        self.restaurantSelectedItems = [[SelectedItems alloc] init];
-        self.shoppingSelectedItems = [[SelectedItems alloc] init];
-        self.entertainmentSelectedItems = [[SelectedItems alloc] init];
+        self.spotSelectedItems = [[[SelectedItems alloc] init] autorelease];
+        self.hotelSelectedItems = [[[SelectedItems alloc] init] autorelease];
+        self.restaurantSelectedItems = [[[SelectedItems alloc] init] autorelease];
+        self.shoppingSelectedItems = [[[SelectedItems alloc] init] autorelease];
+        self.entertainmentSelectedItems = [[[SelectedItems alloc] init] autorelease];
     }
     
     return self;

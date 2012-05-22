@@ -160,4 +160,9 @@
     
 }
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+//    [[ImageCache sharedImageCache] removeAllImagesInMemory];
+}
+
 @end

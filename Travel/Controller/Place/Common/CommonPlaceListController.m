@@ -156,6 +156,9 @@
     self.allPlaceList = placeList;
     
     self.placeList = [self filterAndSort:_allPlaceList];
+    
+    [_selectController setAndReload:_placeList];
+        
     [self createAndReloadPlaceListController];
 }
 
@@ -237,7 +240,7 @@
 {
     NSArray *subCategoryList = [[AppManager defaultManager] getSubCategoryList:[_filterHandler getCategoryId]];
     
-    _selectController = [SelectController createController:subCategoryList                                                           
+    self.selectController = [SelectController createController:subCategoryList                                                           
                                                                 selectedIds:[_selectedItems selectedSubCategoryIdList] 
                                                                multiOptions:YES
                                                                 needConfirm:YES
@@ -253,7 +256,7 @@
 - (void)clickSortButton:(id)sender
 {    
     NSArray *sortOptionList = [[AppManager defaultManager] getSortOptionList:[_filterHandler getCategoryId]];
-    _selectController = [SelectController createController:sortOptionList
+    self.selectController = [SelectController createController:sortOptionList
                                                                 selectedIds:[_selectedItems selectedSortIdList] 
                                                                multiOptions:NO
                                                                 needConfirm:YES
@@ -268,7 +271,7 @@
 - (void)clickPrice:(id)sender
 {    
     NSArray *hotelPriceList = [[AppManager defaultManager] getPriceList:[[AppManager defaultManager] getCurrentCityId]];
-    _selectController = [SelectController createController:hotelPriceList
+    self.selectController = [SelectController createController:hotelPriceList
                                                                 selectedIds:[_selectedItems selectedPriceIdList]
                                                                multiOptions:YES
                                                                 needConfirm:YES
@@ -283,7 +286,7 @@
 - (void)clickArea:(id)sender
 {
     NSArray *areaList = [[AppManager defaultManager] getAreaNameList:[[AppManager defaultManager] getCurrentCityId]];
-    _selectController = [SelectController createController:areaList
+    self.selectController = [SelectController createController:areaList
                                                                 selectedIds:[_selectedItems selectedAreaIdList]
                                                                multiOptions:YES 
                                                                 needConfirm:YES
@@ -300,7 +303,7 @@
     
     NSArray *serviceList = [[AppManager defaultManager] getProvidedServiceList:[_filterHandler getCategoryId]];
     
-    _selectController = [SelectController createController:serviceList
+    self.selectController = [SelectController createController:serviceList
                                                                 selectedIds:[_selectedItems selectedServiceIdList]
                                                                multiOptions:YES
                                                                 needConfirm:YES

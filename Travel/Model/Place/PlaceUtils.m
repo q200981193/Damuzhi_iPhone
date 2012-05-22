@@ -111,11 +111,11 @@
     
     if (distance >1000.0) {
         long long temp = distance/1000.0 + 0.5;
-        return [NSString stringWithFormat:NSLS(@"%lldKM"), temp];
+        return [NSString stringWithFormat:NSLS(@"%lldkm"), temp];
     }
     else {
         int temp = (int)distance > 10? (int)distance : 10;
-        return [NSString stringWithFormat:NSLS(@"%dM"), temp];
+        return [NSString stringWithFormat:NSLS(@"%dm"), temp];
     }
 }
 

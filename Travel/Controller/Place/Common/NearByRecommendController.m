@@ -64,7 +64,7 @@
     mapView.mapType = MKMapTypeStandard; 
     self.mapView.ShowsUserLocation = YES;
     
-    self.placeList = [[NSMutableArray alloc] init];
+    self.placeList = [[[NSMutableArray alloc] init] autorelease];
     
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
@@ -183,7 +183,14 @@
     }
 }
 
-
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+    
+}
 
 
 @end
