@@ -64,5 +64,6 @@
          
 
 - (void)setPlaces:(NSArray*)placeList;
+- (void)showUserLocation:(BOOL)isShow;
 
 @end

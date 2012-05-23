@@ -264,10 +264,12 @@
 {    
     if (_showMap){
         _mapHolderView.hidden = NO;
+        [_mapViewController showUserLocation:YES];
         dataTableView.hidden = YES;
     }
     else{
         _mapHolderView.hidden = YES;
+        [_mapViewController showUserLocation:NO];
         dataTableView.hidden = NO;
     }    
 }

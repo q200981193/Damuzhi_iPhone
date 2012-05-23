@@ -64,18 +64,6 @@
 @synthesize placeList = _placeList;
 @synthesize superController = _superController;
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    self.mapView.ShowsUserLocation = YES;
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    self.mapView.ShowsUserLocation = NO;
-    [super viewDidDisappear:animated];
-}
-
 - (void)loadAllAnnotations
 {    
     NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
@@ -101,10 +89,12 @@
     // Do any additional setup after loading the view from its nib.
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;   
-
+    self.mapView.showsUserLocation = NO;
+    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
+    
 }
 
 - (void)viewDidUnload
@@ -147,6 +137,11 @@
 {
     self.placeList = placeList;
     [self loadAllAnnotations];
+}
+
+- (void)showUserLocation:(BOOL)isShow
+{
+    self.mapView.ShowsUserLocation = isShow;
 }
 
 #pragma mark -

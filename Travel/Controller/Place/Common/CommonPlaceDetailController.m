@@ -230,7 +230,7 @@
     if (count != nil) {
         UILabel *favoriteCountLabel = (UILabel*)[[dataScrollView viewWithTag:TAG_FAVORITE_VIEW] viewWithTag:TAG_FAVORITE_COUNT_LABEL];
         
-        favoriteCountLabel = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
+        favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
     }
     
     CGRect rect = CGRectMake(0, 0, 109, 52);
