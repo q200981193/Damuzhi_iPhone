@@ -11,11 +11,10 @@
 #import "PlaceUtils.h"
 
 @implementation HotelDetailViewHandler
-@synthesize commonController;
 
 #define NO_DETAIL_DATA NSLS(@"暂无")
 
--(void)addStarLevelViewWith:(NSString*)titleString description:(NSString*)descriptionString starCount:(int32_t)starCount
+-(void)addStarLevelViewWith:(NSString*)titleString description:(NSString*)descriptionString starCount:(int32_t)starCount controller:(CommonPlaceDetailController *)controller
 {
     CGSize withinSize = CGSizeMake(300, 100000);
     
@@ -25,10 +24,10 @@
     }
     CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.commonController.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
+    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, controller.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
-    UILabel *title = [self.commonController createTitleView:titleString];
+    UILabel *title = [controller createTitleView:titleString];
     [segmentView addSubview:title];
     
     UIView *starIconView = [[[UIView alloc]initWithFrame:CGRectMake(10, 26, 15 * starCount, 12.5)] autorelease];
@@ -66,33 +65,26 @@
     
     
     [segmentView addSubview:introductionDescription];
-    [commonController.dataScrollView addSubview:segmentView];    
+    [controller.dataScrollView addSubview:segmentView];    
     
-    UIView *middleLineView = [self.commonController createMiddleLineView: self.commonController.detailHeight + segmentView.frame.size.height];
-    [commonController.dataScrollView addSubview:middleLineView];
+    UIView *middleLineView = [controller createMiddleLineView: controller.detailHeight + segmentView.frame.size.height];
+    [controller.dataScrollView addSubview:middleLineView];
     
-    self.commonController.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
+    controller.detailHeight =  middleLineView.frame.origin.y + middleLineView.frame.size.height;
 }
 
-- (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
-{
-    
-    [self.commonController addIntroductionViewWith: NSLS(@"酒店简介") description:[place introduction]];
-    
-    [self addStarLevelViewWith: NSLS(@"酒店星级") description:[PlaceUtils hotelStarToString:[place hotelStar]] starCount:[place hotelStar]];
-    
-    [self.commonController addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@"、"]];
-    
-    [self.commonController addSegmentViewWith: NSLS(@"房间价格") description:[PlaceUtils getDetailPrice:place]];
 
-    [self.commonController addTransportView:place];
-}
-
-- (id)initWith:(CommonPlaceDetailController *)controller
+- (void)addDetailViewsToController:(CommonPlaceDetailController*)controller WithPlace:(Place*)place
 {
-    [super init];
-    self.commonController = controller;
-    return  self;
+    [controller addIntroductionViewWith: NSLS(@"酒店简介") description:[place introduction]];
+    
+    [self addStarLevelViewWith: NSLS(@"酒店星级") description:[PlaceUtils hotelStarToString:[place hotelStar]] starCount:[place hotelStar] controller:controller];
+    
+    [controller addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@"、"]];
+    
+    [controller addSegmentViewWith: NSLS(@"房间价格") description:[PlaceUtils getDetailPrice:place]];
+    
+    [controller addTransportView:place];
 }
 
 @end

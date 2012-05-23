@@ -27,15 +27,11 @@
 @end
 
 @interface PlaceListController : PPTableViewController <CityOverviewServiceDelegate>
-{
-    BOOL _showMap;
-    UIView *_mapHolderView;
-}
 
-@property (retain, nonatomic) PlaceMapViewController *mapViewController;
-@property (retain, nonatomic) IBOutlet UILabel *locationLabel;
 @property (retain, nonatomic) IBOutlet UIView *mapHolderView;
-@property (retain, nonatomic) UIViewController *superController;
+@property (retain, nonatomic) PlaceMapViewController *mapViewController;
+
+@property (assign, nonatomic) UIViewController *superController;
 @property (assign, nonatomic) id<DeletePlaceDelegate> deletePlaceDelegate;
 @property (assign, nonatomic) id<PullToRefrshDelegate> pullDownDelegate;
 

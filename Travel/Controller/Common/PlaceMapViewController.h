@@ -53,16 +53,15 @@
 @class Place;
 
 @interface PlaceMapViewController : PPViewController <MKMapViewDelegate,CLLocationManagerDelegate>
-{
-    MKMapView *mapView;
-    NSArray* _placeList;
-    CLLocationManager* _locationManager;
-}
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) CLLocationManager* locationManager;
-@property (nonatomic, retain) NSArray* placeList;
-@property (nonatomic, retain) UIViewController* superController;
+
+@property (nonatomic, assign) UIViewController* superController;
+
+- (void)showInController:(UIViewController*)superController
+               superView:(UIView*)superView
+               placeList:(NSArray*)placeList;
+         
 
 - (void)setPlaces:(NSArray*)placeList;
 

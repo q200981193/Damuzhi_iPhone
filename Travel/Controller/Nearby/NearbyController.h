@@ -17,14 +17,15 @@
 
 @property (assign, nonatomic) int distance;
 @property (assign, nonatomic) int categoryId;
-@property (retain, nonatomic) NSArray *placeList;
-@property (retain, nonatomic) NSArray *allPlaceList;
 @property (assign, nonatomic) BOOL showMap;
 
+@property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) NSArray *allPlaceList;
 @property (retain, nonatomic) PlaceListController* placeListController;
+@property (retain, nonatomic) UIImageView *imageRedStartView;
+
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 @property (retain, nonatomic) IBOutlet UIImageView *distanceView;
-@property (retain, nonatomic) UIImageView *imageRedStartView;
 @property (retain, nonatomic) IBOutlet UIButton *findAllPlaceButton;
 @property (retain, nonatomic) IBOutlet UIButton *findSpotButton;
 @property (retain, nonatomic) IBOutlet UIButton *findHotelButton;

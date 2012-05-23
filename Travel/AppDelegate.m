@@ -61,11 +61,8 @@
 //    }
     
     [self initImageCacheManager];
-    
 //    //–insert a delay of 5 seconds before the splash screen disappears–
 //    [NSThread sleepForTimeInterval:1.0];
-    
-    [AppUtils createAllNeededDir];
         
     // init app data
     [[AppService defaultService] loadAppData]; 
@@ -162,7 +159,7 @@
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-//    [[ImageCache sharedImageCache] removeAllImagesInMemory];
+    
 }
 
 @end

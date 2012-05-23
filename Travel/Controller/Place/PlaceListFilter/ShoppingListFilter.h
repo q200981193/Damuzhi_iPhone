@@ -11,6 +11,4 @@
 
 @interface ShoppingListFilter : NSObject<PlaceListFilterProtocol>
 
-@property (retain, nonatomic) PPTableViewController *controller;
-
 @end

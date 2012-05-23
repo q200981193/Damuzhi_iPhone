@@ -10,6 +10,4 @@
 #import "CommonPlaceListController.h"
 @interface SpotListFilter : NSObject<PlaceListFilterProtocol>
 
-@property (retain, nonatomic) PPTableViewController *controller;
-
 @end

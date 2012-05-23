@@ -15,11 +15,9 @@
 #import "AppService.h"
 
 @implementation HotelListFilter
-@synthesize controller;
 
 - (void)dealloc
 {
-    [controller release];
     [super dealloc];
 }
 
@@ -48,8 +46,6 @@
     [button4 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
     button4.tag = SORT_BUTTON_TAG;
     [superView addSubview:button4];
-    
-    self.controller = commonPlaceController;
 }
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController

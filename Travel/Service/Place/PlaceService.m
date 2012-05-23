@@ -87,7 +87,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
             
         dispatch_async(dispatch_get_main_queue(), ^{
             if (viewController != nil) {
-                [viewController hideActivity];     
+                [viewController hideActivity];  
             }
             
             if (viewController && [viewController respondsToSelector:@selector(findRequestDone:placeList:)]){

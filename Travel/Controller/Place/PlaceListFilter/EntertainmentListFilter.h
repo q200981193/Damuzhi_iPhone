@@ -11,6 +11,4 @@
 
 @interface EntertainmentListFilter : NSObject<PlaceListFilterProtocol>
 
-@property (retain, nonatomic) PPTableViewController *controller;
-
 @end

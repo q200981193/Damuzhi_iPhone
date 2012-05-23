@@ -11,27 +11,19 @@
 #import "PlaceUtils.h"
 
 @implementation SpotDetailViewHandler
-@synthesize commonController;
 
-- (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
+- (void)addDetailViewsToController:(CommonPlaceDetailController*)controller WithPlace:(Place*)place
 {
-    [self.commonController addIntroductionViewWith: NSLS(@"景点介绍") description:[place introduction]];
-    [self.commonController addSegmentViewWith: NSLS(@"门票价格") description:[PlaceUtils getDetailPrice:place]];
+    [controller addIntroductionViewWith: NSLS(@"景点介绍") description:[place introduction]];
+    [controller addSegmentViewWith: NSLS(@"门票价格") description:[PlaceUtils getDetailPrice:place]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
+    [controller addSegmentViewWith: NSLS(@"开放时间") description:[place openTime]];
     
     NSString *transportation = [place transportation];
-
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
-   
-    [self.commonController addSegmentViewWith: NSLS(@"旅游贴士") description:[place tips]];
-}
-
--(id)initWith:(CommonPlaceDetailController *)controller
-{
-    [super init];
-    self.commonController = controller;
-    return  self;
+    
+    [controller addSegmentViewWith: NSLS(@"交通信息") description:transportation];
+    
+    [controller addSegmentViewWith: NSLS(@"旅游贴士") description:[place tips]];
 }
 
 @end

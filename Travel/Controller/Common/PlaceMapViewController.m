@@ -54,13 +54,15 @@
 #import "MapUtils.h"
 #import "AppUtils.h"
 
+@interface PlaceMapViewController ()
+@property (nonatomic, retain) NSArray* placeList;
+@end
+
 @implementation PlaceMapViewController
 
 @synthesize mapView = _mapView;
-@synthesize locationManager = _locationManager;
 @synthesize placeList = _placeList;
-//@synthesize mapAnnotations;
-@synthesize superController;
+@synthesize superController = _superController;
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -71,6 +73,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     self.mapView.ShowsUserLocation = NO;
+    [super viewDidDisappear:animated];
 }
 
 - (void)loadAllAnnotations
@@ -102,18 +105,12 @@
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
-
-}
-
-- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
-{
 }
 
 - (void)viewDidUnload
 {
-    _mapView = nil;
-    _placeList = nil;
-    _locationManager = nil;
+    self.mapView = nil;
+    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -129,9 +126,22 @@
 {
     [_mapView release];
     [_placeList release];
-    [_locationManager release];
     [super dealloc];
 }
+
+- (void)showInController:(UIViewController*)superController
+               superView:(UIView*)superView
+               placeList:(NSArray*)placeList
+{    
+    [self.view setFrame:superView.bounds];
+    [superView addSubview:self.view];
+    
+    self.superController = superController;
+    self.placeList = placeList;
+    
+    [self loadAllAnnotations];
+}
+
 
 - (void)setPlaces:(NSArray*)placeList
 {
@@ -163,7 +173,7 @@
     {
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"mapAnnotationIdentifier";
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]];
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]];
         if (pinView == nil)
         {
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]

@@ -15,11 +15,9 @@
 #import "AppService.h"
 
 @implementation EntertainmentListFilter
-@synthesize controller;
 
 - (void)dealloc
 {
-    [controller release];
     [super dealloc];
 }
 
@@ -46,8 +44,6 @@
     [button3 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
     button3.tag = SORT_BUTTON_TAG;
     [superView addSubview:button3];
-    
-    self.controller = commonPlaceController;
 }
 
 - (void)findAllPlaces:(PPViewController<PlaceServiceDelegate>*)viewController

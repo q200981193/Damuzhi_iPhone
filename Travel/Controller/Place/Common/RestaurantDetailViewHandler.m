@@ -13,37 +13,25 @@
 
 @implementation RestaurantViewHandler
 
-@synthesize commonController;   
-
-- (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
+- (void)addDetailViewsToController:(CommonPlaceDetailController*)controller WithPlace:(Place*)place
 {
-    
-    [self.commonController addIntroductionViewWith: NSLS(@"餐馆介绍") description:[place introduction]];
+    [controller addIntroductionViewWith: NSLS(@"餐馆介绍") description:[place introduction]];
     
     NSString *str = [[AppManager defaultManager] getSubCategotyName:[place categoryId] subCategoryId:[place subCategoryId]];
-    [self.commonController addSegmentViewWith: NSLS(@"菜式类型") description: str];
+    [controller addSegmentViewWith: NSLS(@"菜式类型") description: str];
     
-    [self.commonController addSegmentViewWith: NSLS(@"营业时间") description:[place openTime]];
+    [controller addSegmentViewWith: NSLS(@"营业时间") description:[place openTime]];
     
-    [self.commonController addSegmentViewWith:NSLS(@"人均消费") description:[PlaceUtils getDetailPrice:place]];
+    [controller addSegmentViewWith:NSLS(@"人均消费") description:[PlaceUtils getDetailPrice:place]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@"、"]];
+    [controller addSegmentViewWith: NSLS(@"用户评价关键词") description:[[place keywordsList] componentsJoinedByString:@"、"]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"特色菜式") description:[[place typicalDishesList] componentsJoinedByString:@" "]];
+    [controller addSegmentViewWith: NSLS(@"特色菜式") description:[[place typicalDishesList] componentsJoinedByString:@" "]];
     
     NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
     NSRange range = NSMakeRange(0, [transportation length]); 
     [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
-//    [self.commonController addTransportView:place];
-
-}
-
-- (id)initWith:(CommonPlaceDetailController *)controller
-{
-    [super init];
-    self.commonController = controller;
-    return  self;
+    [controller addSegmentViewWith: NSLS(@"交通信息") description:transportation];
 }
 
 @end

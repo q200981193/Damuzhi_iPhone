@@ -12,7 +12,6 @@
 #import "CommonPlace.h"
 #import "ImageName.h"
 #import "UIImageUtil.h"
-#import "PlaceMapViewController.h"
 #import "UIUtils.h"
 #import "AppUtils.h"
 #import "AppManager.h"
@@ -48,8 +47,19 @@
 
 #define MAX_NUM_PLACES_NEARBY 10
 
+#define TAG_NEARBY_VIEW 5268
+#define TAG_TELEPHONE_VIEW 5269
+#define TAG_ADDRESS_VIEW 5270
+#define TAG_WEBSITE_VIEW 5271
+
+#define TAG_FAVORITE_VIEW 5272
+#define TAG_FAVORITE_BUTTON 22221
+#define TAG_FAVORITE_COUNT_LABEL 22222
+
+
+
 @implementation CommonPlaceDetailController
-@synthesize helpButton;
+//@synthesize helpButton;
 @synthesize buttonHolerView;
 @synthesize imageHolderView;
 @synthesize dataScrollView;
@@ -60,16 +70,14 @@
 @synthesize praiseIcon3;
 @synthesize serviceHolder;
 @synthesize handler;
-@synthesize favoriteCountLabel;
-@synthesize telephoneView;
-@synthesize addressView;
-@synthesize websiteView;
+//@synthesize favoriteCountLabel;
+//@synthesize telephoneView;
+//@synthesize addressView;
+//@synthesize websiteView;
 @synthesize detailHeight = _detailHeight;
-@synthesize favouritesView;
-@synthesize addFavoriteButton;
-@synthesize nearbyView = _nearbyView;
-@synthesize selectedBgView;
-@synthesize nearbyRecommendController = _nearbyRecommendController;
+//@synthesize favouritesView;
+//@synthesize addFavoriteButton;
+//@synthesize nearbyView = _nearbyView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -80,26 +88,33 @@
     return self;
 }
 
-- (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace superController:(CommonPlaceDetailController *)controller
+- (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace
 {
     if ([onePlace categoryId] == PlaceCategoryTypePlaceSpot){
-        return [[[SpotDetailViewHandler alloc] initWith:controller] autorelease];
+//        return [[[SpotDetailViewHandler alloc] initWith:self] autorelease];
+        return [[[SpotDetailViewHandler alloc] init] autorelease];
+
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceHotel)
     {
-        return [[[HotelDetailViewHandler alloc] initWith:controller] autorelease];
+//        return [[[HotelDetailViewHandler alloc] initWith:self] autorelease];
+        return [[[HotelDetailViewHandler alloc] init] autorelease];
+
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceRestraurant)
     {
-        return [[[RestaurantViewHandler alloc] initWith:controller] autorelease];
+//        return [[[RestaurantViewHandler alloc] initWith:self] autorelease];
+        return [[[RestaurantViewHandler alloc] init] autorelease];
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceShopping)
     {
-        return [[[ShoppingDetailViewHandler alloc] initWith:controller] autorelease];
+//        return [[[ShoppingDetailViewHandler alloc] initWith:self] autorelease];
+        return [[[ShoppingDetailViewHandler alloc] init] autorelease];
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceEntertainment)
     {
-        return [[[EntertainmentDetailViewHandler alloc] initWith:controller] autorelease];
+//        return [[[EntertainmentDetailViewHandler alloc] initWith:self] autorelease];
+        return [[[EntertainmentDetailViewHandler alloc] init] autorelease];
     }
     return nil;
 }
@@ -107,8 +122,11 @@
 - (id)initWithPlace:(Place *)place
 {
     self = [super init];
-    self.place = place;    
-    self.handler = [self createPlaceHandler:place superController:self];     
+    if (self) {
+        self.place = place;    
+        self.handler = [self createPlaceHandler:place]; 
+    }
+    
     return self;
 }
 
@@ -123,30 +141,32 @@
 #pragma mark - View lifecycle
 - (void)setRankImage:(int32_t)rank
 {
-    self.praiseIcon1.image = [UIImage imageNamed:IMAGE_GOOD2];
-    self.praiseIcon2.image = [UIImage imageNamed:IMAGE_GOOD2];
-    self.praiseIcon3.image = [UIImage imageNamed:IMAGE_GOOD2];
+    UIImage *goodImage = [UIImage imageNamed:IMAGE_GOOD];
+    UIImage *good2Image = [UIImage imageNamed:IMAGE_GOOD2];
     
     switch (rank) {
         case 1:
-            [praiseIcon1 setImage:[UIImage imageNamed:IMAGE_GOOD]];
+            praiseIcon1.image = goodImage;
+            praiseIcon2.image = good2Image;
+            praiseIcon3.image = good2Image;
             break;
             
         case 2:
-            [praiseIcon1 setImage:[UIImage imageNamed:IMAGE_GOOD]];
-            [praiseIcon2 setImage:[UIImage imageNamed:IMAGE_GOOD]];
+            praiseIcon1.image = goodImage;
+            praiseIcon2.image = goodImage;
+            praiseIcon3.image = good2Image;
             break;
             
         case 3:
-            [praiseIcon1 setImage:[UIImage imageNamed:IMAGE_GOOD]];
-            [praiseIcon2 setImage:[UIImage imageNamed:IMAGE_GOOD]];
-            [praiseIcon3 setImage:[UIImage imageNamed:IMAGE_GOOD]];
+            praiseIcon1.image = goodImage;
+            praiseIcon2.image = goodImage;
+            praiseIcon3.image = goodImage;
             break;
             
         default:
             break;
     }
-    
+
     return;
 }
 
@@ -160,9 +180,10 @@
 
 - (void)clickMap:(id)sender
 {
-    _nearbyRecommendController = [[NearByRecommendController alloc] initWithPlace:_place];
-    [self.navigationController pushViewController:_nearbyRecommendController animated:YES];
-    [MapUtils gotoLocation:_place mapView:_nearbyRecommendController.mapView];
+    NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
+    [self.navigationController pushViewController:controller animated:YES];
+    [MapUtils gotoLocation:_place mapView:controller.mapView];
+    [controller release];
 }
 
 - (void)clickTelephone:(id)sender
@@ -207,7 +228,9 @@
     [self updateAddFavoriteButton];
     
     if (count != nil) {
-        self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
+        UILabel *favoriteCountLabel = (UILabel*)[[dataScrollView viewWithTag:TAG_FAVORITE_VIEW] viewWithTag:TAG_FAVORITE_COUNT_LABEL];
+        
+        favoriteCountLabel = [NSString stringWithFormat:NSLS(@"已有%d人收藏"), count.intValue];
     }
     
     CGRect rect = CGRectMake(0, 0, 109, 52);
@@ -237,7 +260,8 @@
 
 - (void)didGetPlaceData:(int)placeId count:(int)placeFavoriteCount;
 {
-    self.favoriteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"),placeFavoriteCount];
+    UILabel *favorteCountLabel = (UILabel*)[[dataScrollView viewWithTag:TAG_FAVORITE_VIEW] viewWithTag:TAG_FAVORITE_COUNT_LABEL];
+    favorteCountLabel.text = [NSString stringWithFormat:NSLS(@"已有%d人收藏"),placeFavoriteCount];
 }
 
 #define DESTANCE_BETWEEN_SERVICE_IMAGES 25
@@ -301,7 +325,7 @@
     }
     CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT + 10)] autorelease];
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, self.detailHeight, 320, size.height + TITLE_VIEW_HEIGHT + 10)];
     segmentView.backgroundColor = INTRODUCTION_BG_COLOR;
         
     UILabel *title = [[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, TITLE_VIEW_HEIGHT)]autorelease];
@@ -329,6 +353,7 @@
     [segmentView addSubview:introductionDescription];
     [introductionDescription release];
     [dataScrollView addSubview:segmentView];    
+    [segmentView release];
     
     UIView *middleLineView = [self createMiddleLineView: _detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
@@ -347,7 +372,7 @@
     
     CGSize size = [description sizeWithFont:SEGAMENT_DESCRIPTION_FONT constrainedToSize:withinSize lineBreakMode:UILineBreakModeWordWrap];
     
-    UIView *segmentView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)] autorelease];
+    UIView *segmentView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, 320, size.height + TITLE_VIEW_HEIGHT)];
     segmentView.backgroundColor = PRICE_BG_COLOR;
     
     UILabel *title = [self createTitleView:titleString];
@@ -355,7 +380,8 @@
     
     UILabel *introductionDescription = [self createDescriptionView:description height:size.height];    
     [segmentView addSubview:introductionDescription];
-    [dataScrollView addSubview:segmentView];    
+    [dataScrollView addSubview:segmentView];  
+    [segmentView release];
     
     UIView *middleLineView = [self createMiddleLineView: _detailHeight + segmentView.frame.size.height];
     [dataScrollView addSubview:middleLineView];
@@ -369,8 +395,9 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     
-    selectedBgView = [[UIButton alloc] initWithFrame:CGRectMake(12, _nearbyView.frame.origin.y +30*(index+1), 275, 24)];
-    [dataScrollView addSubview:selectedBgView];
+//    UIButton *selectedBgView = [[UIButton alloc] initWithFrame:CGRectMake(12, _nearbyView.frame.origin.y +30*(index+1), 275, 24)];
+//    [dataScrollView addSubview:selectedBgView];
+//    [selectedBgView release];
     
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[_nearbyPlaceList objectAtIndex:index]];
     
@@ -380,14 +407,17 @@
 
 - (void) addNearbyView
 {
-    _nearbyView = [[[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width , MAX_NUM_PLACES_NEARBY*HEIGHT_NEARBY_PLACE_BUTTON+30+10)] autorelease];
-    _nearbyView.backgroundColor = PRICE_BG_COLOR;
+    UIView *nearbyView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width , MAX_NUM_PLACES_NEARBY*HEIGHT_NEARBY_PLACE_BUTTON+30+10)];
+    nearbyView.tag = TAG_NEARBY_VIEW;
+    nearbyView.backgroundColor = PRICE_BG_COLOR;
     
     UILabel *title = [self createTitleView:NSLS(@"周边推荐")];
-    [_nearbyView addSubview:title];
+    [nearbyView addSubview:title];
     
-    [dataScrollView addSubview:_nearbyView];    
-    _detailHeight = _nearbyView.frame.origin.y + _nearbyView.frame.size.height;
+    [dataScrollView addSubview:nearbyView];    
+    [nearbyView release];
+    
+    _detailHeight = nearbyView.frame.origin.y + nearbyView.frame.size.height;
     
     //get nearby placelist data
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll place:_place num:MAX_NUM_PLACES_NEARBY viewController:self];
@@ -437,22 +467,25 @@
 {
     _detailHeight = view.frame.origin.y + view.frame.size.height;
     
+    UIView *telephoneView = [dataScrollView viewWithTag:TAG_TELEPHONE_VIEW];
     if (telephoneView != nil) {
         [telephoneView setFrame:CGRectMake(telephoneView.frame.origin.x, _detailHeight, telephoneView.frame.size.width, telephoneView.frame.size.height)];
         _detailHeight = telephoneView.frame.origin.y + telephoneView.frame.size.height;
     }
 
+    UIView *addressView = [dataScrollView viewWithTag:TAG_ADDRESS_VIEW];
     if (addressView != nil) {
         [addressView setFrame:CGRectMake(addressView.frame.origin.x, _detailHeight, addressView.frame.size.width, addressView.frame.size.height)];
         _detailHeight = addressView.frame.origin.y + addressView.frame.size.height;
     }
 
-    
+    UIView *websiteView = [dataScrollView viewWithTag:TAG_WEBSITE_VIEW];
     if (websiteView != nil) {
         [websiteView setFrame:CGRectMake(websiteView.frame.origin.x, _detailHeight, websiteView.frame.size.width, websiteView.frame.size.height)];
         _detailHeight = websiteView.frame.origin.y + websiteView.frame.size.height;
     }
 
+    UIView *favouritesView = [dataScrollView viewWithTag:TAG_FAVORITE_VIEW];
     if (favouritesView != nil) {
         [favouritesView setFrame:CGRectMake(favouritesView.frame.origin.x, _detailHeight, favouritesView.frame.size.width, favouritesView.frame.size.height)];
         _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
@@ -465,17 +498,18 @@
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
     if (result == ERROR_SUCCESS) {
-
         
         self.nearbyPlaceList = placeList;
         
-        [_nearbyView setFrame:CGRectMake(_nearbyView.frame.origin.x, _nearbyView.frame.origin.y, self.view.frame.size.width, [placeList count]*HEIGHT_NEARBY_PLACE_BUTTON+30+10)];
-        [self reLayoutViewBelowView:_nearbyView];
+        UIView *nearbyView = [dataScrollView viewWithTag:TAG_NEARBY_VIEW];
+        
+        [nearbyView setFrame:CGRectMake(nearbyView.frame.origin.x, nearbyView.frame.origin.y, self.view.frame.size.width, [placeList count]*HEIGHT_NEARBY_PLACE_BUTTON+30+10)];
+        [self reLayoutViewBelowView:nearbyView];
 
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:_place.latitude longitude:_place.longitude];
         int i = 0;
         for (Place *nearbyPlace in _nearbyPlaceList)
-        {            
+        {
             CLLocation *location = [[CLLocation alloc] initWithLatitude:nearbyPlace.latitude longitude:nearbyPlace.longitude];
             [location release];
             
@@ -534,7 +568,7 @@
             [goView release];
             
             [rowView addTarget:self action:@selector(clickNearbyRow:) forControlEvents:UIControlEventTouchUpInside];
-            [_nearbyView addSubview:rowView];
+            [nearbyView addSubview:rowView];
             [rowView release];
         }    
         [loc release];
@@ -543,6 +577,8 @@
         [self popupMessage:@"加载周边推荐数据失败！" title:nil];
     }
 }
+
+
 
 - (void)setTransportTaleRowBgImage:(UIButton*)button row:(int)row totoalRows:(int)totoalRows
 {
@@ -667,10 +703,6 @@
     UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     [bgImageView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1]];
     
-//    UIImageView *gotoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"go_btn.png"]];
-//    [gotoImageView setCenter:CGPointMake(20, height/2)];
-//    [bgImageView addSubview:gotoImageView];
-    
     bgImageView.image = [UIImage imageNamed:@"t_bg.png"];
     [rowView addSubview:bgImageView];
     [rowView sendSubviewToBack:bgImageView];
@@ -704,7 +736,7 @@
 
 - (void)addTelephoneView
 {
-    telephoneView = [self createRowView:NSLS(@"电话: ") detail:[self.place.telephoneList componentsJoinedByString:@" "]];
+    UIView *telephoneView = [self createRowView:NSLS(@"电话: ") detail:[self.place.telephoneList componentsJoinedByString:@" "]];
     
     if ([self.place.telephoneList count] != 0) {
         UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 6, 29, 29)];
@@ -726,7 +758,7 @@
 
 - (void)addAddressView
 {
-    addressView = [self createRowView:NSLS(@"地址: ") detail:[[_place addressList] componentsJoinedByString:@" "]];
+    UIView *addressView = [self createRowView:NSLS(@"地址: ") detail:[[_place addressList] componentsJoinedByString:@" "]];
     int height = addressView.frame.size.height;
     
     UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 29, 29)];
@@ -750,6 +782,7 @@
 {
     NSString* websiteUrl = [self.place website];
     if ([websiteUrl length] > 0) {
+        UIView *websiteView = [dataScrollView viewWithTag:TAG_WEBSITE_VIEW];
         websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
         [dataScrollView addSubview:websiteView];
         _detailHeight = _detailHeight + websiteView.frame.size.height;
@@ -759,19 +792,20 @@
 
 - (void)updateAddFavoriteButton
 {
+    UIButton *favoriteButton = (UIButton*)[[dataScrollView viewWithTag:TAG_FAVORITE_VIEW] viewWithTag:TAG_FAVORITE_BUTTON];
     if ([[PlaceStorage favoriteManager] isPlaceInFavorite:self.place.placeId]) {
-        [addFavoriteButton setTitle:NSLS(@"已收藏") forState:UIControlStateNormal];
-        [addFavoriteButton setEnabled:NO];
+        [favoriteButton setTitle:NSLS(@"已收藏") forState:UIControlStateNormal];
+        [favoriteButton setEnabled:NO];
     }
     else {
-        [addFavoriteButton setTitle:NSLS(@"收藏本页") forState:UIControlStateNormal];
-        [addFavoriteButton setEnabled:YES];
+        [favoriteButton setTitle:NSLS(@"收藏本页") forState:UIControlStateNormal];
+        [favoriteButton setEnabled:YES];
     }
 }
 
 - (void)addBottomView
 {
-     favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, 60)];
+    UIView *favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, 60)];
 
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
@@ -781,23 +815,21 @@
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [favButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
-    self.addFavoriteButton = favButton;
-    [favButton release];
     [self updateAddFavoriteButton];
-    [favouritesView addSubview:addFavoriteButton];
+    [favouritesView addSubview:favButton];
+    [favButton release];
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((320-120)/2, 40, 120, 15)];
-    self.favoriteCountLabel = label;
-    [label release];
-    self.favoriteCountLabel.backgroundColor = [UIColor clearColor];
-    self.favoriteCountLabel.textAlignment = UITextAlignmentCenter;
-    self.favoriteCountLabel.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
+    label.tag = TAG_FAVORITE_COUNT_LABEL;
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = UITextAlignmentCenter;
+    label.textColor = [UIColor colorWithRed:125/255.0 green:125/255.0 blue:125/255.0 alpha:1.0];
     [[PlaceService defaultService] getPlaceFavoriteCount:self placeId:self.place.placeId];
-    self.favoriteCountLabel.font = [UIFont boldSystemFontOfSize:14];
-    [favouritesView addSubview:self.favoriteCountLabel];
+    label.font = [UIFont boldSystemFontOfSize:14];
+    [favouritesView addSubview:label];
+    [label release];
     
     [dataScrollView addSubview:favouritesView];
-    
     [favouritesView release];
     
     _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
@@ -848,13 +880,14 @@
                             action:@selector(clickMap:)];
     [self setTitle:[self.place name]];
     
+    
     [self addHeaderView];
-   
+    
     [self addSlideImageView];
     
     _detailHeight = imageHolderView.frame.size.height;
     
-    [self.handler addDetailViews:dataScrollView WithPlace:self.place];
+    [self.handler addDetailViewsToController:self WithPlace:self.place];
         
     [self addNearbyView];
     
@@ -873,29 +906,19 @@
     [[PlaceStorage historyManager] addPlace:self.place];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [selectedBgView removeFromSuperview];
-}
-
 - (void)viewDidUnload
 {
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    [self setButtonHolerView:nil];
     [self setImageHolderView:nil];
     [self setDataScrollView:nil];
-    [self setPlace:nil];
-    [self setButtonHolerView:nil];
     [self setPraiseIcon1:nil];
     [self setPraiseIcon2:nil];
     [self setPraiseIcon3:nil];
-    [self setHelpButton:nil];
     [self setServiceHolder:nil];
-    [self setAddFavoriteButton:nil];
-    [self setNearbyView:nil];
-    [self setSelectedBgView:nil];
+
     [super viewDidUnload];
-    [self setNearbyRecommendController:nil];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -905,24 +928,17 @@
 }
 
 - (void)dealloc {
+    [buttonHolerView release];
     [imageHolderView release];
     [dataScrollView release];
-    [_place release];
-    [buttonHolerView release];
     [praiseIcon1 release];
     [praiseIcon2 release];
     [praiseIcon3 release];
-    [helpButton release];
     [serviceHolder release];
+    
+    [_place release];
     [_nearbyPlaceList release];
-    [favoriteCountLabel release];
-    [telephoneView release];
-    [addressView release];
-    [websiteView release];
-    [favouritesView release];
-    [addFavoriteButton release];
-    [selectedBgView release];
-    [_nearbyRecommendController release];
+
     [super dealloc];
 }
 @end

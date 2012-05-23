@@ -27,10 +27,7 @@
 
 @protocol CommonPlaceDetailDataSourceProtocol <NSObject>
 
-@property (retain, nonatomic) CommonPlaceDetailController* commonController;
-
-- (void)addDetailViews:(UIView*)superView WithPlace:(Place*)place;
-- (id)initWith:(CommonPlaceDetailController*)controller;
+- (void)addDetailViewsToController:(CommonPlaceDetailController*)controller WithPlace:(Place*)place;
 
 @end
 
@@ -55,7 +52,6 @@
 @end
 
 @interface CommonPlaceDetailController : PPViewController<UIActionSheetDelegate,PlaceServiceDelegate>
-@property (retain, nonatomic) IBOutlet UIButton *helpButton;
 
 @property (retain, nonatomic) IBOutlet UIView *buttonHolerView;
 @property (retain, nonatomic) IBOutlet UIView *imageHolderView;
@@ -67,17 +63,8 @@
 @property (retain, nonatomic) Place *place;
 @property (retain, nonatomic) NSArray *nearbyPlaceList;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
-@property (retain, nonatomic) NearByRecommendController *nearbyRecommendController;
 
 @property (assign, nonatomic) float detailHeight;
-@property (retain, nonatomic) UILabel *favoriteCountLabel;
-@property (retain, nonatomic) UIView *telephoneView;
-@property (retain, nonatomic) UIView *addressView;
-@property (retain, nonatomic) UIView *websiteView;
-@property (retain, nonatomic) UIView *favouritesView;
-@property (retain, nonatomic) UIView *nearbyView;
-@property (retain, nonatomic) UIView *selectedBgView;
-@property (retain, nonatomic) UIButton *addFavoriteButton;
 
 - (IBAction)clickHelpButton:(id)sender;
 - (id)initWithPlace:(Place*)place;
@@ -89,4 +76,5 @@
 -(void)addIntroductionViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 -(void)addSegmentViewWith:(NSString*)titleString description:(NSString*)descriptionString;
 - (void)addTransportView:(Place*)place;
+
 @end

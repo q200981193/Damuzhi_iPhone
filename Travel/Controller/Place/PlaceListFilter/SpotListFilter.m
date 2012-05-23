@@ -19,11 +19,9 @@
 #import "AppService.h"
 
 @implementation SpotListFilter
-@synthesize controller;
 
 - (void)dealloc
 {
-    [controller release];
     [super dealloc];
 }
 
@@ -53,8 +51,6 @@
     [button2 addTarget:commonPlaceController action:@selector(clickSortButton:) forControlEvents:UIControlEventTouchUpInside];
     button2.tag = SORT_BUTTON_TAG;
     [superView addSubview:button2];
-
-    self.controller = commonPlaceController;
 }
 
 + (NSObject<PlaceListFilterProtocol>*)createFilter

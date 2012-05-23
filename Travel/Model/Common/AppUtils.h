@@ -40,7 +40,7 @@
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
 
-@interface AppUtils
+@interface AppUtils : NSObject
 
 + (BOOL)createAllNeededDir;
 

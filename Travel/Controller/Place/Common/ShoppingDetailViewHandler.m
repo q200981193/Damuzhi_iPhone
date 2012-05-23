@@ -11,34 +11,20 @@
 
 @implementation ShoppingDetailViewHandler
 
-@synthesize commonController;
-
-- (void)addDetailViews:(UIView*)dataScrollView WithPlace:(Place*)place
+- (void)addDetailViewsToController:(CommonPlaceDetailController*)controller WithPlace:(Place*)place
 {
+    [controller addIntroductionViewWith: NSLS(@"商家简介") description:[place introduction]];
     
-    [self.commonController addIntroductionViewWith: NSLS(@"商家简介") description:[place introduction]];
+    [controller addSegmentViewWith: NSLS(@"营业时间") description:[place openTime]];
     
-    [self.commonController addSegmentViewWith: NSLS(@"营业时间") description:[place openTime]];
-    
-//    [self.commonController addSegmentViewWith:NSLS(@"停车指南") description:[place parkingGuide]];
+    //    [self.commonController addSegmentViewWith:NSLS(@"停车指南") description:[place parkingGuide]];
     
     NSMutableString * transportation = [NSMutableString stringWithString:[place transportation]];
     NSRange range = NSMakeRange(0, [transportation length]); 
     [transportation replaceOccurrencesOfString:@";" withString:@"\n" options:NSCaseInsensitiveSearch range:range];
-    [self.commonController addSegmentViewWith: NSLS(@"交通信息") description:transportation];
-//    [self.commonController addTransportView:place];
-
-    [self.commonController addSegmentViewWith: NSLS(@"购物贴士") description:[place tips]];
+    [controller addSegmentViewWith: NSLS(@"交通信息") description:transportation];
     
-    
+    [controller addSegmentViewWith: NSLS(@"购物贴士") description:[place tips]]; 
 }
-
-- (id)initWith:(CommonPlaceDetailController *)controller
-{
-    [super init];
-    self.commonController = controller;
-    return  self;
-}
-
 
 @end

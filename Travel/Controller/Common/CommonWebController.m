@@ -41,11 +41,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") imageName:@"back.png" action:@selector(clickBack:)];
-    
+
     webView.delegate = self;
-    
+
     if (dataSource) {
         [self.navigationItem setTitle:[dataSource getTitleName]];
         [dataSource requestDataWithDelegate:self];
@@ -56,7 +57,6 @@
         
         //request from a url, load request to web view.
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        PPDebug(@"load webview url = %@", [request description]);
         if (request) {
             [self.webView loadRequest:request];        
         }

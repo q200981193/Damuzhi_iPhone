@@ -9,7 +9,6 @@
 #import "CommonPlaceListController.h"
 #import "PlaceListController.h"
 #import "PlaceService.h"
-#import "PlaceMapViewController.h"
 #import "SelectController.h"
 #import "AppManager.h"
 #import "SelectedItemsManager.h"
@@ -42,6 +41,7 @@
     [_selectedItems release];
     [_placeList release];
     [_allPlaceList release];
+    
     [super dealloc];
 }
 
@@ -71,8 +71,6 @@
 }
 
 #pragma mark - View lifecycle
-
-
 - (void)clickHelp:(id)sender
 {
     CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
@@ -98,6 +96,7 @@
     [self setNavigationBarTitle];
         
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
+    
     UIImage *image = [UIImage imageNamed:@"select_tr_bg.png"];
     _buttonHolderView.backgroundColor = [UIColor colorWithPatternImage:image];
 
@@ -142,6 +141,7 @@
     [self setButtonHolderView:nil];
     [self setPlaceListHolderView:nil];
     [self setModeButton:nil];
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -152,13 +152,13 @@
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"网络弱，数据加载失败" title:nil];
     }
-    
+
     self.allPlaceList = placeList;
-    
+
     self.placeList = [self filterAndSort:_allPlaceList];
-    
+
     [_selectController setAndReload:_placeList];
-        
+
     [self createAndReloadPlaceListController];
 }
 
@@ -168,11 +168,11 @@
         self.placeListController = [PlaceListController createController:_placeList 
                                                                superView:_placeListHolderView
                                                          superController:self
-                                                          pullToRreflash:YES];  
+                                                          pullToRreflash:YES]; 
         [_placeListController setPullDownDelegate:self];
     }
     
-    [self.placeListController setAndReloadPlaceList:_placeList];
+    [_placeListController setAndReloadPlaceList:_placeList];
     [self updateNavigationBarTitle:_placeList.count];
 }
 
@@ -208,10 +208,10 @@
     [UIView commitAnimations];
 
     if (_modeButton.selected){
-        [self.placeListController switchToListMode];
+        [_placeListController switchToListMode];
     }
     else{
-        [self.placeListController switchToMapMode];
+        [_placeListController switchToMapMode];
     }
     
     [self updateModeButton];
@@ -320,10 +320,6 @@
     controller.navigationItem.title = [NSString stringWithFormat:NSLS(@"%@%@"),[_filterHandler getCategoryName],title];
 }
 
-//- (void)didSelectFinish:(NSArray*)selectedList
-//{ 
-//    [_filterHandler findAllPlaces:self];
-//}
 
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
@@ -335,5 +331,6 @@
 {
     [_placeListController.dataTableView reloadData];
 }
+
 
 @end

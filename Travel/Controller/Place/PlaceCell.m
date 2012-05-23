@@ -20,6 +20,7 @@
 #import "PlaceService.h"
 #import "PlaceStorage.h"
 #import "PlaceUtils.h"
+#import "UIImageUtil.h"
 #import "PPDebug.h"
 
 @implementation PlaceCell
@@ -118,8 +119,9 @@
 - (void)setPlaceIcon:(Place*)place
 {
     [self.imageView clear];
-    [self.imageView setImage:[UIImage imageNamed:@"default_s.png"]];
 
+    self.imageView.image = [UIImage imageNamed:@"default_s.png"];
+    
     if (![AppUtils isShowImage] ) {
         return;
     }
@@ -128,7 +130,10 @@
         // local files, read image locally
         NSString *iconPath = [[AppUtils getCityDir:[[AppManager defaultManager] getCurrentCityId]] stringByAppendingPathComponent:place.icon];
         PPDebug(@"place iconPath = %@", iconPath);
-        [self.imageView setImage:[UIImage imageWithContentsOfFile:iconPath]];
+        
+        UIImage *image = [[UIImage alloc] initWithContentsOfFile:iconPath];
+        [self.imageView setImage:image];
+        [image release];
     }
     else{
         [self.imageView showLoadingWheel];

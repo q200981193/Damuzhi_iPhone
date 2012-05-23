@@ -64,7 +64,11 @@
 
 - (void)dealloc
 {
+    [_placeList release];
+    [_allPlaceList release];
     [placeListController release];
+    [imageRedStartView release];
+    
     [placeListHolderView release];
     [distanceView release];
     [findAllPlaceButton release];
@@ -73,9 +77,8 @@
     [findShoppingButton release];
     [findEntertainmentButton release];
     [findRestaurantButton release];
-    [_placeList release];
-    [_allPlaceList release];
     [buttonHolderView release];
+
 #ifdef TEST_FOR_SIMULATE__LOCATION
     [testLocation release];
 #endif
@@ -180,6 +183,8 @@
 
 - (void)viewDidUnload
 {
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
     [self setPlaceListHolderView:nil];
     [self setDistanceView:nil];
     [self setFindAllPlaceButton:nil];
@@ -189,9 +194,9 @@
     [self setFindEntertainmentButton:nil];
     [self setFindRestaurantButton:nil];
     [self setButtonHolderView:nil];
+
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

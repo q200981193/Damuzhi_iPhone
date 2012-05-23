@@ -18,9 +18,10 @@
 {
     UIView *buttomView;
 }
+
 @property (retain, nonatomic) IBOutlet MKMapView *mapView;
 @property (retain, nonatomic) Place *place;
-@property (nonatomic, retain) NSMutableArray *placeList;
+@property (retain, nonatomic) NSMutableArray *placeList;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place;
 

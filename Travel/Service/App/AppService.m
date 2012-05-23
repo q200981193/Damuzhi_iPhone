@@ -111,6 +111,8 @@ static AppService* _defaultAppService = nil;
 
 - (void)loadAppData
 {
+    [AppUtils createAllNeededDir];
+
     [self copyDefaultAppDataFormBundle];
     [[AppManager defaultManager] loadAppData];
 

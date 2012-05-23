@@ -19,6 +19,9 @@
 #import "MapUtils.h"
 
 @interface PlaceListController () 
+{
+    BOOL _showMap;
+}
 
 @property (assign, nonatomic) BOOL canDelete;
 
@@ -28,7 +31,6 @@
 
 @implementation PlaceListController
 
-@synthesize locationLabel = _locationLabel;
 @synthesize mapHolderView = _mapHolderView;
 @synthesize superController = _superController;
 @synthesize mapViewController = _mapViewController;
@@ -39,8 +41,8 @@
 - (void)dealloc
 {
     [_mapViewController release];
-    [_locationLabel release];
     [_mapHolderView release];
+    
     [super dealloc];
 }
 
@@ -58,7 +60,6 @@
 {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -68,14 +69,7 @@
 {
     [super viewDidLoad];
     [self.tipsLabel setFont:[UIFont systemFontOfSize:13]]; 
-    
     [self.dataTableView setSeparatorColor:[UIColor clearColor]];
-
-    // create & add map view
-    self.mapHolderView.hidden = YES;
-    self.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
-    [self.mapViewController.view setFrame:self.mapHolderView.bounds];
-    [self.mapHolderView addSubview:self.mapViewController.view];
     [self updateViewByMode];
 }
 
@@ -98,7 +92,6 @@
 
 - (void)viewDidUnload
 {
-    [self setLocationLabel:nil];
     [self setMapHolderView:nil];
     [super viewDidUnload];
 }
@@ -116,11 +109,12 @@
 {
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
     controller.supportRefreshHeader = pullToRreflash;
-
     [controller.view setFrame:superView.bounds];
     controller.superController = superController;
-    controller.mapViewController.superController = superController;
     
+    controller.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
+    [controller.mapViewController showInController:superController superView:controller.mapHolderView placeList:placeList];
+
     [superView addSubview:controller.view];
     
     return controller;
@@ -132,6 +126,7 @@
 
     [self.dataTableView reloadData];
     [self.mapViewController setPlaces:list];
+    
     if ([list count] > 0) {
         [MapUtils gotoCenterRegion:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
     }
@@ -187,22 +182,24 @@
 		PPDebug(@"[WARN] cellForRowAtIndexPath, row(%d) > data list total number(%d)", row, count);
 		return nil;
 	}
-    
+
     Place* place = [dataList objectAtIndex:row];
     Class placeClass = [self getClassByPlace:place];
-    
+
     NSString *CellIdentifier = [self getCellIdentifierByClass:placeClass];
 	UITableViewCell *cell = [theTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
 	if (cell == nil) { 
 		cell = [placeClass createCell:self];
+
+        UIImageView *view = [[UIImageView alloc] init];
+        [view setImage:[UIImage strectchableImageName:@"li_bg.png"]];
+        [cell setBackgroundView:view];
+        [view release];
 	}
 	
     PlaceCell *placeCell = (PlaceCell*)cell;
     
-    UIImageView *view = [[UIImageView alloc] init];
-    [view setImage:[UIImage strectchableImageName:@"li_bg.png"]];
-    [placeCell setBackgroundView:view];
-    [view release];
     [placeCell setCellDataByPlace:place currentLocation:[[AppService defaultService] currentLocation]];
     
     placeCell.frame = CGRectMake(100, 0, placeCell.frame.size.width, placeCell.frame.size.height);
@@ -221,7 +218,7 @@
         placeCell.distanceLable.hidden = NO;
         placeCell.summaryView.frame = (CGRect){CGPointMake(0, 0), placeCell.summaryView.frame.size};
     }
-    
+
 	return cell;	
 }
 
@@ -230,6 +227,7 @@
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[dataList objectAtIndex:indexPath.row]];
     
     [self.superController.navigationController pushViewController:controller animated:YES];
+
     [controller release];
 }
 
@@ -280,5 +278,6 @@
     _showMap = NO;
     [self updateViewByMode];
 }
+
 
 @end
