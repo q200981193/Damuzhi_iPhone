@@ -17,6 +17,7 @@
 #import "UIImageUtil.h"
 #import "AppService.h"
 #import "MapUtils.h"
+#import "PPApplication.h"
 
 @interface PlaceListController () 
 {
@@ -40,10 +41,13 @@
 
 - (void)dealloc
 {
+    [GlobalGetImageCache() cancelLoadingObjects];
     [_mapViewController release];
     [_mapHolderView release];
     
     [super dealloc];
+    
+//    PPDebug(@"data table view retain count=%d", [dataTableView retainCount]);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

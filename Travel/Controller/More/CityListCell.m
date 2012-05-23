@@ -38,7 +38,6 @@
 - (void)dealloc {
     [_city release];
     [downloadProgressView release];
-    [downloadPersentLabel release];
     [downloadButton release];
     [onlineButton release];
     [cityNameLabel release];

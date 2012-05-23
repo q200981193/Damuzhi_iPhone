@@ -737,6 +737,7 @@
 - (void)addTelephoneView
 {
     UIView *telephoneView = [self createRowView:NSLS(@"电话: ") detail:[self.place.telephoneList componentsJoinedByString:@" "]];
+    telephoneView.tag = TAG_TELEPHONE_VIEW;
     
     if ([self.place.telephoneList count] != 0) {
         UIImageView *phoneImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 6, 29, 29)];
@@ -759,6 +760,8 @@
 - (void)addAddressView
 {
     UIView *addressView = [self createRowView:NSLS(@"地址: ") detail:[[_place addressList] componentsJoinedByString:@" "]];
+    addressView.tag = TAG_ADDRESS_VIEW;
+    
     int height = addressView.frame.size.height;
     
     UIImageView *mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, (height - 20)/2, 29, 29)];
@@ -782,11 +785,10 @@
 {
     NSString* websiteUrl = [self.place website];
     if ([websiteUrl length] > 0) {
-        UIView *websiteView = [dataScrollView viewWithTag:TAG_WEBSITE_VIEW];
-        websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
+        UIView *websiteView = [self createRowView:NSLS(@"网站: ") detail:[self.place website]];
         [dataScrollView addSubview:websiteView];
+        websiteView.tag = TAG_WEBSITE_VIEW;
         _detailHeight = _detailHeight + websiteView.frame.size.height;
-
     }
 }
 
@@ -806,18 +808,20 @@
 - (void)addBottomView
 {
     UIView *favouritesView = [[UIView alloc]initWithFrame:CGRectMake(0, _detailHeight, self.view.frame.size.width, 60)];
+    favouritesView.tag = TAG_FAVORITE_VIEW;
 
     favouritesView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bottombg.png"]];
     
     UIButton *favButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width-93)/2, 5, 93, 29)];
+    favButton.tag = TAG_FAVORITE_BUTTON;
     [favButton addTarget:self action:@selector(clickFavourite:) forControlEvents:UIControlEventTouchUpInside];
     favButton.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites.png"]];
     [favButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [favButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [favButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 18, 0, 0)];
-    [self updateAddFavoriteButton];
     [favouritesView addSubview:favButton];
     [favButton release];
+    
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((320-120)/2, 40, 120, 15)];
     label.tag = TAG_FAVORITE_COUNT_LABEL;
@@ -831,6 +835,8 @@
     
     [dataScrollView addSubview:favouritesView];
     [favouritesView release];
+    
+    [self updateAddFavoriteButton];
     
     _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
 }

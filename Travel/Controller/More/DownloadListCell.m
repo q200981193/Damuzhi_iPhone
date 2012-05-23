@@ -47,7 +47,6 @@
     [updateButton release];
     [deleteButton release];
     [dataSizeLabel release];
-//    [defaultLabel release];
     [_city release];
     
     [updateProgressView release];

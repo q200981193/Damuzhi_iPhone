@@ -223,26 +223,25 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
     };
     
     RemoteRequestHandler remoteHandler = ^NSArray *(int* resultCode) {
-        // TODO, send network request here
-        int listType = [self getListTypeByPlaceCategoryId:categoryId];
-        CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
-                                                               cityId:currentCityId
-                                                                 lang:LanguageTypeZhHans]; 
-        NSArray *list = nil;
-        
-        *resultCode = output.resultCode;
-        if (output.resultCode == ERROR_SUCCESS) {
-            @try {
-                TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
-                _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
-                list = [_onlinePlaceManager findPlacesByCategory:categoryId]; 
+            int listType = [self getListTypeByPlaceCategoryId:categoryId];
+            CommonNetworkOutput* output = [TravelNetworkRequest queryList:listType
+                                                                   cityId:currentCityId
+                                                                     lang:LanguageTypeZhHans]; 
+            NSArray *list = nil;
+            
+            *resultCode = output.resultCode;
+            if (output.resultCode == ERROR_SUCCESS) {
+                @try {
+                    TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
+                    _onlinePlaceManager.placeList = [[travelResponse placeList] listList];    
+                    list = [_onlinePlaceManager findPlacesByCategory:categoryId]; 
+                }
+                @catch (NSException *exception) {
+                    PPDebug(@"<findPlaces:%d> Caught %@%@", categoryId, [exception name], [exception reason]);
+                } 
             }
-            @catch (NSException *exception) {
-                PPDebug(@"<findPlaces:%d> Caught %@%@", categoryId, [exception name], [exception reason]);
-            } 
-        }
-        
-        return list;
+            
+            return list;
     };
     
     [self processLocalRemoteQuery:viewController

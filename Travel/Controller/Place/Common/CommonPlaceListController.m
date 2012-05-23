@@ -105,6 +105,12 @@
     [_filterHandler findAllPlaces:self];
 }
 
+- (void)clickBack:(id)sender
+{
+    [[SelectedItemsManager defaultManager] resetAllSelectedItems];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)setNavigationBarTitle
 {
     UILabel *categoryNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -8, 38, 20)];
