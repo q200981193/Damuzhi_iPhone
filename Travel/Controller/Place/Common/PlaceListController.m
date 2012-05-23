@@ -110,6 +110,7 @@
     PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
     controller.supportRefreshHeader = pullToRreflash;
     [controller.view setFrame:superView.bounds];
+    
     controller.superController = superController;
     
     controller.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
