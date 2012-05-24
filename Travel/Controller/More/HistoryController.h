@@ -15,7 +15,5 @@
 @interface HistoryController : PPViewController
 
 @property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
-@property (retain, nonatomic) NSArray *placeList;
-@property (retain, nonatomic) PlaceListController *placeListController;
 
 @end

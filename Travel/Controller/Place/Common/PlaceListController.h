@@ -29,17 +29,12 @@
 @interface PlaceListController : PPTableViewController <CityOverviewServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet UIView *mapHolderView;
-@property (retain, nonatomic) PlaceMapViewController *mapViewController;
-
-@property (assign, nonatomic) UIViewController *superController;
 @property (assign, nonatomic) id<DeletePlaceDelegate> deletePlaceDelegate;
 @property (assign, nonatomic) id<PullToRefrshDelegate> pullDownDelegate;
 
-- (void)setAndReloadPlaceList:(NSArray*)list;
-+ (PlaceListController*)createController:(NSArray*)placeList
-                               superView:(UIView*)superView
-                         superController:(PPViewController*)superController
-                          pullToRreflash:(BOOL)pullToRreflash;
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController;
+- (void)showInView:(UIView*)superView;
+- (void)setPlaceList:(NSArray*)placeList;
 
 - (void)switchToMapMode;
 - (void)switchToListMode;

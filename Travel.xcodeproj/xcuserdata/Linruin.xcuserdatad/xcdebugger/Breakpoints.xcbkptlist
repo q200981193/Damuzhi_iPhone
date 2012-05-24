@@ -59,25 +59,12 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Travel/Controller/Place/Common/CommonPlaceListController.m"
-         timestampString = "359455673.082975"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "147"
-         endingLineNumber = "147"
-         landmarkName = "-viewDidUnload"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Travel/Controller/More/HistoryController.m"
-         timestampString = "359454211.369198"
+         timestampString = "359549057.918376"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "23"
-         endingLineNumber = "23"
+         startingLineNumber = "26"
+         endingLineNumber = "26"
          landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
@@ -91,19 +78,6 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "54"
          endingLineNumber = "54"
-         landmarkName = "-dealloc"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Travel/Controller/Common/CommonWebController.m"
-         timestampString = "359455023.408595"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "84"
-         endingLineNumber = "84"
          landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,12 +112,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Travel/Controller/Favorite/FavoriteController.m"
-         timestampString = "359455267.236015"
+         timestampString = "359549057.918376"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "53"
-         endingLineNumber = "53"
+         startingLineNumber = "72"
+         endingLineNumber = "72"
          landmarkName = "-dealloc"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Travel/Controller/More/HistoryController.m"
+         timestampString = "359549087.755652"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
+         landmarkName = "-clickDelete:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Travel/Controller/Favorite/FavoriteController.m"
+         timestampString = "359549179.408879"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "238"
+         endingLineNumber = "238"
+         landmarkName = "-deletedPlace:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Travel/Controller/Place/Common/PlaceListController.m"
+         timestampString = "359549185.537248"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "248"
+         endingLineNumber = "248"
+         landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -21,6 +21,25 @@
 
 @interface FavoriteController ()
 
+@property (assign, nonatomic) BOOL canDelete;
+
+@property (retain, nonatomic) NSArray *showMyList;
+@property (retain, nonatomic)  NSArray *showTopList;
+@property (retain, nonatomic) PlaceListController *myFavPlaceListController;
+@property (retain, nonatomic) PlaceListController *topFavPlaceListController;
+
+@property (retain, nonatomic) NSArray *myAllFavoritePlaceList;
+@property (retain, nonatomic) NSArray *topAllFavoritePlaceList;
+@property (retain, nonatomic) NSArray *topSpotFavoritePlaceList;
+@property (retain, nonatomic) NSArray *topHotelFavoritePlaceList;
+@property (retain, nonatomic) NSArray *topRestaurantFavoritePlaceList;
+@property (retain, nonatomic) NSArray *topShoppingFavoritePlaceList;
+@property (retain, nonatomic) NSArray *topEntertainmentFavoritePlaceList;
+
+@property (retain, nonatomic) UIButton *myFavoriteButton;
+@property (retain, nonatomic) UIButton *topFavoriteButton;
+@property (retain, nonatomic) UIButton *deleteButton;
+
 - (void)createRightBarButton;
 - (void)clickMyFavorite:(id)sender;
 - (void)clickTopFavorite:(id)sender;
@@ -95,6 +114,12 @@
     }
     
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
+    
+    self.myFavPlaceListController = [[PlaceListController alloc] initWithSuperNavigationController:self.navigationController];
+    [myFavPlaceListController showInView:myFavPlaceListView];
+    
+    self.topFavPlaceListController = [[PlaceListController alloc] initWithSuperNavigationController:self.navigationController];
+    [topFavPlaceListController showInView:myFavPlaceListView];
 }
 
 - (void)showPlaces{
@@ -102,13 +127,7 @@
         self.myFavPlaceListView.hidden = NO;
         self.topFavPlaceListView.hidden = YES;
         
-        if (self.myFavPlaceListController == nil) {
-            self.myFavPlaceListController = [PlaceListController createController:self.showMyList 
-                                                                        superView:myFavPlaceListView
-                                                                  superController:self
-                                                                   pullToRreflash:NO];
-        }
-        [self.myFavPlaceListController setAndReloadPlaceList:self.showMyList];
+        [self.myFavPlaceListController setPlaceList:self.showMyList];
         if ([self.showMyList count] == 0 ) {
             [self.myFavPlaceListController hideTipsOnTableView];
             [self.myFavPlaceListController showTipsOnTableView:NSLS(@"暂无收藏信息")];
@@ -119,14 +138,7 @@
     else {
         self.myFavPlaceListView.hidden = YES;
         self.topFavPlaceListView.hidden = NO;
-        
-        if (self.topFavPlaceListController == nil) {
-            self.topFavPlaceListController = [PlaceListController createController:self.showTopList 
-                                                                        superView:topFavPlaceListView
-                                                                  superController:self
-                                                                    pullToRreflash:NO];
-        }
-        [self.topFavPlaceListController setAndReloadPlaceList:self.showTopList];
+        [self.topFavPlaceListController setPlaceList:self.showTopList];
     }
 }
 
@@ -285,14 +297,6 @@
 {
     canDelete = !canDelete;
     [self.myFavPlaceListController canDeletePlace:canDelete delegate:self];
-    
-//    UIButton *button = (UIButton*)sender;
-//    if (canDelete) {
-//        [button setTitle:NSLS(@"完成") forState:UIControlStateNormal];
-//    }
-//    else {
-//        [button setTitle:NSLS(@"删除") forState:UIControlStateNormal];
-//    }
 }
 
 - (void)clickMyFavorite:(id)sender

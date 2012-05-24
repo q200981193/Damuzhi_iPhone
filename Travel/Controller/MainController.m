@@ -100,7 +100,6 @@
 - (void)viewDidLoad
 {
     [self setBackgroundImageName:@"index_bg.png"];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage strectchableImageName:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.

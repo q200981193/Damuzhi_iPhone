@@ -147,7 +147,7 @@
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
              ;            
-            UIButton *customizeView;
+//            UIButton *customizeView;
             
             //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
             if (placeAnnotation.place == _place )
@@ -173,7 +173,7 @@
                 customPinView.rightCalloutAccessoryView = rightButton;
                 
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
-                customizeView.tag = tag;
+                customPinView.tag = tag;
 
                 return customPinView;
             }

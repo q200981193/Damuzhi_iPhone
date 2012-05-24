@@ -18,39 +18,9 @@
 #import "PPNetworkRequest.h"
 #import "AppService.h"
 #import <CoreLocation/CoreLocation.h>
+#import "UIUtils.h"
 
-//#define TEST_FOR_SIMULATE__LOCATION
-
-
-@interface NearbyController ()
-
-#ifdef TEST_FOR_SIMULATE__LOCATION
-@property (retain, nonatomic) CLLocation *testLocation;
-#endif
-
-@end
-
-
-@implementation NearbyController
-@synthesize imageRedStartView;
-@synthesize findAllPlaceButton;
-@synthesize findSpotButton;
-@synthesize findHotelButton;
-@synthesize findShoppingButton;
-@synthesize findEntertainmentButton;
-@synthesize findRestaurantButton;
-@synthesize buttonHolderView;
-@synthesize placeListController;
-@synthesize placeListHolderView;
-@synthesize distanceView;
-@synthesize distance=_distance;
-@synthesize categoryId = _categoryId;
-@synthesize showMap = _showMap;
-@synthesize placeList = _placeList;
-@synthesize allPlaceList = _allPlaceList;
-#ifdef TEST_FOR_SIMULATE__LOCATION
-@synthesize testLocation;
-#endif
+#define TEST_FOR_SIMULATE__LOCATION
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -62,37 +32,76 @@
 #define DISTANCE_5KM 5000
 #define DISTANCE_10KM 10000
 
+#define TAG_RED_START_IMAGE_VIEW 789
+
+@interface NearbyController ()
+
+@property (assign, nonatomic) int categoryId;
+@property (assign, nonatomic) int distance;
+@property (retain, nonatomic) NSArray *allPlaceList;
+@property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) PlaceListController* placeListController;
+
+//@property (retain, nonatomic) UIImageView *imageRedStartView;
+
+#ifdef TEST_FOR_SIMULATE__LOCATION
+@property (retain, nonatomic) CLLocation *testLocation;
+#endif
+
+- (void)initCategoryBtnsTag;
+- (void)setSelectedBtn:(int)categoryId;
+- (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance;
+
+@end
+
+@implementation NearbyController
+
+@synthesize categoryId = _categoryId;
+@synthesize distance = _distance;
+@synthesize allPlaceList = _allPlaceList;
+@synthesize placeList = _placeList;
+@synthesize placeListController = _placeListController;
+
+//@synthesize imageRedStartView;
+
+@synthesize distanceView;
+@synthesize categoryBtnsHolderView;
+@synthesize allPlaceButton;
+@synthesize spotButton;
+@synthesize hotelButton;
+@synthesize shoppingButton;
+@synthesize entertainmentButton;
+@synthesize restaurantButton;
+@synthesize placeListHolderView;
+
+#ifdef TEST_FOR_SIMULATE__LOCATION
+@synthesize testLocation;
+#endif
+
+#pragma mark - View lifecycle
+
 - (void)dealloc
 {
     [_placeList release];
     [_allPlaceList release];
-    [placeListController release];
-    [imageRedStartView release];
+    [_placeListController release];
     
-    [placeListHolderView release];
+//    [imageRedStartView release];
     [distanceView release];
-    [findAllPlaceButton release];
-    [findSpotButton release];
-    [findHotelButton release];
-    [findShoppingButton release];
-    [findEntertainmentButton release];
-    [findRestaurantButton release];
-    [buttonHolderView release];
+    [categoryBtnsHolderView release];
+    [allPlaceButton release];
+    [spotButton release];
+    [hotelButton release];
+    [shoppingButton release];
+    [entertainmentButton release];
+    [restaurantButton release];
+    [placeListHolderView release];
 
 #ifdef TEST_FOR_SIMULATE__LOCATION
     [testLocation release];
 #endif
 
     [super dealloc];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,99 +113,65 @@
 
 }
 
-- (void)findRequestDone:(int)result placeList:(NSArray*)placeList
-{
-    if (result != ERROR_SUCCESS) {
-        [self popupMessage:@"网络弱，数据加载失败" title:nil];
-    }
-    self.allPlaceList = placeList;
-    
-    self.placeList = [self filterByDistance:_allPlaceList distance:_distance];
-    [self createAndReloadPlaceListController];
-}
-
-- (void)createAndReloadPlaceListController
-{        
-    if (self.placeListController == nil){
-        self.placeListController = [PlaceListController createController:_placeList 
-                                                               superView:placeListHolderView
-                                                         superController:self
-                                                          pullToRreflash:YES];
-        [placeListController setPullDownDelegate:self];
-    }
-    
-    [self.placeListController setAndReloadPlaceList:_placeList];
-}
-
-#pragma mark - View lifecycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.title = [NSString stringWithFormat:NSLS(@"我的附近(%d)"), [_placeList count]];
+    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
-    
-    self.title = NSLS(@"我的附近");
     
     [self setNavigationRightButton:NSLS(@"地图") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickMapBtn:)];
     
-    imageRedStartView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]];
+    UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
+    [mapBtn setTitle:@"地图" forState:UIControlStateNormal];
+    [mapBtn setTitle:@"列表" forState:UIControlStateSelected];
     
+    UIImageView *imageRedStartView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]] autorelease];
+    imageRedStartView.tag = TAG_RED_START_IMAGE_VIEW;
     [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
-
     [distanceView addSubview:imageRedStartView];
     
-    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
+    [categoryBtnsHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
     
-    // Do any additional setup after loading the view from its nib.
     self.distance = DISTANCE_500M;
     self.categoryId = PlaceCategoryTypePlaceAll;
         
+    [self initCategoryBtnsTag];
     [self setSelectedBtn:_categoryId];
+    
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
+    [_placeListController showInView:placeListHolderView];
+    _placeListController.pullDownDelegate = self;
     
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
     
 #ifdef TEST_FOR_SIMULATE__LOCATION
     self.testLocation = [[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease];
+    [self addDoubleTapToView:self.view];
 #endif
-}
-
-- (void)setSelectedBtn:(int)categoryId
-{
-    for (UIView *subView in [buttonHolderView subviews]) {
-        if (![subView isKindOfClass:[UIButton class]]) {
-            return;
-        }
-        
-        UIButton *button = (UIButton*)subView;
-        if (button.tag == categoryId) {
-            button.selected = YES;
-        }
-        else
-        {
-            button.selected = NO;
-        }
-    }
 }
 
 - (void)viewDidUnload
 {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    [self setPlaceListHolderView:nil];
+    
     [self setDistanceView:nil];
-    [self setFindAllPlaceButton:nil];
-    [self setFindSpotButton:nil];
-    [self setFindHotelButton:nil];
-    [self setFindShoppingButton:nil];
-    [self setFindEntertainmentButton:nil];
-    [self setFindRestaurantButton:nil];
-    [self setButtonHolderView:nil];
+    [self setCategoryBtnsHolderView:nil];
+    [self setAllPlaceButton:nil];
+    [self setSpotButton:nil];
+    [self setHotelButton:nil];
+    [self setRestaurantButton:nil];
+    [self setShoppingButton:nil];
+    [self setEntertainmentButton:nil];
+    [self setPlaceListHolderView:nil];
 
     [super viewDidUnload];
-
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -205,31 +180,29 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)didPullDown
-{
-    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
-}
-
 #ifdef TEST_FOR_SIMULATE__LOCATION
 UITextField * alertTextField;
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)addDoubleTapToView:(UIView*)view
 {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     tapGesture.numberOfTapsRequired = 2;
-    [self.view addGestureRecognizer:tapGesture];
+    [view addGestureRecognizer:tapGesture];
     [tapGesture release];
 }
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"输入经纬度数值" message:@"格式:22.254087 113.905029" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        alertTextField = [alert textFieldAtIndex:0];
-        alertTextField.keyboardType = UIKeyboardTypeDefault;
-        alertTextField.placeholder = @"";
-        [alert show];
-        [alert release];  
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"输入经纬度数值" message:@"格式:113.905029 22.254087 " delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+////        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//        alertTextField = [alert textFieldAtIndex:0];
+//        alertTextField.keyboardType = UIKeyboardTypeDefault;
+//        alertTextField.placeholder = @"";
+//        [alert show];
+//        [alert release];  
+        
+        UIAlertView* textAlertView = [UIUtils showTextView:@"输入经纬度数值" okButtonTitle:@"确定" cancelButtonTitle:@"取消" delegate:self];
+        alertTextField = (UITextField*)[textAlertView viewWithTag:kAlertTextViewTag];
     }
 }
 
@@ -240,12 +213,20 @@ UITextField * alertTextField;
             break;
         case 1:{
             NSMutableString *text = [[NSMutableString alloc] initWithString:[alertTextField text]];
-            NSString *latitude = [[text componentsSeparatedByString:@" "] objectAtIndex:0];
-            NSString *logtitude = [[text componentsSeparatedByString:@" "] objectAtIndex:1];
-            double lat = [latitude doubleValue];
-            double log = [logtitude doubleValue];
-             testLocation = [[CLLocation alloc] initWithLatitude:lat longitude:log];
+            NSArray *array = [text componentsSeparatedByString:@" "];
+            if ([array count] <2) {
+                UIAlertView* textAlertView = [UIUtils showTextView:@"输入错误,请重新输入经纬度" okButtonTitle:@"确定" cancelButtonTitle:@"取消" delegate:self];
+                alertTextField = (UITextField*)[textAlertView viewWithTag:kAlertTextViewTag];
+                return;
+            }
             
+            NSString *logtitude= [array objectAtIndex:0];
+            NSString *latitude = [array objectAtIndex:1];
+            double log = [logtitude doubleValue];
+            double lat = [latitude doubleValue];
+            self.testLocation = [[[CLLocation alloc] initWithLatitude:lat longitude:log] autorelease];
+            
+            [[AppService defaultService] setCurrentLocation:testLocation];
         }
             break;  
         default:
@@ -264,9 +245,6 @@ UITextField * alertTextField;
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
         
-#ifdef TEST_FOR_SIMULATE__LOCATION
-        [[AppService defaultService] setCurrentLocation:testLocation];
-#endif
         CLLocation *myLocation = [[AppService defaultService] currentLocation];
 
         CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
@@ -283,39 +261,33 @@ UITextField * alertTextField;
 
 - (void )clickMapBtn:(id)sender
 {
+    UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
+    mapBtn.selected = !mapBtn.selected;
+    
+    UIViewAnimationTransition animationTransition = (mapBtn.selected ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight);
+    
+    [self showSwitchAnimation:animationTransition];
+    
+    if (mapBtn.selected){
+        [self.placeListController switchToMapMode];
+    }
+    else{
+        [self.placeListController switchToListMode];
+    }
+}
+
+- (void)showSwitchAnimation:(UIViewAnimationTransition)animationTransition
+{
     [UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.75];
 	
-	[UIView setAnimationTransition:(_showMap ?
-									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
+	[UIView setAnimationTransition:animationTransition
 						   forView:self.view cache:YES];
+    
     [UIView commitAnimations];
-    
-    if (_showMap){
-        [self.placeListController switchToListMode];
-    }
-    else{
-        [self.placeListController switchToMapMode];
-    }
-    
-    _showMap = !_showMap;
-    [self updateModeButton];
 }
 
-
-- (void)updateModeButton
-{
-    // set button text by _showMap flag
-    if (_showMap) {
-        UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
-        [mapBtn setTitle:@"列表" forState:UIControlStateNormal];
-    } else {
-        UIButton *mapBtn = (UIButton *)self.navigationItem.rightBarButtonItem.customView;
-        [mapBtn setTitle:@"地图" forState:UIControlStateNormal];
-    }
-}
-
-- (void)moveImageView:(UIImageView *)imageView toCenter:(CGPoint)center needAnimation:(BOOL)need
+- (void)moveImageView:(UIView *)imageView toCenter:(CGPoint)center needAnimation:(BOOL)need
 {
     if (need) {
         [UIImageView beginAnimations:nil context:nil];
@@ -330,7 +302,11 @@ UITextField * alertTextField;
 - (IBAction)click500M:(id)sender {
     if (_distance != DISTANCE_500M) {
         self.distance = DISTANCE_500M;
-        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_500M needAnimation:YES];
+        
+        [self moveImageView:[distanceView viewWithTag:TAG_RED_START_IMAGE_VIEW]
+                   toCenter:POINT_OF_DISTANCE_500M 
+              needAnimation:YES];
+        
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
     }
 }
@@ -338,7 +314,11 @@ UITextField * alertTextField;
 - (IBAction)click1K:(id)sender {
     if (_distance != DISTANCE_1KM) {
         self.distance = DISTANCE_1KM;
-        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_1KM needAnimation:YES];
+        
+        [self moveImageView:[distanceView viewWithTag:TAG_RED_START_IMAGE_VIEW]
+                   toCenter:POINT_OF_DISTANCE_1KM 
+              needAnimation:YES];
+        
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
     }   
 }
@@ -346,7 +326,11 @@ UITextField * alertTextField;
 - (IBAction)click5K:(id)sender {
     if (_distance != DISTANCE_5KM) {
         self.distance = DISTANCE_5KM;
-        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_5KM needAnimation:YES];
+        
+        [self moveImageView:[distanceView viewWithTag:TAG_RED_START_IMAGE_VIEW] 
+                   toCenter:POINT_OF_DISTANCE_5KM 
+              needAnimation:YES];
+        
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self];  
     }    
 }
@@ -354,7 +338,11 @@ UITextField * alertTextField;
 - (IBAction)click10K:(id)sender {
     if (_distance != DISTANCE_10KM) {
         self.distance = DISTANCE_10KM;
-        [self moveImageView:imageRedStartView toCenter:POINT_OF_DISTANCE_10KM needAnimation:YES];
+        
+        [self moveImageView:[distanceView viewWithTag:TAG_RED_START_IMAGE_VIEW]
+                   toCenter:POINT_OF_DISTANCE_10KM 
+              needAnimation:YES];
+        
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
     }
 }
@@ -405,6 +393,55 @@ UITextField * alertTextField;
         [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
     }
+}
+
+- (void)initCategoryBtnsTag
+{
+    allPlaceButton.tag = PlaceCategoryTypePlaceAll;
+    spotButton.tag = PlaceCategoryTypePlaceSpot;
+    hotelButton.tag = PlaceCategoryTypePlaceHotel;
+    restaurantButton.tag = PlaceCategoryTypePlaceRestraurant;
+    shoppingButton.tag = PlaceCategoryTypePlaceShopping;
+    entertainmentButton.tag = PlaceCategoryTypePlaceEntertainment;
+}
+
+- (void)setSelectedBtn:(int)categoryId
+{
+    for (UIView *subView in [categoryBtnsHolderView subviews]) {
+        if (![subView isKindOfClass:[UIButton class]]) {
+            return;
+        }
+        
+        UIButton *button = (UIButton*)subView;
+        if (button.tag == categoryId) {
+            button.selected = YES;
+        }
+        else
+        {
+            button.selected = NO;
+        }
+    }
+}
+
+- (void)findRequestDone:(int)result placeList:(NSArray*)placeList
+{
+    if (result != ERROR_SUCCESS) {
+        [self popupMessage:@"网络弱，数据加载失败" title:nil];
+    }
+    
+    self.allPlaceList = placeList;
+    self.placeList = [self filterByDistance:_allPlaceList distance:_distance];
+    
+    // Update place count in navigation bar.
+    self.title = [NSString stringWithFormat:NSLS(@"我的附近(%d)"), [_placeList count]];
+    
+    // Reload place list.
+    [_placeListController setPlaceList:_placeList];
+}
+
+- (void)didPullDown
+{
+    [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
 }
 
 @end

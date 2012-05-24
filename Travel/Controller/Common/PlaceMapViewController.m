@@ -55,41 +55,31 @@
 #import "AppUtils.h"
 
 @interface PlaceMapViewController ()
+
+@property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) NSArray* placeList;
+@property (nonatomic, assign) UINavigationController* superNavigationController;
+
+- (void)loadAllAnnotations;
+
 @end
 
 @implementation PlaceMapViewController
 
 @synthesize mapView = _mapView;
 @synthesize placeList = _placeList;
-@synthesize superController = _superController;
+@synthesize superNavigationController = _superNavigationController;
 
-- (void)loadAllAnnotations
-{    
-    NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
-    if (_placeList && _placeList.count > 0) {
-        for (Place *place in _placeList) {
-            if ([MapUtils isValidLatitude:[place latitude] Longitude:[place longitude]]) {
-                PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
-                [mapAnnotations addObject:placeAnnotation];
-                [placeAnnotation release];
-            }
-        } 
-    }
-    
-    [_mapView removeAnnotations:_mapView.annotations];
-    [_mapView addAnnotations:mapAnnotations];
-    [mapAnnotations release];
-}
+
 
 - (void)viewDidLoad
 {    
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    self.mapView.delegate = self;
-    self.mapView.mapType = MKMapTypeStandard;   
-    self.mapView.showsUserLocation = NO;
+    _mapView.delegate = self;
+    _mapView.mapType = MKMapTypeStandard;   
+    _mapView.showsUserLocation = NO;
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
@@ -109,39 +99,68 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-    
 }
 
 - (void)dealloc 
 {
     [_mapView release];
     [_placeList release];
+    [_superNavigationController release];
     [super dealloc];
 }
 
-- (void)showInController:(UIViewController*)superController
-               superView:(UIView*)superView
-               placeList:(NSArray*)placeList
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController
+{
+    self = [super init];
+    if (self) {
+        self.superNavigationController = superNavigationController;
+    }
+    
+    return self;
+}
+
+- (void)showInView:(UIView*)superView 
 {    
     [self.view setFrame:superView.bounds];
     [superView addSubview:self.view];
+}
+
+- (void)setPlaces:(NSArray*)placeList
+{
+    if (placeList == _placeList) {
+        return;
+    }
     
-    self.superController = superController;
     self.placeList = placeList;
+
+    if ([_placeList count] != 0) {
+        [MapUtils gotoCenterRegion:[_placeList objectAtIndex:0] mapView:self.mapView];
+    }
     
     [self loadAllAnnotations];
 }
 
-
-- (void)setPlaces:(NSArray*)placeList
-{
-    self.placeList = placeList;
-    [self loadAllAnnotations];
+- (void)loadAllAnnotations
+{    
+    NSMutableArray *mapAnnotations = [[NSMutableArray alloc] init];
+    if (_placeList && _placeList.count > 0) {
+        for (Place *place in _placeList) {
+            if ([MapUtils isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+                PlaceMapAnnotation *placeAnnotation = [[PlaceMapAnnotation alloc]initWithPlace:place];
+                [mapAnnotations addObject:placeAnnotation];
+                [placeAnnotation release];
+            }
+        } 
+    }
+    
+    [_mapView removeAnnotations:_mapView.annotations];
+    [_mapView addAnnotations:mapAnnotations];
+    [mapAnnotations release];
 }
 
 - (void)showUserLocation:(BOOL)isShow
 {
-    self.mapView.ShowsUserLocation = isShow;
+    _mapView.ShowsUserLocation = isShow;
 }
 
 #pragma mark -
@@ -153,7 +172,7 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[_placeList objectAtIndex:index]];
-    [self.superController.navigationController pushViewController:controller animated:YES];
+    [_superNavigationController pushViewController:controller animated:YES];
     [controller release];
 }
 

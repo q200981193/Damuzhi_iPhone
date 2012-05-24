@@ -21,7 +21,7 @@
                     responseHandler:(TravelNetworkResponseBlock)responseHandler
                        outputFormat:(int)outputFormat
                              output:(CommonNetworkOutput*)output
-{    
+{  
     NSURL* url = nil;    
     if (constructURLHandler != NULL)
         url = [NSURL URLWithString:[constructURLHandler(baseURL) stringByURLEncode]];
