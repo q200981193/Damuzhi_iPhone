@@ -29,7 +29,7 @@
 - (IBAction)clickTraveGuideButton:(id)sender;
 - (IBAction)clickNearbyButton:(id)sender;
 - (IBAction)clickMoreButton:(id)sender;
--(void) clickTitle:(id)sender;
+- (void) clickTitle:(id)sender;
 - (IBAction)clickFavorite:(id)sender;
 - (IBAction)clickShare:(id)sender;
 

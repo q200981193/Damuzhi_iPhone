@@ -62,8 +62,8 @@
 @property (retain, nonatomic) IBOutlet UIView *serviceHolder;
 @property (retain, nonatomic) Place *place;
 @property (retain, nonatomic) NSArray *nearbyPlaceList;
+@property (retain, nonatomic) NearByRecommendController* nearbyRecommendController;
 @property (assign, nonatomic) id<CommonPlaceDetailDataSourceProtocol> handler;
-
 @property (assign, nonatomic) float detailHeight;
 
 - (IBAction)clickHelpButton:(id)sender;

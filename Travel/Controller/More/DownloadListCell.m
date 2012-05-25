@@ -23,7 +23,6 @@
 @synthesize updateButton;
 @synthesize deleteButton;
 @synthesize dataSizeLabel;
-//@synthesize defaultLabel;
 @synthesize updateProgressView;
 @synthesize updatePercentLabel;
 @synthesize pauseBtn;

@@ -19,11 +19,4 @@
 @property (retain, nonatomic) IBOutlet UIView *myFavPlaceListView;
 @property (retain, nonatomic) IBOutlet UIView *topFavPlaceListView;
 
-//- (IBAction)clickAll:(id)sender;
-//- (IBAction)clickSpot:(id)sender;
-//- (IBAction)clickHotel:(id)sender;
-//- (IBAction)clickRestaurant:(id)sender;
-//- (IBAction)clickShopping:(id)sender;
-//- (IBAction)clickEntertainment:(id)sender;
-
 @end

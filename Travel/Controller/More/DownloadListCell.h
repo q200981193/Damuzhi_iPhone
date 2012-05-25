@@ -30,7 +30,6 @@
 @property (retain, nonatomic) IBOutlet UIButton *updateButton;
 @property (retain, nonatomic) IBOutlet UIButton *deleteButton;
 @property (retain, nonatomic) IBOutlet UILabel *dataSizeLabel;
-//@property (retain, nonatomic) IBOutlet UILabel *defaultLabel;
 @property (retain, nonatomic) IBOutlet UIProgressView *updateProgressView;
 @property (retain, nonatomic) IBOutlet UILabel *updatePercentLabel;
 @property (retain, nonatomic) IBOutlet UIButton *pauseBtn;

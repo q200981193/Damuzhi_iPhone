@@ -117,10 +117,10 @@
 
     self.selectedItems = [[SelectedItemsManager defaultManager] getSelectedItems:[_filterHandler getCategoryId]];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDownDelegate:self] autorelease];
+        
     [_placeListController showInView:_placeListHolderView];
-    _placeListController.pullDownDelegate = self;
-    
+
     [_filterHandler findAllPlaces:self];
 }
 

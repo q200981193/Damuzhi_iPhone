@@ -43,8 +43,8 @@
         }
     } 
     
-    [self.mapView removeAnnotations:mapView.annotations];
-    [self.mapView addAnnotations:mapAnnotations];
+    [mapView removeAnnotations:mapView.annotations];
+    [mapView addAnnotations:mapAnnotations];
     [mapAnnotations release];
 }
 
@@ -53,12 +53,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.mapView.ShowsUserLocation = YES;
+    mapView.ShowsUserLocation = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    self.mapView.ShowsUserLocation = NO;
+    mapView.ShowsUserLocation = NO;
 }
 
 - (void)viewDidLoad
@@ -74,6 +74,7 @@
     
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard; 
+//    mapView.ShowsUserLocation = YES;
     
     MKCoordinateSpan span = MKCoordinateSpanMake(0.0, 0.0);
     [MapUtils setMapSpan:mapView span:span];    
@@ -90,6 +91,12 @@
                                      viewController:self];
 }
 
+//- (void)clickBack:(id)sender
+//{
+//    mapView.showsUserLocation = NO;
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
+
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
     [_placeList addObject:_place];
@@ -97,17 +104,15 @@
     for (Place *place in placeList) {
         [_placeList addObject:place];
     }
-    
     [self loadAllAnnotations];
 }
 
 - (void)dealloc
 {
-    [_placeList release];
-    [_place release];
+    PPRelease(_placeList);
+    PPRelease(_place);
     PPRelease(mapView);
-//    [mapView release];
-//    [annotationToSelect release];
+    
     [super dealloc];
 }
 
@@ -117,9 +122,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     mapView = nil;
-//    annotationToSelect = nil;
-    _place = nil;
-    _placeList = nil;
 }
 
 //The event handling method
@@ -158,9 +160,7 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-             ;            
-//            UIButton *customizeView;
-            
+        
             //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
             if (placeAnnotation.place == _place )
             {
@@ -181,17 +181,15 @@
                 customPinView.tag = tag;
                 
                 [theMapView selectAnnotation:annotation animated:YES];
-                
                 return customPinView;
             }
             else
-            {                
-                
+            {              
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
                 [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
-
             }
+        
             return annotationView;
         }
         else
@@ -201,7 +199,7 @@
         return pinView;
         
     }
-    
+
     return nil;
 }
 

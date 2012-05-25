@@ -68,6 +68,8 @@
 @synthesize serviceHolder;
 @synthesize handler;
 @synthesize detailHeight = _detailHeight;
+@synthesize nearbyRecommendController = _nearbyRecommendController;
+
 
 - (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace
 {
@@ -100,6 +102,7 @@
     self = [super init];
     if (self) {
         self.place = place;    
+        self.handler = [self createPlaceHandler:place]; 
     }
     
     return self;
@@ -155,9 +158,15 @@
 
 - (void)clickMap:(id)sender
 {
-    NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+    if (_nearbyRecommendController == nil) {
+            self.nearbyRecommendController = [[[NearByRecommendController alloc] initWithPlace:_place] autorelease];
+    }
+
+    [self.navigationController pushViewController:_nearbyRecommendController animated:YES];
+    
+//    NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
+//    [self.navigationController pushViewController:controller animated:YES];
+//    PPRelease(controller);
 }
 
 - (void)clickTelephone:(id)sender
@@ -854,9 +863,8 @@
     [self setNavigationRightButton:NSLS(@"") 
                          imageName:@"map_po.png" 
                             action:@selector(clickMap:)];
-    [self setTitle:[self.place name]];
     
-    self.handler = [self createPlaceHandler:_place];
+    [self setTitle:[self.place name]];
     
     [self addHeaderView];
     
@@ -864,7 +872,7 @@
     
     _detailHeight = imageHolderView.frame.size.height;
     
-    [self.handler addDetailViewsToController:self WithPlace:_place];
+    [self.handler addDetailViewsToController:self WithPlace:self.place];
         
     [self addNearbyView];
     
@@ -874,7 +882,7 @@
     
     [self addWebsiteView];
     
-    dataScrollView.backgroundColor = [UIColor whiteColor];
+    dataScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"detail_bg.png"]];
         
     [self addBottomView];
     
@@ -912,10 +920,9 @@
     [praiseIcon2 release];
     [praiseIcon3 release];
     [serviceHolder release];
-    
     [_place release];
     [_nearbyPlaceList release];
-
+    [_nearbyRecommendController release];
     [super dealloc];
 }
 @end

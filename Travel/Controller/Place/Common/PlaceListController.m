@@ -77,7 +77,7 @@
     
     self.mapViewController = [[[PlaceMapViewController alloc] initWithSuperNavigationController:_superNavigationController] autorelease];
     [_mapViewController showInView:_mapHolderView];
-    
+
     [self switchToListMode];
 }
 
@@ -110,20 +110,18 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
+                  wantPullDownToRefresh:(BOOL)wantPullDownToRefresh 
+                       pullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate
 {
     self = [super init];
     if (self) {
         self.superNavigationController = superNavigationController;
+        self.supportRefreshHeader = wantPullDownToRefresh;
+        self.pullDownDelegate = pullDownDelegate;
     }
     
     return self;
-}
-
-- (void)setPullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate
-{
-    self.supportRefreshHeader = YES;
-    _pullDownDelegate = pullDownDelegate;
 }
 
 - (void)showInView:(UIView*)superView 
