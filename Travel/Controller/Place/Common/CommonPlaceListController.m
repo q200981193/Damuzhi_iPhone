@@ -62,7 +62,9 @@
 - (id)initWithFilterHandler:(NSObject<PlaceListFilterProtocol>*)handler
 {
     self = [super init];
-    self.filterHandler = handler;
+    if (self) {
+        self.filterHandler = handler;
+    }
         
     return self;
 }
