@@ -83,6 +83,8 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.028, 0.028);
+    [MapUtils setMapSpan:_mapView span:span];
 }
 
 - (void)viewDidUnload
@@ -131,8 +133,7 @@
     self.placeList = placeList;
 
     if ([_placeList count] != 0) {
-        MKCoordinateSpan span = MKCoordinateSpanMake(0.028, 0.028);
-        [MapUtils gotoLocation:[_placeList objectAtIndex:0] mapView:self.mapView span:span];
+        [MapUtils gotoLocation:_mapView place:[_placeList objectAtIndex:0]];
     }
     
     [self loadAllAnnotations];

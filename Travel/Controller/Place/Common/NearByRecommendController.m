@@ -75,6 +75,10 @@
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard; 
     
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.0, 0.0);
+    [MapUtils setMapSpan:mapView span:span];    
+    [MapUtils gotoLocation:mapView place:_place];
+    
     self.placeList = [[[NSMutableArray alloc] init] autorelease];
     
     // Find places nearby.

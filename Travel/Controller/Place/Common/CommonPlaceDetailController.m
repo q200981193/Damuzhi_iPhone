@@ -182,8 +182,6 @@
 {
     NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
     [self.navigationController pushViewController:controller animated:YES];
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.0, 0.0);
-    [MapUtils gotoLocation:_place mapView:controller.mapView span:span];
     [controller release];
 }
 
