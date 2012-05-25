@@ -34,7 +34,10 @@
 - (id)initWithDataSource:(NSObject<CommonInfoDataSourceProtocol>*)source
 {
     self = [super init];
-    self.dataSource = source;
+    if (self) {
+        self.dataSource = source;
+    }
+    
     return self;
 }
 

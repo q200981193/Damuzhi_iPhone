@@ -206,6 +206,7 @@
 		A48E062B15358FD600B2695E /* CommonWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E062915358FD600B2695E /* CommonWebController.m */; };
 		A48E062C15358FD600B2695E /* CommonWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48E062A15358FD600B2695E /* CommonWebController.xib */; };
 		A48FA65C153803BA00422DB7 /* detail_top_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48FA65B153803B900422DB7 /* detail_top_bg@2x.png */; };
+		A491C704156F69930010CD4E /* detail_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A491C703156F69930010CD4E /* detail_bg@2x.png */; };
 		A4A5CEF91541CC740001A72D /* LocalCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A5CEF61541CC740001A72D /* LocalCity.m */; };
 		A4A5CEFA1541CC740001A72D /* LocalCityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A5CEF81541CC740001A72D /* LocalCityManager.m */; };
 		A4B116721557E09C0015193D /* table4_bg_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4B1166E1557E09C0015193D /* table4_bg_center@2x.png */; };
@@ -450,8 +451,6 @@
 		CA49070914F5F05B00228C37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA49070814F5F05B00228C37 /* AppDelegate.m */; };
 		CA585F9714F7377E00471880 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585F9514F7377E00471880 /* MainController.m */; };
 		CA585F9814F7377E00471880 /* MainController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585F9614F7377E00471880 /* MainController.xib */; };
-		CA585FA114F73AF700471880 /* SpotDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585F9F14F73AF700471880 /* SpotDetailController.m */; };
-		CA585FA214F73AF700471880 /* SpotDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FA014F73AF700471880 /* SpotDetailController.xib */; };
 		CA585FA714F73B5800471880 /* CommonPlaceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FA514F73B5800471880 /* CommonPlaceListController.m */; };
 		CA585FA814F73B5800471880 /* CommonPlaceListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA585FA614F73B5800471880 /* CommonPlaceListController.xib */; };
 		CA585FAC14F73B6800471880 /* CommonPlaceDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA585FAA14F73B6800471880 /* CommonPlaceDetailController.m */; };
@@ -798,6 +797,7 @@
 		A48E062915358FD600B2695E /* CommonWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonWebController.m; sourceTree = "<group>"; };
 		A48E062A15358FD600B2695E /* CommonWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonWebController.xib; sourceTree = "<group>"; };
 		A48FA65B153803B900422DB7 /* detail_top_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_top_bg@2x.png"; sourceTree = "<group>"; };
+		A491C703156F69930010CD4E /* detail_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_bg@2x.png"; sourceTree = "<group>"; };
 		A4A5CEF51541CC740001A72D /* LocalCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCity.h; sourceTree = "<group>"; };
 		A4A5CEF61541CC740001A72D /* LocalCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalCity.m; sourceTree = "<group>"; };
 		A4A5CEF71541CC740001A72D /* LocalCityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalCityManager.h; sourceTree = "<group>"; };
@@ -1251,9 +1251,6 @@
 		CA585F9414F7377E00471880 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		CA585F9514F7377E00471880 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		CA585F9614F7377E00471880 /* MainController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainController.xib; sourceTree = "<group>"; };
-		CA585F9E14F73AF700471880 /* SpotDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpotDetailController.h; sourceTree = "<group>"; };
-		CA585F9F14F73AF700471880 /* SpotDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailController.m; sourceTree = "<group>"; };
-		CA585FA014F73AF700471880 /* SpotDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpotDetailController.xib; sourceTree = "<group>"; };
 		CA585FA414F73B5800471880 /* CommonPlaceListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlaceListController.h; sourceTree = "<group>"; };
 		CA585FA514F73B5800471880 /* CommonPlaceListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonPlaceListController.m; sourceTree = "<group>"; };
 		CA585FA614F73B5800471880 /* CommonPlaceListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonPlaceListController.xib; sourceTree = "<group>"; };
@@ -1860,6 +1857,7 @@
 		A48E04E61534058900B2695E /* place_detail */ = {
 			isa = PBXGroup;
 			children = (
+				A491C703156F69930010CD4E /* detail_bg@2x.png */,
 				A4B116791558B7D90015193D /* point_pic4@2x.png */,
 				A4B116771558B73E0015193D /* point_pic3@2x.png */,
 				A4B1166E1557E09C0015193D /* table4_bg_center@2x.png */,
@@ -3205,9 +3203,6 @@
 			children = (
 				CA238FC714FE56F900114175 /* PlaceListFilter */,
 				CA585FA314F73B4500471880 /* Common */,
-				CA585F9E14F73AF700471880 /* SpotDetailController.h */,
-				CA585F9F14F73AF700471880 /* SpotDetailController.m */,
-				CA585FA014F73AF700471880 /* SpotDetailController.xib */,
 				A3DED49B152044040076E5CD /* PlaceCell.h */,
 				A3DED49C152044040076E5CD /* PlaceCell.m */,
 				A3DED49D152044040076E5CD /* PlaceCell.xib */,
@@ -3415,7 +3410,6 @@
 				CA45608214F66EDD00DA085D /* EGORefresh.strings in Resources */,
 				CA45608314F66EDD00DA085D /* whiteArrow.png in Resources */,
 				CA585F9814F7377E00471880 /* MainController.xib in Resources */,
-				CA585FA214F73AF700471880 /* SpotDetailController.xib in Resources */,
 				CA585FA814F73B5800471880 /* CommonPlaceListController.xib in Resources */,
 				CA585FAD14F73B6800471880 /* CommonPlaceDetailController.xib in Resources */,
 				CA585FB814F73C1100471880 /* CityBasicController.xib in Resources */,
@@ -3594,6 +3588,7 @@
 				A4B116781558B73E0015193D /* point_pic3@2x.png in Resources */,
 				A4B1167A1558B7D90015193D /* point_pic4@2x.png in Resources */,
 				A454CB821559054A00896761 /* city_ing@2x.png in Resources */,
+				A491C704156F69930010CD4E /* detail_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3759,7 +3754,6 @@
 				CA4560B914F66EDD00DA085D /* UIViewUtils.m in Sources */,
 				CA4560BA14F66EDD00DA085D /* UIWebViewUtil.m in Sources */,
 				CA585F9714F7377E00471880 /* MainController.m in Sources */,
-				CA585FA114F73AF700471880 /* SpotDetailController.m in Sources */,
 				CA585FA714F73B5800471880 /* CommonPlaceListController.m in Sources */,
 				CA585FAC14F73B6800471880 /* CommonPlaceDetailController.m in Sources */,
 				CA585FB714F73C1100471880 /* CityBasicController.m in Sources */,

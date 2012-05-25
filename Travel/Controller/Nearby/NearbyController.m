@@ -85,7 +85,6 @@
     [_allPlaceList release];
     [_placeListController release];
     
-//    [imageRedStartView release];
     [distanceView release];
     [categoryBtnsHolderView release];
     [allPlaceButton release];
@@ -143,9 +142,9 @@
     
     [self setSelectedBtn:_categoryId];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDownDelegate:self] autorelease];
+    
     [_placeListController showInView:placeListHolderView];
-    _placeListController.pullDownDelegate = self;
     
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
     

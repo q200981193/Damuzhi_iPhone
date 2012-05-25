@@ -32,7 +32,10 @@
 @property (assign, nonatomic) id<DeletePlaceDelegate> deletePlaceDelegate;
 @property (assign, nonatomic) id<PullToRefrshDelegate> pullDownDelegate;
 
-- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController;
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
+                  wantPullDownToRefresh:(BOOL)wantPullDownToRefresh 
+                       pullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate;
+
 - (void)showInView:(UIView*)superView;
 - (void)setPlaceList:(NSArray*)placeList;
 
