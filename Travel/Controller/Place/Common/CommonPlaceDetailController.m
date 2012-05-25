@@ -102,7 +102,6 @@
     self = [super init];
     if (self) {
         self.place = place;    
-        self.handler = [self createPlaceHandler:place]; 
     }
     
     return self;
@@ -865,6 +864,8 @@
                             action:@selector(clickMap:)];
     
     [self setTitle:[self.place name]];
+    
+    self.handler = [self createPlaceHandler:_place];
     
     [self addHeaderView];
     
