@@ -43,11 +43,11 @@
     [MobClick startWithAppkey:UMENG_KEY];
     
     if ([DeviceDetection isOS5]){
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_live.png"] forBarMetrics:UIBarMetricsDefault];
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
     }
     else{
-        GlobalSetNavBarBackground(@"top_live.png");        
-    }
+        GlobalSetNavBarBackground(@"topmenu_bg.png");        
+    }        
     
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
     

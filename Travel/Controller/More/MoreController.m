@@ -92,6 +92,7 @@
 - (void)dealloc
 {
     [showImageSwitch release];
+    [dataDictionary release];
     [super dealloc];
 }
 

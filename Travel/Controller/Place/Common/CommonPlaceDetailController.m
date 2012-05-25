@@ -56,10 +56,7 @@
 #define TAG_FAVORITE_BUTTON 22221
 #define TAG_FAVORITE_COUNT_LABEL 22222
 
-
-
 @implementation CommonPlaceDetailController
-//@synthesize helpButton;
 @synthesize buttonHolerView;
 @synthesize imageHolderView;
 @synthesize dataScrollView;
@@ -70,50 +67,31 @@
 @synthesize praiseIcon3;
 @synthesize serviceHolder;
 @synthesize handler;
-//@synthesize favoriteCountLabel;
-//@synthesize telephoneView;
-//@synthesize addressView;
-//@synthesize websiteView;
 @synthesize detailHeight = _detailHeight;
-//@synthesize favouritesView;
-//@synthesize addFavoriteButton;
-//@synthesize nearbyView = _nearbyView;
+@synthesize nearbyRecommendController = _nearbyRecommendController;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (id<CommonPlaceDetailDataSourceProtocol>)createPlaceHandler:(Place*)onePlace
 {
     if ([onePlace categoryId] == PlaceCategoryTypePlaceSpot){
-//        return [[[SpotDetailViewHandler alloc] initWith:self] autorelease];
         return [[[SpotDetailViewHandler alloc] init] autorelease];
 
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceHotel)
     {
-//        return [[[HotelDetailViewHandler alloc] initWith:self] autorelease];
         return [[[HotelDetailViewHandler alloc] init] autorelease];
 
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceRestraurant)
     {
-//        return [[[RestaurantViewHandler alloc] initWith:self] autorelease];
         return [[[RestaurantViewHandler alloc] init] autorelease];
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceShopping)
     {
-//        return [[[ShoppingDetailViewHandler alloc] initWith:self] autorelease];
         return [[[ShoppingDetailViewHandler alloc] init] autorelease];
     }
     else if ([onePlace categoryId] == PlaceCategoryTypePlaceEntertainment)
     {
-//        return [[[EntertainmentDetailViewHandler alloc] initWith:self] autorelease];
         return [[[EntertainmentDetailViewHandler alloc] init] autorelease];
     }
     return nil;
@@ -124,7 +102,6 @@
     self = [super init];
     if (self) {
         self.place = place;    
-        self.handler = [self createPlaceHandler:place]; 
     }
     
     return self;
@@ -180,10 +157,15 @@
 
 - (void)clickMap:(id)sender
 {
-    NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
-    [self.navigationController pushViewController:controller animated:YES];
-    [MapUtils gotoLocation:_place mapView:controller.mapView];
-    [controller release];
+    if (_nearbyRecommendController == nil) {
+            self.nearbyRecommendController = [[[NearByRecommendController alloc] initWithPlace:_place] autorelease];
+    }
+
+    [self.navigationController pushViewController:_nearbyRecommendController animated:YES];
+    
+//    NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
+//    [self.navigationController pushViewController:controller animated:YES];
+//    PPRelease(controller);
 }
 
 - (void)clickTelephone:(id)sender
@@ -395,10 +377,6 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     
-//    UIButton *selectedBgView = [[UIButton alloc] initWithFrame:CGRectMake(12, _nearbyView.frame.origin.y +30*(index+1), 275, 24)];
-//    [dataScrollView addSubview:selectedBgView];
-//    [selectedBgView release];
-    
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[_nearbyPlaceList objectAtIndex:index]];
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -536,10 +514,10 @@
             [nameLabel release];
             
             //add rankImage
-            UIView *rankView = [[UIView alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 8, 40, 14)];
+            UIView *rankView = [[UIView alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 9, 40, 14)];
             
             for (int i=0;i<[nearbyPlace rank];i++) {
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*i, 0, 10, 14)];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*i, 0, 9, 13)];
                 UIImage *image = [UIImage imageNamed:IMAGE_GOOD2];
                 [imageView setImage:image];
                 [rankView addSubview:imageView];
@@ -884,8 +862,10 @@
     [self setNavigationRightButton:NSLS(@"") 
                          imageName:@"map_po.png" 
                             action:@selector(clickMap:)];
+    
     [self setTitle:[self.place name]];
     
+    self.handler = [self createPlaceHandler:_place];
     
     [self addHeaderView];
     
@@ -903,7 +883,7 @@
     
     [self addWebsiteView];
     
-    dataScrollView.backgroundColor = [UIColor whiteColor];
+    dataScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"detail_bg.png"]];
         
     [self addBottomView];
     
@@ -941,10 +921,9 @@
     [praiseIcon2 release];
     [praiseIcon3 release];
     [serviceHolder release];
-    
     [_place release];
     [_nearbyPlaceList release];
-
+    [_nearbyRecommendController release];
     [super dealloc];
 }
 @end

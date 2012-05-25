@@ -156,20 +156,15 @@
 }
 
 - (void)setCellDataByPlace:(Place*)place currentLocation:(CLLocation *)currentLocation
-{ 
-    PPDebug(@"cell retain count=%d", [self retainCount]);
-    
+{     
     nameLabel.text = [place name];
     
     [distanceLable setTextColor:[UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]];
-    
-    PPDebug(@"cell retain count=%d", [self retainCount]);
-    
+        
     distanceLable.text = [PlaceUtils getDistanceString:place currentLocation:currentLocation];
     
     [self setPlaceIcon:place];
     priceLable.text = [PlaceUtils getPrice:place];
-    PPDebug(@"cell retain count=%d", [self retainCount]);
     
     areaLable.text = [[AppManager defaultManager] getAreaName:place.cityId areaId:place.areaId];
     
@@ -181,7 +176,6 @@
         categoryLable.text = [[AppManager defaultManager] getSubCategotyName:[place categoryId] 
                                                                     subCategoryId:[place subCategoryId]];
     }
-    PPDebug(@"cell retain count=%d", [self retainCount]);
     
     if ([[PlaceStorage favoriteManager] isPlaceInFavorite:place.placeId]) {
         [favoritesView setImage:[UIImage imageNamed:IMAGE_HEART]];
@@ -206,8 +200,6 @@
     
     [self setServiceIcons:providedServiceIcons];
     [providedServiceIcons release];
-
-    PPDebug(@"cell retain count=%d", [self retainCount]);
 }
 
 - (void)dealloc {

@@ -20,6 +20,7 @@
 @synthesize mapView;
 @synthesize placeList = _placeList;
 @synthesize place = _place;
+//@synthesize annotationToSelect;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place
 {
@@ -42,8 +43,8 @@
         }
     } 
     
-    [self.mapView removeAnnotations:mapView.annotations];
-    [self.mapView addAnnotations:mapAnnotations];
+    [mapView removeAnnotations:mapView.annotations];
+    [mapView addAnnotations:mapAnnotations];
     [mapAnnotations release];
 }
 
@@ -52,12 +53,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.mapView.ShowsUserLocation = YES;
+    mapView.ShowsUserLocation = YES;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    self.mapView.ShowsUserLocation = NO;
+    mapView.ShowsUserLocation = NO;
 }
 
 - (void)viewDidLoad
@@ -73,8 +74,15 @@
     
     mapView.delegate = self;
     mapView.mapType = MKMapTypeStandard; 
+//    mapView.ShowsUserLocation = YES;
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.0, 0.0);
+    [MapUtils setMapSpan:mapView span:span];    
+    [MapUtils gotoLocation:mapView latitude:_place.latitude longitude:_place.longitude];
     
     self.placeList = [[[NSMutableArray alloc] init] autorelease];
+    
+    [self addMyLocationBtnTo:self.view];
     
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
@@ -83,6 +91,12 @@
                                      viewController:self];
 }
 
+//- (void)clickBack:(id)sender
+//{
+//    mapView.showsUserLocation = NO;
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
+
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
     [_placeList addObject:_place];
@@ -90,15 +104,15 @@
     for (Place *place in placeList) {
         [_placeList addObject:place];
     }
-    
     [self loadAllAnnotations];
 }
 
 - (void)dealloc
 {
-    [_placeList release];
-    [_place release];
-    [mapView release];
+    PPRelease(_placeList);
+    PPRelease(_place);
+    PPRelease(mapView);
+    
     [super dealloc];
 }
 
@@ -146,22 +160,13 @@
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
-             ;            
-            UIButton *customizeView;
-            
+        
             //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
             if (placeAnnotation.place == _place )
             {
-//                customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
-//                UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
-//                annotationView.image = img;
-//                [annotationView setFrame:customizeView.frame];
-//                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
-//                buttomView = annotationView;
-//                [annotationView addSubview:customizeView];
-                
                 MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
                                                        initWithAnnotation:annotation reuseIdentifier:[annotation title]] autorelease];
+//                annotationToSelect = annotation;
                 customPinView.pinColor = MKPinAnnotationColorRed;
                 customPinView.animatesDrop = YES;
                 customPinView.canShowCallout = YES;
@@ -173,18 +178,18 @@
                 customPinView.rightCalloutAccessoryView = rightButton;
                 
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
-                customizeView.tag = tag;
-
+                customPinView.tag = tag;
+                
+                [theMapView selectAnnotation:annotation animated:YES];
                 return customPinView;
             }
             else
-            {                
-                
+            {              
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
                 [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
-
             }
+        
             return annotationView;
         }
         else
@@ -194,18 +199,18 @@
         return pinView;
         
     }
-    
+
     return nil;
 }
 
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
-    for (UIView *view in views) {
-        if (view == buttomView) {
-            [view.superview bringSubviewToFront:buttomView];
-        }
-    }
-}
+//- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
+//{
+//    for (id<MKAnnotation> currentAnnotation in mapview.annotations) {       
+//        if ([currentAnnotation isEqual: annotationToSelect]) {
+//            [mapview selectAnnotation:currentAnnotation animated:YES];
+//        }
+//    }
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -214,6 +219,22 @@
     
     // Release any cached data, images, etc that aren't in use.
     
+}
+
+- (void)clickMyLocationBtn
+{
+    [MapUtils gotoLocation:mapView latitude:mapView.userLocation.location.coordinate.latitude longitude:mapView.userLocation.location.coordinate.longitude];
+}
+
+- (void)addMyLocationBtnTo:(UIView*)view
+{
+    //    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
+    
+    [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(clickMyLocationBtn) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    [button release];
 }
 
 

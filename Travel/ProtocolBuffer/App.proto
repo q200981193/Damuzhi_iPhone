@@ -11,7 +11,7 @@ message NameIdPair {
 }
 
 enum PlaceCategoryType{
-  PLACE_ALL = 0;
+  PLACE_ALL = 9999;
   PLACE_SPOT = 1;
   PLACE_HOTEL = 2;
   PLACE_RESTRAURANT = 3;

@@ -23,17 +23,25 @@
 
 - (id)initWithPlace:(Place *)place
 {
-    self.place = place;
-    self.title = place.name;
-    coordinate.longitude = place.longitude;
-    coordinate.latitude = place.latitude;
+    self = [super init];
+    if (self) {
+        self.place = place;
+        self.title = place.name;
+        coordinate.longitude = place.longitude;
+        coordinate.latitude = place.latitude;
+    }
+    
     return self;
 }
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coord;
 {
-    coordinate.longitude = coord.longitude;
-    coordinate.latitude = coord.latitude;
+    self = [super init];
+    if (self) {
+        coordinate.longitude = coord.longitude;
+        coordinate.latitude = coord.latitude;
+    }
+    
     return self;
 }
 

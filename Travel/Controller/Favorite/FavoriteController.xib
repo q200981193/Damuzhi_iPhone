@@ -48,6 +48,7 @@
 								<reference key="NSNextKeyView" ref="288605495"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
+								<int key="IBUITag">9999</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
@@ -62,12 +63,14 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
 								</object>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUINormalTitleShadowColor" ref="610800965"/>
-								<object class="NSCustomResource" key="IBUISelectedBackgroundImage" id="961874250">
+								<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="343556527">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">list_btn_2.png</string>
 								</object>
+								<reference key="IBUISelectedBackgroundImage" ref="343556527"/>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="866846428">
 									<int key="type">1</int>
 									<double key="pointSize">15</double>
@@ -96,9 +99,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="610800965"/>
 								<reference key="IBUISelectedTitleColor" ref="610800965"/>
 								<reference key="IBUINormalTitleColor" ref="691873201"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUINormalTitleShadowColor" ref="610800965"/>
-								<reference key="IBUISelectedBackgroundImage" ref="961874250"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="343556527"/>
+								<reference key="IBUISelectedBackgroundImage" ref="343556527"/>
 								<reference key="IBUIFontDescription" ref="866846428"/>
 								<reference key="IBUIFont" ref="802797616"/>
 							</object>
@@ -120,9 +125,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="610800965"/>
 								<reference key="IBUISelectedTitleColor" ref="610800965"/>
 								<reference key="IBUINormalTitleColor" ref="691873201"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUINormalTitleShadowColor" ref="610800965"/>
-								<reference key="IBUISelectedBackgroundImage" ref="961874250"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="343556527"/>
+								<reference key="IBUISelectedBackgroundImage" ref="343556527"/>
 								<reference key="IBUIFontDescription" ref="866846428"/>
 								<reference key="IBUIFont" ref="802797616"/>
 							</object>
@@ -144,9 +151,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="610800965"/>
 								<reference key="IBUISelectedTitleColor" ref="610800965"/>
 								<reference key="IBUINormalTitleColor" ref="691873201"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUINormalTitleShadowColor" ref="610800965"/>
-								<reference key="IBUISelectedBackgroundImage" ref="961874250"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="343556527"/>
+								<reference key="IBUISelectedBackgroundImage" ref="343556527"/>
 								<reference key="IBUIFontDescription" ref="866846428"/>
 								<reference key="IBUIFont" ref="802797616"/>
 							</object>
@@ -168,9 +177,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="610800965"/>
 								<reference key="IBUISelectedTitleColor" ref="610800965"/>
 								<reference key="IBUINormalTitleColor" ref="691873201"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUINormalTitleShadowColor" ref="610800965"/>
-								<reference key="IBUISelectedBackgroundImage" ref="961874250"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="343556527"/>
+								<reference key="IBUISelectedBackgroundImage" ref="343556527"/>
 								<reference key="IBUIFontDescription" ref="866846428"/>
 								<reference key="IBUIFont" ref="802797616"/>
 							</object>
@@ -192,9 +203,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="610800965"/>
 								<reference key="IBUISelectedTitleColor" ref="610800965"/>
 								<reference key="IBUINormalTitleColor" ref="691873201"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="691873201"/>
 								<reference key="IBUINormalTitleShadowColor" ref="610800965"/>
-								<reference key="IBUISelectedBackgroundImage" ref="961874250"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="343556527"/>
+								<reference key="IBUISelectedBackgroundImage" ref="343556527"/>
 								<reference key="IBUIFontDescription" ref="866846428"/>
 								<reference key="IBUIFont" ref="802797616"/>
 							</object>
@@ -438,20 +451,20 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="10.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="10.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="11.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="11.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="12.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="12.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="13.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="13.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="14.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="14.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
@@ -464,40 +477,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">FavoriteController</string>
 					<string key="superclassName">PPViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="clickAll:">id</string>
-						<string key="clickEntertainment:">id</string>
-						<string key="clickHotel:">id</string>
-						<string key="clickRestaurant:">id</string>
-						<string key="clickShopping:">id</string>
-						<string key="clickSpot:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="clickAll:">
-							<string key="name">clickAll:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickEntertainment:">
-							<string key="name">clickEntertainment:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickHotel:">
-							<string key="name">clickHotel:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickRestaurant:">
-							<string key="name">clickRestaurant:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickShopping:">
-							<string key="name">clickShopping:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="clickSpot:">
-							<string key="name">clickSpot:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="buttonHolderView">UIView</string>
 						<string key="myFavPlaceListView">UIView</string>

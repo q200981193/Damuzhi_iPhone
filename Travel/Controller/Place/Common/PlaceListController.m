@@ -26,14 +26,17 @@
 
 @property (assign, nonatomic) BOOL canDelete;
 
-- (void)updateViewByMode;
+@property (retain, nonatomic) PlaceMapViewController *mapViewController;
+@property (assign, nonatomic) UINavigationController *superNavigationController;
+
+- (void)reloadDataTableView;
 
 @end
 
 @implementation PlaceListController
 
 @synthesize mapHolderView = _mapHolderView;
-@synthesize superController = _superController;
+@synthesize superNavigationController = _superNavigationController;
 @synthesize mapViewController = _mapViewController;
 @synthesize canDelete = _canDelete;
 @synthesize deletePlaceDelegate = _deletePlaceDelegate;
@@ -42,12 +45,11 @@
 - (void)dealloc
 {
     [GlobalGetImageCache() cancelLoadingObjects];
-    [_mapViewController release];
+//    [_mapViewController release];
+    PPRelease(_mapViewController);
     [_mapHolderView release];
     
     [super dealloc];
-    
-//    PPDebug(@"data table view retain count=%d", [dataTableView retainCount]);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -72,9 +74,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tipsLabel setFont:[UIFont systemFontOfSize:13]]; 
-    [self.dataTableView setSeparatorColor:[UIColor clearColor]];
-    [self updateViewByMode];
+    
+    self.mapViewController = [[[PlaceMapViewController alloc] initWithSuperNavigationController:_superNavigationController] autorelease];
+    [_mapViewController showInView:_mapHolderView];
+
+    [self switchToListMode];
 }
 
 #pragma mark For Sub Class to override and implement
@@ -86,11 +90,11 @@
     }
 }
 
-- (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
+- (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)deleteDelegate
 {
     self.canDelete = isCan;
     [self.dataTableView setEditing:isCan animated:YES];
-    self.deletePlaceDelegate = delegateValue;
+    self.deletePlaceDelegate = deleteDelegate;
     [self.dataTableView reloadData];
 }
 
@@ -106,45 +110,39 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-+ (PlaceListController*)createController:(NSArray*)placeList
-                               superView:(UIView*)superView
-                         superController:(PPViewController*)superController
-                          pullToRreflash:(BOOL)pullToRreflash
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
+                  wantPullDownToRefresh:(BOOL)wantPullDownToRefresh 
+                       pullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate
 {
-    PlaceListController* controller = [[[PlaceListController alloc] init] autorelease];
-    controller.supportRefreshHeader = pullToRreflash;
-    [controller.view setFrame:superView.bounds];
+    self = [super init];
+    if (self) {
+        self.superNavigationController = superNavigationController;
+        self.supportRefreshHeader = wantPullDownToRefresh;
+        self.pullDownDelegate = pullDownDelegate;
+    }
     
-    controller.superController = superController;
-    
-    controller.mapViewController = [[[PlaceMapViewController alloc] init] autorelease];
-    [controller.mapViewController showInController:superController superView:controller.mapHolderView placeList:placeList];
-
-    [superView addSubview:controller.view];
-    
-    return controller;
+    return self;
 }
 
-- (void)setAndReloadPlaceList:(NSArray*)list
-{
-    self.dataList = list;
+- (void)showInView:(UIView*)superView 
+{    
+    [self.view setFrame:superView.bounds];
+    [superView addSubview:self.view];
+}
 
-    [self.dataTableView reloadData];
-    [self.mapViewController setPlaces:list];
-    
-    if ([list count] > 0) {
-        [MapUtils gotoCenterRegion:[list objectAtIndex:0] mapView:self.mapViewController.mapView];
-    }
-    if ([dataList count] == 0) {
-        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
-    }
-    else {
-        [self hideTipsOnTableView];
+- (void)setPlaceList:(NSArray*)placeList
+{
+    if (placeList == self.dataList) {
+        return;
     }
     
-    // after finish loading data, please call the following codes
-	[refreshHeaderView setCurrentDate];  	
-	[self dataSourceDidFinishLoadingNewData];
+    self.dataList = placeList;
+
+    if (_showMap) {
+        [_mapViewController setPlaces:self.dataList];
+    }else {
+        [self reloadDataTableView];
+    }
 }
 
 #pragma mark -
@@ -231,7 +229,7 @@
 {
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc] initWithPlace:[dataList objectAtIndex:indexPath.row]];
     
-    [self.superController.navigationController pushViewController:controller animated:YES];
+    [_superNavigationController pushViewController:controller animated:YES];
 
     [controller release];
 }
@@ -260,31 +258,42 @@
     }
 }
 
-- (void)updateViewByMode
-{    
-    if (_showMap){
-        _mapHolderView.hidden = NO;
-        [_mapViewController showUserLocation:YES];
-        dataTableView.hidden = YES;
-    }
-    else{
-        _mapHolderView.hidden = YES;
-        [_mapViewController showUserLocation:NO];
-        dataTableView.hidden = NO;
-    }    
-}
-
 - (void)switchToMapMode
 {
     _showMap = YES;
-    [self updateViewByMode];
+    dataTableView.hidden = YES;
+    _mapHolderView.hidden = NO;
+    
+    [_mapViewController showUserLocation:YES];
+    [_mapViewController setPlaces:self.dataList];
 }
 
 - (void)switchToListMode
 {
     _showMap = NO;
-    [self updateViewByMode];
+    
+    dataTableView.hidden = NO;
+    _mapHolderView.hidden = YES;
+    
+    [_mapViewController showUserLocation:NO];
+    [self reloadDataTableView];
 }
 
+- (void)reloadDataTableView
+{
+    [self.dataTableView reloadData];
+    
+    if ([self.dataList count] == 0) {
+        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
+    }else {
+        [self hideTipsOnTableView];
+    }
+    
+    if (self.superNavigationController) {
+        // after finish loading data, please call the following codes
+        [refreshHeaderView setCurrentDate];  	
+        [self dataSourceDidFinishLoadingNewData];
+    }
+}
 
 @end

@@ -15,23 +15,14 @@
 
 @interface NearbyController : PPViewController<PlaceServiceDelegate, UIGestureRecognizerDelegate,PullToRefrshDelegate, UIAlertViewDelegate>
 
-@property (assign, nonatomic) int distance;
-@property (assign, nonatomic) int categoryId;
-@property (assign, nonatomic) BOOL showMap;
-
-@property (retain, nonatomic) NSArray *placeList;
-@property (retain, nonatomic) NSArray *allPlaceList;
-@property (retain, nonatomic) PlaceListController* placeListController;
-@property (retain, nonatomic) UIImageView *imageRedStartView;
-
-@property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 @property (retain, nonatomic) IBOutlet UIImageView *distanceView;
-@property (retain, nonatomic) IBOutlet UIButton *findAllPlaceButton;
-@property (retain, nonatomic) IBOutlet UIButton *findSpotButton;
-@property (retain, nonatomic) IBOutlet UIButton *findHotelButton;
-@property (retain, nonatomic) IBOutlet UIButton *findShoppingButton;
-@property (retain, nonatomic) IBOutlet UIButton *findEntertainmentButton;
-@property (retain, nonatomic) IBOutlet UIButton *findRestaurantButton;
-@property (retain, nonatomic) IBOutlet UIView *buttonHolderView;
+@property (retain, nonatomic) IBOutlet UIView *categoryBtnsHolderView;
+@property (retain, nonatomic) IBOutlet UIButton *allPlaceButton;
+@property (retain, nonatomic) IBOutlet UIButton *spotButton;
+@property (retain, nonatomic) IBOutlet UIButton *hotelButton;
+@property (retain, nonatomic) IBOutlet UIButton *restaurantButton;
+@property (retain, nonatomic) IBOutlet UIButton *shoppingButton;
+@property (retain, nonatomic) IBOutlet UIButton *entertainmentButton;
+@property (retain, nonatomic) IBOutlet UIView *placeListHolderView;
 
 @end

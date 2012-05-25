@@ -55,14 +55,92 @@
 #import "AppUtils.h"
 
 @interface PlaceMapViewController ()
+
+@property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) NSArray* placeList;
+@property (nonatomic, assign) UINavigationController* superNavigationController;
+
+- (void)loadAllAnnotations;
+
 @end
 
 @implementation PlaceMapViewController
 
 @synthesize mapView = _mapView;
 @synthesize placeList = _placeList;
-@synthesize superController = _superController;
+@synthesize superNavigationController = _superNavigationController;
+
+- (void)viewDidLoad
+{    
+    [super viewDidLoad];
+    
+    // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
+    _mapView.delegate = self;
+    _mapView.mapType = MKMapTypeStandard;   
+    _mapView.showsUserLocation = NO;
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.028, 0.028);
+    [MapUtils setMapSpan:_mapView span:span];
+    
+    [self addMyLocationBtnTo:self.view];
+}
+
+- (void)viewDidUnload
+{
+    self.mapView = nil;
+    [super viewDidUnload];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+- (void)dealloc 
+{
+    [_placeList release];
+    PPRelease(_mapView); 
+    [super dealloc];
+}
+
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController
+{
+    self = [super init];
+    if (self) {
+        self.superNavigationController = superNavigationController;
+    }
+    
+    return self;
+}
+
+- (void)showInView:(UIView*)superView 
+{    
+    [self.view setFrame:superView.bounds];
+    [superView addSubview:self.view];
+}
+
+- (void)setPlaces:(NSArray*)placeList
+{
+    if (placeList == _placeList) {
+        return;
+    }
+    
+    self.placeList = placeList;
+
+    if ([_placeList count] != 0) {
+        Place *place = [_placeList objectAtIndex:0];
+        [MapUtils gotoLocation:_mapView latitude:place.latitude longitude:place.longitude];
+    }
+    
+    [self loadAllAnnotations];
+}
 
 - (void)loadAllAnnotations
 {    
@@ -82,66 +160,14 @@
     [mapAnnotations release];
 }
 
-- (void)viewDidLoad
-{    
-    [super viewDidLoad];
-    
-    // Do any additional setup after loading the view from its nib.
-    self.mapView.delegate = self;
-    self.mapView.mapType = MKMapTypeStandard;   
-    self.mapView.showsUserLocation = NO;
-    
-    [self setNavigationLeftButton:NSLS(@" 返回") 
-                        imageName:@"back.png"
-                           action:@selector(clickBack:)];
-    
-}
-
-- (void)viewDidUnload
-{
-    self.mapView = nil;
-    [super viewDidUnload];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-    
-}
-
-- (void)dealloc 
-{
-    [_mapView release];
-    [_placeList release];
-    [super dealloc];
-}
-
-- (void)showInController:(UIViewController*)superController
-               superView:(UIView*)superView
-               placeList:(NSArray*)placeList
-{    
-    [self.view setFrame:superView.bounds];
-    [superView addSubview:self.view];
-    
-    self.superController = superController;
-    self.placeList = placeList;
-    
-    [self loadAllAnnotations];
-}
-
-
-- (void)setPlaces:(NSArray*)placeList
-{
-    self.placeList = placeList;
-    [self loadAllAnnotations];
-}
-
 - (void)showUserLocation:(BOOL)isShow
 {
-    self.mapView.ShowsUserLocation = isShow;
+    _mapView.ShowsUserLocation = isShow;
+}
+
+- (void)clickMyLocationBtn
+{
+    [MapUtils gotoLocation:_mapView latitude:_mapView.userLocation.location.coordinate.latitude longitude:_mapView.userLocation.location.coordinate.longitude];
 }
 
 #pragma mark -
@@ -153,7 +179,7 @@
     UIButton *button = sender;
     NSInteger index = button.tag;
     CommonPlaceDetailController *controller = [[CommonPlaceDetailController alloc]initWithPlace:[_placeList objectAtIndex:index]];
-    [self.superController.navigationController pushViewController:controller animated:YES];
+    [_superNavigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
@@ -191,6 +217,17 @@
     }
     
     return nil;
+}
+
+- (void)addMyLocationBtnTo:(UIView*)view
+{
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
+
+    [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(clickMyLocationBtn) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    [button release];
 }
 
 @end

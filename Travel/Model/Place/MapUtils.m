@@ -20,41 +20,25 @@
     }
 }
 
-+ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView
++ (void)setMapSpan:(MKMapView*)mapView span:(MKCoordinateSpan)span
 {
-    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
-        return;
-    }
-    
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = [place latitude];
-    newRegion.center.longitude = [place longitude];
-    //设置地图的范围，越小越精确  
-//    newRegion.span.latitudeDelta = 0.025;
-//    newRegion.span.longitudeDelta = 0.025;
-//    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.latitudeDelta = 0;
-    newRegion.span.longitudeDelta = 0;
-//    newRegion.span.longitudeDelta = 0.109863;
-
-    
-    [mapView setRegion:newRegion animated:YES];
+    //设置地图的范围，数值越小越精确  
+    MKCoordinateRegion region = mapView.region;
+    region.span = span;
+    [mapView setRegion:region animated:YES];
 }
 
-+ (void)gotoCenterRegion:(Place*)place mapView:(MKMapView*)mapView
++ (void)gotoLocation:(MKMapView*)mapView latitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude 
 {
-    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+    if (![self isValidLatitude:latitude Longitude:longitude]) {
         return;
     }
     
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = [place latitude];
-    newRegion.center.longitude = [place longitude];
-    //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.0065;
-    newRegion.span.longitudeDelta = 0.0065;
+    MKCoordinateRegion region = mapView.region;
+    region.center.latitude = latitude;
+    region.center.longitude = longitude;
         
-    [mapView setRegion:newRegion animated:YES];
+    [mapView setRegion:region animated:YES];
 }
 
 + (UIButton*)createAnnotationViewWith:(Place*)place placeList:(NSArray*)placeList

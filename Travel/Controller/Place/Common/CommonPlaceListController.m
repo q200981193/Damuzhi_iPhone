@@ -19,6 +19,18 @@
 #import "PPDebug.h"
 #import "PlaceUtils.h"
 
+@interface CommonPlaceListController ()
+
+@property (retain, nonatomic) PlaceListController* placeListController;
+@property (retain, nonatomic) SelectController* selectController;
+@property (retain, nonatomic) NSObject<PlaceListFilterProtocol> *filterHandler;
+
+@property (retain, nonatomic) NSArray *allPlaceList;
+@property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) SelectedItems *selectedItems;
+
+@end
+
 @implementation CommonPlaceListController
 
 @synthesize modeButton = _modeButton;
@@ -33,8 +45,10 @@
 
 - (void)dealloc {
     [_filterHandler release];
-    [_placeListController release];
-    [_selectController release];
+//    [_placeListController release];
+    PPRelease(_placeListController);
+//    [_selectController release];
+    PPRelease(_selectController);
     [_buttonHolderView release];
     [_placeListHolderView release];
     [_modeButton release];
@@ -48,7 +62,9 @@
 - (id)initWithFilterHandler:(NSObject<PlaceListFilterProtocol>*)handler
 {
     self = [super init];
-    self.filterHandler = handler;
+    if (self) {
+        self.filterHandler = handler;
+    }
         
     return self;
 }
@@ -82,7 +98,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self.view setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1]];
 
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") 
@@ -94,7 +109,7 @@
                             action:@selector(clickHelp:)];
     
     [self setNavigationBarTitle];
-        
+
     [_filterHandler createFilterButtons:self.buttonHolderView controller:self];
     
     UIImage *image = [UIImage imageNamed:@"select_tr_bg.png"];
@@ -102,6 +117,10 @@
 
     self.selectedItems = [[SelectedItemsManager defaultManager] getSelectedItems:[_filterHandler getCategoryId]];
     
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDownDelegate:self] autorelease];
+        
+    [_placeListController showInView:_placeListHolderView];
+
     [_filterHandler findAllPlaces:self];
 }
 
@@ -113,13 +132,13 @@
 
 - (void)setNavigationBarTitle
 {
-    UILabel *categoryNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -8, 38, 20)];
+    UILabel *categoryNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -8, 39, 20)];
     categoryNameLabel.text = [_filterHandler getCategoryName];
     categoryNameLabel.font = [UIFont boldSystemFontOfSize:19];
     categoryNameLabel.textColor = [UIColor whiteColor];
     categoryNameLabel.backgroundColor = [UIColor clearColor];
 
-    UILabel *placeCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(38, -8, 30, 20)];
+    UILabel *placeCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(39, -8, 40, 20)];
     placeCountLabel.text = [NSString stringWithFormat:NSLS(@"(%d)"), dataList.count];
     placeCountLabel.font = [UIFont systemFontOfSize:12];
     placeCountLabel.textColor = [UIColor colorWithRed:183 green:222 blue:243 alpha:1];
@@ -160,26 +179,16 @@
     }
 
     self.allPlaceList = placeList;
-
     self.placeList = [self filterAndSort:_allPlaceList];
 
-    [_selectController setAndReload:_placeList];
-
-    [self createAndReloadPlaceListController];
-}
-
-- (void)createAndReloadPlaceListController
-{
-    if (self.placeListController == nil){
-        self.placeListController = [PlaceListController createController:_placeList 
-                                                               superView:_placeListHolderView
-                                                         superController:self
-                                                          pullToRreflash:YES]; 
-        [_placeListController setPullDownDelegate:self];
-    }
-    
-    [_placeListController setAndReloadPlaceList:_placeList];
+    // Update place count in navigation bar.
     [self updateNavigationBarTitle:_placeList.count];
+    
+    // Reload place list.
+    [_placeListController setPlaceList:_placeList];
+    
+    // Update select controller.
+    [_selectController setAndReload:_placeList];
 }
 
 - (void)didPullDown
@@ -192,35 +201,39 @@
     return [_filterHandler filterAndSotrPlaceList:placeList selectedItems:_selectedItems];
 }
 
-- (void)updateModeButton
-{
-    // set button text by _showMap flag
+- (IBAction)clickMapButton:(id)sender
+{    
     _modeButton.selected = !_modeButton.selected;
+    
+    // Show or hide some buttons.
     if (_modeButton.selected) {
         [self hideSomeFilterButtons];
     } else {
         [self showFilterButtons];
     }
+    
+    // Show animation.    
+    UIViewAnimationTransition animationTransition = (_modeButton.selected ? UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight);
+    [self showSwitchAnimation:animationTransition];
+
+    // Switch mode.
+    if (_modeButton.selected){
+        [_placeListController switchToMapMode];
+    }
+    else{
+        [_placeListController switchToListMode];
+    }
 }
 
-- (IBAction)clickMapButton:(id)sender
-{    
+- (void)showSwitchAnimation:(UIViewAnimationTransition)animationTransition
+{
     [UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.75];
 	
-	[UIView setAnimationTransition:(_modeButton.selected ?
-									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
+	[UIView setAnimationTransition:animationTransition
 						   forView:self.view cache:YES];
-    [UIView commitAnimations];
-
-    if (_modeButton.selected){
-        [_placeListController switchToListMode];
-    }
-    else{
-        [_placeListController switchToMapMode];
-    }
     
-    [self updateModeButton];
+    [UIView commitAnimations];
 }
 
 - (void)hideSomeFilterButtons
@@ -330,7 +343,11 @@
 - (void)didSelectFinish:(NSArray*)selectedList
 { 
     self.placeList = [self filterAndSort:_allPlaceList];
-    [self createAndReloadPlaceListController];
+    
+    // Update place count in navigation bar.
+    [self updateNavigationBarTitle:_placeList.count];
+    
+    [_placeListController setPlaceList:_placeList];
 }
 
 - (void)viewWillAppear:(BOOL)animated

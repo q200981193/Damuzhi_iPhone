@@ -12,27 +12,21 @@
 
 @interface HistoryController ()
 
+@property (retain, nonatomic) NSArray *placeList;
+@property (retain, nonatomic) PlaceListController *placeListController;
+
 @end
 
 @implementation HistoryController
 @synthesize placeListHolderView;
 @synthesize placeList = _placeList;
-@synthesize placeListController;
+@synthesize placeListController = _placeListController;
 
 - (void)dealloc {
-    [placeListHolderView release];
-    [_placeList release];
-    [placeListController release];
+    PPRelease(placeListHolderView);
+    PPRelease(_placeList);
+    PPRelease(_placeListController);
     [super dealloc];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -50,12 +44,12 @@
                             action:@selector(clickDelete:)];
     
     self.placeList = [[PlaceStorage historyManager] allPlaces];
-    self.placeListController = [PlaceListController createController:_placeList 
-                                                           superView:placeListHolderView
-                                                     superController:self
-                                                      pullToRreflash:NO];
     
-    [self.placeListController setAndReloadPlaceList:_placeList];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDownDelegate:nil] autorelease];
+    
+    [_placeListController showInView:placeListHolderView];
+    
+    [_placeListController setPlaceList:_placeList];
 }
 
 
@@ -101,7 +95,7 @@
     if (buttonIndex == 1) {
         [[PlaceStorage historyManager] deleteAllPlaces];
          self.placeList = [[PlaceStorage historyManager] allPlaces];
-        [self.placeListController setAndReloadPlaceList:_placeList];
+        [self.placeListController setPlaceList:_placeList];
     }
 }
 

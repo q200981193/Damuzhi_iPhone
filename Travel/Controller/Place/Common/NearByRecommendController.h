@@ -22,6 +22,7 @@
 @property (retain, nonatomic) IBOutlet MKMapView *mapView;
 @property (retain, nonatomic) Place *place;
 @property (retain, nonatomic) NSMutableArray *placeList;
+//@property (assign, nonatomic) id <MKAnnotation> annotationToSelect;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place;
 

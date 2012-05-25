@@ -54,16 +54,12 @@
 
 @interface PlaceMapViewController : PPViewController <MKMapViewDelegate,CLLocationManagerDelegate>
 
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
+- (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController;
 
-@property (nonatomic, assign) UIViewController* superController;
-
-- (void)showInController:(UIViewController*)superController
-               superView:(UIView*)superView
-               placeList:(NSArray*)placeList;
-         
+- (void)showInView:(UIView*)superView;
 
 - (void)setPlaces:(NSArray*)placeList;
+
 - (void)showUserLocation:(BOOL)isShow;
 
 @end
