@@ -20,6 +20,7 @@
 @synthesize mapView;
 @synthesize placeList = _placeList;
 @synthesize place = _place;
+@synthesize annotationToSelect;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place
 {
@@ -99,6 +100,7 @@
     [_placeList release];
     [_place release];
     [mapView release];
+    [annotationToSelect release];
     [super dealloc];
 }
 
@@ -108,6 +110,9 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     mapView = nil;
+    annotationToSelect = nil;
+    _place = nil;
+    _placeList = nil;
 }
 
 //The event handling method
@@ -162,6 +167,7 @@
                 
                 MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
                                                        initWithAnnotation:annotation reuseIdentifier:[annotation title]] autorelease];
+                annotationToSelect = annotation;
                 customPinView.pinColor = MKPinAnnotationColorRed;
                 customPinView.animatesDrop = YES;
                 customPinView.canShowCallout = YES;
@@ -198,11 +204,17 @@
     return nil;
 }
 
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
 {
     for (UIView *view in views) {
         if (view == buttomView) {
             [view.superview bringSubviewToFront:buttomView];
+        }
+    }
+
+    for (id<MKAnnotation> currentAnnotation in mapview.annotations) {       
+        if ([currentAnnotation isEqual: annotationToSelect]) {
+            [mapview selectAnnotation:currentAnnotation animated:YES];
         }
     }
 }
