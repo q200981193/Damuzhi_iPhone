@@ -75,7 +75,7 @@
 {
     [super viewDidLoad];
     
-    self.mapViewController = [[PlaceMapViewController alloc] initWithSuperNavigationController:_superNavigationController];
+    self.mapViewController = [[[PlaceMapViewController alloc] initWithSuperNavigationController:_superNavigationController] autorelease];
     [_mapViewController showInView:_mapHolderView];
     
     [self switchToListMode];
@@ -90,11 +90,11 @@
     }
 }
 
-- (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)delegateValue
+- (void)canDeletePlace:(BOOL)isCan delegate:(id<DeletePlaceDelegate>)deleteDelegate
 {
     self.canDelete = isCan;
     [self.dataTableView setEditing:isCan animated:YES];
-    self.deletePlaceDelegate = delegateValue;
+    self.deletePlaceDelegate = deleteDelegate;
     [self.dataTableView reloadData];
 }
 
@@ -266,8 +266,8 @@
     dataTableView.hidden = YES;
     _mapHolderView.hidden = NO;
     
-    [_mapViewController setPlaces:self.dataList];
     [_mapViewController showUserLocation:YES];
+    [_mapViewController setPlaces:self.dataList];
 }
 
 - (void)switchToListMode
@@ -277,8 +277,8 @@
     dataTableView.hidden = NO;
     _mapHolderView.hidden = YES;
     
-    [self reloadDataTableView];
     [_mapViewController showUserLocation:NO];
+    [self reloadDataTableView];
 }
 
 - (void)reloadDataTableView

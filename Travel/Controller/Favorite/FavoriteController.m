@@ -24,7 +24,7 @@
 @property (assign, nonatomic) BOOL canDelete;
 
 @property (retain, nonatomic) NSArray *showMyList;
-@property (retain, nonatomic)  NSArray *showTopList;
+@property (retain, nonatomic) NSArray *showTopList;
 @property (retain, nonatomic) PlaceListController *myFavPlaceListController;
 @property (retain, nonatomic) PlaceListController *topFavPlaceListController;
 
@@ -107,7 +107,7 @@
     [self createRightBarButton];
     
     self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
-    if ([myAllFavoritePlaceList count] >= 1) {
+    if ([myAllFavoritePlaceList count] != 0) {
         [self clickMyFavorite:nil];
     }else {
         [self clickTopFavorite:nil];
@@ -115,11 +115,12 @@
     
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
     
-    self.myFavPlaceListController = [[PlaceListController alloc] initWithSuperNavigationController:self.navigationController];
-    [myFavPlaceListController showInView:myFavPlaceListView];
+    self.myFavPlaceListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
+    [myFavPlaceListController showInView:myFavPlaceListView];    
     
-    self.topFavPlaceListController = [[PlaceListController alloc] initWithSuperNavigationController:self.navigationController];
+    self.topFavPlaceListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
     [topFavPlaceListController showInView:myFavPlaceListView];
+    [topFavPlaceListController setPlaceList:_showTopList];
 }
 
 - (void)showPlaces{

@@ -48,7 +48,6 @@
 @property (retain, nonatomic) CLLocation *testLocation;
 #endif
 
-- (void)initCategoryBtnsTag;
 - (void)setSelectedBtn:(int)categoryId;
 - (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance;
 
@@ -140,8 +139,8 @@
     
     self.distance = DISTANCE_500M;
     self.categoryId = PlaceCategoryTypePlaceAll;
-        
-    [self initCategoryBtnsTag];
+    allPlaceButton.selected = YES;
+    
     [self setSelectedBtn:_categoryId];
     
     self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
@@ -214,6 +213,7 @@ UITextField * alertTextField;
         case 1:{
             NSMutableString *text = [[NSMutableString alloc] initWithString:[alertTextField text]];
             NSArray *array = [text componentsSeparatedByString:@" "];
+            [text release];
             if ([array count] <2) {
                 UIAlertView* textAlertView = [UIUtils showTextView:@"输入错误,请重新输入经纬度" okButtonTitle:@"确定" cancelButtonTitle:@"取消" delegate:self];
                 alertTextField = (UITextField*)[textAlertView viewWithTag:kAlertTextViewTag];
@@ -350,59 +350,49 @@ UITextField * alertTextField;
 - (IBAction)clickSpotBtn:(id)sender {
     if (_categoryId != PlaceCategoryTypePlaceSpot) {
         self.categoryId = PlaceCategoryTypePlaceSpot;
-        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
         [self setSelectedBtn:_categoryId];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
     }
 }
 
 - (IBAction)clickHotelBtn:(id)sender {
     if (_categoryId != PlaceCategoryTypePlaceHotel) {
         self.categoryId = PlaceCategoryTypePlaceHotel;
-        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
         [self setSelectedBtn:_categoryId];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self];
     }
 }
 
 - (IBAction)clickAllBtn:(id)sender {
     if (_categoryId != PlaceCategoryTypePlaceAll) {
         self.categoryId = PlaceCategoryTypePlaceAll;
-        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     }
 }
 
 - (IBAction)clickRestaurantBtn:(id)sender {
     if (_categoryId != PlaceCategoryTypePlaceRestraurant) {
         self.categoryId = PlaceCategoryTypePlaceRestraurant;
-        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     }
 }
 
 - (IBAction)clickShoppingBtn:(id)sender {
     if (_categoryId != PlaceCategoryTypePlaceShopping) {
         self.categoryId = PlaceCategoryTypePlaceShopping;
-        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     }
 }
 
 - (IBAction)clickEntertainmentBtn:(id)sender {
     if (_categoryId != PlaceCategoryTypePlaceEntertainment) {
         self.categoryId = PlaceCategoryTypePlaceEntertainment;
-        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
         [self setSelectedBtn:_categoryId];
+        [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     }
-}
-
-- (void)initCategoryBtnsTag
-{
-    allPlaceButton.tag = PlaceCategoryTypePlaceAll;
-    spotButton.tag = PlaceCategoryTypePlaceSpot;
-    hotelButton.tag = PlaceCategoryTypePlaceHotel;
-    restaurantButton.tag = PlaceCategoryTypePlaceRestraurant;
-    shoppingButton.tag = PlaceCategoryTypePlaceShopping;
-    entertainmentButton.tag = PlaceCategoryTypePlaceEntertainment;
 }
 
 - (void)setSelectedBtn:(int)categoryId

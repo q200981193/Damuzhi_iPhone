@@ -19,7 +19,7 @@
 @class RecommendedApp;
 @class RecommendedApp_Builder;
 typedef enum {
-  PlaceCategoryTypePlaceAll = 0,
+  PlaceCategoryTypePlaceAll = 9999,
   PlaceCategoryTypePlaceSpot = 1,
   PlaceCategoryTypePlaceHotel = 2,
   PlaceCategoryTypePlaceRestraurant = 3,

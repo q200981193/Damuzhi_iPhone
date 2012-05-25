@@ -160,6 +160,7 @@
 									<bytes key="NSWhite">MCAwAA</bytes>
 								</object>
 								<bool key="IBUIOpaque">NO</bool>
+								<int key="IBUITag">9999</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
@@ -167,16 +168,18 @@
 								<string key="IBUINormalTitle">全部</string>
 								<reference key="IBUIHighlightedTitleColor" ref="533513373"/>
 								<reference key="IBUISelectedTitleColor" ref="533513373"/>
-								<object class="NSColor" key="IBUINormalTitleColor" id="260611459">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
+								<object class="NSColor" key="IBUINormalTitleColor" id="233837567">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MAA</bytes>
 								</object>
-								<reference key="IBUISelectedTitleShadowColor" ref="260611459"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="233837567"/>
+								<reference key="IBUISelectedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUINormalTitleShadowColor" ref="533513373"/>
-								<object class="NSCustomResource" key="IBUISelectedBackgroundImage" id="193014367">
+								<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage" id="727960250">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">list_btn_2.png</string>
 								</object>
+								<reference key="IBUISelectedBackgroundImage" ref="727960250"/>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="137161815">
 									<int key="type">1</int>
 									<double key="pointSize">15</double>
@@ -203,13 +206,12 @@
 								<string key="IBUINormalTitle">景点</string>
 								<reference key="IBUIHighlightedTitleColor" ref="533513373"/>
 								<reference key="IBUISelectedTitleColor" ref="533513373"/>
-								<object class="NSColor" key="IBUINormalTitleColor" id="233837567">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MAA</bytes>
-								</object>
+								<reference key="IBUINormalTitleColor" ref="233837567"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUINormalTitleShadowColor" ref="533513373"/>
-								<reference key="IBUISelectedBackgroundImage" ref="193014367"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="727960250"/>
+								<reference key="IBUISelectedBackgroundImage" ref="727960250"/>
 								<reference key="IBUIFontDescription" ref="137161815"/>
 								<reference key="IBUIFont" ref="77294573"/>
 							</object>
@@ -230,9 +232,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="533513373"/>
 								<reference key="IBUISelectedTitleColor" ref="533513373"/>
 								<reference key="IBUINormalTitleColor" ref="233837567"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUINormalTitleShadowColor" ref="533513373"/>
-								<reference key="IBUISelectedBackgroundImage" ref="193014367"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="727960250"/>
+								<reference key="IBUISelectedBackgroundImage" ref="727960250"/>
 								<reference key="IBUIFontDescription" ref="137161815"/>
 								<reference key="IBUIFont" ref="77294573"/>
 							</object>
@@ -253,9 +257,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="533513373"/>
 								<reference key="IBUISelectedTitleColor" ref="533513373"/>
 								<reference key="IBUINormalTitleColor" ref="233837567"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUINormalTitleShadowColor" ref="533513373"/>
-								<reference key="IBUISelectedBackgroundImage" ref="193014367"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="727960250"/>
+								<reference key="IBUISelectedBackgroundImage" ref="727960250"/>
 								<reference key="IBUIFontDescription" ref="137161815"/>
 								<reference key="IBUIFont" ref="77294573"/>
 							</object>
@@ -276,9 +282,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="533513373"/>
 								<reference key="IBUISelectedTitleColor" ref="533513373"/>
 								<reference key="IBUINormalTitleColor" ref="233837567"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUINormalTitleShadowColor" ref="533513373"/>
-								<reference key="IBUISelectedBackgroundImage" ref="193014367"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="727960250"/>
+								<reference key="IBUISelectedBackgroundImage" ref="727960250"/>
 								<reference key="IBUIFontDescription" ref="137161815"/>
 								<reference key="IBUIFont" ref="77294573"/>
 							</object>
@@ -299,10 +307,11 @@
 								<reference key="IBUIHighlightedTitleColor" ref="533513373"/>
 								<reference key="IBUISelectedTitleColor" ref="533513373"/>
 								<reference key="IBUINormalTitleColor" ref="233837567"/>
-								<reference key="IBUIHighlightedTitleShadowColor" ref="33493124"/>
+								<reference key="IBUIHighlightedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUISelectedTitleShadowColor" ref="233837567"/>
 								<reference key="IBUINormalTitleShadowColor" ref="533513373"/>
-								<reference key="IBUISelectedBackgroundImage" ref="193014367"/>
+								<reference key="IBUIHighlightedBackgroundImage" ref="727960250"/>
+								<reference key="IBUISelectedBackgroundImage" ref="727960250"/>
 								<reference key="IBUIFontDescription" ref="137161815"/>
 								<reference key="IBUIFont" ref="77294573"/>
 							</object>
@@ -472,7 +481,7 @@
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">30</int>
+					<int key="connectionID">51</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -636,9 +645,9 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="10.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="10.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="11.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="11.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="12.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="12.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -651,15 +660,15 @@
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="9.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="9.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">49</int>
+			<int key="maxID">52</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -669,7 +678,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="allPlaceButton">UIButton</string>
 						<string key="categoryBtnsHolderView">UIView</string>
-						<string key="distanceView">UIButton</string>
+						<string key="distanceView">UIImageView</string>
 						<string key="entertainmentButton">UIButton</string>
 						<string key="hotelButton">UIButton</string>
 						<string key="placeListHolderView">UIView</string>
@@ -688,7 +697,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="distanceView">
 							<string key="name">distanceView</string>
-							<string key="candidateClassName">UIButton</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="entertainmentButton">
 							<string key="name">entertainmentButton</string>

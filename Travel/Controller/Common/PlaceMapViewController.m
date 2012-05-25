@@ -70,8 +70,6 @@
 @synthesize placeList = _placeList;
 @synthesize superNavigationController = _superNavigationController;
 
-
-
 - (void)viewDidLoad
 {    
     [super viewDidLoad];
@@ -103,9 +101,8 @@
 
 - (void)dealloc 
 {
-    [_mapView release];
     [_placeList release];
-    [_superNavigationController release];
+    PPRelease(_mapView); 
     [super dealloc];
 }
 
