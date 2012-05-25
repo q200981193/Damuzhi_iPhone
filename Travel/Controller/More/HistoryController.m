@@ -23,9 +23,9 @@
 @synthesize placeListController = _placeListController;
 
 - (void)dealloc {
-    [placeListHolderView release];
-    [_placeList release];
-    [_placeListController release];
+    PPRelease(placeListHolderView);
+    PPRelease(_placeList);
+    PPRelease(_placeListController);
     [super dealloc];
 }
 
@@ -48,7 +48,7 @@
     self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
     [_placeListController showInView:placeListHolderView];
     
-//    [_placeListController setPlaceList:_placeList];
+    [_placeListController setPlaceList:_placeList];
 }
 
 
