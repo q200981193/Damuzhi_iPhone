@@ -20,7 +20,7 @@
 @synthesize mapView;
 @synthesize placeList = _placeList;
 @synthesize place = _place;
-@synthesize annotationToSelect;
+//@synthesize annotationToSelect;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place
 {
@@ -99,8 +99,9 @@
 {
     [_placeList release];
     [_place release];
-    [mapView release];
-    [annotationToSelect release];
+    PPRelease(mapView);
+//    [mapView release];
+//    [annotationToSelect release];
     [super dealloc];
 }
 
@@ -110,7 +111,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     mapView = nil;
-    annotationToSelect = nil;
+//    annotationToSelect = nil;
     _place = nil;
     _placeList = nil;
 }
@@ -157,17 +158,9 @@
             //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
             if (placeAnnotation.place == _place )
             {
-//                customizeView = [MapUtils createAnnotationViewWith:placeAnnotation.place placeList:_placeList];
-//                UIImage *img = [UIImage strectchableImageName:@"red_glass" leftCapWidth:20];
-//                annotationView.image = img;
-//                [annotationView setFrame:customizeView.frame];
-//                [customizeView addTarget:self action:@selector(notationAction:) forControlEvents:UIControlEventTouchUpInside];    
-//                buttomView = annotationView;
-//                [annotationView addSubview:customizeView];
-                
                 MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
                                                        initWithAnnotation:annotation reuseIdentifier:[annotation title]] autorelease];
-                annotationToSelect = annotation;
+//                annotationToSelect = annotation;
                 customPinView.pinColor = MKPinAnnotationColorRed;
                 customPinView.animatesDrop = YES;
                 customPinView.canShowCallout = YES;
@@ -180,7 +173,9 @@
                 
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 customPinView.tag = tag;
-
+                
+                [theMapView selectAnnotation:annotation animated:YES];
+                
                 return customPinView;
             }
             else
@@ -204,20 +199,14 @@
     return nil;
 }
 
-- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
-{
-    for (UIView *view in views) {
-        if (view == buttomView) {
-            [view.superview bringSubviewToFront:buttomView];
-        }
-    }
-
-    for (id<MKAnnotation> currentAnnotation in mapview.annotations) {       
-        if ([currentAnnotation isEqual: annotationToSelect]) {
-            [mapview selectAnnotation:currentAnnotation animated:YES];
-        }
-    }
-}
+//- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
+//{
+//    for (id<MKAnnotation> currentAnnotation in mapview.annotations) {       
+//        if ([currentAnnotation isEqual: annotationToSelect]) {
+//            [mapview selectAnnotation:currentAnnotation animated:YES];
+//        }
+//    }
+//}
 
 - (void)didReceiveMemoryWarning
 {

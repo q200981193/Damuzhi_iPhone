@@ -15,8 +15,10 @@
 @interface MapUtils : NSObject
 
 + (BOOL)isValidLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude;
-+ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView;
-+ (void)gotoCenterRegion:(Place*)place mapView:(MKMapView*)mapView;
+//+ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView;
+//+ (void)gotoCenterRegion:(Place*)place mapView:(MKMapView*)mapView;
++ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView span:(MKCoordinateSpan)span;
+
 + (UIButton*)createAnnotationViewWith:(Place*)place placeList:(NSArray*)placeList;
 + (void) showCallout:(MKAnnotationView*)annotationView imageName:(NSString*)imageName tag:(NSInteger)tag target:(id)target;
 @end

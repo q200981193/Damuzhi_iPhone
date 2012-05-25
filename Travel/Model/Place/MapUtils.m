@@ -20,7 +20,28 @@
     }
 }
 
-+ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView
+//+ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView
+//{
+//    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+//        return;
+//    }
+//    
+//    MKCoordinateRegion newRegion;
+//    newRegion.center.latitude = [place latitude];
+//    newRegion.center.longitude = [place longitude];
+//    //设置地图的范围，越小越精确  
+////    newRegion.span.latitudeDelta = 0.025;
+////    newRegion.span.longitudeDelta = 0.025;
+////    newRegion.span.latitudeDelta = 0.112872;
+//    newRegion.span.latitudeDelta = 0;
+//    newRegion.span.longitudeDelta = 0;
+////    newRegion.span.longitudeDelta = 0.109863;
+//
+//    
+//    [mapView setRegion:newRegion animated:YES];
+//}
+
++ (void)gotoLocation:(Place*)place mapView:(MKMapView*)mapView span:(MKCoordinateSpan)span
 {
     if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
         return;
@@ -30,29 +51,10 @@
     newRegion.center.latitude = [place latitude];
     newRegion.center.longitude = [place longitude];
     //设置地图的范围，越小越精确  
-//    newRegion.span.latitudeDelta = 0.025;
-//    newRegion.span.longitudeDelta = 0.025;
-//    newRegion.span.latitudeDelta = 0.112872;
-    newRegion.span.latitudeDelta = 0;
-    newRegion.span.longitudeDelta = 0;
-//    newRegion.span.longitudeDelta = 0.109863;
 
-    
-    [mapView setRegion:newRegion animated:YES];
-}
-
-+ (void)gotoCenterRegion:(Place*)place mapView:(MKMapView*)mapView
-{
-    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
-        return;
-    }
-    
-    MKCoordinateRegion newRegion;
-    newRegion.center.latitude = [place latitude];
-    newRegion.center.longitude = [place longitude];
-    //设置地图的范围，越小越精确  
-    newRegion.span.latitudeDelta = 0.0065;
-    newRegion.span.longitudeDelta = 0.0065;
+    newRegion.span = span;
+//    newRegion.span.latitudeDelta = 0.0065;
+//    newRegion.span.longitudeDelta = 0.0065;
         
     [mapView setRegion:newRegion animated:YES];
 }

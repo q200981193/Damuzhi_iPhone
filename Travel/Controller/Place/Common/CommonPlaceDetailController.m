@@ -182,7 +182,8 @@
 {
     NearByRecommendController *controller = [[NearByRecommendController alloc] initWithPlace:_place];
     [self.navigationController pushViewController:controller animated:YES];
-    [MapUtils gotoLocation:_place mapView:controller.mapView];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.0, 0.0);
+    [MapUtils gotoLocation:_place mapView:controller.mapView span:span];
     [controller release];
 }
 
@@ -536,10 +537,10 @@
             [nameLabel release];
             
             //add rankImage
-            UIView *rankView = [[UIView alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 8, 40, 14)];
+            UIView *rankView = [[UIView alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+8, 9, 40, 14)];
             
             for (int i=0;i<[nearbyPlace rank];i++) {
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*i, 0, 10, 14)];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(14*i, 0, 9, 13)];
                 UIImage *image = [UIImage imageNamed:IMAGE_GOOD2];
                 [imageView setImage:image];
                 [rankView addSubview:imageView];

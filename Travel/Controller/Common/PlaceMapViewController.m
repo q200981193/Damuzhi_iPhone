@@ -131,7 +131,8 @@
     self.placeList = placeList;
 
     if ([_placeList count] != 0) {
-        [MapUtils gotoCenterRegion:[_placeList objectAtIndex:0] mapView:self.mapView];
+        MKCoordinateSpan span = MKCoordinateSpanMake(0.028, 0.028);
+        [MapUtils gotoLocation:[_placeList objectAtIndex:0] mapView:self.mapView span:span];
     }
     
     [self loadAllAnnotations];
