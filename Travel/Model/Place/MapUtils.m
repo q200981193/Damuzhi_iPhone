@@ -28,15 +28,15 @@
     [mapView setRegion:region animated:YES];
 }
 
-+ (void)gotoLocation:(MKMapView*)mapView place:(Place*)place 
++ (void)gotoLocation:(MKMapView*)mapView latitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude 
 {
-    if (![self isValidLatitude:[place latitude] Longitude:[place longitude]]) {
+    if (![self isValidLatitude:latitude Longitude:longitude]) {
         return;
     }
     
     MKCoordinateRegion region = mapView.region;
-    region.center.latitude = [place latitude];
-    region.center.longitude = [place longitude];
+    region.center.latitude = latitude;
+    region.center.longitude = longitude;
         
     [mapView setRegion:region animated:YES];
 }

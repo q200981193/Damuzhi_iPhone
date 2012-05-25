@@ -77,9 +77,11 @@
     
     MKCoordinateSpan span = MKCoordinateSpanMake(0.0, 0.0);
     [MapUtils setMapSpan:mapView span:span];    
-    [MapUtils gotoLocation:mapView place:_place];
+    [MapUtils gotoLocation:mapView latitude:_place.latitude longitude:_place.longitude];
     
     self.placeList = [[[NSMutableArray alloc] init] autorelease];
+    
+    [self addMyLocationBtnTo:self.view];
     
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
@@ -219,6 +221,22 @@
     
     // Release any cached data, images, etc that aren't in use.
     
+}
+
+- (void)clickMyLocationBtn
+{
+    [MapUtils gotoLocation:mapView latitude:mapView.userLocation.location.coordinate.latitude longitude:mapView.userLocation.location.coordinate.longitude];
+}
+
+- (void)addMyLocationBtnTo:(UIView*)view
+{
+    //    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
+    
+    [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(clickMyLocationBtn) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    [button release];
 }
 
 

@@ -17,7 +17,7 @@
 + (BOOL)isValidLatitude:(CGFloat)latitude Longitude:(CGFloat)longitude;
 
 + (void)setMapSpan:(MKMapView*)mapView span:(MKCoordinateSpan)span;
-+ (void)gotoLocation:(MKMapView*)mapView place:(Place*)place;
++ (void)gotoLocation:(MKMapView*)mapView latitude:(CLLocationDegrees)latitude longitude:(CLLocationDegrees)longitude;
 
 + (UIButton*)createAnnotationViewWith:(Place*)place placeList:(NSArray*)placeList;
 + (void) showCallout:(MKAnnotationView*)annotationView imageName:(NSString*)imageName tag:(NSInteger)tag target:(id)target;

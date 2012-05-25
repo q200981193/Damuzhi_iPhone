@@ -75,16 +75,18 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-    _mapView.delegate = self;
-    _mapView.mapType = MKMapTypeStandard;   
-    _mapView.showsUserLocation = NO;
-    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
+    _mapView.delegate = self;
+    _mapView.mapType = MKMapTypeStandard;   
+    _mapView.showsUserLocation = NO;
+    
     MKCoordinateSpan span = MKCoordinateSpanMake(0.028, 0.028);
     [MapUtils setMapSpan:_mapView span:span];
+    
+    [self addMyLocationBtnTo:self.view];
 }
 
 - (void)viewDidUnload
@@ -133,7 +135,8 @@
     self.placeList = placeList;
 
     if ([_placeList count] != 0) {
-        [MapUtils gotoLocation:_mapView place:[_placeList objectAtIndex:0]];
+        Place *place = [_placeList objectAtIndex:0];
+        [MapUtils gotoLocation:_mapView latitude:place.latitude longitude:place.longitude];
     }
     
     [self loadAllAnnotations];
@@ -160,6 +163,11 @@
 - (void)showUserLocation:(BOOL)isShow
 {
     _mapView.ShowsUserLocation = isShow;
+}
+
+- (void)clickMyLocationBtn
+{
+    [MapUtils gotoLocation:_mapView latitude:_mapView.userLocation.location.coordinate.latitude longitude:_mapView.userLocation.location.coordinate.longitude];
 }
 
 #pragma mark -
@@ -209,6 +217,17 @@
     }
     
     return nil;
+}
+
+- (void)addMyLocationBtnTo:(UIView*)view
+{
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
+
+    [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(clickMyLocationBtn) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:button];
+    [button release];
 }
 
 @end
