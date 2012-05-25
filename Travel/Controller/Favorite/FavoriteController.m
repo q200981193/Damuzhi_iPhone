@@ -69,23 +69,23 @@
 @synthesize topEntertainmentFavoritePlaceList;
 
 - (void)dealloc {
-    [buttonHolderView release];
-    [myFavPlaceListView release];
-    [myFavPlaceListController release];
-    [_showMyList release];
-    [topFavPlaceListView release];
-    [topFavPlaceListController release];
-    [_showTopList release];
-    [myFavoriteButton release];
-    [topFavoriteButton release];
-    [deleteButton release];
-    [myAllFavoritePlaceList release];
-    [topAllFavoritePlaceList release];
-    [topSpotFavoritePlaceList release];
-    [topHotelFavoritePlaceList release];
-    [topRestaurantFavoritePlaceList release];
-    [topShoppingFavoritePlaceList release];
-    [topEntertainmentFavoritePlaceList release];
+    PPRelease(buttonHolderView);
+    PPRelease(myFavPlaceListView);
+    PPRelease(myFavPlaceListController);
+    PPRelease(_showMyList);
+    PPRelease(topFavPlaceListView);
+    PPRelease(topFavPlaceListController);
+    PPRelease(_showTopList);
+    PPRelease(myFavoriteButton);
+    PPRelease(topFavoriteButton);
+    PPRelease(deleteButton);
+    PPRelease(myAllFavoritePlaceList);
+    PPRelease(topAllFavoritePlaceList);
+    PPRelease(topSpotFavoritePlaceList);
+    PPRelease(topHotelFavoritePlaceList);
+    PPRelease(topRestaurantFavoritePlaceList);
+    PPRelease(topShoppingFavoritePlaceList);
+    PPRelease(topEntertainmentFavoritePlaceList);
     [super dealloc];
 }
 
@@ -106,21 +106,25 @@
                            action:@selector(clickBack:)];
     [self createRightBarButton];
     
+    
+    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
+
+    PlaceListController *myController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController];
+    self.myFavPlaceListController = myController;
+    [myController release];
+    [myFavPlaceListController showInView:myFavPlaceListView];    
+    
+    PlaceListController *topController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController];
+    self.topFavPlaceListController = topController;
+    [topController release];
+    [topFavPlaceListController showInView:topFavPlaceListView];
+    
     self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
     if ([myAllFavoritePlaceList count] != 0) {
         [self clickMyFavorite:nil];
     }else {
         [self clickTopFavorite:nil];
     }
-    
-    [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
-    
-    self.myFavPlaceListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
-    [myFavPlaceListController showInView:myFavPlaceListView];    
-    
-    self.topFavPlaceListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController] autorelease];
-    [topFavPlaceListController showInView:myFavPlaceListView];
-    [topFavPlaceListController setPlaceList:_showTopList];
 }
 
 - (void)showPlaces{
