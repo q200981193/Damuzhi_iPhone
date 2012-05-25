@@ -179,8 +179,8 @@
                 
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 customPinView.tag = tag;
-                
-                [theMapView selectAnnotation:annotation animated:YES];
+
+                [self performSelector:@selector(selectAnnotation:) withObject:annotation afterDelay:0.3f];
                 return customPinView;
             }
             else
@@ -202,6 +202,12 @@
 
     return nil;
 }
+
+- (void)selectAnnotation:(id <MKAnnotation>)annotation
+{
+    [self.mapView selectAnnotation:annotation animated:YES];
+}
+
 
 //- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
 //{
