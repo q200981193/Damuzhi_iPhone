@@ -188,11 +188,15 @@
                 
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 customPinView.tag = tag;
+
                 
                 // Note: on itouch4(iOS4.2.1) , it will run into crash. 
                 // but on iphone4 and iphone4s(both ios5.1), it run just fine.
                 // can you tell me why?
-                [theMapView selectAnnotation:annotation animated:YES];
+//                [theMapView selectAnnotation:annotation animated:YES];
+
+                [self performSelector:@selector(selectAnnotation:) withObject:annotation afterDelay:0.3f];
+
                 return customPinView;
             }
             else
@@ -213,6 +217,11 @@
     }
 
     return nil;
+}
+
+- (void)selectAnnotation:(id <MKAnnotation>)annotation
+{
+    [self.mapView selectAnnotation:annotation animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
