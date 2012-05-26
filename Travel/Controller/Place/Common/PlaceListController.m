@@ -18,6 +18,8 @@
 #import "AppService.h"
 #import "MapUtils.h"
 #import "PPApplication.h"
+#import "Reachability.h"
+#import "AppUtils.h"
 
 @interface PlaceListController () 
 {
@@ -260,6 +262,10 @@
 
 - (void)switchToMapMode
 {
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
+        [AppUtils showAlertViewWhenLookingMapWithoutNetwork];
+    }
+    
     _showMap = YES;
     dataTableView.hidden = YES;
     _mapHolderView.hidden = NO;

@@ -115,8 +115,10 @@
 + (void)enableImageShow:(BOOL)isShow;
 
 // For showing Alert message.
-+ (UIAlertView*)showUsingCellNetworkAlertViewWithTag:(int)tag delegate:(id)delegate;
++ (UIAlertView*)showAlertViewWhenUsingCellNetworkForDownloadWithTag:(int)tag delegate:(id)delegate;
 + (UIAlertView*)showDeleteCityDataAlertViewWithTag:(int)tag delegate:(id)delegate;
+
++ (UIAlertView*)showAlertViewWhenLookingMapWithoutNetwork;
 
 // for other ...
 + (NSString*)getAbsolutePath:(NSString*)absoluteDir string:(NSString*)string;

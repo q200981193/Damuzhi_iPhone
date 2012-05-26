@@ -14,13 +14,13 @@
 #import "App.pb.h"
 #import "PPDebug.h"
 #import "MapUtils.h"
+#import "Reachability.h"
 
 @implementation NearByRecommendController
 
 @synthesize mapView;
 @synthesize placeList = _placeList;
 @synthesize place = _place;
-//@synthesize annotationToSelect;
 
 - (NearByRecommendController*)initWithPlace:(Place*)place
 {
@@ -54,6 +54,10 @@
 {
     [super viewDidAppear:animated];
     mapView.ShowsUserLocation = YES;
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
+        [AppUtils showAlertViewWhenLookingMapWithoutNetwork];
+        return;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -83,6 +87,11 @@
     self.placeList = [[[NSMutableArray alloc] init] autorelease];
     
     [self addMyLocationBtnTo:self.view];
+    
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
+        [AppUtils showAlertViewWhenLookingMapWithoutNetwork];
+        return;
+    }
     
     // Find places nearby.
     [[PlaceService defaultService] findPlacesNearby:PlaceCategoryTypePlaceAll 
@@ -141,32 +150,32 @@
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
-#define  RED_GLASS_VIEW 20120510
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
+    // handle our custom annotations
     // if it's the user location, just return nil.
-//    if ([annotation isKindOfClass:[MKUserLocation class]])
-//        return nil;
-    
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+        
     // handle our custom annotations
     if([annotation isKindOfClass:[PlaceMapAnnotation class]])
     {
         // try to dequeue an existing pin view first
-        static NSString* annotationIdentifier = @"mapAnnotationIdentifier";
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]];
+        static NSString* annotationIdentifier = @"mapAnnotationIdentifier2";
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        
         if (pinView == nil)
         {
             MKAnnotationView* annotationView = [[[MKAnnotationView alloc]
                                                  initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
             PlaceMapAnnotation *placeAnnotation = (PlaceMapAnnotation*)annotation;
         
-            //判断placeAnnotation是否为当前地点，是则显示红色长方块背景
+            //判断placeAnnotation是否为当前地点
             if (placeAnnotation.place == _place )
             {
                 MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
-                                                       initWithAnnotation:annotation reuseIdentifier:[annotation title]] autorelease];
-//                annotationToSelect = annotation;
+                                                       initWithAnnotation:annotation reuseIdentifier:annotationIdentifier] autorelease];
                 customPinView.pinColor = MKPinAnnotationColorRed;
                 customPinView.animatesDrop = YES;
                 customPinView.canShowCallout = YES;
@@ -180,11 +189,14 @@
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 customPinView.tag = tag;
                 
+                // Note: on itouch4(iOS4.2.1) , it will run into crash. 
+                // but on iphone4 and iphone4s(both ios5.1), it run just fine.
+                // can you tell me why?
                 [theMapView selectAnnotation:annotation animated:YES];
                 return customPinView;
             }
             else
-            {              
+            {   
                 NSInteger tag = [_placeList indexOfObject:placeAnnotation.place];
                 NSString *fileName = [AppUtils getCategoryPinIcon:placeAnnotation.place.categoryId];
                 [MapUtils showCallout:annotationView imageName:fileName tag:tag target:self];
@@ -202,15 +214,6 @@
 
     return nil;
 }
-
-//- (void)mapView:(MKMapView *)mapview didAddAnnotationViews:(NSArray *)views
-//{
-//    for (id<MKAnnotation> currentAnnotation in mapview.annotations) {       
-//        if ([currentAnnotation isEqual: annotationToSelect]) {
-//            [mapview selectAnnotation:currentAnnotation animated:YES];
-//        }
-//    }
-//}
 
 - (void)didReceiveMemoryWarning
 {

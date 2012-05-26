@@ -154,7 +154,7 @@
 
 - (IBAction)clickUpdateBtn:(id)sender {
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-        [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+        [AppUtils showAlertViewWhenUsingCellNetworkForDownloadWithTag:ALERT_USING_CELL_NEWORK delegate:self];
     }
     else {
         [self updateCity];
@@ -170,7 +170,7 @@
     else {
         //TODO, resume download request
         if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-            [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+            [AppUtils showAlertViewWhenUsingCellNetworkForDownloadWithTag:ALERT_USING_CELL_NEWORK delegate:self];
         }
         else {
             [self updateCity];
