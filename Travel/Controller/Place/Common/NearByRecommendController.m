@@ -53,7 +53,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    mapView.ShowsUserLocation = YES;
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
         [AppUtils showAlertViewWhenLookingMapWithoutNetwork];
         return;
@@ -62,7 +61,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    mapView.ShowsUserLocation = NO;
+    mapView.showsUserLocation = NO;
+    [super viewDidDisappear:animated];
 }
 
 - (void)viewDidLoad
@@ -233,18 +233,28 @@
     
 }
 
-- (void)clickMyLocationBtn
+- (void)clickMyLocationBtn:(id)sender
 {
-    [MapUtils gotoLocation:mapView latitude:mapView.userLocation.location.coordinate.latitude longitude:mapView.userLocation.location.coordinate.longitude];
+    UIButton *button = (UIButton*)sender;
+    button.selected = !button.selected;
+    if (button.selected) {
+        mapView.showsUserLocation = YES;
+        [MapUtils gotoLocation:mapView latitude:mapView.userLocation.location.coordinate.latitude longitude:mapView.userLocation.location.coordinate.longitude];
+    }else {
+        mapView.showsUserLocation = NO;
+        [MapUtils gotoLocation:mapView latitude:_place.latitude longitude:_place.longitude];
+    }
 }
 
 - (void)addMyLocationBtnTo:(UIView*)view
 {
     //    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(3, 3, 31, 31)];            
     
     [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(clickMyLocationBtn) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"locate_back.png"] forState:UIControlStateSelected];
+    
+    [button addTarget:self action:@selector(clickMyLocationBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     [button release];
 }

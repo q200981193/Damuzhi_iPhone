@@ -44,17 +44,15 @@
 @synthesize allPlaceList = _allPlaceList;
 
 - (void)dealloc {
-    [_filterHandler release];
-//    [_placeListController release];
+    PPRelease(_filterHandler);
     PPRelease(_placeListController);
-//    [_selectController release];
     PPRelease(_selectController);
     [_buttonHolderView release];
     [_placeListHolderView release];
     [_modeButton release];
     [_selectedItems release];
-    [_placeList release];
-    [_allPlaceList release];
+    PPRelease(_placeList);
+    PPRelease(_allPlaceList);
     
     [super dealloc];
 }
@@ -174,6 +172,8 @@
 
 - (void)findRequestDone:(int)result placeList:(NSArray *)placeList
 {
+    [_placeListController hideRefreshHeaderViewAfterLoading];
+    
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"网络弱，数据加载失败" title:nil];
     }
@@ -187,8 +187,8 @@
     // Reload place list.
     [_placeListController setPlaceList:_placeList];
     
-    // Update select controller.
-    [_selectController setAndReload:_placeList];
+//    // Update select controller.
+//    [_selectController setAndReload:_placeList];
 }
 
 - (void)didPullDown

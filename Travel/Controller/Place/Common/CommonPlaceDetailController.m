@@ -921,9 +921,9 @@
     [praiseIcon2 release];
     [praiseIcon3 release];
     [serviceHolder release];
-    [_place release];
-    [_nearbyPlaceList release];
-    [_nearbyRecommendController release];
+    PPRelease(_place);
+    PPRelease(_nearbyPlaceList);
+    PPRelease(_nearbyRecommendController);
     [super dealloc];
 }
 @end

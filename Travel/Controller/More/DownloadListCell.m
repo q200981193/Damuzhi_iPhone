@@ -42,11 +42,12 @@
 }
 
 - (void)dealloc {
+    [_city release];
+    
     [cityNameLabel release];
     [updateButton release];
     [deleteButton release];
     [dataSizeLabel release];
-    [_city release];
     
     [updateProgressView release];
     [pauseBtn release];

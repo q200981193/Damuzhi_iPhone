@@ -37,6 +37,7 @@
 #pragma mark: 
 - (void)dealloc {
     [_city release];
+    
     [downloadProgressView release];
     [downloadButton release];
     [onlineButton release];

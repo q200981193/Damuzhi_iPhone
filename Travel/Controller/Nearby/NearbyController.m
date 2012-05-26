@@ -81,9 +81,9 @@
 
 - (void)dealloc
 {
-    [_placeList release];
-    [_allPlaceList release];
-    [_placeListController release];
+    PPRelease(_placeList);
+    PPRelease(_allPlaceList);
+    PPRelease(_placeListController);
     
     [distanceView release];
     [categoryBtnsHolderView release];
@@ -96,7 +96,7 @@
     [placeListHolderView release];
 
 #ifdef TEST_FOR_SIMULATE__LOCATION
-    [testLocation release];
+    PPRelease(testLocation);
 #endif
 
     [super dealloc];
@@ -131,12 +131,12 @@
     
     UIImageView *imageRedStartView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]] autorelease];
     imageRedStartView.tag = TAG_RED_START_IMAGE_VIEW;
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
     [distanceView addSubview:imageRedStartView];
     
     [categoryBtnsHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
     
-    self.distance = DISTANCE_500M;
+    self.distance = DISTANCE_1KM;
     self.categoryId = PlaceCategoryTypePlaceAll;
     allPlaceButton.selected = YES;
     
@@ -224,8 +224,8 @@ UITextField * alertTextField;
             double log = [logtitude doubleValue];
             double lat = [latitude doubleValue];
             self.testLocation = [[[CLLocation alloc] initWithLatitude:lat longitude:log] autorelease];
-            
             [[AppService defaultService] setCurrentLocation:testLocation];
+            [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
         }
             break;  
         default:
@@ -414,6 +414,8 @@ UITextField * alertTextField;
 
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList
 {
+    [_placeListController hideRefreshHeaderViewAfterLoading];
+    
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"网络弱，数据加载失败" title:nil];
     }

@@ -105,7 +105,7 @@
 
 - (void)dealloc 
 {
-    [_placeList release];
+    PPRelease(_placeList);
     PPRelease(_mapView); 
     [super dealloc];
 }
@@ -162,11 +162,12 @@
 
 - (void)showUserLocation:(BOOL)isShow
 {
-    _mapView.ShowsUserLocation = isShow;
+    _mapView.showsUserLocation = isShow;
 }
 
 - (void)clickMyLocationBtn
 {
+    [self showUserLocation:YES];
     [MapUtils gotoLocation:_mapView latitude:_mapView.userLocation.location.coordinate.latitude longitude:_mapView.userLocation.location.coordinate.longitude];
 }
 

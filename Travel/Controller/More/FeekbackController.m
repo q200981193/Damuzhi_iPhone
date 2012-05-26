@@ -83,8 +83,8 @@
 }
 
 - (void)dealloc {
-    [feekbackTextView release];
-    [contactWayTextField release];
+    PPRelease(feekbackTextView);
+    PPRelease(contactWayTextField);
     [super dealloc];
 }
 

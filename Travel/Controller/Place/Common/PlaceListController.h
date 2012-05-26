@@ -36,6 +36,8 @@
                   wantPullDownToRefresh:(BOOL)wantPullDownToRefresh 
                        pullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate;
 
+- (void)hideRefreshHeaderViewAfterLoading;
+
 - (void)showInView:(UIView*)superView;
 - (void)setPlaceList:(NSArray*)placeList;
 
