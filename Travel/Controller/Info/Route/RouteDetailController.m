@@ -139,7 +139,7 @@
     }
     
     SlideImageView *slideImageView = [[SlideImageView alloc] initWithFrame:imageHolderView.bounds];
-    slideImageView.defaultImage =IMAGE_PLACE_DETAIL;
+    slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
     [slideImageView.pageControl setPageIndicatorImageForCurrentPage:[UIImage strectchableImageName:@"point_pic3.png"] forNotCurrentPage:[UIImage strectchableImageName:@"point_pic4.png"]];
     [slideImageView setImages:imagePathList];
     [imageHolderView addSubview:slideImageView];

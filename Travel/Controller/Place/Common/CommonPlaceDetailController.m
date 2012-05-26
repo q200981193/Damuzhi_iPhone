@@ -469,7 +469,12 @@
         _detailHeight = favouritesView.frame.origin.y + favouritesView.frame.size.height;
     }
 
-    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight + 175)];
+    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight)];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, dataScrollView.contentSize.height, 320, 250)];
+    [imageView setImage:[UIImage imageNamed:@"detail_bg_down.png"]];
+    [dataScrollView addSubview:imageView];
+    [imageView release];
 }
 
 //request done after get nearby placelist
@@ -867,6 +872,11 @@
     
     self.handler = [self createPlaceHandler:_place];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -250, 320, 250)];
+    [imageView setImage:[UIImage imageNamed:@"detail_bg_up.png"]];
+    [dataScrollView addSubview:imageView];
+    [imageView release];
+    
     [self addHeaderView];
     
     [self addSlideImageView];
@@ -882,12 +892,10 @@
     [self addAddressView];
     
     [self addWebsiteView];
-    
-    dataScrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"detail_bg.png"]];
         
     [self addBottomView];
     
-    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight+175)];
+    [dataScrollView setContentSize:CGSizeMake(self.view.frame.size.width, _detailHeight)];
     
     [[PlaceStorage historyManager] addPlace:self.place];
 }

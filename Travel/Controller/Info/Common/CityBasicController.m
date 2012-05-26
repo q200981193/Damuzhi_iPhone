@@ -72,6 +72,11 @@
                            action:@selector(clickBack:)];
         
     dataWebview.delegate = self;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -250, 320, 250)];
+    [imageView setImage:[UIImage imageNamed:@"detail_bg_up.png"]];
+    [scrollView addSubview:imageView];
+    [imageView release];
 
     scrollView.backgroundColor = [UIColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:230.0/255.0 alpha:1];
     
@@ -95,6 +100,11 @@
     CGSize sz = scrollView.bounds.size;
     sz.height = webView.frame.size.height + imageHolderView.frame.size.height;
     scrollView.contentSize = sz;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, scrollView.contentSize.height, 320, 250)];
+    [imageView setImage:[UIImage imageNamed:@"detail_bg_down.png"]];
+    [scrollView addSubview:imageView];
+    [imageView release];
 }
 
 - (void)findRequestDone:(int)result overview:(CommonOverview*)overview;

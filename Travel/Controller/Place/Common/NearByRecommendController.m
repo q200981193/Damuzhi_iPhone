@@ -163,7 +163,7 @@
     {
         // try to dequeue an existing pin view first
         static NSString* annotationIdentifier = @"mapAnnotationIdentifier2";
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:[annotation title]];
         
         if (pinView == nil)
         {
