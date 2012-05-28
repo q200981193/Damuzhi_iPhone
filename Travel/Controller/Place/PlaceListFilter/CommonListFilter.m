@@ -13,6 +13,7 @@
 #import "LogUtil.h"
 #import "LocaleUtils.h"
 #import "ImageName.h"
+#import "PlaceUtils.h"
 
 @implementation CommonListFilter
 
@@ -173,20 +174,22 @@
             break;
             
         case SORT_BY_DESTANCE_FROM_NEAR_TO_FAR:
-            array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
-                CLLocation *place1Location = [[CLLocation alloc] initWithLatitude:[place1 latitude] longitude:[place1 longitude]];
-                CLLocation *place2Location = [[CLLocation alloc] initWithLatitude:[place2 latitude] longitude:[place2 longitude]];
-                CLLocationDistance distance1 = [currentLocation distanceFromLocation:place1Location];
-                CLLocationDistance distance2 = [currentLocation distanceFromLocation:place2Location];
-                [place1Location release];
-                [place2Location release];
-                
-                if (distance1 < distance2)
-                    return NSOrderedAscending;
-                else  if (distance1 > distance2)
-                    return NSOrderedDescending;
-                else return NSOrderedSame;
-            }];
+            array = [PlaceUtils sortedByDistance:currentLocation array:placeList type:[selectedSortId intValue]];
+            
+//            [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+//                CLLocation *place1Location = [[CLLocation alloc] initWithLatitude:[place1 latitude] longitude:[place1 longitude]];
+//                CLLocation *place2Location = [[CLLocation alloc] initWithLatitude:[place2 latitude] longitude:[place2 longitude]];
+//                CLLocationDistance distance1 = [currentLocation distanceFromLocation:place1Location];
+//                CLLocationDistance distance2 = [currentLocation distanceFromLocation:place2Location];
+//                [place1Location release];
+//                [place2Location release];
+//                
+//                if (distance1 < distance2)
+//                    return NSOrderedAscending;
+//                else  if (distance1 > distance2)
+//                    return NSOrderedDescending;
+//                else return NSOrderedSame;
+//            }];
             break;
             
         case SORT_BY_STARTS:

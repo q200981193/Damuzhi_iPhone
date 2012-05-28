@@ -101,7 +101,7 @@
 {
     self = [super init];
     if (self) {
-        self.place = place;    
+        self.place = place;  
     }
     
     return self;

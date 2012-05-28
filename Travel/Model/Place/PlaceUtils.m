@@ -195,6 +195,34 @@
     return count;
 }
 
-
++ (NSArray*)sortedByDistance:(CLLocation*)location array:(NSArray*)array type:(int)type
+{
+    NSArray *retArray = [array sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
+        CLLocation *place1Location = [[CLLocation alloc] initWithLatitude:[place1 latitude] longitude:[place1 longitude]];
+        CLLocation *place2Location = [[CLLocation alloc] initWithLatitude:[place2 latitude] longitude:[place2 longitude]];
+        CLLocationDistance distance1 = [location distanceFromLocation:place1Location];
+        CLLocationDistance distance2 = [location distanceFromLocation:place2Location];
+        [place1Location release];
+        [place2Location release];
+        
+        if (type == SORT_BY_DESTANCE_FROM_NEAR_TO_FAR) {
+            if (distance1 < distance2)
+                return NSOrderedAscending;
+            else  if (distance1 > distance2)
+                return NSOrderedDescending;
+            else return NSOrderedSame;
+        }else if(type == SORT_BY_DESTANCE_FROM_FAR_TO_NEAR){
+            if (distance1 > distance2)
+                return NSOrderedAscending;
+            else  if (distance1 < distance2)
+                return NSOrderedDescending;
+            else return NSOrderedSame;
+        }else {
+            return NSOrderedSame;
+        }
+    }];
+    
+    return retArray;
+}
 
 @end

@@ -238,18 +238,22 @@
     UIButton *button = (UIButton*)sender;
     button.selected = !button.selected;
     if (button.selected) {
-        mapView.showsUserLocation = YES;
-        [MapUtils gotoLocation:mapView latitude:mapView.userLocation.location.coordinate.latitude longitude:mapView.userLocation.location.coordinate.longitude];
+        mapView.showsUserLocation = YES;       
     }else {
         mapView.showsUserLocation = NO;
         [MapUtils gotoLocation:mapView latitude:_place.latitude longitude:_place.longitude];
     }
 }
 
+- (void)mapView:(MKMapView *)mapView1 didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    [MapUtils gotoLocation:mapView1 latitude:userLocation.location.coordinate.latitude longitude:userLocation.location.coordinate.longitude];
+}
+
 - (void)addMyLocationBtnTo:(UIView*)view
 {
     //    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(3, 3, 31, 31)];            
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-35, self.view.frame.size.height-35, 31, 31)];            
     
     [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"locate_back.png"] forState:UIControlStateSelected];

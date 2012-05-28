@@ -19,6 +19,7 @@
 #import "AppService.h"
 #import <CoreLocation/CoreLocation.h>
 #import "UIUtils.h"
+#import "PlaceUtils.h"
 
 #define TEST_FOR_SIMULATE__LOCATION
 
@@ -238,25 +239,23 @@ UITextField * alertTextField;
 #endif
 
 
-- (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
+- (NSArray*)filterByDistanceAndSort:(NSArray*)list distance:(int)distance
 {
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
+    
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
         
-        CLLocation *myLocation = [[AppService defaultService] currentLocation];
-
-        CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
+        CLLocationDistance distance = [[[AppService defaultService] currentLocation] distanceFromLocation:placeLocation];
         [placeLocation release];
                 
         if (distance <= _distance) {
             [placeList addObject:place];
         }
     }
-    
-    return placeList;
-}
 
+    return [PlaceUtils sortedByDistance:[[AppService defaultService] currentLocation] array:placeList type:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR];
+}
 
 - (void )clickMapBtn:(id)sender
 {
@@ -421,7 +420,7 @@ UITextField * alertTextField;
     }
     
     self.allPlaceList = placeList;
-    self.placeList = [self filterByDistance:_allPlaceList distance:_distance];
+    self.placeList = [self filterByDistanceAndSort:_allPlaceList distance:_distance];
     
     // Update place count in navigation bar.
     self.title = [NSString stringWithFormat:NSLS(@"我的附近(%d)"), [_placeList count]];
@@ -429,6 +428,7 @@ UITextField * alertTextField;
     // Reload place list.
     [_placeListController setPlaceList:_placeList];
 }
+
 
 - (void)didPullDown
 {

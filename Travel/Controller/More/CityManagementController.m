@@ -357,7 +357,7 @@ static CityManagementController *_instance;
     PPDebug(@"download failed, error = %@", error.description);
     NSString *message = [NSString stringWithFormat:NSLS(@"%@.%@城市数据下载失败"), city.countryName, city.cityName];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles:nil];
     [alert show];
     [alert release];
 //    [self popupMessage:message title:nil];

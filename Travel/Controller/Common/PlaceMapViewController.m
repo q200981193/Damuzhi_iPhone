@@ -165,14 +165,26 @@
     _mapView.showsUserLocation = isShow;
 }
 
-- (void)clickMyLocationBtn
+- (void)clickMyLocationBtn:(id)sender
 {
-    [self showUserLocation:YES];
-    [MapUtils gotoLocation:_mapView latitude:_mapView.userLocation.location.coordinate.latitude longitude:_mapView.userLocation.location.coordinate.longitude];
+    UIButton *button = (UIButton*)sender;
+    button.selected = !button.selected;
+    if (button.selected) {
+        _mapView.showsUserLocation = YES;       
+    }else {
+        _mapView.showsUserLocation = NO;
+        Place *place = [_placeList objectAtIndex:0];
+        [MapUtils gotoLocation:_mapView latitude:place.latitude longitude:place.longitude];
+    }
 }
 
 #pragma mark -
 #pragma mark MKMapViewDelegate
+
+- (void)mapView:(MKMapView *)mapView1 didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    [MapUtils gotoLocation:mapView1 latitude:userLocation.location.coordinate.latitude longitude:userLocation.location.coordinate.longitude];
+}
 
 //The event handling method
 - (void)notationAction:(id)sender
@@ -222,11 +234,15 @@
 
 - (void)addMyLocationBtnTo:(UIView*)view
 {
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(view.frame.size.width-31, view.frame.size.height-31, 31, 31)];  
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-35, 342, 31, 31)];            
+
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 31, 31)];            
 
     [button setImage:[UIImage imageNamed:@"locate.png"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(clickMyLocationBtn) forControlEvents:UIControlEventTouchUpInside];
+    [button setImage:[UIImage imageNamed:@"locate_jt.png"] forState:UIControlStateSelected];
+    
+    [button addTarget:self action:@selector(clickMyLocationBtn:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     [button release];
 }
