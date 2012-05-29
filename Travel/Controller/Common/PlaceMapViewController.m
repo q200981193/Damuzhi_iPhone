@@ -176,6 +176,9 @@
         Place *place = [_placeList objectAtIndex:0];
         [MapUtils gotoLocation:_mapView latitude:place.latitude longitude:place.longitude];
     }
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.028, 0.028);
+    [MapUtils setMapSpan:_mapView span:span];
 }
 
 #pragma mark -

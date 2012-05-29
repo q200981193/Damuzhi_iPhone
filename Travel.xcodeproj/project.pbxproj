@@ -3946,8 +3946,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3962,8 +3962,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "F934E021-3EEF-446A-B947-622789AE03D5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F934E021-3EEF-446A-B947-622789AE03D5";
+				PROVISIONING_PROFILE = "82576983-BE93-468C-9D5F-DA06785F744C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82576983-BE93-468C-9D5F-DA06785F744C";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 			};
@@ -3977,8 +3977,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: TopTrip Co.Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TopTrip Co.Ltd";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -3987,8 +3987,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "F934E021-3EEF-446A-B947-622789AE03D5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F934E021-3EEF-446A-B947-622789AE03D5";
+				PROVISIONING_PROFILE = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 				VALIDATE_PRODUCT = YES;
@@ -3998,8 +3998,8 @@
 		CA49071314F5F05B00228C37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -4009,8 +4009,8 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F934E021-3EEF-446A-B947-622789AE03D5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F934E021-3EEF-446A-B947-622789AE03D5";
+				PROVISIONING_PROFILE = "82576983-BE93-468C-9D5F-DA06785F744C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82576983-BE93-468C-9D5F-DA06785F744C";
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
 			};
@@ -4019,8 +4019,8 @@
 		CA49071414F5F05B00228C37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: TopTrip Co.Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TopTrip Co.Ltd";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -4030,8 +4030,8 @@
 					"\"$(SRCROOT)/../Common_iPhone_20/3PP-SDK/MobClick\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F934E021-3EEF-446A-B947-622789AE03D5";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F934E021-3EEF-446A-B947-622789AE03D5";
+				PROVISIONING_PROFILE = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
 			};

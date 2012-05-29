@@ -21,7 +21,7 @@
 #import "UIUtils.h"
 #import "PlaceUtils.h"
 
-#define TEST_FOR_SIMULATE__LOCATION
+//#define TEST_FOR_SIMULATE__LOCATION
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -43,14 +43,12 @@
 @property (retain, nonatomic) NSArray *placeList;
 @property (retain, nonatomic) PlaceListController* placeListController;
 
-//@property (retain, nonatomic) UIImageView *imageRedStartView;
-
 #ifdef TEST_FOR_SIMULATE__LOCATION
 @property (retain, nonatomic) CLLocation *testLocation;
 #endif
 
 - (void)setSelectedBtn:(int)categoryId;
-- (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance;
+- (NSArray*)filterByDistanceAndSort:(NSArray*)list distance:(int)distance;
 
 @end
 
@@ -61,8 +59,6 @@
 @synthesize allPlaceList = _allPlaceList;
 @synthesize placeList = _placeList;
 @synthesize placeListController = _placeListController;
-
-//@synthesize imageRedStartView;
 
 @synthesize distanceView;
 @synthesize categoryBtnsHolderView;

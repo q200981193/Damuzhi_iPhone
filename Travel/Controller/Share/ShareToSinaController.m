@@ -10,8 +10,11 @@
 #import "LogUtil.h"
 #import "LocaleUtils.h"
 
-#define kSinaWeiBoAppKey        @"475196157"
-#define kSinaWeiBoAppSecret     @"747adfaf3ec50dfe3791f9f0481365aa"
+//#define kSinaWeiBoAppKey        @"475196157"
+#define kSinaWeiBoAppKey        @"4107968699"
+
+//#define kSinaWeiBoAppSecret     @"747adfaf3ec50dfe3791f9f0481365aa"
+#define kSinaWeiBoAppSecret     @"7d7d43fde5bb48e19c4b4bd09bd07848"
 
 @interface ShareToSinaController ()
 

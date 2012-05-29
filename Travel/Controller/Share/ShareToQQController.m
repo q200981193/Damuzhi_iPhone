@@ -13,8 +13,10 @@
 #import "QWeiboAsyncApi.h"
 #import "NSURL+QAdditions.h"
 
-#define kQQWeiBoAppKey        @"801124726"
-#define kQQWeiBoAppSecret     @"4cd1cd1882f68fe7a7a43df7761d30d9"
+//#define kQQWeiBoAppKey        @"801124726"
+//#define kQQWeiBoAppSecret     @"4cd1cd1882f68fe7a7a43df7761d30d9"
+#define kQQWeiBoAppKey        @"801157911"
+#define kQQWeiBoAppSecret     @"78eb11cc37feb6325c8d5e4409b598a9"
 #define kQQAccessTokenKey       @"QQAccessTokenKey"
 #define kQQAccessTokenSecret	@"QQAccessTokenSecret"
 #define VERIFY_URL      @"http://open.t.qq.com/cgi-bin/authorize?oauth_token="

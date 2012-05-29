@@ -138,11 +138,12 @@
     }
     
     self.dataList = placeList;
+    [self reloadDataTableView];
 
     if (_showMap) {
         [_mapViewController setPlaces:self.dataList];
     }else {
-        [self reloadDataTableView];
+//        [self reloadDataTableView];
     }
 }
 
