@@ -233,6 +233,8 @@
 		A4DC80F1150F2EF00025F032 /* SelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DC80EF150F2EF00025F032 /* SelectController.m */; };
 		A4DC80F2150F2EF00025F032 /* SelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4DC80F0150F2EF00025F032 /* SelectController.xib */; };
 		A4EAFCCD150DB9BB003C35E5 /* AppService.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EAFCCC150DB9BB003C35E5 /* AppService.m */; };
+		A4EBF07515776E1200B088A0 /* TouristRoute.proto in Resources */ = {isa = PBXBuildFile; fileRef = A4EBF07415776E1200B088A0 /* TouristRoute.proto */; };
+		A4EBF07815776E2000B088A0 /* TouristRoute.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EBF07715776E2000B088A0 /* TouristRoute.pb.m */; };
 		A4EC7F4515732B6000889067 /* locate_jt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4EC7F4415732B6000889067 /* locate_jt@2x.png */; };
 		A4F01FF31508BB900041726D /* TravelNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F01FF21508BB900041726D /* TravelNetworkRequest.m */; };
 		A4FB94AD15368B6500DDC76E /* gl_tg_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94AC15368B6500DDC76E /* gl_tg_bg@2x.png */; };
@@ -839,6 +841,9 @@
 		A4DC80F0150F2EF00025F032 /* SelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectController.xib; sourceTree = "<group>"; };
 		A4EAFCCB150DB9BB003C35E5 /* AppService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppService.h; sourceTree = "<group>"; };
 		A4EAFCCC150DB9BB003C35E5 /* AppService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppService.m; sourceTree = "<group>"; };
+		A4EBF07415776E1200B088A0 /* TouristRoute.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TouristRoute.proto; sourceTree = "<group>"; };
+		A4EBF07615776E2000B088A0 /* TouristRoute.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouristRoute.pb.h; sourceTree = "<group>"; };
+		A4EBF07715776E2000B088A0 /* TouristRoute.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouristRoute.pb.m; sourceTree = "<group>"; };
 		A4EC7F4415732B6000889067 /* locate_jt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "locate_jt@2x.png"; sourceTree = "<group>"; };
 		A4F01FF21508BB900041726D /* TravelNetworkRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelNetworkRequest.m; sourceTree = "<group>"; };
 		A4FB94AC15368B6500DDC76E /* gl_tg_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gl_tg_bg@2x.png"; sourceTree = "<group>"; };
@@ -2079,6 +2084,7 @@
 				CA238F2B14FB2F5C00114175 /* TravelTips.proto */,
 				CA238F2D14FB337C00114175 /* App.proto */,
 				CA238F2F14FB344800114175 /* Package.proto */,
+				A4EBF07415776E1200B088A0 /* TouristRoute.proto */,
 			);
 			path = ProtocolBuffer;
 			sourceTree = "<group>";
@@ -2086,6 +2092,8 @@
 		CA238F3114FB526C00114175 /* Gen */ = {
 			isa = PBXGroup;
 			children = (
+				A4EBF07615776E2000B088A0 /* TouristRoute.pb.h */,
+				A4EBF07715776E2000B088A0 /* TouristRoute.pb.m */,
 				CA238F3214FB526C00114175 /* App.pb.h */,
 				CA238F3314FB526C00114175 /* App.pb.m */,
 				CA238F3414FB526C00114175 /* CityOverview.pb.h */,
@@ -3601,6 +3609,7 @@
 				A45169861570DFDC00FF72CD /* detail_bg_down@2x.png in Resources */,
 				A45169871570DFDC00FF72CD /* detail_bg_up@2x.png in Resources */,
 				A4EC7F4515732B6000889067 /* locate_jt@2x.png in Resources */,
+				A4EBF07515776E1200B088A0 /* TouristRoute.proto in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3870,6 +3879,7 @@
 				A42D90911555387E0023AF32 /* RecommendedAppCell.m in Sources */,
 				A3ED59661557742900312715 /* ResendService.m in Sources */,
 				A3ED596A15577CA700312715 /* ResendManager.m in Sources */,
+				A4EBF07815776E2000B088A0 /* TouristRoute.pb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

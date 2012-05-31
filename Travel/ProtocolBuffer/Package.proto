@@ -3,6 +3,7 @@ import "Place.proto";
 import "CityOverview.proto";
 import "TravelTips.proto";
 import "App.proto";
+import "TouristRoute.proto";
 
 package damuzhi;
 
@@ -33,4 +34,7 @@ message TravelResponse{
   optional CityList cityList = 8;
   optional App appInfo = 9;   
   optional CommonTravelTipList travelTipList = 10;
+  
+  optional TouristRoute route = 20;
+  optional TouristRouteList routeList = 21;
 }
