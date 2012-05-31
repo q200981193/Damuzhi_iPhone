@@ -9,6 +9,7 @@
 #import "ShareToSinaController.h"
 #import "LogUtil.h"
 #import "LocaleUtils.h"
+#import "AppDelegate.h"
 
 //#define kSinaWeiBoAppKey        @"475196157"
 #define kSinaWeiBoAppKey        @"4107968699"
@@ -136,7 +137,7 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, WEIBO_LOGO_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT)];
     textView.delegate = self;
     textView.font = [UIFont systemFontOfSize:14];
-    textView.text = NSLS(@"朋友们，我发现了一款非常专业的旅游指南《大拇指旅游》，非常适合我们外出旅游使用，快下载来看看吧：http://xxxxxx");
+    textView.text = [NSString stringWithFormat:NSLS(@"kShareContent"),[UIUtils getAppLink:kAppId]];
     textView.backgroundColor = [UIColor clearColor];
     self.contentTextView = textView;
     [textView release];
