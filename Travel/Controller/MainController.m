@@ -20,6 +20,7 @@
 #import "TravelUtilityDataSource.h"
 #import "TravelTransportDataSource.h"
 #import "CommonPlace.h"
+#import "AppDelegate.h"
 
 #import "NearbyController.h"
 #import "AppManager.h"
@@ -260,7 +261,7 @@
     switch (buttonIndex) {
         case 0:
         {
-            [self sendSms:nil body:NSLS(@"朋友们，我发现了一款非常专业的旅游指南《大拇指旅游》，非常适合我们外出旅游使用，快下载来看看吧：http://xxxxxx")];
+            [self sendSms:nil body:[NSString stringWithFormat:NSLS(@"kShareContent"),[UIUtils getAppLink:kAppId]]];
             break;
         }
         case 1:

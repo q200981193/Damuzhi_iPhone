@@ -12,6 +12,8 @@
 #import "QWeiboSyncApi.h"
 #import "QWeiboAsyncApi.h"
 #import "NSURL+QAdditions.h"
+#import "UIUtils.h"
+#import "AppDelegate.h"
 
 //#define kQQWeiBoAppKey        @"801124726"
 //#define kQQWeiBoAppSecret     @"4cd1cd1882f68fe7a7a43df7761d30d9"
@@ -168,7 +170,7 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake((320-CONTENT_WIDTH)/2, WEIBO_LOGO_HEIGHT, CONTENT_WIDTH, CONTENT_HEIGHT)];
     textView.delegate = self;
     textView.font = [UIFont systemFontOfSize:14];
-    textView.text = NSLS(@"朋友们，我发现了一款非常专业的旅游指南《大拇指旅游》，非常适合我们外出旅游使用，快下载来看看吧：http://xxxxxx");
+    textView.text = [NSString stringWithFormat:NSLS(@"kShareContent"),[UIUtils getAppLink:kAppId]];
     textView.backgroundColor = [UIColor clearColor];
     self.contentTextView = textView;
     [textView release];
