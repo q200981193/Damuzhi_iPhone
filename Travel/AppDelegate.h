@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PPApplication.h"
 
-#define kAppId			@"travl_id"
+#define kAppId			@"531266294"
 
 @class MainController;
 
