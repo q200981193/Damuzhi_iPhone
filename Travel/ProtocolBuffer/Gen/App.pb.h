@@ -2,22 +2,48 @@
 
 #import "ProtocolBuffers.h"
 
+#import "TouristRoute.pb.h"
+
+@class Accommodation;
+@class Accommodation_Builder;
+@class Agency;
+@class Agency_Builder;
 @class App;
 @class App_Builder;
+@class Booking;
+@class Booking_Builder;
 @class City;
 @class CityArea;
 @class CityArea_Builder;
 @class CityList;
 @class CityList_Builder;
 @class City_Builder;
+@class DailySchedule;
+@class DailySchedule_Builder;
+@class Flight;
+@class Flight_Builder;
 @class HelpInfo;
 @class HelpInfo_Builder;
 @class NameIdPair;
 @class NameIdPair_Builder;
+@class Order;
+@class OrderList;
+@class OrderList_Builder;
+@class Order_Builder;
 @class PlaceMeta;
 @class PlaceMeta_Builder;
+@class PlaceTour;
+@class PlaceTour_Builder;
 @class RecommendedApp;
 @class RecommendedApp_Builder;
+@class RouteCity;
+@class RouteCity_Builder;
+@class TouristRoute;
+@class TouristRouteList;
+@class TouristRouteList_Builder;
+@class TouristRoute_Builder;
+@class TravelPackage;
+@class TravelPackage_Builder;
 typedef enum {
   PlaceCategoryTypePlaceAll = 9999,
   PlaceCategoryTypePlaceSpot = 1,
@@ -574,6 +600,129 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (RecommendedApp_Builder*) clearUrl;
 @end
 
+@interface Agency : PBGeneratedMessage {
+@private
+  BOOL hasAgencyId_:1;
+  BOOL hasName_:1;
+  int32_t agencyId;
+  int32_t name;
+}
+- (BOOL) hasAgencyId;
+- (BOOL) hasName;
+@property (readonly) int32_t agencyId;
+@property (readonly) int32_t name;
+
++ (Agency*) defaultInstance;
+- (Agency*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (Agency_Builder*) builder;
++ (Agency_Builder*) builder;
++ (Agency_Builder*) builderWithPrototype:(Agency*) prototype;
+
++ (Agency*) parseFromData:(NSData*) data;
++ (Agency*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (Agency*) parseFromInputStream:(NSInputStream*) input;
++ (Agency*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (Agency*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (Agency*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface Agency_Builder : PBGeneratedMessage_Builder {
+@private
+  Agency* result;
+}
+
+- (Agency*) defaultInstance;
+
+- (Agency_Builder*) clear;
+- (Agency_Builder*) clone;
+
+- (Agency*) build;
+- (Agency*) buildPartial;
+
+- (Agency_Builder*) mergeFrom:(Agency*) other;
+- (Agency_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (Agency_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasAgencyId;
+- (int32_t) agencyId;
+- (Agency_Builder*) setAgencyId:(int32_t) value;
+- (Agency_Builder*) clearAgencyId;
+
+- (BOOL) hasName;
+- (int32_t) name;
+- (Agency_Builder*) setName:(int32_t) value;
+- (Agency_Builder*) clearName;
+@end
+
+@interface RouteCity : PBGeneratedMessage {
+@private
+  BOOL hasRouteCityId_:1;
+  BOOL hasCityName_:1;
+  BOOL hasCountryName_:1;
+  int32_t routeCityId;
+  NSString* cityName;
+  NSString* countryName;
+}
+- (BOOL) hasRouteCityId;
+- (BOOL) hasCityName;
+- (BOOL) hasCountryName;
+@property (readonly) int32_t routeCityId;
+@property (readonly, retain) NSString* cityName;
+@property (readonly, retain) NSString* countryName;
+
++ (RouteCity*) defaultInstance;
+- (RouteCity*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (RouteCity_Builder*) builder;
++ (RouteCity_Builder*) builder;
++ (RouteCity_Builder*) builderWithPrototype:(RouteCity*) prototype;
+
++ (RouteCity*) parseFromData:(NSData*) data;
++ (RouteCity*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RouteCity*) parseFromInputStream:(NSInputStream*) input;
++ (RouteCity*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RouteCity*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (RouteCity*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface RouteCity_Builder : PBGeneratedMessage_Builder {
+@private
+  RouteCity* result;
+}
+
+- (RouteCity*) defaultInstance;
+
+- (RouteCity_Builder*) clear;
+- (RouteCity_Builder*) clone;
+
+- (RouteCity*) build;
+- (RouteCity*) buildPartial;
+
+- (RouteCity_Builder*) mergeFrom:(RouteCity*) other;
+- (RouteCity_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (RouteCity_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasRouteCityId;
+- (int32_t) routeCityId;
+- (RouteCity_Builder*) setRouteCityId:(int32_t) value;
+- (RouteCity_Builder*) clearRouteCityId;
+
+- (BOOL) hasCityName;
+- (NSString*) cityName;
+- (RouteCity_Builder*) setCityName:(NSString*) value;
+- (RouteCity_Builder*) clearCityName;
+
+- (BOOL) hasCountryName;
+- (NSString*) countryName;
+- (RouteCity_Builder*) setCountryName:(NSString*) value;
+- (RouteCity_Builder*) clearCountryName;
+@end
+
 @interface App : PBGeneratedMessage {
 @private
   BOOL hasDataVersion_:1;
@@ -582,6 +731,11 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   NSMutableArray* mutableTestCitiesList;
   NSMutableArray* mutablePlaceMetaDataListList;
   NSMutableArray* mutableRecommendedAppsList;
+  NSMutableArray* mutableDepartCitiesList;
+  NSMutableArray* mutableDestinationCitiesList;
+  NSMutableArray* mutableRouteThemesList;
+  NSMutableArray* mutableRouteTypesList;
+  NSMutableArray* mutableAgenciesList;
 }
 - (BOOL) hasDataVersion;
 @property (readonly, retain) NSString* dataVersion;
@@ -593,6 +747,16 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
 - (NSArray*) recommendedAppsList;
 - (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index;
+- (NSArray*) departCitiesList;
+- (RouteCity*) departCitiesAtIndex:(int32_t) index;
+- (NSArray*) destinationCitiesList;
+- (RouteCity*) destinationCitiesAtIndex:(int32_t) index;
+- (NSArray*) routeThemesList;
+- (NameIdPair*) routeThemesAtIndex:(int32_t) index;
+- (NSArray*) routeTypesList;
+- (NameIdPair*) routeTypesAtIndex:(int32_t) index;
+- (NSArray*) agenciesList;
+- (Agency*) agenciesAtIndex:(int32_t) index;
 
 + (App*) defaultInstance;
 - (App*) defaultInstance;
@@ -660,5 +824,40 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) addRecommendedApps:(RecommendedApp*) value;
 - (App_Builder*) addAllRecommendedApps:(NSArray*) values;
 - (App_Builder*) clearRecommendedAppsList;
+
+- (NSArray*) departCitiesList;
+- (RouteCity*) departCitiesAtIndex:(int32_t) index;
+- (App_Builder*) replaceDepartCitiesAtIndex:(int32_t) index with:(RouteCity*) value;
+- (App_Builder*) addDepartCities:(RouteCity*) value;
+- (App_Builder*) addAllDepartCities:(NSArray*) values;
+- (App_Builder*) clearDepartCitiesList;
+
+- (NSArray*) destinationCitiesList;
+- (RouteCity*) destinationCitiesAtIndex:(int32_t) index;
+- (App_Builder*) replaceDestinationCitiesAtIndex:(int32_t) index with:(RouteCity*) value;
+- (App_Builder*) addDestinationCities:(RouteCity*) value;
+- (App_Builder*) addAllDestinationCities:(NSArray*) values;
+- (App_Builder*) clearDestinationCitiesList;
+
+- (NSArray*) routeThemesList;
+- (NameIdPair*) routeThemesAtIndex:(int32_t) index;
+- (App_Builder*) replaceRouteThemesAtIndex:(int32_t) index with:(NameIdPair*) value;
+- (App_Builder*) addRouteThemes:(NameIdPair*) value;
+- (App_Builder*) addAllRouteThemes:(NSArray*) values;
+- (App_Builder*) clearRouteThemesList;
+
+- (NSArray*) routeTypesList;
+- (NameIdPair*) routeTypesAtIndex:(int32_t) index;
+- (App_Builder*) replaceRouteTypesAtIndex:(int32_t) index with:(NameIdPair*) value;
+- (App_Builder*) addRouteTypes:(NameIdPair*) value;
+- (App_Builder*) addAllRouteTypes:(NSArray*) values;
+- (App_Builder*) clearRouteTypesList;
+
+- (NSArray*) agenciesList;
+- (Agency*) agenciesAtIndex:(int32_t) index;
+- (App_Builder*) replaceAgenciesAtIndex:(int32_t) index with:(Agency*) value;
+- (App_Builder*) addAgencies:(Agency*) value;
+- (App_Builder*) addAllAgencies:(NSArray*) values;
+- (App_Builder*) clearAgenciesList;
 @end
 

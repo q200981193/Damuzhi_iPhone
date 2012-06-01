@@ -102,7 +102,7 @@
         //set input parameters
         NSString* str = [NSString stringWithString:baseURL];        
         
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:[[UserManager defaultManager] userId]];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:[[UserManager defaultManager] getUserId]];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTACT 
                                        value:[contact stringByURLEncode]];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTENT 

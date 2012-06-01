@@ -16,6 +16,7 @@ static PBExtensionRegistry* extensionRegistry = nil;
     [CityOverviewRoot registerAllExtensions:registry];
     [TravelTipsRoot registerAllExtensions:registry];
     [AppRoot registerAllExtensions:registry];
+    [TouristRouteRoot registerAllExtensions:registry];
     extensionRegistry = [registry retain];
   }
 }
@@ -343,6 +344,1072 @@ static Package* defaultPackageInstance = nil;
 }
 @end
 
+@interface UserInfo ()
+@property (retain) NSString* userId;
+@property (retain) NSString* memberId;
+@property (retain) NSString* password;
+@property (retain) NSString* nickName;
+@property int32_t gender;
+@property int32_t type;
+@property (retain) NSString* fullName;
+@property (retain) NSString* telephone;
+@property (retain) NSString* email;
+@end
+
+@implementation UserInfo
+
+- (BOOL) hasUserId {
+  return !!hasUserId_;
+}
+- (void) setHasUserId:(BOOL) value {
+  hasUserId_ = !!value;
+}
+@synthesize userId;
+- (BOOL) hasMemberId {
+  return !!hasMemberId_;
+}
+- (void) setHasMemberId:(BOOL) value {
+  hasMemberId_ = !!value;
+}
+@synthesize memberId;
+- (BOOL) hasPassword {
+  return !!hasPassword_;
+}
+- (void) setHasPassword:(BOOL) value {
+  hasPassword_ = !!value;
+}
+@synthesize password;
+- (BOOL) hasNickName {
+  return !!hasNickName_;
+}
+- (void) setHasNickName:(BOOL) value {
+  hasNickName_ = !!value;
+}
+@synthesize nickName;
+- (BOOL) hasGender {
+  return !!hasGender_;
+}
+- (void) setHasGender:(BOOL) value {
+  hasGender_ = !!value;
+}
+@synthesize gender;
+- (BOOL) hasType {
+  return !!hasType_;
+}
+- (void) setHasType:(BOOL) value {
+  hasType_ = !!value;
+}
+@synthesize type;
+- (BOOL) hasFullName {
+  return !!hasFullName_;
+}
+- (void) setHasFullName:(BOOL) value {
+  hasFullName_ = !!value;
+}
+@synthesize fullName;
+- (BOOL) hasTelephone {
+  return !!hasTelephone_;
+}
+- (void) setHasTelephone:(BOOL) value {
+  hasTelephone_ = !!value;
+}
+@synthesize telephone;
+- (BOOL) hasEmail {
+  return !!hasEmail_;
+}
+- (void) setHasEmail:(BOOL) value {
+  hasEmail_ = !!value;
+}
+@synthesize email;
+- (void) dealloc {
+  self.userId = nil;
+  self.memberId = nil;
+  self.password = nil;
+  self.nickName = nil;
+  self.fullName = nil;
+  self.telephone = nil;
+  self.email = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.userId = @"";
+    self.memberId = @"";
+    self.password = @"";
+    self.nickName = @"";
+    self.gender = 0;
+    self.type = 0;
+    self.fullName = @"";
+    self.telephone = @"";
+    self.email = @"";
+  }
+  return self;
+}
+static UserInfo* defaultUserInfoInstance = nil;
++ (void) initialize {
+  if (self == [UserInfo class]) {
+    defaultUserInfoInstance = [[UserInfo alloc] init];
+  }
+}
++ (UserInfo*) defaultInstance {
+  return defaultUserInfoInstance;
+}
+- (UserInfo*) defaultInstance {
+  return defaultUserInfoInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasMemberId) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasUserId) {
+    [output writeString:1 value:self.userId];
+  }
+  if (self.hasMemberId) {
+    [output writeString:2 value:self.memberId];
+  }
+  if (self.hasPassword) {
+    [output writeString:3 value:self.password];
+  }
+  if (self.hasNickName) {
+    [output writeString:4 value:self.nickName];
+  }
+  if (self.hasGender) {
+    [output writeInt32:5 value:self.gender];
+  }
+  if (self.hasType) {
+    [output writeInt32:6 value:self.type];
+  }
+  if (self.hasFullName) {
+    [output writeString:7 value:self.fullName];
+  }
+  if (self.hasTelephone) {
+    [output writeString:8 value:self.telephone];
+  }
+  if (self.hasEmail) {
+    [output writeString:9 value:self.email];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasUserId) {
+    size += computeStringSize(1, self.userId);
+  }
+  if (self.hasMemberId) {
+    size += computeStringSize(2, self.memberId);
+  }
+  if (self.hasPassword) {
+    size += computeStringSize(3, self.password);
+  }
+  if (self.hasNickName) {
+    size += computeStringSize(4, self.nickName);
+  }
+  if (self.hasGender) {
+    size += computeInt32Size(5, self.gender);
+  }
+  if (self.hasType) {
+    size += computeInt32Size(6, self.type);
+  }
+  if (self.hasFullName) {
+    size += computeStringSize(7, self.fullName);
+  }
+  if (self.hasTelephone) {
+    size += computeStringSize(8, self.telephone);
+  }
+  if (self.hasEmail) {
+    size += computeStringSize(9, self.email);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (UserInfo*) parseFromData:(NSData*) data {
+  return (UserInfo*)[[[UserInfo builder] mergeFromData:data] build];
+}
++ (UserInfo*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (UserInfo*)[[[UserInfo builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (UserInfo*) parseFromInputStream:(NSInputStream*) input {
+  return (UserInfo*)[[[UserInfo builder] mergeFromInputStream:input] build];
+}
++ (UserInfo*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (UserInfo*)[[[UserInfo builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (UserInfo*)[[[UserInfo builder] mergeFromCodedInputStream:input] build];
+}
++ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (UserInfo*)[[[UserInfo builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (UserInfo_Builder*) builder {
+  return [[[UserInfo_Builder alloc] init] autorelease];
+}
++ (UserInfo_Builder*) builderWithPrototype:(UserInfo*) prototype {
+  return [[UserInfo builder] mergeFrom:prototype];
+}
+- (UserInfo_Builder*) builder {
+  return [UserInfo builder];
+}
+@end
+
+@interface UserInfo_Builder()
+@property (retain) UserInfo* result;
+@end
+
+@implementation UserInfo_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[UserInfo alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (UserInfo_Builder*) clear {
+  self.result = [[[UserInfo alloc] init] autorelease];
+  return self;
+}
+- (UserInfo_Builder*) clone {
+  return [UserInfo builderWithPrototype:result];
+}
+- (UserInfo*) defaultInstance {
+  return [UserInfo defaultInstance];
+}
+- (UserInfo*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (UserInfo*) buildPartial {
+  UserInfo* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (UserInfo_Builder*) mergeFrom:(UserInfo*) other {
+  if (other == [UserInfo defaultInstance]) {
+    return self;
+  }
+  if (other.hasUserId) {
+    [self setUserId:other.userId];
+  }
+  if (other.hasMemberId) {
+    [self setMemberId:other.memberId];
+  }
+  if (other.hasPassword) {
+    [self setPassword:other.password];
+  }
+  if (other.hasNickName) {
+    [self setNickName:other.nickName];
+  }
+  if (other.hasGender) {
+    [self setGender:other.gender];
+  }
+  if (other.hasType) {
+    [self setType:other.type];
+  }
+  if (other.hasFullName) {
+    [self setFullName:other.fullName];
+  }
+  if (other.hasTelephone) {
+    [self setTelephone:other.telephone];
+  }
+  if (other.hasEmail) {
+    [self setEmail:other.email];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setUserId:[input readString]];
+        break;
+      }
+      case 18: {
+        [self setMemberId:[input readString]];
+        break;
+      }
+      case 26: {
+        [self setPassword:[input readString]];
+        break;
+      }
+      case 34: {
+        [self setNickName:[input readString]];
+        break;
+      }
+      case 40: {
+        [self setGender:[input readInt32]];
+        break;
+      }
+      case 48: {
+        [self setType:[input readInt32]];
+        break;
+      }
+      case 58: {
+        [self setFullName:[input readString]];
+        break;
+      }
+      case 66: {
+        [self setTelephone:[input readString]];
+        break;
+      }
+      case 74: {
+        [self setEmail:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasUserId {
+  return result.hasUserId;
+}
+- (NSString*) userId {
+  return result.userId;
+}
+- (UserInfo_Builder*) setUserId:(NSString*) value {
+  result.hasUserId = YES;
+  result.userId = value;
+  return self;
+}
+- (UserInfo_Builder*) clearUserId {
+  result.hasUserId = NO;
+  result.userId = @"";
+  return self;
+}
+- (BOOL) hasMemberId {
+  return result.hasMemberId;
+}
+- (NSString*) memberId {
+  return result.memberId;
+}
+- (UserInfo_Builder*) setMemberId:(NSString*) value {
+  result.hasMemberId = YES;
+  result.memberId = value;
+  return self;
+}
+- (UserInfo_Builder*) clearMemberId {
+  result.hasMemberId = NO;
+  result.memberId = @"";
+  return self;
+}
+- (BOOL) hasPassword {
+  return result.hasPassword;
+}
+- (NSString*) password {
+  return result.password;
+}
+- (UserInfo_Builder*) setPassword:(NSString*) value {
+  result.hasPassword = YES;
+  result.password = value;
+  return self;
+}
+- (UserInfo_Builder*) clearPassword {
+  result.hasPassword = NO;
+  result.password = @"";
+  return self;
+}
+- (BOOL) hasNickName {
+  return result.hasNickName;
+}
+- (NSString*) nickName {
+  return result.nickName;
+}
+- (UserInfo_Builder*) setNickName:(NSString*) value {
+  result.hasNickName = YES;
+  result.nickName = value;
+  return self;
+}
+- (UserInfo_Builder*) clearNickName {
+  result.hasNickName = NO;
+  result.nickName = @"";
+  return self;
+}
+- (BOOL) hasGender {
+  return result.hasGender;
+}
+- (int32_t) gender {
+  return result.gender;
+}
+- (UserInfo_Builder*) setGender:(int32_t) value {
+  result.hasGender = YES;
+  result.gender = value;
+  return self;
+}
+- (UserInfo_Builder*) clearGender {
+  result.hasGender = NO;
+  result.gender = 0;
+  return self;
+}
+- (BOOL) hasType {
+  return result.hasType;
+}
+- (int32_t) type {
+  return result.type;
+}
+- (UserInfo_Builder*) setType:(int32_t) value {
+  result.hasType = YES;
+  result.type = value;
+  return self;
+}
+- (UserInfo_Builder*) clearType {
+  result.hasType = NO;
+  result.type = 0;
+  return self;
+}
+- (BOOL) hasFullName {
+  return result.hasFullName;
+}
+- (NSString*) fullName {
+  return result.fullName;
+}
+- (UserInfo_Builder*) setFullName:(NSString*) value {
+  result.hasFullName = YES;
+  result.fullName = value;
+  return self;
+}
+- (UserInfo_Builder*) clearFullName {
+  result.hasFullName = NO;
+  result.fullName = @"";
+  return self;
+}
+- (BOOL) hasTelephone {
+  return result.hasTelephone;
+}
+- (NSString*) telephone {
+  return result.telephone;
+}
+- (UserInfo_Builder*) setTelephone:(NSString*) value {
+  result.hasTelephone = YES;
+  result.telephone = value;
+  return self;
+}
+- (UserInfo_Builder*) clearTelephone {
+  result.hasTelephone = NO;
+  result.telephone = @"";
+  return self;
+}
+- (BOOL) hasEmail {
+  return result.hasEmail;
+}
+- (NSString*) email {
+  return result.email;
+}
+- (UserInfo_Builder*) setEmail:(NSString*) value {
+  result.hasEmail = YES;
+  result.email = value;
+  return self;
+}
+- (UserInfo_Builder*) clearEmail {
+  result.hasEmail = NO;
+  result.email = @"";
+  return self;
+}
+@end
+
+@interface RouteFeekbackList ()
+@property (retain) NSMutableArray* mutableRouteFeekbacksList;
+@end
+
+@implementation RouteFeekbackList
+
+@synthesize mutableRouteFeekbacksList;
+- (void) dealloc {
+  self.mutableRouteFeekbacksList = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+  }
+  return self;
+}
+static RouteFeekbackList* defaultRouteFeekbackListInstance = nil;
++ (void) initialize {
+  if (self == [RouteFeekbackList class]) {
+    defaultRouteFeekbackListInstance = [[RouteFeekbackList alloc] init];
+  }
+}
++ (RouteFeekbackList*) defaultInstance {
+  return defaultRouteFeekbackListInstance;
+}
+- (RouteFeekbackList*) defaultInstance {
+  return defaultRouteFeekbackListInstance;
+}
+- (NSArray*) routeFeekbacksList {
+  return mutableRouteFeekbacksList;
+}
+- (RouteFeekback*) routeFeekbacksAtIndex:(int32_t) index {
+  id value = [mutableRouteFeekbacksList objectAtIndex:index];
+  return value;
+}
+- (BOOL) isInitialized {
+  for (RouteFeekback* element in self.routeFeekbacksList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  for (RouteFeekback* element in self.routeFeekbacksList) {
+    [output writeMessage:1 value:element];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  for (RouteFeekback* element in self.routeFeekbacksList) {
+    size += computeMessageSize(1, element);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (RouteFeekbackList*) parseFromData:(NSData*) data {
+  return (RouteFeekbackList*)[[[RouteFeekbackList builder] mergeFromData:data] build];
+}
++ (RouteFeekbackList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteFeekbackList*)[[[RouteFeekbackList builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (RouteFeekbackList*) parseFromInputStream:(NSInputStream*) input {
+  return (RouteFeekbackList*)[[[RouteFeekbackList builder] mergeFromInputStream:input] build];
+}
++ (RouteFeekbackList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteFeekbackList*)[[[RouteFeekbackList builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RouteFeekbackList*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (RouteFeekbackList*)[[[RouteFeekbackList builder] mergeFromCodedInputStream:input] build];
+}
++ (RouteFeekbackList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteFeekbackList*)[[[RouteFeekbackList builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RouteFeekbackList_Builder*) builder {
+  return [[[RouteFeekbackList_Builder alloc] init] autorelease];
+}
++ (RouteFeekbackList_Builder*) builderWithPrototype:(RouteFeekbackList*) prototype {
+  return [[RouteFeekbackList builder] mergeFrom:prototype];
+}
+- (RouteFeekbackList_Builder*) builder {
+  return [RouteFeekbackList builder];
+}
+@end
+
+@interface RouteFeekbackList_Builder()
+@property (retain) RouteFeekbackList* result;
+@end
+
+@implementation RouteFeekbackList_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[RouteFeekbackList alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (RouteFeekbackList_Builder*) clear {
+  self.result = [[[RouteFeekbackList alloc] init] autorelease];
+  return self;
+}
+- (RouteFeekbackList_Builder*) clone {
+  return [RouteFeekbackList builderWithPrototype:result];
+}
+- (RouteFeekbackList*) defaultInstance {
+  return [RouteFeekbackList defaultInstance];
+}
+- (RouteFeekbackList*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (RouteFeekbackList*) buildPartial {
+  RouteFeekbackList* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (RouteFeekbackList_Builder*) mergeFrom:(RouteFeekbackList*) other {
+  if (other == [RouteFeekbackList defaultInstance]) {
+    return self;
+  }
+  if (other.mutableRouteFeekbacksList.count > 0) {
+    if (result.mutableRouteFeekbacksList == nil) {
+      result.mutableRouteFeekbacksList = [NSMutableArray array];
+    }
+    [result.mutableRouteFeekbacksList addObjectsFromArray:other.mutableRouteFeekbacksList];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (RouteFeekbackList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (RouteFeekbackList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        RouteFeekback_Builder* subBuilder = [RouteFeekback builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addRouteFeekbacks:[subBuilder buildPartial]];
+        break;
+      }
+    }
+  }
+}
+- (NSArray*) routeFeekbacksList {
+  if (result.mutableRouteFeekbacksList == nil) { return [NSArray array]; }
+  return result.mutableRouteFeekbacksList;
+}
+- (RouteFeekback*) routeFeekbacksAtIndex:(int32_t) index {
+  return [result routeFeekbacksAtIndex:index];
+}
+- (RouteFeekbackList_Builder*) replaceRouteFeekbacksAtIndex:(int32_t) index with:(RouteFeekback*) value {
+  [result.mutableRouteFeekbacksList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (RouteFeekbackList_Builder*) addAllRouteFeekbacks:(NSArray*) values {
+  if (result.mutableRouteFeekbacksList == nil) {
+    result.mutableRouteFeekbacksList = [NSMutableArray array];
+  }
+  [result.mutableRouteFeekbacksList addObjectsFromArray:values];
+  return self;
+}
+- (RouteFeekbackList_Builder*) clearRouteFeekbacksList {
+  result.mutableRouteFeekbacksList = nil;
+  return self;
+}
+- (RouteFeekbackList_Builder*) addRouteFeekbacks:(RouteFeekback*) value {
+  if (result.mutableRouteFeekbacksList == nil) {
+    result.mutableRouteFeekbacksList = [NSMutableArray array];
+  }
+  [result.mutableRouteFeekbacksList addObject:value];
+  return self;
+}
+@end
+
+@interface RouteFeekback ()
+@property int32_t routeId;
+@property (retain) NSString* memberId;
+@property (retain) NSString* nickName;
+@property (retain) NSString* date;
+@property int32_t rank;
+@property (retain) NSString* content;
+@end
+
+@implementation RouteFeekback
+
+- (BOOL) hasRouteId {
+  return !!hasRouteId_;
+}
+- (void) setHasRouteId:(BOOL) value {
+  hasRouteId_ = !!value;
+}
+@synthesize routeId;
+- (BOOL) hasMemberId {
+  return !!hasMemberId_;
+}
+- (void) setHasMemberId:(BOOL) value {
+  hasMemberId_ = !!value;
+}
+@synthesize memberId;
+- (BOOL) hasNickName {
+  return !!hasNickName_;
+}
+- (void) setHasNickName:(BOOL) value {
+  hasNickName_ = !!value;
+}
+@synthesize nickName;
+- (BOOL) hasDate {
+  return !!hasDate_;
+}
+- (void) setHasDate:(BOOL) value {
+  hasDate_ = !!value;
+}
+@synthesize date;
+- (BOOL) hasRank {
+  return !!hasRank_;
+}
+- (void) setHasRank:(BOOL) value {
+  hasRank_ = !!value;
+}
+@synthesize rank;
+- (BOOL) hasContent {
+  return !!hasContent_;
+}
+- (void) setHasContent:(BOOL) value {
+  hasContent_ = !!value;
+}
+@synthesize content;
+- (void) dealloc {
+  self.memberId = nil;
+  self.nickName = nil;
+  self.date = nil;
+  self.content = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.routeId = 0;
+    self.memberId = @"";
+    self.nickName = @"";
+    self.date = @"";
+    self.rank = 0;
+    self.content = @"";
+  }
+  return self;
+}
+static RouteFeekback* defaultRouteFeekbackInstance = nil;
++ (void) initialize {
+  if (self == [RouteFeekback class]) {
+    defaultRouteFeekbackInstance = [[RouteFeekback alloc] init];
+  }
+}
++ (RouteFeekback*) defaultInstance {
+  return defaultRouteFeekbackInstance;
+}
+- (RouteFeekback*) defaultInstance {
+  return defaultRouteFeekbackInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasNickName) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasRouteId) {
+    [output writeInt32:1 value:self.routeId];
+  }
+  if (self.hasMemberId) {
+    [output writeString:2 value:self.memberId];
+  }
+  if (self.hasNickName) {
+    [output writeString:3 value:self.nickName];
+  }
+  if (self.hasDate) {
+    [output writeString:4 value:self.date];
+  }
+  if (self.hasRank) {
+    [output writeInt32:5 value:self.rank];
+  }
+  if (self.hasContent) {
+    [output writeString:6 value:self.content];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasRouteId) {
+    size += computeInt32Size(1, self.routeId);
+  }
+  if (self.hasMemberId) {
+    size += computeStringSize(2, self.memberId);
+  }
+  if (self.hasNickName) {
+    size += computeStringSize(3, self.nickName);
+  }
+  if (self.hasDate) {
+    size += computeStringSize(4, self.date);
+  }
+  if (self.hasRank) {
+    size += computeInt32Size(5, self.rank);
+  }
+  if (self.hasContent) {
+    size += computeStringSize(6, self.content);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (RouteFeekback*) parseFromData:(NSData*) data {
+  return (RouteFeekback*)[[[RouteFeekback builder] mergeFromData:data] build];
+}
++ (RouteFeekback*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteFeekback*)[[[RouteFeekback builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (RouteFeekback*) parseFromInputStream:(NSInputStream*) input {
+  return (RouteFeekback*)[[[RouteFeekback builder] mergeFromInputStream:input] build];
+}
++ (RouteFeekback*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteFeekback*)[[[RouteFeekback builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RouteFeekback*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (RouteFeekback*)[[[RouteFeekback builder] mergeFromCodedInputStream:input] build];
+}
++ (RouteFeekback*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteFeekback*)[[[RouteFeekback builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RouteFeekback_Builder*) builder {
+  return [[[RouteFeekback_Builder alloc] init] autorelease];
+}
++ (RouteFeekback_Builder*) builderWithPrototype:(RouteFeekback*) prototype {
+  return [[RouteFeekback builder] mergeFrom:prototype];
+}
+- (RouteFeekback_Builder*) builder {
+  return [RouteFeekback builder];
+}
+@end
+
+@interface RouteFeekback_Builder()
+@property (retain) RouteFeekback* result;
+@end
+
+@implementation RouteFeekback_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[RouteFeekback alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (RouteFeekback_Builder*) clear {
+  self.result = [[[RouteFeekback alloc] init] autorelease];
+  return self;
+}
+- (RouteFeekback_Builder*) clone {
+  return [RouteFeekback builderWithPrototype:result];
+}
+- (RouteFeekback*) defaultInstance {
+  return [RouteFeekback defaultInstance];
+}
+- (RouteFeekback*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (RouteFeekback*) buildPartial {
+  RouteFeekback* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (RouteFeekback_Builder*) mergeFrom:(RouteFeekback*) other {
+  if (other == [RouteFeekback defaultInstance]) {
+    return self;
+  }
+  if (other.hasRouteId) {
+    [self setRouteId:other.routeId];
+  }
+  if (other.hasMemberId) {
+    [self setMemberId:other.memberId];
+  }
+  if (other.hasNickName) {
+    [self setNickName:other.nickName];
+  }
+  if (other.hasDate) {
+    [self setDate:other.date];
+  }
+  if (other.hasRank) {
+    [self setRank:other.rank];
+  }
+  if (other.hasContent) {
+    [self setContent:other.content];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (RouteFeekback_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (RouteFeekback_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 8: {
+        [self setRouteId:[input readInt32]];
+        break;
+      }
+      case 18: {
+        [self setMemberId:[input readString]];
+        break;
+      }
+      case 26: {
+        [self setNickName:[input readString]];
+        break;
+      }
+      case 34: {
+        [self setDate:[input readString]];
+        break;
+      }
+      case 40: {
+        [self setRank:[input readInt32]];
+        break;
+      }
+      case 50: {
+        [self setContent:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasRouteId {
+  return result.hasRouteId;
+}
+- (int32_t) routeId {
+  return result.routeId;
+}
+- (RouteFeekback_Builder*) setRouteId:(int32_t) value {
+  result.hasRouteId = YES;
+  result.routeId = value;
+  return self;
+}
+- (RouteFeekback_Builder*) clearRouteId {
+  result.hasRouteId = NO;
+  result.routeId = 0;
+  return self;
+}
+- (BOOL) hasMemberId {
+  return result.hasMemberId;
+}
+- (NSString*) memberId {
+  return result.memberId;
+}
+- (RouteFeekback_Builder*) setMemberId:(NSString*) value {
+  result.hasMemberId = YES;
+  result.memberId = value;
+  return self;
+}
+- (RouteFeekback_Builder*) clearMemberId {
+  result.hasMemberId = NO;
+  result.memberId = @"";
+  return self;
+}
+- (BOOL) hasNickName {
+  return result.hasNickName;
+}
+- (NSString*) nickName {
+  return result.nickName;
+}
+- (RouteFeekback_Builder*) setNickName:(NSString*) value {
+  result.hasNickName = YES;
+  result.nickName = value;
+  return self;
+}
+- (RouteFeekback_Builder*) clearNickName {
+  result.hasNickName = NO;
+  result.nickName = @"";
+  return self;
+}
+- (BOOL) hasDate {
+  return result.hasDate;
+}
+- (NSString*) date {
+  return result.date;
+}
+- (RouteFeekback_Builder*) setDate:(NSString*) value {
+  result.hasDate = YES;
+  result.date = value;
+  return self;
+}
+- (RouteFeekback_Builder*) clearDate {
+  result.hasDate = NO;
+  result.date = @"";
+  return self;
+}
+- (BOOL) hasRank {
+  return result.hasRank;
+}
+- (int32_t) rank {
+  return result.rank;
+}
+- (RouteFeekback_Builder*) setRank:(int32_t) value {
+  result.hasRank = YES;
+  result.rank = value;
+  return self;
+}
+- (RouteFeekback_Builder*) clearRank {
+  result.hasRank = NO;
+  result.rank = 0;
+  return self;
+}
+- (BOOL) hasContent {
+  return result.hasContent;
+}
+- (NSString*) content {
+  return result.content;
+}
+- (RouteFeekback_Builder*) setContent:(NSString*) value {
+  result.hasContent = YES;
+  result.content = value;
+  return self;
+}
+- (RouteFeekback_Builder*) clearContent {
+  result.hasContent = NO;
+  result.content = @"";
+  return self;
+}
+@end
+
 @interface TravelResponse ()
 @property int32_t resultCode;
 @property (retain) NSString* resultInfo;
@@ -354,6 +1421,11 @@ static Package* defaultPackageInstance = nil;
 @property (retain) CityList* cityList;
 @property (retain) App* appInfo;
 @property (retain) CommonTravelTipList* travelTipList;
+@property (retain) UserInfo* userInfo;
+@property (retain) TouristRoute* route;
+@property (retain) TouristRouteList* routeList;
+@property (retain) RouteFeekbackList* routeFeekbackList;
+@property (retain) OrderList* orderList;
 @end
 
 @implementation TravelResponse
@@ -428,6 +1500,41 @@ static Package* defaultPackageInstance = nil;
   hasTravelTipList_ = !!value;
 }
 @synthesize travelTipList;
+- (BOOL) hasUserInfo {
+  return !!hasUserInfo_;
+}
+- (void) setHasUserInfo:(BOOL) value {
+  hasUserInfo_ = !!value;
+}
+@synthesize userInfo;
+- (BOOL) hasRoute {
+  return !!hasRoute_;
+}
+- (void) setHasRoute:(BOOL) value {
+  hasRoute_ = !!value;
+}
+@synthesize route;
+- (BOOL) hasRouteList {
+  return !!hasRouteList_;
+}
+- (void) setHasRouteList:(BOOL) value {
+  hasRouteList_ = !!value;
+}
+@synthesize routeList;
+- (BOOL) hasRouteFeekbackList {
+  return !!hasRouteFeekbackList_;
+}
+- (void) setHasRouteFeekbackList:(BOOL) value {
+  hasRouteFeekbackList_ = !!value;
+}
+@synthesize routeFeekbackList;
+- (BOOL) hasOrderList {
+  return !!hasOrderList_;
+}
+- (void) setHasOrderList:(BOOL) value {
+  hasOrderList_ = !!value;
+}
+@synthesize orderList;
 - (void) dealloc {
   self.resultInfo = nil;
   self.place = nil;
@@ -438,6 +1545,11 @@ static Package* defaultPackageInstance = nil;
   self.cityList = nil;
   self.appInfo = nil;
   self.travelTipList = nil;
+  self.userInfo = nil;
+  self.route = nil;
+  self.routeList = nil;
+  self.routeFeekbackList = nil;
+  self.orderList = nil;
   [super dealloc];
 }
 - (id) init {
@@ -452,6 +1564,11 @@ static Package* defaultPackageInstance = nil;
     self.cityList = [CityList defaultInstance];
     self.appInfo = [App defaultInstance];
     self.travelTipList = [CommonTravelTipList defaultInstance];
+    self.userInfo = [UserInfo defaultInstance];
+    self.route = [TouristRoute defaultInstance];
+    self.routeList = [TouristRouteList defaultInstance];
+    self.routeFeekbackList = [RouteFeekbackList defaultInstance];
+    self.orderList = [OrderList defaultInstance];
   }
   return self;
 }
@@ -506,6 +1623,31 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
+  if (self.hasUserInfo) {
+    if (!self.userInfo.isInitialized) {
+      return NO;
+    }
+  }
+  if (self.hasRoute) {
+    if (!self.route.isInitialized) {
+      return NO;
+    }
+  }
+  if (self.hasRouteList) {
+    if (!self.routeList.isInitialized) {
+      return NO;
+    }
+  }
+  if (self.hasRouteFeekbackList) {
+    if (!self.routeFeekbackList.isInitialized) {
+      return NO;
+    }
+  }
+  if (self.hasOrderList) {
+    if (!self.orderList.isInitialized) {
+      return NO;
+    }
+  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
@@ -538,6 +1680,21 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasTravelTipList) {
     [output writeMessage:10 value:self.travelTipList];
+  }
+  if (self.hasUserInfo) {
+    [output writeMessage:15 value:self.userInfo];
+  }
+  if (self.hasRoute) {
+    [output writeMessage:20 value:self.route];
+  }
+  if (self.hasRouteList) {
+    [output writeMessage:21 value:self.routeList];
+  }
+  if (self.hasRouteFeekbackList) {
+    [output writeMessage:30 value:self.routeFeekbackList];
+  }
+  if (self.hasOrderList) {
+    [output writeMessage:35 value:self.orderList];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -577,6 +1734,21 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasTravelTipList) {
     size += computeMessageSize(10, self.travelTipList);
+  }
+  if (self.hasUserInfo) {
+    size += computeMessageSize(15, self.userInfo);
+  }
+  if (self.hasRoute) {
+    size += computeMessageSize(20, self.route);
+  }
+  if (self.hasRouteList) {
+    size += computeMessageSize(21, self.routeList);
+  }
+  if (self.hasRouteFeekbackList) {
+    size += computeMessageSize(30, self.routeFeekbackList);
+  }
+  if (self.hasOrderList) {
+    size += computeMessageSize(35, self.orderList);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -683,6 +1855,21 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other.hasTravelTipList) {
     [self mergeTravelTipList:other.travelTipList];
   }
+  if (other.hasUserInfo) {
+    [self mergeUserInfo:other.userInfo];
+  }
+  if (other.hasRoute) {
+    [self mergeRoute:other.route];
+  }
+  if (other.hasRouteList) {
+    [self mergeRouteList:other.routeList];
+  }
+  if (other.hasRouteFeekbackList) {
+    [self mergeRouteFeekbackList:other.routeFeekbackList];
+  }
+  if (other.hasOrderList) {
+    [self mergeOrderList:other.orderList];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -782,6 +1969,51 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self setTravelTipList:[subBuilder buildPartial]];
+        break;
+      }
+      case 122: {
+        UserInfo_Builder* subBuilder = [UserInfo builder];
+        if (self.hasUserInfo) {
+          [subBuilder mergeFrom:self.userInfo];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setUserInfo:[subBuilder buildPartial]];
+        break;
+      }
+      case 162: {
+        TouristRoute_Builder* subBuilder = [TouristRoute builder];
+        if (self.hasRoute) {
+          [subBuilder mergeFrom:self.route];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setRoute:[subBuilder buildPartial]];
+        break;
+      }
+      case 170: {
+        TouristRouteList_Builder* subBuilder = [TouristRouteList builder];
+        if (self.hasRouteList) {
+          [subBuilder mergeFrom:self.routeList];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setRouteList:[subBuilder buildPartial]];
+        break;
+      }
+      case 242: {
+        RouteFeekbackList_Builder* subBuilder = [RouteFeekbackList builder];
+        if (self.hasRouteFeekbackList) {
+          [subBuilder mergeFrom:self.routeFeekbackList];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setRouteFeekbackList:[subBuilder buildPartial]];
+        break;
+      }
+      case 282: {
+        OrderList_Builder* subBuilder = [OrderList builder];
+        if (self.hasOrderList) {
+          [subBuilder mergeFrom:self.orderList];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setOrderList:[subBuilder buildPartial]];
         break;
       }
     }
@@ -1057,6 +2289,156 @@ static TravelResponse* defaultTravelResponseInstance = nil;
 - (TravelResponse_Builder*) clearTravelTipList {
   result.hasTravelTipList = NO;
   result.travelTipList = [CommonTravelTipList defaultInstance];
+  return self;
+}
+- (BOOL) hasUserInfo {
+  return result.hasUserInfo;
+}
+- (UserInfo*) userInfo {
+  return result.userInfo;
+}
+- (TravelResponse_Builder*) setUserInfo:(UserInfo*) value {
+  result.hasUserInfo = YES;
+  result.userInfo = value;
+  return self;
+}
+- (TravelResponse_Builder*) setUserInfoBuilder:(UserInfo_Builder*) builderForValue {
+  return [self setUserInfo:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeUserInfo:(UserInfo*) value {
+  if (result.hasUserInfo &&
+      result.userInfo != [UserInfo defaultInstance]) {
+    result.userInfo =
+      [[[UserInfo builderWithPrototype:result.userInfo] mergeFrom:value] buildPartial];
+  } else {
+    result.userInfo = value;
+  }
+  result.hasUserInfo = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearUserInfo {
+  result.hasUserInfo = NO;
+  result.userInfo = [UserInfo defaultInstance];
+  return self;
+}
+- (BOOL) hasRoute {
+  return result.hasRoute;
+}
+- (TouristRoute*) route {
+  return result.route;
+}
+- (TravelResponse_Builder*) setRoute:(TouristRoute*) value {
+  result.hasRoute = YES;
+  result.route = value;
+  return self;
+}
+- (TravelResponse_Builder*) setRouteBuilder:(TouristRoute_Builder*) builderForValue {
+  return [self setRoute:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeRoute:(TouristRoute*) value {
+  if (result.hasRoute &&
+      result.route != [TouristRoute defaultInstance]) {
+    result.route =
+      [[[TouristRoute builderWithPrototype:result.route] mergeFrom:value] buildPartial];
+  } else {
+    result.route = value;
+  }
+  result.hasRoute = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearRoute {
+  result.hasRoute = NO;
+  result.route = [TouristRoute defaultInstance];
+  return self;
+}
+- (BOOL) hasRouteList {
+  return result.hasRouteList;
+}
+- (TouristRouteList*) routeList {
+  return result.routeList;
+}
+- (TravelResponse_Builder*) setRouteList:(TouristRouteList*) value {
+  result.hasRouteList = YES;
+  result.routeList = value;
+  return self;
+}
+- (TravelResponse_Builder*) setRouteListBuilder:(TouristRouteList_Builder*) builderForValue {
+  return [self setRouteList:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeRouteList:(TouristRouteList*) value {
+  if (result.hasRouteList &&
+      result.routeList != [TouristRouteList defaultInstance]) {
+    result.routeList =
+      [[[TouristRouteList builderWithPrototype:result.routeList] mergeFrom:value] buildPartial];
+  } else {
+    result.routeList = value;
+  }
+  result.hasRouteList = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearRouteList {
+  result.hasRouteList = NO;
+  result.routeList = [TouristRouteList defaultInstance];
+  return self;
+}
+- (BOOL) hasRouteFeekbackList {
+  return result.hasRouteFeekbackList;
+}
+- (RouteFeekbackList*) routeFeekbackList {
+  return result.routeFeekbackList;
+}
+- (TravelResponse_Builder*) setRouteFeekbackList:(RouteFeekbackList*) value {
+  result.hasRouteFeekbackList = YES;
+  result.routeFeekbackList = value;
+  return self;
+}
+- (TravelResponse_Builder*) setRouteFeekbackListBuilder:(RouteFeekbackList_Builder*) builderForValue {
+  return [self setRouteFeekbackList:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeRouteFeekbackList:(RouteFeekbackList*) value {
+  if (result.hasRouteFeekbackList &&
+      result.routeFeekbackList != [RouteFeekbackList defaultInstance]) {
+    result.routeFeekbackList =
+      [[[RouteFeekbackList builderWithPrototype:result.routeFeekbackList] mergeFrom:value] buildPartial];
+  } else {
+    result.routeFeekbackList = value;
+  }
+  result.hasRouteFeekbackList = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearRouteFeekbackList {
+  result.hasRouteFeekbackList = NO;
+  result.routeFeekbackList = [RouteFeekbackList defaultInstance];
+  return self;
+}
+- (BOOL) hasOrderList {
+  return result.hasOrderList;
+}
+- (OrderList*) orderList {
+  return result.orderList;
+}
+- (TravelResponse_Builder*) setOrderList:(OrderList*) value {
+  result.hasOrderList = YES;
+  result.orderList = value;
+  return self;
+}
+- (TravelResponse_Builder*) setOrderListBuilder:(OrderList_Builder*) builderForValue {
+  return [self setOrderList:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeOrderList:(OrderList*) value {
+  if (result.hasOrderList &&
+      result.orderList != [OrderList defaultInstance]) {
+    result.orderList =
+      [[[OrderList builderWithPrototype:result.orderList] mergeFrom:value] buildPartial];
+  } else {
+    result.orderList = value;
+  }
+  result.hasOrderList = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearOrderList {
+  result.hasOrderList = NO;
+  result.orderList = [OrderList defaultInstance];
   return self;
 }
 @end

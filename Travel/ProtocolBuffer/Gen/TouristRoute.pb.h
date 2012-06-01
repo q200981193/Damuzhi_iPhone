@@ -4,32 +4,24 @@
 
 @class Accommodation;
 @class Accommodation_Builder;
-@class Agency;
-@class Agency_Builder;
 @class Booking;
 @class Booking_Builder;
 @class DailySchedule;
 @class DailySchedule_Builder;
-@class Dining;
-@class Dining_Builder;
 @class Flight;
 @class Flight_Builder;
 @class Order;
+@class OrderList;
+@class OrderList_Builder;
 @class Order_Builder;
-@class Package;
-@class Package_Builder;
 @class PlaceTour;
 @class PlaceTour_Builder;
-@class RouteCity;
-@class RouteCity_Builder;
 @class TouristRoute;
 @class TouristRouteList;
 @class TouristRouteList_Builder;
 @class TouristRoute_Builder;
-@class UserFeekBack;
-@class UserFeekBack_Builder;
-@class UserInfo;
-@class UserInfo_Builder;
+@class TravelPackage;
+@class TravelPackage_Builder;
 
 @interface TouristRouteRoot : NSObject {
 }
@@ -92,7 +84,7 @@
   BOOL hasRouteId_:1;
   BOOL hasDepartCityId_:1;
   BOOL hasDestinationCityId_:1;
-  BOOL hasAgencyIds_:1;
+  BOOL hasAgencyId_:1;
   BOOL hasAverageRank_:1;
   BOOL hasDays_:1;
   BOOL hasFollowUserCount_:1;
@@ -109,7 +101,7 @@
   int32_t routeId;
   int32_t departCityId;
   int32_t destinationCityId;
-  int32_t agencyIds;
+  int32_t agencyId;
   int32_t averageRank;
   int32_t days;
   int32_t followUserCount;
@@ -125,17 +117,17 @@
   Booking* booking;
   NSMutableArray* mutableTypeIdsList;
   NSMutableArray* mutableThemeIdsList;
-  NSMutableArray* mutablePlaceIdsList;
   NSMutableArray* mutableImagesList;
   NSMutableArray* mutableDailySchedulesList;
   NSMutableArray* mutablePackagesList;
+  NSMutableArray* mutableRelatedplacesList;
 }
 - (BOOL) hasRouteId;
 - (BOOL) hasName;
 - (BOOL) hasDepartCityId;
 - (BOOL) hasDestinationCityId;
 - (BOOL) hasPrice;
-- (BOOL) hasAgencyIds;
+- (BOOL) hasAgencyId;
 - (BOOL) hasAverageRank;
 - (BOOL) hasImage;
 - (BOOL) hasTour;
@@ -152,7 +144,7 @@
 @property (readonly) int32_t departCityId;
 @property (readonly) int32_t destinationCityId;
 @property (readonly, retain) NSString* price;
-@property (readonly) int32_t agencyIds;
+@property (readonly) int32_t agencyId;
 @property (readonly) int32_t averageRank;
 @property (readonly, retain) NSString* image;
 @property (readonly, retain) NSString* tour;
@@ -173,9 +165,9 @@
 - (NSArray*) dailySchedulesList;
 - (DailySchedule*) dailySchedulesAtIndex:(int32_t) index;
 - (NSArray*) packagesList;
-- (Package*) packagesAtIndex:(int32_t) index;
-- (NSArray*) placeIdsList;
-- (int32_t) placeIdsAtIndex:(int32_t) index;
+- (TravelPackage*) packagesAtIndex:(int32_t) index;
+- (NSArray*) relatedplacesList;
+- (PlaceTour*) relatedplacesAtIndex:(int32_t) index;
 
 + (TouristRoute*) defaultInstance;
 - (TouristRoute*) defaultInstance;
@@ -236,10 +228,10 @@
 - (TouristRoute_Builder*) setPrice:(NSString*) value;
 - (TouristRoute_Builder*) clearPrice;
 
-- (BOOL) hasAgencyIds;
-- (int32_t) agencyIds;
-- (TouristRoute_Builder*) setAgencyIds:(int32_t) value;
-- (TouristRoute_Builder*) clearAgencyIds;
+- (BOOL) hasAgencyId;
+- (int32_t) agencyId;
+- (TouristRoute_Builder*) setAgencyId:(int32_t) value;
+- (TouristRoute_Builder*) clearAgencyId;
 
 - (BOOL) hasAverageRank;
 - (int32_t) averageRank;
@@ -305,9 +297,9 @@
 - (TouristRoute_Builder*) clearDailySchedulesList;
 
 - (NSArray*) packagesList;
-- (Package*) packagesAtIndex:(int32_t) index;
-- (TouristRoute_Builder*) replacePackagesAtIndex:(int32_t) index with:(Package*) value;
-- (TouristRoute_Builder*) addPackages:(Package*) value;
+- (TravelPackage*) packagesAtIndex:(int32_t) index;
+- (TouristRoute_Builder*) replacePackagesAtIndex:(int32_t) index with:(TravelPackage*) value;
+- (TouristRoute_Builder*) addPackages:(TravelPackage*) value;
 - (TouristRoute_Builder*) addAllPackages:(NSArray*) values;
 - (TouristRoute_Builder*) clearPackagesList;
 
@@ -323,12 +315,12 @@
 - (TouristRoute_Builder*) setReference:(NSString*) value;
 - (TouristRoute_Builder*) clearReference;
 
-- (NSArray*) placeIdsList;
-- (int32_t) placeIdsAtIndex:(int32_t) index;
-- (TouristRoute_Builder*) replacePlaceIdsAtIndex:(int32_t) index with:(int32_t) value;
-- (TouristRoute_Builder*) addPlaceIds:(int32_t) value;
-- (TouristRoute_Builder*) addAllPlaceIds:(NSArray*) values;
-- (TouristRoute_Builder*) clearPlaceIdsList;
+- (NSArray*) relatedplacesList;
+- (PlaceTour*) relatedplacesAtIndex:(int32_t) index;
+- (TouristRoute_Builder*) replaceRelatedplacesAtIndex:(int32_t) index with:(PlaceTour*) value;
+- (TouristRoute_Builder*) addRelatedplaces:(PlaceTour*) value;
+- (TouristRoute_Builder*) addAllRelatedplaces:(NSArray*) values;
+- (TouristRoute_Builder*) clearRelatedplacesList;
 
 - (BOOL) hasFee;
 - (NSString*) fee;
@@ -339,222 +331,6 @@
 - (NSString*) bookingNotice;
 - (TouristRoute_Builder*) setBookingNotice:(NSString*) value;
 - (TouristRoute_Builder*) clearBookingNotice;
-@end
-
-@interface UserFeekBack : PBGeneratedMessage {
-@private
-  BOOL hasRouteId_:1;
-  BOOL hasUserId_:1;
-  BOOL hasRank_:1;
-  BOOL hasNickName_:1;
-  BOOL hasDate_:1;
-  BOOL hasFeedback_:1;
-  int32_t routeId;
-  int32_t userId;
-  int32_t rank;
-  NSString* nickName;
-  NSString* date;
-  NSString* feedback;
-}
-- (BOOL) hasRouteId;
-- (BOOL) hasUserId;
-- (BOOL) hasNickName;
-- (BOOL) hasDate;
-- (BOOL) hasRank;
-- (BOOL) hasFeedback;
-@property (readonly) int32_t routeId;
-@property (readonly) int32_t userId;
-@property (readonly, retain) NSString* nickName;
-@property (readonly, retain) NSString* date;
-@property (readonly) int32_t rank;
-@property (readonly, retain) NSString* feedback;
-
-+ (UserFeekBack*) defaultInstance;
-- (UserFeekBack*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (UserFeekBack_Builder*) builder;
-+ (UserFeekBack_Builder*) builder;
-+ (UserFeekBack_Builder*) builderWithPrototype:(UserFeekBack*) prototype;
-
-+ (UserFeekBack*) parseFromData:(NSData*) data;
-+ (UserFeekBack*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (UserFeekBack*) parseFromInputStream:(NSInputStream*) input;
-+ (UserFeekBack*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (UserFeekBack*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (UserFeekBack*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface UserFeekBack_Builder : PBGeneratedMessage_Builder {
-@private
-  UserFeekBack* result;
-}
-
-- (UserFeekBack*) defaultInstance;
-
-- (UserFeekBack_Builder*) clear;
-- (UserFeekBack_Builder*) clone;
-
-- (UserFeekBack*) build;
-- (UserFeekBack*) buildPartial;
-
-- (UserFeekBack_Builder*) mergeFrom:(UserFeekBack*) other;
-- (UserFeekBack_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (UserFeekBack_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasRouteId;
-- (int32_t) routeId;
-- (UserFeekBack_Builder*) setRouteId:(int32_t) value;
-- (UserFeekBack_Builder*) clearRouteId;
-
-- (BOOL) hasUserId;
-- (int32_t) userId;
-- (UserFeekBack_Builder*) setUserId:(int32_t) value;
-- (UserFeekBack_Builder*) clearUserId;
-
-- (BOOL) hasNickName;
-- (NSString*) nickName;
-- (UserFeekBack_Builder*) setNickName:(NSString*) value;
-- (UserFeekBack_Builder*) clearNickName;
-
-- (BOOL) hasDate;
-- (NSString*) date;
-- (UserFeekBack_Builder*) setDate:(NSString*) value;
-- (UserFeekBack_Builder*) clearDate;
-
-- (BOOL) hasRank;
-- (int32_t) rank;
-- (UserFeekBack_Builder*) setRank:(int32_t) value;
-- (UserFeekBack_Builder*) clearRank;
-
-- (BOOL) hasFeedback;
-- (NSString*) feedback;
-- (UserFeekBack_Builder*) setFeedback:(NSString*) value;
-- (UserFeekBack_Builder*) clearFeedback;
-@end
-
-@interface Agency : PBGeneratedMessage {
-@private
-  BOOL hasAgencyId_:1;
-  BOOL hasName_:1;
-  int32_t agencyId;
-  int32_t name;
-}
-- (BOOL) hasAgencyId;
-- (BOOL) hasName;
-@property (readonly) int32_t agencyId;
-@property (readonly) int32_t name;
-
-+ (Agency*) defaultInstance;
-- (Agency*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (Agency_Builder*) builder;
-+ (Agency_Builder*) builder;
-+ (Agency_Builder*) builderWithPrototype:(Agency*) prototype;
-
-+ (Agency*) parseFromData:(NSData*) data;
-+ (Agency*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (Agency*) parseFromInputStream:(NSInputStream*) input;
-+ (Agency*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (Agency*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (Agency*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface Agency_Builder : PBGeneratedMessage_Builder {
-@private
-  Agency* result;
-}
-
-- (Agency*) defaultInstance;
-
-- (Agency_Builder*) clear;
-- (Agency_Builder*) clone;
-
-- (Agency*) build;
-- (Agency*) buildPartial;
-
-- (Agency_Builder*) mergeFrom:(Agency*) other;
-- (Agency_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (Agency_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasAgencyId;
-- (int32_t) agencyId;
-- (Agency_Builder*) setAgencyId:(int32_t) value;
-- (Agency_Builder*) clearAgencyId;
-
-- (BOOL) hasName;
-- (int32_t) name;
-- (Agency_Builder*) setName:(int32_t) value;
-- (Agency_Builder*) clearName;
-@end
-
-@interface RouteCity : PBGeneratedMessage {
-@private
-  BOOL hasRouteCityId_:1;
-  BOOL hasCityName_:1;
-  BOOL hasCountryName_:1;
-  int32_t routeCityId;
-  NSString* cityName;
-  NSString* countryName;
-}
-- (BOOL) hasRouteCityId;
-- (BOOL) hasCityName;
-- (BOOL) hasCountryName;
-@property (readonly) int32_t routeCityId;
-@property (readonly, retain) NSString* cityName;
-@property (readonly, retain) NSString* countryName;
-
-+ (RouteCity*) defaultInstance;
-- (RouteCity*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (RouteCity_Builder*) builder;
-+ (RouteCity_Builder*) builder;
-+ (RouteCity_Builder*) builderWithPrototype:(RouteCity*) prototype;
-
-+ (RouteCity*) parseFromData:(NSData*) data;
-+ (RouteCity*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (RouteCity*) parseFromInputStream:(NSInputStream*) input;
-+ (RouteCity*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (RouteCity*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (RouteCity*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface RouteCity_Builder : PBGeneratedMessage_Builder {
-@private
-  RouteCity* result;
-}
-
-- (RouteCity*) defaultInstance;
-
-- (RouteCity_Builder*) clear;
-- (RouteCity_Builder*) clone;
-
-- (RouteCity*) build;
-- (RouteCity*) buildPartial;
-
-- (RouteCity_Builder*) mergeFrom:(RouteCity*) other;
-- (RouteCity_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (RouteCity_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasRouteCityId;
-- (int32_t) routeCityId;
-- (RouteCity_Builder*) setRouteCityId:(int32_t) value;
-- (RouteCity_Builder*) clearRouteCityId;
-
-- (BOOL) hasCityName;
-- (NSString*) cityName;
-- (RouteCity_Builder*) setCityName:(NSString*) value;
-- (RouteCity_Builder*) clearCityName;
-
-- (BOOL) hasCountryName;
-- (NSString*) countryName;
-- (RouteCity_Builder*) setCountryName:(NSString*) value;
-- (RouteCity_Builder*) clearCountryName;
 @end
 
 @interface DailySchedule : PBGeneratedMessage {
@@ -663,84 +439,84 @@
 - (DailySchedule_Builder*) clearAccommodation;
 @end
 
-@interface Package : PBGeneratedMessage {
+@interface TravelPackage : PBGeneratedMessage {
 @private
-  BOOL hasNumber_:1;
+  BOOL hasPackageId_:1;
   BOOL hasDepartFlight_:1;
   BOOL hasReturnFlight_:1;
-  int32_t number;
+  int32_t packageId;
   Flight* departFlight;
   Flight* returnFlight;
   NSMutableArray* mutableAccommodationsList;
 }
-- (BOOL) hasNumber;
+- (BOOL) hasPackageId;
 - (BOOL) hasDepartFlight;
 - (BOOL) hasReturnFlight;
-@property (readonly) int32_t number;
+@property (readonly) int32_t packageId;
 @property (readonly, retain) Flight* departFlight;
 @property (readonly, retain) Flight* returnFlight;
 - (NSArray*) accommodationsList;
 - (Accommodation*) accommodationsAtIndex:(int32_t) index;
 
-+ (Package*) defaultInstance;
-- (Package*) defaultInstance;
++ (TravelPackage*) defaultInstance;
+- (TravelPackage*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (Package_Builder*) builder;
-+ (Package_Builder*) builder;
-+ (Package_Builder*) builderWithPrototype:(Package*) prototype;
+- (TravelPackage_Builder*) builder;
++ (TravelPackage_Builder*) builder;
++ (TravelPackage_Builder*) builderWithPrototype:(TravelPackage*) prototype;
 
-+ (Package*) parseFromData:(NSData*) data;
-+ (Package*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (Package*) parseFromInputStream:(NSInputStream*) input;
-+ (Package*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (Package*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (Package*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TravelPackage*) parseFromData:(NSData*) data;
++ (TravelPackage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TravelPackage*) parseFromInputStream:(NSInputStream*) input;
++ (TravelPackage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TravelPackage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TravelPackage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface Package_Builder : PBGeneratedMessage_Builder {
+@interface TravelPackage_Builder : PBGeneratedMessage_Builder {
 @private
-  Package* result;
+  TravelPackage* result;
 }
 
-- (Package*) defaultInstance;
+- (TravelPackage*) defaultInstance;
 
-- (Package_Builder*) clear;
-- (Package_Builder*) clone;
+- (TravelPackage_Builder*) clear;
+- (TravelPackage_Builder*) clone;
 
-- (Package*) build;
-- (Package*) buildPartial;
+- (TravelPackage*) build;
+- (TravelPackage*) buildPartial;
 
-- (Package_Builder*) mergeFrom:(Package*) other;
-- (Package_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (Package_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TravelPackage_Builder*) mergeFrom:(TravelPackage*) other;
+- (TravelPackage_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TravelPackage_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasNumber;
-- (int32_t) number;
-- (Package_Builder*) setNumber:(int32_t) value;
-- (Package_Builder*) clearNumber;
+- (BOOL) hasPackageId;
+- (int32_t) packageId;
+- (TravelPackage_Builder*) setPackageId:(int32_t) value;
+- (TravelPackage_Builder*) clearPackageId;
 
 - (BOOL) hasDepartFlight;
 - (Flight*) departFlight;
-- (Package_Builder*) setDepartFlight:(Flight*) value;
-- (Package_Builder*) setDepartFlightBuilder:(Flight_Builder*) builderForValue;
-- (Package_Builder*) mergeDepartFlight:(Flight*) value;
-- (Package_Builder*) clearDepartFlight;
+- (TravelPackage_Builder*) setDepartFlight:(Flight*) value;
+- (TravelPackage_Builder*) setDepartFlightBuilder:(Flight_Builder*) builderForValue;
+- (TravelPackage_Builder*) mergeDepartFlight:(Flight*) value;
+- (TravelPackage_Builder*) clearDepartFlight;
 
 - (BOOL) hasReturnFlight;
 - (Flight*) returnFlight;
-- (Package_Builder*) setReturnFlight:(Flight*) value;
-- (Package_Builder*) setReturnFlightBuilder:(Flight_Builder*) builderForValue;
-- (Package_Builder*) mergeReturnFlight:(Flight*) value;
-- (Package_Builder*) clearReturnFlight;
+- (TravelPackage_Builder*) setReturnFlight:(Flight*) value;
+- (TravelPackage_Builder*) setReturnFlightBuilder:(Flight_Builder*) builderForValue;
+- (TravelPackage_Builder*) mergeReturnFlight:(Flight*) value;
+- (TravelPackage_Builder*) clearReturnFlight;
 
 - (NSArray*) accommodationsList;
 - (Accommodation*) accommodationsAtIndex:(int32_t) index;
-- (Package_Builder*) replaceAccommodationsAtIndex:(int32_t) index with:(Accommodation*) value;
-- (Package_Builder*) addAccommodations:(Accommodation*) value;
-- (Package_Builder*) addAllAccommodations:(NSArray*) values;
-- (Package_Builder*) clearAccommodationsList;
+- (TravelPackage_Builder*) replaceAccommodationsAtIndex:(int32_t) index with:(Accommodation*) value;
+- (TravelPackage_Builder*) addAccommodations:(Accommodation*) value;
+- (TravelPackage_Builder*) addAllAccommodations:(NSArray*) values;
+- (TravelPackage_Builder*) clearAccommodationsList;
 @end
 
 @interface Booking : PBGeneratedMessage {
@@ -827,141 +603,9 @@
 - (Booking_Builder*) clearChildrenPrice;
 @end
 
-@interface PlaceTour : PBGeneratedMessage {
-@private
-  BOOL hasId_:1;
-  BOOL hasName_:1;
-  BOOL hasDuration_:1;
-  int32_t id;
-  NSString* name;
-  NSString* duration;
-}
-- (BOOL) hasId;
-- (BOOL) hasName;
-- (BOOL) hasDuration;
-@property (readonly) int32_t id;
-@property (readonly, retain) NSString* name;
-@property (readonly, retain) NSString* duration;
-
-+ (PlaceTour*) defaultInstance;
-- (PlaceTour*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (PlaceTour_Builder*) builder;
-+ (PlaceTour_Builder*) builder;
-+ (PlaceTour_Builder*) builderWithPrototype:(PlaceTour*) prototype;
-
-+ (PlaceTour*) parseFromData:(NSData*) data;
-+ (PlaceTour*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (PlaceTour*) parseFromInputStream:(NSInputStream*) input;
-+ (PlaceTour*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface PlaceTour_Builder : PBGeneratedMessage_Builder {
-@private
-  PlaceTour* result;
-}
-
-- (PlaceTour*) defaultInstance;
-
-- (PlaceTour_Builder*) clear;
-- (PlaceTour_Builder*) clone;
-
-- (PlaceTour*) build;
-- (PlaceTour*) buildPartial;
-
-- (PlaceTour_Builder*) mergeFrom:(PlaceTour*) other;
-- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasId;
-- (int32_t) id;
-- (PlaceTour_Builder*) setId:(int32_t) value;
-- (PlaceTour_Builder*) clearId;
-
-- (BOOL) hasName;
-- (NSString*) name;
-- (PlaceTour_Builder*) setName:(NSString*) value;
-- (PlaceTour_Builder*) clearName;
-
-- (BOOL) hasDuration;
-- (NSString*) duration;
-- (PlaceTour_Builder*) setDuration:(NSString*) value;
-- (PlaceTour_Builder*) clearDuration;
-@end
-
-@interface Dining : PBGeneratedMessage {
-@private
-  BOOL hasBreakfast_:1;
-  BOOL hasLunch_:1;
-  BOOL hasDinner_:1;
-  NSString* breakfast;
-  NSString* lunch;
-  NSString* dinner;
-}
-- (BOOL) hasBreakfast;
-- (BOOL) hasLunch;
-- (BOOL) hasDinner;
-@property (readonly, retain) NSString* breakfast;
-@property (readonly, retain) NSString* lunch;
-@property (readonly, retain) NSString* dinner;
-
-+ (Dining*) defaultInstance;
-- (Dining*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (Dining_Builder*) builder;
-+ (Dining_Builder*) builder;
-+ (Dining_Builder*) builderWithPrototype:(Dining*) prototype;
-
-+ (Dining*) parseFromData:(NSData*) data;
-+ (Dining*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (Dining*) parseFromInputStream:(NSInputStream*) input;
-+ (Dining*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (Dining*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (Dining*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface Dining_Builder : PBGeneratedMessage_Builder {
-@private
-  Dining* result;
-}
-
-- (Dining*) defaultInstance;
-
-- (Dining_Builder*) clear;
-- (Dining_Builder*) clone;
-
-- (Dining*) build;
-- (Dining*) buildPartial;
-
-- (Dining_Builder*) mergeFrom:(Dining*) other;
-- (Dining_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (Dining_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasBreakfast;
-- (NSString*) breakfast;
-- (Dining_Builder*) setBreakfast:(NSString*) value;
-- (Dining_Builder*) clearBreakfast;
-
-- (BOOL) hasLunch;
-- (NSString*) lunch;
-- (Dining_Builder*) setLunch:(NSString*) value;
-- (Dining_Builder*) clearLunch;
-
-- (BOOL) hasDinner;
-- (NSString*) dinner;
-- (Dining_Builder*) setDinner:(NSString*) value;
-- (Dining_Builder*) clearDinner;
-@end
-
 @interface Flight : PBGeneratedMessage {
 @private
-  BOOL hasNumber_:1;
+  BOOL hasFlightId_:1;
   BOOL hasCompany_:1;
   BOOL hasMode_:1;
   BOOL hasDepartCityName_:1;
@@ -970,7 +614,7 @@
   BOOL hasArriveCityName_:1;
   BOOL hasArriveTime_:1;
   BOOL hasArriveAirport_:1;
-  NSString* number;
+  NSString* flightId;
   NSString* company;
   NSString* mode;
   NSString* departCityName;
@@ -980,7 +624,7 @@
   NSString* arriveTime;
   NSString* arriveAirport;
 }
-- (BOOL) hasNumber;
+- (BOOL) hasFlightId;
 - (BOOL) hasCompany;
 - (BOOL) hasMode;
 - (BOOL) hasDepartCityName;
@@ -989,7 +633,7 @@
 - (BOOL) hasArriveCityName;
 - (BOOL) hasArriveTime;
 - (BOOL) hasArriveAirport;
-@property (readonly, retain) NSString* number;
+@property (readonly, retain) NSString* flightId;
 @property (readonly, retain) NSString* company;
 @property (readonly, retain) NSString* mode;
 @property (readonly, retain) NSString* departCityName;
@@ -1033,10 +677,10 @@
 - (Flight_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (Flight_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasNumber;
-- (NSString*) number;
-- (Flight_Builder*) setNumber:(NSString*) value;
-- (Flight_Builder*) clearNumber;
+- (BOOL) hasFlightId;
+- (NSString*) flightId;
+- (Flight_Builder*) setFlightId:(NSString*) value;
+- (Flight_Builder*) clearFlightId;
 
 - (BOOL) hasCompany;
 - (NSString*) company;
@@ -1079,11 +723,79 @@
 - (Flight_Builder*) clearArriveAirport;
 @end
 
+@interface PlaceTour : PBGeneratedMessage {
+@private
+  BOOL hasPlaceId_:1;
+  BOOL hasName_:1;
+  BOOL hasDuration_:1;
+  int32_t placeId;
+  NSString* name;
+  NSString* duration;
+}
+- (BOOL) hasName;
+- (BOOL) hasPlaceId;
+- (BOOL) hasDuration;
+@property (readonly, retain) NSString* name;
+@property (readonly) int32_t placeId;
+@property (readonly, retain) NSString* duration;
+
++ (PlaceTour*) defaultInstance;
+- (PlaceTour*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (PlaceTour_Builder*) builder;
++ (PlaceTour_Builder*) builder;
++ (PlaceTour_Builder*) builderWithPrototype:(PlaceTour*) prototype;
+
++ (PlaceTour*) parseFromData:(NSData*) data;
++ (PlaceTour*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (PlaceTour*) parseFromInputStream:(NSInputStream*) input;
++ (PlaceTour*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface PlaceTour_Builder : PBGeneratedMessage_Builder {
+@private
+  PlaceTour* result;
+}
+
+- (PlaceTour*) defaultInstance;
+
+- (PlaceTour_Builder*) clear;
+- (PlaceTour_Builder*) clone;
+
+- (PlaceTour*) build;
+- (PlaceTour*) buildPartial;
+
+- (PlaceTour_Builder*) mergeFrom:(PlaceTour*) other;
+- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasName;
+- (NSString*) name;
+- (PlaceTour_Builder*) setName:(NSString*) value;
+- (PlaceTour_Builder*) clearName;
+
+- (BOOL) hasPlaceId;
+- (int32_t) placeId;
+- (PlaceTour_Builder*) setPlaceId:(int32_t) value;
+- (PlaceTour_Builder*) clearPlaceId;
+
+- (BOOL) hasDuration;
+- (NSString*) duration;
+- (PlaceTour_Builder*) setDuration:(NSString*) value;
+- (PlaceTour_Builder*) clearDuration;
+@end
+
 @interface Accommodation : PBGeneratedMessage {
 @private
+  BOOL hasHotelId_:1;
   BOOL hasHotelName_:1;
   BOOL hasRoomType_:1;
   BOOL hasDuration_:1;
+  int32_t hotelId;
   NSString* hotelName;
   NSString* roomType;
   NSString* duration;
@@ -1091,9 +803,11 @@
 - (BOOL) hasHotelName;
 - (BOOL) hasRoomType;
 - (BOOL) hasDuration;
+- (BOOL) hasHotelId;
 @property (readonly, retain) NSString* hotelName;
 @property (readonly, retain) NSString* roomType;
 @property (readonly, retain) NSString* duration;
+@property (readonly) int32_t hotelId;
 
 + (Accommodation*) defaultInstance;
 - (Accommodation*) defaultInstance;
@@ -1143,126 +857,60 @@
 - (NSString*) duration;
 - (Accommodation_Builder*) setDuration:(NSString*) value;
 - (Accommodation_Builder*) clearDuration;
+
+- (BOOL) hasHotelId;
+- (int32_t) hotelId;
+- (Accommodation_Builder*) setHotelId:(int32_t) value;
+- (Accommodation_Builder*) clearHotelId;
 @end
 
-@interface UserInfo : PBGeneratedMessage {
+@interface OrderList : PBGeneratedMessage {
 @private
-  BOOL hasUserId_:1;
-  BOOL hasGender_:1;
-  BOOL hasType_:1;
-  BOOL hasUserName_:1;
-  BOOL hasPassword_:1;
-  BOOL hasNickName_:1;
-  BOOL hasFullName_:1;
-  BOOL hasTelephone_:1;
-  BOOL hasEmail_:1;
-  int32_t userId;
-  int32_t gender;
-  int32_t type;
-  NSString* userName;
-  NSString* password;
-  NSString* nickName;
-  NSString* fullName;
-  NSString* telephone;
-  NSString* email;
+  NSMutableArray* mutableOrdersList;
 }
-- (BOOL) hasUserId;
-- (BOOL) hasUserName;
-- (BOOL) hasPassword;
-- (BOOL) hasNickName;
-- (BOOL) hasGender;
-- (BOOL) hasType;
-- (BOOL) hasFullName;
-- (BOOL) hasTelephone;
-- (BOOL) hasEmail;
-@property (readonly) int32_t userId;
-@property (readonly, retain) NSString* userName;
-@property (readonly, retain) NSString* password;
-@property (readonly, retain) NSString* nickName;
-@property (readonly) int32_t gender;
-@property (readonly) int32_t type;
-@property (readonly, retain) NSString* fullName;
-@property (readonly, retain) NSString* telephone;
-@property (readonly, retain) NSString* email;
+- (NSArray*) ordersList;
+- (Order*) ordersAtIndex:(int32_t) index;
 
-+ (UserInfo*) defaultInstance;
-- (UserInfo*) defaultInstance;
++ (OrderList*) defaultInstance;
+- (OrderList*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (UserInfo_Builder*) builder;
-+ (UserInfo_Builder*) builder;
-+ (UserInfo_Builder*) builderWithPrototype:(UserInfo*) prototype;
+- (OrderList_Builder*) builder;
++ (OrderList_Builder*) builder;
++ (OrderList_Builder*) builderWithPrototype:(OrderList*) prototype;
 
-+ (UserInfo*) parseFromData:(NSData*) data;
-+ (UserInfo*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (UserInfo*) parseFromInputStream:(NSInputStream*) input;
-+ (UserInfo*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (OrderList*) parseFromData:(NSData*) data;
++ (OrderList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (OrderList*) parseFromInputStream:(NSInputStream*) input;
++ (OrderList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (OrderList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (OrderList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface UserInfo_Builder : PBGeneratedMessage_Builder {
+@interface OrderList_Builder : PBGeneratedMessage_Builder {
 @private
-  UserInfo* result;
+  OrderList* result;
 }
 
-- (UserInfo*) defaultInstance;
+- (OrderList*) defaultInstance;
 
-- (UserInfo_Builder*) clear;
-- (UserInfo_Builder*) clone;
+- (OrderList_Builder*) clear;
+- (OrderList_Builder*) clone;
 
-- (UserInfo*) build;
-- (UserInfo*) buildPartial;
+- (OrderList*) build;
+- (OrderList*) buildPartial;
 
-- (UserInfo_Builder*) mergeFrom:(UserInfo*) other;
-- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (OrderList_Builder*) mergeFrom:(OrderList*) other;
+- (OrderList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (OrderList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasUserId;
-- (int32_t) userId;
-- (UserInfo_Builder*) setUserId:(int32_t) value;
-- (UserInfo_Builder*) clearUserId;
-
-- (BOOL) hasUserName;
-- (NSString*) userName;
-- (UserInfo_Builder*) setUserName:(NSString*) value;
-- (UserInfo_Builder*) clearUserName;
-
-- (BOOL) hasPassword;
-- (NSString*) password;
-- (UserInfo_Builder*) setPassword:(NSString*) value;
-- (UserInfo_Builder*) clearPassword;
-
-- (BOOL) hasNickName;
-- (NSString*) nickName;
-- (UserInfo_Builder*) setNickName:(NSString*) value;
-- (UserInfo_Builder*) clearNickName;
-
-- (BOOL) hasGender;
-- (int32_t) gender;
-- (UserInfo_Builder*) setGender:(int32_t) value;
-- (UserInfo_Builder*) clearGender;
-
-- (BOOL) hasType;
-- (int32_t) type;
-- (UserInfo_Builder*) setType:(int32_t) value;
-- (UserInfo_Builder*) clearType;
-
-- (BOOL) hasFullName;
-- (NSString*) fullName;
-- (UserInfo_Builder*) setFullName:(NSString*) value;
-- (UserInfo_Builder*) clearFullName;
-
-- (BOOL) hasTelephone;
-- (NSString*) telephone;
-- (UserInfo_Builder*) setTelephone:(NSString*) value;
-- (UserInfo_Builder*) clearTelephone;
-
-- (BOOL) hasEmail;
-- (NSString*) email;
-- (UserInfo_Builder*) setEmail:(NSString*) value;
-- (UserInfo_Builder*) clearEmail;
+- (NSArray*) ordersList;
+- (Order*) ordersAtIndex:(int32_t) index;
+- (OrderList_Builder*) replaceOrdersAtIndex:(int32_t) index with:(Order*) value;
+- (OrderList_Builder*) addOrders:(Order*) value;
+- (OrderList_Builder*) addAllOrders:(NSArray*) values;
+- (OrderList_Builder*) clearOrdersList;
 @end
 
 @interface Order : PBGeneratedMessage {

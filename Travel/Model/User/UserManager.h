@@ -11,7 +11,7 @@
 
 @interface UserManager : NSObject<CommonManagerProtocol>
 
-- (NSString*)userId;
+- (NSString*)getUserId;
 - (void)saveUserId:(NSString*)userId;
 
 @end

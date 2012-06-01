@@ -228,7 +228,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
 @property int32_t departCityId;
 @property int32_t destinationCityId;
 @property (retain) NSString* price;
-@property int32_t agencyIds;
+@property int32_t agencyId;
 @property int32_t averageRank;
 @property (retain) NSString* image;
 @property (retain) NSString* tour;
@@ -243,7 +243,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
 @property (retain) NSMutableArray* mutablePackagesList;
 @property (retain) Booking* booking;
 @property (retain) NSString* reference;
-@property (retain) NSMutableArray* mutablePlaceIdsList;
+@property (retain) NSMutableArray* mutableRelatedplacesList;
 @property (retain) NSString* fee;
 @property (retain) NSString* bookingNotice;
 @end
@@ -285,13 +285,13 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
   hasPrice_ = !!value;
 }
 @synthesize price;
-- (BOOL) hasAgencyIds {
-  return !!hasAgencyIds_;
+- (BOOL) hasAgencyId {
+  return !!hasAgencyId_;
 }
-- (void) setHasAgencyIds:(BOOL) value {
-  hasAgencyIds_ = !!value;
+- (void) setHasAgencyId:(BOOL) value {
+  hasAgencyId_ = !!value;
 }
-@synthesize agencyIds;
+@synthesize agencyId;
 - (BOOL) hasAverageRank {
   return !!hasAverageRank_;
 }
@@ -360,7 +360,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
   hasReference_ = !!value;
 }
 @synthesize reference;
-@synthesize mutablePlaceIdsList;
+@synthesize mutableRelatedplacesList;
 - (BOOL) hasFee {
   return !!hasFee_;
 }
@@ -389,7 +389,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
   self.mutablePackagesList = nil;
   self.booking = nil;
   self.reference = nil;
-  self.mutablePlaceIdsList = nil;
+  self.mutableRelatedplacesList = nil;
   self.fee = nil;
   self.bookingNotice = nil;
   [super dealloc];
@@ -401,7 +401,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
     self.departCityId = 0;
     self.destinationCityId = 0;
     self.price = @"";
-    self.agencyIds = 0;
+    self.agencyId = 0;
     self.averageRank = 0;
     self.image = @"";
     self.tour = @"";
@@ -459,16 +459,16 @@ static TouristRoute* defaultTouristRouteInstance = nil;
 - (NSArray*) packagesList {
   return mutablePackagesList;
 }
-- (Package*) packagesAtIndex:(int32_t) index {
+- (TravelPackage*) packagesAtIndex:(int32_t) index {
   id value = [mutablePackagesList objectAtIndex:index];
   return value;
 }
-- (NSArray*) placeIdsList {
-  return mutablePlaceIdsList;
+- (NSArray*) relatedplacesList {
+  return mutableRelatedplacesList;
 }
-- (int32_t) placeIdsAtIndex:(int32_t) index {
-  id value = [mutablePlaceIdsList objectAtIndex:index];
-  return [value intValue];
+- (PlaceTour*) relatedplacesAtIndex:(int32_t) index {
+  id value = [mutableRelatedplacesList objectAtIndex:index];
+  return value;
 }
 - (BOOL) isInitialized {
   if (!self.hasRouteId) {
@@ -488,13 +488,18 @@ static TouristRoute* defaultTouristRouteInstance = nil;
       return NO;
     }
   }
-  for (Package* element in self.packagesList) {
+  for (TravelPackage* element in self.packagesList) {
     if (!element.isInitialized) {
       return NO;
     }
   }
   if (self.hasBooking) {
     if (!self.booking.isInitialized) {
+      return NO;
+    }
+  }
+  for (PlaceTour* element in self.relatedplacesList) {
+    if (!element.isInitialized) {
       return NO;
     }
   }
@@ -516,8 +521,8 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (self.hasPrice) {
     [output writeString:5 value:self.price];
   }
-  if (self.hasAgencyIds) {
-    [output writeInt32:6 value:self.agencyIds];
+  if (self.hasAgencyId) {
+    [output writeInt32:6 value:self.agencyId];
   }
   if (self.hasAverageRank) {
     [output writeInt32:7 value:self.averageRank];
@@ -552,7 +557,7 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   for (DailySchedule* element in self.dailySchedulesList) {
     [output writeMessage:23 value:element];
   }
-  for (Package* element in self.packagesList) {
+  for (TravelPackage* element in self.packagesList) {
     [output writeMessage:24 value:element];
   }
   if (self.hasBooking) {
@@ -561,8 +566,8 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (self.hasReference) {
     [output writeString:26 value:self.reference];
   }
-  for (NSNumber* value in self.mutablePlaceIdsList) {
-    [output writeInt32:27 value:[value intValue]];
+  for (PlaceTour* element in self.relatedplacesList) {
+    [output writeMessage:27 value:element];
   }
   if (self.hasFee) {
     [output writeString:50 value:self.fee];
@@ -594,8 +599,8 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (self.hasPrice) {
     size += computeStringSize(5, self.price);
   }
-  if (self.hasAgencyIds) {
-    size += computeInt32Size(6, self.agencyIds);
+  if (self.hasAgencyId) {
+    size += computeInt32Size(6, self.agencyId);
   }
   if (self.hasAverageRank) {
     size += computeInt32Size(7, self.averageRank);
@@ -645,7 +650,7 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   for (DailySchedule* element in self.dailySchedulesList) {
     size += computeMessageSize(23, element);
   }
-  for (Package* element in self.packagesList) {
+  for (TravelPackage* element in self.packagesList) {
     size += computeMessageSize(24, element);
   }
   if (self.hasBooking) {
@@ -654,13 +659,8 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (self.hasReference) {
     size += computeStringSize(26, self.reference);
   }
-  {
-    int32_t dataSize = 0;
-    for (NSNumber* value in self.mutablePlaceIdsList) {
-      dataSize += computeInt32SizeNoTag([value intValue]);
-    }
-    size += dataSize;
-    size += 2 * self.mutablePlaceIdsList.count;
+  for (PlaceTour* element in self.relatedplacesList) {
+    size += computeMessageSize(27, element);
   }
   if (self.hasFee) {
     size += computeStringSize(50, self.fee);
@@ -758,8 +758,8 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (other.hasPrice) {
     [self setPrice:other.price];
   }
-  if (other.hasAgencyIds) {
-    [self setAgencyIds:other.agencyIds];
+  if (other.hasAgencyId) {
+    [self setAgencyId:other.agencyId];
   }
   if (other.hasAverageRank) {
     [self setAverageRank:other.averageRank];
@@ -818,11 +818,11 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (other.hasReference) {
     [self setReference:other.reference];
   }
-  if (other.mutablePlaceIdsList.count > 0) {
-    if (result.mutablePlaceIdsList == nil) {
-      result.mutablePlaceIdsList = [NSMutableArray array];
+  if (other.mutableRelatedplacesList.count > 0) {
+    if (result.mutableRelatedplacesList == nil) {
+      result.mutableRelatedplacesList = [NSMutableArray array];
     }
-    [result.mutablePlaceIdsList addObjectsFromArray:other.mutablePlaceIdsList];
+    [result.mutableRelatedplacesList addObjectsFromArray:other.mutableRelatedplacesList];
   }
   if (other.hasFee) {
     [self setFee:other.fee];
@@ -872,7 +872,7 @@ static TouristRoute* defaultTouristRouteInstance = nil;
         break;
       }
       case 48: {
-        [self setAgencyIds:[input readInt32]];
+        [self setAgencyId:[input readInt32]];
         break;
       }
       case 56: {
@@ -922,7 +922,7 @@ static TouristRoute* defaultTouristRouteInstance = nil;
         break;
       }
       case 194: {
-        Package_Builder* subBuilder = [Package builder];
+        TravelPackage_Builder* subBuilder = [TravelPackage builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addPackages:[subBuilder buildPartial]];
         break;
@@ -940,8 +940,10 @@ static TouristRoute* defaultTouristRouteInstance = nil;
         [self setReference:[input readString]];
         break;
       }
-      case 216: {
-        [self addPlaceIds:[input readInt32]];
+      case 218: {
+        PlaceTour_Builder* subBuilder = [PlaceTour builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addRelatedplaces:[subBuilder buildPartial]];
         break;
       }
       case 402: {
@@ -1035,20 +1037,20 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   result.price = @"";
   return self;
 }
-- (BOOL) hasAgencyIds {
-  return result.hasAgencyIds;
+- (BOOL) hasAgencyId {
+  return result.hasAgencyId;
 }
-- (int32_t) agencyIds {
-  return result.agencyIds;
+- (int32_t) agencyId {
+  return result.agencyId;
 }
-- (TouristRoute_Builder*) setAgencyIds:(int32_t) value {
-  result.hasAgencyIds = YES;
-  result.agencyIds = value;
+- (TouristRoute_Builder*) setAgencyId:(int32_t) value {
+  result.hasAgencyId = YES;
+  result.agencyId = value;
   return self;
 }
-- (TouristRoute_Builder*) clearAgencyIds {
-  result.hasAgencyIds = NO;
-  result.agencyIds = 0;
+- (TouristRoute_Builder*) clearAgencyId {
+  result.hasAgencyId = NO;
+  result.agencyId = 0;
   return self;
 }
 - (BOOL) hasAverageRank {
@@ -1289,10 +1291,10 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (result.mutablePackagesList == nil) { return [NSArray array]; }
   return result.mutablePackagesList;
 }
-- (Package*) packagesAtIndex:(int32_t) index {
+- (TravelPackage*) packagesAtIndex:(int32_t) index {
   return [result packagesAtIndex:index];
 }
-- (TouristRoute_Builder*) replacePackagesAtIndex:(int32_t) index with:(Package*) value {
+- (TouristRoute_Builder*) replacePackagesAtIndex:(int32_t) index with:(TravelPackage*) value {
   [result.mutablePackagesList replaceObjectAtIndex:index withObject:value];
   return self;
 }
@@ -1307,7 +1309,7 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   result.mutablePackagesList = nil;
   return self;
 }
-- (TouristRoute_Builder*) addPackages:(Package*) value {
+- (TouristRoute_Builder*) addPackages:(TravelPackage*) value {
   if (result.mutablePackagesList == nil) {
     result.mutablePackagesList = [NSMutableArray array];
   }
@@ -1360,35 +1362,33 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   result.reference = @"";
   return self;
 }
-- (NSArray*) placeIdsList {
-  if (result.mutablePlaceIdsList == nil) {
-    return [NSArray array];
-  }
-  return result.mutablePlaceIdsList;
+- (NSArray*) relatedplacesList {
+  if (result.mutableRelatedplacesList == nil) { return [NSArray array]; }
+  return result.mutableRelatedplacesList;
 }
-- (int32_t) placeIdsAtIndex:(int32_t) index {
-  return [result placeIdsAtIndex:index];
+- (PlaceTour*) relatedplacesAtIndex:(int32_t) index {
+  return [result relatedplacesAtIndex:index];
 }
-- (TouristRoute_Builder*) replacePlaceIdsAtIndex:(int32_t) index with:(int32_t) value {
-  [result.mutablePlaceIdsList replaceObjectAtIndex:index withObject:[NSNumber numberWithInt:value]];
+- (TouristRoute_Builder*) replaceRelatedplacesAtIndex:(int32_t) index with:(PlaceTour*) value {
+  [result.mutableRelatedplacesList replaceObjectAtIndex:index withObject:value];
   return self;
 }
-- (TouristRoute_Builder*) addPlaceIds:(int32_t) value {
-  if (result.mutablePlaceIdsList == nil) {
-    result.mutablePlaceIdsList = [NSMutableArray array];
+- (TouristRoute_Builder*) addAllRelatedplaces:(NSArray*) values {
+  if (result.mutableRelatedplacesList == nil) {
+    result.mutableRelatedplacesList = [NSMutableArray array];
   }
-  [result.mutablePlaceIdsList addObject:[NSNumber numberWithInt:value]];
+  [result.mutableRelatedplacesList addObjectsFromArray:values];
   return self;
 }
-- (TouristRoute_Builder*) addAllPlaceIds:(NSArray*) values {
-  if (result.mutablePlaceIdsList == nil) {
-    result.mutablePlaceIdsList = [NSMutableArray array];
-  }
-  [result.mutablePlaceIdsList addObjectsFromArray:values];
+- (TouristRoute_Builder*) clearRelatedplacesList {
+  result.mutableRelatedplacesList = nil;
   return self;
 }
-- (TouristRoute_Builder*) clearPlaceIdsList {
-  result.mutablePlaceIdsList = nil;
+- (TouristRoute_Builder*) addRelatedplaces:(PlaceTour*) value {
+  if (result.mutableRelatedplacesList == nil) {
+    result.mutableRelatedplacesList = [NSMutableArray array];
+  }
+  [result.mutableRelatedplacesList addObject:value];
   return self;
 }
 - (BOOL) hasFee {
@@ -1421,864 +1421,6 @@ static TouristRoute* defaultTouristRouteInstance = nil;
 - (TouristRoute_Builder*) clearBookingNotice {
   result.hasBookingNotice = NO;
   result.bookingNotice = @"";
-  return self;
-}
-@end
-
-@interface UserFeekBack ()
-@property int32_t routeId;
-@property int32_t userId;
-@property (retain) NSString* nickName;
-@property (retain) NSString* date;
-@property int32_t rank;
-@property (retain) NSString* feedback;
-@end
-
-@implementation UserFeekBack
-
-- (BOOL) hasRouteId {
-  return !!hasRouteId_;
-}
-- (void) setHasRouteId:(BOOL) value {
-  hasRouteId_ = !!value;
-}
-@synthesize routeId;
-- (BOOL) hasUserId {
-  return !!hasUserId_;
-}
-- (void) setHasUserId:(BOOL) value {
-  hasUserId_ = !!value;
-}
-@synthesize userId;
-- (BOOL) hasNickName {
-  return !!hasNickName_;
-}
-- (void) setHasNickName:(BOOL) value {
-  hasNickName_ = !!value;
-}
-@synthesize nickName;
-- (BOOL) hasDate {
-  return !!hasDate_;
-}
-- (void) setHasDate:(BOOL) value {
-  hasDate_ = !!value;
-}
-@synthesize date;
-- (BOOL) hasRank {
-  return !!hasRank_;
-}
-- (void) setHasRank:(BOOL) value {
-  hasRank_ = !!value;
-}
-@synthesize rank;
-- (BOOL) hasFeedback {
-  return !!hasFeedback_;
-}
-- (void) setHasFeedback:(BOOL) value {
-  hasFeedback_ = !!value;
-}
-@synthesize feedback;
-- (void) dealloc {
-  self.nickName = nil;
-  self.date = nil;
-  self.feedback = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.routeId = 0;
-    self.userId = 0;
-    self.nickName = @"";
-    self.date = @"";
-    self.rank = 0;
-    self.feedback = @"";
-  }
-  return self;
-}
-static UserFeekBack* defaultUserFeekBackInstance = nil;
-+ (void) initialize {
-  if (self == [UserFeekBack class]) {
-    defaultUserFeekBackInstance = [[UserFeekBack alloc] init];
-  }
-}
-+ (UserFeekBack*) defaultInstance {
-  return defaultUserFeekBackInstance;
-}
-- (UserFeekBack*) defaultInstance {
-  return defaultUserFeekBackInstance;
-}
-- (BOOL) isInitialized {
-  if (!self.hasRouteId) {
-    return NO;
-  }
-  return YES;
-}
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasRouteId) {
-    [output writeInt32:1 value:self.routeId];
-  }
-  if (self.hasUserId) {
-    [output writeInt32:2 value:self.userId];
-  }
-  if (self.hasNickName) {
-    [output writeString:3 value:self.nickName];
-  }
-  if (self.hasDate) {
-    [output writeString:4 value:self.date];
-  }
-  if (self.hasRank) {
-    [output writeInt32:5 value:self.rank];
-  }
-  if (self.hasFeedback) {
-    [output writeString:6 value:self.feedback];
-  }
-  [self.unknownFields writeToCodedOutputStream:output];
-}
-- (int32_t) serializedSize {
-  int32_t size = memoizedSerializedSize;
-  if (size != -1) {
-    return size;
-  }
-
-  size = 0;
-  if (self.hasRouteId) {
-    size += computeInt32Size(1, self.routeId);
-  }
-  if (self.hasUserId) {
-    size += computeInt32Size(2, self.userId);
-  }
-  if (self.hasNickName) {
-    size += computeStringSize(3, self.nickName);
-  }
-  if (self.hasDate) {
-    size += computeStringSize(4, self.date);
-  }
-  if (self.hasRank) {
-    size += computeInt32Size(5, self.rank);
-  }
-  if (self.hasFeedback) {
-    size += computeStringSize(6, self.feedback);
-  }
-  size += self.unknownFields.serializedSize;
-  memoizedSerializedSize = size;
-  return size;
-}
-+ (UserFeekBack*) parseFromData:(NSData*) data {
-  return (UserFeekBack*)[[[UserFeekBack builder] mergeFromData:data] build];
-}
-+ (UserFeekBack*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (UserFeekBack*)[[[UserFeekBack builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
-}
-+ (UserFeekBack*) parseFromInputStream:(NSInputStream*) input {
-  return (UserFeekBack*)[[[UserFeekBack builder] mergeFromInputStream:input] build];
-}
-+ (UserFeekBack*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (UserFeekBack*)[[[UserFeekBack builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (UserFeekBack*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (UserFeekBack*)[[[UserFeekBack builder] mergeFromCodedInputStream:input] build];
-}
-+ (UserFeekBack*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (UserFeekBack*)[[[UserFeekBack builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (UserFeekBack_Builder*) builder {
-  return [[[UserFeekBack_Builder alloc] init] autorelease];
-}
-+ (UserFeekBack_Builder*) builderWithPrototype:(UserFeekBack*) prototype {
-  return [[UserFeekBack builder] mergeFrom:prototype];
-}
-- (UserFeekBack_Builder*) builder {
-  return [UserFeekBack builder];
-}
-@end
-
-@interface UserFeekBack_Builder()
-@property (retain) UserFeekBack* result;
-@end
-
-@implementation UserFeekBack_Builder
-@synthesize result;
-- (void) dealloc {
-  self.result = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.result = [[[UserFeekBack alloc] init] autorelease];
-  }
-  return self;
-}
-- (PBGeneratedMessage*) internalGetResult {
-  return result;
-}
-- (UserFeekBack_Builder*) clear {
-  self.result = [[[UserFeekBack alloc] init] autorelease];
-  return self;
-}
-- (UserFeekBack_Builder*) clone {
-  return [UserFeekBack builderWithPrototype:result];
-}
-- (UserFeekBack*) defaultInstance {
-  return [UserFeekBack defaultInstance];
-}
-- (UserFeekBack*) build {
-  [self checkInitialized];
-  return [self buildPartial];
-}
-- (UserFeekBack*) buildPartial {
-  UserFeekBack* returnMe = [[result retain] autorelease];
-  self.result = nil;
-  return returnMe;
-}
-- (UserFeekBack_Builder*) mergeFrom:(UserFeekBack*) other {
-  if (other == [UserFeekBack defaultInstance]) {
-    return self;
-  }
-  if (other.hasRouteId) {
-    [self setRouteId:other.routeId];
-  }
-  if (other.hasUserId) {
-    [self setUserId:other.userId];
-  }
-  if (other.hasNickName) {
-    [self setNickName:other.nickName];
-  }
-  if (other.hasDate) {
-    [self setDate:other.date];
-  }
-  if (other.hasRank) {
-    [self setRank:other.rank];
-  }
-  if (other.hasFeedback) {
-    [self setFeedback:other.feedback];
-  }
-  [self mergeUnknownFields:other.unknownFields];
-  return self;
-}
-- (UserFeekBack_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
-  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
-}
-- (UserFeekBack_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
-  while (YES) {
-    int32_t tag = [input readTag];
-    switch (tag) {
-      case 0:
-        [self setUnknownFields:[unknownFields build]];
-        return self;
-      default: {
-        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
-          [self setUnknownFields:[unknownFields build]];
-          return self;
-        }
-        break;
-      }
-      case 8: {
-        [self setRouteId:[input readInt32]];
-        break;
-      }
-      case 16: {
-        [self setUserId:[input readInt32]];
-        break;
-      }
-      case 26: {
-        [self setNickName:[input readString]];
-        break;
-      }
-      case 34: {
-        [self setDate:[input readString]];
-        break;
-      }
-      case 40: {
-        [self setRank:[input readInt32]];
-        break;
-      }
-      case 50: {
-        [self setFeedback:[input readString]];
-        break;
-      }
-    }
-  }
-}
-- (BOOL) hasRouteId {
-  return result.hasRouteId;
-}
-- (int32_t) routeId {
-  return result.routeId;
-}
-- (UserFeekBack_Builder*) setRouteId:(int32_t) value {
-  result.hasRouteId = YES;
-  result.routeId = value;
-  return self;
-}
-- (UserFeekBack_Builder*) clearRouteId {
-  result.hasRouteId = NO;
-  result.routeId = 0;
-  return self;
-}
-- (BOOL) hasUserId {
-  return result.hasUserId;
-}
-- (int32_t) userId {
-  return result.userId;
-}
-- (UserFeekBack_Builder*) setUserId:(int32_t) value {
-  result.hasUserId = YES;
-  result.userId = value;
-  return self;
-}
-- (UserFeekBack_Builder*) clearUserId {
-  result.hasUserId = NO;
-  result.userId = 0;
-  return self;
-}
-- (BOOL) hasNickName {
-  return result.hasNickName;
-}
-- (NSString*) nickName {
-  return result.nickName;
-}
-- (UserFeekBack_Builder*) setNickName:(NSString*) value {
-  result.hasNickName = YES;
-  result.nickName = value;
-  return self;
-}
-- (UserFeekBack_Builder*) clearNickName {
-  result.hasNickName = NO;
-  result.nickName = @"";
-  return self;
-}
-- (BOOL) hasDate {
-  return result.hasDate;
-}
-- (NSString*) date {
-  return result.date;
-}
-- (UserFeekBack_Builder*) setDate:(NSString*) value {
-  result.hasDate = YES;
-  result.date = value;
-  return self;
-}
-- (UserFeekBack_Builder*) clearDate {
-  result.hasDate = NO;
-  result.date = @"";
-  return self;
-}
-- (BOOL) hasRank {
-  return result.hasRank;
-}
-- (int32_t) rank {
-  return result.rank;
-}
-- (UserFeekBack_Builder*) setRank:(int32_t) value {
-  result.hasRank = YES;
-  result.rank = value;
-  return self;
-}
-- (UserFeekBack_Builder*) clearRank {
-  result.hasRank = NO;
-  result.rank = 0;
-  return self;
-}
-- (BOOL) hasFeedback {
-  return result.hasFeedback;
-}
-- (NSString*) feedback {
-  return result.feedback;
-}
-- (UserFeekBack_Builder*) setFeedback:(NSString*) value {
-  result.hasFeedback = YES;
-  result.feedback = value;
-  return self;
-}
-- (UserFeekBack_Builder*) clearFeedback {
-  result.hasFeedback = NO;
-  result.feedback = @"";
-  return self;
-}
-@end
-
-@interface Agency ()
-@property int32_t agencyId;
-@property int32_t name;
-@end
-
-@implementation Agency
-
-- (BOOL) hasAgencyId {
-  return !!hasAgencyId_;
-}
-- (void) setHasAgencyId:(BOOL) value {
-  hasAgencyId_ = !!value;
-}
-@synthesize agencyId;
-- (BOOL) hasName {
-  return !!hasName_;
-}
-- (void) setHasName:(BOOL) value {
-  hasName_ = !!value;
-}
-@synthesize name;
-- (void) dealloc {
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.agencyId = 0;
-    self.name = 0;
-  }
-  return self;
-}
-static Agency* defaultAgencyInstance = nil;
-+ (void) initialize {
-  if (self == [Agency class]) {
-    defaultAgencyInstance = [[Agency alloc] init];
-  }
-}
-+ (Agency*) defaultInstance {
-  return defaultAgencyInstance;
-}
-- (Agency*) defaultInstance {
-  return defaultAgencyInstance;
-}
-- (BOOL) isInitialized {
-  if (!self.hasAgencyId) {
-    return NO;
-  }
-  if (!self.hasName) {
-    return NO;
-  }
-  return YES;
-}
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasAgencyId) {
-    [output writeInt32:1 value:self.agencyId];
-  }
-  if (self.hasName) {
-    [output writeInt32:2 value:self.name];
-  }
-  [self.unknownFields writeToCodedOutputStream:output];
-}
-- (int32_t) serializedSize {
-  int32_t size = memoizedSerializedSize;
-  if (size != -1) {
-    return size;
-  }
-
-  size = 0;
-  if (self.hasAgencyId) {
-    size += computeInt32Size(1, self.agencyId);
-  }
-  if (self.hasName) {
-    size += computeInt32Size(2, self.name);
-  }
-  size += self.unknownFields.serializedSize;
-  memoizedSerializedSize = size;
-  return size;
-}
-+ (Agency*) parseFromData:(NSData*) data {
-  return (Agency*)[[[Agency builder] mergeFromData:data] build];
-}
-+ (Agency*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Agency*)[[[Agency builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
-}
-+ (Agency*) parseFromInputStream:(NSInputStream*) input {
-  return (Agency*)[[[Agency builder] mergeFromInputStream:input] build];
-}
-+ (Agency*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Agency*)[[[Agency builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (Agency*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (Agency*)[[[Agency builder] mergeFromCodedInputStream:input] build];
-}
-+ (Agency*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Agency*)[[[Agency builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (Agency_Builder*) builder {
-  return [[[Agency_Builder alloc] init] autorelease];
-}
-+ (Agency_Builder*) builderWithPrototype:(Agency*) prototype {
-  return [[Agency builder] mergeFrom:prototype];
-}
-- (Agency_Builder*) builder {
-  return [Agency builder];
-}
-@end
-
-@interface Agency_Builder()
-@property (retain) Agency* result;
-@end
-
-@implementation Agency_Builder
-@synthesize result;
-- (void) dealloc {
-  self.result = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.result = [[[Agency alloc] init] autorelease];
-  }
-  return self;
-}
-- (PBGeneratedMessage*) internalGetResult {
-  return result;
-}
-- (Agency_Builder*) clear {
-  self.result = [[[Agency alloc] init] autorelease];
-  return self;
-}
-- (Agency_Builder*) clone {
-  return [Agency builderWithPrototype:result];
-}
-- (Agency*) defaultInstance {
-  return [Agency defaultInstance];
-}
-- (Agency*) build {
-  [self checkInitialized];
-  return [self buildPartial];
-}
-- (Agency*) buildPartial {
-  Agency* returnMe = [[result retain] autorelease];
-  self.result = nil;
-  return returnMe;
-}
-- (Agency_Builder*) mergeFrom:(Agency*) other {
-  if (other == [Agency defaultInstance]) {
-    return self;
-  }
-  if (other.hasAgencyId) {
-    [self setAgencyId:other.agencyId];
-  }
-  if (other.hasName) {
-    [self setName:other.name];
-  }
-  [self mergeUnknownFields:other.unknownFields];
-  return self;
-}
-- (Agency_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
-  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
-}
-- (Agency_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
-  while (YES) {
-    int32_t tag = [input readTag];
-    switch (tag) {
-      case 0:
-        [self setUnknownFields:[unknownFields build]];
-        return self;
-      default: {
-        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
-          [self setUnknownFields:[unknownFields build]];
-          return self;
-        }
-        break;
-      }
-      case 8: {
-        [self setAgencyId:[input readInt32]];
-        break;
-      }
-      case 16: {
-        [self setName:[input readInt32]];
-        break;
-      }
-    }
-  }
-}
-- (BOOL) hasAgencyId {
-  return result.hasAgencyId;
-}
-- (int32_t) agencyId {
-  return result.agencyId;
-}
-- (Agency_Builder*) setAgencyId:(int32_t) value {
-  result.hasAgencyId = YES;
-  result.agencyId = value;
-  return self;
-}
-- (Agency_Builder*) clearAgencyId {
-  result.hasAgencyId = NO;
-  result.agencyId = 0;
-  return self;
-}
-- (BOOL) hasName {
-  return result.hasName;
-}
-- (int32_t) name {
-  return result.name;
-}
-- (Agency_Builder*) setName:(int32_t) value {
-  result.hasName = YES;
-  result.name = value;
-  return self;
-}
-- (Agency_Builder*) clearName {
-  result.hasName = NO;
-  result.name = 0;
-  return self;
-}
-@end
-
-@interface RouteCity ()
-@property int32_t routeCityId;
-@property (retain) NSString* cityName;
-@property (retain) NSString* countryName;
-@end
-
-@implementation RouteCity
-
-- (BOOL) hasRouteCityId {
-  return !!hasRouteCityId_;
-}
-- (void) setHasRouteCityId:(BOOL) value {
-  hasRouteCityId_ = !!value;
-}
-@synthesize routeCityId;
-- (BOOL) hasCityName {
-  return !!hasCityName_;
-}
-- (void) setHasCityName:(BOOL) value {
-  hasCityName_ = !!value;
-}
-@synthesize cityName;
-- (BOOL) hasCountryName {
-  return !!hasCountryName_;
-}
-- (void) setHasCountryName:(BOOL) value {
-  hasCountryName_ = !!value;
-}
-@synthesize countryName;
-- (void) dealloc {
-  self.cityName = nil;
-  self.countryName = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.routeCityId = 0;
-    self.cityName = @"";
-    self.countryName = @"";
-  }
-  return self;
-}
-static RouteCity* defaultRouteCityInstance = nil;
-+ (void) initialize {
-  if (self == [RouteCity class]) {
-    defaultRouteCityInstance = [[RouteCity alloc] init];
-  }
-}
-+ (RouteCity*) defaultInstance {
-  return defaultRouteCityInstance;
-}
-- (RouteCity*) defaultInstance {
-  return defaultRouteCityInstance;
-}
-- (BOOL) isInitialized {
-  if (!self.hasRouteCityId) {
-    return NO;
-  }
-  if (!self.hasCityName) {
-    return NO;
-  }
-  if (!self.hasCountryName) {
-    return NO;
-  }
-  return YES;
-}
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasRouteCityId) {
-    [output writeInt32:1 value:self.routeCityId];
-  }
-  if (self.hasCityName) {
-    [output writeString:2 value:self.cityName];
-  }
-  if (self.hasCountryName) {
-    [output writeString:3 value:self.countryName];
-  }
-  [self.unknownFields writeToCodedOutputStream:output];
-}
-- (int32_t) serializedSize {
-  int32_t size = memoizedSerializedSize;
-  if (size != -1) {
-    return size;
-  }
-
-  size = 0;
-  if (self.hasRouteCityId) {
-    size += computeInt32Size(1, self.routeCityId);
-  }
-  if (self.hasCityName) {
-    size += computeStringSize(2, self.cityName);
-  }
-  if (self.hasCountryName) {
-    size += computeStringSize(3, self.countryName);
-  }
-  size += self.unknownFields.serializedSize;
-  memoizedSerializedSize = size;
-  return size;
-}
-+ (RouteCity*) parseFromData:(NSData*) data {
-  return (RouteCity*)[[[RouteCity builder] mergeFromData:data] build];
-}
-+ (RouteCity*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (RouteCity*)[[[RouteCity builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
-}
-+ (RouteCity*) parseFromInputStream:(NSInputStream*) input {
-  return (RouteCity*)[[[RouteCity builder] mergeFromInputStream:input] build];
-}
-+ (RouteCity*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (RouteCity*)[[[RouteCity builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (RouteCity*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (RouteCity*)[[[RouteCity builder] mergeFromCodedInputStream:input] build];
-}
-+ (RouteCity*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (RouteCity*)[[[RouteCity builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (RouteCity_Builder*) builder {
-  return [[[RouteCity_Builder alloc] init] autorelease];
-}
-+ (RouteCity_Builder*) builderWithPrototype:(RouteCity*) prototype {
-  return [[RouteCity builder] mergeFrom:prototype];
-}
-- (RouteCity_Builder*) builder {
-  return [RouteCity builder];
-}
-@end
-
-@interface RouteCity_Builder()
-@property (retain) RouteCity* result;
-@end
-
-@implementation RouteCity_Builder
-@synthesize result;
-- (void) dealloc {
-  self.result = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.result = [[[RouteCity alloc] init] autorelease];
-  }
-  return self;
-}
-- (PBGeneratedMessage*) internalGetResult {
-  return result;
-}
-- (RouteCity_Builder*) clear {
-  self.result = [[[RouteCity alloc] init] autorelease];
-  return self;
-}
-- (RouteCity_Builder*) clone {
-  return [RouteCity builderWithPrototype:result];
-}
-- (RouteCity*) defaultInstance {
-  return [RouteCity defaultInstance];
-}
-- (RouteCity*) build {
-  [self checkInitialized];
-  return [self buildPartial];
-}
-- (RouteCity*) buildPartial {
-  RouteCity* returnMe = [[result retain] autorelease];
-  self.result = nil;
-  return returnMe;
-}
-- (RouteCity_Builder*) mergeFrom:(RouteCity*) other {
-  if (other == [RouteCity defaultInstance]) {
-    return self;
-  }
-  if (other.hasRouteCityId) {
-    [self setRouteCityId:other.routeCityId];
-  }
-  if (other.hasCityName) {
-    [self setCityName:other.cityName];
-  }
-  if (other.hasCountryName) {
-    [self setCountryName:other.countryName];
-  }
-  [self mergeUnknownFields:other.unknownFields];
-  return self;
-}
-- (RouteCity_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
-  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
-}
-- (RouteCity_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
-  while (YES) {
-    int32_t tag = [input readTag];
-    switch (tag) {
-      case 0:
-        [self setUnknownFields:[unknownFields build]];
-        return self;
-      default: {
-        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
-          [self setUnknownFields:[unknownFields build]];
-          return self;
-        }
-        break;
-      }
-      case 8: {
-        [self setRouteCityId:[input readInt32]];
-        break;
-      }
-      case 18: {
-        [self setCityName:[input readString]];
-        break;
-      }
-      case 26: {
-        [self setCountryName:[input readString]];
-        break;
-      }
-    }
-  }
-}
-- (BOOL) hasRouteCityId {
-  return result.hasRouteCityId;
-}
-- (int32_t) routeCityId {
-  return result.routeCityId;
-}
-- (RouteCity_Builder*) setRouteCityId:(int32_t) value {
-  result.hasRouteCityId = YES;
-  result.routeCityId = value;
-  return self;
-}
-- (RouteCity_Builder*) clearRouteCityId {
-  result.hasRouteCityId = NO;
-  result.routeCityId = 0;
-  return self;
-}
-- (BOOL) hasCityName {
-  return result.hasCityName;
-}
-- (NSString*) cityName {
-  return result.cityName;
-}
-- (RouteCity_Builder*) setCityName:(NSString*) value {
-  result.hasCityName = YES;
-  result.cityName = value;
-  return self;
-}
-- (RouteCity_Builder*) clearCityName {
-  result.hasCityName = NO;
-  result.cityName = @"";
-  return self;
-}
-- (BOOL) hasCountryName {
-  return result.hasCountryName;
-}
-- (NSString*) countryName {
-  return result.countryName;
-}
-- (RouteCity_Builder*) setCountryName:(NSString*) value {
-  result.hasCountryName = YES;
-  result.countryName = value;
-  return self;
-}
-- (RouteCity_Builder*) clearCountryName {
-  result.hasCountryName = NO;
-  result.countryName = @"";
   return self;
 }
 @end
@@ -2748,22 +1890,22 @@ static DailySchedule* defaultDailyScheduleInstance = nil;
 }
 @end
 
-@interface Package ()
-@property int32_t number;
+@interface TravelPackage ()
+@property int32_t packageId;
 @property (retain) Flight* departFlight;
 @property (retain) Flight* returnFlight;
 @property (retain) NSMutableArray* mutableAccommodationsList;
 @end
 
-@implementation Package
+@implementation TravelPackage
 
-- (BOOL) hasNumber {
-  return !!hasNumber_;
+- (BOOL) hasPackageId {
+  return !!hasPackageId_;
 }
-- (void) setHasNumber:(BOOL) value {
-  hasNumber_ = !!value;
+- (void) setHasPackageId:(BOOL) value {
+  hasPackageId_ = !!value;
 }
-@synthesize number;
+@synthesize packageId;
 - (BOOL) hasDepartFlight {
   return !!hasDepartFlight_;
 }
@@ -2787,23 +1929,23 @@ static DailySchedule* defaultDailyScheduleInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.number = 0;
+    self.packageId = 0;
     self.departFlight = [Flight defaultInstance];
     self.returnFlight = [Flight defaultInstance];
   }
   return self;
 }
-static Package* defaultPackageInstance = nil;
+static TravelPackage* defaultTravelPackageInstance = nil;
 + (void) initialize {
-  if (self == [Package class]) {
-    defaultPackageInstance = [[Package alloc] init];
+  if (self == [TravelPackage class]) {
+    defaultTravelPackageInstance = [[TravelPackage alloc] init];
   }
 }
-+ (Package*) defaultInstance {
-  return defaultPackageInstance;
++ (TravelPackage*) defaultInstance {
+  return defaultTravelPackageInstance;
 }
-- (Package*) defaultInstance {
-  return defaultPackageInstance;
+- (TravelPackage*) defaultInstance {
+  return defaultTravelPackageInstance;
 }
 - (NSArray*) accommodationsList {
   return mutableAccommodationsList;
@@ -2813,7 +1955,7 @@ static Package* defaultPackageInstance = nil;
   return value;
 }
 - (BOOL) isInitialized {
-  if (!self.hasNumber) {
+  if (!self.hasPackageId) {
     return NO;
   }
   if (self.hasDepartFlight) {
@@ -2834,8 +1976,8 @@ static Package* defaultPackageInstance = nil;
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasNumber) {
-    [output writeInt32:1 value:self.number];
+  if (self.hasPackageId) {
+    [output writeInt32:1 value:self.packageId];
   }
   if (self.hasDepartFlight) {
     [output writeMessage:2 value:self.departFlight];
@@ -2855,8 +1997,8 @@ static Package* defaultPackageInstance = nil;
   }
 
   size = 0;
-  if (self.hasNumber) {
-    size += computeInt32Size(1, self.number);
+  if (self.hasPackageId) {
+    size += computeInt32Size(1, self.packageId);
   }
   if (self.hasDepartFlight) {
     size += computeMessageSize(2, self.departFlight);
@@ -2871,40 +2013,40 @@ static Package* defaultPackageInstance = nil;
   memoizedSerializedSize = size;
   return size;
 }
-+ (Package*) parseFromData:(NSData*) data {
-  return (Package*)[[[Package builder] mergeFromData:data] build];
++ (TravelPackage*) parseFromData:(NSData*) data {
+  return (TravelPackage*)[[[TravelPackage builder] mergeFromData:data] build];
 }
-+ (Package*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Package*)[[[Package builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
++ (TravelPackage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (TravelPackage*)[[[TravelPackage builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
 }
-+ (Package*) parseFromInputStream:(NSInputStream*) input {
-  return (Package*)[[[Package builder] mergeFromInputStream:input] build];
++ (TravelPackage*) parseFromInputStream:(NSInputStream*) input {
+  return (TravelPackage*)[[[TravelPackage builder] mergeFromInputStream:input] build];
 }
-+ (Package*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Package*)[[[Package builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
++ (TravelPackage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (TravelPackage*)[[[TravelPackage builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (Package*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (Package*)[[[Package builder] mergeFromCodedInputStream:input] build];
++ (TravelPackage*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (TravelPackage*)[[[TravelPackage builder] mergeFromCodedInputStream:input] build];
 }
-+ (Package*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Package*)[[[Package builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
++ (TravelPackage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (TravelPackage*)[[[TravelPackage builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (Package_Builder*) builder {
-  return [[[Package_Builder alloc] init] autorelease];
++ (TravelPackage_Builder*) builder {
+  return [[[TravelPackage_Builder alloc] init] autorelease];
 }
-+ (Package_Builder*) builderWithPrototype:(Package*) prototype {
-  return [[Package builder] mergeFrom:prototype];
++ (TravelPackage_Builder*) builderWithPrototype:(TravelPackage*) prototype {
+  return [[TravelPackage builder] mergeFrom:prototype];
 }
-- (Package_Builder*) builder {
-  return [Package builder];
+- (TravelPackage_Builder*) builder {
+  return [TravelPackage builder];
 }
 @end
 
-@interface Package_Builder()
-@property (retain) Package* result;
+@interface TravelPackage_Builder()
+@property (retain) TravelPackage* result;
 @end
 
-@implementation Package_Builder
+@implementation TravelPackage_Builder
 @synthesize result;
 - (void) dealloc {
   self.result = nil;
@@ -2912,38 +2054,38 @@ static Package* defaultPackageInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.result = [[[Package alloc] init] autorelease];
+    self.result = [[[TravelPackage alloc] init] autorelease];
   }
   return self;
 }
 - (PBGeneratedMessage*) internalGetResult {
   return result;
 }
-- (Package_Builder*) clear {
-  self.result = [[[Package alloc] init] autorelease];
+- (TravelPackage_Builder*) clear {
+  self.result = [[[TravelPackage alloc] init] autorelease];
   return self;
 }
-- (Package_Builder*) clone {
-  return [Package builderWithPrototype:result];
+- (TravelPackage_Builder*) clone {
+  return [TravelPackage builderWithPrototype:result];
 }
-- (Package*) defaultInstance {
-  return [Package defaultInstance];
+- (TravelPackage*) defaultInstance {
+  return [TravelPackage defaultInstance];
 }
-- (Package*) build {
+- (TravelPackage*) build {
   [self checkInitialized];
   return [self buildPartial];
 }
-- (Package*) buildPartial {
-  Package* returnMe = [[result retain] autorelease];
+- (TravelPackage*) buildPartial {
+  TravelPackage* returnMe = [[result retain] autorelease];
   self.result = nil;
   return returnMe;
 }
-- (Package_Builder*) mergeFrom:(Package*) other {
-  if (other == [Package defaultInstance]) {
+- (TravelPackage_Builder*) mergeFrom:(TravelPackage*) other {
+  if (other == [TravelPackage defaultInstance]) {
     return self;
   }
-  if (other.hasNumber) {
-    [self setNumber:other.number];
+  if (other.hasPackageId) {
+    [self setPackageId:other.packageId];
   }
   if (other.hasDepartFlight) {
     [self mergeDepartFlight:other.departFlight];
@@ -2960,10 +2102,10 @@ static Package* defaultPackageInstance = nil;
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
-- (Package_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+- (TravelPackage_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
   return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
 }
-- (Package_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+- (TravelPackage_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
   PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
   while (YES) {
     int32_t tag = [input readTag];
@@ -2979,7 +2121,7 @@ static Package* defaultPackageInstance = nil;
         break;
       }
       case 8: {
-        [self setNumber:[input readInt32]];
+        [self setPackageId:[input readInt32]];
         break;
       }
       case 18: {
@@ -3009,20 +2151,20 @@ static Package* defaultPackageInstance = nil;
     }
   }
 }
-- (BOOL) hasNumber {
-  return result.hasNumber;
+- (BOOL) hasPackageId {
+  return result.hasPackageId;
 }
-- (int32_t) number {
-  return result.number;
+- (int32_t) packageId {
+  return result.packageId;
 }
-- (Package_Builder*) setNumber:(int32_t) value {
-  result.hasNumber = YES;
-  result.number = value;
+- (TravelPackage_Builder*) setPackageId:(int32_t) value {
+  result.hasPackageId = YES;
+  result.packageId = value;
   return self;
 }
-- (Package_Builder*) clearNumber {
-  result.hasNumber = NO;
-  result.number = 0;
+- (TravelPackage_Builder*) clearPackageId {
+  result.hasPackageId = NO;
+  result.packageId = 0;
   return self;
 }
 - (BOOL) hasDepartFlight {
@@ -3031,15 +2173,15 @@ static Package* defaultPackageInstance = nil;
 - (Flight*) departFlight {
   return result.departFlight;
 }
-- (Package_Builder*) setDepartFlight:(Flight*) value {
+- (TravelPackage_Builder*) setDepartFlight:(Flight*) value {
   result.hasDepartFlight = YES;
   result.departFlight = value;
   return self;
 }
-- (Package_Builder*) setDepartFlightBuilder:(Flight_Builder*) builderForValue {
+- (TravelPackage_Builder*) setDepartFlightBuilder:(Flight_Builder*) builderForValue {
   return [self setDepartFlight:[builderForValue build]];
 }
-- (Package_Builder*) mergeDepartFlight:(Flight*) value {
+- (TravelPackage_Builder*) mergeDepartFlight:(Flight*) value {
   if (result.hasDepartFlight &&
       result.departFlight != [Flight defaultInstance]) {
     result.departFlight =
@@ -3050,7 +2192,7 @@ static Package* defaultPackageInstance = nil;
   result.hasDepartFlight = YES;
   return self;
 }
-- (Package_Builder*) clearDepartFlight {
+- (TravelPackage_Builder*) clearDepartFlight {
   result.hasDepartFlight = NO;
   result.departFlight = [Flight defaultInstance];
   return self;
@@ -3061,15 +2203,15 @@ static Package* defaultPackageInstance = nil;
 - (Flight*) returnFlight {
   return result.returnFlight;
 }
-- (Package_Builder*) setReturnFlight:(Flight*) value {
+- (TravelPackage_Builder*) setReturnFlight:(Flight*) value {
   result.hasReturnFlight = YES;
   result.returnFlight = value;
   return self;
 }
-- (Package_Builder*) setReturnFlightBuilder:(Flight_Builder*) builderForValue {
+- (TravelPackage_Builder*) setReturnFlightBuilder:(Flight_Builder*) builderForValue {
   return [self setReturnFlight:[builderForValue build]];
 }
-- (Package_Builder*) mergeReturnFlight:(Flight*) value {
+- (TravelPackage_Builder*) mergeReturnFlight:(Flight*) value {
   if (result.hasReturnFlight &&
       result.returnFlight != [Flight defaultInstance]) {
     result.returnFlight =
@@ -3080,7 +2222,7 @@ static Package* defaultPackageInstance = nil;
   result.hasReturnFlight = YES;
   return self;
 }
-- (Package_Builder*) clearReturnFlight {
+- (TravelPackage_Builder*) clearReturnFlight {
   result.hasReturnFlight = NO;
   result.returnFlight = [Flight defaultInstance];
   return self;
@@ -3092,22 +2234,22 @@ static Package* defaultPackageInstance = nil;
 - (Accommodation*) accommodationsAtIndex:(int32_t) index {
   return [result accommodationsAtIndex:index];
 }
-- (Package_Builder*) replaceAccommodationsAtIndex:(int32_t) index with:(Accommodation*) value {
+- (TravelPackage_Builder*) replaceAccommodationsAtIndex:(int32_t) index with:(Accommodation*) value {
   [result.mutableAccommodationsList replaceObjectAtIndex:index withObject:value];
   return self;
 }
-- (Package_Builder*) addAllAccommodations:(NSArray*) values {
+- (TravelPackage_Builder*) addAllAccommodations:(NSArray*) values {
   if (result.mutableAccommodationsList == nil) {
     result.mutableAccommodationsList = [NSMutableArray array];
   }
   [result.mutableAccommodationsList addObjectsFromArray:values];
   return self;
 }
-- (Package_Builder*) clearAccommodationsList {
+- (TravelPackage_Builder*) clearAccommodationsList {
   result.mutableAccommodationsList = nil;
   return self;
 }
-- (Package_Builder*) addAccommodations:(Accommodation*) value {
+- (TravelPackage_Builder*) addAccommodations:(Accommodation*) value {
   if (result.mutableAccommodationsList == nil) {
     result.mutableAccommodationsList = [NSMutableArray array];
   }
@@ -3451,525 +2593,8 @@ static Booking* defaultBookingInstance = nil;
 }
 @end
 
-@interface PlaceTour ()
-@property int32_t id;
-@property (retain) NSString* name;
-@property (retain) NSString* duration;
-@end
-
-@implementation PlaceTour
-
-- (BOOL) hasId {
-  return !!hasId_;
-}
-- (void) setHasId:(BOOL) value {
-  hasId_ = !!value;
-}
-@synthesize id;
-- (BOOL) hasName {
-  return !!hasName_;
-}
-- (void) setHasName:(BOOL) value {
-  hasName_ = !!value;
-}
-@synthesize name;
-- (BOOL) hasDuration {
-  return !!hasDuration_;
-}
-- (void) setHasDuration:(BOOL) value {
-  hasDuration_ = !!value;
-}
-@synthesize duration;
-- (void) dealloc {
-  self.name = nil;
-  self.duration = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.id = 0;
-    self.name = @"";
-    self.duration = @"";
-  }
-  return self;
-}
-static PlaceTour* defaultPlaceTourInstance = nil;
-+ (void) initialize {
-  if (self == [PlaceTour class]) {
-    defaultPlaceTourInstance = [[PlaceTour alloc] init];
-  }
-}
-+ (PlaceTour*) defaultInstance {
-  return defaultPlaceTourInstance;
-}
-- (PlaceTour*) defaultInstance {
-  return defaultPlaceTourInstance;
-}
-- (BOOL) isInitialized {
-  if (!self.hasId) {
-    return NO;
-  }
-  if (!self.hasName) {
-    return NO;
-  }
-  return YES;
-}
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasId) {
-    [output writeInt32:1 value:self.id];
-  }
-  if (self.hasName) {
-    [output writeString:2 value:self.name];
-  }
-  if (self.hasDuration) {
-    [output writeString:3 value:self.duration];
-  }
-  [self.unknownFields writeToCodedOutputStream:output];
-}
-- (int32_t) serializedSize {
-  int32_t size = memoizedSerializedSize;
-  if (size != -1) {
-    return size;
-  }
-
-  size = 0;
-  if (self.hasId) {
-    size += computeInt32Size(1, self.id);
-  }
-  if (self.hasName) {
-    size += computeStringSize(2, self.name);
-  }
-  if (self.hasDuration) {
-    size += computeStringSize(3, self.duration);
-  }
-  size += self.unknownFields.serializedSize;
-  memoizedSerializedSize = size;
-  return size;
-}
-+ (PlaceTour*) parseFromData:(NSData*) data {
-  return (PlaceTour*)[[[PlaceTour builder] mergeFromData:data] build];
-}
-+ (PlaceTour*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (PlaceTour*)[[[PlaceTour builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
-}
-+ (PlaceTour*) parseFromInputStream:(NSInputStream*) input {
-  return (PlaceTour*)[[[PlaceTour builder] mergeFromInputStream:input] build];
-}
-+ (PlaceTour*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (PlaceTour*)[[[PlaceTour builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (PlaceTour*)[[[PlaceTour builder] mergeFromCodedInputStream:input] build];
-}
-+ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (PlaceTour*)[[[PlaceTour builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (PlaceTour_Builder*) builder {
-  return [[[PlaceTour_Builder alloc] init] autorelease];
-}
-+ (PlaceTour_Builder*) builderWithPrototype:(PlaceTour*) prototype {
-  return [[PlaceTour builder] mergeFrom:prototype];
-}
-- (PlaceTour_Builder*) builder {
-  return [PlaceTour builder];
-}
-@end
-
-@interface PlaceTour_Builder()
-@property (retain) PlaceTour* result;
-@end
-
-@implementation PlaceTour_Builder
-@synthesize result;
-- (void) dealloc {
-  self.result = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.result = [[[PlaceTour alloc] init] autorelease];
-  }
-  return self;
-}
-- (PBGeneratedMessage*) internalGetResult {
-  return result;
-}
-- (PlaceTour_Builder*) clear {
-  self.result = [[[PlaceTour alloc] init] autorelease];
-  return self;
-}
-- (PlaceTour_Builder*) clone {
-  return [PlaceTour builderWithPrototype:result];
-}
-- (PlaceTour*) defaultInstance {
-  return [PlaceTour defaultInstance];
-}
-- (PlaceTour*) build {
-  [self checkInitialized];
-  return [self buildPartial];
-}
-- (PlaceTour*) buildPartial {
-  PlaceTour* returnMe = [[result retain] autorelease];
-  self.result = nil;
-  return returnMe;
-}
-- (PlaceTour_Builder*) mergeFrom:(PlaceTour*) other {
-  if (other == [PlaceTour defaultInstance]) {
-    return self;
-  }
-  if (other.hasId) {
-    [self setId:other.id];
-  }
-  if (other.hasName) {
-    [self setName:other.name];
-  }
-  if (other.hasDuration) {
-    [self setDuration:other.duration];
-  }
-  [self mergeUnknownFields:other.unknownFields];
-  return self;
-}
-- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
-  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
-}
-- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
-  while (YES) {
-    int32_t tag = [input readTag];
-    switch (tag) {
-      case 0:
-        [self setUnknownFields:[unknownFields build]];
-        return self;
-      default: {
-        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
-          [self setUnknownFields:[unknownFields build]];
-          return self;
-        }
-        break;
-      }
-      case 8: {
-        [self setId:[input readInt32]];
-        break;
-      }
-      case 18: {
-        [self setName:[input readString]];
-        break;
-      }
-      case 26: {
-        [self setDuration:[input readString]];
-        break;
-      }
-    }
-  }
-}
-- (BOOL) hasId {
-  return result.hasId;
-}
-- (int32_t) id {
-  return result.id;
-}
-- (PlaceTour_Builder*) setId:(int32_t) value {
-  result.hasId = YES;
-  result.id = value;
-  return self;
-}
-- (PlaceTour_Builder*) clearId {
-  result.hasId = NO;
-  result.id = 0;
-  return self;
-}
-- (BOOL) hasName {
-  return result.hasName;
-}
-- (NSString*) name {
-  return result.name;
-}
-- (PlaceTour_Builder*) setName:(NSString*) value {
-  result.hasName = YES;
-  result.name = value;
-  return self;
-}
-- (PlaceTour_Builder*) clearName {
-  result.hasName = NO;
-  result.name = @"";
-  return self;
-}
-- (BOOL) hasDuration {
-  return result.hasDuration;
-}
-- (NSString*) duration {
-  return result.duration;
-}
-- (PlaceTour_Builder*) setDuration:(NSString*) value {
-  result.hasDuration = YES;
-  result.duration = value;
-  return self;
-}
-- (PlaceTour_Builder*) clearDuration {
-  result.hasDuration = NO;
-  result.duration = @"";
-  return self;
-}
-@end
-
-@interface Dining ()
-@property (retain) NSString* breakfast;
-@property (retain) NSString* lunch;
-@property (retain) NSString* dinner;
-@end
-
-@implementation Dining
-
-- (BOOL) hasBreakfast {
-  return !!hasBreakfast_;
-}
-- (void) setHasBreakfast:(BOOL) value {
-  hasBreakfast_ = !!value;
-}
-@synthesize breakfast;
-- (BOOL) hasLunch {
-  return !!hasLunch_;
-}
-- (void) setHasLunch:(BOOL) value {
-  hasLunch_ = !!value;
-}
-@synthesize lunch;
-- (BOOL) hasDinner {
-  return !!hasDinner_;
-}
-- (void) setHasDinner:(BOOL) value {
-  hasDinner_ = !!value;
-}
-@synthesize dinner;
-- (void) dealloc {
-  self.breakfast = nil;
-  self.lunch = nil;
-  self.dinner = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.breakfast = @"";
-    self.lunch = @"";
-    self.dinner = @"";
-  }
-  return self;
-}
-static Dining* defaultDiningInstance = nil;
-+ (void) initialize {
-  if (self == [Dining class]) {
-    defaultDiningInstance = [[Dining alloc] init];
-  }
-}
-+ (Dining*) defaultInstance {
-  return defaultDiningInstance;
-}
-- (Dining*) defaultInstance {
-  return defaultDiningInstance;
-}
-- (BOOL) isInitialized {
-  return YES;
-}
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasBreakfast) {
-    [output writeString:1 value:self.breakfast];
-  }
-  if (self.hasLunch) {
-    [output writeString:2 value:self.lunch];
-  }
-  if (self.hasDinner) {
-    [output writeString:3 value:self.dinner];
-  }
-  [self.unknownFields writeToCodedOutputStream:output];
-}
-- (int32_t) serializedSize {
-  int32_t size = memoizedSerializedSize;
-  if (size != -1) {
-    return size;
-  }
-
-  size = 0;
-  if (self.hasBreakfast) {
-    size += computeStringSize(1, self.breakfast);
-  }
-  if (self.hasLunch) {
-    size += computeStringSize(2, self.lunch);
-  }
-  if (self.hasDinner) {
-    size += computeStringSize(3, self.dinner);
-  }
-  size += self.unknownFields.serializedSize;
-  memoizedSerializedSize = size;
-  return size;
-}
-+ (Dining*) parseFromData:(NSData*) data {
-  return (Dining*)[[[Dining builder] mergeFromData:data] build];
-}
-+ (Dining*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Dining*)[[[Dining builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
-}
-+ (Dining*) parseFromInputStream:(NSInputStream*) input {
-  return (Dining*)[[[Dining builder] mergeFromInputStream:input] build];
-}
-+ (Dining*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Dining*)[[[Dining builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (Dining*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (Dining*)[[[Dining builder] mergeFromCodedInputStream:input] build];
-}
-+ (Dining*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (Dining*)[[[Dining builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (Dining_Builder*) builder {
-  return [[[Dining_Builder alloc] init] autorelease];
-}
-+ (Dining_Builder*) builderWithPrototype:(Dining*) prototype {
-  return [[Dining builder] mergeFrom:prototype];
-}
-- (Dining_Builder*) builder {
-  return [Dining builder];
-}
-@end
-
-@interface Dining_Builder()
-@property (retain) Dining* result;
-@end
-
-@implementation Dining_Builder
-@synthesize result;
-- (void) dealloc {
-  self.result = nil;
-  [super dealloc];
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.result = [[[Dining alloc] init] autorelease];
-  }
-  return self;
-}
-- (PBGeneratedMessage*) internalGetResult {
-  return result;
-}
-- (Dining_Builder*) clear {
-  self.result = [[[Dining alloc] init] autorelease];
-  return self;
-}
-- (Dining_Builder*) clone {
-  return [Dining builderWithPrototype:result];
-}
-- (Dining*) defaultInstance {
-  return [Dining defaultInstance];
-}
-- (Dining*) build {
-  [self checkInitialized];
-  return [self buildPartial];
-}
-- (Dining*) buildPartial {
-  Dining* returnMe = [[result retain] autorelease];
-  self.result = nil;
-  return returnMe;
-}
-- (Dining_Builder*) mergeFrom:(Dining*) other {
-  if (other == [Dining defaultInstance]) {
-    return self;
-  }
-  if (other.hasBreakfast) {
-    [self setBreakfast:other.breakfast];
-  }
-  if (other.hasLunch) {
-    [self setLunch:other.lunch];
-  }
-  if (other.hasDinner) {
-    [self setDinner:other.dinner];
-  }
-  [self mergeUnknownFields:other.unknownFields];
-  return self;
-}
-- (Dining_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
-  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
-}
-- (Dining_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
-  while (YES) {
-    int32_t tag = [input readTag];
-    switch (tag) {
-      case 0:
-        [self setUnknownFields:[unknownFields build]];
-        return self;
-      default: {
-        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
-          [self setUnknownFields:[unknownFields build]];
-          return self;
-        }
-        break;
-      }
-      case 10: {
-        [self setBreakfast:[input readString]];
-        break;
-      }
-      case 18: {
-        [self setLunch:[input readString]];
-        break;
-      }
-      case 26: {
-        [self setDinner:[input readString]];
-        break;
-      }
-    }
-  }
-}
-- (BOOL) hasBreakfast {
-  return result.hasBreakfast;
-}
-- (NSString*) breakfast {
-  return result.breakfast;
-}
-- (Dining_Builder*) setBreakfast:(NSString*) value {
-  result.hasBreakfast = YES;
-  result.breakfast = value;
-  return self;
-}
-- (Dining_Builder*) clearBreakfast {
-  result.hasBreakfast = NO;
-  result.breakfast = @"";
-  return self;
-}
-- (BOOL) hasLunch {
-  return result.hasLunch;
-}
-- (NSString*) lunch {
-  return result.lunch;
-}
-- (Dining_Builder*) setLunch:(NSString*) value {
-  result.hasLunch = YES;
-  result.lunch = value;
-  return self;
-}
-- (Dining_Builder*) clearLunch {
-  result.hasLunch = NO;
-  result.lunch = @"";
-  return self;
-}
-- (BOOL) hasDinner {
-  return result.hasDinner;
-}
-- (NSString*) dinner {
-  return result.dinner;
-}
-- (Dining_Builder*) setDinner:(NSString*) value {
-  result.hasDinner = YES;
-  result.dinner = value;
-  return self;
-}
-- (Dining_Builder*) clearDinner {
-  result.hasDinner = NO;
-  result.dinner = @"";
-  return self;
-}
-@end
-
 @interface Flight ()
-@property (retain) NSString* number;
+@property (retain) NSString* flightId;
 @property (retain) NSString* company;
 @property (retain) NSString* mode;
 @property (retain) NSString* departCityName;
@@ -3982,13 +2607,13 @@ static Dining* defaultDiningInstance = nil;
 
 @implementation Flight
 
-- (BOOL) hasNumber {
-  return !!hasNumber_;
+- (BOOL) hasFlightId {
+  return !!hasFlightId_;
 }
-- (void) setHasNumber:(BOOL) value {
-  hasNumber_ = !!value;
+- (void) setHasFlightId:(BOOL) value {
+  hasFlightId_ = !!value;
 }
-@synthesize number;
+@synthesize flightId;
 - (BOOL) hasCompany {
   return !!hasCompany_;
 }
@@ -4046,7 +2671,7 @@ static Dining* defaultDiningInstance = nil;
 }
 @synthesize arriveAirport;
 - (void) dealloc {
-  self.number = nil;
+  self.flightId = nil;
   self.company = nil;
   self.mode = nil;
   self.departCityName = nil;
@@ -4059,7 +2684,7 @@ static Dining* defaultDiningInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.number = @"";
+    self.flightId = @"";
     self.company = @"";
     self.mode = @"";
     self.departCityName = @"";
@@ -4084,14 +2709,14 @@ static Flight* defaultFlightInstance = nil;
   return defaultFlightInstance;
 }
 - (BOOL) isInitialized {
-  if (!self.hasNumber) {
+  if (!self.hasFlightId) {
     return NO;
   }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasNumber) {
-    [output writeString:1 value:self.number];
+  if (self.hasFlightId) {
+    [output writeString:1 value:self.flightId];
   }
   if (self.hasCompany) {
     [output writeString:2 value:self.company];
@@ -4126,8 +2751,8 @@ static Flight* defaultFlightInstance = nil;
   }
 
   size = 0;
-  if (self.hasNumber) {
-    size += computeStringSize(1, self.number);
+  if (self.hasFlightId) {
+    size += computeStringSize(1, self.flightId);
   }
   if (self.hasCompany) {
     size += computeStringSize(2, self.company);
@@ -4228,8 +2853,8 @@ static Flight* defaultFlightInstance = nil;
   if (other == [Flight defaultInstance]) {
     return self;
   }
-  if (other.hasNumber) {
-    [self setNumber:other.number];
+  if (other.hasFlightId) {
+    [self setFlightId:other.flightId];
   }
   if (other.hasCompany) {
     [self setCompany:other.company];
@@ -4277,7 +2902,7 @@ static Flight* defaultFlightInstance = nil;
         break;
       }
       case 10: {
-        [self setNumber:[input readString]];
+        [self setFlightId:[input readString]];
         break;
       }
       case 18: {
@@ -4315,20 +2940,20 @@ static Flight* defaultFlightInstance = nil;
     }
   }
 }
-- (BOOL) hasNumber {
-  return result.hasNumber;
+- (BOOL) hasFlightId {
+  return result.hasFlightId;
 }
-- (NSString*) number {
-  return result.number;
+- (NSString*) flightId {
+  return result.flightId;
 }
-- (Flight_Builder*) setNumber:(NSString*) value {
-  result.hasNumber = YES;
-  result.number = value;
+- (Flight_Builder*) setFlightId:(NSString*) value {
+  result.hasFlightId = YES;
+  result.flightId = value;
   return self;
 }
-- (Flight_Builder*) clearNumber {
-  result.hasNumber = NO;
-  result.number = @"";
+- (Flight_Builder*) clearFlightId {
+  result.hasFlightId = NO;
+  result.flightId = @"";
   return self;
 }
 - (BOOL) hasCompany {
@@ -4461,10 +3086,269 @@ static Flight* defaultFlightInstance = nil;
 }
 @end
 
+@interface PlaceTour ()
+@property (retain) NSString* name;
+@property int32_t placeId;
+@property (retain) NSString* duration;
+@end
+
+@implementation PlaceTour
+
+- (BOOL) hasName {
+  return !!hasName_;
+}
+- (void) setHasName:(BOOL) value {
+  hasName_ = !!value;
+}
+@synthesize name;
+- (BOOL) hasPlaceId {
+  return !!hasPlaceId_;
+}
+- (void) setHasPlaceId:(BOOL) value {
+  hasPlaceId_ = !!value;
+}
+@synthesize placeId;
+- (BOOL) hasDuration {
+  return !!hasDuration_;
+}
+- (void) setHasDuration:(BOOL) value {
+  hasDuration_ = !!value;
+}
+@synthesize duration;
+- (void) dealloc {
+  self.name = nil;
+  self.duration = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.name = @"";
+    self.placeId = 0;
+    self.duration = @"";
+  }
+  return self;
+}
+static PlaceTour* defaultPlaceTourInstance = nil;
++ (void) initialize {
+  if (self == [PlaceTour class]) {
+    defaultPlaceTourInstance = [[PlaceTour alloc] init];
+  }
+}
++ (PlaceTour*) defaultInstance {
+  return defaultPlaceTourInstance;
+}
+- (PlaceTour*) defaultInstance {
+  return defaultPlaceTourInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasName) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasName) {
+    [output writeString:1 value:self.name];
+  }
+  if (self.hasPlaceId) {
+    [output writeInt32:2 value:self.placeId];
+  }
+  if (self.hasDuration) {
+    [output writeString:3 value:self.duration];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasName) {
+    size += computeStringSize(1, self.name);
+  }
+  if (self.hasPlaceId) {
+    size += computeInt32Size(2, self.placeId);
+  }
+  if (self.hasDuration) {
+    size += computeStringSize(3, self.duration);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (PlaceTour*) parseFromData:(NSData*) data {
+  return (PlaceTour*)[[[PlaceTour builder] mergeFromData:data] build];
+}
++ (PlaceTour*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PlaceTour*)[[[PlaceTour builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (PlaceTour*) parseFromInputStream:(NSInputStream*) input {
+  return (PlaceTour*)[[[PlaceTour builder] mergeFromInputStream:input] build];
+}
++ (PlaceTour*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PlaceTour*)[[[PlaceTour builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (PlaceTour*)[[[PlaceTour builder] mergeFromCodedInputStream:input] build];
+}
++ (PlaceTour*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PlaceTour*)[[[PlaceTour builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (PlaceTour_Builder*) builder {
+  return [[[PlaceTour_Builder alloc] init] autorelease];
+}
++ (PlaceTour_Builder*) builderWithPrototype:(PlaceTour*) prototype {
+  return [[PlaceTour builder] mergeFrom:prototype];
+}
+- (PlaceTour_Builder*) builder {
+  return [PlaceTour builder];
+}
+@end
+
+@interface PlaceTour_Builder()
+@property (retain) PlaceTour* result;
+@end
+
+@implementation PlaceTour_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[PlaceTour alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (PlaceTour_Builder*) clear {
+  self.result = [[[PlaceTour alloc] init] autorelease];
+  return self;
+}
+- (PlaceTour_Builder*) clone {
+  return [PlaceTour builderWithPrototype:result];
+}
+- (PlaceTour*) defaultInstance {
+  return [PlaceTour defaultInstance];
+}
+- (PlaceTour*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (PlaceTour*) buildPartial {
+  PlaceTour* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (PlaceTour_Builder*) mergeFrom:(PlaceTour*) other {
+  if (other == [PlaceTour defaultInstance]) {
+    return self;
+  }
+  if (other.hasName) {
+    [self setName:other.name];
+  }
+  if (other.hasPlaceId) {
+    [self setPlaceId:other.placeId];
+  }
+  if (other.hasDuration) {
+    [self setDuration:other.duration];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (PlaceTour_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setName:[input readString]];
+        break;
+      }
+      case 16: {
+        [self setPlaceId:[input readInt32]];
+        break;
+      }
+      case 26: {
+        [self setDuration:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasName {
+  return result.hasName;
+}
+- (NSString*) name {
+  return result.name;
+}
+- (PlaceTour_Builder*) setName:(NSString*) value {
+  result.hasName = YES;
+  result.name = value;
+  return self;
+}
+- (PlaceTour_Builder*) clearName {
+  result.hasName = NO;
+  result.name = @"";
+  return self;
+}
+- (BOOL) hasPlaceId {
+  return result.hasPlaceId;
+}
+- (int32_t) placeId {
+  return result.placeId;
+}
+- (PlaceTour_Builder*) setPlaceId:(int32_t) value {
+  result.hasPlaceId = YES;
+  result.placeId = value;
+  return self;
+}
+- (PlaceTour_Builder*) clearPlaceId {
+  result.hasPlaceId = NO;
+  result.placeId = 0;
+  return self;
+}
+- (BOOL) hasDuration {
+  return result.hasDuration;
+}
+- (NSString*) duration {
+  return result.duration;
+}
+- (PlaceTour_Builder*) setDuration:(NSString*) value {
+  result.hasDuration = YES;
+  result.duration = value;
+  return self;
+}
+- (PlaceTour_Builder*) clearDuration {
+  result.hasDuration = NO;
+  result.duration = @"";
+  return self;
+}
+@end
+
 @interface Accommodation ()
 @property (retain) NSString* hotelName;
 @property (retain) NSString* roomType;
 @property (retain) NSString* duration;
+@property int32_t hotelId;
 @end
 
 @implementation Accommodation
@@ -4490,6 +3374,13 @@ static Flight* defaultFlightInstance = nil;
   hasDuration_ = !!value;
 }
 @synthesize duration;
+- (BOOL) hasHotelId {
+  return !!hasHotelId_;
+}
+- (void) setHasHotelId:(BOOL) value {
+  hasHotelId_ = !!value;
+}
+@synthesize hotelId;
 - (void) dealloc {
   self.hotelName = nil;
   self.roomType = nil;
@@ -4501,6 +3392,7 @@ static Flight* defaultFlightInstance = nil;
     self.hotelName = @"";
     self.roomType = @"";
     self.duration = @"";
+    self.hotelId = 0;
   }
   return self;
 }
@@ -4532,6 +3424,9 @@ static Accommodation* defaultAccommodationInstance = nil;
   if (self.hasDuration) {
     [output writeString:3 value:self.duration];
   }
+  if (self.hasHotelId) {
+    [output writeInt32:10 value:self.hotelId];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -4549,6 +3444,9 @@ static Accommodation* defaultAccommodationInstance = nil;
   }
   if (self.hasDuration) {
     size += computeStringSize(3, self.duration);
+  }
+  if (self.hasHotelId) {
+    size += computeInt32Size(10, self.hotelId);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -4634,6 +3532,9 @@ static Accommodation* defaultAccommodationInstance = nil;
   if (other.hasDuration) {
     [self setDuration:other.duration];
   }
+  if (other.hasHotelId) {
+    [self setHotelId:other.hotelId];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -4665,6 +3566,10 @@ static Accommodation* defaultAccommodationInstance = nil;
       }
       case 26: {
         [self setDuration:[input readString]];
+        break;
+      }
+      case 80: {
+        [self setHotelId:[input readInt32]];
         break;
       }
     }
@@ -4718,153 +3623,70 @@ static Accommodation* defaultAccommodationInstance = nil;
   result.duration = @"";
   return self;
 }
+- (BOOL) hasHotelId {
+  return result.hasHotelId;
+}
+- (int32_t) hotelId {
+  return result.hotelId;
+}
+- (Accommodation_Builder*) setHotelId:(int32_t) value {
+  result.hasHotelId = YES;
+  result.hotelId = value;
+  return self;
+}
+- (Accommodation_Builder*) clearHotelId {
+  result.hasHotelId = NO;
+  result.hotelId = 0;
+  return self;
+}
 @end
 
-@interface UserInfo ()
-@property int32_t userId;
-@property (retain) NSString* userName;
-@property (retain) NSString* password;
-@property (retain) NSString* nickName;
-@property int32_t gender;
-@property int32_t type;
-@property (retain) NSString* fullName;
-@property (retain) NSString* telephone;
-@property (retain) NSString* email;
+@interface OrderList ()
+@property (retain) NSMutableArray* mutableOrdersList;
 @end
 
-@implementation UserInfo
+@implementation OrderList
 
-- (BOOL) hasUserId {
-  return !!hasUserId_;
-}
-- (void) setHasUserId:(BOOL) value {
-  hasUserId_ = !!value;
-}
-@synthesize userId;
-- (BOOL) hasUserName {
-  return !!hasUserName_;
-}
-- (void) setHasUserName:(BOOL) value {
-  hasUserName_ = !!value;
-}
-@synthesize userName;
-- (BOOL) hasPassword {
-  return !!hasPassword_;
-}
-- (void) setHasPassword:(BOOL) value {
-  hasPassword_ = !!value;
-}
-@synthesize password;
-- (BOOL) hasNickName {
-  return !!hasNickName_;
-}
-- (void) setHasNickName:(BOOL) value {
-  hasNickName_ = !!value;
-}
-@synthesize nickName;
-- (BOOL) hasGender {
-  return !!hasGender_;
-}
-- (void) setHasGender:(BOOL) value {
-  hasGender_ = !!value;
-}
-@synthesize gender;
-- (BOOL) hasType {
-  return !!hasType_;
-}
-- (void) setHasType:(BOOL) value {
-  hasType_ = !!value;
-}
-@synthesize type;
-- (BOOL) hasFullName {
-  return !!hasFullName_;
-}
-- (void) setHasFullName:(BOOL) value {
-  hasFullName_ = !!value;
-}
-@synthesize fullName;
-- (BOOL) hasTelephone {
-  return !!hasTelephone_;
-}
-- (void) setHasTelephone:(BOOL) value {
-  hasTelephone_ = !!value;
-}
-@synthesize telephone;
-- (BOOL) hasEmail {
-  return !!hasEmail_;
-}
-- (void) setHasEmail:(BOOL) value {
-  hasEmail_ = !!value;
-}
-@synthesize email;
+@synthesize mutableOrdersList;
 - (void) dealloc {
-  self.userName = nil;
-  self.password = nil;
-  self.nickName = nil;
-  self.fullName = nil;
-  self.telephone = nil;
-  self.email = nil;
+  self.mutableOrdersList = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
-    self.userId = 0;
-    self.userName = @"";
-    self.password = @"";
-    self.nickName = @"";
-    self.gender = 0;
-    self.type = 0;
-    self.fullName = @"";
-    self.telephone = @"";
-    self.email = @"";
   }
   return self;
 }
-static UserInfo* defaultUserInfoInstance = nil;
+static OrderList* defaultOrderListInstance = nil;
 + (void) initialize {
-  if (self == [UserInfo class]) {
-    defaultUserInfoInstance = [[UserInfo alloc] init];
+  if (self == [OrderList class]) {
+    defaultOrderListInstance = [[OrderList alloc] init];
   }
 }
-+ (UserInfo*) defaultInstance {
-  return defaultUserInfoInstance;
++ (OrderList*) defaultInstance {
+  return defaultOrderListInstance;
 }
-- (UserInfo*) defaultInstance {
-  return defaultUserInfoInstance;
+- (OrderList*) defaultInstance {
+  return defaultOrderListInstance;
+}
+- (NSArray*) ordersList {
+  return mutableOrdersList;
+}
+- (Order*) ordersAtIndex:(int32_t) index {
+  id value = [mutableOrdersList objectAtIndex:index];
+  return value;
 }
 - (BOOL) isInitialized {
-  if (!self.hasUserName) {
-    return NO;
+  for (Order* element in self.ordersList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
   }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasUserId) {
-    [output writeInt32:1 value:self.userId];
-  }
-  if (self.hasUserName) {
-    [output writeString:2 value:self.userName];
-  }
-  if (self.hasPassword) {
-    [output writeString:3 value:self.password];
-  }
-  if (self.hasNickName) {
-    [output writeString:4 value:self.nickName];
-  }
-  if (self.hasGender) {
-    [output writeInt32:5 value:self.gender];
-  }
-  if (self.hasType) {
-    [output writeInt32:6 value:self.type];
-  }
-  if (self.hasFullName) {
-    [output writeString:7 value:self.fullName];
-  }
-  if (self.hasTelephone) {
-    [output writeString:8 value:self.telephone];
-  }
-  if (self.hasEmail) {
-    [output writeString:9 value:self.email];
+  for (Order* element in self.ordersList) {
+    [output writeMessage:1 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -4875,71 +3697,47 @@ static UserInfo* defaultUserInfoInstance = nil;
   }
 
   size = 0;
-  if (self.hasUserId) {
-    size += computeInt32Size(1, self.userId);
-  }
-  if (self.hasUserName) {
-    size += computeStringSize(2, self.userName);
-  }
-  if (self.hasPassword) {
-    size += computeStringSize(3, self.password);
-  }
-  if (self.hasNickName) {
-    size += computeStringSize(4, self.nickName);
-  }
-  if (self.hasGender) {
-    size += computeInt32Size(5, self.gender);
-  }
-  if (self.hasType) {
-    size += computeInt32Size(6, self.type);
-  }
-  if (self.hasFullName) {
-    size += computeStringSize(7, self.fullName);
-  }
-  if (self.hasTelephone) {
-    size += computeStringSize(8, self.telephone);
-  }
-  if (self.hasEmail) {
-    size += computeStringSize(9, self.email);
+  for (Order* element in self.ordersList) {
+    size += computeMessageSize(1, element);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
   return size;
 }
-+ (UserInfo*) parseFromData:(NSData*) data {
-  return (UserInfo*)[[[UserInfo builder] mergeFromData:data] build];
++ (OrderList*) parseFromData:(NSData*) data {
+  return (OrderList*)[[[OrderList builder] mergeFromData:data] build];
 }
-+ (UserInfo*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (UserInfo*)[[[UserInfo builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
++ (OrderList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (OrderList*)[[[OrderList builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
 }
-+ (UserInfo*) parseFromInputStream:(NSInputStream*) input {
-  return (UserInfo*)[[[UserInfo builder] mergeFromInputStream:input] build];
++ (OrderList*) parseFromInputStream:(NSInputStream*) input {
+  return (OrderList*)[[[OrderList builder] mergeFromInputStream:input] build];
 }
-+ (UserInfo*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (UserInfo*)[[[UserInfo builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
++ (OrderList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (OrderList*)[[[OrderList builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (UserInfo*)[[[UserInfo builder] mergeFromCodedInputStream:input] build];
++ (OrderList*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (OrderList*)[[[OrderList builder] mergeFromCodedInputStream:input] build];
 }
-+ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (UserInfo*)[[[UserInfo builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
++ (OrderList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (OrderList*)[[[OrderList builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
 }
-+ (UserInfo_Builder*) builder {
-  return [[[UserInfo_Builder alloc] init] autorelease];
++ (OrderList_Builder*) builder {
+  return [[[OrderList_Builder alloc] init] autorelease];
 }
-+ (UserInfo_Builder*) builderWithPrototype:(UserInfo*) prototype {
-  return [[UserInfo builder] mergeFrom:prototype];
++ (OrderList_Builder*) builderWithPrototype:(OrderList*) prototype {
+  return [[OrderList builder] mergeFrom:prototype];
 }
-- (UserInfo_Builder*) builder {
-  return [UserInfo builder];
+- (OrderList_Builder*) builder {
+  return [OrderList builder];
 }
 @end
 
-@interface UserInfo_Builder()
-@property (retain) UserInfo* result;
+@interface OrderList_Builder()
+@property (retain) OrderList* result;
 @end
 
-@implementation UserInfo_Builder
+@implementation OrderList_Builder
 @synthesize result;
 - (void) dealloc {
   self.result = nil;
@@ -4947,70 +3745,49 @@ static UserInfo* defaultUserInfoInstance = nil;
 }
 - (id) init {
   if ((self = [super init])) {
-    self.result = [[[UserInfo alloc] init] autorelease];
+    self.result = [[[OrderList alloc] init] autorelease];
   }
   return self;
 }
 - (PBGeneratedMessage*) internalGetResult {
   return result;
 }
-- (UserInfo_Builder*) clear {
-  self.result = [[[UserInfo alloc] init] autorelease];
+- (OrderList_Builder*) clear {
+  self.result = [[[OrderList alloc] init] autorelease];
   return self;
 }
-- (UserInfo_Builder*) clone {
-  return [UserInfo builderWithPrototype:result];
+- (OrderList_Builder*) clone {
+  return [OrderList builderWithPrototype:result];
 }
-- (UserInfo*) defaultInstance {
-  return [UserInfo defaultInstance];
+- (OrderList*) defaultInstance {
+  return [OrderList defaultInstance];
 }
-- (UserInfo*) build {
+- (OrderList*) build {
   [self checkInitialized];
   return [self buildPartial];
 }
-- (UserInfo*) buildPartial {
-  UserInfo* returnMe = [[result retain] autorelease];
+- (OrderList*) buildPartial {
+  OrderList* returnMe = [[result retain] autorelease];
   self.result = nil;
   return returnMe;
 }
-- (UserInfo_Builder*) mergeFrom:(UserInfo*) other {
-  if (other == [UserInfo defaultInstance]) {
+- (OrderList_Builder*) mergeFrom:(OrderList*) other {
+  if (other == [OrderList defaultInstance]) {
     return self;
   }
-  if (other.hasUserId) {
-    [self setUserId:other.userId];
-  }
-  if (other.hasUserName) {
-    [self setUserName:other.userName];
-  }
-  if (other.hasPassword) {
-    [self setPassword:other.password];
-  }
-  if (other.hasNickName) {
-    [self setNickName:other.nickName];
-  }
-  if (other.hasGender) {
-    [self setGender:other.gender];
-  }
-  if (other.hasType) {
-    [self setType:other.type];
-  }
-  if (other.hasFullName) {
-    [self setFullName:other.fullName];
-  }
-  if (other.hasTelephone) {
-    [self setTelephone:other.telephone];
-  }
-  if (other.hasEmail) {
-    [self setEmail:other.email];
+  if (other.mutableOrdersList.count > 0) {
+    if (result.mutableOrdersList == nil) {
+      result.mutableOrdersList = [NSMutableArray array];
+    }
+    [result.mutableOrdersList addObjectsFromArray:other.mutableOrdersList];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
-- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+- (OrderList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
   return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
 }
-- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+- (OrderList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
   PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
   while (YES) {
     int32_t tag = [input readTag];
@@ -5025,187 +3802,42 @@ static UserInfo* defaultUserInfoInstance = nil;
         }
         break;
       }
-      case 8: {
-        [self setUserId:[input readInt32]];
-        break;
-      }
-      case 18: {
-        [self setUserName:[input readString]];
-        break;
-      }
-      case 26: {
-        [self setPassword:[input readString]];
-        break;
-      }
-      case 34: {
-        [self setNickName:[input readString]];
-        break;
-      }
-      case 40: {
-        [self setGender:[input readInt32]];
-        break;
-      }
-      case 48: {
-        [self setType:[input readInt32]];
-        break;
-      }
-      case 58: {
-        [self setFullName:[input readString]];
-        break;
-      }
-      case 66: {
-        [self setTelephone:[input readString]];
-        break;
-      }
-      case 74: {
-        [self setEmail:[input readString]];
+      case 10: {
+        Order_Builder* subBuilder = [Order builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addOrders:[subBuilder buildPartial]];
         break;
       }
     }
   }
 }
-- (BOOL) hasUserId {
-  return result.hasUserId;
+- (NSArray*) ordersList {
+  if (result.mutableOrdersList == nil) { return [NSArray array]; }
+  return result.mutableOrdersList;
 }
-- (int32_t) userId {
-  return result.userId;
+- (Order*) ordersAtIndex:(int32_t) index {
+  return [result ordersAtIndex:index];
 }
-- (UserInfo_Builder*) setUserId:(int32_t) value {
-  result.hasUserId = YES;
-  result.userId = value;
+- (OrderList_Builder*) replaceOrdersAtIndex:(int32_t) index with:(Order*) value {
+  [result.mutableOrdersList replaceObjectAtIndex:index withObject:value];
   return self;
 }
-- (UserInfo_Builder*) clearUserId {
-  result.hasUserId = NO;
-  result.userId = 0;
+- (OrderList_Builder*) addAllOrders:(NSArray*) values {
+  if (result.mutableOrdersList == nil) {
+    result.mutableOrdersList = [NSMutableArray array];
+  }
+  [result.mutableOrdersList addObjectsFromArray:values];
   return self;
 }
-- (BOOL) hasUserName {
-  return result.hasUserName;
-}
-- (NSString*) userName {
-  return result.userName;
-}
-- (UserInfo_Builder*) setUserName:(NSString*) value {
-  result.hasUserName = YES;
-  result.userName = value;
+- (OrderList_Builder*) clearOrdersList {
+  result.mutableOrdersList = nil;
   return self;
 }
-- (UserInfo_Builder*) clearUserName {
-  result.hasUserName = NO;
-  result.userName = @"";
-  return self;
-}
-- (BOOL) hasPassword {
-  return result.hasPassword;
-}
-- (NSString*) password {
-  return result.password;
-}
-- (UserInfo_Builder*) setPassword:(NSString*) value {
-  result.hasPassword = YES;
-  result.password = value;
-  return self;
-}
-- (UserInfo_Builder*) clearPassword {
-  result.hasPassword = NO;
-  result.password = @"";
-  return self;
-}
-- (BOOL) hasNickName {
-  return result.hasNickName;
-}
-- (NSString*) nickName {
-  return result.nickName;
-}
-- (UserInfo_Builder*) setNickName:(NSString*) value {
-  result.hasNickName = YES;
-  result.nickName = value;
-  return self;
-}
-- (UserInfo_Builder*) clearNickName {
-  result.hasNickName = NO;
-  result.nickName = @"";
-  return self;
-}
-- (BOOL) hasGender {
-  return result.hasGender;
-}
-- (int32_t) gender {
-  return result.gender;
-}
-- (UserInfo_Builder*) setGender:(int32_t) value {
-  result.hasGender = YES;
-  result.gender = value;
-  return self;
-}
-- (UserInfo_Builder*) clearGender {
-  result.hasGender = NO;
-  result.gender = 0;
-  return self;
-}
-- (BOOL) hasType {
-  return result.hasType;
-}
-- (int32_t) type {
-  return result.type;
-}
-- (UserInfo_Builder*) setType:(int32_t) value {
-  result.hasType = YES;
-  result.type = value;
-  return self;
-}
-- (UserInfo_Builder*) clearType {
-  result.hasType = NO;
-  result.type = 0;
-  return self;
-}
-- (BOOL) hasFullName {
-  return result.hasFullName;
-}
-- (NSString*) fullName {
-  return result.fullName;
-}
-- (UserInfo_Builder*) setFullName:(NSString*) value {
-  result.hasFullName = YES;
-  result.fullName = value;
-  return self;
-}
-- (UserInfo_Builder*) clearFullName {
-  result.hasFullName = NO;
-  result.fullName = @"";
-  return self;
-}
-- (BOOL) hasTelephone {
-  return result.hasTelephone;
-}
-- (NSString*) telephone {
-  return result.telephone;
-}
-- (UserInfo_Builder*) setTelephone:(NSString*) value {
-  result.hasTelephone = YES;
-  result.telephone = value;
-  return self;
-}
-- (UserInfo_Builder*) clearTelephone {
-  result.hasTelephone = NO;
-  result.telephone = @"";
-  return self;
-}
-- (BOOL) hasEmail {
-  return result.hasEmail;
-}
-- (NSString*) email {
-  return result.email;
-}
-- (UserInfo_Builder*) setEmail:(NSString*) value {
-  result.hasEmail = YES;
-  result.email = value;
-  return self;
-}
-- (UserInfo_Builder*) clearEmail {
-  result.hasEmail = NO;
-  result.email = @"";
+- (OrderList_Builder*) addOrders:(Order*) value {
+  if (result.mutableOrdersList == nil) {
+    result.mutableOrdersList = [NSMutableArray array];
+  }
+  [result.mutableOrdersList addObject:value];
   return self;
 }
 @end

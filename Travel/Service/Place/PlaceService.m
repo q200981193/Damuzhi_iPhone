@@ -329,7 +329,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 - (void)addPlaceIntoFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
                        place:(Place*)place
 {
-    NSString* userId = [[UserManager defaultManager] userId];    
+    NSString* userId = [[UserManager defaultManager] getUserId];    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]  longitude:[NSString stringWithFormat:@"%f",place.longitude] latitude:[NSString stringWithFormat:@"%f",place.latitude]];
         
@@ -355,7 +355,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
 - (void)deletePlaceFromFavorite:(PPViewController<PlaceServiceDelegate>*)viewController 
                           place:(Place*)place
 {
-    NSString* userId = [[UserManager defaultManager] userId];    
+    NSString* userId = [[UserManager defaultManager] getUserId];    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         
         CommonNetworkOutput *output = [TravelNetworkRequest deleteFavoriteByUserId:userId placeId:[NSString stringWithFormat:@"%d",place.placeId]];
@@ -383,7 +383,7 @@ typedef NSArray* (^RemoteRequestHandler)(int* resultCode);
                       placeId:(int)placeId
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
-        CommonNetworkOutput* output = [TravelNetworkRequest queryPlace:[[UserManager defaultManager] userId] placeId:[NSString stringWithFormat:@"%d",placeId]];
+        CommonNetworkOutput* output = [TravelNetworkRequest queryPlace:[[UserManager defaultManager] getUserId] placeId:[NSString stringWithFormat:@"%d",placeId]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (output.resultCode == ERROR_SUCCESS) {
