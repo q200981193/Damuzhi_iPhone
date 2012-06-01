@@ -19,8 +19,9 @@
 #import "AppService.h"
 #import <CoreLocation/CoreLocation.h>
 #import "UIUtils.h"
+#import "PlaceUtils.h"
 
-#define TEST_FOR_SIMULATE__LOCATION
+//#define TEST_FOR_SIMULATE__LOCATION
 
 #define POINT_OF_DISTANCE_500M  CGPointMake(28, 18)
 #define POINT_OF_DISTANCE_1KM   CGPointMake(83, 18)
@@ -42,14 +43,12 @@
 @property (retain, nonatomic) NSArray *placeList;
 @property (retain, nonatomic) PlaceListController* placeListController;
 
-//@property (retain, nonatomic) UIImageView *imageRedStartView;
-
 #ifdef TEST_FOR_SIMULATE__LOCATION
 @property (retain, nonatomic) CLLocation *testLocation;
 #endif
 
 - (void)setSelectedBtn:(int)categoryId;
-- (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance;
+- (NSArray*)filterByDistanceAndSort:(NSArray*)list distance:(int)distance;
 
 @end
 
@@ -60,8 +59,6 @@
 @synthesize allPlaceList = _allPlaceList;
 @synthesize placeList = _placeList;
 @synthesize placeListController = _placeListController;
-
-//@synthesize imageRedStartView;
 
 @synthesize distanceView;
 @synthesize categoryBtnsHolderView;
@@ -81,9 +78,9 @@
 
 - (void)dealloc
 {
-    [_placeList release];
-    [_allPlaceList release];
-    [_placeListController release];
+    PPRelease(_placeList);
+    PPRelease(_allPlaceList);
+    PPRelease(_placeListController);
     
     [distanceView release];
     [categoryBtnsHolderView release];
@@ -96,7 +93,7 @@
     [placeListHolderView release];
 
 #ifdef TEST_FOR_SIMULATE__LOCATION
-    [testLocation release];
+    PPRelease(testLocation);
 #endif
 
     [super dealloc];
@@ -131,12 +128,12 @@
     
     UIImageView *imageRedStartView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"red_star.png"]] autorelease];
     imageRedStartView.tag = TAG_RED_START_IMAGE_VIEW;
-    [imageRedStartView setCenter:POINT_OF_DISTANCE_500M];
+    [imageRedStartView setCenter:POINT_OF_DISTANCE_1KM];
     [distanceView addSubview:imageRedStartView];
     
     [categoryBtnsHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];    
     
-    self.distance = DISTANCE_500M;
+    self.distance = DISTANCE_1KM;
     self.categoryId = PlaceCategoryTypePlaceAll;
     allPlaceButton.selected = YES;
     
@@ -224,8 +221,8 @@ UITextField * alertTextField;
             double log = [logtitude doubleValue];
             double lat = [latitude doubleValue];
             self.testLocation = [[[CLLocation alloc] initWithLatitude:lat longitude:log] autorelease];
-            
             [[AppService defaultService] setCurrentLocation:testLocation];
+            [[PlaceService defaultService] findPlaces:_categoryId viewController:self];    
         }
             break;  
         default:
@@ -238,25 +235,23 @@ UITextField * alertTextField;
 #endif
 
 
-- (NSArray*)filterByDistance:(NSArray*)list distance:(int)distance
+- (NSArray*)filterByDistanceAndSort:(NSArray*)list distance:(int)distance
 {
     NSMutableArray *placeList = [[[NSMutableArray alloc] init] autorelease];
+    
     for (Place *place in list) {
         CLLocation *placeLocation = [[CLLocation alloc] initWithLatitude:[place latitude] longitude:[place longitude]];
         
-        CLLocation *myLocation = [[AppService defaultService] currentLocation];
-
-        CLLocationDistance distance = [myLocation distanceFromLocation:placeLocation];
+        CLLocationDistance distance = [[[AppService defaultService] currentLocation] distanceFromLocation:placeLocation];
         [placeLocation release];
                 
         if (distance <= _distance) {
             [placeList addObject:place];
         }
     }
-    
-    return placeList;
-}
 
+    return [PlaceUtils sortedByDistance:[[AppService defaultService] currentLocation] array:placeList type:SORT_BY_DESTANCE_FROM_NEAR_TO_FAR];
+}
 
 - (void )clickMapBtn:(id)sender
 {
@@ -414,12 +409,14 @@ UITextField * alertTextField;
 
 - (void)findRequestDone:(int)result placeList:(NSArray*)placeList
 {
+    [_placeListController hideRefreshHeaderViewAfterLoading];
+    
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"网络弱，数据加载失败" title:nil];
     }
     
     self.allPlaceList = placeList;
-    self.placeList = [self filterByDistance:_allPlaceList distance:_distance];
+    self.placeList = [self filterByDistanceAndSort:_allPlaceList distance:_distance];
     
     // Update place count in navigation bar.
     self.title = [NSString stringWithFormat:NSLS(@"我的附近(%d)"), [_placeList count]];
@@ -427,6 +424,7 @@ UITextField * alertTextField;
     // Reload place list.
     [_placeListController setPlaceList:_placeList];
 }
+
 
 - (void)didPullDown
 {

@@ -14,7 +14,7 @@
 		<string>dmzlogo@2x.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.gancheng.damuzhi</string>
+	<string>com.toptrip.main</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -39,5 +39,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 </dict>
 </plist>

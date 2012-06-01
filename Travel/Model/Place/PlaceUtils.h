@@ -23,5 +23,5 @@
 + (NSString*)getPrice:(Place*)place;
 + (NSString*)getDistanceString:(Place*)place currentLocation:(CLLocation*)currentLocation;
 + (int)getPlacesCountInSameType:(int)type typeId:(int)typeId placeList:(NSArray*)placeList;
-
++ (NSArray*)sortedByDistance:(CLLocation*)location array:(NSArray*)array type:(int)type;
 @end

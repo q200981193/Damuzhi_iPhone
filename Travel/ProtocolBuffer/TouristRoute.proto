@@ -1,0 +1,118 @@
+
+package damuzhi;
+
+option java_package = "com.damuzhi.travel";
+option java_outer_classname = "TouristRouteProtos";
+
+// 用于获取团游和自由行列表
+message TouristRouteList {
+  required TouristRoute routes = 1;
+}
+
+//　用于跟团游和自由行详情和列表
+message TouristRoute {
+  // 基础数据
+  required int32  routeId = 1;				// 线路编号
+  required string name = 2;                 // 线路名称
+  required int32 departCityId = 3;			// 线路出发城市id。基础数据
+  required int32 destinationCityId = 4;		// 线路目的城市id。基础数据
+  optional string price = 5;				// 线路价格
+  optional int32 agencyId = 6;				// 旅行社id。基础数据
+  optional int32 averageRank = 7;			// 用户综合评级
+
+  // 简要数据
+  optional string image = 10;                       // 线路列表中显示的小图片的绝对URL地址
+  optional string tour = 11;                        // 线路列表中显示经过的地方
+  optional int32 days = 12;                         // 线路游览天数
+  repeated int32 themeIds = 13;                     // 线路主题id：赏花，登山。基础数据
+  repeated int32 typeIds = 14;                      // 线路类型id：国内游，东南亚，欧洲。基础数据
+  optional int32 followUserCount = 15;              // 线路关注的用户总数	
+
+  // 路线详情
+  optional string customerServiceTelephone = 20;	// 客服电话
+  repeated string images = 21;                      // 线路详情中滑动图片的绝对URL地址
+  optional string characteristic =  22;       		// 线路特色
+  repeated DailySchedule dailySchedules = 23;		// 线路行程安排，跟团游特有字段
+  repeated TravelPackage packages= 24;              // 线路套餐，自由行特有字段
+  optional Booking booking = 25;                    // 线路预订情况
+  optional string reference = 26;                   // 线路参考行程，返回html的绝对url
+  repeated PlaceTour relatedplaces = 27;            // 线路相关景点
+
+  optional string fee = 50;                         // 线路费用说明，返回html的绝对url
+  optional string bookingNotice = 51;               // 线路预订须知，返回html的绝对url
+}
+
+message DailySchedule {
+  required int32 day = 1;                       // 第几天
+  required string title = 2;                    // 每日行程标题
+  optional PlaceTour placeTours = 3;            // 景点游览
+  optional string breakfast = 4;                // 早餐
+  optional string lunch = 5;                    // 午餐
+  optional string dinner = 6;                   // 晚餐
+  optional Accommodation accommodation = 7;     // 入住
+} 
+
+message TravelPackage {
+  required int32 packageId = 1;                 // 套餐编号
+  optional Flight departFlight = 2;             // 出发航班
+  optional Flight returnFlight = 3;             // 回程航班
+  repeated Accommodation accommodations = 4;	// 入住
+}
+
+message Booking {
+  required int32 date = 1;              // 日期，从1970年1月1日0时0分0秒算起，经过的秒数。
+  optional int32 status = 2;            // 状态
+  optional string remainder = 3;        // 剩余票数
+  optional string adultPrice = 4;       // 成人价格
+  optional string childrenPrice = 5;	// 儿童价格
+}
+
+message Flight {
+  required string flightId = 1;             // 航班号
+  optional string company = 2;              // 航空公司
+  optional string mode = 3;                 // 机型
+  optional string departCityName = 4; 		// 起飞城市id
+  optional string departTime = 5;           // 起飞时间
+  optional string departAirport = 6;     	// 起飞机场
+  optional string arriveCityName = 7; 		// 到达城市id
+  optional string arriveTime = 8;           // 到达时间
+  optional string arriveAirport = 9;     	// 到达机场
+}
+
+message PlaceTour {
+  required string name = 1;             // 名称
+  optional int32 placeId = 2;           // 地点id
+  optional string duration = 3;         // 游览时间
+}
+
+message Accommodation {
+  required string hotelName = 1;	// 酒店名称
+  optional string roomType = 2;		// 房间类型
+  optional string duration =3;		// 住的时间段
+  optional int32 hotelId = 10;      // 酒店id
+}
+
+// 用于查询订单列表
+message OrderList {
+  repeated Order orders = 1;
+}
+
+message Order {
+  required int32 orderId = 1;		// 订单编号
+  required int32 date = 2;          // 下订日期，从1970年1月1日0时0分0秒算起，经过的秒数。
+
+  required int32 routeId = 3;		// 路线编号
+  optional string routeName = 4;	// 线路名称
+
+  optional int32 agencyId = 5;		// 旅行社id
+
+  optional string departCityName = 6;	// 出发城市名称
+  optional string departDate = 7;       // 出发日期
+  optional int32 adult = 8;             // 成人个数
+  optional int32 children = 9 ;         // 儿童个数
+
+  optional string price = 10;           // 大拇指价
+  optional int32 priceStatus = 11;      // 价格状态
+  optional int32 status = 12;           // 订单状态
+}
+

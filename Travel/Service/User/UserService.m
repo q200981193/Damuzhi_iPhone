@@ -27,7 +27,7 @@ static UserService* _defaultUserService = nil;
 - (void)autoRegisterUser:(NSString*)deviceToken
 {
     // if user exists locally then return, else send a registration to server
-    if ([[UserManager defaultManager] userId]) {
+    if ([[UserManager defaultManager] getUserId]) {
         return;
     }
     else {

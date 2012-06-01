@@ -6,9 +6,16 @@
 #import "CityOverview.pb.h"
 #import "TravelTips.pb.h"
 #import "App.pb.h"
+#import "TouristRoute.pb.h"
 
+@class Accommodation;
+@class Accommodation_Builder;
+@class Agency;
+@class Agency_Builder;
 @class App;
 @class App_Builder;
+@class Booking;
+@class Booking_Builder;
 @class City;
 @class CityArea;
 @class CityArea_Builder;
@@ -23,10 +30,18 @@
 @class CommonTravelTipList;
 @class CommonTravelTipList_Builder;
 @class CommonTravelTip_Builder;
+@class DailySchedule;
+@class DailySchedule_Builder;
+@class Flight;
+@class Flight_Builder;
 @class HelpInfo;
 @class HelpInfo_Builder;
 @class NameIdPair;
 @class NameIdPair_Builder;
+@class Order;
+@class OrderList;
+@class OrderList_Builder;
+@class Order_Builder;
 @class Package;
 @class Package_Builder;
 @class Place;
@@ -34,13 +49,29 @@
 @class PlaceList_Builder;
 @class PlaceMeta;
 @class PlaceMeta_Builder;
+@class PlaceTour;
+@class PlaceTour_Builder;
 @class Place_Builder;
 @class RecommendedApp;
 @class RecommendedApp_Builder;
+@class RouteCity;
+@class RouteCity_Builder;
+@class RouteFeekback;
+@class RouteFeekbackList;
+@class RouteFeekbackList_Builder;
+@class RouteFeekback_Builder;
+@class TouristRoute;
+@class TouristRouteList;
+@class TouristRouteList_Builder;
+@class TouristRoute_Builder;
+@class TravelPackage;
+@class TravelPackage_Builder;
 @class TravelResponse;
 @class TravelResponse_Builder;
 @class TravelTips;
 @class TravelTips_Builder;
+@class UserInfo;
+@class UserInfo_Builder;
 typedef enum {
   LanguageTypeZhHans = 1,
   LanguageTypeZhHant = 2,
@@ -131,6 +162,268 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (Package_Builder*) clearLanguage;
 @end
 
+@interface UserInfo : PBGeneratedMessage {
+@private
+  BOOL hasGender_:1;
+  BOOL hasType_:1;
+  BOOL hasUserId_:1;
+  BOOL hasMemberId_:1;
+  BOOL hasPassword_:1;
+  BOOL hasNickName_:1;
+  BOOL hasFullName_:1;
+  BOOL hasTelephone_:1;
+  BOOL hasEmail_:1;
+  int32_t gender;
+  int32_t type;
+  NSString* userId;
+  NSString* memberId;
+  NSString* password;
+  NSString* nickName;
+  NSString* fullName;
+  NSString* telephone;
+  NSString* email;
+}
+- (BOOL) hasUserId;
+- (BOOL) hasMemberId;
+- (BOOL) hasPassword;
+- (BOOL) hasNickName;
+- (BOOL) hasGender;
+- (BOOL) hasType;
+- (BOOL) hasFullName;
+- (BOOL) hasTelephone;
+- (BOOL) hasEmail;
+@property (readonly, retain) NSString* userId;
+@property (readonly, retain) NSString* memberId;
+@property (readonly, retain) NSString* password;
+@property (readonly, retain) NSString* nickName;
+@property (readonly) int32_t gender;
+@property (readonly) int32_t type;
+@property (readonly, retain) NSString* fullName;
+@property (readonly, retain) NSString* telephone;
+@property (readonly, retain) NSString* email;
+
++ (UserInfo*) defaultInstance;
+- (UserInfo*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (UserInfo_Builder*) builder;
++ (UserInfo_Builder*) builder;
++ (UserInfo_Builder*) builderWithPrototype:(UserInfo*) prototype;
+
++ (UserInfo*) parseFromData:(NSData*) data;
++ (UserInfo*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (UserInfo*) parseFromInputStream:(NSInputStream*) input;
++ (UserInfo*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (UserInfo*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface UserInfo_Builder : PBGeneratedMessage_Builder {
+@private
+  UserInfo* result;
+}
+
+- (UserInfo*) defaultInstance;
+
+- (UserInfo_Builder*) clear;
+- (UserInfo_Builder*) clone;
+
+- (UserInfo*) build;
+- (UserInfo*) buildPartial;
+
+- (UserInfo_Builder*) mergeFrom:(UserInfo*) other;
+- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasUserId;
+- (NSString*) userId;
+- (UserInfo_Builder*) setUserId:(NSString*) value;
+- (UserInfo_Builder*) clearUserId;
+
+- (BOOL) hasMemberId;
+- (NSString*) memberId;
+- (UserInfo_Builder*) setMemberId:(NSString*) value;
+- (UserInfo_Builder*) clearMemberId;
+
+- (BOOL) hasPassword;
+- (NSString*) password;
+- (UserInfo_Builder*) setPassword:(NSString*) value;
+- (UserInfo_Builder*) clearPassword;
+
+- (BOOL) hasNickName;
+- (NSString*) nickName;
+- (UserInfo_Builder*) setNickName:(NSString*) value;
+- (UserInfo_Builder*) clearNickName;
+
+- (BOOL) hasGender;
+- (int32_t) gender;
+- (UserInfo_Builder*) setGender:(int32_t) value;
+- (UserInfo_Builder*) clearGender;
+
+- (BOOL) hasType;
+- (int32_t) type;
+- (UserInfo_Builder*) setType:(int32_t) value;
+- (UserInfo_Builder*) clearType;
+
+- (BOOL) hasFullName;
+- (NSString*) fullName;
+- (UserInfo_Builder*) setFullName:(NSString*) value;
+- (UserInfo_Builder*) clearFullName;
+
+- (BOOL) hasTelephone;
+- (NSString*) telephone;
+- (UserInfo_Builder*) setTelephone:(NSString*) value;
+- (UserInfo_Builder*) clearTelephone;
+
+- (BOOL) hasEmail;
+- (NSString*) email;
+- (UserInfo_Builder*) setEmail:(NSString*) value;
+- (UserInfo_Builder*) clearEmail;
+@end
+
+@interface RouteFeekbackList : PBGeneratedMessage {
+@private
+  NSMutableArray* mutableRouteFeekbacksList;
+}
+- (NSArray*) routeFeekbacksList;
+- (RouteFeekback*) routeFeekbacksAtIndex:(int32_t) index;
+
++ (RouteFeekbackList*) defaultInstance;
+- (RouteFeekbackList*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (RouteFeekbackList_Builder*) builder;
++ (RouteFeekbackList_Builder*) builder;
++ (RouteFeekbackList_Builder*) builderWithPrototype:(RouteFeekbackList*) prototype;
+
++ (RouteFeekbackList*) parseFromData:(NSData*) data;
++ (RouteFeekbackList*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RouteFeekbackList*) parseFromInputStream:(NSInputStream*) input;
++ (RouteFeekbackList*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RouteFeekbackList*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (RouteFeekbackList*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface RouteFeekbackList_Builder : PBGeneratedMessage_Builder {
+@private
+  RouteFeekbackList* result;
+}
+
+- (RouteFeekbackList*) defaultInstance;
+
+- (RouteFeekbackList_Builder*) clear;
+- (RouteFeekbackList_Builder*) clone;
+
+- (RouteFeekbackList*) build;
+- (RouteFeekbackList*) buildPartial;
+
+- (RouteFeekbackList_Builder*) mergeFrom:(RouteFeekbackList*) other;
+- (RouteFeekbackList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (RouteFeekbackList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (NSArray*) routeFeekbacksList;
+- (RouteFeekback*) routeFeekbacksAtIndex:(int32_t) index;
+- (RouteFeekbackList_Builder*) replaceRouteFeekbacksAtIndex:(int32_t) index with:(RouteFeekback*) value;
+- (RouteFeekbackList_Builder*) addRouteFeekbacks:(RouteFeekback*) value;
+- (RouteFeekbackList_Builder*) addAllRouteFeekbacks:(NSArray*) values;
+- (RouteFeekbackList_Builder*) clearRouteFeekbacksList;
+@end
+
+@interface RouteFeekback : PBGeneratedMessage {
+@private
+  BOOL hasRouteId_:1;
+  BOOL hasRank_:1;
+  BOOL hasMemberId_:1;
+  BOOL hasNickName_:1;
+  BOOL hasDate_:1;
+  BOOL hasContent_:1;
+  int32_t routeId;
+  int32_t rank;
+  NSString* memberId;
+  NSString* nickName;
+  NSString* date;
+  NSString* content;
+}
+- (BOOL) hasRouteId;
+- (BOOL) hasMemberId;
+- (BOOL) hasNickName;
+- (BOOL) hasDate;
+- (BOOL) hasRank;
+- (BOOL) hasContent;
+@property (readonly) int32_t routeId;
+@property (readonly, retain) NSString* memberId;
+@property (readonly, retain) NSString* nickName;
+@property (readonly, retain) NSString* date;
+@property (readonly) int32_t rank;
+@property (readonly, retain) NSString* content;
+
++ (RouteFeekback*) defaultInstance;
+- (RouteFeekback*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (RouteFeekback_Builder*) builder;
++ (RouteFeekback_Builder*) builder;
++ (RouteFeekback_Builder*) builderWithPrototype:(RouteFeekback*) prototype;
+
++ (RouteFeekback*) parseFromData:(NSData*) data;
++ (RouteFeekback*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RouteFeekback*) parseFromInputStream:(NSInputStream*) input;
++ (RouteFeekback*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (RouteFeekback*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (RouteFeekback*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface RouteFeekback_Builder : PBGeneratedMessage_Builder {
+@private
+  RouteFeekback* result;
+}
+
+- (RouteFeekback*) defaultInstance;
+
+- (RouteFeekback_Builder*) clear;
+- (RouteFeekback_Builder*) clone;
+
+- (RouteFeekback*) build;
+- (RouteFeekback*) buildPartial;
+
+- (RouteFeekback_Builder*) mergeFrom:(RouteFeekback*) other;
+- (RouteFeekback_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (RouteFeekback_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasRouteId;
+- (int32_t) routeId;
+- (RouteFeekback_Builder*) setRouteId:(int32_t) value;
+- (RouteFeekback_Builder*) clearRouteId;
+
+- (BOOL) hasMemberId;
+- (NSString*) memberId;
+- (RouteFeekback_Builder*) setMemberId:(NSString*) value;
+- (RouteFeekback_Builder*) clearMemberId;
+
+- (BOOL) hasNickName;
+- (NSString*) nickName;
+- (RouteFeekback_Builder*) setNickName:(NSString*) value;
+- (RouteFeekback_Builder*) clearNickName;
+
+- (BOOL) hasDate;
+- (NSString*) date;
+- (RouteFeekback_Builder*) setDate:(NSString*) value;
+- (RouteFeekback_Builder*) clearDate;
+
+- (BOOL) hasRank;
+- (int32_t) rank;
+- (RouteFeekback_Builder*) setRank:(int32_t) value;
+- (RouteFeekback_Builder*) clearRank;
+
+- (BOOL) hasContent;
+- (NSString*) content;
+- (RouteFeekback_Builder*) setContent:(NSString*) value;
+- (RouteFeekback_Builder*) clearContent;
+@end
+
 @interface TravelResponse : PBGeneratedMessage {
 @private
   BOOL hasResultCode_:1;
@@ -143,6 +436,11 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   BOOL hasCityList_:1;
   BOOL hasAppInfo_:1;
   BOOL hasTravelTipList_:1;
+  BOOL hasUserInfo_:1;
+  BOOL hasRoute_:1;
+  BOOL hasRouteList_:1;
+  BOOL hasRouteFeekbackList_:1;
+  BOOL hasOrderList_:1;
   int32_t resultCode;
   NSString* resultInfo;
   Place* place;
@@ -153,6 +451,11 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   CityList* cityList;
   App* appInfo;
   CommonTravelTipList* travelTipList;
+  UserInfo* userInfo;
+  TouristRoute* route;
+  TouristRouteList* routeList;
+  RouteFeekbackList* routeFeekbackList;
+  OrderList* orderList;
 }
 - (BOOL) hasResultCode;
 - (BOOL) hasResultInfo;
@@ -164,6 +467,11 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (BOOL) hasCityList;
 - (BOOL) hasAppInfo;
 - (BOOL) hasTravelTipList;
+- (BOOL) hasUserInfo;
+- (BOOL) hasRoute;
+- (BOOL) hasRouteList;
+- (BOOL) hasRouteFeekbackList;
+- (BOOL) hasOrderList;
 @property (readonly) int32_t resultCode;
 @property (readonly, retain) NSString* resultInfo;
 @property (readonly, retain) Place* place;
@@ -174,6 +482,11 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 @property (readonly, retain) CityList* cityList;
 @property (readonly, retain) App* appInfo;
 @property (readonly, retain) CommonTravelTipList* travelTipList;
+@property (readonly, retain) UserInfo* userInfo;
+@property (readonly, retain) TouristRoute* route;
+@property (readonly, retain) TouristRouteList* routeList;
+@property (readonly, retain) RouteFeekbackList* routeFeekbackList;
+@property (readonly, retain) OrderList* orderList;
 
 + (TravelResponse*) defaultInstance;
 - (TravelResponse*) defaultInstance;
@@ -274,5 +587,40 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (TravelResponse_Builder*) setTravelTipListBuilder:(CommonTravelTipList_Builder*) builderForValue;
 - (TravelResponse_Builder*) mergeTravelTipList:(CommonTravelTipList*) value;
 - (TravelResponse_Builder*) clearTravelTipList;
+
+- (BOOL) hasUserInfo;
+- (UserInfo*) userInfo;
+- (TravelResponse_Builder*) setUserInfo:(UserInfo*) value;
+- (TravelResponse_Builder*) setUserInfoBuilder:(UserInfo_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeUserInfo:(UserInfo*) value;
+- (TravelResponse_Builder*) clearUserInfo;
+
+- (BOOL) hasRoute;
+- (TouristRoute*) route;
+- (TravelResponse_Builder*) setRoute:(TouristRoute*) value;
+- (TravelResponse_Builder*) setRouteBuilder:(TouristRoute_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeRoute:(TouristRoute*) value;
+- (TravelResponse_Builder*) clearRoute;
+
+- (BOOL) hasRouteList;
+- (TouristRouteList*) routeList;
+- (TravelResponse_Builder*) setRouteList:(TouristRouteList*) value;
+- (TravelResponse_Builder*) setRouteListBuilder:(TouristRouteList_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeRouteList:(TouristRouteList*) value;
+- (TravelResponse_Builder*) clearRouteList;
+
+- (BOOL) hasRouteFeekbackList;
+- (RouteFeekbackList*) routeFeekbackList;
+- (TravelResponse_Builder*) setRouteFeekbackList:(RouteFeekbackList*) value;
+- (TravelResponse_Builder*) setRouteFeekbackListBuilder:(RouteFeekbackList_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeRouteFeekbackList:(RouteFeekbackList*) value;
+- (TravelResponse_Builder*) clearRouteFeekbackList;
+
+- (BOOL) hasOrderList;
+- (OrderList*) orderList;
+- (TravelResponse_Builder*) setOrderList:(OrderList*) value;
+- (TravelResponse_Builder*) setOrderListBuilder:(OrderList_Builder*) builderForValue;
+- (TravelResponse_Builder*) mergeOrderList:(OrderList*) value;
+- (TravelResponse_Builder*) clearOrderList;
 @end
 

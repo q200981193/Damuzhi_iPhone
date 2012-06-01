@@ -379,7 +379,7 @@
     
 }
 
-+ (UIAlertView*)showUsingCellNetworkAlertViewWithTag:(int)tag delegate:(id)delegate
++ (UIAlertView*)showAlertViewWhenUsingCellNetworkForDownloadWithTag:(int)tag delegate:(id)delegate
 {
     NSString *message = NSLS(@"您现在使用非WIFI网络下载，将会占用大量流量，是否继续下载?");
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:delegate cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"),nil] autorelease];
@@ -394,6 +394,15 @@
     NSString *message = NSLS(@"是否确认删除?");
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:delegate cancelButtonTitle:NSLS(@"取消") otherButtonTitles:NSLS(@"确定"),nil] autorelease];
     alert.tag = tag;
+    [alert show];
+    
+    return alert;
+}
+
++ (UIAlertView*)showAlertViewWhenLookingMapWithoutNetwork
+{
+    NSString *message = NSLS(@"网络弱，地图模式暂无法使用");
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:NSLS(@"提示") message:message delegate:nil cancelButtonTitle:NSLS(@"我知道了") otherButtonTitles:nil,nil] autorelease];
     [alert show];
     
     return alert;

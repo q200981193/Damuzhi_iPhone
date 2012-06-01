@@ -43,7 +43,7 @@ static ResendService *_defaultResendService = nil;
                 longitude:(NSString *)longitude 
                  latitude:(NSString *)latitude
 {
-    NSString* userId = [[UserManager defaultManager] userId];    
+    NSString* userId = [[UserManager defaultManager] getUserId];    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         CommonNetworkOutput* output = [TravelNetworkRequest addFavoriteByUserId:userId placeId:placeId  longitude:longitude latitude:latitude];
         
@@ -63,7 +63,7 @@ static ResendService *_defaultResendService = nil;
 
 - (void)resendDeleteFavorite:(NSString *)placeId
 {
-    NSString* userId = [[UserManager defaultManager] userId];
+    NSString* userId = [[UserManager defaultManager] getUserId];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
         
         CommonNetworkOutput *output = [TravelNetworkRequest deleteFavoriteByUserId:userId placeId:placeId];

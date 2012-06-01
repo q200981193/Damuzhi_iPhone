@@ -7,6 +7,7 @@
 //
 
 #import "PlaceMapAnnotation.h"
+#import "PPDebug.h"
 
 @implementation PlaceMapAnnotation
 
@@ -16,8 +17,8 @@
 
 - (void)dealloc
 {
-    [_place release];
-    [_title release];
+    PPRelease(_place);
+    PPRelease(_title);
     [super dealloc];
 }
 

@@ -37,6 +37,7 @@
 #pragma mark: 
 - (void)dealloc {
     [_city release];
+    
     [downloadProgressView release];
     [downloadButton release];
     [onlineButton release];
@@ -218,9 +219,9 @@
 
 #pragma mark -
 #pragma mark: Imlementation for buttons event.
-- (IBAction)clickDownload:(id)sender {    
+- (IBAction)clickDownload:(id)sender {
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-        [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+        [AppUtils showAlertViewWhenUsingCellNetworkForDownloadWithTag:ALERT_USING_CELL_NEWORK delegate:self];
     }
     else {
         [self download];
@@ -251,7 +252,7 @@
         //TODO, resume download request
         if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
             // user is using Mobile Network
-            [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+            [AppUtils showAlertViewWhenUsingCellNetworkForDownloadWithTag:ALERT_USING_CELL_NEWORK delegate:self];
         }
         else {
             [self download];

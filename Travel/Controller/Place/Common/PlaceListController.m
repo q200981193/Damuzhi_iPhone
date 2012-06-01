@@ -18,6 +18,8 @@
 #import "AppService.h"
 #import "MapUtils.h"
 #import "PPApplication.h"
+#import "Reachability.h"
+#import "AppUtils.h"
 
 @interface PlaceListController () 
 {
@@ -45,7 +47,6 @@
 - (void)dealloc
 {
     [GlobalGetImageCache() cancelLoadingObjects];
-//    [_mapViewController release];
     PPRelease(_mapViewController);
     [_mapHolderView release];
     
@@ -137,11 +138,12 @@
     }
     
     self.dataList = placeList;
+    [self reloadDataTableView];
 
     if (_showMap) {
         [_mapViewController setPlaces:self.dataList];
     }else {
-        [self reloadDataTableView];
+//        [self reloadDataTableView];
     }
 }
 
@@ -260,11 +262,15 @@
 
 - (void)switchToMapMode
 {
+    if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
+        [AppUtils showAlertViewWhenLookingMapWithoutNetwork];
+    }
+    
     _showMap = YES;
     dataTableView.hidden = YES;
     _mapHolderView.hidden = NO;
     
-    [_mapViewController showUserLocation:YES];
+//    [_mapViewController showUserLocation:YES];
     [_mapViewController setPlaces:self.dataList];
 }
 
@@ -288,7 +294,10 @@
     }else {
         [self hideTipsOnTableView];
     }
-    
+}
+
+- (void)hideRefreshHeaderViewAfterLoading
+{
     if (self.superNavigationController) {
         // after finish loading data, please call the following codes
         [refreshHeaderView setCurrentDate];  	

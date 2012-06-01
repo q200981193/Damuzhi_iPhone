@@ -1,3 +1,4 @@
+import "TouristRoute.proto";
 
 package damuzhi;
 
@@ -68,6 +69,19 @@ message RecommendedApp {
   optional string url = 6;                  // app的链接，给安卓系统用
 }
 
+// 旅行社
+message Agency {
+  required int32 agencyId = 1;	// 旅行社id
+  required int32 name = 2;		// 旅行社名称
+}
+
+// 线路出发/目的城市
+message RouteCity {
+  required int32 routeCityId =1;		// 线路城市id
+  required string cityName = 2;         // 城市名
+  required string countryName = 3;		// 国家名称
+}
+
 // 应用相关的基础数据，和城市无关
 message App {
   required string dataVersion = 1;                  // 数据的版本，如1.0
@@ -75,5 +89,12 @@ message App {
   repeated City testCities = 3;                     // 测试实用测试列表
   repeated PlaceMeta placeMetaDataList = 5;         // 每种地点分类的相关数据
   repeated RecommendedApp recommendedApps = 10;     // 应用推荐
+  
+  repeated RouteCity departCities = 20;             // 路线出发城市
+  repeated RouteCity destinationCities  = 21;       // 路线目的城市
+  repeated NameIdPair routeThemes = 25;             // 路线主题
+  repeated NameIdPair routeTypes = 26;              // 路线类型
+  
+  repeated Agency agencies = 30;                   // 旅行社
 }
 

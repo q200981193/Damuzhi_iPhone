@@ -23,7 +23,7 @@ static UserManager* _defaultUserManager = nil;
     return _defaultUserManager;
 }
 
-- (NSString*)userId
+- (NSString*)getUserId
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:KEY_USER_ID];
 }

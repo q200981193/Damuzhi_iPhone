@@ -42,11 +42,12 @@
 }
 
 - (void)dealloc {
+    [_city release];
+    
     [cityNameLabel release];
     [updateButton release];
     [deleteButton release];
     [dataSizeLabel release];
-    [_city release];
     
     [updateProgressView release];
     [pauseBtn release];
@@ -154,7 +155,7 @@
 
 - (IBAction)clickUpdateBtn:(id)sender {
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-        [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+        [AppUtils showAlertViewWhenUsingCellNetworkForDownloadWithTag:ALERT_USING_CELL_NEWORK delegate:self];
     }
     else {
         [self updateCity];
@@ -170,7 +171,7 @@
     else {
         //TODO, resume download request
         if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN){
-            [AppUtils showUsingCellNetworkAlertViewWithTag:ALERT_USING_CELL_NEWORK delegate:self];
+            [AppUtils showAlertViewWhenUsingCellNetworkForDownloadWithTag:ALERT_USING_CELL_NEWORK delegate:self];
         }
         else {
             [self updateCity];
