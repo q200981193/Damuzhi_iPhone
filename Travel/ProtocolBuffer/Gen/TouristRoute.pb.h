@@ -94,7 +94,7 @@
   BOOL hasCharacteristic_:1;
   BOOL hasCustomerServiceTelephone_:1;
   BOOL hasTour_:1;
-  BOOL hasImage_:1;
+  BOOL hasThumbImage_:1;
   BOOL hasPrice_:1;
   BOOL hasName_:1;
   BOOL hasBooking_:1;
@@ -111,13 +111,13 @@
   NSString* characteristic;
   NSString* customerServiceTelephone;
   NSString* tour;
-  NSString* image;
+  NSString* thumbImage;
   NSString* price;
   NSString* name;
   Booking* booking;
   NSMutableArray* mutableTypeIdsList;
   NSMutableArray* mutableThemeIdsList;
-  NSMutableArray* mutableImagesList;
+  NSMutableArray* mutableDetailImagesList;
   NSMutableArray* mutableDailySchedulesList;
   NSMutableArray* mutablePackagesList;
   NSMutableArray* mutableRelatedplacesList;
@@ -129,7 +129,7 @@
 - (BOOL) hasPrice;
 - (BOOL) hasAgencyId;
 - (BOOL) hasAverageRank;
-- (BOOL) hasImage;
+- (BOOL) hasThumbImage;
 - (BOOL) hasTour;
 - (BOOL) hasDays;
 - (BOOL) hasFollowUserCount;
@@ -146,7 +146,7 @@
 @property (readonly, retain) NSString* price;
 @property (readonly) int32_t agencyId;
 @property (readonly) int32_t averageRank;
-@property (readonly, retain) NSString* image;
+@property (readonly, retain) NSString* thumbImage;
 @property (readonly, retain) NSString* tour;
 @property (readonly) int32_t days;
 @property (readonly) int32_t followUserCount;
@@ -160,8 +160,8 @@
 - (int32_t) themeIdsAtIndex:(int32_t) index;
 - (NSArray*) typeIdsList;
 - (int32_t) typeIdsAtIndex:(int32_t) index;
-- (NSArray*) imagesList;
-- (NSString*) imagesAtIndex:(int32_t) index;
+- (NSArray*) detailImagesList;
+- (NSString*) detailImagesAtIndex:(int32_t) index;
 - (NSArray*) dailySchedulesList;
 - (DailySchedule*) dailySchedulesAtIndex:(int32_t) index;
 - (NSArray*) packagesList;
@@ -238,10 +238,10 @@
 - (TouristRoute_Builder*) setAverageRank:(int32_t) value;
 - (TouristRoute_Builder*) clearAverageRank;
 
-- (BOOL) hasImage;
-- (NSString*) image;
-- (TouristRoute_Builder*) setImage:(NSString*) value;
-- (TouristRoute_Builder*) clearImage;
+- (BOOL) hasThumbImage;
+- (NSString*) thumbImage;
+- (TouristRoute_Builder*) setThumbImage:(NSString*) value;
+- (TouristRoute_Builder*) clearThumbImage;
 
 - (BOOL) hasTour;
 - (NSString*) tour;
@@ -277,12 +277,12 @@
 - (TouristRoute_Builder*) setCustomerServiceTelephone:(NSString*) value;
 - (TouristRoute_Builder*) clearCustomerServiceTelephone;
 
-- (NSArray*) imagesList;
-- (NSString*) imagesAtIndex:(int32_t) index;
-- (TouristRoute_Builder*) replaceImagesAtIndex:(int32_t) index with:(NSString*) value;
-- (TouristRoute_Builder*) addImages:(NSString*) value;
-- (TouristRoute_Builder*) addAllImages:(NSArray*) values;
-- (TouristRoute_Builder*) clearImagesList;
+- (NSArray*) detailImagesList;
+- (NSString*) detailImagesAtIndex:(int32_t) index;
+- (TouristRoute_Builder*) replaceDetailImagesAtIndex:(int32_t) index with:(NSString*) value;
+- (TouristRoute_Builder*) addDetailImages:(NSString*) value;
+- (TouristRoute_Builder*) addAllDetailImages:(NSArray*) values;
+- (TouristRoute_Builder*) clearDetailImagesList;
 
 - (BOOL) hasCharacteristic;
 - (NSString*) characteristic;
