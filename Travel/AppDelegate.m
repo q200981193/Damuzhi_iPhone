@@ -41,6 +41,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [MobClick startWithAppkey:UMENG_KEY];
+    [MobClick updateOnlineConfig];
     
     if ([DeviceDetection isOS5]){
         [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"topmenu_bg.png"] forBarMetrics:UIBarMetricsDefault];
