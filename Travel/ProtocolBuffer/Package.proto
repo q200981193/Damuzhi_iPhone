@@ -27,13 +27,15 @@ message Package {
 message UserInfo {
   required string userId = 1;		// 用户id，与设备id绑定
   required int32  loginType = 2;    // 当前登录类型，1：手机；2：邮箱
-  required string telephone = 3;	// 电话
-  required string email = 4; 		// 邮箱
-  required string password = 5;		// 密码
+  required string password = 3;		// 密码
 
-  optional string nickName = 6;		// 昵称
-  optional int32  gender = 7; 		// 性别
-  optional string fullName = 8;		// 姓名
+  required string telephone = 10;	// 电话
+  required string email = 11; 		// 邮箱
+
+  optional string nickName = 20;	// 昵称
+  optional int32  gender = 21; 		// 性别
+  optional string fullName = 22;	// 姓名
+  optional string address = 23;     // 住址
 }
 
 // 用于获取线路反馈列表
