@@ -202,7 +202,9 @@
 {
     if (version && dataVersion) {
         NSString *localVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-        if ([version isEqual:localVersion]) {
+        float versionFloat = [version floatValue];
+        float localVersionFloat = [localVersion floatValue];
+        if (localVersionFloat >= versionFloat) {
             [self popupHappyMessage:NSLS(@"isNewVersion") title:nil];
         }else {
             [UIUtils openApp:kAppId];
