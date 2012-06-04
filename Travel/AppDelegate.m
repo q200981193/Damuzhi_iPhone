@@ -41,7 +41,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [MobClick startWithAppkey:UMENG_KEY];
+    //[MobClick startWithAppkey:UMENG_KEY];
+    [MobClick startWithAppkey:UMENG_KEY reportPolicy:BATCH channelId:@"91"];
     [MobClick updateOnlineConfig];
     
     if ([DeviceDetection isOS5]){
