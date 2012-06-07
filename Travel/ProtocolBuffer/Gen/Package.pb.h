@@ -427,6 +427,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 @interface TravelResponse : PBGeneratedMessage {
 @private
   BOOL hasResultCode_:1;
+  BOOL hasTotalCount_:1;
   BOOL hasResultInfo_:1;
   BOOL hasPlace_:1;
   BOOL hasOverview_:1;
@@ -442,6 +443,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
   BOOL hasRouteFeekbackList_:1;
   BOOL hasOrderList_:1;
   int32_t resultCode;
+  int32_t totalCount;
   NSString* resultInfo;
   Place* place;
   CommonOverview* overview;
@@ -467,6 +469,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (BOOL) hasCityList;
 - (BOOL) hasAppInfo;
 - (BOOL) hasTravelTipList;
+- (BOOL) hasTotalCount;
 - (BOOL) hasUserInfo;
 - (BOOL) hasRoute;
 - (BOOL) hasRouteList;
@@ -482,6 +485,7 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 @property (readonly, retain) CityList* cityList;
 @property (readonly, retain) App* appInfo;
 @property (readonly, retain) CommonTravelTipList* travelTipList;
+@property (readonly) int32_t totalCount;
 @property (readonly, retain) UserInfo* userInfo;
 @property (readonly, retain) TouristRoute* route;
 @property (readonly, retain) TouristRouteList* routeList;
@@ -587,6 +591,11 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (TravelResponse_Builder*) setTravelTipListBuilder:(CommonTravelTipList_Builder*) builderForValue;
 - (TravelResponse_Builder*) mergeTravelTipList:(CommonTravelTipList*) value;
 - (TravelResponse_Builder*) clearTravelTipList;
+
+- (BOOL) hasTotalCount;
+- (int32_t) totalCount;
+- (TravelResponse_Builder*) setTotalCount:(int32_t) value;
+- (TravelResponse_Builder*) clearTotalCount;
 
 - (BOOL) hasUserInfo;
 - (UserInfo*) userInfo;

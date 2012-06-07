@@ -1444,6 +1444,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
 @property (retain) CityList* cityList;
 @property (retain) App* appInfo;
 @property (retain) CommonTravelTipList* travelTipList;
+@property int32_t totalCount;
 @property (retain) UserInfo* userInfo;
 @property (retain) TouristRoute* route;
 @property (retain) TouristRouteList* routeList;
@@ -1523,6 +1524,13 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   hasTravelTipList_ = !!value;
 }
 @synthesize travelTipList;
+- (BOOL) hasTotalCount {
+  return !!hasTotalCount_;
+}
+- (void) setHasTotalCount:(BOOL) value {
+  hasTotalCount_ = !!value;
+}
+@synthesize totalCount;
 - (BOOL) hasUserInfo {
   return !!hasUserInfo_;
 }
@@ -1587,6 +1595,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
     self.cityList = [CityList defaultInstance];
     self.appInfo = [App defaultInstance];
     self.travelTipList = [CommonTravelTipList defaultInstance];
+    self.totalCount = 0;
     self.userInfo = [UserInfo defaultInstance];
     self.route = [TouristRoute defaultInstance];
     self.routeList = [TouristRouteList defaultInstance];
@@ -1704,6 +1713,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasTravelTipList) {
     [output writeMessage:10 value:self.travelTipList];
   }
+  if (self.hasTotalCount) {
+    [output writeInt32:13 value:self.totalCount];
+  }
   if (self.hasUserInfo) {
     [output writeMessage:15 value:self.userInfo];
   }
@@ -1757,6 +1769,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasTravelTipList) {
     size += computeMessageSize(10, self.travelTipList);
+  }
+  if (self.hasTotalCount) {
+    size += computeInt32Size(13, self.totalCount);
   }
   if (self.hasUserInfo) {
     size += computeMessageSize(15, self.userInfo);
@@ -1878,6 +1893,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other.hasTravelTipList) {
     [self mergeTravelTipList:other.travelTipList];
   }
+  if (other.hasTotalCount) {
+    [self setTotalCount:other.totalCount];
+  }
   if (other.hasUserInfo) {
     [self mergeUserInfo:other.userInfo];
   }
@@ -1992,6 +2010,10 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self setTravelTipList:[subBuilder buildPartial]];
+        break;
+      }
+      case 104: {
+        [self setTotalCount:[input readInt32]];
         break;
       }
       case 122: {
@@ -2312,6 +2334,22 @@ static TravelResponse* defaultTravelResponseInstance = nil;
 - (TravelResponse_Builder*) clearTravelTipList {
   result.hasTravelTipList = NO;
   result.travelTipList = [CommonTravelTipList defaultInstance];
+  return self;
+}
+- (BOOL) hasTotalCount {
+  return result.hasTotalCount;
+}
+- (int32_t) totalCount {
+  return result.totalCount;
+}
+- (TravelResponse_Builder*) setTotalCount:(int32_t) value {
+  result.hasTotalCount = YES;
+  result.totalCount = value;
+  return self;
+}
+- (TravelResponse_Builder*) clearTotalCount {
+  result.hasTotalCount = NO;
+  result.totalCount = 0;
   return self;
 }
 - (BOOL) hasUserInfo {

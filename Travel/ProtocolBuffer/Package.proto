@@ -66,6 +66,8 @@ message TravelResponse{
   optional App appInfo = 9;   
   optional CommonTravelTipList travelTipList = 10;
   
+  optional int32 totalCount = 13;                       // 用于返回符合查询条件的列表的行总数
+  
   optional UserInfo userInfo = 15;                      // 用户资料
   
   optional TouristRoute route = 20;                     // 线路详情

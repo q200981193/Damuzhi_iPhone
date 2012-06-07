@@ -31,11 +31,10 @@
 
 @interface TouristRouteList : PBGeneratedMessage {
 @private
-  BOOL hasRoutes_:1;
-  TouristRoute* routes;
+  NSMutableArray* mutableRoutesList;
 }
-- (BOOL) hasRoutes;
-@property (readonly, retain) TouristRoute* routes;
+- (NSArray*) routesList;
+- (TouristRoute*) routesAtIndex:(int32_t) index;
 
 + (TouristRouteList*) defaultInstance;
 - (TouristRouteList*) defaultInstance;
@@ -71,51 +70,52 @@
 - (TouristRouteList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (TouristRouteList_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasRoutes;
-- (TouristRoute*) routes;
-- (TouristRouteList_Builder*) setRoutes:(TouristRoute*) value;
-- (TouristRouteList_Builder*) setRoutesBuilder:(TouristRoute_Builder*) builderForValue;
-- (TouristRouteList_Builder*) mergeRoutes:(TouristRoute*) value;
-- (TouristRouteList_Builder*) clearRoutes;
+- (NSArray*) routesList;
+- (TouristRoute*) routesAtIndex:(int32_t) index;
+- (TouristRouteList_Builder*) replaceRoutesAtIndex:(int32_t) index with:(TouristRoute*) value;
+- (TouristRouteList_Builder*) addRoutes:(TouristRoute*) value;
+- (TouristRouteList_Builder*) addAllRoutes:(NSArray*) values;
+- (TouristRouteList_Builder*) clearRoutesList;
 @end
 
 @interface TouristRoute : PBGeneratedMessage {
 @private
-  BOOL hasRouteId_:1;
-  BOOL hasDepartCityId_:1;
-  BOOL hasDestinationCityId_:1;
-  BOOL hasAgencyId_:1;
-  BOOL hasAverageRank_:1;
-  BOOL hasDays_:1;
   BOOL hasFollowUserCount_:1;
+  BOOL hasTypeId_:1;
+  BOOL hasDays_:1;
+  BOOL hasAverageRank_:1;
+  BOOL hasAgencyId_:1;
+  BOOL hasDestinationCityId_:1;
+  BOOL hasDepartCityId_:1;
+  BOOL hasRouteId_:1;
   BOOL hasBookingNotice_:1;
   BOOL hasFee_:1;
   BOOL hasReference_:1;
   BOOL hasCharacteristic_:1;
   BOOL hasCustomerServiceTelephone_:1;
+  BOOL hasName_:1;
   BOOL hasTour_:1;
   BOOL hasThumbImage_:1;
   BOOL hasPrice_:1;
-  BOOL hasName_:1;
   BOOL hasBooking_:1;
-  int32_t routeId;
-  int32_t departCityId;
-  int32_t destinationCityId;
-  int32_t agencyId;
-  int32_t averageRank;
-  int32_t days;
   int32_t followUserCount;
+  int32_t typeId;
+  int32_t days;
+  int32_t averageRank;
+  int32_t agencyId;
+  int32_t destinationCityId;
+  int32_t departCityId;
+  int32_t routeId;
   NSString* bookingNotice;
   NSString* fee;
   NSString* reference;
   NSString* characteristic;
   NSString* customerServiceTelephone;
+  NSString* name;
   NSString* tour;
   NSString* thumbImage;
   NSString* price;
-  NSString* name;
   Booking* booking;
-  NSMutableArray* mutableTypeIdsList;
   NSMutableArray* mutableThemeIdsList;
   NSMutableArray* mutableDetailImagesList;
   NSMutableArray* mutableDailySchedulesList;
@@ -132,6 +132,7 @@
 - (BOOL) hasThumbImage;
 - (BOOL) hasTour;
 - (BOOL) hasDays;
+- (BOOL) hasTypeId;
 - (BOOL) hasFollowUserCount;
 - (BOOL) hasCustomerServiceTelephone;
 - (BOOL) hasCharacteristic;
@@ -149,6 +150,7 @@
 @property (readonly, retain) NSString* thumbImage;
 @property (readonly, retain) NSString* tour;
 @property (readonly) int32_t days;
+@property (readonly) int32_t typeId;
 @property (readonly) int32_t followUserCount;
 @property (readonly, retain) NSString* customerServiceTelephone;
 @property (readonly, retain) NSString* characteristic;
@@ -158,8 +160,6 @@
 @property (readonly, retain) NSString* bookingNotice;
 - (NSArray*) themeIdsList;
 - (int32_t) themeIdsAtIndex:(int32_t) index;
-- (NSArray*) typeIdsList;
-- (int32_t) typeIdsAtIndex:(int32_t) index;
 - (NSArray*) detailImagesList;
 - (NSString*) detailImagesAtIndex:(int32_t) index;
 - (NSArray*) dailySchedulesList;
@@ -260,12 +260,10 @@
 - (TouristRoute_Builder*) addAllThemeIds:(NSArray*) values;
 - (TouristRoute_Builder*) clearThemeIdsList;
 
-- (NSArray*) typeIdsList;
-- (int32_t) typeIdsAtIndex:(int32_t) index;
-- (TouristRoute_Builder*) replaceTypeIdsAtIndex:(int32_t) index with:(int32_t) value;
-- (TouristRoute_Builder*) addTypeIds:(int32_t) value;
-- (TouristRoute_Builder*) addAllTypeIds:(NSArray*) values;
-- (TouristRoute_Builder*) clearTypeIdsList;
+- (BOOL) hasTypeId;
+- (int32_t) typeId;
+- (TouristRoute_Builder*) setTypeId:(int32_t) value;
+- (TouristRoute_Builder*) clearTypeId;
 
 - (BOOL) hasFollowUserCount;
 - (int32_t) followUserCount;
