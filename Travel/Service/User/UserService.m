@@ -77,7 +77,9 @@ static UserService* _defaultUserService = nil;
 
 }
 
-- (void)submitFeekback:(id<UserServiceDelegate>)delegate feekback:(NSString*)feekback contact:(NSString*)contact
+- (void)submitFeekback:(id<UserServiceDelegate>)delegate
+              feekback:(NSString*)feekback
+               contact:(NSString*)contact
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest submitFeekback:feekback contact:contact];
@@ -90,12 +92,40 @@ static UserService* _defaultUserService = nil;
 }
 
 
-- (void)loginWithLoginId:(NSString *)loginId password:(NSString *)password os:(int)os
+- (void)login:(NSString *)loginId
+     password:(NSString *)password
+     delegate:(id<UserServiceDelegate>)delegate
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest login:loginId password:password];   
+        if (output.resultCode == ERROR_SUCCESS) {
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            NSString *token = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_TOKEN];
+            [[UserManager defaultManager] login:loginId token:token];
+        }
     
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (delegate && [delegate respondsToSelector:@selector(loginDidFinish:)]) {
+                [delegate loginDidFinish:(!output.resultCode)];
+            }
+        });                        
+    });
 }
 
-- (void)signUpWithLoginId:(NSString *)loginId password:(NSString *)password delegate:(id<UserServiceDelegate>)delegate
+- (void)logout:(NSString *)loginId 
+         token:(NSString *)token
+{
+    [[UserManager defaultManager] logout];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        CommonNetworkOutput *output = [TravelNetworkRequest logout:loginId token:token];   
+        [TravelNetworkRequest logout:loginId token:token];   
+    });
+}
+
+- (void)signUp:(NSString *)loginId 
+      password:(NSString *)password 
+      delegate:(id<UserServiceDelegate>)delegate
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest signUp:loginId password:password];
@@ -107,32 +137,73 @@ static UserService* _defaultUserService = nil;
     });
 }
 
-- (void)verificate:(NSString *)loginId telephone:(NSString *)telephone
-{}
-- (void)verificate:(NSString *)loginId code:(NSString *)code
-{}
+- (void)verificate:(NSString *)loginId
+         telephone:(NSString *)telephone
+          delegate:(id<UserServiceDelegate>)delegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest verificate:loginId telephone:telephone];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (delegate && [delegate respondsToSelector:@selector(verificationDidSend:)]) {
+                [delegate verificationDidSend:(!output.resultCode)];
+            }
+        });
+    });
+}
 
-- (void)retrievePassword:(NSString *)telephone
-{}
+- (void)verificate:(NSString *)loginId 
+              code:(NSString *)code 
+          delegate:(id<UserServiceDelegate>)delegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest verificate:loginId code:code];   
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (delegate && [delegate respondsToSelector:@selector(verificationDidFinish:)]) {
+                [delegate verificationDidFinish:(!output.resultCode)];
+            }
+        });
+    });
+}
 
-- (void)modifyUserInfoWithLoginId:(NSString *)loginId
-                            token:(NSString *)token 
-                         fullName:(NSString *)fullName
-                         nickName:(NSString *)nickName
-                           gender:(int)gender
-                        telephone:(NSString *)telephone
-                            email:(NSString *)email
-                          address:(NSString *)address
-{}
+- (void)retrievePassword:(NSString *)loginId 
+               telephone:(NSString *)telephone 
+                delegate:(id<UserServiceDelegate>)delegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest retrievePassword:loginId telephone:telephone];   
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (delegate && [delegate respondsToSelector:@selector(retrievePasswordDidSend:)]) {
+                [delegate retrievePasswordDidSend:(!output.resultCode)];
+            }
+        });
+    });
+}
 
-- (void)modifyPasswordWithLoginId:(NSString *)loginId
-                            token:(NSString *)token 
-                      oldPassword:(NSString *)oldPassword
-                      newPassword:(NSString *)newPassword
-{}
+- (void)modifyUserInfo:(NSString *)loginId
+                 token:(NSString *)token 
+              fullName:(NSString *)fullName
+              nickName:(NSString *)nickName
+                gender:(int)gender
+             telephone:(NSString *)telephone
+                 email:(NSString *)email
+               address:(NSString *)address
+{
+    
 
-- (void)retrieveUserInfoLoginId:(NSString *)loginId
-                          token:(NSString *)token
-{}
+}
+
+- (void)modifyPassword:(NSString *)loginId
+                 token:(NSString *)token 
+           oldPassword:(NSString *)oldPassword
+           newPassword:(NSString *)newPassword
+{
+    
+}
+
+- (void)retrieveUserInfo:(NSString *)loginId
+                   token:(NSString *)token
+{
+    
+}
 
 @end

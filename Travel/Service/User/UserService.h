@@ -17,6 +17,10 @@
 - (void)submitFeekbackDidFinish:(BOOL)success;
 
 - (void)signUpDidFinish:(BOOL)success;
+- (void)verificationDidSend:(BOOL)success;
+- (void)verificationDidFinish:(BOOL)success;
+- (void)loginDidFinish:(BOOL)success;
+- (void)retrievePasswordDidSend:(BOOL)success;
 
 @end
 
@@ -28,32 +32,48 @@
 
 - (void)queryVersion:(id<UserServiceDelegate>)delegate;
 
-- (void)submitFeekback:(id<UserServiceDelegate>)delegate feekback:(NSString*)feekback contact:(NSString*)contact;
+- (void)submitFeekback:(id<UserServiceDelegate>)delegate
+              feekback:(NSString*)feekback
+               contact:(NSString*)contact;
 
-- (void)loginWithLoginId:(NSString *)loginId password:(NSString *)password os:(int)os;
+- (void)login:(NSString *)loginId
+     password:(NSString *)password
+     delegate:(id<UserServiceDelegate>)delegate;
 
-- (void)signUpWithLoginId:(NSString *)loginId password:(NSString *)password;
+- (void)logout:(NSString *)loginId 
+         token:(NSString *)token;
 
-- (void)verificate:(NSString *)loginId telephone:(NSString *)telephone;
-- (void)verificate:(NSString *)loginId code:(NSString *)code;
+- (void)signUp:(NSString *)loginId 
+      password:(NSString *)password
+      delegate:(id<UserServiceDelegate>)delegate;
 
-- (void)retrievePassword:(NSString *)telephone;
+- (void)verificate:(NSString *)loginId 
+         telephone:(NSString *)telephone 
+          delegate:(id<UserServiceDelegate>)delegate;
 
-- (void)modifyUserInfoWithLoginId:(NSString *)loginId
-                            token:(NSString *)token 
-                         fullName:(NSString *)fullName
-                         nickName:(NSString *)nickName
-                           gender:(int)gender
-                        telephone:(NSString *)telephone
-                            email:(NSString *)email
-                          address:(NSString *)address;
+- (void)verificate:(NSString *)loginId 
+              code:(NSString *)code 
+          delegate:(id<UserServiceDelegate>)delegate;
+
+- (void)retrievePassword:(NSString *)loginId 
+               telephone:(NSString *)telephone
+                delegate:(id<UserServiceDelegate>)delegate;
+
+- (void)modifyUserInfo:(NSString *)loginId
+                 token:(NSString *)token 
+              fullName:(NSString *)fullName
+              nickName:(NSString *)nickName
+                gender:(int)gender
+             telephone:(NSString *)telephone
+                 email:(NSString *)email
+               address:(NSString *)address;
     
-- (void)modifyPasswordWithLoginId:(NSString *)loginId
-                            token:(NSString *)token 
-                      oldPassword:(NSString *)oldPassword
-                      newPassword:(NSString *)newPassword;
+- (void)modifyPassword:(NSString *)loginId
+                 token:(NSString *)token 
+           oldPassword:(NSString *)oldPassword
+                newPassword:(NSString *)newPassword;
 
-- (void)retrieveUserInfoLoginId:(NSString *)loginId
-                          token:(NSString *)token;
+- (void)retrieveUserInfo:(NSString *)loginId
+        token:(NSString *)token;
 
 @end

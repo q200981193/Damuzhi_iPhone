@@ -486,6 +486,11 @@
     return nil;
 }
 
++ (CommonNetworkOutput*)logout:(NSString *)loginId token:(NSString *)token
+{
+    return nil;
+}
+
 + (CommonNetworkOutput*)signUp:(NSString *)loginId
                       password:(NSString *)password 
 {
@@ -513,5 +518,112 @@
                                 outputFormat:FORMAT_TRAVEL_JSON
                                       output:output];
 }
+
++ (CommonNetworkOutput*)verificate:(NSString *)loginId telephone:(NSString *)telephone 
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_MEMBER_VERIFICATION
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
+
++ (CommonNetworkOutput*)verificate:(NSString *)loginId code:(NSString *)code
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_CODE value:code];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_MEMBER_VERIFICATION
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
+
++ (CommonNetworkOutput*)retrievePassword:(NSString *)loginId telephone:(NSString *)telephone
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_RETRIEVE_PASSWORD
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)modifyUserInfoWithLoginId:(NSString *)loginId
+                            token:(NSString *)token 
+                         fullName:(NSString *)fullName
+                         nickName:(NSString *)nickName
+                           gender:(int)gender
+                        telephone:(NSString *)telephone
+                            email:(NSString *)email
+                          address:(NSString *)address
+{
+    return nil;
+}
+
++ (CommonNetworkOutput*)modifyPasswordWithLoginId:(NSString *)loginId
+                            token:(NSString *)token 
+                      oldPassword:(NSString *)oldPassword
+                      newPassword:(NSString *)newPassword
+{
+    return nil;
+}
+
++ (CommonNetworkOutput*)retrieveUserInfoLoginId:(NSString *)loginId
+                          token:(NSString *)token
+{
+    return nil;
+}
+
 
 @end
