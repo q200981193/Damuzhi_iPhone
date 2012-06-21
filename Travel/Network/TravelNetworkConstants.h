@@ -33,7 +33,9 @@
 #define URL_TRAVEL_QUERY_VERSION    (URL_SERVICE@"iphoneVersion.txt")
 #define URL_TRAVEL_SUBMIT_FEEKBACK  (URL_SERVICE@"feedback.aspx?")
 
-#define URL_TRAVEL_MEMBER_REGISTER  (URL_SERVICE@"memberRegister.aspx?")
+#define URL_TRAVEL_MEMBER_REGISTER      (URL_SERVICE@"memberRegister.aspx?")
+#define URL_TRAVEL_MEMBER_VERIFICATION  (URL_SERVICE@"memberVerification.aspx?")
+#define URL_TRAVEL_RETRIEVE_PASSWORD  (URL_SERVICE@"retrievePassword.aspx?")
 
 // Output Format
 #define FORMAT_TRAVEL_JSON          1
@@ -43,7 +45,7 @@
 #define PARA_TRAVEL_USER_ID         @"userId"
 #define PARA_TRAVEL_LOGIN_ID        @"loginId"
 #define PARA_TRAVEL_PASSWORD        @"password"
-
+#define PARA_TRAVEL_TOKEN           @"token"
 #define PARA_TRAVEL_TYPE            @"type"
 #define PARA_TRAVEL_DEVICE_TOKEN    @"deviceToken"
 #define PARA_TRAVEL_RESULT          @"result"
@@ -71,9 +73,12 @@
 #define PARA_TRAVEL_COUNT                   @"count"
 
 
-#define PARA_TRAVEL_PLACE_FAVORITE_COUNT  @"placeFavoriteCount"
-#define PARA_TRAVEL_APP_VERSION           @"app_version"
-#define PARA_TRAVEL_APP_DATA_VERSION      @"app_data_version"
+#define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"
+#define PARA_TRAVEL_APP_VERSION             @"app_version"
+#define PARA_TRAVEL_APP_DATA_VERSION        @"app_data_version"
+
+#define PARA_TRAVEL_TELEPHONE               @"telephone"
+#define PARA_TRAVEL_CODE                    @"code"
 
 // For object list
 #define OBJECT_LIST_TYPE_ALL_PLACE       1
