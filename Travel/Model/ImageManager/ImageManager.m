@@ -199,4 +199,9 @@ static ImageManager *_defaultManager = nil;
     return [UIImage strectchableImageName:@"date_t_bg.png"];
 }
 
+- (UIImage *)signUpBgImage
+{
+    return [UIImage imageNamed:@"signup_bg.png"];
+}
+
 @end

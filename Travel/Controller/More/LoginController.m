@@ -7,6 +7,7 @@
 //
 
 #import "LoginController.h"
+#import "SignUpController.h"
 
 @interface LoginController ()
 
@@ -42,4 +43,8 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (IBAction)clickSignUp:(id)sender {
+    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
+    [self.navigationController pushViewController:contoller animated:YES];
+}
 @end

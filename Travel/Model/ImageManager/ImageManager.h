@@ -46,4 +46,6 @@
 
 - (UIImage *)bookingBgImage;
 
+- (UIImage *)signUpBgImage;
+
 @end

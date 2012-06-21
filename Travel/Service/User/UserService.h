@@ -14,13 +14,13 @@
 @optional
 
 - (void)queryVersionFinish:(NSString*)version dataVersion:(NSString*)dataVersion;
-- (void)submitFeekbackDidFinish:(BOOL)success;
+- (void)submitFeekbackDidFinish:(int)resultCode;
 
-- (void)signUpDidFinish:(BOOL)success;
-- (void)verificationDidSend:(BOOL)success;
-- (void)verificationDidFinish:(BOOL)success;
-- (void)loginDidFinish:(BOOL)success;
-- (void)retrievePasswordDidSend:(BOOL)success;
+- (void)signUpDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+- (void)verificationDidSend:(int)resultCode;
+- (void)verificationDidFinish:(int)resultCode;
+- (void)loginDidFinish:(int)resultCode;
+- (void)retrievePasswordDidSend:(int)resultCode;
 
 @end
 

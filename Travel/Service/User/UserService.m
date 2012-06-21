@@ -85,7 +85,7 @@ static UserService* _defaultUserService = nil;
         CommonNetworkOutput *output = [TravelNetworkRequest submitFeekback:feekback contact:contact];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(submitFeekbackDidFinish:)]) {
-                 [delegate submitFeekbackDidFinish:(!output.resultCode)];
+                 [delegate submitFeekbackDidFinish:(output.resultCode)];
             }
         });                        
     });
@@ -106,7 +106,7 @@ static UserService* _defaultUserService = nil;
     
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(loginDidFinish:)]) {
-                [delegate loginDidFinish:(!output.resultCode)];
+                [delegate loginDidFinish:output.resultCode];
             }
         });                        
     });
@@ -129,9 +129,14 @@ static UserService* _defaultUserService = nil;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest signUp:loginId password:password];
+        
+        NSDictionary* jsonDict = [output.textData JSONValue];
+        int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+        NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (delegate && [delegate respondsToSelector:@selector(signUpDidFinish:)]) {
-                [delegate signUpDidFinish:(!output.resultCode)];
+            if (delegate && [delegate respondsToSelector:@selector(signUpDidFinish:result:resultInfo:)]) {
+                [delegate signUpDidFinish:output.resultCode result:result resultInfo:resultInfo];
             }
         });                        
     });
@@ -144,8 +149,8 @@ static UserService* _defaultUserService = nil;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest verificate:loginId telephone:telephone];
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (delegate && [delegate respondsToSelector:@selector(verificationDidSend:)]) {
-                [delegate verificationDidSend:(!output.resultCode)];
+            if ([delegate respondsToSelector:@selector(verificationDidSend:)]) {
+                [delegate verificationDidSend:output.resultCode];
             }
         });
     });
@@ -159,7 +164,7 @@ static UserService* _defaultUserService = nil;
         CommonNetworkOutput *output = [TravelNetworkRequest verificate:loginId code:code];   
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(verificationDidFinish:)]) {
-                [delegate verificationDidFinish:(!output.resultCode)];
+                [delegate verificationDidFinish:output.resultCode];
             }
         });
     });
@@ -173,7 +178,7 @@ static UserService* _defaultUserService = nil;
         CommonNetworkOutput *output = [TravelNetworkRequest retrievePassword:loginId telephone:telephone];   
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(retrievePasswordDidSend:)]) {
-                [delegate retrievePasswordDidSend:(!output.resultCode)];
+                [delegate retrievePasswordDidSend:output.resultCode];
             }
         });
     });
