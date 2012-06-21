@@ -90,4 +90,49 @@ static UserService* _defaultUserService = nil;
 }
 
 
+- (void)loginWithLoginId:(NSString *)loginId password:(NSString *)password os:(int)os
+{
+    
+}
+
+- (void)signUpWithLoginId:(NSString *)loginId password:(NSString *)password delegate:(id<UserServiceDelegate>)delegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest signUp:loginId password:password];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (delegate && [delegate respondsToSelector:@selector(signUpDidFinish:)]) {
+                [delegate signUpDidFinish:(!output.resultCode)];
+            }
+        });                        
+    });
+}
+
+- (void)verificate:(NSString *)loginId telephone:(NSString *)telephone
+{}
+- (void)verificate:(NSString *)loginId code:(NSString *)code
+{}
+
+- (void)retrievePassword:(NSString *)telephone
+{}
+
+- (void)modifyUserInfoWithLoginId:(NSString *)loginId
+                            token:(NSString *)token 
+                         fullName:(NSString *)fullName
+                         nickName:(NSString *)nickName
+                           gender:(int)gender
+                        telephone:(NSString *)telephone
+                            email:(NSString *)email
+                          address:(NSString *)address
+{}
+
+- (void)modifyPasswordWithLoginId:(NSString *)loginId
+                            token:(NSString *)token 
+                      oldPassword:(NSString *)oldPassword
+                      newPassword:(NSString *)newPassword
+{}
+
+- (void)retrieveUserInfoLoginId:(NSString *)loginId
+                          token:(NSString *)token
+{}
+
 @end

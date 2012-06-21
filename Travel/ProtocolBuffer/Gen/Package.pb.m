@@ -1050,7 +1050,7 @@ static RouteFeekbackList* defaultRouteFeekbackListInstance = nil;
 
 @interface RouteFeekback ()
 @property int32_t routeId;
-@property (retain) NSString* userId;
+@property (retain) NSString* loginId;
 @property (retain) NSString* nickName;
 @property int32_t date;
 @property int32_t rank;
@@ -1066,13 +1066,13 @@ static RouteFeekbackList* defaultRouteFeekbackListInstance = nil;
   hasRouteId_ = !!value;
 }
 @synthesize routeId;
-- (BOOL) hasUserId {
-  return !!hasUserId_;
+- (BOOL) hasLoginId {
+  return !!hasLoginId_;
 }
-- (void) setHasUserId:(BOOL) value {
-  hasUserId_ = !!value;
+- (void) setHasLoginId:(BOOL) value {
+  hasLoginId_ = !!value;
 }
-@synthesize userId;
+@synthesize loginId;
 - (BOOL) hasNickName {
   return !!hasNickName_;
 }
@@ -1102,7 +1102,7 @@ static RouteFeekbackList* defaultRouteFeekbackListInstance = nil;
 }
 @synthesize content;
 - (void) dealloc {
-  self.userId = nil;
+  self.loginId = nil;
   self.nickName = nil;
   self.content = nil;
   [super dealloc];
@@ -1110,7 +1110,7 @@ static RouteFeekbackList* defaultRouteFeekbackListInstance = nil;
 - (id) init {
   if ((self = [super init])) {
     self.routeId = 0;
-    self.userId = @"";
+    self.loginId = @"";
     self.nickName = @"";
     self.date = 0;
     self.rank = 0;
@@ -1134,7 +1134,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   if (!self.hasRouteId) {
     return NO;
   }
-  if (!self.hasUserId) {
+  if (!self.hasLoginId) {
     return NO;
   }
   if (!self.hasNickName) {
@@ -1152,8 +1152,8 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   if (self.hasRouteId) {
     [output writeInt32:1 value:self.routeId];
   }
-  if (self.hasUserId) {
-    [output writeString:2 value:self.userId];
+  if (self.hasLoginId) {
+    [output writeString:2 value:self.loginId];
   }
   if (self.hasNickName) {
     [output writeString:3 value:self.nickName];
@@ -1179,8 +1179,8 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   if (self.hasRouteId) {
     size += computeInt32Size(1, self.routeId);
   }
-  if (self.hasUserId) {
-    size += computeStringSize(2, self.userId);
+  if (self.hasLoginId) {
+    size += computeStringSize(2, self.loginId);
   }
   if (self.hasNickName) {
     size += computeStringSize(3, self.nickName);
@@ -1272,8 +1272,8 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   if (other.hasRouteId) {
     [self setRouteId:other.routeId];
   }
-  if (other.hasUserId) {
-    [self setUserId:other.userId];
+  if (other.hasLoginId) {
+    [self setLoginId:other.loginId];
   }
   if (other.hasNickName) {
     [self setNickName:other.nickName];
@@ -1313,7 +1313,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
         break;
       }
       case 18: {
-        [self setUserId:[input readString]];
+        [self setLoginId:[input readString]];
         break;
       }
       case 26: {
@@ -1351,20 +1351,20 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   result.routeId = 0;
   return self;
 }
-- (BOOL) hasUserId {
-  return result.hasUserId;
+- (BOOL) hasLoginId {
+  return result.hasLoginId;
 }
-- (NSString*) userId {
-  return result.userId;
+- (NSString*) loginId {
+  return result.loginId;
 }
-- (RouteFeekback_Builder*) setUserId:(NSString*) value {
-  result.hasUserId = YES;
-  result.userId = value;
+- (RouteFeekback_Builder*) setLoginId:(NSString*) value {
+  result.hasLoginId = YES;
+  result.loginId = value;
   return self;
 }
-- (RouteFeekback_Builder*) clearUserId {
-  result.hasUserId = NO;
-  result.userId = @"";
+- (RouteFeekback_Builder*) clearLoginId {
+  result.hasLoginId = NO;
+  result.loginId = @"";
   return self;
 }
 - (BOOL) hasNickName {

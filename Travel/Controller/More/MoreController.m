@@ -16,6 +16,7 @@
 #import "PPDebug.h"
 #import "RecommendedAppsControllerViewController.h"
 #import "MobClickUtils.h"
+#import "UserManager.h"
 
 @interface MoreController ()
 
@@ -53,7 +54,18 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
-
+    
+    
+    if ([[UserManager defaultManager] isLogin]) {
+        [self setNavigationRightButton:NSLS(@"会员登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogin:)];
+    }else {
+        [self setNavigationRightButton:NSLS(@"退出登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogout:)];
+    }
+    
     int kShowPraise = [MobClickUtils getIntValueByKey:@"kShowPraise" defaultValue:0];
     
     int i = 0;
@@ -277,6 +289,16 @@
 {
     UISwitch *currentSwitch = (UISwitch *)sender;
     [AppUtils enableImageShow:currentSwitch.on];
+}
+
+- (void)clickLogin:(id)sender
+{
+    
+}
+
+- (void)clickLogout:(id)sender
+{
+    
 }
 
 @end

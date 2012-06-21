@@ -12,10 +12,10 @@
 #define OS_IOS 1
 
 // for test service
-//#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
+#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
 // for formal service
-#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
 
 // URL
@@ -33,12 +33,17 @@
 #define URL_TRAVEL_QUERY_VERSION    (URL_SERVICE@"iphoneVersion.txt")
 #define URL_TRAVEL_SUBMIT_FEEKBACK  (URL_SERVICE@"feedback.aspx?")
 
+#define URL_TRAVEL_MEMBER_REGISTER  (URL_SERVICE@"memberRegister.aspx?")
+
 // Output Format
 #define FORMAT_TRAVEL_JSON          1
 #define FORMAT_TRAVEL_PB            2   // protocol buffer
 
 // request & reponse parameters (HTTP / JSON)
 #define PARA_TRAVEL_USER_ID         @"userId"
+#define PARA_TRAVEL_LOGIN_ID        @"loginId"
+#define PARA_TRAVEL_PASSWORD        @"password"
+
 #define PARA_TRAVEL_TYPE            @"type"
 #define PARA_TRAVEL_DEVICE_TOKEN    @"deviceToken"
 #define PARA_TRAVEL_RESULT          @"result"

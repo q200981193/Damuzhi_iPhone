@@ -480,4 +480,38 @@
                                       output:output];
 }
 
+
++ (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password
+{
+    return nil;
+}
+
++ (CommonNetworkOutput*)signUp:(NSString *)loginId
+                      password:(NSString *)password 
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PASSWORD value:password];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_OS intValue:OS_IOS];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_MEMBER_REGISTER
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+}
+
 @end

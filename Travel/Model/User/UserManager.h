@@ -14,4 +14,14 @@
 - (NSString*)getUserId;
 - (void)saveUserId:(NSString*)userId;
 
+- (NSString *)login;
+- (void)logout;
+
+- (BOOL)isLogin;
+- (NSString *)loginId;
+- (NSString *)token;
+
+
+
+
 @end

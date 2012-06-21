@@ -65,4 +65,9 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                             count:(int)count
                              lang:(int)lang;
 
++ (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password;
+
++ (CommonNetworkOutput*)signUp:(NSString *)loginId
+                      password:(NSString *)password;
+
 @end
