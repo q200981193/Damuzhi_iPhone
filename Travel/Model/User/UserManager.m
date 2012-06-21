@@ -62,17 +62,17 @@ static UserManager* _defaultUserManager = nil;
 
 - (BOOL)isLogin
 {
-    return self.isLogin;
+    return _isLogin;
 }
 
 - (NSString *)loginId;
 {
-    return self.loginId;
+    return _loginId;
 }
 
 - (NSString *)token
 {
-    return self.token;
+    return _token;
 }
 
 @end

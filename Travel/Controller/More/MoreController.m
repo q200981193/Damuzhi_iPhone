@@ -17,6 +17,7 @@
 #import "RecommendedAppsControllerViewController.h"
 #import "MobClickUtils.h"
 #import "UserManager.h"
+#import "LoginController.h"
 
 @interface MoreController ()
 
@@ -57,13 +58,15 @@
     
     
     if ([[UserManager defaultManager] isLogin]) {
-        [self setNavigationRightButton:NSLS(@"会员登陆") 
-                             imageName:@"topmenu_btn2.png"
-                                action:@selector(clickLogin:)];
-    }else {
         [self setNavigationRightButton:NSLS(@"退出登陆") 
                              imageName:@"topmenu_btn2.png"
                                 action:@selector(clickLogout:)];
+    }else {
+
+        [self setNavigationRightButton:NSLS(@"会员登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogin:)];
+
     }
     
     int kShowPraise = [MobClickUtils getIntValueByKey:@"kShowPraise" defaultValue:0];
@@ -293,12 +296,13 @@
 
 - (void)clickLogin:(id)sender
 {
-    
+    LoginController *controller = [[[LoginController alloc] init] autorelease];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clickLogout:(id)sender
 {
-    
+    [[UserManager defaultManager] logout];
 }
 
 @end
