@@ -56,6 +56,8 @@
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
     
+
+    
     
     if ([[UserManager defaultManager] isLogin]) {
         [self setNavigationRightButton:NSLS(@"退出登陆") 
