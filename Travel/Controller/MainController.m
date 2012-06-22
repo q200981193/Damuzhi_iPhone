@@ -36,6 +36,9 @@
 #import "MobClick.h"
 #import "PPDebug.h"
 
+#include "UserService.h"
+
+
 #import "CommonRouteListController.h"
 #import "PackageTourListFilter.h"
 #import "UnPackageTourListFilter.h"
