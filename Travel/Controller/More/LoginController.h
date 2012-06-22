@@ -7,7 +7,13 @@
 //
 
 #import "PPTableViewController.h"
+#import "UserService.h"
 
-@interface LoginController : PPTableViewController
+@interface LoginController : PPTableViewController <UserServiceDelegate>
+
+//
+//@property (retain, nonatomic) IBOutlet UITextField *userNameTele;
+//
+//@property (retain, nonatomic) IBOutlet UITextField *userPassword;
 
 @end

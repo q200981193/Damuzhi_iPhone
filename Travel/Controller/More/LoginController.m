@@ -14,6 +14,7 @@
 
 @implementation LoginController
 
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,11 +28,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor redColor];
+    
+    
+    self.view.backgroundColor = [UIColor redColor];//by lst
+    self.navigationItem.title = NSLS(@"登录");//by lst
+    
 }
 
 - (void)viewDidUnload
 {
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -42,4 +48,86 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)clickLogin:(id)sender
+{
+    [[UserService defaultService] login:nil password:nil delegate:self];
+}
+
+- (void)loginDidFinish:(BOOL)success
+{
+    if (success) {
+        
+    }else {
+    }
+}
+
+
+
+- (void)dealloc {
+      [super dealloc];
+}
+
+
+
+
+
+
+
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
