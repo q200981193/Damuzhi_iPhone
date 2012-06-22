@@ -66,7 +66,11 @@
 
 }
 
+- (IBAction)clickRetrievePasswordButton:(id)sender {
+}
 
+- (IBAction)clickCheckOrders:(id)sender {
+}
 
 - (void)dealloc {
       [super dealloc];
@@ -77,14 +81,15 @@
     button.selected = !button.selected; 
 }
 
-- (IBAction)clickRemAccountButton:(id)sender {
+- (IBAction)clickRememberLoginIdButton:(id)sender {
     UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected; 
+    button.selected = !button.selected;
 }
 
-- (IBAction)clickRemPasswordButton:(id)sender {
+
+- (IBAction)clickRememberPasswordButton:(id)sender {
     UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected; 
+    button.selected = !button.selected;
 }
 
 
