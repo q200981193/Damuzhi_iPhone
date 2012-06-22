@@ -7,6 +7,7 @@
 //
 
 #import "LoginController.h"
+#import "SignUpController.h"
 
 @interface LoginController ()
 
@@ -48,17 +49,21 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+- (IBAction)clickSignUp:(id)sender {
+    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
+    contoller.superController = self;
+    [self.navigationController pushViewController:contoller animated:YES];
+}
+
 - (void)clickLogin:(id)sender
 {
     [[UserService defaultService] login:nil password:nil delegate:self];
 }
 
-- (void)loginDidFinish:(BOOL)success
+- (void)loginDidFinish:(int)success
 {
-    if (success) {
-        
-    }else {
-    }
+
 }
 
 
@@ -71,13 +76,6 @@
     UIButton *button = (UIButton *)sender;
     button.selected = !button.selected; 
 }
-
-
-
-
-
-
-
 
 @end
 

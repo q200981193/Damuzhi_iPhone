@@ -80,6 +80,10 @@
 #define PARA_TRAVEL_TELEPHONE               @"telephone"
 #define PARA_TRAVEL_CODE                    @"code"
 
+#define PARA_TRAVEL_RESULT                  @"result"
+#define PARA_TRAVEL_RESULT_INFO             @"resultInfo"
+
+
 // For object list
 #define OBJECT_LIST_TYPE_ALL_PLACE       1
 #define OBJECT_LIST_TYPE_SPOT            21
