@@ -66,10 +66,19 @@
 
 }
 
+- (IBAction)clickRetrievePasswordButton:(id)sender {
+}
 
+- (IBAction)clickCheckOrders:(id)sender {
+}
 
 - (void)dealloc {
       [super dealloc];
+}
+
+- (IBAction)clickAutoLoginButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected; 
 }
 
 @end
