@@ -30,9 +30,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.view.backgroundColor = [UIColor redColor];
+    self.navigationItem.title = NSLS(@"登录");
+    [self setNavigationRightButton:NSLS(@"登录") 
+                         imageName:@"topmenu_btn2.png"
+                            action:@selector(clickLogin:)];
     
-    self.view.backgroundColor = [UIColor redColor];//by lst
-    self.navigationItem.title = NSLS(@"登录");//by lst
     
 }
 
