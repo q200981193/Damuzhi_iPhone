@@ -67,6 +67,10 @@
       [super dealloc];
 }
 
+- (IBAction)clickAutoLoginButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected; 
+}
 
 
 
