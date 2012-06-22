@@ -101,7 +101,7 @@ static UserService* _defaultUserService = nil;
         if (output.resultCode == ERROR_SUCCESS) {
             NSDictionary* jsonDict = [output.textData JSONValue];
             NSString *token = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_TOKEN];
-            [[UserManager defaultManager] login:loginId token:token];
+            [[UserManager defaultManager] loginWithLoginId:loginId password:password token:token];
         }
     
         dispatch_async(dispatch_get_main_queue(), ^{

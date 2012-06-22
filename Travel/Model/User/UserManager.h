@@ -14,14 +14,24 @@
 - (NSString*)getUserId;
 - (void)saveUserId:(NSString*)userId;
 
-- (void)login:(NSString *)loginId token:(NSString *)token;
+- (void)loginWithLoginId:(NSString *)loginId
+                password:(NSString *)password
+                   token:(NSString *)token;
+
 - (void)logout;
 
 - (BOOL)isLogin;
 - (NSString *)loginId;
+- (NSString *)password;
 - (NSString *)token;
 
 
+- (void)setAutoLogin:(BOOL)autoLogin;
+- (void)rememberLoginId:(BOOL)remember;
+- (void)rememberPassword:(BOOL)remember;
 
+- (BOOL)isAutoLogin;
+- (BOOL)isRememberLoginId;
+- (BOOL)isRememberPassword;
 
 @end
