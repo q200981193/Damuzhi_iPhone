@@ -91,6 +91,12 @@ static UserService* _defaultUserService = nil;
     });
 }
 
+- (void)autoLogin:(id<UserServiceDelegate>)delegate
+{
+    if ([[UserManager defaultManager] isAutoLogin]) {
+            [self login:[[UserManager defaultManager] loginId] password:[[UserManager defaultManager] password] delegate:delegate];
+    }
+}
 
 - (void)login:(NSString *)loginId
      password:(NSString *)password

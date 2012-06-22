@@ -36,25 +36,35 @@
               feekback:(NSString*)feekback
                contact:(NSString*)contact;
 
+// 用户自动登陆接口，启动时调用
+- (void)autoLogin:(id<UserServiceDelegate>)delegate;
+
+// 用户登陆接口
 - (void)login:(NSString *)loginId
      password:(NSString *)password
      delegate:(id<UserServiceDelegate>)delegate;
 
+// 用户登出接口
 - (void)logout:(NSString *)loginId 
          token:(NSString *)token;
 
+// 注册接口
 - (void)signUp:(NSString *)loginId 
       password:(NSString *)password
       delegate:(id<UserServiceDelegate>)delegate;
 
+// 验证接口
 - (void)verificate:(NSString *)loginId 
          telephone:(NSString *)telephone 
           delegate:(id<UserServiceDelegate>)delegate;
 
+// 验证接口
 - (void)verificate:(NSString *)loginId 
               code:(NSString *)code 
           delegate:(id<UserServiceDelegate>)delegate;
 
+
+// 找回密码接口
 - (void)retrievePassword:(NSString *)loginId 
                telephone:(NSString *)telephone
                 delegate:(id<UserServiceDelegate>)delegate;

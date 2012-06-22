@@ -96,7 +96,6 @@ static UserManager* _defaultUserManager = nil;
     [userDefaults setObject:userId forKey:KEY_USER_ID];
 }
 
-
 - (void)loginWithLoginId:(NSString *)loginId
                 password:(NSString *)password
                    token:(NSString *)token
