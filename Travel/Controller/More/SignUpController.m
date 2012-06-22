@@ -7,7 +7,7 @@
 //
 
 #import "SignUpController.h"
-#import "ImageManager.h"
+//#import "ImageManager.h"
 #import "StringUtil.h"
 #import "PPNetworkRequest.h"
 #import "VerificationController.h"
@@ -29,21 +29,21 @@
 @synthesize loginId = _loginId;
 @synthesize password = _password;
 @synthesize signUpButton = _signUpButton;
+@synthesize superController = _superController;
 
 @synthesize loginIdTextField;
 @synthesize passwordTextField;
 @synthesize comfirmPasswordTextField;
-@synthesize SignUpBgImageView;
 
 - (void)dealloc {
     [_loginId release];
     [_password release];
     [_signUpButton release];
+    [_superController release];
     
     [loginIdTextField release];
     [passwordTextField release];
     [comfirmPasswordTextField release];
-    [SignUpBgImageView release];
     [super dealloc];
 }
 
@@ -64,7 +64,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
-    self.SignUpBgImageView.image = [[ImageManager defaultManager] signUpBgImage];
+//    self.SignUpBgImageView.image = [[ImageManager defaultManager] signUpBgImage];
     
     loginIdTextField.tag = TAG_TEXT_FIELD_LOGIN_ID;
     passwordTextField.tag = TAG_TEXT_FIELD_PASSWORD;
@@ -80,8 +80,6 @@
     singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
     [self.view addGestureRecognizer:singleTapRecognizer];
     [singleTapRecognizer release];
-    
-    
 }
 
 - (void)viewDidUnload
@@ -89,7 +87,6 @@
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
     [self setComfirmPasswordTextField:nil];
-    [self setSignUpBgImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -139,6 +136,7 @@
     _signUpButton.enabled = YES;
     
     VerificationController *controller = [[[VerificationController alloc] init] autorelease];
+    controller.loginController = self.superController;
     [self.navigationController pushViewController:controller animated:YES];
     
     if (resultCode != ERROR_SUCCESS) {

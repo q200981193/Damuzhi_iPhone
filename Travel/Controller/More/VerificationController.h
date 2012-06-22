@@ -11,7 +11,9 @@
 
 
 @interface VerificationController : PPTableViewController <UserServiceDelegate, UITextFieldDelegate>
-@property (retain, nonatomic) IBOutlet UIImageView *verificationBgImageView;
+
+@property (retain, nonatomic) UIViewController *loginController;
+
 @property (retain, nonatomic) IBOutlet UITextField *telephoneTextField;
 @property (retain, nonatomic) IBOutlet UITextField *codeTextField;
 @property (retain, nonatomic) IBOutlet UIButton *hideKeyboardButton;

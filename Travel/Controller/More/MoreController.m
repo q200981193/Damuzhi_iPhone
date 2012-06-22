@@ -297,6 +297,11 @@
 - (void)clickLogin:(id)sender
 {
     LoginController *controller = [[[LoginController alloc] init] autorelease];
+
+    
+//    [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
+    
+    
     [self.navigationController pushViewController:controller animated:YES];
 }
 

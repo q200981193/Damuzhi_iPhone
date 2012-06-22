@@ -45,6 +45,8 @@
 
 - (IBAction)clickSignUp:(id)sender {
     SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
+    contoller.superController = self;
     [self.navigationController pushViewController:contoller animated:YES];
 }
+
 @end

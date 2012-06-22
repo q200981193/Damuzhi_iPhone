@@ -7,7 +7,6 @@
 //
 
 #import "VerificationController.h"
-#import "ImageManager.h"
 #import "UserManager.h"
 #import "PPNetworkRequest.h"
 
@@ -21,8 +20,8 @@
 @implementation VerificationController
 @synthesize telephone = _telephone;
 @synthesize code = _code;
+@synthesize loginController = _loginController;
 
-@synthesize verificationBgImageView;
 @synthesize telephoneTextField;
 @synthesize codeTextField;
 @synthesize hideKeyboardButton;
@@ -30,22 +29,12 @@
 - (void)dealloc {
     [_telephone release];
     [_code release];
+    [_loginController release];
     
-    [verificationBgImageView release];
     [telephoneTextField release];
     [codeTextField release];
     [hideKeyboardButton release];
     [super dealloc];
-}
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -62,16 +51,13 @@
                             action:@selector(clickFinish:)];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
-    
-    verificationBgImageView.image = [[ImageManager defaultManager] signUpBgImage];
-    
+        
     telephoneTextField.delegate = self;
     codeTextField.delegate = self;
 }
 
 - (void)viewDidUnload
 {
-    [self setVerificationBgImageView:nil];
     [self setTelephoneTextField:nil];
     [self setCodeTextField:nil];
     [self setHideKeyboardButton:nil];
@@ -80,17 +66,11 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-
-
 - (IBAction)clickRetrieveCodeButton:(id)sender {
     self.telephone = telephoneTextField.text;
     
-    [[UserService defaultService] verificate:[[UserManager defaultManager] loginId] telephone:_telephone delegate:self];
+    [self.navigationController popToViewController:self.loginController animated:YES];
+//    [[UserService defaultService] verificate:[[UserManager defaultManager] loginId] telephone:_telephone delegate:self];
 }
 
 - (void) verificationDidSend:(int)resultCode
@@ -119,8 +99,5 @@
     hideKeyboardButton.enabled = YES;
 }
 
-//- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer {
-//    [self hideKeyboard];
-//}
 
 @end

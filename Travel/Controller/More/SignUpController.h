@@ -11,8 +11,10 @@
 
 @interface SignUpController : PPTableViewController <UITextFieldDelegate, UserServiceDelegate>
 
+@property (retain, nonatomic) UIViewController *superController;
+
 @property (retain, nonatomic) IBOutlet UITextField *loginIdTextField;
 @property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (retain, nonatomic) IBOutlet UITextField *comfirmPasswordTextField;
-@property (retain, nonatomic) IBOutlet UIImageView *SignUpBgImageView;
+
 @end
