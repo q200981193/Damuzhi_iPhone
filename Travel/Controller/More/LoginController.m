@@ -50,11 +50,6 @@
 }
 
 
-- (IBAction)clickSignUp:(id)sender {
-    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
-    contoller.superController = self;
-    [self.navigationController pushViewController:contoller animated:YES];
-}
 
 - (void)clickLogin:(id)sender
 {
@@ -65,12 +60,18 @@
 {
 
 }
+- (IBAction)clickSignUpButton:(id)sender {
+    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
+    contoller.superController = self;
+    [self.navigationController pushViewController:contoller animated:YES];
+}
 
 - (IBAction)clickRetrievePasswordButton:(id)sender {
 }
 
-- (IBAction)clickCheckOrders:(id)sender {
+- (IBAction)clickCheckOrdersButton:(id)sender {
 }
+
 
 - (void)dealloc {
       [super dealloc];
@@ -80,6 +81,18 @@
     UIButton *button = (UIButton *)sender;
     button.selected = !button.selected; 
 }
+
+- (IBAction)clickRememberLoginIdButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected;
+}
+
+
+- (IBAction)clickRememberPasswordButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected;
+}
+
 
 @end
 
