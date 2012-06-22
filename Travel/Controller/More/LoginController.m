@@ -77,6 +77,17 @@
     button.selected = !button.selected; 
 }
 
+- (IBAction)clickRemAccountButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected; 
+}
+
+- (IBAction)clickRemPasswordButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected; 
+}
+
+
 @end
 
 
