@@ -1450,6 +1450,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
 @property (retain) TouristRouteList* routeList;
 @property (retain) RouteFeekbackList* routeFeekbackList;
 @property (retain) OrderList* orderList;
+@property (retain) CityImageList* cityImageList;
 @end
 
 @implementation TravelResponse
@@ -1566,6 +1567,13 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   hasOrderList_ = !!value;
 }
 @synthesize orderList;
+- (BOOL) hasCityImageList {
+  return !!hasCityImageList_;
+}
+- (void) setHasCityImageList:(BOOL) value {
+  hasCityImageList_ = !!value;
+}
+@synthesize cityImageList;
 - (void) dealloc {
   self.resultInfo = nil;
   self.place = nil;
@@ -1581,6 +1589,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   self.routeList = nil;
   self.routeFeekbackList = nil;
   self.orderList = nil;
+  self.cityImageList = nil;
   [super dealloc];
 }
 - (id) init {
@@ -1601,6 +1610,7 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
     self.routeList = [TouristRouteList defaultInstance];
     self.routeFeekbackList = [RouteFeekbackList defaultInstance];
     self.orderList = [OrderList defaultInstance];
+    self.cityImageList = [CityImageList defaultInstance];
   }
   return self;
 }
@@ -1680,6 +1690,11 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
+  if (self.hasCityImageList) {
+    if (!self.cityImageList.isInitialized) {
+      return NO;
+    }
+  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
@@ -1730,6 +1745,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasOrderList) {
     [output writeMessage:35 value:self.orderList];
+  }
+  if (self.hasCityImageList) {
+    [output writeMessage:40 value:self.cityImageList];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -1787,6 +1805,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasOrderList) {
     size += computeMessageSize(35, self.orderList);
+  }
+  if (self.hasCityImageList) {
+    size += computeMessageSize(40, self.cityImageList);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -1910,6 +1931,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (other.hasOrderList) {
     [self mergeOrderList:other.orderList];
+  }
+  if (other.hasCityImageList) {
+    [self mergeCityImageList:other.cityImageList];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -2059,6 +2083,15 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self setOrderList:[subBuilder buildPartial]];
+        break;
+      }
+      case 322: {
+        CityImageList_Builder* subBuilder = [CityImageList builder];
+        if (self.hasCityImageList) {
+          [subBuilder mergeFrom:self.cityImageList];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setCityImageList:[subBuilder buildPartial]];
         break;
       }
     }
@@ -2500,6 +2533,36 @@ static TravelResponse* defaultTravelResponseInstance = nil;
 - (TravelResponse_Builder*) clearOrderList {
   result.hasOrderList = NO;
   result.orderList = [OrderList defaultInstance];
+  return self;
+}
+- (BOOL) hasCityImageList {
+  return result.hasCityImageList;
+}
+- (CityImageList*) cityImageList {
+  return result.cityImageList;
+}
+- (TravelResponse_Builder*) setCityImageList:(CityImageList*) value {
+  result.hasCityImageList = YES;
+  result.cityImageList = value;
+  return self;
+}
+- (TravelResponse_Builder*) setCityImageListBuilder:(CityImageList_Builder*) builderForValue {
+  return [self setCityImageList:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeCityImageList:(CityImageList*) value {
+  if (result.hasCityImageList &&
+      result.cityImageList != [CityImageList defaultInstance]) {
+    result.cityImageList =
+      [[[CityImageList builderWithPrototype:result.cityImageList] mergeFrom:value] buildPartial];
+  } else {
+    result.cityImageList = value;
+  }
+  result.hasCityImageList = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearCityImageList {
+  result.hasCityImageList = NO;
+  result.cityImageList = [CityImageList defaultInstance];
   return self;
 }
 @end

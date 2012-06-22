@@ -25,6 +25,12 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                              lang:(int)lang;
 
 + (CommonNetworkOutput*)queryList:(int)type 
+                           cityId:(int)cityId
+                            start:(int)start
+                            count:(int)count
+                             lang:(int)lang;
+
++ (CommonNetworkOutput*)queryList:(int)type 
                              lang:(int)lang;
 
 + (CommonNetworkOutput*)queryList:(int)type 

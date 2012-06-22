@@ -120,6 +120,7 @@
 #define OBJECT_LIST_ROUTE_UNPACKAGE_TOUR            71
 #define OBJECT_LIST_ROUTE_SELF_GUIDE_TOUR           72
 
+#define OBJECT_LIST_CITY_IMAGE                      90
 
 // For object type
 #define OBJECT_TYPE_CITY_BASIC                  2

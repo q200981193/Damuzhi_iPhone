@@ -93,7 +93,8 @@
     return output;
 }
 
-+ (CommonNetworkOutput*)submitFeekback:(NSString*)feekback contact:(NSString*)contact
++ (CommonNetworkOutput*)submitFeekback:(NSString*)feekback
+                               contact:(NSString*)contact
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -123,7 +124,8 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)registerUser:(int)type token:(NSString*)deviceToken
++ (CommonNetworkOutput*)registerUser:(int)type
+                               token:(NSString*)deviceToken
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -152,7 +154,9 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type cityId:(int)cityId lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type 
+                           cityId:(int)cityId 
+                             lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -179,7 +183,41 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type 
+                           cityId:(int)cityId
+                            start:(int)start
+                            count:(int)count
+                             lang:(int)lang 
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_CITY_ID intValue:cityId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_START intValue:start];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_COUNT intValue:count];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type
+                             lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -205,7 +243,9 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type lang:(int)lang os:(int)os
++ (CommonNetworkOutput*)queryList:(int)type 
+                             lang:(int)lang
+                               os:(int)os
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -232,7 +272,10 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId num:(int)num lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type
+                          placeId:(int)placeId
+                              num:(int)num 
+                             lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -260,7 +303,10 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryList:(int)type placeId:(int)placeId distance:(double)distance lang:(int)lang
++ (CommonNetworkOutput*)queryList:(int)type
+                          placeId:(int)placeId 
+                         distance:(double)distance
+                             lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -288,7 +334,9 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryObject:(int)type objId:(int)objId lang:(int)lang
++ (CommonNetworkOutput*)queryObject:(int)type 
+                              objId:(int)objId 
+                               lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -316,7 +364,8 @@
 }
 
 
-+ (CommonNetworkOutput*)queryObject:(int)type lang:(int)lang
++ (CommonNetworkOutput*)queryObject:(int)type
+                               lang:(int)lang
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -344,7 +393,10 @@
 
 
 
-+ (CommonNetworkOutput*)addFavoriteByUserId:(NSString *)userId placeId:(NSString *)placeId longitude:(NSString *)longitude latitude:(NSString *)latitude
++ (CommonNetworkOutput*)addFavoriteByUserId:(NSString *)userId
+                                    placeId:(NSString *)placeId 
+                                  longitude:(NSString *)longitude
+                                   latitude:(NSString *)latitude
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -372,7 +424,8 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)deleteFavoriteByUserId:(NSString *)userId placeId:(NSString *)placeId
++ (CommonNetworkOutput*)deleteFavoriteByUserId:(NSString *)userId 
+                                       placeId:(NSString *)placeId
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -418,7 +471,8 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)queryPlace:(NSString*)userId placeId:(NSString*)placeId;
++ (CommonNetworkOutput*)queryPlace:(NSString*)userId
+                           placeId:(NSString*)placeId;
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -481,12 +535,14 @@
 }
 
 
-+ (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password
++ (CommonNetworkOutput*)login:(NSString *)loginId
+                     password:(NSString *)password
 {
     return nil;
 }
 
-+ (CommonNetworkOutput*)logout:(NSString *)loginId token:(NSString *)token
++ (CommonNetworkOutput*)logout:(NSString *)loginId 
+                         token:(NSString *)token
 {
     return nil;
 }
@@ -519,7 +575,8 @@
                                       output:output];
 }
 
-+ (CommonNetworkOutput*)verificate:(NSString *)loginId telephone:(NSString *)telephone 
++ (CommonNetworkOutput*)verificate:(NSString *)loginId
+                         telephone:(NSString *)telephone 
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -546,7 +603,8 @@
 }
 
 
-+ (CommonNetworkOutput*)verificate:(NSString *)loginId code:(NSString *)code
++ (CommonNetworkOutput*)verificate:(NSString *)loginId 
+                              code:(NSString *)code
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -573,7 +631,8 @@
 }
 
 
-+ (CommonNetworkOutput*)retrievePassword:(NSString *)loginId telephone:(NSString *)telephone
++ (CommonNetworkOutput*)retrievePassword:(NSString *)loginId
+                               telephone:(NSString *)telephone
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
