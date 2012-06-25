@@ -14,7 +14,6 @@
 			<string>IBUITableViewCell</string>
 			<string>IBUIImageView</string>
 			<string>IBUIView</string>
-			<string>IBUIButton</string>
 			<string>IBProxyObject</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -51,82 +50,12 @@
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIButton" id="1020137916">
-								<reference key="NSNextResponder" ref="766757604"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{160, 10}, {90, 30}}</string>
-								<reference key="NSSuperview" ref="766757604"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">2012年7月</string>
-								<object class="NSColor" key="IBUIHighlightedTitleColor" id="478537149">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MQA</bytes>
-								</object>
-								<object class="NSColor" key="IBUINormalTitleColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-								</object>
-								<object class="NSColor" key="IBUINormalTitleShadowColor" id="1064152814">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MC41AA</bytes>
-								</object>
-								<object class="NSCustomResource" key="IBUISelectedBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">date_off2@2x.png</string>
-								</object>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">date_off@2x.png</string>
-								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="591713056">
-									<int key="type">2</int>
-									<double key="pointSize">15</double>
-								</object>
-								<object class="NSFont" key="IBUIFont" id="656355693">
-									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">15</double>
-									<int key="NSfFlags">16</int>
-								</object>
-							</object>
-							<object class="IBUIButton" id="118507523">
-								<reference key="NSNextResponder" ref="766757604"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{70, 10}, {90, 30}}</string>
-								<reference key="NSSuperview" ref="766757604"/>
-								<reference key="NSNextKeyView" ref="1020137916"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<int key="IBUIContentHorizontalAlignment">0</int>
-								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">2012年6月</string>
-								<reference key="IBUIHighlightedTitleColor" ref="478537149"/>
-								<object class="NSColor" key="IBUINormalTitleColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="1064152814"/>
-								<object class="NSCustomResource" key="IBUISelectedBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">date_on@2x.png</string>
-								</object>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">date_on2@2x.png</string>
-								</object>
-								<reference key="IBUIFontDescription" ref="591713056"/>
-								<reference key="IBUIFont" ref="656355693"/>
-							</object>
 							<object class="IBUIView" id="821884245">
 								<reference key="NSNextResponder" ref="766757604"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{11, 23}, {298, 354}}</string>
+								<string key="NSFrame">{{11, 0}, {298, 372}}</string>
 								<reference key="NSSuperview" ref="766757604"/>
-								<reference key="NSNextKeyView" ref="118507523"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="866135647">
 									<int key="NSColorSpace">3</int>
@@ -161,22 +90,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">nextMonthButton</string>
-						<reference key="source" ref="300097335"/>
-						<reference key="destination" ref="1020137916"/>
-					</object>
-					<int key="connectionID">24</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">currentMonthButton</string>
-						<reference key="source" ref="300097335"/>
-						<reference key="destination" ref="118507523"/>
-					</object>
-					<int key="connectionID">23</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">monthHolderView</string>
 						<reference key="source" ref="300097335"/>
 						<reference key="destination" ref="821884245"/>
@@ -190,24 +103,6 @@
 						<reference key="destination" ref="424530249"/>
 					</object>
 					<int key="connectionID">39</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">clickCurrentMonthButton:</string>
-						<reference key="source" ref="118507523"/>
-						<reference key="destination" ref="300097335"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">25</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">clickNextMonthButton:</string>
-						<reference key="source" ref="1020137916"/>
-						<reference key="destination" ref="300097335"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">26</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -234,9 +129,7 @@
 						<reference key="object" ref="300097335"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="424530249"/>
-							<reference ref="118507523"/>
 							<reference ref="821884245"/>
-							<reference ref="1020137916"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -251,16 +144,6 @@
 						<reference key="object" ref="424530249"/>
 						<reference key="parent" ref="300097335"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">6</int>
-						<reference key="object" ref="1020137916"/>
-						<reference key="parent" ref="300097335"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="118507523"/>
-						<reference key="parent" ref="300097335"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -271,10 +154,6 @@
 				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.CustomClassName">BookingCell</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="6.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
@@ -292,12 +171,6 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="date_off2@2x.png">{180, 60}</string>
-			<string key="date_off@2x.png">{180, 60}</string>
-			<string key="date_on2@2x.png">{180, 60}</string>
-			<string key="date_on@2x.png">{180, 60}</string>
-		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>

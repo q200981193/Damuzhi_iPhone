@@ -10,11 +10,9 @@
 #import "TKCalendarMonthView.h"
 
 @interface BookingCell : PPTableViewCell <TKCalendarMonthViewDelegate, TKCalendarMonthViewDataSource>
+
 @property (retain, nonatomic) IBOutlet UIImageView *bookingBgImageView;
 @property (retain, nonatomic) IBOutlet UIView *monthHolderView;
-
-@property (retain, nonatomic) IBOutlet UIButton *currentMonthButton;
-@property (retain, nonatomic) IBOutlet UIButton *nextMonthButton;
 
 - (void)setCellData:(BOOL)sundayFirst bookings:(NSArray*)bookings;
 
