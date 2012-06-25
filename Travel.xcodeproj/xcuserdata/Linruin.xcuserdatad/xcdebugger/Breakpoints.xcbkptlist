@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Travel/Model/App/AppManager.m"
-         timestampString = "361704254.207631"
+         timestampString = "362286599.794117"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "252"
-         endingLineNumber = "252"
+         startingLineNumber = "256"
+         endingLineNumber = "256"
          landmarkName = "-getCurrencySymbol:"
          landmarkType = "5">
       </FileBreakpoint>

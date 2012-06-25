@@ -50,6 +50,7 @@
 #define PARA_TRAVEL_DEVICE_TOKEN    @"deviceToken"
 #define PARA_TRAVEL_RESULT          @"result"
 #define PARA_TRAVEL_DEVICE_ID       @"deviceId"
+#define PARA_TRAVEL_MAC_ADRESS      @"macAdress"
 #define PARA_TRAVEL_ID              @"id"
 
 #define PARA_TRAVEL_CONTACT         @"contact"
@@ -74,7 +75,7 @@
 
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"
-#define PARA_TRAVEL_APP_VERSION             @"app_version"
+#define PARA_TRAVEL_APP_VERSION             @"appVersion"
 #define PARA_TRAVEL_APP_DATA_VERSION        @"app_data_version"
 
 #define PARA_TRAVEL_TELEPHONE               @"telephone"
@@ -83,6 +84,12 @@
 #define PARA_TRAVEL_RESULT                  @"result"
 #define PARA_TRAVEL_RESULT_INFO             @"resultInfo"
 
+#define PARA_TRAVEL_ROUTE_ID                @"routeId"
+#define PARA_TRAVEL_PACKAGE_ID              @"packageId"
+#define PARA_TRAVEL_DEPART_DATE             @"departDate"
+#define PARA_TRAVEL_ADULT                   @"adult"
+#define PARA_TRAVEL_CHILDREN                @"children"
+#define PARA_TRAVEL_CONTACT_PERSION         @"contactPersion"
 
 // For object list
 #define OBJECT_LIST_TYPE_ALL_PLACE       1
@@ -123,6 +130,7 @@
 #define OBJECT_LIST_CITY_IMAGE                      90
 
 // For object type
+#define OBJECT_TYPE_USER_RIGISTER               1
 #define OBJECT_TYPE_CITY_BASIC                  2
 #define OBJECT_TYPE_TRAVEL_PREPARATION          3
 #define OBJECT_TYPE_TRAVEL_TRANSPORTATION       4     

@@ -119,6 +119,10 @@ static AppManager* _defaultAppManager = nil;
         PPDebug(@"testcity = %@", city.cityName);
     }
     
+    for (RecommendedApp *app in self.app.recommendedAppsList) {
+        PPDebug(@"app.name = %@", app.name);
+    }
+    
     [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
 
