@@ -7,7 +7,24 @@
 //
 
 #import "PPViewController.h"
+#import "TouristRoute.pb.h"
+#import "MonthViewController.h"
+#import "SelectController.h"
 
-@interface PlaceOrderController : PPViewController
+@interface PlaceOrderController : PPViewController <MonthViewControllerDelegate, SelectControllerDelegate>
+
+@property (retain, nonatomic) IBOutlet UILabel *routeNameLabel;
+@property (retain, nonatomic) IBOutlet UILabel *routeIdLabel;
+
+@property (retain, nonatomic) IBOutlet UILabel *departCityLabel;
+
+@property (retain, nonatomic) IBOutlet UIButton *departDateButton;
+@property (retain, nonatomic) IBOutlet UIButton *adultButton;
+@property (retain, nonatomic) IBOutlet UIButton *childrenButton;
+
+@property (retain, nonatomic) IBOutlet UILabel *priceLabel;
+
+@property (retain, nonatomic) IBOutlet UILabel *noteLabel;
+- (id)initWithRoute:(TouristRoute *)route;
 
 @end

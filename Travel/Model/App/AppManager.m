@@ -779,5 +779,80 @@ static AppManager* _defaultAppManager = nil;
     return nil;
 }
 
+- (NSArray*)buildAdultItemList
+{
+    NSMutableArray *adultItems = [[[NSMutableArray alloc] init] autorelease];    
+    
+    [adultItems addObject:[Item itemWithId:1
+                                  itemName:NSLS(@"成人1位") 
+                                     count:0]];
+    
+    [adultItems addObject:[Item itemWithId:2
+                                  itemName:NSLS(@"成人2位") 
+                                     count:0]];
+    
+    [adultItems addObject:[Item itemWithId:3
+                                  itemName:NSLS(@"成人3位") 
+                                     count:0]];
+    
+    [adultItems addObject:[Item itemWithId:4
+                                  itemName:NSLS(@"成人4位") 
+                                     count:0]];
+    
+    [adultItems addObject:[Item itemWithId:5
+                                  itemName:NSLS(@"成人5位") 
+                                     count:0]];
+    
+    [adultItems addObject:[Item itemWithId:6
+                                  itemName:NSLS(@"成人6位") 
+                                     count:0]];
+    
+    [adultItems addObject:[Item itemWithId:7
+                                  itemName:NSLS(@"成人7位") 
+                                     count:0]];
+    
+    
+    return adultItems;
+}
+
+- (NSArray*)buildChildrenItemList
+{
+    NSMutableArray *childrenItems = [[[NSMutableArray alloc] init] autorelease]; 
+    
+    [childrenItems addObject:[Item itemWithId:0
+                                     itemName:NSLS(@"儿童0位") 
+                                        count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:1
+                                  itemName:NSLS(@"儿童1位") 
+                                     count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:2
+                                  itemName:NSLS(@"儿童2位") 
+                                     count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:3
+                                  itemName:NSLS(@"儿童3位") 
+                                     count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:4
+                                  itemName:NSLS(@"儿童4位") 
+                                     count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:5
+                                  itemName:NSLS(@"儿童5位") 
+                                     count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:6
+                                  itemName:NSLS(@"儿童6位") 
+                                     count:0]];
+    
+    [childrenItems addObject:[Item itemWithId:7
+                                  itemName:NSLS(@"儿童7位") 
+                                     count:0]];
+    
+    return childrenItems;
+}
+
 
 @end

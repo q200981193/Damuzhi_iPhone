@@ -84,7 +84,7 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
 + (CommonNetworkOutput*)placeOrderWithUserId:(NSString *)userId 
                                      routeId:(int)routeId
                                    packageId:(int)packageId
-                                  departDate:(int)departDate
+                                  departDate:(NSString *)departDate
                                        adult:(int)adult
                                     children:(int)children
                                contactPerson:(NSString *)contactPersion
@@ -94,7 +94,7 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                                         token:(NSString *)token
                                       routeId:(int)routeId
                                     packageId:(int)packageId
-                                   departDate:(int)departDate
+                                   departDate:(NSString *)departDate
                                         adult:(int)adult
                                      children:(int)children
                                 contactPerson:(NSString *)contactPersion

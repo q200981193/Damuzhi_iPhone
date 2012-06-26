@@ -8,6 +8,7 @@
 
 #import "OrderService.h"
 #import "TravelNetworkRequest.h"
+#import "JSON.h"
 
 @implementation OrderService
 
@@ -24,8 +25,8 @@ static OrderService *_instance = nil;
 
 - (void)placeOrderUsingUserId:(NSString *)userId 
                       routeId:(int)routeId
-                       packageId:(int)packageId
-                   departDate:(int)departDate
+                    packageId:(int)packageId
+                   departDate:(NSString *)departDate
                         adult:(int)adult
                      children:(int)children
                 contactPerson:(NSString *)contactPersion
@@ -42,10 +43,17 @@ static OrderService *_instance = nil;
                                                                    contactPerson:contactPersion 
                                                                        telephone:telephone];   
 
+        int result = -1;
+        NSString *resultInfo;
+        if (output.resultCode == ERROR_SUCCESS) {
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+            resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(placeOrderDone:)]) {
-                [delegate placeOrderDone:output.resultCode];
+            if ([delegate respondsToSelector:@selector(placeOrderDone:result:reusultInfo:)]) {
+                [delegate placeOrderDone:output.resultCode result:result reusultInfo:resultInfo];
             }
         });                        
     });
@@ -55,7 +63,7 @@ static OrderService *_instance = nil;
                          token:(NSString *)token
                        routeId:(int)routeId
                      packageId:(int)packageId
-                    departDate:(int)departDate
+                    departDate:(NSString *)departDate
                          adult:(int)adult
                       children:(int)children
                  contactPerson:(NSString *)contactPersion
@@ -72,11 +80,17 @@ static OrderService *_instance = nil;
                                                                          children:children 
                                                                     contactPerson:contactPersion 
                                                                         telephone:telephone];   
-        
+        int result = -1;
+        NSString *resultInfo;
+        if (output.resultCode == ERROR_SUCCESS) {
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+            resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(placeOrderDone:)]) {
-                [delegate placeOrderDone:output.resultCode];
+            if ([delegate respondsToSelector:@selector(placeOrderDone:result:reusultInfo:)]) {
+                [delegate placeOrderDone:output.resultCode result:result reusultInfo:resultInfo];
             }
         });                        
     });

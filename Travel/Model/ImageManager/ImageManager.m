@@ -204,4 +204,9 @@ static ImageManager *_defaultManager = nil;
     return [UIImage strectchableImageName:@"signup_bg.png"];
 }
 
+- (UIImage *)selectDownImage
+{
+    return [UIImage strectchableImageName:@"select_down.png" leftCapWidth:10];
+}
+
 @end

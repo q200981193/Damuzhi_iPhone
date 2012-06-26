@@ -44,6 +44,9 @@
 #define HEIGHT_HEADER_VIEW 30
 #define HEIGHT_FOOTER_VIEW 8
 
+#define HEIGHT_BOOK_BUTTON 22
+#define WIDTH_BOOK_BUTTON 70
+
 @interface RouteIntroductionController ()
 
 @property (retain, nonatomic) NSMutableArray *sectionStat;
@@ -54,6 +57,7 @@
 
 @implementation RouteIntroductionController
 
+@synthesize aDelegate = _aDelegate;
 @synthesize sectionStat = _sectionStat;
 @synthesize route = _route;
 @synthesize routeType = _routeType;
@@ -118,7 +122,6 @@
     
     [agencyInfoHolderView setBackgroundColor:[UIColor colorWithPatternImage:[[ImageManager defaultManager] routeDetailAgencyBgImage]]];
     [self setAgencyInfoHolderViewAppearance];
-
     
     self.dataTableView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:240.0/255.0 blue:241.0/255.0 alpha:1];
     
@@ -223,7 +226,9 @@
 
 - (void)clickBookButton
 {
-    [self popupMessage:@"待实现" title:nil];
+    if ([_aDelegate respondsToSelector:@selector(didClickBookButton)]) {
+        [_aDelegate didClickBookButton];
+    }
 }
 
 

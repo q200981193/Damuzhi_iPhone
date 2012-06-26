@@ -135,7 +135,7 @@
         //set input parameters
         NSString* str = [NSString stringWithString:baseURL];        
         NSString* deviceId = [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
-        NSString *macAdress = [[UIDevice currentDevice] performSelector:@selector(macAdress)];
+        NSString *macAdress = [[UIDevice currentDevice] performSelector:@selector(macaddress)];
         NSString* appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
@@ -692,7 +692,7 @@
 + (CommonNetworkOutput*)placeOrderWithUserId:(NSString *)userId 
                                      routeId:(int)routeId
                                    packageId:(int)packageId
-                                  departDate:(int)departDate
+                                  departDate:(NSString *)departDate
                                        adult:(int)adult
                                     children:(int)children
                                contactPerson:(NSString *)contactPersion
@@ -708,7 +708,7 @@
         str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_ROUTE_ID intValue:routeId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_PACKAGE_ID intValue:packageId];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_DEPART_DATE intValue:departDate];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_DEPART_DATE value:departDate];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CHILDREN intValue:children];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTACT_PERSION value:contactPersion];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];
@@ -720,7 +720,7 @@
         return;
     };
     
-    return [TravelNetworkRequest sendRequest:URL_TRAVEL_MEMBER_REGISTER
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_PLACE_ORDER
                          constructURLHandler:constructURLHandler                         
                              responseHandler:responseHandler         
                                 outputFormat:FORMAT_TRAVEL_JSON
@@ -732,7 +732,7 @@
                                         token:(NSString *)token
                                       routeId:(int)routeId
                                     packageId:(int)packageId
-                                   departDate:(int)departDate
+                                   departDate:(NSString *)departDate
                                         adult:(int)adult
                                      children:(int)children
                                 contactPerson:(NSString *)contactPersion
@@ -749,7 +749,7 @@
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TOKEN value:token];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_ROUTE_ID intValue:routeId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_PACKAGE_ID intValue:packageId];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_DEPART_DATE intValue:departDate];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_DEPART_DATE value:departDate];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CHILDREN intValue:children];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTACT_PERSION value:contactPersion];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];
@@ -761,7 +761,7 @@
         return;
     };
     
-    return [TravelNetworkRequest sendRequest:URL_TRAVEL_MEMBER_REGISTER
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_PLACE_ORDER
                          constructURLHandler:constructURLHandler                         
                              responseHandler:responseHandler         
                                 outputFormat:FORMAT_TRAVEL_JSON

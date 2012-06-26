@@ -104,15 +104,20 @@ static UserService* _defaultUserService = nil;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest login:loginId password:password];   
+        
+        int result = -1;
+        NSString *resultInfo;
         if (output.resultCode == ERROR_SUCCESS) {
             NSDictionary* jsonDict = [output.textData JSONValue];
+            result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+            resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
             NSString *token = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_TOKEN];
             [[UserManager defaultManager] loginWithLoginId:loginId password:password token:token];
         }
     
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (delegate && [delegate respondsToSelector:@selector(loginDidFinish:)]) {
-                [delegate loginDidFinish:output.resultCode];
+            if ([delegate respondsToSelector:@selector(loginDidFinish:result:resultInfo:)]) {
+                [delegate loginDidFinish:output.resultCode result:result resultInfo:resultInfo];
             }
         });                        
     });
