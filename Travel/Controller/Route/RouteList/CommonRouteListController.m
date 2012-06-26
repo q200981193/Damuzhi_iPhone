@@ -168,7 +168,7 @@
 }
 
 #pragma mark - RouteServiceDelegate
-- (void)findRequestDone:(int)result totalCount:(int)totalCount routeList:(NSArray *)routeList
+- (void)findRequestDone:(int)result totalCount:(int)totalCount list:(NSArray *)routeList
 {
     [self dataSourceDidFinishLoadingNewData];
     [self dataSourceDidFinishLoadingMoreData];

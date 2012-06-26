@@ -78,7 +78,7 @@ static RouteService *_defaultRouteService = nil;
             if ([viewController respondsToSelector:@selector(findRequestDone:totalCount:routeList:)]) {
                 [viewController findRequestDone:output.resultCode 
                                      totalCount:totalCount
-                                      routeList:routeList];
+                                           list:routeList];
             }
         });
     });    
@@ -111,5 +111,9 @@ static RouteService *_defaultRouteService = nil;
     }); 
 }
 
+- (void)queryRouteFeekbacks:(int)routeId start:(int)start count:(int)count delegate:(id<RouteServiceDelegate>)delegate
+{
+    
+}
 
 @end

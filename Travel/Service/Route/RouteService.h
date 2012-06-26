@@ -19,8 +19,9 @@
 @protocol RouteServiceDelegate <NSObject>
 
 @optional
-- (void)findRequestDone:(int)result totalCount:(int)totalCount routeList:(NSArray*)routeList;
+- (void)findRequestDone:(int)result totalCount:(int)totalCount list:(NSArray*)list;
 - (void)findRequestDone:(int)result route:(TouristRoute *)route;
+
 
 @end
 
