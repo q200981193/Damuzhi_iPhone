@@ -135,7 +135,7 @@
         //set input parameters
         NSString* str = [NSString stringWithString:baseURL];        
         NSString* deviceId = [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
-        NSString *macAdress = [[UIDevice currentDevice] performSelector:@selector(macAdress)];
+        NSString *macAdress = [[UIDevice currentDevice] performSelector:@selector(macaddress)];
         NSString* appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];

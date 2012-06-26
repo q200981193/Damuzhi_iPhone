@@ -19,7 +19,6 @@
 @interface LoginController ()
 @property (copy, nonatomic) NSString *loginId;
 @property (copy, nonatomic) NSString *password;
-//@property (retain, nonatomic) UIButton loginButton;
 @end
 
 @implementation LoginController
@@ -29,22 +28,22 @@
 @synthesize loginId = _loginId;
 @synthesize password = _password;
 
+#pragma mark: Lift cycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (void)dealloc {
+    [_loginId release];
+    [_password release];
+    
+    [loginIdTextField release];
+    [passwordTextField release];
+    
+    [super dealloc];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    //self.view.backgroundColor = [UIColor redColor];
     [self setNavigationLeftButton:NSLS(@" 返回") 
                          imageName:@"topmenu_btn2.png"
                             action:@selector(clickBack:)];
@@ -53,8 +52,6 @@
     [self setNavigationRightButton:NSLS(@"登录") 
                          imageName:@"topmenu_btn2.png"
                             action:@selector(clickLogin:)];
-    
-    
 }
 
 - (void)viewDidUnload
@@ -67,19 +64,76 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+#pragma mark: Button action
+
+- (void)clickLogin:(id)sender
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // To do, check password. 6~16 characters
+    // valid loginId and password
+    [self hideKeyboard:nil];
+    self.loginId = [self.loginIdTextField.text
+                    stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.password = self.passwordTextField.text;
+    
+    
+    
+    if (!NSStringIsValidPhone(_loginId)) {
+        [self popupMessage:NSLS(@"您输入的号码格式不正确") title:nil];
+        return;
+    }
+    
+    if (_password.length < 6) {
+        [self popupMessage:NSLS(@"您输入的密码太短") title:nil];
+        return;
+    }
+    
+    if (_password.length > 16) {
+        [self popupMessage:NSLS(@"您输入的密码长度太长") title:nil];
+        return;
+    }
+    
+    [[UserService defaultService] login:loginIdTextField.text
+                               password:passwordTextField.text
+                               delegate:self];
+    
 }
 
-
-// hide the keyboard
 - (IBAction)hideKeyboard:(id)sender {
     [self.loginIdTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
 }
 
 
+- (IBAction)clickSignUpButton:(id)sender {
+    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
+    contoller.superController = self;
+    [self.navigationController pushViewController:contoller animated:YES];
+}
+
+- (IBAction)clickRetrievePasswordButton:(id)sender {
+    
+}
+
+- (IBAction)clickCheckOrdersButton:(id)sender {
+    
+}
+
+- (IBAction)clickAutoLoginButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected; 
+}
+
+- (IBAction)clickRememberLoginIdButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    [[UserManager defaultManager] rememberLoginId:button.selected];  
+    button.selected = !button.selected;
+}
+
+- (IBAction)clickRememberPasswordButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    [[UserManager defaultManager] rememberPassword:button.selected]; 
+    button.selected = !button.selected;
+}
 
 ////called whe 'done' key pressed. return NO to ignore
 //-(BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -99,104 +153,22 @@
 //    return YES;
 //}
 
+#pragma mark: implementation of UserServiceDelegate.
 
-
-
-
-
-
-
-- (void)clickLogin:(id)sender
+- (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
 {
-    // To do, check password. 6~16 characters
-    
-    
-    // check the format of loginId and password
-    [self hideKeyboard:nil];
-    self.loginId = [self.loginIdTextField.text
-                    stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    self.password = self.passwordTextField.text;
-    
-    
-
-    if (!NSStringIsValidPhone(_loginId)) {
-        [self popupMessage:NSLS(@"您输入的号码格式不正确") title:nil];
-        return;
-    }
-    
-    if (_password.length < 6) {
-        [self popupMessage:NSLS(@"您输入的密码太短") title:nil];
-        return;
-    }
-    
-    if (_password.length > 16) {
-        [self popupMessage:NSLS(@"您输入的密码长度太长") title:nil];
-        return;
-    }
-    
-
-    // verified by the server to test whether password matched loginId
-    [[UserService defaultService] login:loginIdTextField.text
-                               password:passwordTextField.text
-                               delegate:self];
-    
-}
-
-- (void)loginDidFinish:(int)success
-{
-    // check login success code.
-    if (success != ERROR_SUCCESS) {
+    if (resultCode != ERROR_SUCCESS) {
         [self popupMessage:NSLS(@"您的网络不稳定，登录失败") title:nil];
         return;
     }
     
+    if (result != 0) {
+        NSString *str = [NSString stringWithFormat:NSLS(@"登陆失败：%@"), resultInfo];
+        [self popupMessage:str title:nil];
+        return;
+    }
     
-    // jump to another place
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)clickSignUpButton:(id)sender {
-    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
-    contoller.superController = self;
-    [self.navigationController pushViewController:contoller animated:YES];
-}
-
-- (IBAction)clickRetrievePasswordButton:(id)sender {
-    
-}
-
-- (IBAction)clickCheckOrdersButton:(id)sender {
-    
-}
-
-
-
-
-
-
-
-- (void)dealloc {
-    [loginIdTextField release];
-    [passwordTextField release];
-    [super dealloc];
-}
-
-- (IBAction)clickAutoLoginButton:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected; 
-}
-
-- (IBAction)clickRememberLoginIdButton:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    [[UserManager defaultManager] rememberLoginId:button.selected]; // save
-    button.selected = !button.selected;
-}
-
-
-- (IBAction)clickRememberPasswordButton:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    [[UserManager defaultManager] rememberPassword:button.selected]; // save
-     button.selected = !button.selected;
 }
 
 

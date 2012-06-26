@@ -7,7 +7,8 @@
 //
 
 #import "PPTableViewController.h"
+#import "RouteService.h"
 
-@interface RouteFeekbackController : PPTableViewController
+@interface RouteFeekbackController : PPTableViewController <RouteServiceDelegate>
 
 @end

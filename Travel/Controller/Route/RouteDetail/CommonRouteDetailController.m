@@ -9,8 +9,9 @@
 #import "CommonRouteDetailController.h"
 #import "TouristRoute.pb.h"
 #import "PPNetworkRequest.h"
-#import "RouteIntroductionController.h"
 #import "ImageManager.h"
+#import "RouteFeekbackController.h"
+#import "PlaceOrderController.h"
 
 @interface CommonRouteDetailController ()
 
@@ -87,6 +88,7 @@
 - (IBAction)clickIntroductionButton:(id)sender {
     if (_introductionController == nil) {
         self.introductionController = [[[RouteIntroductionController alloc] initWithRoute:_route routeType:_routeType] autorelease];
+        _introductionController.aDelegate = self;
     }
     
     [_introductionController showInView:self.contentScrollView];
@@ -99,6 +101,9 @@
 }
 
 - (IBAction)clickUserFeekbackButton:(id)sender {
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    
 }
 
 - (void)findRequestDone:(int)result route:(TouristRoute *)route
@@ -114,6 +119,12 @@
 
 }
 
-
+- (void)didClickBookButton
+{
+    PlaceOrderController *controller = [[[PlaceOrderController alloc] initWithRoute:_route] autorelease];
+    [self.navigationController pushViewController:controller animated:YES];
+    
+    
+}
 
 @end

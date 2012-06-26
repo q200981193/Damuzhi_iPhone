@@ -19,7 +19,7 @@
 - (void)signUpDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)verificationDidSend:(int)resultCode;
 - (void)verificationDidFinish:(int)resultCode;
-- (void)loginDidFinish:(int)resultCode;
+- (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)retrievePasswordDidSend:(int)resultCode;
 
 @end

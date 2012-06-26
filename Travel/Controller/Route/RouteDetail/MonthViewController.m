@@ -23,6 +23,7 @@
 @end
 
 @implementation MonthViewController
+@synthesize aDelegate = _aDelegate;
 @synthesize currentMonthButton = _currentMonthButton;
 @synthesize nextMonthButton = _nextMonthButton;
 @synthesize monthHolderView = _monthHolderView;
@@ -62,7 +63,7 @@
                                                     hasMonthYearAndArrow:NO 
                                                         hasTopBackground:NO
                                                                hasShadow:NO 
-                                                   userInteractionEnable:NO] autorelease];
+                                                   userInteractionEnable:YES] autorelease];
     
     [self.currentMonthButton setTitle:dateToStringByFormat(now, @"yyyy年MM月") forState:UIControlStateNormal];
     [self.nextMonthButton  setTitle:dateToStringByFormat([now nextMonth], @"yyyy年MM月") forState:UIControlStateNormal];
@@ -188,6 +189,13 @@
     _monthView.frame = CGRectMake(0, 0, _monthView.frame.size.width, _monthView.frame.size.height);
     
     [superView addSubview:self.view];
+}
+
+- (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date
+{
+    if ([_aDelegate respondsToSelector:@selector(didSelecteDate:)]) {
+        [_aDelegate didSelecteDate:date];
+    }
 }
 
 @end

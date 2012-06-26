@@ -8,7 +8,8 @@
 
 #import "RouteFeekbackController.h"
 #import "Package.pb.h"
-#import "RouteService.h"
+
+#define EACH_COUNT 20
 
 @interface RouteFeekbackController ()
 
@@ -35,7 +36,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    
+    [[RouteService defaultService] queryRouteFeekbacks:_routeId start:0 count:EACH_COUNT delegate:self];
 }
 
 - (void)viewDidUnload
@@ -43,6 +44,13 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+
+
+- (void)findRequestDone:(int)result totalCount:(int)totalCount routeList:(NSArray *)routeList
+{
+    self.dataList = routeList;
 }
 
 @end

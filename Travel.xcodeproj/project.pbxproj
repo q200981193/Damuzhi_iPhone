@@ -132,6 +132,8 @@
 		A455F8ED1585D43900CA5743 /* CommonRouteListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A455F8E01585D43900CA5743 /* CommonRouteListFilter.m */; };
 		A455F8EE1585D43900CA5743 /* PackageTourListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A455F8E21585D43900CA5743 /* PackageTourListFilter.m */; };
 		A455F8EF1585D43900CA5743 /* UnPackageTourListFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A455F8E41585D43900CA5743 /* UnPackageTourListFilter.m */; };
+		A45663A91599537F00DD926B /* NONMemberOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = A45663A71599537F00DD926B /* NONMemberOrder.m */; };
+		A45663AA1599537F00DD926B /* NONMemberOrder.xib in Resources */ = {isa = PBXBuildFile; fileRef = A45663A81599537F00DD926B /* NONMemberOrder.xib */; };
 		A483AAEE1594717900A1F699 /* CityImageController.m in Sources */ = {isa = PBXBuildFile; fileRef = A483AAEC1594717900A1F699 /* CityImageController.m */; };
 		A483AAEF1594717900A1F699 /* CityImageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A483AAED1594717900A1F699 /* CityImageController.xib */; };
 		A483AAF31594D39A00A1F699 /* OrderService.m in Sources */ = {isa = PBXBuildFile; fileRef = A483AAF21594D39A00A1F699 /* OrderService.m */; };
@@ -803,6 +805,9 @@
 		A455F8E21585D43900CA5743 /* PackageTourListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageTourListFilter.m; sourceTree = "<group>"; };
 		A455F8E31585D43900CA5743 /* UnPackageTourListFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnPackageTourListFilter.h; sourceTree = "<group>"; };
 		A455F8E41585D43900CA5743 /* UnPackageTourListFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnPackageTourListFilter.m; sourceTree = "<group>"; };
+		A45663A61599537F00DD926B /* NONMemberOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NONMemberOrder.h; sourceTree = "<group>"; };
+		A45663A71599537F00DD926B /* NONMemberOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NONMemberOrder.m; sourceTree = "<group>"; };
+		A45663A81599537F00DD926B /* NONMemberOrder.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NONMemberOrder.xib; sourceTree = "<group>"; };
 		A483AAEB1594717900A1F699 /* CityImageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityImageController.h; sourceTree = "<group>"; };
 		A483AAEC1594717900A1F699 /* CityImageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityImageController.m; sourceTree = "<group>"; };
 		A483AAED1594717900A1F699 /* CityImageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CityImageController.xib; sourceTree = "<group>"; };
@@ -1731,9 +1736,11 @@
 				A406A2AD1597FD7E00CE938A /* PlaceOrderController.h */,
 				A406A2AE1597FD7E00CE938A /* PlaceOrderController.m */,
 				A406A2AF1597FD7E00CE938A /* PlaceOrderController.xib */,
+				A45663A61599537F00DD926B /* NONMemberOrder.h */,
+				A45663A71599537F00DD926B /* NONMemberOrder.m */,
+				A45663A81599537F00DD926B /* NONMemberOrder.xib */,
 			);
-			name = Order;
-			path = Controller/Order;
+			path = Order;
 			sourceTree = "<group>";
 		};
 		A406BA4E157C49F000257DED /* Route */ = {
@@ -3533,7 +3540,6 @@
 		CA4906FE14F5F05B00228C37 /* Travel */ = {
 			isa = PBXGroup;
 			children = (
-				A406A2AC1597FD0800CE938A /* Order */,
 				A48E047A1534058800B2695E /* Resource */,
 				CA238F2514FB27B600114175 /* ProtocolBuffer */,
 				CA585F8C14F7376300471880 /* Controller */,
@@ -3562,6 +3568,7 @@
 		CA585F8C14F7376300471880 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A406A2AC1597FD0800CE938A /* Order */,
 				A455F8CE1585D43900CA5743 /* Route */,
 				A313DE56152F02EB004E0964 /* Share */,
 				A40D9DFF150C87AB00BB2D29 /* ImageName.h */,
@@ -4046,6 +4053,7 @@
 				A483AAEF1594717900A1F699 /* CityImageController.xib in Resources */,
 				A406A2B11597FD7E00CE938A /* PlaceOrderController.xib in Resources */,
 				A406A2B61597FFEE00CE938A /* MonthViewController.xib in Resources */,
+				A45663AA1599537F00DD926B /* NONMemberOrder.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4343,6 +4351,7 @@
 				A483AAF31594D39A00A1F699 /* OrderService.m in Sources */,
 				A406A2B01597FD7E00CE938A /* PlaceOrderController.m in Sources */,
 				A406A2B51597FFEE00CE938A /* MonthViewController.m in Sources */,
+				A45663A91599537F00DD926B /* NONMemberOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

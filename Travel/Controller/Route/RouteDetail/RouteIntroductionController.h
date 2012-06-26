@@ -10,9 +10,18 @@
 #import "TouristRoute.pb.h"
 #import "RelatedPlaceCell.h"
 
+@protocol RouteIntroductionControllerDelegate <NSObject>
+
+@optional
+- (void)didClickBookButton;
+
+@end
+
 @interface RouteIntroductionController : PPTableViewController <RelatedPlaceCellDelegate>
 
 - (id)initWithRoute:(TouristRoute *)route routeType:(int)routeType;
+
+@property (assign, nonatomic) id<RouteIntroductionControllerDelegate> aDelegate;
 
 @property (retain, nonatomic) IBOutlet UIView *titleHolerView;
 @property (retain, nonatomic) IBOutlet UILabel *routeNameLabel;
