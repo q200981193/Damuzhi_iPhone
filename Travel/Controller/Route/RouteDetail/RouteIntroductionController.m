@@ -220,10 +220,12 @@
     [superView addSubview:self.view];
 }
 
+
 - (void)clickBookButton
 {
     [self popupMessage:@"待实现" title:nil];
 }
+
 
 // Table vew delegate.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

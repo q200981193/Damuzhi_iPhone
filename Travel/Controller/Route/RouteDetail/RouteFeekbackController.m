@@ -35,6 +35,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png" 
+                           action:@selector(clickBack:)];
+    
+    [self setNavigationRightButton:NSLS(@"我的关注") 
+                         imageName:@"topmenu_btn2.png"
+                            action:@selector(clickMyFollow:)];    
+    
+    
+    
+    
+    
+    
+    [RouteService defaultService] ;
+    
     
 }
 
@@ -45,4 +60,18 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //return [RouteFeekbackController getCellHeight];
+}
+
 @end
+
+
+
+
+
+
+
+
+

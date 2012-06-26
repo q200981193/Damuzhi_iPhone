@@ -11,6 +11,8 @@
 #import "PPNetworkRequest.h"
 #import "RouteIntroductionController.h"
 #import "ImageManager.h"
+#import "RouteFeekbackController.h"
+
 
 @interface CommonRouteDetailController ()
 
@@ -98,8 +100,21 @@
 - (IBAction)clickBookingPolicyButton:(id)sender {
 }
 
+
+
+
 - (IBAction)clickUserFeekbackButton:(id)sender {
+    
+    
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+
+    
 }
+
+
+
 
 - (void)findRequestDone:(int)result route:(TouristRoute *)route
 {
