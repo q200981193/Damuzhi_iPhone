@@ -75,7 +75,7 @@ static RouteService *_defaultRouteService = nil;
         dispatch_async(dispatch_get_main_queue(), ^{
             [viewController hideActivity];   
             
-            if ([viewController respondsToSelector:@selector(findRequestDone:totalCount:routeList:)]) {
+            if ([viewController respondsToSelector:@selector(findRequestDone:totalCount:list:)]) {
                 [viewController findRequestDone:output.resultCode 
                                      totalCount:totalCount
                                            list:routeList];

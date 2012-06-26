@@ -81,8 +81,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor whiteColor];
+    // Do any additional setup after loading the view from its nib.    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
     [self.departDateButton setBackgroundImage:[[ImageManager defaultManager] selectDownImage] forState:UIControlStateNormal];
     [self.adultButton setBackgroundImage:[[ImageManager defaultManager] selectDownImage] forState:UIControlStateNormal];   
