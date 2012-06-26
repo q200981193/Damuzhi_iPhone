@@ -36,6 +36,8 @@
 #define URL_TRAVEL_MEMBER_REGISTER      (URL_SERVICE@"memberRegister.aspx?")
 #define URL_TRAVEL_MEMBER_VERIFICATION  (URL_SERVICE@"memberVerification.aspx?")
 #define URL_TRAVEL_RETRIEVE_PASSWORD  (URL_SERVICE@"retrievePassword.aspx?")
+#define URL_TRAVEL_PLACE_ORDER  (URL_SERVICE@"placeOrder.aspx?")
+
 
 // Output Format
 #define FORMAT_TRAVEL_JSON          1
