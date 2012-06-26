@@ -223,12 +223,14 @@
     [superView addSubview:self.view];
 }
 
+
 - (void)clickBookButton
 {
     if ([_aDelegate respondsToSelector:@selector(didClickBookButton)]) {
         [_aDelegate didClickBookButton];
     }
 }
+
 
 // Table vew delegate.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

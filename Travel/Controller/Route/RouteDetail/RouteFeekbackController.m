@@ -36,6 +36,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png" 
+                           action:@selector(clickBack:)];
+    
+    [self setNavigationRightButton:NSLS(@"我的关注") 
+                         imageName:@"topmenu_btn2.png"
+                            action:@selector(clickMyFollow:)];    
+    
+    
+    
+    
+    
+    
+    [RouteService defaultService] ;
+    
+    
     [[RouteService defaultService] queryRouteFeekbacks:_routeId start:0 count:EACH_COUNT delegate:self];
 }
 
@@ -46,6 +62,9 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //return [RouteFeekbackController getCellHeight];
 
 
 - (void)findRequestDone:(int)result totalCount:(int)totalCount routeList:(NSArray *)routeList
@@ -54,3 +73,12 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
