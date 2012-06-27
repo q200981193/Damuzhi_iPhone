@@ -209,4 +209,15 @@ static ImageManager *_defaultManager = nil;
     return [UIImage strectchableImageName:@"select_down.png" leftCapWidth:10];
 }
 
+
+- (UIImage *)morePointImage
+{
+    return [UIImage imageNamed:@"more_icon.png"];
+}
+
+- (UIImage *)accessoryImage
+{
+    return [UIImage imageNamed:@"go_btn.png"];
+}
+
 @end

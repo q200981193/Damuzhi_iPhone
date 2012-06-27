@@ -96,6 +96,22 @@ static AppManager* _defaultAppManager = nil;
             App *localApp = [App parseFromData:localAppData];
             self.app = localApp;
             PPDebug(@"loading local app data %@...... done!", [AppUtils getAppFilePath]);
+            
+//            NSArray *cityList = [localApp citiesList];
+//            for (City *city in cityList) {
+//                PPDebug(@"city = %@", city.cityName);
+//                PPDebug(@"city size = %d", city.dataSize);
+//            }
+//            
+//            NSArray *testCityList = [localApp testCitiesList];
+//            for (City *city in testCityList) {
+//                PPDebug(@"testcity = %@", city.cityName);
+//                PPDebug(@"city size = %d", city.dataSize);
+//            }
+//            
+//            for (RecommendedApp *app in localApp.recommendedAppsList) {
+//                PPDebug(@"app.name = %@", app.name);
+//            }
         }
         @catch (NSException *exception) {
             PPDebug (@"<loadAppData> Caught %@%@", [exception name], [exception reason]);
@@ -109,21 +125,23 @@ static AppManager* _defaultAppManager = nil;
     
     self.app = appData;    
     
-    NSArray *cityList = [self.app citiesList];
+    NSArray *cityList = [appData citiesList];
     for (City *city in cityList) {
         PPDebug(@"city = %@", city.cityName);
+        PPDebug(@"city size = %d", city.dataSize);
     }
     
-    NSArray *testCityList = [self.app testCitiesList];
+    NSArray *testCityList = [appData testCitiesList];
     for (City *city in testCityList) {
         PPDebug(@"testcity = %@", city.cityName);
+        PPDebug(@"city size = %d", city.dataSize);
     }
     
-    for (RecommendedApp *app in self.app.recommendedAppsList) {
+    for (RecommendedApp *app in appData.recommendedAppsList) {
         PPDebug(@"app.name = %@", app.name);
     }
     
-    [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
+   [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
 
 - (City*)getCity:(int)cityId

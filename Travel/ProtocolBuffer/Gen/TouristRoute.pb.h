@@ -922,32 +922,32 @@
 @interface Order : PBGeneratedMessage {
 @private
   BOOL hasOrderId_:1;
-  BOOL hasDate_:1;
+  BOOL hasBookDate_:1;
   BOOL hasRouteId_:1;
   BOOL hasAgencyId_:1;
+  BOOL hasDepartDate_:1;
   BOOL hasAdult_:1;
   BOOL hasChildren_:1;
-  BOOL hasPriceStatus_:1;
-  BOOL hasStatus_:1;
   BOOL hasRouteName_:1;
   BOOL hasDepartCityName_:1;
-  BOOL hasDepartDate_:1;
   BOOL hasPrice_:1;
+  BOOL hasPriceStatus_:1;
+  BOOL hasStatus_:1;
   int32_t orderId;
-  int32_t date;
+  int32_t bookDate;
   int32_t routeId;
   int32_t agencyId;
+  int32_t departDate;
   int32_t adult;
   int32_t children;
-  int32_t priceStatus;
-  int32_t status;
   NSString* routeName;
   NSString* departCityName;
-  NSString* departDate;
   NSString* price;
+  NSString* priceStatus;
+  NSString* status;
 }
 - (BOOL) hasOrderId;
-- (BOOL) hasDate;
+- (BOOL) hasBookDate;
 - (BOOL) hasRouteId;
 - (BOOL) hasRouteName;
 - (BOOL) hasAgencyId;
@@ -959,17 +959,17 @@
 - (BOOL) hasPriceStatus;
 - (BOOL) hasStatus;
 @property (readonly) int32_t orderId;
-@property (readonly) int32_t date;
+@property (readonly) int32_t bookDate;
 @property (readonly) int32_t routeId;
 @property (readonly, retain) NSString* routeName;
 @property (readonly) int32_t agencyId;
 @property (readonly, retain) NSString* departCityName;
-@property (readonly, retain) NSString* departDate;
+@property (readonly) int32_t departDate;
 @property (readonly) int32_t adult;
 @property (readonly) int32_t children;
 @property (readonly, retain) NSString* price;
-@property (readonly) int32_t priceStatus;
-@property (readonly) int32_t status;
+@property (readonly, retain) NSString* priceStatus;
+@property (readonly, retain) NSString* status;
 
 + (Order*) defaultInstance;
 - (Order*) defaultInstance;
@@ -1010,10 +1010,10 @@
 - (Order_Builder*) setOrderId:(int32_t) value;
 - (Order_Builder*) clearOrderId;
 
-- (BOOL) hasDate;
-- (int32_t) date;
-- (Order_Builder*) setDate:(int32_t) value;
-- (Order_Builder*) clearDate;
+- (BOOL) hasBookDate;
+- (int32_t) bookDate;
+- (Order_Builder*) setBookDate:(int32_t) value;
+- (Order_Builder*) clearBookDate;
 
 - (BOOL) hasRouteId;
 - (int32_t) routeId;
@@ -1036,8 +1036,8 @@
 - (Order_Builder*) clearDepartCityName;
 
 - (BOOL) hasDepartDate;
-- (NSString*) departDate;
-- (Order_Builder*) setDepartDate:(NSString*) value;
+- (int32_t) departDate;
+- (Order_Builder*) setDepartDate:(int32_t) value;
 - (Order_Builder*) clearDepartDate;
 
 - (BOOL) hasAdult;
@@ -1056,13 +1056,13 @@
 - (Order_Builder*) clearPrice;
 
 - (BOOL) hasPriceStatus;
-- (int32_t) priceStatus;
-- (Order_Builder*) setPriceStatus:(int32_t) value;
+- (NSString*) priceStatus;
+- (Order_Builder*) setPriceStatus:(NSString*) value;
 - (Order_Builder*) clearPriceStatus;
 
 - (BOOL) hasStatus;
-- (int32_t) status;
-- (Order_Builder*) setStatus:(int32_t) value;
+- (NSString*) status;
+- (Order_Builder*) setStatus:(NSString*) value;
 - (Order_Builder*) clearStatus;
 @end
 

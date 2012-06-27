@@ -3876,17 +3876,17 @@ static OrderList* defaultOrderListInstance = nil;
 
 @interface Order ()
 @property int32_t orderId;
-@property int32_t date;
+@property int32_t bookDate;
 @property int32_t routeId;
 @property (retain) NSString* routeName;
 @property int32_t agencyId;
 @property (retain) NSString* departCityName;
-@property (retain) NSString* departDate;
+@property int32_t departDate;
 @property int32_t adult;
 @property int32_t children;
 @property (retain) NSString* price;
-@property int32_t priceStatus;
-@property int32_t status;
+@property (retain) NSString* priceStatus;
+@property (retain) NSString* status;
 @end
 
 @implementation Order
@@ -3898,13 +3898,13 @@ static OrderList* defaultOrderListInstance = nil;
   hasOrderId_ = !!value;
 }
 @synthesize orderId;
-- (BOOL) hasDate {
-  return !!hasDate_;
+- (BOOL) hasBookDate {
+  return !!hasBookDate_;
 }
-- (void) setHasDate:(BOOL) value {
-  hasDate_ = !!value;
+- (void) setHasBookDate:(BOOL) value {
+  hasBookDate_ = !!value;
 }
-@synthesize date;
+@synthesize bookDate;
 - (BOOL) hasRouteId {
   return !!hasRouteId_;
 }
@@ -3978,24 +3978,25 @@ static OrderList* defaultOrderListInstance = nil;
 - (void) dealloc {
   self.routeName = nil;
   self.departCityName = nil;
-  self.departDate = nil;
   self.price = nil;
+  self.priceStatus = nil;
+  self.status = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
     self.orderId = 0;
-    self.date = 0;
+    self.bookDate = 0;
     self.routeId = 0;
     self.routeName = @"";
     self.agencyId = 0;
     self.departCityName = @"";
-    self.departDate = @"";
+    self.departDate = 0;
     self.adult = 0;
     self.children = 0;
     self.price = @"";
-    self.priceStatus = 0;
-    self.status = 0;
+    self.priceStatus = @"";
+    self.status = @"";
   }
   return self;
 }
@@ -4015,7 +4016,7 @@ static Order* defaultOrderInstance = nil;
   if (!self.hasOrderId) {
     return NO;
   }
-  if (!self.hasDate) {
+  if (!self.hasBookDate) {
     return NO;
   }
   if (!self.hasRouteId) {
@@ -4027,8 +4028,8 @@ static Order* defaultOrderInstance = nil;
   if (self.hasOrderId) {
     [output writeInt32:1 value:self.orderId];
   }
-  if (self.hasDate) {
-    [output writeInt32:2 value:self.date];
+  if (self.hasBookDate) {
+    [output writeInt32:2 value:self.bookDate];
   }
   if (self.hasRouteId) {
     [output writeInt32:3 value:self.routeId];
@@ -4043,7 +4044,7 @@ static Order* defaultOrderInstance = nil;
     [output writeString:6 value:self.departCityName];
   }
   if (self.hasDepartDate) {
-    [output writeString:7 value:self.departDate];
+    [output writeInt32:7 value:self.departDate];
   }
   if (self.hasAdult) {
     [output writeInt32:8 value:self.adult];
@@ -4055,10 +4056,10 @@ static Order* defaultOrderInstance = nil;
     [output writeString:10 value:self.price];
   }
   if (self.hasPriceStatus) {
-    [output writeInt32:11 value:self.priceStatus];
+    [output writeString:11 value:self.priceStatus];
   }
   if (self.hasStatus) {
-    [output writeInt32:12 value:self.status];
+    [output writeString:12 value:self.status];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -4072,8 +4073,8 @@ static Order* defaultOrderInstance = nil;
   if (self.hasOrderId) {
     size += computeInt32Size(1, self.orderId);
   }
-  if (self.hasDate) {
-    size += computeInt32Size(2, self.date);
+  if (self.hasBookDate) {
+    size += computeInt32Size(2, self.bookDate);
   }
   if (self.hasRouteId) {
     size += computeInt32Size(3, self.routeId);
@@ -4088,7 +4089,7 @@ static Order* defaultOrderInstance = nil;
     size += computeStringSize(6, self.departCityName);
   }
   if (self.hasDepartDate) {
-    size += computeStringSize(7, self.departDate);
+    size += computeInt32Size(7, self.departDate);
   }
   if (self.hasAdult) {
     size += computeInt32Size(8, self.adult);
@@ -4100,10 +4101,10 @@ static Order* defaultOrderInstance = nil;
     size += computeStringSize(10, self.price);
   }
   if (self.hasPriceStatus) {
-    size += computeInt32Size(11, self.priceStatus);
+    size += computeStringSize(11, self.priceStatus);
   }
   if (self.hasStatus) {
-    size += computeInt32Size(12, self.status);
+    size += computeStringSize(12, self.status);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -4183,8 +4184,8 @@ static Order* defaultOrderInstance = nil;
   if (other.hasOrderId) {
     [self setOrderId:other.orderId];
   }
-  if (other.hasDate) {
-    [self setDate:other.date];
+  if (other.hasBookDate) {
+    [self setBookDate:other.bookDate];
   }
   if (other.hasRouteId) {
     [self setRouteId:other.routeId];
@@ -4242,7 +4243,7 @@ static Order* defaultOrderInstance = nil;
         break;
       }
       case 16: {
-        [self setDate:[input readInt32]];
+        [self setBookDate:[input readInt32]];
         break;
       }
       case 24: {
@@ -4261,8 +4262,8 @@ static Order* defaultOrderInstance = nil;
         [self setDepartCityName:[input readString]];
         break;
       }
-      case 58: {
-        [self setDepartDate:[input readString]];
+      case 56: {
+        [self setDepartDate:[input readInt32]];
         break;
       }
       case 64: {
@@ -4277,12 +4278,12 @@ static Order* defaultOrderInstance = nil;
         [self setPrice:[input readString]];
         break;
       }
-      case 88: {
-        [self setPriceStatus:[input readInt32]];
+      case 90: {
+        [self setPriceStatus:[input readString]];
         break;
       }
-      case 96: {
-        [self setStatus:[input readInt32]];
+      case 98: {
+        [self setStatus:[input readString]];
         break;
       }
     }
@@ -4304,20 +4305,20 @@ static Order* defaultOrderInstance = nil;
   result.orderId = 0;
   return self;
 }
-- (BOOL) hasDate {
-  return result.hasDate;
+- (BOOL) hasBookDate {
+  return result.hasBookDate;
 }
-- (int32_t) date {
-  return result.date;
+- (int32_t) bookDate {
+  return result.bookDate;
 }
-- (Order_Builder*) setDate:(int32_t) value {
-  result.hasDate = YES;
-  result.date = value;
+- (Order_Builder*) setBookDate:(int32_t) value {
+  result.hasBookDate = YES;
+  result.bookDate = value;
   return self;
 }
-- (Order_Builder*) clearDate {
-  result.hasDate = NO;
-  result.date = 0;
+- (Order_Builder*) clearBookDate {
+  result.hasBookDate = NO;
+  result.bookDate = 0;
   return self;
 }
 - (BOOL) hasRouteId {
@@ -4387,17 +4388,17 @@ static Order* defaultOrderInstance = nil;
 - (BOOL) hasDepartDate {
   return result.hasDepartDate;
 }
-- (NSString*) departDate {
+- (int32_t) departDate {
   return result.departDate;
 }
-- (Order_Builder*) setDepartDate:(NSString*) value {
+- (Order_Builder*) setDepartDate:(int32_t) value {
   result.hasDepartDate = YES;
   result.departDate = value;
   return self;
 }
 - (Order_Builder*) clearDepartDate {
   result.hasDepartDate = NO;
-  result.departDate = @"";
+  result.departDate = 0;
   return self;
 }
 - (BOOL) hasAdult {
@@ -4451,33 +4452,33 @@ static Order* defaultOrderInstance = nil;
 - (BOOL) hasPriceStatus {
   return result.hasPriceStatus;
 }
-- (int32_t) priceStatus {
+- (NSString*) priceStatus {
   return result.priceStatus;
 }
-- (Order_Builder*) setPriceStatus:(int32_t) value {
+- (Order_Builder*) setPriceStatus:(NSString*) value {
   result.hasPriceStatus = YES;
   result.priceStatus = value;
   return self;
 }
 - (Order_Builder*) clearPriceStatus {
   result.hasPriceStatus = NO;
-  result.priceStatus = 0;
+  result.priceStatus = @"";
   return self;
 }
 - (BOOL) hasStatus {
   return result.hasStatus;
 }
-- (int32_t) status {
+- (NSString*) status {
   return result.status;
 }
-- (Order_Builder*) setStatus:(int32_t) value {
+- (Order_Builder*) setStatus:(NSString*) value {
   result.hasStatus = YES;
   result.status = value;
   return self;
 }
 - (Order_Builder*) clearStatus {
   result.hasStatus = NO;
-  result.status = 0;
+  result.status = @"";
   return self;
 }
 @end

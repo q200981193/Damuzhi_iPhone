@@ -42,12 +42,7 @@
     
     [self setNavigationRightButton:NSLS(@"我的关注") 
                          imageName:@"topmenu_btn2.png"
-                            action:@selector(clickMyFollow:)];    
-    
-    
-    
-    
-    
+                            action:@selector(clickMyFollow:)];
     
     [RouteService defaultService] ;
     

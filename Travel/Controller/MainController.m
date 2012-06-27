@@ -43,6 +43,8 @@
 #import "PackageTourListFilter.h"
 #import "UnPackageTourListFilter.h"
 
+#import "OrderManagerController.h"
+
 @implementation MainController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -237,10 +239,15 @@
 //    [controller release];
     
     
-    NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
-    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:YES];
+//    NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
+//    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:YES];
+//    
+//    controller.navigationItem.title = [filter getRouteTypeName];
+//    
+//    [self.navigationController pushViewController:controller animated:YES];
+//    [controller release];
     
-    controller.navigationItem.title = [filter getRouteTypeName];
+    OrderManagerController *controller  = [[OrderManagerController alloc] init];
     
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
