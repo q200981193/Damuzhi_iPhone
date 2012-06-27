@@ -60,9 +60,9 @@
     
     [self setNavigationRightButton:NSLS(@"咨询") 
                          imageName:@"topmenu_btn2.png"
+
                             action:@selector(query:)];
     self.navigationItem.title = NSLS(@"路线详情");
-    
     
     [RouteService defaultService] ;
     

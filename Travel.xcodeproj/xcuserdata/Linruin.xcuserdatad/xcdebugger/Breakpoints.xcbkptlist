@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Travel/Model/App/AppManager.m"
-         timestampString = "362286599.794117"
+         timestampString = "362455040.844268"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "256"
-         endingLineNumber = "256"
+         startingLineNumber = "274"
+         endingLineNumber = "274"
          landmarkName = "-getCurrencySymbol:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -66,19 +66,6 @@
          startingLineNumber = "81"
          endingLineNumber = "81"
          landmarkName = "-clickDelete:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Travel/Controller/More/DownloadListCell.m"
-         timestampString = "359697399.443688"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
-         landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

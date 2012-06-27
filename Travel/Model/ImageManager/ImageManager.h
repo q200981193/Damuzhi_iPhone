@@ -49,4 +49,7 @@
 - (UIImage *)signUpBgImage;
 - (UIImage *)selectDownImage;
 
+- (UIImage *)morePointImage;
+- (UIImage *)accessoryImage;
+
 @end

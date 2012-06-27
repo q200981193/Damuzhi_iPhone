@@ -12,7 +12,14 @@
 @protocol OrderServiceDelegate <NSObject>
 
 @optional
-- (void)placeOrderDone:(int)resultCode result:(int)result reusultInfo:(NSString *)resultInfo;
+- (void)placeOrderDone:(int)resultCode
+                result:(int)result
+           reusultInfo:(NSString *)resultInfo;
+
+- (void)findRequestDone:(int)resultCode
+                 result:(int)result
+             resultInfo:(NSString *)resultInfo
+                   list:(NSArray *)list;
 
 @end
 
@@ -42,6 +49,13 @@
                 contactPerson:(NSString *)contactPersion
                     telephone:(NSString *)telephone
                       delegate:(id<OrderServiceDelegate>)delegate;
+
+
+- (void)findOrderUsingUserId:(NSString *)userId;
+
+
+- (void)findOrderUsingLoginId:(NSString *)loginId
+                        token:(NSString *)token;
 
 
 

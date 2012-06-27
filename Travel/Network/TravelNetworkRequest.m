@@ -768,4 +768,97 @@
                                       output:output];
 }
 
++ (CommonNetworkOutput*)queryList:(int)type
+                           userId:(NSString *)userId
+                             lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_USER_ID value:userId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type
+                          loginId:(NSString *)loginId
+                            token:(NSString *)token
+                             lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TOKEN value:token];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type
+                          routeId:(int)loginId
+                            start:(int)start
+                            count:(int)count
+                             lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID intValue:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_START intValue:start];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_COUNT intValue:count];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
 @end

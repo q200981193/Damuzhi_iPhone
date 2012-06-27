@@ -9,6 +9,8 @@
 #import "OrderService.h"
 #import "TravelNetworkRequest.h"
 #import "JSON.h"
+#import "Package.pb.h"
+#import "PPDebug.h"
 
 @implementation OrderService
 
@@ -91,6 +93,81 @@ static OrderService *_instance = nil;
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([delegate respondsToSelector:@selector(placeOrderDone:result:reusultInfo:)]) {
                 [delegate placeOrderDone:output.resultCode result:result reusultInfo:resultInfo];
+            }
+        });                        
+    });
+}
+
+- (void)findPackageTourOrderUsingUserId:(NSString *)userId
+                    delegate:(id<OrderServiceDelegate>)delegate
+{
+    [self findOrderUsingUserId:userId
+                     routeType:OBJECT_LIST_PACKAGE_TOUR_ORDER 
+                      delegate:delegate];
+}
+
+
+- (void)findOrderUsingUserId:(NSString *)userId
+                    routeType:(int)routeType
+                    delegate:(id<OrderServiceDelegate>)delegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest queryList:routeType userId:userId lang:LanguageTypeZhHans];   
+        int result = -1;
+        NSString *resultInfo;
+        TravelResponse *travelResponse = nil;
+
+        if (output.resultCode == ERROR_SUCCESS) {
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+            resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+            @try{
+                travelResponse = [TravelResponse parseFromData:output.responseData];
+            } @catch (NSException *exception){
+                PPDebug (@"<findOrderUsingUserId> Caught %@%@", [exception name], [exception reason]);
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(findRequestDone:result:resultInfo:list:)]) {
+                [delegate findRequestDone:output.resultCode
+                                   result:result
+                               resultInfo:resultInfo
+                                     list:[travelResponse.orderList ordersList]];
+            }
+        });                        
+    });
+}
+
+
+- (void)findOrderUsingLoginId:(NSString *)loginId
+                        token:(NSString *)token
+                    routeType:(int)routeType
+                     delegate:(id<OrderServiceDelegate>)delegate
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        CommonNetworkOutput *output = [TravelNetworkRequest queryList:routeType loginId:loginId token:token lang:LanguageTypeZhHans];   
+        int result = -1;
+        NSString *resultInfo;
+        TravelResponse *travelResponse = nil;
+        
+        if (output.resultCode == ERROR_SUCCESS) {
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+            resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+            @try{
+                travelResponse = [TravelResponse parseFromData:output.responseData];
+            } @catch (NSException *exception){
+                PPDebug (@"<findOrderUsingUserId> Caught %@%@", [exception name], [exception reason]);
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(findRequestDone:result:resultInfo:list:)]) {
+                [delegate findRequestDone:output.resultCode
+                                   result:result
+                               resultInfo:resultInfo
+                                     list:[travelResponse.orderList ordersList]];
             }
         });                        
     });

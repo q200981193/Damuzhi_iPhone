@@ -12,10 +12,10 @@
 #define OS_IOS 1
 
 // for test service
-#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
+//#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
 // for formal service
-//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+#define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
 
 // URL
@@ -128,6 +128,14 @@
 #define OBJECT_LIST_ROUTE_PACKAGE_TOUR              70
 #define OBJECT_LIST_ROUTE_UNPACKAGE_TOUR            71
 #define OBJECT_LIST_ROUTE_SELF_GUIDE_TOUR           72
+
+#define OBJECT_LIST_ROUTE_FEEKBACK                  75
+
+
+#define OBJECT_LIST_PACKAGE_TOUR_ORDER              80
+#define OBJECT_LIST_UNPACKAGE_ORDER                 81
+#define OBJECT_LIST_SELF_GUIDE_TOUR_ORDER           82
+
 
 #define OBJECT_LIST_CITY_IMAGE                      90
 
