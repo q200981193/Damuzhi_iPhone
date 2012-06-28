@@ -7,7 +7,12 @@
 //
 
 #import "PPTableViewController.h"
+#import "OrderService.h"
+#import "OrderCell.h"
 
-@interface OrderListController : PPTableViewController
+@interface OrderListController : PPTableViewController <OrderServiceDelegate, OrderCellDelegate>
+
+- (id)initWithOrderType:(int)orderType;
+
 
 @end

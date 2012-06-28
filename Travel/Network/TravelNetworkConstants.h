@@ -12,11 +12,11 @@
 #define OS_IOS 1
 
 // for test service
-//#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
+#define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
 // for formal service
-#define URL_SERVICE                 @"http://api.trip8888.com/service/"
-
+//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+//#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
 
 // URL
 #define URL_TRAVEL_REGISTER_USER    (URL_SERVICE@"RegisterUser.aspx?")
@@ -133,7 +133,7 @@
 
 
 #define OBJECT_LIST_PACKAGE_TOUR_ORDER              80
-#define OBJECT_LIST_UNPACKAGE_ORDER                 81
+#define OBJECT_LIST_UNPACKAGE_TOUR_ORDER            81
 #define OBJECT_LIST_SELF_GUIDE_TOUR_ORDER           82
 
 

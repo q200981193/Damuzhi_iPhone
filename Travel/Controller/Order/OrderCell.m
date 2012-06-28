@@ -21,6 +21,7 @@
 @implementation OrderCell
 
 @synthesize order = _order;
+@synthesize delegate = _delegate;
 
 @synthesize routeNameLabel;
 @synthesize routeIdLabel;
@@ -74,6 +75,18 @@
     priceLabel.text = [NSString stringWithFormat:NSLS(@"%@(%@)"), order.price, order.price];
     
     orderStatusLabel.text = order.status;
+}
+
+- (IBAction)clickRouteFeekbackButton:(id)sender {
+    if ([_delegate respondsToSelector:@selector(didClickRouteFeekback:)]){
+        [_delegate didClickRouteFeekback:_order.routeId];
+    }
+}
+
+- (IBAction)clickRouteDetailButton:(id)sender {
+    if ([_delegate respondsToSelector:@selector(didClickRouteDetail:)]){
+        [_delegate didClickRouteDetail:_order.routeId];
+    }
 }
 
 @end

@@ -98,21 +98,13 @@ static OrderService *_instance = nil;
     });
 }
 
-- (void)findPackageTourOrderUsingUserId:(NSString *)userId
-                    delegate:(id<OrderServiceDelegate>)delegate
-{
-    [self findOrderUsingUserId:userId
-                     routeType:OBJECT_LIST_PACKAGE_TOUR_ORDER 
-                      delegate:delegate];
-}
-
 
 - (void)findOrderUsingUserId:(NSString *)userId
-                    routeType:(int)routeType
+                    orderType:(int)orderType
                     delegate:(id<OrderServiceDelegate>)delegate
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CommonNetworkOutput *output = [TravelNetworkRequest queryList:routeType userId:userId lang:LanguageTypeZhHans];   
+        CommonNetworkOutput *output = [TravelNetworkRequest queryList:orderType userId:userId lang:LanguageTypeZhHans];   
         int result = -1;
         NSString *resultInfo;
         TravelResponse *travelResponse = nil;
@@ -129,10 +121,8 @@ static OrderService *_instance = nil;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(findRequestDone:result:resultInfo:list:)]) {
+            if ([delegate respondsToSelector:@selector(findRequestDone:list:)]) {
                 [delegate findRequestDone:output.resultCode
-                                   result:result
-                               resultInfo:resultInfo
                                      list:[travelResponse.orderList ordersList]];
             }
         });                        
@@ -142,11 +132,11 @@ static OrderService *_instance = nil;
 
 - (void)findOrderUsingLoginId:(NSString *)loginId
                         token:(NSString *)token
-                    routeType:(int)routeType
+                    orderType:(int)orderType
                      delegate:(id<OrderServiceDelegate>)delegate
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CommonNetworkOutput *output = [TravelNetworkRequest queryList:routeType loginId:loginId token:token lang:LanguageTypeZhHans];   
+        CommonNetworkOutput *output = [TravelNetworkRequest queryList:orderType loginId:loginId token:token lang:LanguageTypeZhHans];   
         int result = -1;
         NSString *resultInfo;
         TravelResponse *travelResponse = nil;
@@ -163,10 +153,8 @@ static OrderService *_instance = nil;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(findRequestDone:result:resultInfo:list:)]) {
+            if ([delegate respondsToSelector:@selector(findRequestDone:list:)]) {
                 [delegate findRequestDone:output.resultCode
-                                   result:result
-                               resultInfo:resultInfo
                                      list:[travelResponse.orderList ordersList]];
             }
         });                        

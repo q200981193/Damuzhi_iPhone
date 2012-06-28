@@ -215,9 +215,38 @@ static ImageManager *_defaultManager = nil;
     return [UIImage imageNamed:@"more_icon.png"];
 }
 
+
+
 - (UIImage *)accessoryImage
 {
     return [UIImage imageNamed:@"go_btn.png"];
 }
+
+
+
+- (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount
+{
+    int position = [self getPositionWithRowNum:rowNum rowCount:rowCount];
+    
+    if (position == POSITION_MIDDLE) {
+        return [UIImage strectchableImageName:@"order_list_2.png" leftCapWidth:50]; 
+    }
+    
+    if (position == POSITION_TOP || position == POSITION_ONLY_ONE) {
+        return [UIImage strectchableImageName:@"order_list_1.png" leftCapWidth:50]; 
+    }
+    
+    if (position == POSITION_BOTTOM) {
+        return [UIImage strectchableImageName:@"order_list_3.png" leftCapWidth:50]; 
+    }
+    
+    return nil;
+}
+
+- (UIImage *)orangePoint
+{
+    return [UIImage imageNamed:@"line_p2.png"];
+}
+
 
 @end

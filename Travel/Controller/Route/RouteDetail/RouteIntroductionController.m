@@ -125,9 +125,6 @@
     
     self.dataTableView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:240.0/255.0 blue:241.0/255.0 alpha:1];
     
-    //init sectionStat
-    [self initSectionStatWithSectionCount:[self sectionCountWithRouteType:_routeType]];
-    
     SlideImageView *slideImageView = [[SlideImageView alloc] initWithFrame:imagesHolderView.bounds];
     slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
     [slideImageView setImages:_route.detailImagesList];
@@ -504,7 +501,6 @@
     
     UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, HEIGHT_HEADER_VIEW/2-22/2, 22, 22)];
     arrowImageView.image = [[ImageManager defaultManager] arrowImage];
-    
     [headerView addSubview:arrowImageView];
     [arrowImageView release];
     
@@ -527,7 +523,6 @@
     UIButton *button = (UIButton *)sender;
     BOOL open = [self isSectionOpen:button.tag];
     [self setSection:button.tag Open:!open];
-    
 }
 
 - (void)didSelectedRelatedPlace:(PlaceTour *)placeTour
