@@ -233,10 +233,10 @@
 }
 
 - (IBAction)clickHelp:(id)sender {
-    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
-    controller.navigationItem.title = NSLS(@"帮助");
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+//    CommonWebController *controller = [[CommonWebController alloc] initWithWebUrl:[AppUtils getHelpHtmlFilePath]];
+//    controller.navigationItem.title = NSLS(@"帮助");
+//    [self.navigationController pushViewController:controller animated:YES];
+//    [controller release];
     
     
 //    NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
@@ -246,11 +246,11 @@
 //    
 //    [self.navigationController pushViewController:controller animated:YES];
 //    [controller release];
-//    
-//    OrderManagerController *controller  = [[OrderManagerController alloc] init];
-//    
-//    [self.navigationController pushViewController:controller animated:YES];
-//    [controller release];
+    
+    OrderManagerController *controller  = [[OrderManagerController alloc] init];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (IBAction)clickShare:(id)sender
