@@ -72,9 +72,9 @@
     
     personCountLabel.text = [NSString stringWithFormat:NSLS(@"成人%d位 儿童%d位"), order.adult, order.children];
     
-    priceLabel.text = [NSString stringWithFormat:NSLS(@"%@(%@)"), order.price, order.price];
+    priceLabel.text = [NSString stringWithFormat:NSLS(@"%@(%@)"), order.price, order.priceStatus];
     
-    orderStatusLabel.text = order.status;
+    orderStatusLabel.text = [self orderStatusString:order.status];
 }
 
 - (IBAction)clickRouteFeekbackButton:(id)sender {
@@ -88,5 +88,41 @@
         [_delegate didClickRouteDetail:_order.routeId];
     }
 }
+
+- (NSString*)orderStatusString:(int)orderStatus
+{
+    NSString *string;
+    switch (orderStatus) {
+        case 1:
+            string = NSLS(@"意向订单");
+            break;
+            
+        case 2:
+            string = NSLS(@"处理中");
+            break;
+            
+        case 3:
+            string = NSLS(@"待支付");
+            break;
+            
+        case 4:
+            string = NSLS(@"已支付");
+            break;
+            
+        case 5:
+            string = NSLS(@"已完成");
+            break;
+            
+        case 6:
+            string = NSLS(@"取消");
+            break;
+            
+        default:
+            break;
+    }
+    
+    return string;
+}
+
 
 @end

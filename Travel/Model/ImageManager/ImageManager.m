@@ -248,5 +248,10 @@ static ImageManager *_defaultManager = nil;
     return [UIImage imageNamed:@"line_p2.png"];
 }
 
+- (UIImage *)orderTel
+{
+    return [UIImage imageNamed:@"order_tel.png"];
+}
+
 
 @end

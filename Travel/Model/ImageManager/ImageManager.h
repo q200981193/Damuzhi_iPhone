@@ -55,5 +55,6 @@
 - (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount;
 
 - (UIImage *)orangePoint;
+- (UIImage *)orderTel;
 
 @end

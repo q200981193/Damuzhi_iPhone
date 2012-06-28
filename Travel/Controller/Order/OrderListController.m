@@ -51,7 +51,10 @@
     [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    // Set navigation bar buttons
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
     
     if ([[UserManager defaultManager] isLogin]) {
         [[OrderService defaultService] findOrderUsingLoginId:[[UserManager defaultManager] loginId] 
@@ -153,13 +156,14 @@
     [view addSubview:routeIdLabel];
     [routeIdLabel release];
     
-//    UILabel *bookDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 0, 50, HEIGHT_HEADER_VIEW)];
-//    NSDate *bookDate = [NSDate dateWithTimeIntervalSince1970:[[dataList objectAtIndex:section] bookDate]];
-//    bookDateLabel.text = dateToStringByFormat(bookDate, @"yyyy年MM月dd日");
-//    [view addSubview:bookDateLabel];
-//    [bookDate release];
-//    
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, HEIGHT_HEADER_VIEW/2-22/2, 22, 22)];
+    UILabel *bookDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 0, 80, HEIGHT_HEADER_VIEW)];
+    NSDate *bookDate = [NSDate dateWithTimeIntervalSince1970:[[dataList objectAtIndex:section] bookDate]];
+    bookDateLabel.backgroundColor = [UIColor clearColor];
+    bookDateLabel.font = [UIFont systemFontOfSize:15];
+    bookDateLabel.text = dateToStringByFormat(bookDate, @"MM月dd日");
+    [view addSubview:bookDateLabel];
+    
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(270, HEIGHT_HEADER_VIEW/2-22/2, 22, 22)];
     arrowImageView.image = [[ImageManager defaultManager] arrowImage];
     [view addSubview:arrowImageView];
     [arrowImageView release];
@@ -178,6 +182,11 @@
 {
     if (resultCode != ERROR_SUCCESS) {
         [self popupMessage:NSLS(@"网络弱，暂时无法获取订单列表") title:nil];
+        return;
+    }
+    
+    if ([list count] == 0) {
+        [self showTipsOnTableView:NSLS(@"您没有下过订单")];
         return;
     }
     
@@ -258,6 +267,7 @@
 {
     
 }
+
 
 
 @end

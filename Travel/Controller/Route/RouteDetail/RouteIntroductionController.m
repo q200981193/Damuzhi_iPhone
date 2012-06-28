@@ -434,10 +434,10 @@
     return HEIGHT_HEADER_VIEW;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return HEIGHT_FOOTER_VIEW;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return HEIGHT_FOOTER_VIEW;
+//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -472,13 +472,13 @@
 
 
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOOTER_VIEW);
-    UIView *view = [[[UIView alloc] initWithFrame:rect] autorelease];
-    view.backgroundColor = [UIColor clearColor];
-    return view;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOOTER_VIEW);
+//    UIView *view = [[[UIView alloc] initWithFrame:rect] autorelease];
+//    view.backgroundColor = [UIColor clearColor];
+//    return view;
+//}
 
 - (UIView *)headerViewForSection:(NSInteger)section
 {    
