@@ -39,6 +39,8 @@
 @synthesize totalCount = _totalCount;
 @synthesize departCityId = _departCityId;
 @synthesize statisticsView = _statisticsView;
+
+
 - (id)initWithRouteId:(int)routeId
 {
     if (self = [super init]) {
@@ -67,7 +69,7 @@
     [RouteService defaultService] ;
     
     
-    [[RouteService defaultService] queryRouteFeekbacks:_routeId start:0 count:EACH_COUNT delegate:self];
+    [[RouteService defaultService] queryRouteFeekbacks:_routeId start:0 count:EACH_COUNT viewController:self];
 }
 
 - (void)viewDidUnload
@@ -77,6 +79,17 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [RouteFeekbackCell getCellHeight];
+}
+
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [dataList count];
+}
 
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,34 +118,10 @@
     return cell;
 }
 
-
-
-// TableView delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [RouteFeekbackCell getCellHeight];
-
-}
-
-
-
+// essential
 - (void)updateStatisticsData
 {
-//    NSString *departCityName = [[AppManager defaultManager] getDepartCityName:_departCityId];
-//    UILabel *departCityLabel = (UILabel *)[_statisticsView viewWithTag:TAG_DEPART_CITY_LABEL];
-//    [departCityLabel setText:[NSString stringWithFormat:@"%@出发", departCityName]];
-    
-    //    int agencyCount = 0;
-    //    if ([[_selectedItemIds.agencyIds objectAtIndex:0] intValue] == ALL_CATEGORY) {
-    //        agencyCount = [[[AppManager defaultManager] getAgencyItemList:dataList] count] - 1;
-    //    }else {
-    //        [_selectedItemIds.agencyIds count];
-    //    }
-    //    UILabel *agencyLabel = (UILabel *)[_statisticsView viewWithTag:TAG_AGENCY_LABEL];
-    //    [agencyLabel setText:[NSString stringWithFormat:@"%d个旅行社", agencyCount]];
-    //    
-    //    UILabel *routeCountLabel = (UILabel *)[_statisticsView viewWithTag:TAG_ROUTE_COUNT_LABEL];
-    //    [routeCountLabel setText:[NSString stringWithFormat:@"%d条线路", [dataList count]]];
+
 }
 
 // RouteService delegate
@@ -158,6 +147,7 @@
     [_allRouteFeekback addObjectsFromArray:routeFeekback];
     self.dataList = [dataList arrayByAddingObjectsFromArray:routeFeekback];     
     
+    PPDebug(@"dalist count %d", [dataList count]);
     
     if (_start >= totalCount) {
         self.noMoreData = YES;
@@ -167,6 +157,14 @@
     
     [dataTableView reloadData];
 }
+
+
+//-(UIImage *)generateRankView: (CGRect)from  image:(UIImage *)image total:(int） total rank:(int)rank
+//{
+//    
+//}
+                                
+                             
 
 
 @end

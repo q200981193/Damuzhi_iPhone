@@ -239,18 +239,18 @@
 //    [controller release];
     
     
-//    NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
-//    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:YES];
-//    
-//    controller.navigationItem.title = [filter getRouteTypeName];
+    NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
+    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:YES];
+    
+    controller.navigationItem.title = [filter getRouteTypeName];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+//    [controller release];
+    
+//    OrderManagerController *controller  = [[OrderManagerController alloc] init];
 //    
 //    [self.navigationController pushViewController:controller animated:YES];
 //    [controller release];
-    
-    OrderManagerController *controller  = [[OrderManagerController alloc] init];
-    
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
 }
 
 - (IBAction)clickShare:(id)sender

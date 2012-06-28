@@ -104,7 +104,7 @@
 
 
 - (IBAction)clickUserFeekbackButton:(id)sender {
-    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] initWithRouteId:_routeId];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 

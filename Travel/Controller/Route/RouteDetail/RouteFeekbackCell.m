@@ -7,8 +7,8 @@
 //
 
 #import "RouteFeekbackCell.h"
-#import "Package.pb.h"
 #import "TimeUtils.h"
+#import "PPDebug.h"
 
 @interface RouteFeekbackCell ()
 
@@ -20,6 +20,14 @@
 @synthesize contentLabel;
 @synthesize bgImageView;
 
++ (CGFloat)getCellHeight
+{
+    return 98;
+}
+
+
+
+
 + (NSString *)getCellIdentifier
 {
     return @"RouteFeekbackCell";
@@ -27,11 +35,18 @@
 
 - (void)setCellData:(RouteFeekback *)routeFeekback
 {
+
     userNameLabel.text = routeFeekback.nickName;
-    
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:routeFeekback.date];
     dateLabel.text = dateToStringByFormat(date, DATE_FORMAT);
     contentLabel.text = routeFeekback.content;
+    
+    CGSize withinSize = CGSizeMake(contentLabel.frame.size.width, MAXFLOAT);
+    CGSize size = [routeFeekback.content sizeWithFont:contentLabel.font constrainedToSize:withinSize lineBreakMode:contentLabel.lineBreakMode];
+    
+    contentLabel.frame = CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y, contentLabel.frame.size.width, size.height);
+    
+    //PPDebug(@"%@", routeFeekback);
 }
 
 - (void)dealloc {

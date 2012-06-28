@@ -110,7 +110,7 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                              lang:(int)lang;
 
 + (CommonNetworkOutput*)queryList:(int)type
-                          routeId:(int)loginId
+                          routeId:(int)routeId
                             start:(int)start
                             count:(int)count
                              lang:(int)lang;

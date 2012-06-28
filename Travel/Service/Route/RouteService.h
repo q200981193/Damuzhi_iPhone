@@ -38,7 +38,10 @@
 
 - (void)findRouteWithRouteId:(int)routeId viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 
-- (void)queryRouteFeekbacks:(int)routeId start:(int)start count:(int)count delegate:(id<RouteServiceDelegate>)delegate;
+- (void)queryRouteFeekbacks:(int)routeId 
+                      start:(int)start
+                      count:(int)count
+             viewController:(PPViewController<RouteServiceDelegate>*)viewController;
                 
 
 @end
