@@ -91,6 +91,12 @@
 		A42D908D155533610023AF32 /* RecommendedAppsControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A42D908B155533610023AF32 /* RecommendedAppsControllerViewController.xib */; };
 		A42D90911555387E0023AF32 /* RecommendedAppCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A42D908F155538780023AF32 /* RecommendedAppCell.m */; };
 		A42D90921555387E0023AF32 /* RecommendedAppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A42D90901555387B0023AF32 /* RecommendedAppCell.xib */; };
+		A44CCD6C159AFD29000AC138 /* order_list_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD69159AFD29000AC138 /* order_list_1@2x.png */; };
+		A44CCD6D159AFD29000AC138 /* order_list_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD6A159AFD29000AC138 /* order_list_2@2x.png */; };
+		A44CCD6E159AFD29000AC138 /* order_list_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD6B159AFD29000AC138 /* order_list_3@2x.png */; };
+		A44CCD70159B1160000AC138 /* order_list_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD6F159B1160000AC138 /* order_list_4@2x.png */; };
+		A44CCDE0159C0A6C000AC138 /* fk_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCDDE159C0A6C000AC138 /* fk_bg@2x.png */; };
+		A44CCDE1159C0A6C000AC138 /* fk_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCDDF159C0A6C000AC138 /* fk_bg2@2x.png */; };
 		A4516966157087E500FF72CD /* locate_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4516965157087E500FF72CD /* locate_back@2x.png */; };
 		A45169861570DFDC00FF72CD /* detail_bg_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A45169841570DFDC00FF72CD /* detail_bg_down@2x.png */; };
 		A45169871570DFDC00FF72CD /* detail_bg_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A45169851570DFDC00FF72CD /* detail_bg_up@2x.png */; };
@@ -766,6 +772,12 @@
 		A42D908E155538760023AF32 /* RecommendedAppCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedAppCell.h; sourceTree = "<group>"; };
 		A42D908F155538780023AF32 /* RecommendedAppCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedAppCell.m; sourceTree = "<group>"; };
 		A42D90901555387B0023AF32 /* RecommendedAppCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommendedAppCell.xib; sourceTree = "<group>"; };
+		A44CCD69159AFD29000AC138 /* order_list_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_1@2x.png"; sourceTree = "<group>"; };
+		A44CCD6A159AFD29000AC138 /* order_list_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_2@2x.png"; sourceTree = "<group>"; };
+		A44CCD6B159AFD29000AC138 /* order_list_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_3@2x.png"; sourceTree = "<group>"; };
+		A44CCD6F159B1160000AC138 /* order_list_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_4@2x.png"; sourceTree = "<group>"; };
+		A44CCDDE159C0A6C000AC138 /* fk_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fk_bg@2x.png"; sourceTree = "<group>"; };
+		A44CCDDF159C0A6C000AC138 /* fk_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fk_bg2@2x.png"; sourceTree = "<group>"; };
 		A4516965157087E500FF72CD /* locate_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "locate_back@2x.png"; sourceTree = "<group>"; };
 		A45169841570DFDC00FF72CD /* detail_bg_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_bg_down@2x.png"; sourceTree = "<group>"; };
 		A45169851570DFDC00FF72CD /* detail_bg_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_bg_up@2x.png"; sourceTree = "<group>"; };
@@ -1882,6 +1894,12 @@
 		A455F85A1585A0F800CA5743 /* route_detail */ = {
 			isa = PBXGroup;
 			children = (
+				A44CCDDE159C0A6C000AC138 /* fk_bg@2x.png */,
+				A44CCDDF159C0A6C000AC138 /* fk_bg2@2x.png */,
+				A44CCD6F159B1160000AC138 /* order_list_4@2x.png */,
+				A44CCD69159AFD29000AC138 /* order_list_1@2x.png */,
+				A44CCD6A159AFD29000AC138 /* order_list_2@2x.png */,
+				A44CCD6B159AFD29000AC138 /* order_list_3@2x.png */,
 				A49B79581599BAAE00F3A926 /* order_btn_1@2x.png */,
 				A49B79591599BAAE00F3A926 /* order_btn_2@2x.png */,
 				A49B794C1599A06B00F3A926 /* order_bg1@2x.png */,
@@ -4105,6 +4123,12 @@
 				A49B795A1599BAAE00F3A926 /* order_btn_1@2x.png in Resources */,
 				A49B795B1599BAAE00F3A926 /* order_btn_2@2x.png in Resources */,
 				A49B79601599BC7D00F3A926 /* OrderListController.xib in Resources */,
+				A44CCD6C159AFD29000AC138 /* order_list_1@2x.png in Resources */,
+				A44CCD6D159AFD29000AC138 /* order_list_2@2x.png in Resources */,
+				A44CCD6E159AFD29000AC138 /* order_list_3@2x.png in Resources */,
+				A44CCD70159B1160000AC138 /* order_list_4@2x.png in Resources */,
+				A44CCDE0159C0A6C000AC138 /* fk_bg@2x.png in Resources */,
+				A44CCDE1159C0A6C000AC138 /* fk_bg2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4474,8 +4498,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: TopTrip Co.Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TopTrip Co.Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4490,8 +4514,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 			};
@@ -4505,8 +4529,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Distribution: TopTrip Co.Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TopTrip Co.Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -4515,8 +4539,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 				VALIDATE_PRODUCT = YES;
@@ -4526,8 +4550,8 @@
 		CA49071314F5F05B00228C37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: TopTrip Co.Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TopTrip Co.Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -4538,8 +4562,8 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
@@ -4549,8 +4573,8 @@
 		CA49071414F5F05B00228C37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: TopTrip Co.Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: TopTrip Co.Ltd";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -4561,8 +4585,8 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77E072E6-D6D3-4790-A415-98002DCA6CAB";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;

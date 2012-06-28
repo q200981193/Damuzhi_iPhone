@@ -52,4 +52,8 @@
 - (UIImage *)morePointImage;
 - (UIImage *)accessoryImage;
 
+- (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount;
+
+- (UIImage *)orangePoint;
+
 @end

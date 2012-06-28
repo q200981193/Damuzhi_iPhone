@@ -59,17 +59,17 @@
 
     
     
-    if ([[UserManager defaultManager] isLogin]) {
-        [self setNavigationRightButton:NSLS(@"退出登陆") 
-                             imageName:@"topmenu_btn2.png"
-                                action:@selector(clickLogout:)];
-    }else {
-
-        [self setNavigationRightButton:NSLS(@"会员登陆") 
-                             imageName:@"topmenu_btn2.png"
-                                action:@selector(clickLogin:)];
-
-    }
+//    if ([[UserManager defaultManager] isLogin]) {
+//        [self setNavigationRightButton:NSLS(@"退出登陆") 
+//                             imageName:@"topmenu_btn2.png"
+//                                action:@selector(clickLogout:)];
+//    }else {
+//
+//        [self setNavigationRightButton:NSLS(@"会员登陆") 
+//                             imageName:@"topmenu_btn2.png"
+//                                action:@selector(clickLogin:)];
+//
+//    }
     
     int kShowPraise = [MobClickUtils getIntValueByKey:@"kShowPraise" defaultValue:0];
     

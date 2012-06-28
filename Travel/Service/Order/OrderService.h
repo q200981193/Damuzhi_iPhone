@@ -17,8 +17,6 @@
            reusultInfo:(NSString *)resultInfo;
 
 - (void)findRequestDone:(int)resultCode
-                 result:(int)result
-             resultInfo:(NSString *)resultInfo
                    list:(NSArray *)list;
 
 @end
@@ -50,13 +48,15 @@
                     telephone:(NSString *)telephone
                       delegate:(id<OrderServiceDelegate>)delegate;
 
-
-- (void)findOrderUsingUserId:(NSString *)userId;
+- (void)findOrderUsingUserId:(NSString *)userId
+                   orderType:(int)orderType
+                    delegate:(id<OrderServiceDelegate>)delegate;
 
 
 - (void)findOrderUsingLoginId:(NSString *)loginId
-                        token:(NSString *)token;
-
+                        token:(NSString *)token
+                    orderType:(int)orderType
+                     delegate:(id<OrderServiceDelegate>)delegate;
 
 
 @end

@@ -8,12 +8,25 @@
 
 #import "OrderManagerController.h"
 #import "ImageManager.h"
+#import "TravelNetworkConstants.h"
+#import "OrderListController.h"
 
 @interface OrderManagerController ()
+
+@property (retain, nonatomic) NSArray *orderTypeList;
 
 @end
 
 @implementation OrderManagerController
+
+@synthesize orderTypeList = _orderTypeList;
+
+- (void)dealloc
+{
+    [_orderTypeList release];
+    
+    [super dealloc];
+}
 
 - (void)viewDidLoad
 {
@@ -23,6 +36,8 @@
     // Do any additional setup after loading the view from its nib.
 
     self.dataList = [NSArray arrayWithObjects:NSLS(@"跟团游订单管理"), NSLS(@"自由行订单管理"), NSLS(@"自定制订单管理"),nil];
+    self.orderTypeList = [NSArray arrayWithObjects:[NSNumber numberWithInt:OBJECT_LIST_PACKAGE_TOUR_ORDER], [NSNumber numberWithInt:OBJECT_LIST_UNPACKAGE_TOUR_ORDER], [NSNumber numberWithInt:OBJECT_LIST_SELF_GUIDE_TOUR_ORDER], nil];
+    
 }
 
 - (void)viewDidUnload
@@ -74,7 +89,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    OrderListController *controller = [[OrderListController alloc] initWithOrderType:[[_orderTypeList objectAtIndex:indexPath.row] intValue]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
     
 }
 

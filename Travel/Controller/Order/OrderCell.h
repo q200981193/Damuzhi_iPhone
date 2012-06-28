@@ -9,7 +9,17 @@
 #import "PPTableViewCell.h"
 #import "TouristRoute.pb.h"
 
+@protocol OrderCellDelegate <NSObject>
+
+@optional
+- (void)didClickRouteFeekback:(int)routeId;
+- (void)didClickRouteDetail:(int)routeId;
+
+@end
+
 @interface OrderCell : PPTableViewCell
+
+@property (assign, nonatomic) id<OrderCellDelegate> delegate;
 
 @property (retain, nonatomic) IBOutlet UILabel *routeNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *routeIdLabel;
