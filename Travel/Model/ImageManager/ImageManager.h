@@ -22,8 +22,8 @@
 
 - (UIImage *)listBgImage;
 
-- (UIImage *)routeRankGoodImage;
-- (UIImage *)routeRankBadImage;
+- (UIImage *)rankGoodImage;
+- (UIImage *)rankBadImage;
 
 - (UIImage *)departIcon;
 - (UIImage *)angencyIcon;
@@ -56,4 +56,6 @@
 
 - (UIImage *)orangePoint;
 
+- (UIImage *)routeFeekbackBgImage1;
+- (UIImage *)routeFeekbackBgImage2;
 @end

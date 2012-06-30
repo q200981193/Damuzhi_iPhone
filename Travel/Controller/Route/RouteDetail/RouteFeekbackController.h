@@ -12,6 +12,5 @@
 @interface RouteFeekbackController : PPTableViewController <RouteServiceDelegate>
 
 - (id)initWithRouteId:(int)routeId;
-//-(UIImage *)generateRankView: from:(CGRect)from  image:(UIImage *)image total:(int）total  rank:(int)rank；
 
 @end

@@ -66,6 +66,8 @@
                             action:@selector(query:)];
     self.navigationItem.title = NSLS(@"路线详情");
     
+    dataTableView.backgroundColor = [UIColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1];
+    
     [RouteService defaultService] ;
     
     
@@ -98,11 +100,7 @@
     cell = [tableView dequeueReusableCellWithIdentifier:[RouteFeekbackCell getCellIdentifier]];
     if (cell == nil) {
         cell = [RouteFeekbackCell createCell:self];		
-        
-        UIImageView *view = [[UIImageView alloc] init];
-        [view setImage:[[ImageManager defaultManager] listBgImage]];
-        [cell setBackgroundView:view];
-        [view release];
+    
         // Customize the appearance of table view cells at first time
     }
     
@@ -159,11 +157,7 @@
 }
 
 
-//-(UIImage *)generateRankView: (CGRect)from  image:(UIImage *)image total:(int） total rank:(int)rank
-//{
-//    
-//}
-                                
+                         
                              
 
 

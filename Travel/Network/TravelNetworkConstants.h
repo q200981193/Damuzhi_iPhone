@@ -15,13 +15,13 @@
 #define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
 // for formal service
-<<<<<<< HEAD
+
 //#define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
-=======
-#define URL_SERVICE                 @"http://api.trip8888.com/service/"
-//#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
->>>>>>> origin/master
+
+//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+////#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
+
 
 // URL
 #define URL_TRAVEL_REGISTER_USER    (URL_SERVICE@"RegisterUser.aspx?")

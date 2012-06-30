@@ -17,4 +17,11 @@
 
 - (void)setCellData:(RouteFeekback *)routeFeekback;
 
+
+@property (retain, nonatomic) IBOutlet UIImageView *displayRankImage1;
+
+@property (retain, nonatomic) IBOutlet UIImageView *displayRankImage2;
+
+@property (retain, nonatomic) IBOutlet UIImageView *displayRankImage3;
+
 @end

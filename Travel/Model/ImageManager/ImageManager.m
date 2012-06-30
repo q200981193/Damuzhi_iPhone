@@ -63,14 +63,14 @@ static ImageManager *_defaultManager = nil;
     return [UIImage strectchableImageName:@"li_bg.png"];
 }
 
-- (UIImage *)routeRankGoodImage
+- (UIImage *)rankGoodImage
 {
-    return [UIImage strectchableImageName:@"line_star.png"];
+    return [UIImage strectchableImageName:@"good.png"];
 }
 
-- (UIImage *)routeRankBadImage;
+- (UIImage *)rankBadImage;
 {
-    return [UIImage strectchableImageName:@"line_star2.png"];
+    return [UIImage strectchableImageName:@"good2.png"];
 }
 
 - (UIImage *)departIcon
@@ -248,5 +248,13 @@ static ImageManager *_defaultManager = nil;
     return [UIImage imageNamed:@"line_p2.png"];
 }
 
+- (UIImage *)routeFeekbackBgImage1
+{
+    return [UIImage strectchableImageName:@"fk_bg.png" leftCapWidth:12];
+}
+- (UIImage *)routeFeekbackBgImage2
+{
+    return [UIImage strectchableImageName:@"fk_bg2.png" leftCapWidth:(21)];
+}
 
 @end
