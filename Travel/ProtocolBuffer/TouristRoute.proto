@@ -113,7 +113,7 @@ message Order {
   optional int32 children = 9 ;         // 儿童个数
 
   optional string price = 10;           // 大拇指价
-  optional string priceStatus = 11;      // 价格状态
-  optional string status = 12;          // 订单状态
+  optional string priceStatus = 11;     // 价格状态
+  optional int32 status = 12;             // 订单状态
 }
 

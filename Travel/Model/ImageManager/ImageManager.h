@@ -55,6 +55,7 @@
 - (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount;
 
 - (UIImage *)orangePoint;
+- (UIImage *)orderTel;
 
 - (UIImage *)routeFeekbackBgImage1;
 - (UIImage *)routeFeekbackBgImage2;

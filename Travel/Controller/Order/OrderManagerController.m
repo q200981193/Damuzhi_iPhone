@@ -10,6 +10,7 @@
 #import "ImageManager.h"
 #import "TravelNetworkConstants.h"
 #import "OrderListController.h"
+#import "UIUtils.h"
 
 @interface OrderManagerController ()
 
@@ -34,6 +35,15 @@
 
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Set navigation bar buttons
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+//    
+//    [self setNavigationRightButton:NSLS(@"提交") 
+//                         imageName:@"topmenu_btn_right.png" 
+//                            action:@selector(clickSubmit:)];
 
     self.dataList = [NSArray arrayWithObjects:NSLS(@"跟团游订单管理"), NSLS(@"自由行订单管理"), NSLS(@"自定制订单管理"),nil];
     self.orderTypeList = [NSArray arrayWithObjects:[NSNumber numberWithInt:OBJECT_LIST_PACKAGE_TOUR_ORDER], [NSNumber numberWithInt:OBJECT_LIST_UNPACKAGE_TOUR_ORDER], [NSNumber numberWithInt:OBJECT_LIST_SELF_GUIDE_TOUR_ORDER], nil];
@@ -95,5 +105,39 @@
     
 }
 
+#define HEIGHT_FOOTER_VIEW 44
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return HEIGHT_FOOTER_VIEW;
+}
+
+
+#define CUSTOMER_SERVICE_TELEPHONE @"400-800-888"
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, HEIGHT_FOOTER_VIEW)] autorelease];
+    
+    [button addTarget:self action:@selector(clickCustomerServiceTelephone:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIImageView *imageView = [[[UIImageView alloc] initWithFrame:CGRectMake(65, HEIGHT_FOOTER_VIEW/2-8, 16, 16)] autorelease];
+    imageView.image = [[ImageManager defaultManager] orderTel];
+    [button addSubview:imageView];
+    
+    UILabel *label = [[[UILabel alloc] initWithFrame:CGRectMake(88, 0, 200, HEIGHT_FOOTER_VIEW)] autorelease];
+    label.text = [NSString stringWithFormat:NSLS(@"客服电话：%@"), CUSTOMER_SERVICE_TELEPHONE];
+    label.textColor = [UIColor colorWithRed:1 green:72.0/255.0 blue:0 alpha:1];
+    label.font = [UIFont systemFontOfSize:15];
+    label.backgroundColor = [UIColor clearColor];
+    [button addSubview:label];
+    
+    return button;
+}
+
+- (void)clickCustomerServiceTelephone:(id)sender
+{
+    NSString *telephone = [CUSTOMER_SERVICE_TELEPHONE stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    [UIUtils makeCall:telephone];
+}
 
 @end

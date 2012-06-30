@@ -928,11 +928,11 @@
   BOOL hasDepartDate_:1;
   BOOL hasAdult_:1;
   BOOL hasChildren_:1;
+  BOOL hasStatus_:1;
   BOOL hasRouteName_:1;
   BOOL hasDepartCityName_:1;
   BOOL hasPrice_:1;
   BOOL hasPriceStatus_:1;
-  BOOL hasStatus_:1;
   int32_t orderId;
   int32_t bookDate;
   int32_t routeId;
@@ -940,11 +940,11 @@
   int32_t departDate;
   int32_t adult;
   int32_t children;
+  int32_t status;
   NSString* routeName;
   NSString* departCityName;
   NSString* price;
   NSString* priceStatus;
-  NSString* status;
 }
 - (BOOL) hasOrderId;
 - (BOOL) hasBookDate;
@@ -969,7 +969,7 @@
 @property (readonly) int32_t children;
 @property (readonly, retain) NSString* price;
 @property (readonly, retain) NSString* priceStatus;
-@property (readonly, retain) NSString* status;
+@property (readonly) int32_t status;
 
 + (Order*) defaultInstance;
 - (Order*) defaultInstance;
@@ -1061,8 +1061,8 @@
 - (Order_Builder*) clearPriceStatus;
 
 - (BOOL) hasStatus;
-- (NSString*) status;
-- (Order_Builder*) setStatus:(NSString*) value;
+- (int32_t) status;
+- (Order_Builder*) setStatus:(int32_t) value;
 - (Order_Builder*) clearStatus;
 @end
 

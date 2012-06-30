@@ -3886,7 +3886,7 @@ static OrderList* defaultOrderListInstance = nil;
 @property int32_t children;
 @property (retain) NSString* price;
 @property (retain) NSString* priceStatus;
-@property (retain) NSString* status;
+@property int32_t status;
 @end
 
 @implementation Order
@@ -3980,7 +3980,6 @@ static OrderList* defaultOrderListInstance = nil;
   self.departCityName = nil;
   self.price = nil;
   self.priceStatus = nil;
-  self.status = nil;
   [super dealloc];
 }
 - (id) init {
@@ -3996,7 +3995,7 @@ static OrderList* defaultOrderListInstance = nil;
     self.children = 0;
     self.price = @"";
     self.priceStatus = @"";
-    self.status = @"";
+    self.status = 0;
   }
   return self;
 }
@@ -4059,7 +4058,7 @@ static Order* defaultOrderInstance = nil;
     [output writeString:11 value:self.priceStatus];
   }
   if (self.hasStatus) {
-    [output writeString:12 value:self.status];
+    [output writeInt32:12 value:self.status];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -4104,7 +4103,7 @@ static Order* defaultOrderInstance = nil;
     size += computeStringSize(11, self.priceStatus);
   }
   if (self.hasStatus) {
-    size += computeStringSize(12, self.status);
+    size += computeInt32Size(12, self.status);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -4282,8 +4281,8 @@ static Order* defaultOrderInstance = nil;
         [self setPriceStatus:[input readString]];
         break;
       }
-      case 98: {
-        [self setStatus:[input readString]];
+      case 96: {
+        [self setStatus:[input readInt32]];
         break;
       }
     }
@@ -4468,17 +4467,17 @@ static Order* defaultOrderInstance = nil;
 - (BOOL) hasStatus {
   return result.hasStatus;
 }
-- (NSString*) status {
+- (int32_t) status {
   return result.status;
 }
-- (Order_Builder*) setStatus:(NSString*) value {
+- (Order_Builder*) setStatus:(int32_t) value {
   result.hasStatus = YES;
   result.status = value;
   return self;
 }
 - (Order_Builder*) clearStatus {
   result.hasStatus = NO;
-  result.status = @"";
+  result.status = 0;
   return self;
 }
 @end
