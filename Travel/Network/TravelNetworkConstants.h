@@ -15,8 +15,13 @@
 #define URL_SERVICE                 @"http://59.34.17.68:8012/service/"
 
 // for formal service
+
 //#define URL_SERVICE                 @"http://api.trip8888.com/service/"
-//#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
+
+
+//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
+////#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
+
 
 // URL
 #define URL_TRAVEL_REGISTER_USER    (URL_SERVICE@"RegisterUser.aspx?")
@@ -77,7 +82,7 @@
 
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"
-#define PARA_TRAVEL_APP_VERSION             @"app_version"
+#define PARA_TRAVEL_APP_VERSION             @"appVersion"
 #define PARA_TRAVEL_APP_DATA_VERSION        @"app_data_version"
 
 #define PARA_TRAVEL_TELEPHONE               @"telephone"

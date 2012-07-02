@@ -245,7 +245,7 @@
     controller.navigationItem.title = [filter getRouteTypeName];
     
     [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
+//    [controller release];
     
 //    OrderManagerController *controller  = [[OrderManagerController alloc] init];
 //    

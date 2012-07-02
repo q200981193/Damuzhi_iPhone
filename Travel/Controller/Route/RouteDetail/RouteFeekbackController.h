@@ -11,4 +11,8 @@
 
 @interface RouteFeekbackController : PPTableViewController <RouteServiceDelegate>
 
+- (id)initWithRouteId:(int)routeId;
+
+- (void)showInView:(UIView *)superView;
+
 @end

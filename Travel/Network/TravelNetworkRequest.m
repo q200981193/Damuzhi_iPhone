@@ -830,7 +830,7 @@
 }
 
 + (CommonNetworkOutput*)queryList:(int)type
-                          routeId:(int)loginId
+                          routeId:(int)routeId
                             start:(int)start
                             count:(int)count
                              lang:(int)lang
@@ -843,7 +843,7 @@
         NSString* str = [NSString stringWithString:baseURL];        
         
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID intValue:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_ROUTE_ID intValue:routeId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_START intValue:start];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_COUNT intValue:count];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];

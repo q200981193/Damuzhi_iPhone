@@ -140,4 +140,16 @@
     }
 }
 
+-(void) showInView:(UIView *)superView
+{
+    webView.frame = superView.bounds;
+    
+        [superView addSubview:self.view];
+}
+
 @end
+
+
+
+
+

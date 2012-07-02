@@ -20,7 +20,6 @@
 
 @property (retain, nonatomic) IBOutlet UIScrollView *contentScrollView;
 
-
 - (id)initWithRouteId:(int)routeId routeType:(int)routeType;
 
 @end

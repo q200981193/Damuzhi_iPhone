@@ -93,14 +93,14 @@
         int tag = TAG_BEGIN_RANK_IMAGE_VIEW + i;
         
         UIImageView *rankImageView = (UIImageView*)[rankHolderView viewWithTag:tag];
-        [rankImageView setImage:[[ImageManager defaultManager] routeRankGoodImage]];
+        [rankImageView setImage:[[ImageManager defaultManager] rankGoodImage]];
     }
     
     for ( ; i < 5; i ++) {
         int tag = TAG_BEGIN_RANK_IMAGE_VIEW + i;
         
         UIImageView *rankImageView = (UIImageView*)[rankHolderView viewWithTag:tag];
-        [rankImageView setImage:[[ImageManager defaultManager] routeRankBadImage]];
+        [rankImageView setImage:[[ImageManager defaultManager] rankGoodImage]];
     }
 }
 

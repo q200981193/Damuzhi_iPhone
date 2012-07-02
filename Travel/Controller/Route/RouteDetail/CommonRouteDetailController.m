@@ -12,6 +12,7 @@
 #import "ImageManager.h"
 #import "RouteFeekbackController.h"
 #import "PlaceOrderController.h"
+#import "CommonWebController.h"
 
 @interface CommonRouteDetailController ()
 
@@ -20,7 +21,10 @@
 @property (retain, nonatomic) TouristRoute *route;
 
 @property (retain, nonatomic) RouteIntroductionController *introductionController;
+@property (retain, nonatomic) CommonWebController *feeController;
 
+@property (retain, nonatomic) CommonWebController *bookingPolicyController;
+@property (retain, nonatomic) CommonWebController *userFeekbackController;
 @end
 
 @implementation CommonRouteDetailController
@@ -30,6 +34,9 @@
 @synthesize route = _route;
 
 @synthesize introductionController = _introductionController;
+@synthesize feeController = _feeController;
+@synthesize bookingPolicyController = _bookingPolicyController;
+@synthesize userFeekbackController = _userFeekbackController;
 
 @synthesize introductionButton = _introductionButton;
 @synthesize costDescriptionButton = _costDescriptionButton;
@@ -42,6 +49,7 @@
 - (void)dealloc {
     [_route release];
     [_introductionController release];
+    [_feeController release];
     
     [_introductionButton release];
     [_costDescriptionButton release];
@@ -94,23 +102,37 @@
     [_introductionController showInView:self.contentScrollView];
 }
 
+
+
 - (IBAction)clickCostDecriptionButton:(id)sender {
+    if (_feeController == nil) {
+        self.feeController = [[[CommonWebController alloc] initWithWebUrl:_route.fee] autorelease];
+    }
+    
+    [_feeController showInView:self.contentScrollView];    
 }
 
+
+
 - (IBAction)clickBookingPolicyButton:(id)sender {
+    if (_bookingPolicyController == nil) {
+        self.bookingPolicyController = [[[CommonWebController alloc] initWithWebUrl:_route.bookingNotice] autorelease];
+    }
+    
+    [_bookingPolicyController showInView:self.contentScrollView];        
+    
 }
 
 
 
 
 - (IBAction)clickUserFeekbackButton:(id)sender {
-    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller release];
-
-    
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] initWithRouteId:_routeId];
+[controller showInView:self.contentScrollView];   
+//    [self.navigationController pushViewController:controller animated:YES];
+//    [controller release];
+       
 }
-
 
 
 
