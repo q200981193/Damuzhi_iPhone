@@ -13,4 +13,6 @@
 
 - (id)initWithRouteId:(int)routeId;
 
+- (void)showInView:(UIView *)superView;
+
 @end

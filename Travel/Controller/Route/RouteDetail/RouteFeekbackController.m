@@ -160,6 +160,11 @@
                          
                              
 
+-(void) showInView:(UIView *)superView
+{
+    self.view.frame = superView.bounds;
+    [superView addSubview:self.view];
+}
 
 @end
 
