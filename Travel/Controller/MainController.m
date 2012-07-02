@@ -297,7 +297,7 @@
     
     
     NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
-    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:YES];
+    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:NO];
     
     controller.navigationItem.title = [filter getRouteTypeName];
     
