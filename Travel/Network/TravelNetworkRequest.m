@@ -143,7 +143,7 @@
         str = [str stringByAddQueryParameter:PARA_TRAVEL_DEVICE_TOKEN value:deviceToken];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_DEVICE_ID value:deviceId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_MAC_ADRESS value:macAdress];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_APP_VERSION value:appVersion];
+        str = [str stringByAddQueryParameter:@"appVersion" value:appVersion];
 
         return str;
     };
