@@ -110,9 +110,11 @@
 - (void)viewDidLoad
 {
 
-    
+    self.title = [_filterHandler getRouteTypeName];
+
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+
     
     // Init UI Interface
     [self setNavigationLeftButton:NSLS(@" 返回") 

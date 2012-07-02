@@ -92,6 +92,7 @@
     return self;
 }
 
+
 - (int)sectionCountWithRouteType:(int)routeType
 {
     if (routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
@@ -117,6 +118,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [titleHolerView setBackgroundColor:[UIColor colorWithPatternImage:[[ImageManager defaultManager] routeDetailTitleBgImage]]];
+    
     [routeNameLabel setText:_route.name];
     [routeIdLabel setText:[NSString stringWithFormat:NSLS(@"编号：%d"), _route.routeId]];
     

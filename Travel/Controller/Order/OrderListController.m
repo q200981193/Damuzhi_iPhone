@@ -48,6 +48,7 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"订单详情";
     [self setBackgroundImageName:@"all_page_bg2.jpg"];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -148,7 +149,7 @@
     [view addSubview:imageView];
     [imageView release];
     
-    UILabel *routeIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(23, 0, 160, HEIGHT_HEADER_VIEW)];
+    UILabel *routeIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(26, 0, 160, HEIGHT_HEADER_VIEW)];
     routeIdLabel.font = [UIFont systemFontOfSize:15];
     routeIdLabel.backgroundColor = [UIColor clearColor];
     int orderId = [[dataList objectAtIndex:section] orderId];
@@ -161,6 +162,7 @@
     bookDateLabel.backgroundColor = [UIColor clearColor];
     bookDateLabel.font = [UIFont systemFontOfSize:15];
     bookDateLabel.text = dateToStringByFormat(bookDate, @"MM月dd日");
+    bookDateLabel.textColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1];
     [view addSubview:bookDateLabel];
     
     UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(270, HEIGHT_HEADER_VIEW/2-22/2, 22, 22)];

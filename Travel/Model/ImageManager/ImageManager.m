@@ -259,7 +259,7 @@ static ImageManager *_defaultManager = nil;
 
 - (UIImage *)orderTel
 {
-    return nil;
+    return [UIImage imageNamed:@"order_tel.png"];
 }
 
 @end
