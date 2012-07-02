@@ -22,9 +22,8 @@
 
 @property (retain, nonatomic) RouteIntroductionController *introductionController;
 @property (retain, nonatomic) CommonWebController *feeController;
-
 @property (retain, nonatomic) CommonWebController *bookingPolicyController;
-@property (retain, nonatomic) CommonWebController *userFeekbackController;
+@property (retain, nonatomic) RouteFeekbackController *userFeekbackController;
 
 @property (retain, nonatomic) UIButton *currentSelectedButton;
 
@@ -54,6 +53,7 @@
     [_route release];
     [_introductionController release];
     [_feeController release];
+    [_userFeekbackController release];
     
     [_introductionButton release];
     [_costDescriptionButton release];
@@ -161,17 +161,16 @@
 }
 
 
-
-
 - (IBAction)clickUserFeekbackButton:(id)sender {
     UIButton *button  = (UIButton *)sender;
     [self updateSelectedButton:button];
     
-    RouteFeekbackController *controller = [[RouteFeekbackController alloc] initWithRouteId:_routeId];
-[controller showInView:self.contentScrollView];   
-//    [self.navigationController pushViewController:controller animated:YES];
-//    [controller release];
-       
+    if (_userFeekbackController == nil) {
+        self.userFeekbackController = [[[RouteFeekbackController alloc] initWithRouteId:_routeId] autorelease];
+
+    }
+
+    [_userFeekbackController showInView:self.contentScrollView];   
 }
 
 - (void)findRequestDone:(int)result route:(TouristRoute *)route
@@ -190,8 +189,11 @@
 {
     PlaceOrderController *controller = [[[PlaceOrderController alloc] initWithRoute:_route] autorelease];
     [self.navigationController pushViewController:controller animated:YES];
-    
-    
+}
+
+- (void)clickConsult:(id)sender
+{
+    [self popupMessage:NSLS(@"拨打电话") title:nil];
 }
 
 @end
