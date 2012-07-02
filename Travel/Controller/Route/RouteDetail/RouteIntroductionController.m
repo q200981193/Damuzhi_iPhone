@@ -129,6 +129,8 @@
     slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
     [slideImageView setImages:_route.detailImagesList];
     [imagesHolderView addSubview:slideImageView];
+    
+    [self initSectionStatWithSectionCount:[self sectionCountWithRouteType:_routeType]];
 }
 
 - (void)viewDidUnload

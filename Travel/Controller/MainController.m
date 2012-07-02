@@ -13,7 +13,6 @@
 #import "RestaurantListFilter.h"
 #import "ShoppingListFilter.h"
 #import "EntertainmentListFilter.h"
-#import "FavoriteController.h"
 #import "CityBasicController.h"
 #import "CityBasicDataSource.h"
 #import "TravelPreparationDataSource.h"
@@ -25,8 +24,7 @@
 #import "NearbyController.h"
 #import "AppManager.h"
 #import "CityManagementController.h"
-#import "ShareToSinaController.h"
-#import "ShareToQQController.h"
+
 #import "RouteController.h"
 #import "GuideController.h"
 #import "CommonWebController.h"
@@ -38,14 +36,23 @@
 
 #include "UserService.h"
 
-
 #import "CommonRouteListController.h"
 #import "PackageTourListFilter.h"
 #import "UnPackageTourListFilter.h"
 
-#import "OrderManagerController.h"
+@interface MainController()
+
+@property (retain, nonatomic) UIButton *currentSelectedButton;
+
+@end
 
 @implementation MainController
+@synthesize homeButton = _homeButton;
+@synthesize UnpackageButton = _UnpackageButton;
+@synthesize PackageButton = _PackageButton;
+@synthesize moreButton = _moreButton;
+
+@synthesize currentSelectedButton = _currentSelectedButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,6 +65,11 @@
 
 - (void)dealloc
 {
+    [_currentSelectedButton release];
+    [_homeButton release];
+    [_UnpackageButton release];
+    [_PackageButton release];
+    [_moreButton release];
     [super dealloc];
 }
 
@@ -113,6 +125,9 @@
 {
     [self setBackgroundImageName:@"index_bg.png"];
     [super viewDidLoad];
+    
+    self.currentSelectedButton = self.homeButton;
+    self.currentSelectedButton.selected = YES;
         
     [self checkCurrentCityVersion];
 }
@@ -125,6 +140,10 @@
 
 - (void)viewDidUnload
 {
+    [self setHomeButton:nil];
+    [self setUnpackageButton:nil];
+    [self setPackageButton:nil];
+    [self setMoreButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -219,17 +238,55 @@
 }
 
 - (IBAction)clickMoreButton:(id)sender
-{
+{ 
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
     MoreController *controller = [[MoreController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
-- (IBAction)clickFavorite:(id)sender
+
+- (void)updateSelectedButton:(UIButton *)button
 {
-    FavoriteController *fc = [[FavoriteController alloc] init];
-    [self.navigationController pushViewController:fc animated:YES];
-    [fc release];
+    self.currentSelectedButton.selected = NO;
+    self.currentSelectedButton = button;
+    self.currentSelectedButton.selected = YES;
+}
+
+- (IBAction)clickHomeButton:(id)sender {
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+
+    
+    
+    
+}
+- (IBAction)clickUnpackageTourButton:(id)sender {
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
+    NSObject<RouteListFilterProtocol>* filter = [UnPackageTourListFilter createFilter];
+    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:YES];
+    
+    controller.navigationItem.title = [filter getRouteTypeName];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+
+
+- (IBAction)clickPackageTourButton:(id)sender {
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
+    NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
+    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:NO];
+    
+    controller.navigationItem.title = [filter getRouteTypeName];
+    
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)clickHelp:(id)sender {
@@ -253,42 +310,8 @@
 //    [controller release];
 }
 
-- (IBAction)clickShare:(id)sender
-{
-    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLS(@"取消") destructiveButtonTitle:NSLS(@"通过短信") otherButtonTitles:NSLS(@"分享到新浪微博"), NSLS(@"分享到腾讯微博"), nil];
-    [shareSheet showInView:self.view];
-    [shareSheet release];
-}
-
 #pragma -mark share UIActionSheet delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0:
-        {
-            [self sendSms:nil body:[NSString stringWithFormat:NSLS(@"kShareContent"),[MobClick getConfigParams:@"download_website"]]];
-            break;
-        }
-        case 1:
-        {
-            ShareToSinaController *sc = [[ShareToSinaController alloc] init];
-            [self.navigationController pushViewController:sc animated:YES];
-            [sc release];
-            break;
-        }
-        case 2:
-        {
-            ShareToQQController *shareToQQ = [[ShareToQQController alloc] init];
-            [self.navigationController pushViewController:shareToQQ animated:YES];
-            [shareToQQ release];
-            break;
-        }
-        case 3:
-            break;
-        default:
-            break;
-    }
-}
+
 
 - (void)checkCurrentCityVersion
 {
