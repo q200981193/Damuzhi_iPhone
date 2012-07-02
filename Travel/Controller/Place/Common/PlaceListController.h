@@ -11,6 +11,10 @@
 #import "CityOverviewService.h"
 #import "PlaceService.h"
 
+
+#define ALERT_TYPE_WITH_NEVER_REMIND_BUTTON 1
+#define ALERT_TYPE_WITHOUT_NEVER_REMIND_BUTTON 2
+
 @class PlaceMapViewController;
 @class Place;
 
@@ -18,8 +22,8 @@
 
 @optional
 - (void)deletedPlace:(Place *)place;
-- (void)didUpdateToLocation;
-- (void)didFailUpdateLocation;
+//- (void)didUpdateToLocation;
+//- (void)didFailUpdateLocation;
 
 @end
 
@@ -29,15 +33,19 @@
 
 @end
 
-@interface PlaceListController : PPTableViewController <CityOverviewServiceDelegate>
+@interface PlaceListController : PPTableViewController <MKMapViewDelegate, CityOverviewServiceDelegate>
 
-@property (retain, nonatomic) IBOutlet UIView *mapHolderView;
+@property (retain, nonatomic) IBOutlet MKMapView *mapView;
 @property (assign, nonatomic) id<PlaceListControllerDelegate> aDelegate;
 @property (assign, nonatomic) id<PullToRefrshDelegate> pullDownDelegate;
+
+@property (assign, nonatomic) int alertViewType;
 
 - (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
                   wantPullDownToRefresh:(BOOL)wantPullDownToRefresh
                        pullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate;
+
+
 
 - (void)showInView:(UIView*)superView;
 - (void)setPlaceList:(NSArray*)placeList;
