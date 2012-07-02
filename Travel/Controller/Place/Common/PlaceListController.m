@@ -342,16 +342,27 @@
     [MapUtils setMapSpan:_mapView span:span];
 }
 
+#define TOLERANCE 0.000001
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-//    if (_updateTimes < 2) {
-//        _updateTimes ++;
-//        return;
-//    }
-    
-    PPDebug(@"showsUserLocation = %d", _mapView.showsUserLocation);
-    
     PPDebug(@"current location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+    
+    CLLocation *currentLocation1 = [[AppService defaultService] currentLocation];
+    
+    PPDebug(@"my location: %f, %f", currentLocation1.coordinate.latitude, currentLocation1.coordinate.longitude);
+    
+    float distance  = [userLocation.location distanceFromLocation:currentLocation1];
+    
+    PPDebug(@"distance = %f", distance);
+    
+    if (_firstIn && (userLocation.location.coordinate.latitude - 0.000000) < TOLERANCE && (userLocation.location.coordinate.longitude - 0.000000) < TOLERANCE) {
+        return;
+    }
+    
+    if (!_firstIn && distance < 100.0) {
+        return;
+    }
     
     [[AppService defaultService] setCurrentLocation:userLocation.location];
     
@@ -361,9 +372,9 @@
         [self reloadTableView];
     }
     
-//    if ([_aDelegate respondsToSelector:@selector(didUpdateToLocation)]) {
-//        [_aDelegate didUpdateToLocation];
-//    }
+    if ([_aDelegate respondsToSelector:@selector(didUpdateToLocation)]) {
+        [_aDelegate didUpdateToLocation];
+    }
 
     if (_firstIn) {
         _firstIn = NO;
@@ -375,7 +386,10 @@
 {
     [[AppService defaultService] setCurrentLocation:nil];
     [self reloadTableView];
-
+    
+    PPDebug(@"error domain: %@", error.domain);
+//    PPDebug(@"error code: %@", error.code);
+    
     if (error.domain != kCLErrorDomain) {
         return;
     }
@@ -391,9 +405,9 @@
         [AppUtils showAlertViewWhenCannotLocateUserLocation];
     }
     
-    //    if ([_aDelegate respondsToSelector:@selector(didFailUpdateLocation)]) {
-    //        [_aDelegate didFailUpdateLocation];
-    //    }
+    if ([_aDelegate respondsToSelector:@selector(didFailUpdateLocation)]) {
+        [_aDelegate didFailUpdateLocation];
+    }
     
     _mapView.showsUserLocation = NO;
     

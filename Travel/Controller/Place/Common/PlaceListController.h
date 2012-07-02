@@ -22,8 +22,8 @@
 
 @optional
 - (void)deletedPlace:(Place *)place;
-//- (void)didUpdateToLocation;
-//- (void)didFailUpdateLocation;
+- (void)didUpdateToLocation;
+- (void)didFailUpdateLocation;
 
 @end
 
