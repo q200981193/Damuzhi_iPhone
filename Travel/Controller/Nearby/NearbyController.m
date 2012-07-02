@@ -466,14 +466,14 @@ UITextField * alertTextField;
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
 }
 
-//- (void)didUpdateToLocation
-//{
-//    [self updateDataSorce];
-//}
-//
-//- (void)didFailUpdateLocation
-//{
-//    [self updateDataSorce];
-//}
+- (void)didUpdateToLocation
+{
+    [self updateDataSorce];
+}
+
+- (void)didFailUpdateLocation
+{
+    [self updateDataSorce];
+}
 
 @end
