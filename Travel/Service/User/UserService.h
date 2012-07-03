@@ -45,8 +45,7 @@
      delegate:(id<UserServiceDelegate>)delegate;
 
 // 用户登出接口
-- (void)logout:(NSString *)loginId 
-         token:(NSString *)token;
+- (void)logout;
 
 // 注册接口
 - (void)signUp:(NSString *)loginId 

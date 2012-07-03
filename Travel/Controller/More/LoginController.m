@@ -11,9 +11,9 @@
 #import "UserManager.h"
 #import "PPNetworkRequest.h"
 #import "UIImageUtil.h"
+#import "OrderManagerController.h"
 
 #import "StringUtil.h"
-#import "FlightController.h"
 
 @interface LoginController ()
 @property (copy, nonatomic) NSString *loginId;
@@ -128,16 +128,9 @@
 
 
 - (IBAction)clickCheckOrdersButton:(id)sender {
-//
-//    
-//    
-    FlightController *controller = [[FlightController alloc] init];
+    OrderManagerController *controller = [[OrderManagerController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
-    
-    
-    
-    
 }
 
 
@@ -181,6 +174,8 @@
         return;
     }
     
+    [self popupMessage:NSLS(@"登陆成功") title:nil];
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 

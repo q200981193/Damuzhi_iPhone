@@ -155,7 +155,7 @@
 
 - (void)clickLogout:(id)sender
 {
-    [[UserService defaultService] logout:[[AppManager defaultManager] loginId] token:[[AppManager defaultManager] token]];
+    [[UserService defaultService] logout];
 }
 
 - (void)clickLogin:(id)sender

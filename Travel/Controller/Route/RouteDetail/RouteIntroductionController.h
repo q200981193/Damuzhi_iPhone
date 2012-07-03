@@ -16,6 +16,7 @@
 @optional
 - (void)didClickBookButton;
 - (void)didSelectedPlace:(int)placeId;
+- (void)didClickFlight:(int)packageId;
 
 @end
 

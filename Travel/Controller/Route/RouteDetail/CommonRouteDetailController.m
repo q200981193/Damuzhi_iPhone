@@ -14,6 +14,7 @@
 #import "PlaceOrderController.h"
 #import "CommonWebController.h"
 #import "CommonPlaceDetailController.h"
+#import "FlightController.h"
 
 @interface CommonRouteDetailController ()
 
@@ -220,5 +221,13 @@
     CommonPlaceDetailController *controller = [[[CommonPlaceDetailController alloc] initWithPlace:place] autorelease];
     [self.navigationController pushViewController:controller animated:YES];
 }
+
+- (void)didClickFlight:(int)packageId
+{
+    FlightController *controller = [[FlightController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
 
 @end

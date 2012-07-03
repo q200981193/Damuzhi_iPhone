@@ -53,6 +53,8 @@
 @property (assign, nonatomic) int routeType;
 @property (retain, nonatomic) NSMutableDictionary *sectionInfo;
 
+- (RankView *)headerRankView;
+
 @end
 
 @implementation RouteIntroductionController
@@ -127,12 +129,6 @@
     [slideImageView setImages:_route.detailImagesList];
     [imagesHolderView addSubview:slideImageView];
     
-    if (_routeType != OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        RankView *rankView = [self headerRankView];
-        rankView.center = CGPointMake(agencyInfoHolderView.frame.size.width/2, agencyInfoHolderView.frame.size.height/2);
-        [agencyInfoHolderView addSubview:rankView];
-    }
-    
     [self initSectionStat];
 }
 
@@ -182,6 +178,8 @@
 {
     [agencyNameLabel setText:[[AppManager defaultManager] getAgencyName:_route.agencyId]];
     
+    CGSize agencyNameSize = [agencyNameLabel.text sizeWithFont:agencyNameLabel.font forWidth:160 lineBreakMode:UILineBreakModeWordWrap];
+    
     CGFloat origin_x;
     CGFloat origin_y;
 
@@ -189,9 +187,11 @@
     UILabel *priceSuffixLabel;
     UIButton *bookButton;
     
+    RankView *rankView;
+    
     switch (_routeType) {
         case OBJECT_LIST_ROUTE_PACKAGE_TOUR:
-            origin_x = agencyNameLabel.frame.origin.x + agencyNameLabel.frame.size.width + 15;
+            origin_x = 180;
             origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_LABEL/2; 
             priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 40, HEIGHT_PRICE_LABEL)];
             [agencyInfoHolderView addSubview:priceLabel];
@@ -201,7 +201,7 @@
             priceSuffixLabel = [self genPriceSuffixLabelWithFrame:CGRectMake(origin_x, origin_y, 15, HEIGHT_PRICE_SUFFIX_LABEL)];
             [agencyInfoHolderView addSubview:priceSuffixLabel];
             
-            origin_x = priceSuffixLabel.frame.origin.x + priceSuffixLabel.frame.size.width + 20;
+            origin_x = priceSuffixLabel.frame.origin.x + priceSuffixLabel.frame.size.width + 10;
             origin_y = agencyNameLabel.frame.size.height/2 - 22/2; 
             bookButton = [self genBookBttonWithFrame:CGRectMake(origin_x, origin_y, 70, 22)];
             [agencyInfoHolderView addSubview:bookButton];
@@ -209,9 +209,17 @@
             break;
         
         case OBJECT_LIST_ROUTE_UNPACKAGE_TOUR:
-            origin_x = 250;
+            rankView = [self headerRankView];
+            origin_x = agencyInfoHolderView.frame.size.width / 2 - rankView.frame.size.width;
+            if (agencyNameSize.width+10 > origin_x) {
+                origin_x = agencyNameSize.width+10;
+            }
+            rankView.frame = CGRectMake(origin_x, (agencyInfoHolderView.frame.size.height-rankView.frame.size.height)/2, rankView.frame.size.width, rankView.frame.size.height);
+            [agencyInfoHolderView addSubview:rankView];
+            
+            origin_x = 220;
             origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_LABEL/2; 
-            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 40, HEIGHT_PRICE_LABEL)];
+            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 70, HEIGHT_PRICE_LABEL)];
             [agencyInfoHolderView addSubview:priceLabel];
             
             origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
@@ -620,19 +628,21 @@
         //自由行
         
         for (TravelPackage * package in _route.packagesList) {
-            PPDebug(@"package.name : %@",package.name);
             
             if ([label.text isEqualToString:package.name]) {
-                UILabel *priceLabel = [self genPriceLabelWithFrame:CGRectMake(200, 0, 40, 30)];
+                UILabel *priceLabel = [self genPriceLabelWithFrame:CGRectMake(150, 0, 40, 30)];
                 priceLabel.text = package.price;
-                PPDebug(@"package.price : %@", package.price);
-                
                 [headerView addSubview:priceLabel];
                 
-                CGFloat origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
-                CGFloat origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_SUFFIX_LABEL/2 + 1;
-                UILabel *priceSuffixLabel = [self genPriceSuffixLabelWithFrame:CGRectMake(origin_x, origin_y, 15, 30)];
+                UILabel *priceSuffixLabel = [self genPriceSuffixLabelWithFrame:CGRectMake(190, 0, 15, 30)];
                 [headerView addSubview:priceSuffixLabel];
+                
+                UIButton *bookButton = [[[UIButton alloc] init] autorelease];
+                bookButton.frame = CGRectMake(210, 0, 70, 30);
+                [bookButton setImage:[[ImageManager defaultManager] bookButtonImage] forState:UIControlStateNormal];
+                //[bookButton addTarget:self action:@selector(clickBookButton) forControlEvents:UIControlEventTouchUpInside];
+                [headerView addSubview:bookButton];
+                
                 break;
             }
         }
@@ -704,7 +714,9 @@
 
 - (void)didClickFlight:(int)packageId
 {
-    [self popupMessage:@"查看航班" title:nil];
+    if ([_aDelegate respondsToSelector:@selector(didClickFlight:)]) {
+        [_aDelegate didClickFlight:packageId];
+    }
 }
 
 - (void)didClickAccommodation:(int)hotelId
