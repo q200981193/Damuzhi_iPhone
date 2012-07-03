@@ -9,8 +9,9 @@
 #import "PPTableViewController.h"
 #import "RouteService.h"
 #import "RouteIntroductionController.h"
+#import "PlaceService.h"
 
-@interface CommonRouteDetailController : PPTableViewController <RouteServiceDelegate, RouteIntroductionControllerDelegate>
+@interface CommonRouteDetailController : PPTableViewController <RouteServiceDelegate, RouteIntroductionControllerDelegate, PlaceServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet UIButton *introductionButton;
 @property (retain, nonatomic) IBOutlet UIButton *costDescriptionButton;

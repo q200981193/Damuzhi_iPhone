@@ -81,6 +81,7 @@ message Flight {
   optional string arriveCityName = 7; 		// 到达城市id
   optional string arriveTime = 8;           // 到达时间
   optional string arriveAirport = 9;     	// 到达机场
+  optional string note = 10;                // 航班提示：如“需到北京机场经传”
 }
 
 message PlaceTour {

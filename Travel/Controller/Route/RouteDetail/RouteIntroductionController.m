@@ -17,10 +17,9 @@
 #import "SlideImageView.h"
 #import "ImageName.h"
 #import "RankView.h"
+#import "PPNetworkRequest.h"
 
 #define CELL_IDENTIFY_CHARACTICS @"CharacticsCell"
-
-//#define SECTION_COUNT 4
 
 #define SECTION_OPEN 1
 #define SECTION_CLOSE 0
@@ -306,7 +305,7 @@
         return 0;
     }
     
-    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:section]];
+    NSString *title = [self titleForSection:section];
     
     if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
         return [_route.relatedplacesList count]; 
@@ -338,7 +337,7 @@
     
     UITableViewCell *cell = nil;
 
-    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    NSString *title = [self titleForSection:indexPath.section];
     PPDebug(@"title: %@", title);
 
     if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
@@ -480,7 +479,11 @@
 
 - (CGFloat)cellHeightForPackageWithIndex:(NSIndexPath *)indexPath
 {
-    return [PackageCell getCellHeight];
+    TravelPackage *package = [[_route packagesList] objectAtIndex:indexPath.row];
+    
+    CGFloat height = 5 + 32 + (HEIGHT_ACCOMODATION_VIEW + EDGE) * [package.accommodationsList count];
+    
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -498,7 +501,7 @@
     
     CGFloat height = 0;
     
-    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    NSString *title = [self titleForSection:indexPath.section];
     if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
         height = [self cellHeightForCharacticsWithIndex:indexPath];
     }else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
@@ -543,11 +546,8 @@
 }
 
 - (NSString *)titleForSection:(NSInteger)section
-{
-    NSNumber *row = [NSNumber numberWithInt:section];
-    NSString *title = [self.sectionInfo objectForKey:row];
-    
-    return title;
+{    
+    return [self.sectionInfo objectForKey:[NSNumber numberWithInt:section]];
 }
 
 
@@ -694,23 +694,30 @@
     [self setSection:button.tag Open:!open];
 }
 
-- (void)didSelectedRelatedPlace:(PlaceTour *)placeTour
+- (void)didSelectedRelatedPlace:(int)placeId
 {
-    [self popupMessage:@"待实现" title:nil];
+    if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
+        [_aDelegate didSelectedPlace:placeId];
+    }
 }
 
 - (IBAction)clickFollowRoute:(id)sender
 {
-    [self popupMessage:@"待实现" title:nil]; 
+    [self popupMessage:@"关注路线" title:nil]; 
 }
 
 - (void)didClickFlight:(int)packageId
 {
     [self popupMessage:@"查看航班" title:nil];
 }
+
 - (void)didClickAccommodation:(int)hotelId
 {
-    [self popupMessage:@"查看住宿" title:nil];
+    if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
+        [_aDelegate didSelectedPlace:hotelId];
+    }
 }
+
+
 
 @end

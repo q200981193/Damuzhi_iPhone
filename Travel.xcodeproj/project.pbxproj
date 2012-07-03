@@ -327,6 +327,9 @@
 		A4C6BC4D152DF83000681DD7 /* HotelDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C6BC49152DF83000681DD7 /* HotelDetailViewHandler.m */; };
 		A4C6BC4E152DF83000681DD7 /* RestaurantDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C6BC4A152DF83000681DD7 /* RestaurantDetailViewHandler.m */; };
 		A4C6BC4F152DF83000681DD7 /* ShoppingDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A4C6BC4B152DF83000681DD7 /* ShoppingDetailViewHandler.m */; };
+		A4CD756615A2B69300713F0B /* login_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4CD756515A2B69300713F0B /* login_bg@2x.png */; };
+		A4CD756A15A2D14600713F0B /* FlightController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CD756815A2D14500713F0B /* FlightController.m */; };
+		A4CD756B15A2D14600713F0B /* FlightController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4CD756915A2D14600713F0B /* FlightController.xib */; };
 		A4D9F30F1592F14700566B32 /* SignUpController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D9F30D1592F14700566B32 /* SignUpController.m */; };
 		A4D9F3101592F14700566B32 /* SignUpController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4D9F30E1592F14700566B32 /* SignUpController.xib */; };
 		A4D9F3131592FB3A00566B32 /* signup_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4D9F3121592FB3A00566B32 /* signup_bg@2x.png */; };
@@ -1073,6 +1076,10 @@
 		A4C6BC49152DF83000681DD7 /* HotelDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelDetailViewHandler.m; sourceTree = "<group>"; };
 		A4C6BC4A152DF83000681DD7 /* RestaurantDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestaurantDetailViewHandler.m; sourceTree = "<group>"; };
 		A4C6BC4B152DF83000681DD7 /* ShoppingDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingDetailViewHandler.m; sourceTree = "<group>"; };
+		A4CD756515A2B69300713F0B /* login_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_bg@2x.png"; sourceTree = "<group>"; };
+		A4CD756715A2D14500713F0B /* FlightController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlightController.h; sourceTree = "<group>"; };
+		A4CD756815A2D14500713F0B /* FlightController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlightController.m; sourceTree = "<group>"; };
+		A4CD756915A2D14600713F0B /* FlightController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlightController.xib; sourceTree = "<group>"; };
 		A4D9F30C1592F14700566B32 /* SignUpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpController.h; sourceTree = "<group>"; };
 		A4D9F30D1592F14700566B32 /* SignUpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpController.m; sourceTree = "<group>"; };
 		A4D9F30E1592F14700566B32 /* SignUpController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpController.xib; sourceTree = "<group>"; };
@@ -1991,6 +1998,9 @@
 				A406A2B21597FFEE00CE938A /* MonthViewController.h */,
 				A406A2B31597FFEE00CE938A /* MonthViewController.m */,
 				A406A2B41597FFEE00CE938A /* MonthViewController.xib */,
+				A4CD756715A2D14500713F0B /* FlightController.h */,
+				A4CD756815A2D14500713F0B /* FlightController.m */,
+				A4CD756915A2D14600713F0B /* FlightController.xib */,
 			);
 			path = RouteDetail;
 			sourceTree = "<group>";
@@ -2548,6 +2558,7 @@
 		A4D9F3111592FB3A00566B32 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				A4CD756515A2B69300713F0B /* login_bg@2x.png */,
 				A4D9F3121592FB3A00566B32 /* signup_bg@2x.png */,
 			);
 			path = login;
@@ -4182,6 +4193,8 @@
 				A48A542315A1959B0012C782 /* menu_left@2x.png in Resources */,
 				A48A542415A1959B0012C782 /* menu_right@2x.png in Resources */,
 				A48A542915A210120012C782 /* PackageCell.xib in Resources */,
+				A4CD756615A2B69300713F0B /* login_bg@2x.png in Resources */,
+				A4CD756B15A2D14600713F0B /* FlightController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4484,6 +4497,7 @@
 				A49B79561599B47F00F3A926 /* OrderCell.m in Sources */,
 				A49B795F1599BC7D00F3A926 /* OrderListController.m in Sources */,
 				A48A542815A210120012C782 /* PackageCell.m in Sources */,
+				A4CD756A15A2D14600713F0B /* FlightController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
