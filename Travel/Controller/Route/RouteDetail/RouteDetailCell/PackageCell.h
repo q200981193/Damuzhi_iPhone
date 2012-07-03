@@ -9,9 +9,20 @@
 #import "PPTableViewCell.h"
 #import "TouristRoute.pb.h"
 
+@protocol PackageCellDelegate <NSObject>
+
+@optional
+- (void)didClickFlight:(int)packageId;
+- (void)didClickAccommodation:(int)hotelId;
+
+@end
+
 @interface PackageCell : PPTableViewCell
 
 - (void)setCellData:(TravelPackage *)package;
 
+@property (assign, nonatomic) id<PackageCellDelegate> aDelegate;
 @property (retain, nonatomic) IBOutlet UIButton *flightButton;
+
+
 @end

@@ -9,6 +9,7 @@
 #import "PPTableViewController.h"
 #import "TouristRoute.pb.h"
 #import "RelatedPlaceCell.h"
+#import "PackageCell.h"
 
 @protocol RouteIntroductionControllerDelegate <NSObject>
 
@@ -17,7 +18,7 @@
 
 @end
 
-@interface RouteIntroductionController : PPTableViewController <RelatedPlaceCellDelegate>
+@interface RouteIntroductionController : PPTableViewController <RelatedPlaceCellDelegate, PackageCellDelegate>
 
 - (id)initWithRoute:(TouristRoute *)route routeType:(int)routeType;
 
