@@ -11,6 +11,7 @@
 #import "UserManager.h"
 #import "PPNetworkRequest.h"
 #import "UIImageUtil.h"
+#import "OrderManagerController.h"
 
 // add by lst
 #import "StringUtil.h"
@@ -127,9 +128,9 @@
 }
 
 - (IBAction)clickCheckOrdersButton:(id)sender {
-    
-    
-    
+    OrderManagerController *controller = [[OrderManagerController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (IBAction)clickAutoLoginButton:(id)sender {
@@ -171,6 +172,8 @@
         return;
     }
     
+    [self popupMessage:NSLS(@"登陆成功") title:nil];
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 

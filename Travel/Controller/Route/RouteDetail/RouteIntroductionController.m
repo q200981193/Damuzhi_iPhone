@@ -704,7 +704,7 @@
 
 - (void)didClickFlight:(int)packageId
 {
-    [self popupMessage:@"查看航班" title:nil];
+    
 }
 
 - (void)didClickAccommodation:(int)hotelId

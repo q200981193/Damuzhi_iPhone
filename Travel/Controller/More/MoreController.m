@@ -311,16 +311,11 @@
     else if ([title isEqualToString:RECOMMENDED_APP]) {
         [self showRecommendedApps];
     }
-    else if ([title isEqualToString:ORDER_NON_MEMBER]) {
+    else if ([title isEqualToString:ORDER_NON_MEMBER] || [title isEqualToString:ORDER_MANAGER]) {
         [self showOrderManager];
     }
     else if ([title isEqualToString:USER_INFO]) {
         
-    }
-    else if ([title isEqualToString:ORDER_MANAGER]) {
-//        OrderManagerController *controller  = [[OrderManagerController alloc] init];
-//        [self.navigationController pushViewController:controller animated:YES];
-//        [controller release];
     }
     else if ([title isEqualToString:MY_FAVORITE]) {
         [self showFavorite];
@@ -373,9 +368,7 @@
 
 - (void)clickLogout:(id)sender
 {
-    [[UserService defaultService] logout:[[AppManager defaultManager] loginId] token:[[AppManager defaultManager] token]];
-    
-    
+    [[UserService defaultService] logout];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

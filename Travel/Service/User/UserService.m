@@ -123,13 +123,13 @@ static UserService* _defaultUserService = nil;
     });
 }
 
-- (void)logout:(NSString *)loginId 
-         token:(NSString *)token
+- (void)logout
 {
+    NSString *loginId = [[UserManager defaultManager] loginId];
+    NSString *token = [[UserManager defaultManager] token];
     [[UserManager defaultManager] logout];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        CommonNetworkOutput *output = [TravelNetworkRequest logout:loginId token:token];   
         [TravelNetworkRequest logout:loginId token:token];   
     });
 }
