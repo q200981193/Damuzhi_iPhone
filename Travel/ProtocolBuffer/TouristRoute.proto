@@ -30,13 +30,14 @@ message TouristRoute {
 
   // 路线详情
   optional string customerServiceTelephone = 20;	// 客服电话
-  repeated string detailImages = 21;                // 线路详情中滑动图片的绝对URL地址
-  optional string characteristic =  22;       		// 线路特色
-  repeated DailySchedule dailySchedules = 23;		// 线路行程安排，跟团游特有字段
-  repeated TravelPackage packages= 24;              // 线路套餐，自由行特有字段
-  repeated Booking bookings = 25;                   // 线路预订情况
-  optional string reference = 26;                   // 线路参考行程，返回html的绝对url
-  repeated PlaceTour relatedplaces = 27;            // 线路相关景点
+  repeated string detailImages = 25;                // 线路详情中滑动图片的绝对URL地址
+  optional string characteristic =  30;       		// 线路特色
+  repeated DailySchedule dailySchedules = 33;		// 线路行程安排，跟团游特有字段
+  repeated TravelPackage packages= 36;              // 线路套餐，自由行特有字段
+  optional string bookingNote = 40;                 // 预订备注：如“需提前10天预订”
+  repeated Booking bookings = 41;                   // 线路预订情况
+  optional string reference = 45;                   // 线路参考行程，返回html的绝对url
+  repeated PlaceTour relatedplaces = 48;            // 线路相关景点
 
   optional string fee = 50;                         // 线路费用说明，返回html的绝对url
   optional string bookingNotice = 51;               // 线路预订须知，返回html的绝对url
@@ -54,10 +55,12 @@ message DailySchedule {
 
 message TravelPackage {
   required int32 packageId = 1;                 // 套餐编号
-  optional string price = 2;                    // 套餐价格
-  optional Flight departFlight = 3;             // 出发航班
-  optional Flight returnFlight = 4;             // 回程航班
-  repeated Accommodation accommodations = 5;	// 入住
+  optional string name = 2;                     // 套餐名称：如“套餐1”
+  optional string note = 3;                     // 套餐备注：如“(机票+酒店)”
+  optional string price = 5;                    // 套餐价格：如“4800元/人”
+  optional Flight departFlight = 10;            // 出发航班
+  optional Flight returnFlight = 11;            // 回程航班
+  repeated Accommodation accommodations = 15;	// 入住
 }
 
 message Booking {
