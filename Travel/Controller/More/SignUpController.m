@@ -107,10 +107,12 @@
     
     if (_password.length < 6) {
         [self popupMessage:NSLS(@"您输入的密码长度太短") title:nil];
+        return;
     }
     
     if (_password.length > 16) {
         [self popupMessage:NSLS(@"您输入的密码长度太长") title:nil];
+        return;
     }
     
     if (![_password isEqualToString:comfirmPassword]) {

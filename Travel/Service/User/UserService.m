@@ -159,9 +159,14 @@ static UserService* _defaultUserService = nil;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest verificate:loginId telephone:telephone];
+        
+        NSDictionary* jsonDict = [output.textData JSONValue];
+        int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+        NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(verificationDidSend:)]) {
-                [delegate verificationDidSend:output.resultCode];
+            if ([delegate respondsToSelector:@selector(verificationDidSend:result:resultInfo:)]) {
+                [delegate verificationDidSend:output.resultCode result:result resultInfo:resultInfo];
             }
         });
     });
@@ -173,9 +178,14 @@ static UserService* _defaultUserService = nil;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CommonNetworkOutput *output = [TravelNetworkRequest verificate:loginId code:code];   
+        
+        NSDictionary* jsonDict = [output.textData JSONValue];
+        int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+        NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(verificationDidFinish:)]) {
-                [delegate verificationDidFinish:output.resultCode];
+                [delegate verificationDidFinish:output.resultCode result:result resultInfo:resultInfo];
             }
         });
     });

@@ -17,8 +17,8 @@
 - (void)submitFeekbackDidFinish:(int)resultCode;
 
 - (void)signUpDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
-- (void)verificationDidSend:(int)resultCode;
-- (void)verificationDidFinish:(int)resultCode;
+- (void)verificationDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+- (void)verificationDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)retrievePasswordDidSend:(int)resultCode;
 
