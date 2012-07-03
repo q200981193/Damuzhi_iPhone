@@ -1915,8 +1915,8 @@
 			children = (
 				A455F8531585859700CA5743 /* select_bg_line@2x.png */,
 				A455F8511585842500CA5743 /* select_bg_zy1@2x.png */,
-				A455F8361583740B00CA5743 /* select_icon1@2x.png */,
 				A455F8371583740B00CA5743 /* select_icon2@2x.png */,
+				A455F8361583740B00CA5743 /* select_icon1@2x.png */,
 				A455F8381583740B00CA5743 /* select_icon3@2x.png */,
 				A455F8291583623600CA5743 /* line_star@2x.png */,
 				A455F82A1583623600CA5743 /* line_star2@2x.png */,

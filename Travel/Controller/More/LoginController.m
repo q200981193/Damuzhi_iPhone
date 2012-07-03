@@ -12,10 +12,8 @@
 #import "PPNetworkRequest.h"
 #import "UIImageUtil.h"
 
-// add by lst
 #import "StringUtil.h"
-//#define TAG_TEXT_FIELD_LOGIN_ID 19
-//#define TAG_TEXT_FIELD_PASSWORD 20
+#import "FlightController.h"
 
 @interface LoginController ()
 @property (copy, nonatomic) NSString *loginId;
@@ -124,9 +122,21 @@
     
 }
 
+
+
+
 - (IBAction)clickCheckOrdersButton:(id)sender {
+//
+//    
+//    
+    FlightController *controller = [[FlightController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+    
     
 }
+
+
 
 - (IBAction)clickAutoLoginButton:(id)sender {
     UIButton *button = (UIButton *)sender;
