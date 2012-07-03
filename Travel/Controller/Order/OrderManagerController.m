@@ -11,6 +11,9 @@
 #import "TravelNetworkConstants.h"
 #import "OrderListController.h"
 #import "UIUtils.h"
+#import "UserManager.h"
+#import "LoginController.h"
+#import "AppManager.h"
 
 @interface OrderManagerController ()
 
@@ -31,6 +34,7 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"订单管理";
     [self setBackgroundImageName:@"all_page_bg2.jpg"];
 
     [super viewDidLoad];
@@ -40,10 +44,17 @@
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
-//    
-//    [self setNavigationRightButton:NSLS(@"提交") 
-//                         imageName:@"topmenu_btn_right.png" 
-//                            action:@selector(clickSubmit:)];
+    
+    if ([[UserManager defaultManager] isLogin]) {
+        [self setNavigationRightButton:NSLS(@"退出登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogout:)];
+        
+    }else {
+        [self setNavigationRightButton:NSLS(@"会员登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogin:)];
+    }
 
     self.dataList = [NSArray arrayWithObjects:NSLS(@"跟团游订单管理"), NSLS(@"自由行订单管理"), NSLS(@"自定制订单管理"),nil];
     self.orderTypeList = [NSArray arrayWithObjects:[NSNumber numberWithInt:OBJECT_LIST_PACKAGE_TOUR_ORDER], [NSNumber numberWithInt:OBJECT_LIST_UNPACKAGE_TOUR_ORDER], [NSNumber numberWithInt:OBJECT_LIST_SELF_GUIDE_TOUR_ORDER], nil];
@@ -82,6 +93,8 @@
     }
     
 	cell.textLabel.text = [dataList objectAtIndex:indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.textLabel.textColor = [UIColor blackColor];
     
     return cell;
 }
@@ -89,7 +102,7 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 42;
+    return 43;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -138,6 +151,17 @@
 {
     NSString *telephone = [CUSTOMER_SERVICE_TELEPHONE stringByReplacingOccurrencesOfString:@"-" withString:@""];
     [UIUtils makeCall:telephone];
+}
+
+- (void)clickLogout:(id)sender
+{
+    [[UserService defaultService] logout:[[AppManager defaultManager] loginId] token:[[AppManager defaultManager] token]];
+}
+
+- (void)clickLogin:(id)sender
+{
+    LoginController *controller = [[[LoginController alloc] init] autorelease];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

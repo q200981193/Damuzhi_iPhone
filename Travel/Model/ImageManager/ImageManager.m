@@ -257,4 +257,9 @@ static ImageManager *_defaultManager = nil;
     return [UIImage strectchableImageName:@"fk_bg2.png" leftCapWidth:(21)];
 }
 
+- (UIImage *)orderTel
+{
+    return [UIImage imageNamed:@"order_tel.png"];
+}
+
 @end

@@ -150,7 +150,7 @@
     
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
     
-    _placeListController.alertViewType = ALERT_TYPE_WITHOUT_NEVER_REMIND_BUTTON;
+    _placeListController.isNearby = YES;
     
 #ifdef TEST_FOR_SIMULATE__LOCATION
     self.testLocation = [[[CLLocation alloc] initWithLatitude:0.0 longitude:0.0] autorelease];

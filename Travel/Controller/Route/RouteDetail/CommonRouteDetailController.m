@@ -22,9 +22,11 @@
 
 @property (retain, nonatomic) RouteIntroductionController *introductionController;
 @property (retain, nonatomic) CommonWebController *feeController;
-
 @property (retain, nonatomic) CommonWebController *bookingPolicyController;
-@property (retain, nonatomic) CommonWebController *userFeekbackController;
+@property (retain, nonatomic) RouteFeekbackController *userFeekbackController;
+
+@property (retain, nonatomic) UIButton *currentSelectedButton;
+
 @end
 
 @implementation CommonRouteDetailController
@@ -44,12 +46,14 @@
 @synthesize userFeekbackButton = _userFeekbackButton;
 @synthesize buttonsHolderView = _buttonsHolderView;
 @synthesize contentScrollView = _contentScrollView;
+@synthesize currentSelectedButton = _currentSelectedButton;
 
 
 - (void)dealloc {
     [_route release];
     [_introductionController release];
     [_feeController release];
+    [_userFeekbackController release];
     
     [_introductionButton release];
     [_costDescriptionButton release];
@@ -58,6 +62,8 @@
     
     [_buttonsHolderView release];
     [_contentScrollView release];
+    [_currentSelectedButton release];
+    
     [super dealloc];
 }
 
@@ -73,9 +79,22 @@
 
 - (void)viewDidLoad
 {
+    self.title = @"路线详情";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // Set navigation bar buttons
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
+    [self setNavigationRightButton:NSLS(@"咨询") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickConsult:)];
+    
     self.buttonsHolderView.backgroundColor = [UIColor colorWithPatternImage:[[ImageManager defaultManager] lineNavBgImage]];
+    
+    self.currentSelectedButton = self.introductionButton;
+    self.introductionButton.selected = YES;
     
     [[RouteService defaultService] findRouteWithRouteId:_routeId viewController:self];
 }
@@ -93,7 +112,19 @@
     // e.g. self.myOutlet = nil;
 }
 
+
+- (void)updateSelectedButton:(UIButton *)button
+{
+    self.currentSelectedButton.selected = NO;
+    self.currentSelectedButton = button;
+    self.currentSelectedButton.selected = YES;
+}
+
+
 - (IBAction)clickIntroductionButton:(id)sender {
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
     if (_introductionController == nil) {
         self.introductionController = [[[RouteIntroductionController alloc] initWithRoute:_route routeType:_routeType] autorelease];
         _introductionController.aDelegate = self;
@@ -105,6 +136,9 @@
 
 
 - (IBAction)clickCostDecriptionButton:(id)sender {
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
     if (_feeController == nil) {
         self.feeController = [[[CommonWebController alloc] initWithWebUrl:_route.fee] autorelease];
     }
@@ -115,6 +149,9 @@
 
 
 - (IBAction)clickBookingPolicyButton:(id)sender {
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
     if (_bookingPolicyController == nil) {
         self.bookingPolicyController = [[[CommonWebController alloc] initWithWebUrl:_route.bookingNotice] autorelease];
     }
@@ -124,17 +161,17 @@
 }
 
 
-
-
 - (IBAction)clickUserFeekbackButton:(id)sender {
-    RouteFeekbackController *controller = [[RouteFeekbackController alloc] initWithRouteId:_routeId];
-[controller showInView:self.contentScrollView];   
-//    [self.navigationController pushViewController:controller animated:YES];
-//    [controller release];
-       
+    UIButton *button  = (UIButton *)sender;
+    [self updateSelectedButton:button];
+    
+    if (_userFeekbackController == nil) {
+        self.userFeekbackController = [[[RouteFeekbackController alloc] initWithRouteId:_routeId] autorelease];
+
+    }
+
+    [_userFeekbackController showInView:self.contentScrollView];   
 }
-
-
 
 - (void)findRequestDone:(int)result route:(TouristRoute *)route
 {
@@ -145,16 +182,18 @@
     
     self.route = route;
     
-    [self clickIntroductionButton:nil];
-
+    [self clickIntroductionButton:_introductionButton];
 }
 
 - (void)didClickBookButton
 {
     PlaceOrderController *controller = [[[PlaceOrderController alloc] initWithRoute:_route] autorelease];
     [self.navigationController pushViewController:controller animated:YES];
-    
-    
+}
+
+- (void)clickConsult:(id)sender
+{
+    [self popupMessage:NSLS(@"拨打电话") title:nil];
 }
 
 @end

@@ -18,6 +18,10 @@
 #import "MobClickUtils.h"
 #import "UserManager.h"
 #import "LoginController.h"
+#import "OrderManagerController.h"
+#import "FavoriteController.h"
+#import "ShareToSinaController.h"
+#import "ShareToQQController.h"
 
 @interface MoreController ()
 
@@ -45,10 +49,18 @@
 #define PRAISE              NSLS(@"给我一个好评吧")
 #define SHOW_IMAGE          NSLS(@"列表中显示图片")
 
+#define ORDER_NON_MEMBER    NSLS(@"非会员订单查询")
+#define USER_INFO           NSLS(@"个人资料")
+#define ORDER_MANAGER       NSLS(@"订单管理")
+#define MY_FAVORITE         NSLS(@"我的收藏")
+#define SHARE               NSLS(@"推荐给好友")
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
 
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") 
@@ -56,35 +68,7 @@
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
     
-
-    
-    
-    if ([[UserManager defaultManager] isLogin]) {
-        [self setNavigationRightButton:NSLS(@"退出登陆") 
-                             imageName:@"topmenu_btn2.png"
-                                action:@selector(clickLogout:)];
-    }else {
-
-        [self setNavigationRightButton:NSLS(@"会员登陆") 
-                             imageName:@"topmenu_btn2.png"
-                                action:@selector(clickLogin:)];
-
-    }
-    
-    int kShowPraise = [MobClickUtils getIntValueByKey:@"kShowPraise" defaultValue:0];
-    
-    int i = 0;
-    self.dataDictionary = [[[NSMutableDictionary alloc] init] autorelease];
-    [dataDictionary setObject:CITIES forKey:[NSNumber numberWithInt:i++]];
-    [dataDictionary setObject:HISTORY forKey:[NSNumber numberWithInt:i++]];
-    [dataDictionary setObject:FEEDBACK forKey:[NSNumber numberWithInt:i++]];
-    [dataDictionary setObject:VERSION forKey:[NSNumber numberWithInt:i++]];
-    [dataDictionary setObject:ABOUT forKey:[NSNumber numberWithInt:i++]];
-    if (kShowPraise == 1) {
-        [dataDictionary setObject:PRAISE forKey:[NSNumber numberWithInt:i++]];
-    }
-    [dataDictionary setObject:SHOW_IMAGE forKey:[NSNumber numberWithInt:i++]];
-    [dataDictionary setObject:RECOMMENDED_APP forKey:[NSNumber numberWithInt:i++]];
+    [self updateDataSource];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
     
@@ -94,6 +78,47 @@
     self.showImageSwitch = aSwitch;
     [aSwitch release];
     showImageSwitch.on = [AppUtils isShowImage];
+}
+
+- (void)updateDataSource
+{
+    
+    int kShowPraise = [MobClickUtils getIntValueByKey:@"kShowPraise" defaultValue:0];
+    
+    int i = 0;
+    self.dataDictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    [dataDictionary setObject:CITIES forKey:[NSNumber numberWithInt:i++]];
+    
+    if ([[UserManager defaultManager] isLogin]) {
+        [self setNavigationRightButton:NSLS(@"退出登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogout:)];
+        
+        [dataDictionary setObject:USER_INFO forKey:[NSNumber numberWithInt:i++]];
+        [dataDictionary setObject:ORDER_MANAGER forKey:[NSNumber numberWithInt:i++]];
+        
+    }else {
+        [self setNavigationRightButton:NSLS(@"会员登陆") 
+                             imageName:@"topmenu_btn2.png"
+                                action:@selector(clickLogin:)];
+        
+        [dataDictionary setObject:ORDER_NON_MEMBER forKey:[NSNumber numberWithInt:i++]];
+    }
+    
+    [dataDictionary setObject:HISTORY forKey:[NSNumber numberWithInt:i++]];
+    
+    [dataDictionary setObject:MY_FAVORITE forKey:[NSNumber numberWithInt:i++]];
+    
+    [dataDictionary setObject:FEEDBACK forKey:[NSNumber numberWithInt:i++]];
+    [dataDictionary setObject:VERSION forKey:[NSNumber numberWithInt:i++]];
+    [dataDictionary setObject:ABOUT forKey:[NSNumber numberWithInt:i++]];
+    [dataDictionary setObject:SHARE forKey:[NSNumber numberWithInt:i++]];
+    
+    if (kShowPraise == 1) {
+        [dataDictionary setObject:PRAISE forKey:[NSNumber numberWithInt:i++]];
+    }
+    [dataDictionary setObject:SHOW_IMAGE forKey:[NSNumber numberWithInt:i++]];
+    [dataDictionary setObject:RECOMMENDED_APP forKey:[NSNumber numberWithInt:i++]];
 }
 
 - (void)viewDidUnload
@@ -286,7 +311,25 @@
     else if ([title isEqualToString:RECOMMENDED_APP]) {
         [self showRecommendedApps];
     }
-    else {
+    else if ([title isEqualToString:ORDER_NON_MEMBER]) {
+        [self showOrderManager];
+    }
+    else if ([title isEqualToString:USER_INFO]) {
+        
+    }
+    else if ([title isEqualToString:ORDER_MANAGER]) {
+//        OrderManagerController *controller  = [[OrderManagerController alloc] init];
+//        [self.navigationController pushViewController:controller animated:YES];
+//        [controller release];
+    }
+    else if ([title isEqualToString:MY_FAVORITE]) {
+        [self showFavorite];
+    }
+    else if ([title isEqualToString:SHARE]) {
+        [self showShare];
+    }
+    else
+    {
     }
 }
 
@@ -307,9 +350,62 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)showOrderManager
+{
+    OrderManagerController *controller  = [[OrderManagerController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+- (void)showFavorite
+{
+    FavoriteController *fc = [[FavoriteController alloc] init];
+    [self.navigationController pushViewController:fc animated:YES];
+    [fc release];
+}
+
+- (void)showShare
+{
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:NSLS(@"取消") destructiveButtonTitle:NSLS(@"通过短信") otherButtonTitles:NSLS(@"分享到新浪微博"), NSLS(@"分享到腾讯微博"), nil];
+    [shareSheet showInView:self.view];
+    [shareSheet release];
+}
+
 - (void)clickLogout:(id)sender
 {
-    [[UserManager defaultManager] logout];
+    [[UserService defaultService] logout:[[AppManager defaultManager] loginId] token:[[AppManager defaultManager] token]];
+    
+    
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+        {
+            [self sendSms:nil body:[NSString stringWithFormat:NSLS(@"kShareContent"),[MobClick getConfigParams:@"download_website"]]];
+            break;
+        }
+        case 1:
+        {
+            ShareToSinaController *sc = [[ShareToSinaController alloc] init];
+            [self.navigationController pushViewController:sc animated:YES];
+            [sc release];
+            break;
+        }
+        case 2:
+        {
+            ShareToQQController *shareToQQ = [[ShareToQQController alloc] init];
+            [self.navigationController pushViewController:shareToQQ animated:YES];
+            [shareToQQ release];
+            break;
+        }
+        case 3:
+            break;
+        default:
+            break;
+    }
+}
+
 
 @end

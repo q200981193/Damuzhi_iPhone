@@ -48,7 +48,7 @@
 
 + (CGFloat)getCellHeight
 {
-    return 298;
+    return 248;
 }
 
 + (NSString *)getCellIdentifier
