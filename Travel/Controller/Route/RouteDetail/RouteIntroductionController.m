@@ -469,11 +469,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == [self sectionCount] - 1) {
-        return HEIGHT_FOLLOW_VIEW;
-    }
+//    if (section == [self sectionCount] - 1) {
+//        return HEIGHT_FOLLOW_VIEW;
+//    }
     
-    return HEIGHT_FOOTER_VIEW;
+    return HEIGHT_FOOTER_VIEW * [[_sectionStat objectAtIndex:section] boolValue];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -505,14 +505,14 @@
     
 //    PPDebug(@"section count: %d", [self sectionCount]);
 //    PPDebug(@"section = %d", section);
-    if (section == [self sectionCount] - 1) {
-        view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOLLOW_VIEW);
-        UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(self.dataTableView.frame.size.width/2 - WIDTH_FOLLOW_BUTTON/2, 53/2 - HEIGHT_FOLLOW_BUTTOn/2, WIDTH_FOLLOW_BUTTON, HEIGHT_FOLLOW_BUTTOn)] autorelease];
-        [button addTarget:self action:@selector(clickFollowRoute:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:NSLS(@"关注路线") forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateNormal];
-        [view addSubview:button];
-    }
+//    if (section == [self sectionCount] - 1) {
+//        view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOLLOW_VIEW);
+//        UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(self.dataTableView.frame.size.width/2 - WIDTH_FOLLOW_BUTTON/2, 53/2 - HEIGHT_FOLLOW_BUTTOn/2, WIDTH_FOLLOW_BUTTON, HEIGHT_FOLLOW_BUTTOn)] autorelease];
+//        [button addTarget:self action:@selector(clickFollowRoute:) forControlEvents:UIControlEventTouchUpInside];
+//        [button setTitle:NSLS(@"关注路线") forState:UIControlStateNormal];
+//        [button setBackgroundImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateNormal];
+//        [view addSubview:button];
+//    }
 
     view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOOTER_VIEW);
     
@@ -573,7 +573,7 @@
     [self popupMessage:@"待实现" title:nil];
 }
 
-- (void)clickFollowRoute:(id)sender
+- (IBAction)clickFollowRoute:(id)sender
 {
     [self popupMessage:@"待实现" title:nil]; 
 }
