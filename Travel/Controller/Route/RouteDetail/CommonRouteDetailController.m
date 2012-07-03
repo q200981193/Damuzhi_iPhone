@@ -72,7 +72,6 @@
     if (self = [super init]) {
         self.routeId = routeId;
         self.routeType = routeType;
-        
     }
     
     return self;

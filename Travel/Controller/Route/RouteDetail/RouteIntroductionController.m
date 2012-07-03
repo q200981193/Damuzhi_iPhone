@@ -142,10 +142,11 @@
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
         }else {
             for (TravelPackage * package in _route.packagesList) {
-//                [dic setObject:package.name forKey:[NSNumber numberWithInt:row++]];
+                NSString *packageIdentifier = [self packageIdentifier:package.name section:row];
+                [dic setObject:packageIdentifier forKey:[NSNumber numberWithInt:row++]];
             }
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
-            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
+//            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
         }
         
         [dic setObject:SECTION_TITLE_RELATED_PLACE forKey:[NSNumber numberWithInt:row++]];
@@ -288,10 +289,10 @@
     
     NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:section]];
     
-    if (title == SECTION_TITLE_RELATED_PLACE) {
+    if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
         return [_route.relatedplacesList count]; 
     }
-    else if (title == SECTION_TITLE_DAILY_SCHEDULE) {
+    else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
         return [_route.dailySchedulesList count];
     }else {
         return 1;
@@ -318,16 +319,26 @@
     
     UITableViewCell *cell = nil;
 
-    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
-        if (title == SECTION_TITLE_CHARACTICS) {
-            cell = [self cellForCharacticsWithIndex:indexPath tableView:tableView];
-        }else if (title == SECTION_TITLE_DAILY_SCHEDULE) {
-            cell = [self cellForDailyScheduleWithIndex:indexPath tableView:tableView];
-        }else if (title == SECTION_TITLE_BOOKING) {
-            cell = [self cellForBookingWithIndex:indexPath tableView:tableView];
-        }else if (title == SECTION_TITLE_RELATED_PLACE) {
-            cell = [self cellForRelatedPlaceWithIndex:indexPath tableView:tableView];
+    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    PPDebug(@"title: %@", title);
+
+    if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
+        cell = [self cellForCharacticsWithIndex:indexPath tableView:tableView];
+    }else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
+        cell = [self cellForDailyScheduleWithIndex:indexPath tableView:tableView];
+    }else if ([title isEqualToString:SECTION_TITLE_BOOKING]) {
+        cell = [self cellForBookingWithIndex:indexPath tableView:tableView];
+    }else if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
+        cell = [self cellForRelatedPlaceWithIndex:indexPath tableView:tableView];
+//    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
+//        
+    }else{
+        for (TravelPackage *package in _route.packagesList) {
+            NSString *packageIdentifier = [self packageIdentifier:package.name section:indexPath.section];
+            PPDebug(@"packageIdentifier: %@", packageIdentifier);
+            if ([title isEqualToString:packageIdentifier]) {
+                cell = [self cellForPackageWithIndex:indexPath tableView:tableView];
+            }
         }
     }
     
@@ -430,6 +441,29 @@
     return [RelatedPlaceCell getCellHeight];
 }
 
+- (UITableViewCell *)cellForPackageWithIndex:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[PackageCell getCellIdentifier]];
+    
+    if (cell == nil) {
+        cell = [PackageCell createCell:self];				            
+        
+    }
+    
+    PackageCell *packageCell = (PackageCell *)cell;
+    
+    [packageCell setCellData:[_route.packagesList objectAtIndex:indexPath.row]];
+    
+    packageCell.aDelegate = self;
+    
+    return cell;
+}
+
+- (CGFloat)cellHeightForPackageWithIndex:(NSIndexPath *)indexPath
+{
+    return [PackageCell getCellHeight];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     int sectionCount = [self sectionCount];
@@ -444,18 +478,26 @@
     }
     
     CGFloat height = 0;
-    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
-        if (title == SECTION_TITLE_CHARACTICS) {
-            height = [self cellHeightForCharacticsWithIndex:indexPath];
-        }else if (title == SECTION_TITLE_DAILY_SCHEDULE) {
-            height = [self cellHeightForDailyScheduleWithIndex:indexPath];
-        }else if (title == SECTION_TITLE_BOOKING) {
-            height = [self cellHeightForBookingWithIndex:indexPath];
-        }else if (title == SECTION_TITLE_RELATED_PLACE) {
-            height = [self cellHeightForRelatedPlaceWithIndex:indexPath];
-        }
+    
+    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
+        height = [self cellHeightForCharacticsWithIndex:indexPath];
+    }else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
+        height = [self cellHeightForDailyScheduleWithIndex:indexPath];
+    }else if ([title isEqualToString:SECTION_TITLE_BOOKING]) {
+        height = [self cellHeightForBookingWithIndex:indexPath];
+    }else if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
+        height = [self cellHeightForRelatedPlaceWithIndex:indexPath];
+//    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
+        
+    }else{
+        for (TravelPackage *package in _route.packagesList) {
+            NSString *packageIdentifier = [self packageIdentifier:package.name section:indexPath.section];
+            if ([title isEqualToString:packageIdentifier]) {
+                height = [self cellHeightForPackageWithIndex:indexPath];
+            }
     }
+}
         
     return height;
 }
@@ -560,6 +602,12 @@
     return headerTitle;
 }
 
+- (NSString *)packageIdentifier:(NSString *)packageName 
+                        section:(NSInteger)section
+{
+    return [NSString stringWithFormat:@"%@%d", packageName, section];
+}
+
 
 - (void)clickSectionHeaderView:(id)sender
 {
@@ -576,6 +624,15 @@
 - (IBAction)clickFollowRoute:(id)sender
 {
     [self popupMessage:@"待实现" title:nil]; 
+}
+
+- (void)didClickFlight:(int)packageId
+{
+    [self popupMessage:@"查看航班" title:nil];
+}
+- (void)didClickAccommodation:(int)hotelId
+{
+    [self popupMessage:@"查看住宿" title:nil];
 }
 
 @end

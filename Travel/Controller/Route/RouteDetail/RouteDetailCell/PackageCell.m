@@ -19,12 +19,21 @@
 
 @interface PackageCell ()
 
+@property (retain, nonatomic) TravelPackage *package;
+
 @end
 
 @implementation PackageCell
 
-
+@synthesize aDelegate = _aDelegate;
+@synthesize package = _package;
 @synthesize flightButton;
+
+- (void)dealloc {
+    [flightButton release];
+    [_package release];
+    [super dealloc];
+}
 
 + (CGFloat)getCellHeight
 {
@@ -38,7 +47,11 @@
 
 - (void)setCellData:(TravelPackage *)package
 {
-    NSString *flight = [NSString stringWithFormat:NSLS(@"往：%@%@ 返：%@%@"), package.departFlight.company, package.departFlight.mode];
+    self.package = _package;
+    
+    NSString *flight = [NSString stringWithFormat:NSLS(@"往：%@%@ 返：%@%@"), package.departFlight.company, package.departFlight.flightId, package.returnFlight.company, package.returnFlight.flightId];
+    
+    
     [flightButton setTitle:flight forState:UIControlStateNormal];
     
     CGFloat originX = self.frame.size.width/2 - flightButton.frame.size.width/2;
@@ -91,13 +104,19 @@
 
 - (void)clickAcommodation:(id)sender
 {
+    UIButton *button = (UIButton *)sender;
+    int hotelId = button.tag;
     
+    if ([_aDelegate respondsToSelector:@selector(didClickAccommodation:)]) {
+        [_aDelegate didClickAccommodation:hotelId];
+    }
 }
 
-
-- (void)dealloc {
-    [flightButton release];
-    [super dealloc];
+- (IBAction)clickFilghtButton:(id)sender {
+    if ([_aDelegate respondsToSelector:@selector(didClickFlight:)]) {
+        [_aDelegate didClickFlight:_package.packageId];
+    }
 }
+
 
 @end
