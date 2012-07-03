@@ -16,6 +16,7 @@
 #import "BookingCell.h"
 #import "SlideImageView.h"
 #import "ImageName.h"
+#import "RankView.h"
 
 #define CELL_IDENTIFY_CHARACTICS @"CharacticsCell"
 
@@ -127,6 +128,12 @@
     [slideImageView setImages:_route.detailImagesList];
     [imagesHolderView addSubview:slideImageView];
     
+    if (_routeType != OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
+        RankView *rankView = [self headerRankView];
+        rankView.center = CGPointMake(agencyInfoHolderView.frame.size.width/2, agencyInfoHolderView.frame.size.height/2);
+        [agencyInfoHolderView addSubview:rankView];
+    }
+    
     [self initSectionStat];
 }
 
@@ -201,6 +208,18 @@
             bookButton = [self genBookBttonWithFrame:CGRectMake(origin_x, origin_y, 70, 22)];
             [agencyInfoHolderView addSubview:bookButton];
             
+            break;
+        
+        case OBJECT_LIST_ROUTE_UNPACKAGE_TOUR:
+            origin_x = 250;
+            origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_LABEL/2; 
+            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 40, HEIGHT_PRICE_LABEL)];
+            [agencyInfoHolderView addSubview:priceLabel];
+            
+            origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
+            origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_SUFFIX_LABEL/2 + 1; 
+            priceSuffixLabel = [self genPriceSuffixLabelWithFrame:CGRectMake(origin_x, origin_y, 15, HEIGHT_PRICE_SUFFIX_LABEL)];
+            [agencyInfoHolderView addSubview:priceSuffixLabel];
             break;
             
         default:
@@ -561,6 +580,28 @@
     return view;
 }
 
+- (RankView *)headerRankView
+{
+    RankView *rankView = [[[RankView alloc] initWithGoodImage:[[ImageManager defaultManager] rankGoodImage] 
+                                                    badImage:[[ImageManager defaultManager] rankBadImage]  
+                                                   imageSize:CGSizeMake(11, 16) 
+                                                       space:3 
+                                                    maxCount:3 
+                                                        rank:_route.averageRank] autorelease];
+    rankView.frame = CGRectMake(74, 7, rankView.frame.size.width, rankView.frame.size.height);
+    return rankView;
+}
+
+- (UILabel *)headerNote
+{
+    UILabel *note = [[[UILabel alloc] initWithFrame:CGRectMake(74, 1, 80, 30)] autorelease];
+    note.backgroundColor = [UIColor clearColor];
+    note.textColor = [UIColor colorWithRed:75.0/255.0 green:75.0/255.0 blue:76.0/255.0 alpha:1];
+    note.font = [UIFont systemFontOfSize:11];
+    
+    return note;
+}
+
 - (UIView *)headerViewForSection:(NSInteger)section
 {
     UIView *headerView = [self headerView];
@@ -570,9 +611,46 @@
     label.text = [self titleForSection:section];
     [headerView addSubview:label];
     
-    // 特殊处理
+    //特殊处理
+    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
+        //跟团游
+        
+        if ([label.text isEqualToString:SECTION_TITLE_CHARACTICS]) {
+            RankView * rankView = [self headerRankView];
+            [headerView addSubview:rankView];
+        }
+        
+    } else if (_routeType == OBJECT_LIST_ROUTE_UNPACKAGE_TOUR){
+        //自由行
+        
+        for (TravelPackage * package in _route.packagesList) {
+            PPDebug(@"package.name : %@",package.name);
+            
+            if ([label.text isEqualToString:package.name]) {
+                UILabel *priceLabel = [self genPriceLabelWithFrame:CGRectMake(200, 0, 40, 30)];
+                priceLabel.text = package.price;
+                PPDebug(@"package.price : %@", package.price);
+                
+                [headerView addSubview:priceLabel];
+                
+                CGFloat origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
+                CGFloat origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_SUFFIX_LABEL/2 + 1;
+                UILabel *priceSuffixLabel = [self genPriceSuffixLabelWithFrame:CGRectMake(origin_x, origin_y, 15, 30)];
+                [headerView addSubview:priceSuffixLabel];
+                break;
+            }
+        }
+    }
     
     
+    //出发日期
+    if([label.text isEqualToString:SECTION_TITLE_BOOKING]) {
+        UILabel *noteLabel = [self headerNote];
+        noteLabel.text = [NSString  stringWithFormat:@"(%@)", _route.bookingNote];
+        noteLabel.text = [NSString  stringWithFormat:@"(%@)", @"提前10天"];
+        [headerView addSubview:noteLabel];
+    }
+        
     return headerView;
 }
 
