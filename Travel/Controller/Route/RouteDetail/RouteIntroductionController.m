@@ -510,6 +510,7 @@
         UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(self.dataTableView.frame.size.width/2 - WIDTH_FOLLOW_BUTTON/2, 53/2 - HEIGHT_FOLLOW_BUTTOn/2, WIDTH_FOLLOW_BUTTON, HEIGHT_FOLLOW_BUTTOn)] autorelease];
         [button addTarget:self action:@selector(clickFollowRoute:) forControlEvents:UIControlEventTouchUpInside];
         [button setTitle:NSLS(@"关注路线") forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateNormal];
         [view addSubview:button];
     }
 
