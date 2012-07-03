@@ -27,5 +27,6 @@
 @property (assign, nonatomic) id<PackageCellDelegate> aDelegate;
 @property (retain, nonatomic) IBOutlet UIButton *flightButton;
 
+@property (retain, nonatomic) IBOutlet UILabel *flightLabel;
 
 @end
