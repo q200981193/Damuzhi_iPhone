@@ -13,6 +13,7 @@
 #import "RouteFeekbackController.h"
 #import "PlaceOrderController.h"
 #import "CommonWebController.h"
+#import "CommonPlaceDetailController.h"
 
 @interface CommonRouteDetailController ()
 
@@ -194,6 +195,30 @@
 - (void)clickConsult:(id)sender
 {
     [self popupMessage:NSLS(@"拨打电话") title:nil];
+}
+
+- (void)didSelectedPlace:(int)placeId
+{
+    [[PlaceService defaultService] findPlace:placeId viewController:self];
+}
+
+- (void)findRequestDone:(int)resultCode
+                 result:(int)result 
+             resultInfo:(NSString *)resultInfo
+                  place:(Place *)place
+{
+    if (resultCode != ERROR_SUCCESS) {
+        [self popupMessage:@"网络弱，数据加载失败" title:nil];
+        return;
+    }
+    
+    if (result != 0) {
+        [self popupMessage:resultInfo title:nil];
+        return;
+    }
+    
+    CommonPlaceDetailController *controller = [[[CommonPlaceDetailController alloc] initWithPlace:place] autorelease];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

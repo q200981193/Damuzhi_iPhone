@@ -145,7 +145,7 @@
 #define OBJECT_LIST_CITY_IMAGE                      90
 
 // For object type
-#define OBJECT_TYPE_USER_RIGISTER               1
+#define OBJECT_TYPE_PLACE                       1
 #define OBJECT_TYPE_CITY_BASIC                  2
 #define OBJECT_TYPE_TRAVEL_PREPARATION          3
 #define OBJECT_TYPE_TRAVEL_TRANSPORTATION       4     

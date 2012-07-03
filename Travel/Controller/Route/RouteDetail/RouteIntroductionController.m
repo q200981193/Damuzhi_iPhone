@@ -16,10 +16,9 @@
 #import "BookingCell.h"
 #import "SlideImageView.h"
 #import "ImageName.h"
+#import "PPNetworkRequest.h"
 
 #define CELL_IDENTIFY_CHARACTICS @"CharacticsCell"
-
-//#define SECTION_COUNT 4
 
 #define SECTION_OPEN 1
 #define SECTION_CLOSE 0
@@ -617,23 +616,30 @@
     [self setSection:button.tag Open:!open];
 }
 
-- (void)didSelectedRelatedPlace:(PlaceTour *)placeTour
+- (void)didSelectedRelatedPlace:(int)placeId
 {
-    [self popupMessage:@"待实现" title:nil];
+    if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
+        [_aDelegate didSelectedPlace:placeId];
+    }
 }
 
 - (IBAction)clickFollowRoute:(id)sender
 {
-    [self popupMessage:@"待实现" title:nil]; 
+    [self popupMessage:@"关注路线" title:nil]; 
 }
 
 - (void)didClickFlight:(int)packageId
 {
     [self popupMessage:@"查看航班" title:nil];
 }
+
 - (void)didClickAccommodation:(int)hotelId
 {
-    [self popupMessage:@"查看住宿" title:nil];
+    if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
+        [_aDelegate didSelectedPlace:hotelId];
+    }
 }
+
+
 
 @end
