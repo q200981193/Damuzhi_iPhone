@@ -287,7 +287,7 @@
         return 0;
     }
     
-    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:section]];
+    NSString *title = [self titleForSection:section];
     
     if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
         return [_route.relatedplacesList count]; 
@@ -319,7 +319,7 @@
     
     UITableViewCell *cell = nil;
 
-    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    NSString *title = [self titleForSection:indexPath.section];
     PPDebug(@"title: %@", title);
 
     if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
@@ -483,7 +483,7 @@
     
     CGFloat height = 0;
     
-    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    NSString *title = [self titleForSection:indexPath.section];
     if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
         height = [self cellHeightForCharacticsWithIndex:indexPath];
     }else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
@@ -528,11 +528,8 @@
 }
 
 - (NSString *)titleForSection:(NSInteger)section
-{
-    NSNumber *row = [NSNumber numberWithInt:section];
-    NSString *title = [self.sectionInfo objectForKey:row];
-    
-    return title;
+{    
+    return [self.sectionInfo objectForKey:[NSNumber numberWithInt:section]];
 }
 
 
