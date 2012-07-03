@@ -15,6 +15,7 @@
 
 @optional
 - (void)didClickBookButton;
+- (void)didSelectedPlace:(int)placeId;
 
 @end
 

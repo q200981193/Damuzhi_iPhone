@@ -2020,6 +2020,9 @@ static TravelPackage* defaultTravelPackageInstance = nil;
   if (!self.hasPackageId) {
     return NO;
   }
+  if (!self.hasName) {
+    return NO;
+  }
   if (self.hasDepartFlight) {
     if (!self.departFlight.isInitialized) {
       return NO;
@@ -2752,6 +2755,7 @@ static Booking* defaultBookingInstance = nil;
 @property (retain) NSString* arriveCityName;
 @property (retain) NSString* arriveTime;
 @property (retain) NSString* arriveAirport;
+@property (retain) NSString* note;
 @end
 
 @implementation Flight
@@ -2819,6 +2823,13 @@ static Booking* defaultBookingInstance = nil;
   hasArriveAirport_ = !!value;
 }
 @synthesize arriveAirport;
+- (BOOL) hasNote {
+  return !!hasNote_;
+}
+- (void) setHasNote:(BOOL) value {
+  hasNote_ = !!value;
+}
+@synthesize note;
 - (void) dealloc {
   self.flightId = nil;
   self.company = nil;
@@ -2829,6 +2840,7 @@ static Booking* defaultBookingInstance = nil;
   self.arriveCityName = nil;
   self.arriveTime = nil;
   self.arriveAirport = nil;
+  self.note = nil;
   [super dealloc];
 }
 - (id) init {
@@ -2842,6 +2854,7 @@ static Booking* defaultBookingInstance = nil;
     self.arriveCityName = @"";
     self.arriveTime = @"";
     self.arriveAirport = @"";
+    self.note = @"";
   }
   return self;
 }
@@ -2891,6 +2904,9 @@ static Flight* defaultFlightInstance = nil;
   if (self.hasArriveAirport) {
     [output writeString:9 value:self.arriveAirport];
   }
+  if (self.hasNote) {
+    [output writeString:10 value:self.note];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -2926,6 +2942,9 @@ static Flight* defaultFlightInstance = nil;
   }
   if (self.hasArriveAirport) {
     size += computeStringSize(9, self.arriveAirport);
+  }
+  if (self.hasNote) {
+    size += computeStringSize(10, self.note);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -3029,6 +3048,9 @@ static Flight* defaultFlightInstance = nil;
   if (other.hasArriveAirport) {
     [self setArriveAirport:other.arriveAirport];
   }
+  if (other.hasNote) {
+    [self setNote:other.note];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -3084,6 +3106,10 @@ static Flight* defaultFlightInstance = nil;
       }
       case 74: {
         [self setArriveAirport:[input readString]];
+        break;
+      }
+      case 82: {
+        [self setNote:[input readString]];
         break;
       }
     }
@@ -3231,6 +3257,22 @@ static Flight* defaultFlightInstance = nil;
 - (Flight_Builder*) clearArriveAirport {
   result.hasArriveAirport = NO;
   result.arriveAirport = @"";
+  return self;
+}
+- (BOOL) hasNote {
+  return result.hasNote;
+}
+- (NSString*) note {
+  return result.note;
+}
+- (Flight_Builder*) setNote:(NSString*) value {
+  result.hasNote = YES;
+  result.note = value;
+  return self;
+}
+- (Flight_Builder*) clearNote {
+  result.hasNote = NO;
+  result.note = @"";
   return self;
 }
 @end

@@ -55,7 +55,7 @@ message DailySchedule {
 
 message TravelPackage {
   required int32 packageId = 1;                 // 套餐编号
-  optional string name = 2;                     // 套餐名称：如“套餐1”
+  required string name = 2;                     // 套餐名称：如“套餐1”
   optional string note = 3;                     // 套餐备注：如“(机票+酒店)”
   optional string price = 5;                    // 套餐价格：如“4800元/人”
   optional Flight departFlight = 10;            // 出发航班

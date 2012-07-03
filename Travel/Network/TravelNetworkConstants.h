@@ -82,7 +82,7 @@
 
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"
-#define PARA_TRAVEL_APP_VERSION             @"appVersion"
+#define PARA_TRAVEL_APP_VERSION             @"app_version"
 #define PARA_TRAVEL_APP_DATA_VERSION        @"app_data_version"
 
 #define PARA_TRAVEL_TELEPHONE               @"telephone"
@@ -145,7 +145,7 @@
 #define OBJECT_LIST_CITY_IMAGE                      90
 
 // For object type
-#define OBJECT_TYPE_USER_RIGISTER               1
+#define OBJECT_TYPE_PLACE                       1
 #define OBJECT_TYPE_CITY_BASIC                  2
 #define OBJECT_TYPE_TRAVEL_PREPARATION          3
 #define OBJECT_TYPE_TRAVEL_TRANSPORTATION       4     

@@ -14,10 +14,9 @@
 @property (retain, nonatomic) IBOutlet UITextField *loginIdTextField;
 
 @property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (retain, nonatomic) IBOutlet UIButton *checkOrdersButton;
 
 -(IBAction)textFieldDoneEditing:(id)sender;
-
-@property (retain, nonatomic) IBOutlet UIButton *nonMemberOrderQueryButton;
 
 
 @end

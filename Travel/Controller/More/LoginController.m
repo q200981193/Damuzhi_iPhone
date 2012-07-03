@@ -21,10 +21,10 @@
 @end
 
 @implementation LoginController
-@synthesize nonMemberOrderQueryButton;
 
 @synthesize loginIdTextField;
 @synthesize passwordTextField;
+@synthesize checkOrdersButton;
 
 @synthesize loginId = _loginId;
 @synthesize password = _password;
@@ -38,7 +38,7 @@
     [loginIdTextField release];
     [passwordTextField release];
     
-    [nonMemberOrderQueryButton release];
+    [checkOrdersButton release];
      [super dealloc];
 }
 
@@ -57,7 +57,7 @@
     
     UIImage *buttonImageBackground = [UIImage strectchableImageName:@"line_btn1.png"leftCapWidth:20];
     
-    [nonMemberOrderQueryButton setBackgroundImage:buttonImageBackground forState:UIControlStateNormal];
+    [checkOrdersButton setBackgroundImage:buttonImageBackground forState:UIControlStateNormal];
 
 }
 
@@ -66,7 +66,7 @@
     
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
-    [self setNonMemberOrderQueryButton:nil];
+    [self setCheckOrdersButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -120,6 +120,8 @@
 
 - (IBAction)clickRetrievePasswordButton:(id)sender {
     
+    
+    
 }
 
 
@@ -132,6 +134,8 @@
     FlightController *controller = [[FlightController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
+    
+    
     
     
 }
