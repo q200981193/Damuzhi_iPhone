@@ -81,7 +81,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.    
+    // Do any additional setup after loading the view from its nib. 
+    
+    self.title = @"线路预订";
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png"
+                           action:@selector(clickBack:)];
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
     [self.departDateButton setBackgroundImage:[[ImageManager defaultManager] selectDownImage] forState:UIControlStateNormal];
