@@ -647,6 +647,7 @@
   BOOL hasArriveCityName_:1;
   BOOL hasArriveTime_:1;
   BOOL hasArriveAirport_:1;
+  BOOL hasNote_:1;
   NSString* flightId;
   NSString* company;
   NSString* mode;
@@ -656,6 +657,7 @@
   NSString* arriveCityName;
   NSString* arriveTime;
   NSString* arriveAirport;
+  NSString* note;
 }
 - (BOOL) hasFlightId;
 - (BOOL) hasCompany;
@@ -666,6 +668,7 @@
 - (BOOL) hasArriveCityName;
 - (BOOL) hasArriveTime;
 - (BOOL) hasArriveAirport;
+- (BOOL) hasNote;
 @property (readonly, retain) NSString* flightId;
 @property (readonly, retain) NSString* company;
 @property (readonly, retain) NSString* mode;
@@ -675,6 +678,7 @@
 @property (readonly, retain) NSString* arriveCityName;
 @property (readonly, retain) NSString* arriveTime;
 @property (readonly, retain) NSString* arriveAirport;
+@property (readonly, retain) NSString* note;
 
 + (Flight*) defaultInstance;
 - (Flight*) defaultInstance;
@@ -754,6 +758,11 @@
 - (NSString*) arriveAirport;
 - (Flight_Builder*) setArriveAirport:(NSString*) value;
 - (Flight_Builder*) clearArriveAirport;
+
+- (BOOL) hasNote;
+- (NSString*) note;
+- (Flight_Builder*) setNote:(NSString*) value;
+- (Flight_Builder*) clearNote;
 @end
 
 @interface PlaceTour : PBGeneratedMessage {
