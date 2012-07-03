@@ -13,10 +13,7 @@
 #import "UIImageUtil.h"
 #import "OrderManagerController.h"
 
-// add by lst
 #import "StringUtil.h"
-//#define TAG_TEXT_FIELD_LOGIN_ID 19
-//#define TAG_TEXT_FIELD_PASSWORD 20
 
 @interface LoginController ()
 @property (copy, nonatomic) NSString *loginId;
@@ -127,11 +124,16 @@
     
 }
 
+
+
+
 - (IBAction)clickCheckOrdersButton:(id)sender {
     OrderManagerController *controller = [[OrderManagerController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
+
+
 
 - (IBAction)clickAutoLoginButton:(id)sender {
     UIButton *button = (UIButton *)sender;

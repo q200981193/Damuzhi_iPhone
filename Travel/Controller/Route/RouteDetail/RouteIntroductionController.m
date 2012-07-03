@@ -704,7 +704,9 @@
 
 - (void)didClickFlight:(int)packageId
 {
-    
+    if ([_aDelegate respondsToSelector:@selector(didClickFlight:)]) {
+        [_aDelegate didClickFlight:packageId];
+    }
 }
 
 - (void)didClickAccommodation:(int)hotelId

@@ -11,6 +11,25 @@
 
 @interface FlightController : PPTableViewController
 
-- (id)initWithDepartFlight:(Flight *)departFlight returnFlight:(Flight *)returnFlight;
+@property (retain, nonatomic) IBOutlet UILabel *departFlightTextField;
+
+@property (retain, nonatomic) IBOutlet UILabel *departFlightLaunchInfoTextField;
+
+@property (retain, nonatomic) IBOutlet UILabel *departFlightDescendInfoTextField;
+
+@property (retain, nonatomic) IBOutlet UILabel *departFlightNumberTextField;
+
+
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightTextField;
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightLaunchInfoTextField;
+
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightDescendInfoTextField;
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightNumberTextField;
+
+
 
 @end
