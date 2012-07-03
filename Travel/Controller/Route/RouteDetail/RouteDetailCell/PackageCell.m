@@ -9,7 +9,7 @@
 #import "PackageCell.h"
 #import "LocaleUtils.h"
 
-#define EDGE 5
+
 
 #define FONT_DURATION_LABEL [UIFont systemFontOfSize:13]
 #define TEXT_COLOR_DURATION_LABEL [UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]
@@ -19,16 +19,20 @@
 
 @interface PackageCell ()
 
+@property (retain, nonatomic) TravelPackage *package;
+
 @end
 
 @implementation PackageCell
 
-
+@synthesize aDelegate = _aDelegate;
+@synthesize package = _package;
 @synthesize flightButton;
 
-+ (CGFloat)getCellHeight
-{
-    return 78;
+- (void)dealloc {
+    [flightButton release];
+    [_package release];
+    [super dealloc];
 }
 
 + (NSString *)getCellIdentifier
@@ -38,13 +42,17 @@
 
 - (void)setCellData:(TravelPackage *)package
 {
-    NSString *flight = [NSString stringWithFormat:NSLS(@"往：%@%@ 返：%@%@"), package.departFlight.company, package.departFlight.mode];
+    self.package = _package;
+    
+    NSString *flight = [NSString stringWithFormat:NSLS(@"往：%@%@ 返：%@%@"), package.departFlight.company, package.departFlight.flightId, package.returnFlight.company, package.returnFlight.flightId];
+    
+    
     [flightButton setTitle:flight forState:UIControlStateNormal];
     
     CGFloat originX = self.frame.size.width/2 - flightButton.frame.size.width/2;
     CGFloat originY = flightButton.frame.origin.y + flightButton.frame.size.height + EDGE;    
     CGFloat width = flightButton.frame.size.width;
-    CGFloat height = 42;
+    CGFloat height = HEIGHT_ACCOMODATION_VIEW;
     
     CGRect frame = CGRectMake(originX, originY, width, height);
     for (Accommodation *accommodation in package.accommodationsList) {
@@ -91,13 +99,19 @@
 
 - (void)clickAcommodation:(id)sender
 {
+    UIButton *button = (UIButton *)sender;
+    int hotelId = button.tag;
     
+    if ([_aDelegate respondsToSelector:@selector(didClickAccommodation:)]) {
+        [_aDelegate didClickAccommodation:hotelId];
+    }
 }
 
-
-- (void)dealloc {
-    [flightButton release];
-    [super dealloc];
+- (IBAction)clickFilghtButton:(id)sender {
+    if ([_aDelegate respondsToSelector:@selector(didClickFlight:)]) {
+        [_aDelegate didClickFlight:_package.packageId];
+    }
 }
+
 
 @end

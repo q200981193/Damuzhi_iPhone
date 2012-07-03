@@ -239,6 +239,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
 @property (retain) NSString* characteristic;
 @property (retain) NSMutableArray* mutableDailySchedulesList;
 @property (retain) NSMutableArray* mutablePackagesList;
+@property (retain) NSString* bookingNote;
 @property (retain) NSMutableArray* mutableBookingsList;
 @property (retain) NSString* reference;
 @property (retain) NSMutableArray* mutableRelatedplacesList;
@@ -344,6 +345,13 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
 @synthesize characteristic;
 @synthesize mutableDailySchedulesList;
 @synthesize mutablePackagesList;
+- (BOOL) hasBookingNote {
+  return !!hasBookingNote_;
+}
+- (void) setHasBookingNote:(BOOL) value {
+  hasBookingNote_ = !!value;
+}
+@synthesize bookingNote;
 @synthesize mutableBookingsList;
 - (BOOL) hasReference {
   return !!hasReference_;
@@ -379,6 +387,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
   self.characteristic = nil;
   self.mutableDailySchedulesList = nil;
   self.mutablePackagesList = nil;
+  self.bookingNote = nil;
   self.mutableBookingsList = nil;
   self.reference = nil;
   self.mutableRelatedplacesList = nil;
@@ -401,6 +410,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
     self.followUserCount = 0;
     self.customerServiceTelephone = @"";
     self.characteristic = @"";
+    self.bookingNote = @"";
     self.reference = @"";
     self.fee = @"";
     self.bookingNotice = @"";
@@ -544,25 +554,28 @@ static TouristRoute* defaultTouristRouteInstance = nil;
     [output writeString:20 value:self.customerServiceTelephone];
   }
   for (NSString* element in self.mutableDetailImagesList) {
-    [output writeString:21 value:element];
+    [output writeString:25 value:element];
   }
   if (self.hasCharacteristic) {
-    [output writeString:22 value:self.characteristic];
+    [output writeString:30 value:self.characteristic];
   }
   for (DailySchedule* element in self.dailySchedulesList) {
-    [output writeMessage:23 value:element];
+    [output writeMessage:33 value:element];
   }
   for (TravelPackage* element in self.packagesList) {
-    [output writeMessage:24 value:element];
+    [output writeMessage:36 value:element];
+  }
+  if (self.hasBookingNote) {
+    [output writeString:40 value:self.bookingNote];
   }
   for (Booking* element in self.bookingsList) {
-    [output writeMessage:25 value:element];
+    [output writeMessage:41 value:element];
   }
   if (self.hasReference) {
-    [output writeString:26 value:self.reference];
+    [output writeString:45 value:self.reference];
   }
   for (PlaceTour* element in self.relatedplacesList) {
-    [output writeMessage:27 value:element];
+    [output writeMessage:48 value:element];
   }
   if (self.hasFee) {
     [output writeString:50 value:self.fee];
@@ -640,22 +653,25 @@ static TouristRoute* defaultTouristRouteInstance = nil;
     size += 2 * self.mutableDetailImagesList.count;
   }
   if (self.hasCharacteristic) {
-    size += computeStringSize(22, self.characteristic);
+    size += computeStringSize(30, self.characteristic);
   }
   for (DailySchedule* element in self.dailySchedulesList) {
-    size += computeMessageSize(23, element);
+    size += computeMessageSize(33, element);
   }
   for (TravelPackage* element in self.packagesList) {
-    size += computeMessageSize(24, element);
+    size += computeMessageSize(36, element);
+  }
+  if (self.hasBookingNote) {
+    size += computeStringSize(40, self.bookingNote);
   }
   for (Booking* element in self.bookingsList) {
-    size += computeMessageSize(25, element);
+    size += computeMessageSize(41, element);
   }
   if (self.hasReference) {
-    size += computeStringSize(26, self.reference);
+    size += computeStringSize(45, self.reference);
   }
   for (PlaceTour* element in self.relatedplacesList) {
-    size += computeMessageSize(27, element);
+    size += computeMessageSize(48, element);
   }
   if (self.hasFee) {
     size += computeStringSize(50, self.fee);
@@ -807,6 +823,9 @@ static TouristRoute* defaultTouristRouteInstance = nil;
     }
     [result.mutablePackagesList addObjectsFromArray:other.mutablePackagesList];
   }
+  if (other.hasBookingNote) {
+    [self setBookingNote:other.bookingNote];
+  }
   if (other.mutableBookingsList.count > 0) {
     if (result.mutableBookingsList == nil) {
       result.mutableBookingsList = [NSMutableArray array];
@@ -905,37 +924,41 @@ static TouristRoute* defaultTouristRouteInstance = nil;
         [self setCustomerServiceTelephone:[input readString]];
         break;
       }
-      case 170: {
+      case 202: {
         [self addDetailImages:[input readString]];
         break;
       }
-      case 178: {
+      case 242: {
         [self setCharacteristic:[input readString]];
         break;
       }
-      case 186: {
+      case 266: {
         DailySchedule_Builder* subBuilder = [DailySchedule builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addDailySchedules:[subBuilder buildPartial]];
         break;
       }
-      case 194: {
+      case 290: {
         TravelPackage_Builder* subBuilder = [TravelPackage builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addPackages:[subBuilder buildPartial]];
         break;
       }
-      case 202: {
+      case 322: {
+        [self setBookingNote:[input readString]];
+        break;
+      }
+      case 330: {
         Booking_Builder* subBuilder = [Booking builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addBookings:[subBuilder buildPartial]];
         break;
       }
-      case 210: {
+      case 362: {
         [self setReference:[input readString]];
         break;
       }
-      case 218: {
+      case 386: {
         PlaceTour_Builder* subBuilder = [PlaceTour builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addRelatedplaces:[subBuilder buildPartial]];
@@ -1309,6 +1332,22 @@ static TouristRoute* defaultTouristRouteInstance = nil;
     result.mutablePackagesList = [NSMutableArray array];
   }
   [result.mutablePackagesList addObject:value];
+  return self;
+}
+- (BOOL) hasBookingNote {
+  return result.hasBookingNote;
+}
+- (NSString*) bookingNote {
+  return result.bookingNote;
+}
+- (TouristRoute_Builder*) setBookingNote:(NSString*) value {
+  result.hasBookingNote = YES;
+  result.bookingNote = value;
+  return self;
+}
+- (TouristRoute_Builder*) clearBookingNote {
+  result.hasBookingNote = NO;
+  result.bookingNote = @"";
   return self;
 }
 - (NSArray*) bookingsList {
@@ -1885,6 +1924,8 @@ static DailySchedule* defaultDailyScheduleInstance = nil;
 
 @interface TravelPackage ()
 @property int32_t packageId;
+@property (retain) NSString* name;
+@property (retain) NSString* note;
 @property (retain) NSString* price;
 @property (retain) Flight* departFlight;
 @property (retain) Flight* returnFlight;
@@ -1900,6 +1941,20 @@ static DailySchedule* defaultDailyScheduleInstance = nil;
   hasPackageId_ = !!value;
 }
 @synthesize packageId;
+- (BOOL) hasName {
+  return !!hasName_;
+}
+- (void) setHasName:(BOOL) value {
+  hasName_ = !!value;
+}
+@synthesize name;
+- (BOOL) hasNote {
+  return !!hasNote_;
+}
+- (void) setHasNote:(BOOL) value {
+  hasNote_ = !!value;
+}
+@synthesize note;
 - (BOOL) hasPrice {
   return !!hasPrice_;
 }
@@ -1923,6 +1978,8 @@ static DailySchedule* defaultDailyScheduleInstance = nil;
 @synthesize returnFlight;
 @synthesize mutableAccommodationsList;
 - (void) dealloc {
+  self.name = nil;
+  self.note = nil;
   self.price = nil;
   self.departFlight = nil;
   self.returnFlight = nil;
@@ -1932,6 +1989,8 @@ static DailySchedule* defaultDailyScheduleInstance = nil;
 - (id) init {
   if ((self = [super init])) {
     self.packageId = 0;
+    self.name = @"";
+    self.note = @"";
     self.price = @"";
     self.departFlight = [Flight defaultInstance];
     self.returnFlight = [Flight defaultInstance];
@@ -1982,17 +2041,23 @@ static TravelPackage* defaultTravelPackageInstance = nil;
   if (self.hasPackageId) {
     [output writeInt32:1 value:self.packageId];
   }
+  if (self.hasName) {
+    [output writeString:2 value:self.name];
+  }
+  if (self.hasNote) {
+    [output writeString:3 value:self.note];
+  }
   if (self.hasPrice) {
-    [output writeString:2 value:self.price];
+    [output writeString:5 value:self.price];
   }
   if (self.hasDepartFlight) {
-    [output writeMessage:3 value:self.departFlight];
+    [output writeMessage:10 value:self.departFlight];
   }
   if (self.hasReturnFlight) {
-    [output writeMessage:4 value:self.returnFlight];
+    [output writeMessage:11 value:self.returnFlight];
   }
   for (Accommodation* element in self.accommodationsList) {
-    [output writeMessage:5 value:element];
+    [output writeMessage:15 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -2006,17 +2071,23 @@ static TravelPackage* defaultTravelPackageInstance = nil;
   if (self.hasPackageId) {
     size += computeInt32Size(1, self.packageId);
   }
+  if (self.hasName) {
+    size += computeStringSize(2, self.name);
+  }
+  if (self.hasNote) {
+    size += computeStringSize(3, self.note);
+  }
   if (self.hasPrice) {
-    size += computeStringSize(2, self.price);
+    size += computeStringSize(5, self.price);
   }
   if (self.hasDepartFlight) {
-    size += computeMessageSize(3, self.departFlight);
+    size += computeMessageSize(10, self.departFlight);
   }
   if (self.hasReturnFlight) {
-    size += computeMessageSize(4, self.returnFlight);
+    size += computeMessageSize(11, self.returnFlight);
   }
   for (Accommodation* element in self.accommodationsList) {
-    size += computeMessageSize(5, element);
+    size += computeMessageSize(15, element);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -2096,6 +2167,12 @@ static TravelPackage* defaultTravelPackageInstance = nil;
   if (other.hasPackageId) {
     [self setPackageId:other.packageId];
   }
+  if (other.hasName) {
+    [self setName:other.name];
+  }
+  if (other.hasNote) {
+    [self setNote:other.note];
+  }
   if (other.hasPrice) {
     [self setPrice:other.price];
   }
@@ -2137,10 +2214,18 @@ static TravelPackage* defaultTravelPackageInstance = nil;
         break;
       }
       case 18: {
-        [self setPrice:[input readString]];
+        [self setName:[input readString]];
         break;
       }
       case 26: {
+        [self setNote:[input readString]];
+        break;
+      }
+      case 42: {
+        [self setPrice:[input readString]];
+        break;
+      }
+      case 82: {
         Flight_Builder* subBuilder = [Flight builder];
         if (self.hasDepartFlight) {
           [subBuilder mergeFrom:self.departFlight];
@@ -2149,7 +2234,7 @@ static TravelPackage* defaultTravelPackageInstance = nil;
         [self setDepartFlight:[subBuilder buildPartial]];
         break;
       }
-      case 34: {
+      case 90: {
         Flight_Builder* subBuilder = [Flight builder];
         if (self.hasReturnFlight) {
           [subBuilder mergeFrom:self.returnFlight];
@@ -2158,7 +2243,7 @@ static TravelPackage* defaultTravelPackageInstance = nil;
         [self setReturnFlight:[subBuilder buildPartial]];
         break;
       }
-      case 42: {
+      case 122: {
         Accommodation_Builder* subBuilder = [Accommodation builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addAccommodations:[subBuilder buildPartial]];
@@ -2181,6 +2266,38 @@ static TravelPackage* defaultTravelPackageInstance = nil;
 - (TravelPackage_Builder*) clearPackageId {
   result.hasPackageId = NO;
   result.packageId = 0;
+  return self;
+}
+- (BOOL) hasName {
+  return result.hasName;
+}
+- (NSString*) name {
+  return result.name;
+}
+- (TravelPackage_Builder*) setName:(NSString*) value {
+  result.hasName = YES;
+  result.name = value;
+  return self;
+}
+- (TravelPackage_Builder*) clearName {
+  result.hasName = NO;
+  result.name = @"";
+  return self;
+}
+- (BOOL) hasNote {
+  return result.hasNote;
+}
+- (NSString*) note {
+  return result.note;
+}
+- (TravelPackage_Builder*) setNote:(NSString*) value {
+  result.hasNote = YES;
+  result.note = value;
+  return self;
+}
+- (TravelPackage_Builder*) clearNote {
+  result.hasNote = NO;
+  result.note = @"";
   return self;
 }
 - (BOOL) hasPrice {

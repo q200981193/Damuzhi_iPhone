@@ -9,9 +9,23 @@
 #import "PPTableViewCell.h"
 #import "TouristRoute.pb.h"
 
+#define EDGE 5
+#define HEIGHT_ACCOMODATION_VIEW 42
+
+@protocol PackageCellDelegate <NSObject>
+
+@optional
+- (void)didClickFlight:(int)packageId;
+- (void)didClickAccommodation:(int)hotelId;
+
+@end
+
 @interface PackageCell : PPTableViewCell
 
 - (void)setCellData:(TravelPackage *)package;
 
+@property (assign, nonatomic) id<PackageCellDelegate> aDelegate;
 @property (retain, nonatomic) IBOutlet UIButton *flightButton;
+
+
 @end

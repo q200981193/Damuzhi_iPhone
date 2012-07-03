@@ -142,10 +142,11 @@
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
         }else {
             for (TravelPackage * package in _route.packagesList) {
-//                [dic setObject:package.name forKey:[NSNumber numberWithInt:row++]];
+                NSString *packageIdentifier = [self packageIdentifier:package.name section:row];
+                [dic setObject:packageIdentifier forKey:[NSNumber numberWithInt:row++]];
             }
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
-            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
+//            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
         }
         
         [dic setObject:SECTION_TITLE_RELATED_PLACE forKey:[NSNumber numberWithInt:row++]];
@@ -288,10 +289,10 @@
     
     NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:section]];
     
-    if (title == SECTION_TITLE_RELATED_PLACE) {
+    if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
         return [_route.relatedplacesList count]; 
     }
-    else if (title == SECTION_TITLE_DAILY_SCHEDULE) {
+    else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
         return [_route.dailySchedulesList count];
     }else {
         return 1;
@@ -318,16 +319,26 @@
     
     UITableViewCell *cell = nil;
 
-    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
-        if (title == SECTION_TITLE_CHARACTICS) {
-            cell = [self cellForCharacticsWithIndex:indexPath tableView:tableView];
-        }else if (title == SECTION_TITLE_DAILY_SCHEDULE) {
-            cell = [self cellForDailyScheduleWithIndex:indexPath tableView:tableView];
-        }else if (title == SECTION_TITLE_BOOKING) {
-            cell = [self cellForBookingWithIndex:indexPath tableView:tableView];
-        }else if (title == SECTION_TITLE_RELATED_PLACE) {
-            cell = [self cellForRelatedPlaceWithIndex:indexPath tableView:tableView];
+    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    PPDebug(@"title: %@", title);
+
+    if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
+        cell = [self cellForCharacticsWithIndex:indexPath tableView:tableView];
+    }else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
+        cell = [self cellForDailyScheduleWithIndex:indexPath tableView:tableView];
+    }else if ([title isEqualToString:SECTION_TITLE_BOOKING]) {
+        cell = [self cellForBookingWithIndex:indexPath tableView:tableView];
+    }else if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
+        cell = [self cellForRelatedPlaceWithIndex:indexPath tableView:tableView];
+//    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
+//        
+    }else{
+        for (TravelPackage *package in _route.packagesList) {
+            NSString *packageIdentifier = [self packageIdentifier:package.name section:indexPath.section];
+            PPDebug(@"packageIdentifier: %@", packageIdentifier);
+            if ([title isEqualToString:packageIdentifier]) {
+                cell = [self cellForPackageWithIndex:indexPath tableView:tableView];
+            }
         }
     }
     
@@ -430,6 +441,33 @@
     return [RelatedPlaceCell getCellHeight];
 }
 
+- (UITableViewCell *)cellForPackageWithIndex:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[PackageCell getCellIdentifier]];
+    
+    if (cell == nil) {
+        cell = [PackageCell createCell:self];				            
+        
+    }
+    
+    PackageCell *packageCell = (PackageCell *)cell;
+    
+    [packageCell setCellData:[_route.packagesList objectAtIndex:indexPath.row]];
+    
+    packageCell.aDelegate = self;
+    
+    return cell;
+}
+
+- (CGFloat)cellHeightForPackageWithIndex:(NSIndexPath *)indexPath
+{
+    TravelPackage *package = [[_route packagesList] objectAtIndex:indexPath.row];
+    
+    CGFloat height = 5 + 32 + (HEIGHT_ACCOMODATION_VIEW + EDGE) * [package.accommodationsList count];
+    
+    return height;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {    
     int sectionCount = [self sectionCount];
@@ -444,18 +482,26 @@
     }
     
     CGFloat height = 0;
-    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
-        if (title == SECTION_TITLE_CHARACTICS) {
-            height = [self cellHeightForCharacticsWithIndex:indexPath];
-        }else if (title == SECTION_TITLE_DAILY_SCHEDULE) {
-            height = [self cellHeightForDailyScheduleWithIndex:indexPath];
-        }else if (title == SECTION_TITLE_BOOKING) {
-            height = [self cellHeightForBookingWithIndex:indexPath];
-        }else if (title == SECTION_TITLE_RELATED_PLACE) {
-            height = [self cellHeightForRelatedPlaceWithIndex:indexPath];
-        }
+    
+    NSString *title = [self.sectionInfo objectForKey:[NSNumber numberWithInt:indexPath.section]];
+    if ([title isEqualToString:SECTION_TITLE_CHARACTICS]) {
+        height = [self cellHeightForCharacticsWithIndex:indexPath];
+    }else if ([title isEqualToString:SECTION_TITLE_DAILY_SCHEDULE]) {
+        height = [self cellHeightForDailyScheduleWithIndex:indexPath];
+    }else if ([title isEqualToString:SECTION_TITLE_BOOKING]) {
+        height = [self cellHeightForBookingWithIndex:indexPath];
+    }else if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
+        height = [self cellHeightForRelatedPlaceWithIndex:indexPath];
+//    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
+        
+    }else{
+        for (TravelPackage *package in _route.packagesList) {
+            NSString *packageIdentifier = [self packageIdentifier:package.name section:indexPath.section];
+            if ([title isEqualToString:packageIdentifier]) {
+                height = [self cellHeightForPackageWithIndex:indexPath];
+            }
     }
+}
         
     return height;
 }
@@ -469,11 +515,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == [self sectionCount] - 1) {
-        return HEIGHT_FOLLOW_VIEW;
-    }
+//    if (section == [self sectionCount] - 1) {
+//        return HEIGHT_FOLLOW_VIEW;
+//    }
     
-    return HEIGHT_FOOTER_VIEW;
+    return HEIGHT_FOOTER_VIEW * [[_sectionStat objectAtIndex:section] boolValue];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -505,13 +551,14 @@
     
 //    PPDebug(@"section count: %d", [self sectionCount]);
 //    PPDebug(@"section = %d", section);
-    if (section == [self sectionCount] - 1) {
-        view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOLLOW_VIEW);
-        UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(self.dataTableView.frame.size.width/2 - WIDTH_FOLLOW_BUTTON/2, 53/2 - HEIGHT_FOLLOW_BUTTOn/2, WIDTH_FOLLOW_BUTTON, HEIGHT_FOLLOW_BUTTOn)] autorelease];
-        [button addTarget:self action:@selector(clickFollowRoute:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:NSLS(@"关注路线") forState:UIControlStateNormal];
-        [view addSubview:button];
-    }
+//    if (section == [self sectionCount] - 1) {
+//        view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOLLOW_VIEW);
+//        UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(self.dataTableView.frame.size.width/2 - WIDTH_FOLLOW_BUTTON/2, 53/2 - HEIGHT_FOLLOW_BUTTOn/2, WIDTH_FOLLOW_BUTTON, HEIGHT_FOLLOW_BUTTOn)] autorelease];
+//        [button addTarget:self action:@selector(clickFollowRoute:) forControlEvents:UIControlEventTouchUpInside];
+//        [button setTitle:NSLS(@"关注路线") forState:UIControlStateNormal];
+//        [button setBackgroundImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateNormal];
+//        [view addSubview:button];
+//    }
 
     view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOOTER_VIEW);
     
@@ -559,6 +606,12 @@
     return headerTitle;
 }
 
+- (NSString *)packageIdentifier:(NSString *)packageName 
+                        section:(NSInteger)section
+{
+    return [NSString stringWithFormat:@"%@%d", packageName, section];
+}
+
 
 - (void)clickSectionHeaderView:(id)sender
 {
@@ -572,9 +625,18 @@
     [self popupMessage:@"待实现" title:nil];
 }
 
-- (void)clickFollowRoute:(id)sender
+- (IBAction)clickFollowRoute:(id)sender
 {
     [self popupMessage:@"待实现" title:nil]; 
+}
+
+- (void)didClickFlight:(int)packageId
+{
+    [self popupMessage:@"查看航班" title:nil];
+}
+- (void)didClickAccommodation:(int)hotelId
+{
+    [self popupMessage:@"查看住宿" title:nil];
 }
 
 @end

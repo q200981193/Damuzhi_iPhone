@@ -90,6 +90,7 @@
   BOOL hasBookingNotice_:1;
   BOOL hasFee_:1;
   BOOL hasReference_:1;
+  BOOL hasBookingNote_:1;
   BOOL hasCharacteristic_:1;
   BOOL hasCustomerServiceTelephone_:1;
   BOOL hasName_:1;
@@ -106,6 +107,7 @@
   NSString* bookingNotice;
   NSString* fee;
   NSString* reference;
+  NSString* bookingNote;
   NSString* characteristic;
   NSString* customerServiceTelephone;
   NSString* name;
@@ -133,6 +135,7 @@
 - (BOOL) hasFollowUserCount;
 - (BOOL) hasCustomerServiceTelephone;
 - (BOOL) hasCharacteristic;
+- (BOOL) hasBookingNote;
 - (BOOL) hasReference;
 - (BOOL) hasFee;
 - (BOOL) hasBookingNotice;
@@ -149,6 +152,7 @@
 @property (readonly) int32_t followUserCount;
 @property (readonly, retain) NSString* customerServiceTelephone;
 @property (readonly, retain) NSString* characteristic;
+@property (readonly, retain) NSString* bookingNote;
 @property (readonly, retain) NSString* reference;
 @property (readonly, retain) NSString* fee;
 @property (readonly, retain) NSString* bookingNotice;
@@ -301,6 +305,11 @@
 - (TouristRoute_Builder*) addAllPackages:(NSArray*) values;
 - (TouristRoute_Builder*) clearPackagesList;
 
+- (BOOL) hasBookingNote;
+- (NSString*) bookingNote;
+- (TouristRoute_Builder*) setBookingNote:(NSString*) value;
+- (TouristRoute_Builder*) clearBookingNote;
+
 - (NSArray*) bookingsList;
 - (Booking*) bookingsAtIndex:(int32_t) index;
 - (TouristRoute_Builder*) replaceBookingsAtIndex:(int32_t) index with:(Booking*) value;
@@ -439,20 +448,28 @@
 @interface TravelPackage : PBGeneratedMessage {
 @private
   BOOL hasPackageId_:1;
+  BOOL hasName_:1;
+  BOOL hasNote_:1;
   BOOL hasPrice_:1;
   BOOL hasDepartFlight_:1;
   BOOL hasReturnFlight_:1;
   int32_t packageId;
+  NSString* name;
+  NSString* note;
   NSString* price;
   Flight* departFlight;
   Flight* returnFlight;
   NSMutableArray* mutableAccommodationsList;
 }
 - (BOOL) hasPackageId;
+- (BOOL) hasName;
+- (BOOL) hasNote;
 - (BOOL) hasPrice;
 - (BOOL) hasDepartFlight;
 - (BOOL) hasReturnFlight;
 @property (readonly) int32_t packageId;
+@property (readonly, retain) NSString* name;
+@property (readonly, retain) NSString* note;
 @property (readonly, retain) NSString* price;
 @property (readonly, retain) Flight* departFlight;
 @property (readonly, retain) Flight* returnFlight;
@@ -497,6 +514,16 @@
 - (int32_t) packageId;
 - (TravelPackage_Builder*) setPackageId:(int32_t) value;
 - (TravelPackage_Builder*) clearPackageId;
+
+- (BOOL) hasName;
+- (NSString*) name;
+- (TravelPackage_Builder*) setName:(NSString*) value;
+- (TravelPackage_Builder*) clearName;
+
+- (BOOL) hasNote;
+- (NSString*) note;
+- (TravelPackage_Builder*) setNote:(NSString*) value;
+- (TravelPackage_Builder*) clearNote;
 
 - (BOOL) hasPrice;
 - (NSString*) price;
