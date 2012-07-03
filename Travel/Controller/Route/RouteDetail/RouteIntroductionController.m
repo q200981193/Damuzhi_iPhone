@@ -461,7 +461,11 @@
 
 - (CGFloat)cellHeightForPackageWithIndex:(NSIndexPath *)indexPath
 {
-    return [PackageCell getCellHeight];
+    TravelPackage *package = [[_route packagesList] objectAtIndex:indexPath.row];
+    
+    CGFloat height = 5 + 32 + (HEIGHT_ACCOMODATION_VIEW + EDGE) * [package.accommodationsList count];
+    
+    return height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

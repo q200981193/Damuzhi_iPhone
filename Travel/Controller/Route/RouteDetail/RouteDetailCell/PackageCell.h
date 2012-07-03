@@ -9,6 +9,9 @@
 #import "PPTableViewCell.h"
 #import "TouristRoute.pb.h"
 
+#define EDGE 5
+#define HEIGHT_ACCOMODATION_VIEW 42
+
 @protocol PackageCellDelegate <NSObject>
 
 @optional

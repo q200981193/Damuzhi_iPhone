@@ -9,7 +9,7 @@
 #import "PackageCell.h"
 #import "LocaleUtils.h"
 
-#define EDGE 5
+
 
 #define FONT_DURATION_LABEL [UIFont systemFontOfSize:13]
 #define TEXT_COLOR_DURATION_LABEL [UIColor colorWithRed:85.0/255.0 green:85.0/255.0 blue:85.0/255.0 alpha:1]
@@ -35,11 +35,6 @@
     [super dealloc];
 }
 
-+ (CGFloat)getCellHeight
-{
-    return 78;
-}
-
 + (NSString *)getCellIdentifier
 {
     return @"PackageCell";
@@ -57,7 +52,7 @@
     CGFloat originX = self.frame.size.width/2 - flightButton.frame.size.width/2;
     CGFloat originY = flightButton.frame.origin.y + flightButton.frame.size.height + EDGE;    
     CGFloat width = flightButton.frame.size.width;
-    CGFloat height = 42;
+    CGFloat height = HEIGHT_ACCOMODATION_VIEW;
     
     CGRect frame = CGRectMake(originX, originY, width, height);
     for (Accommodation *accommodation in package.accommodationsList) {
