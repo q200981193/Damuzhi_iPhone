@@ -45,12 +45,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") 
-                         imageName:@"topmenu_btn2.png"
+                         imageName:@"back.png"
                             action:@selector(clickBack:)];
     
     self.navigationItem.title = NSLS(@"登录");
     [self setNavigationRightButton:NSLS(@"登录") 
-                         imageName:@"topmenu_btn2.png"
+                         imageName:@"topmenu_btn_right.png"
                             action:@selector(clickLogin:)];
 }
 
@@ -135,23 +135,12 @@
     button.selected = !button.selected;
 }
 
-////called whe 'done' key pressed. return NO to ignore
-//-(BOOL) textFieldShouldReturn:(UITextField *)textField
-//{
-//       switch (textField.tag) {
-//        case :TAG_TEXT_FIELD_LOGIN_ID
-//            [loginIdTextField becomeFirstResponder];
-//            break;
-//         
-//        case :TAG_TEXT_FIELD_PASSWORD
-//            [self hideKeyboard:nil]
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    return YES;
-//}
+
+-(IBAction)textFieldDoneEditing:(id)sender;
+{
+    [sender resignFirstResponder];
+}
+
 
 #pragma mark: implementation of UserServiceDelegate.
 

@@ -14,4 +14,6 @@
 @property (retain, nonatomic) IBOutlet UITextField *loginIdTextField;
 
 @property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
+
+-(IBAction)textFieldDoneEditing:(id)sender;
 @end
