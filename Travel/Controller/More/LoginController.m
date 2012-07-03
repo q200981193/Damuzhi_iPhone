@@ -10,6 +10,7 @@
 #import "SignUpController.h"
 #import "UserManager.h"
 #import "PPNetworkRequest.h"
+#import "UIImageUtil.h"
 
 // add by lst
 #import "StringUtil.h"
@@ -22,6 +23,8 @@
 @end
 
 @implementation LoginController
+@synthesize nonMemberOrderQueryButton;
+
 @synthesize loginIdTextField;
 @synthesize passwordTextField;
 
@@ -37,7 +40,8 @@
     [loginIdTextField release];
     [passwordTextField release];
     
-    [super dealloc];
+    [nonMemberOrderQueryButton release];
+     [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -52,6 +56,11 @@
     [self setNavigationRightButton:NSLS(@"登录") 
                          imageName:@"topmenu_btn_right.png"
                             action:@selector(clickLogin:)];
+    
+    UIImage *buttonImageBackground = [UIImage strectchableImageName:@"line_btn1.png"leftCapWidth:20];
+    
+    [nonMemberOrderQueryButton setBackgroundImage:buttonImageBackground forState:UIControlStateNormal];
+
 }
 
 - (void)viewDidUnload
@@ -59,6 +68,7 @@
     
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
+    [self setNonMemberOrderQueryButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

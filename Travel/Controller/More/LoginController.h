@@ -16,4 +16,8 @@
 @property (retain, nonatomic) IBOutlet UITextField *passwordTextField;
 
 -(IBAction)textFieldDoneEditing:(id)sender;
+
+@property (retain, nonatomic) IBOutlet UIButton *nonMemberOrderQueryButton;
+
+
 @end

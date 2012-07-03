@@ -363,6 +363,7 @@
 		A4FB94D11536B74300DDC76E /* default_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94CF1536B74300DDC76E /* default_b@2x.png */; };
 		A4FB94D21536B74300DDC76E /* detail_tr_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94D01536B74300DDC76E /* detail_tr_bg@2x.png */; };
 		A4FCE24115170A830077A333 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FCE24015170A830077A333 /* AppUtils.m */; };
+		C28F0CB815A292E30026444A /* login_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28F0CB715A292E30026444A /* login_bg@2x.png */; };
 		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
 		CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF5150467B200F60C03 /* PlaceMapViewController.m */; };
 		CA103AF8150467B200F60C03 /* PlaceMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */; };
@@ -1120,6 +1121,7 @@
 		A4FCE23E1516FF9F0077A333 /* AppConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		A4FCE23F15170A830077A333 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		A4FCE24015170A830077A333 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
+		C28F0CB715A292E30026444A /* login_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login_bg@2x.png"; path = "../../../../../../Users/orange/Desktop/login_bg@2x.png"; sourceTree = "<group>"; };
 		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		CA103AF4150467B200F60C03 /* PlaceMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapViewController.h; sourceTree = "<group>"; };
@@ -2548,6 +2550,7 @@
 		A4D9F3111592FB3A00566B32 /* login */ = {
 			isa = PBXGroup;
 			children = (
+				C28F0CB715A292E30026444A /* login_bg@2x.png */,
 				A4D9F3121592FB3A00566B32 /* signup_bg@2x.png */,
 			);
 			path = login;
@@ -4182,6 +4185,7 @@
 				A48A542315A1959B0012C782 /* menu_left@2x.png in Resources */,
 				A48A542415A1959B0012C782 /* menu_right@2x.png in Resources */,
 				A48A542915A210120012C782 /* PackageCell.xib in Resources */,
+				C28F0CB815A292E30026444A /* login_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
