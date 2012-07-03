@@ -79,7 +79,7 @@
     
     button.tag = accommodation.hotelId;
     
-    CGRect rect = CGRectMake(frame.origin.x + 30, 2, frame.size.width - 32, frame.size.height/2);
+    CGRect rect = CGRectMake(30, 2, self.flightLabel.frame.size.width, frame.size.height/2);
     UILabel *durationLabel = [[[UILabel alloc] initWithFrame:rect] autorelease];
     durationLabel.backgroundColor = [UIColor clearColor];
     durationLabel.text =  accommodation.duration;
@@ -88,7 +88,7 @@
     
     [button addSubview:durationLabel];
     
-    rect = CGRectMake(durationLabel.frame.origin.x, durationLabel.frame.origin.y+durationLabel.frame.size.height - 6, durationLabel.frame.size.width, durationLabel.frame.size.height);
+    rect = CGRectMake(30, durationLabel.frame.origin.y+durationLabel.frame.size.height - 4, self.flightLabel.frame.size.width, durationLabel.frame.size.height);
     
     UILabel *hotelNameLabel = [[[UILabel alloc] initWithFrame:rect] autorelease];
     hotelNameLabel.backgroundColor = [UIColor clearColor];
