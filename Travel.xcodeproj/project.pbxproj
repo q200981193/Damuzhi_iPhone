@@ -92,6 +92,11 @@
 		A42D908D155533610023AF32 /* RecommendedAppsControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A42D908B155533610023AF32 /* RecommendedAppsControllerViewController.xib */; };
 		A42D90911555387E0023AF32 /* RecommendedAppCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A42D908F155538780023AF32 /* RecommendedAppCell.m */; };
 		A42D90921555387E0023AF32 /* RecommendedAppCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A42D90901555387B0023AF32 /* RecommendedAppCell.xib */; };
+		A43BAFFD15A2FA70008F3AFC /* fly_p1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A43BAFF815A2FA70008F3AFC /* fly_p1@2x.png */; };
+		A43BAFFE15A2FA70008F3AFC /* fly_p2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A43BAFF915A2FA70008F3AFC /* fly_p2@2x.png */; };
+		A43BAFFF15A2FA70008F3AFC /* fly_p3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A43BAFFA15A2FA70008F3AFC /* fly_p3@2x.png */; };
+		A43BB00015A2FA70008F3AFC /* fly_p4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A43BAFFB15A2FA70008F3AFC /* fly_p4@2x.png */; };
+		A43BB00115A2FA70008F3AFC /* fly_p5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A43BAFFC15A2FA70008F3AFC /* fly_p5@2x.png */; };
 		A44CCD6C159AFD29000AC138 /* order_list_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD69159AFD29000AC138 /* order_list_1@2x.png */; };
 		A44CCD6D159AFD29000AC138 /* order_list_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD6A159AFD29000AC138 /* order_list_2@2x.png */; };
 		A44CCD6E159AFD29000AC138 /* order_list_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A44CCD6B159AFD29000AC138 /* order_list_3@2x.png */; };
@@ -791,6 +796,11 @@
 		A42D908E155538760023AF32 /* RecommendedAppCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedAppCell.h; sourceTree = "<group>"; };
 		A42D908F155538780023AF32 /* RecommendedAppCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedAppCell.m; sourceTree = "<group>"; };
 		A42D90901555387B0023AF32 /* RecommendedAppCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommendedAppCell.xib; sourceTree = "<group>"; };
+		A43BAFF815A2FA70008F3AFC /* fly_p1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_p1@2x.png"; sourceTree = "<group>"; };
+		A43BAFF915A2FA70008F3AFC /* fly_p2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_p2@2x.png"; sourceTree = "<group>"; };
+		A43BAFFA15A2FA70008F3AFC /* fly_p3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_p3@2x.png"; sourceTree = "<group>"; };
+		A43BAFFB15A2FA70008F3AFC /* fly_p4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_p4@2x.png"; sourceTree = "<group>"; };
+		A43BAFFC15A2FA70008F3AFC /* fly_p5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_p5@2x.png"; sourceTree = "<group>"; };
 		A44CCD69159AFD29000AC138 /* order_list_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_1@2x.png"; sourceTree = "<group>"; };
 		A44CCD6A159AFD29000AC138 /* order_list_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_2@2x.png"; sourceTree = "<group>"; };
 		A44CCD6B159AFD29000AC138 /* order_list_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order_list_3@2x.png"; sourceTree = "<group>"; };
@@ -1931,6 +1941,11 @@
 		A455F85A1585A0F800CA5743 /* route_detail */ = {
 			isa = PBXGroup;
 			children = (
+				A43BAFF815A2FA70008F3AFC /* fly_p1@2x.png */,
+				A43BAFF915A2FA70008F3AFC /* fly_p2@2x.png */,
+				A43BAFFA15A2FA70008F3AFC /* fly_p3@2x.png */,
+				A43BAFFB15A2FA70008F3AFC /* fly_p4@2x.png */,
+				A43BAFFC15A2FA70008F3AFC /* fly_p5@2x.png */,
 				A44CCDE2159C3006000AC138 /* order_tel@2x.png */,
 				A44CCDDE159C0A6C000AC138 /* fk_bg@2x.png */,
 				A44CCDDF159C0A6C000AC138 /* fk_bg2@2x.png */,
@@ -4200,6 +4215,11 @@
 				A48A542915A210120012C782 /* PackageCell.xib in Resources */,
 				A4CD756615A2B69300713F0B /* login_bg@2x.png in Resources */,
 				A4CD756B15A2D14600713F0B /* FlightController.xib in Resources */,
+				A43BAFFD15A2FA70008F3AFC /* fly_p1@2x.png in Resources */,
+				A43BAFFE15A2FA70008F3AFC /* fly_p2@2x.png in Resources */,
+				A43BAFFF15A2FA70008F3AFC /* fly_p3@2x.png in Resources */,
+				A43BB00015A2FA70008F3AFC /* fly_p4@2x.png in Resources */,
+				A43BB00115A2FA70008F3AFC /* fly_p5@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

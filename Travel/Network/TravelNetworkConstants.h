@@ -82,7 +82,7 @@
 
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"
-#define PARA_TRAVEL_APP_VERSION             @"appVersion"
+#define PARA_TRAVEL_APP_VERSION             @"app_version"
 #define PARA_TRAVEL_APP_DATA_VERSION        @"app_data_version"
 
 #define PARA_TRAVEL_TELEPHONE               @"telephone"
