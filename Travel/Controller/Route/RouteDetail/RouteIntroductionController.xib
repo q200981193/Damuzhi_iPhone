@@ -150,7 +150,7 @@
 											<object class="IBUILabel" id="700812591">
 												<reference key="NSNextResponder" ref="203210147"/>
 												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{5, 0}, {147, 34}}</string>
+												<string key="NSFrame">{{5, 0}, {200, 34}}</string>
 												<reference key="NSSuperview" ref="203210147"/>
 												<reference key="NSWindow"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -199,15 +199,15 @@
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
-							<object class="IBUIView" id="327039552">
+							<object class="IBUIView" id="369482555">
 								<reference key="NSNextResponder" ref="791047754"/>
 								<int key="NSvFlags">292</int>
 								<array class="NSMutableArray" key="NSSubviews">
-									<object class="IBUIButton" id="604771026">
-										<reference key="NSNextResponder" ref="327039552"/>
+									<object class="IBUIButton" id="1037973918">
+										<reference key="NSNextResponder" ref="369482555"/>
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{114, 4}, {92, 29}}</string>
-										<reference key="NSSuperview" ref="327039552"/>
+										<reference key="NSSuperview" ref="369482555"/>
 										<reference key="NSWindow"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -275,7 +275,7 @@
 						<float key="IBUISectionHeaderHeight">22</float>
 						<float key="IBUISectionFooterHeight">22</float>
 						<reference key="IBUITableHeaderView" ref="477464325"/>
-						<reference key="IBUITableFooterView" ref="327039552"/>
+						<reference key="IBUITableFooterView" ref="369482555"/>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
@@ -379,7 +379,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">clickFollowRoute:</string>
-						<reference key="source" ref="604771026"/>
+						<reference key="source" ref="1037973918"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -418,7 +418,7 @@
 						<reference key="object" ref="791047754"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="477464325"/>
-							<reference ref="327039552"/>
+							<reference ref="369482555"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -471,16 +471,16 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">38</int>
-						<reference key="object" ref="327039552"/>
+						<reference key="object" ref="369482555"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="604771026"/>
+							<reference ref="1037973918"/>
 						</array>
 						<reference key="parent" ref="791047754"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">39</int>
-						<reference key="object" ref="604771026"/>
-						<reference key="parent" ref="327039552"/>
+						<reference key="object" ref="1037973918"/>
+						<reference key="parent" ref="369482555"/>
 					</object>
 				</array>
 			</object>
