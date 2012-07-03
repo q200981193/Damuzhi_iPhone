@@ -148,8 +148,7 @@
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
         }else {
             for (TravelPackage * package in _route.packagesList) {
-                NSString *packageIdentifier = [self packageIdentifier:package.name section:row];
-                [dic setObject:packageIdentifier forKey:[NSNumber numberWithInt:row++]];
+                [dic setObject:package.name forKey:[NSNumber numberWithInt:row++]];
             }
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
 //            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
@@ -352,9 +351,7 @@
 //        
     }else{
         for (TravelPackage *package in _route.packagesList) {
-            NSString *packageIdentifier = [self packageIdentifier:package.name section:indexPath.section];
-            PPDebug(@"packageIdentifier: %@", packageIdentifier);
-            if ([title isEqualToString:packageIdentifier]) {
+            if ([title isEqualToString:package.name]) {
                 cell = [self cellForPackageWithIndex:indexPath tableView:tableView];
             }
         }
@@ -514,8 +511,7 @@
         
     }else{
         for (TravelPackage *package in _route.packagesList) {
-            NSString *packageIdentifier = [self packageIdentifier:package.name section:indexPath.section];
-            if ([title isEqualToString:packageIdentifier]) {
+            if ([title isEqualToString:package.name]) {
                 height = [self cellHeightForPackageWithIndex:indexPath];
             }
     }
