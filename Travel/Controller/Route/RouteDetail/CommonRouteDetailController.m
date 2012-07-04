@@ -189,7 +189,7 @@
 
 - (void)didClickBookButton:(int)packageId
 {
-    PlaceOrderController *controller = [[[PlaceOrderController alloc] initWithRoute:_route packageId:packageId] autorelease];
+    PlaceOrderController *controller = [[[PlaceOrderController alloc] initWithRoute:_route routeType:_routeType packageId:packageId] autorelease];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

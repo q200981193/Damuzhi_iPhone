@@ -73,4 +73,15 @@
 }
 
 
++ (Booking *)bookingOfDay:(int)passDaySince1970 bookings:(NSArray *)bookings
+{
+    for (Booking *booking in bookings) {
+        if (passDaySince1970 == booking.date / 86400) {
+            return booking;
+        }
+    }
+    
+    return nil;
+}
+
 @end

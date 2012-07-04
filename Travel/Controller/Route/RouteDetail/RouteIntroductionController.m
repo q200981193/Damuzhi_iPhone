@@ -262,7 +262,7 @@
     UIButton *bookButton = [[[UIButton alloc] initWithFrame:frame] autorelease];
     [bookButton setImage:[[ImageManager defaultManager] bookButtonImage] forState:UIControlStateNormal];
     
-    [bookButton addTarget:self action:@selector(clickBookButton) forControlEvents:UIControlEventTouchUpInside];
+    [bookButton addTarget:self action:@selector(clickBookButton:) forControlEvents:UIControlEventTouchUpInside];
     
     return bookButton;
 }

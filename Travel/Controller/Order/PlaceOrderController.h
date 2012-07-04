@@ -27,6 +27,8 @@
 
 @property (retain, nonatomic) IBOutlet UILabel *noteLabel;
 
-- (id)initWithRoute:(TouristRoute *)route packageId:(int)packageId;
+- (id)initWithRoute:(TouristRoute *)route 
+          routeType:(int)routeType
+          packageId:(int)packageId;
 
 @end
