@@ -72,5 +72,28 @@
     return retArray; 
 }
 
++ (TravelPackage *)findPackageByPackageId:(int)packageId fromPackageList:(NSArray *)packageList
+{
+    TravelPackage *package;
+    for (package in packageList) {
+        if (package.packageId == packageId) {
+            return package;
+        }
+    }
+    
+    return nil;
+}
+
+
++ (Booking *)bookingOfDay:(int)passDaySince1970 bookings:(NSArray *)bookings
+{
+    for (Booking *booking in bookings) {
+        if (passDaySince1970 == booking.date / 86400) {
+            return booking;
+        }
+    }
+    
+    return nil;
+}
 
 @end

@@ -47,10 +47,12 @@
     [passwordTextField release];
     
     [checkOrdersButton release];
+
     [autoLoginButton release];
     [rememberLoginIdbutton release];
     [rememberPasswordButton release];
-     [super dealloc];
+
+    [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -88,6 +90,7 @@
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
     [self setCheckOrdersButton:nil];
+
     [self setAutoLoginButton:nil];
     [self setRememberLoginIdbutton:nil];
     [self setRememberPasswordButton:nil];

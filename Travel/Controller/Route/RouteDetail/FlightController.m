@@ -7,12 +7,20 @@
 //
 
 #import "FlightController.h"
+#import "PPDebug.h"
+#import "TouristRoute.pb.h"
 
-//@interface FlightController ()
-//
-//@end
+@interface FlightController ()
+
+@property (retain, nonatomic) Flight *departFlight;
+@property (retain, nonatomic) Flight *returnFlight;
+@end
 
 @implementation FlightController
+
+@synthesize departFlight = _departFlight;
+@synthesize returnFlight = _returnFlight;
+
 @synthesize departFlightTextField;
 @synthesize departFlightLaunchInfoTextField;
 @synthesize departFlightDescendInfoTextField;
@@ -21,6 +29,32 @@
 @synthesize returnFlightLaunchInfoTextField;
 @synthesize returnFlightDescendInfoTextField;
 @synthesize returnFlightNumberTextField;
+
+
+- (void)dealloc {
+    [_departFlight release];
+    
+    [departFlightTextField release];
+    [departFlightLaunchInfoTextField release];
+    [departFlightDescendInfoTextField release];
+    [departFlightNumberTextField release];
+    [returnFlightTextField release];
+    [returnFlightLaunchInfoTextField release];
+    [returnFlightDescendInfoTextField release];
+    [returnFlightNumberTextField release];
+    [departFlightTextField release];
+    [super dealloc];
+}
+
+- (id)initWithDepartFlight:(Flight *)departFlight returnFlight:(Flight *)returnFlight
+{
+    if (self = [super init]) {
+        self.departFlight = departFlight;
+        self.returnFlight = returnFlight;
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad
 {
@@ -33,33 +67,29 @@
                            action:@selector(clickBack:)];
     
     self.navigationItem.title = NSLS(@"机票详情");
-}
+
+    
+    PPDebug(@"_departFlight is %@", _departFlight);
+    
+    
+    departFlightTextField.text = _departFlight.note;
+//    
+}  
 
 - (void)viewDidUnload
-{
+{    
     [self setDepartFlightTextField:nil];
     [self setDepartFlightLaunchInfoTextField:nil];
     [self setDepartFlightDescendInfoTextField:nil];
     [self setDepartFlightNumberTextField:nil];
+    
     [self setReturnFlightTextField:nil];
     [self setReturnFlightLaunchInfoTextField:nil];
     [self setReturnFlightDescendInfoTextField:nil];
     [self setReturnFlightNumberTextField:nil];
     [super viewDidUnload];
-    
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (void)dealloc {
-    [departFlightTextField release];
-    [departFlightLaunchInfoTextField release];
-    [departFlightDescendInfoTextField release];
-    [departFlightNumberTextField release];
-    [returnFlightTextField release];
-    [returnFlightLaunchInfoTextField release];
-    [returnFlightDescendInfoTextField release];
-    [returnFlightNumberTextField release];
-    [super dealloc];
-}
 @end

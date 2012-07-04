@@ -17,6 +17,9 @@
 #import "LoginController.h"
 
 @interface PlaceOrderController ()
+{
+    int _routeType;
+}
 
 @property (retain, nonatomic) TouristRoute *route;
 @property (retain, nonatomic) MonthViewController *monthViewController;
@@ -68,15 +71,19 @@
     [super dealloc];
 }
 
-- (id)initWithRoute:(TouristRoute *)route  packageId:(int)packageId
+- (id)initWithRoute:(TouristRoute *)route 
+          routeType:(int)routeType
+          packageId:(int)packageId
 {
     if (self = [super init]) {
         self.route = route;
+        _routeType = routeType;
         self.packageId = packageId;
         self.selectedAdultIdList = [NSMutableArray array];
         self.selectedChildrenIdList = [NSMutableArray array];
         self.adult = 1;
         self.children = 0;
+
     }
     
     return self;
@@ -175,8 +182,8 @@
                              departDate:departDateStr 
                                   adult:_adult 
                                children:_children 
-                          contactPerson:@"测试" //待修改
-                              telephone:@"13800138000" //待修改
+                          contactPerson:nil
+                              telephone:nil
                                delegate:self];
     } else {
         LoginController *controller  = [[LoginController alloc] init];

@@ -13,6 +13,7 @@
 #import "TouristRoute.pb.h"
 #import "NSDate+TKCategory.h"
 #import "UIViewUtils.h"
+#import "RouteUtils.h"
 
 
 @interface MonthViewController ()
@@ -153,11 +154,7 @@
     NSDate *d = startDate;
     
     while(YES){
-        //        if ([d compare:[NSDate date]] == NSOrderedAscending) {
-        //            [texts addObject:@""];
-        //        }else {
         [texts addObject:[self bookingStringWithDate:d]];
-        //        }
 		
 		TKDateInformation info = [d dateInformationWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 		info.day++;
@@ -170,21 +167,24 @@
 
 - (NSString*)bookingStringWithDate:(NSDate *)date
 {
+    NSString *bookingInfo = @"";
+    
     int passDay = [date timeIntervalSince1970] / 86400;
-    for (Booking *booking in _bookings) {
-        if (passDay == booking.date / 86400) {
-            if (booking.status == 1) {
-                return @"未开售";
-            }else if (booking.status == 2) {
-                return [NSString stringWithFormat:@"%@\n%@", booking.adultPrice, booking.remainder];
-            }else if (booking.status == 3) {
-                return NSLS(@"满");
-            }
+    Booking *booking = [RouteUtils bookingOfDay:passDay bookings:_bookings];
+    if (booking != nil) {
+        if (booking.status == 1) {
+            bookingInfo = NSLS(@"未开售") ;
+        }else if (booking.status == 2) {
+            bookingInfo = [NSString stringWithFormat:@"%@\n%@", booking.adultPrice, booking.remainder];
+        }else if (booking.status == 3) {
+            bookingInfo = NSLS(@"满");
         }
     }
     
-    return @"";
+    return bookingInfo;
 }
+
+
 
 - (void)showInView:(UIView *)superView
 {
@@ -202,6 +202,7 @@
 {
     if ([_aDelegate respondsToSelector:@selector(didSelecteDate:)]) {
         [_aDelegate didSelecteDate:date];
+        
     }
 }
 
