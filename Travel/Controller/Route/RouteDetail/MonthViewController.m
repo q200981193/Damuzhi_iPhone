@@ -12,6 +12,7 @@
 #import "TimeUtils.h"
 #import "TouristRoute.pb.h"
 #import "NSDate+TKCategory.h"
+#import "UIViewUtils.h"
 
 
 @interface MonthViewController ()
@@ -54,8 +55,12 @@
 
 - (void)viewDidLoad
 {
+    self.title = NSLS(@"出发日期");
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png" 
+                           action:@selector(clickBack:)];
     
     NSDate *now = [NSDate date];
     self.monthView = [[[TKCalendarMonthView alloc] initWithSundayAsFirst:NO 
@@ -183,6 +188,8 @@
 
 - (void)showInView:(UIView *)superView
 {
+    [superView removeAllSubviews];
+
     CGFloat scale = superView.frame.size.width / self.view.frame.size.width;
     CGAffineTransform transform =  CGAffineTransformMakeScale(scale, scale);
     _monthView.transform = transform;

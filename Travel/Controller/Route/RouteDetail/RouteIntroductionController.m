@@ -18,6 +18,7 @@
 #import "ImageName.h"
 #import "RankView.h"
 #import "PPNetworkRequest.h"
+#import "UIViewUtils.h"
 
 #define CELL_IDENTIFY_CHARACTICS @"CharacticsCell"
 
@@ -268,6 +269,8 @@
 
 - (void)showInView:(UIScrollView *)superView
 {
+    [superView removeAllSubviews];
+    
     superView.contentSize = self.view.bounds.size;
     [superView addSubview:self.view];
 }

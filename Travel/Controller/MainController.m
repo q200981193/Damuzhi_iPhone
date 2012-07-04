@@ -20,6 +20,7 @@
 #import "TravelTransportDataSource.h"
 #import "CommonPlace.h"
 #import "AppDelegate.h"
+#import "PPNetworkRequest.h"
 
 #import "NearbyController.h"
 #import "AppManager.h"
@@ -131,6 +132,8 @@
     self.currentSelectedButton.selected = YES;
         
     [self checkCurrentCityVersion];
+    
+    [[UserService defaultService] autoLogin:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -323,6 +326,24 @@
         default:
             break;
     }
+}
+
+#pragma mark: implementation of UserServiceDelegate.
+
+- (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    if (resultCode != ERROR_SUCCESS) {
+        [self popupMessage:NSLS(@"您的网络不稳定，登录失败") title:nil];
+        return;
+    }
+    
+    if (result != 0) {
+        NSString *str = [NSString stringWithFormat:NSLS(@"登陆失败：%@"), resultInfo];
+        [self popupMessage:str title:nil];
+        return;
+    }
+    
+    [self popupMessage:NSLS(@"登陆成功") title:nil];    
 }
 
 @end

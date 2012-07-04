@@ -72,6 +72,14 @@
     autoLoginButton.selected = [[UserManager defaultManager] isAutoLogin];
     rememberLoginIdbutton.selected = [[UserManager defaultManager] isRememberLoginId];
     rememberPasswordButton.selected = [[UserManager defaultManager]  isRememberPassword];
+    
+    if ([[UserManager defaultManager] isRememberLoginId]) {
+        loginIdTextField.text = [[UserManager defaultManager] loginId];
+    }
+    
+    if ([[UserManager defaultManager]  isRememberPassword]) {
+        passwordTextField.text = [[UserManager defaultManager] password];
+    }
 }
 
 - (void)viewDidUnload

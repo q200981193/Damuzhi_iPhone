@@ -11,6 +11,7 @@
 #import "AppManager.h"
 #import "PPDebug.h"
 #import "PPNetworkRequest.h"
+#import "UIViewUtils.h"
 
 @implementation CommonWebController
 
@@ -142,9 +143,10 @@
 
 -(void) showInView:(UIView *)superView
 {
+    [superView removeAllSubviews];
+
     webView.frame = superView.bounds;
-    
-        [superView addSubview:self.view];
+    [superView addSubview:self.view];
 }
 
 @end
