@@ -47,14 +47,12 @@
     [passwordTextField release];
     
     [checkOrdersButton release];
-<<<<<<< HEAD
-    [loginIdTextField release];
-=======
+
     [autoLoginButton release];
     [rememberLoginIdbutton release];
     [rememberPasswordButton release];
->>>>>>> origin/master
-     [super dealloc];
+
+    [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -92,13 +90,10 @@
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
     [self setCheckOrdersButton:nil];
-<<<<<<< HEAD
-    [self setLoginIdTextField:nil];
-=======
+
     [self setAutoLoginButton:nil];
     [self setRememberLoginIdbutton:nil];
     [self setRememberPasswordButton:nil];
->>>>>>> origin/master
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
