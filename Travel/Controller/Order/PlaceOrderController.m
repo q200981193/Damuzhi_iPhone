@@ -13,7 +13,8 @@
 #import "TimeUtils.h"
 #import "NonMemberOrderController.h"
 #import "ImageManager.h"
-
+#import "UserManager.h"
+#import "LoginController.h"
 
 @interface PlaceOrderController ()
 
@@ -24,6 +25,7 @@
 @property (assign, nonatomic) int children;
 @property (retain, nonatomic) NSMutableArray *selectedAdultIdList;
 @property (retain, nonatomic) NSMutableArray *selectedChildrenIdList;
+@property (assign, nonatomic) int packageId;
 
 @end
 
@@ -41,6 +43,7 @@
 @synthesize departDate = _departDate;
 @synthesize adult = _adult;
 @synthesize children = _children;
+@synthesize packageId = _packageId;
 
 @synthesize selectedAdultIdList = _selectedAdultIdList;
 @synthesize selectedChildrenIdList = _selectedChildrenIdList;
@@ -65,10 +68,11 @@
     [super dealloc];
 }
 
-- (id)initWithRoute:(TouristRoute *)route
+- (id)initWithRoute:(TouristRoute *)route  packageId:(int)packageId
 {
     if (self = [super init]) {
         self.route = route;
+        self.packageId = packageId;
         self.selectedAdultIdList = [NSMutableArray array];
         self.selectedChildrenIdList = [NSMutableArray array];
         self.adult = 1;
@@ -155,6 +159,30 @@
 }
 
 - (IBAction)clickMemberBookButton:(id)sender {
+    UserManager *manager = [UserManager defaultManager];
+    
+    if ([manager isLogin]) {
+        
+        NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        [dateFormatter setDateFormat:@"yyyyMMdd"];
+        NSString *departDateStr = [dateFormatter stringFromDate:self.departDate];
+        
+        OrderService *service = [OrderService defaultService];
+        [service placeOrderUsingLoginId:[manager loginId] 
+                                  token:[manager token]
+                                routeId:_route.routeId 
+                              packageId:_packageId
+                             departDate:departDateStr 
+                                  adult:_adult 
+                               children:_children 
+                          contactPerson:@"测试" //待修改
+                              telephone:@"13800138000" //待修改
+                               delegate:self];
+    } else {
+        LoginController *controller  = [[LoginController alloc] init];
+        [self.navigationController pushViewController:controller animated:YES];
+        [controller release];
+    }
 }
 
 - (IBAction)clickNonMemberBookButton:(id)sender {
@@ -183,6 +211,20 @@
 
     [self.adultButton setTitle:[NSString stringWithFormat:[NSString stringWithFormat:NSLS(@"成人%d位"), _adult]] forState:UIControlStateNormal];
     [self.childrenButton setTitle:[NSString stringWithFormat:[NSString stringWithFormat:NSLS(@"儿童%d位"), _children]] forState:UIControlStateNormal];   
+}
+
+#pragma mark - OrderServiceDelegate methods
+- (void)placeOrderDone:(int)resultCode result:(int)result reusultInfo:(NSString *)resultInfo
+{
+    if (resultCode == 0) {
+        if ( result == 0) {
+             [self popupMessage:NSLS(@"预订成功") title:nil];
+        } else {
+            [self popupMessage:resultInfo title:nil];
+        }
+    }else {
+        [self popupMessage:NSLS(@"网络弱，请稍后再试") title:nil];
+    }
 }
 
 @end

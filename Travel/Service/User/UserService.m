@@ -112,7 +112,9 @@ static UserService* _defaultUserService = nil;
             result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
             resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
             NSString *token = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_TOKEN];
-            [[UserManager defaultManager] loginWithLoginId:loginId password:password token:token];
+            if (result == 0) {
+                [[UserManager defaultManager] loginWithLoginId:loginId password:password token:token];
+            }
         }
     
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -123,14 +125,21 @@ static UserService* _defaultUserService = nil;
     });
 }
 
-- (void)logout
+- (void)logout:(id<UserServiceDelegate>)delegate
+ 
 {
-    NSString *loginId = [[UserManager defaultManager] loginId];
-    NSString *token = [[UserManager defaultManager] token];
-    [[UserManager defaultManager] logout];
-
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [TravelNetworkRequest logout:loginId token:token];   
+        NSString *loginId = [[UserManager defaultManager] loginId];
+        NSString *token = [[UserManager defaultManager] token];
+        
+        [TravelNetworkRequest logout:loginId token:token];
+                
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(loginoutDidFinish:result:resultInfo:)]) {
+                [[UserManager defaultManager] logout];
+                [delegate loginoutDidFinish:0 result:0 resultInfo:nil];
+            }
+        });  
     });
 }
 

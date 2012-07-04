@@ -18,6 +18,7 @@
 #import "ImageName.h"
 #import "RankView.h"
 #import "PPNetworkRequest.h"
+#import "UIViewUtils.h"
 
 #define CELL_IDENTIFY_CHARACTICS @"CharacticsCell"
 
@@ -268,15 +269,19 @@
 
 - (void)showInView:(UIScrollView *)superView
 {
+    [superView removeAllSubviews];
+    
     superView.contentSize = self.view.bounds.size;
     [superView addSubview:self.view];
 }
 
 
-- (void)clickBookButton
+- (void)clickBookButton:(id)sender
 {
-    if ([_aDelegate respondsToSelector:@selector(didClickBookButton)]) {
-        [_aDelegate didClickBookButton];
+    UIButton *button = (UIButton *)sender;
+    int selectPackageId = button.tag;
+    if ([_aDelegate respondsToSelector:@selector(didClickBookButton:)]) {
+        [_aDelegate didClickBookButton:selectPackageId];
     }
 }
 
@@ -640,7 +645,8 @@
                 UIButton *bookButton = [[[UIButton alloc] init] autorelease];
                 bookButton.frame = CGRectMake(210, 0, 70, 30);
                 [bookButton setImage:[[ImageManager defaultManager] bookButtonImage] forState:UIControlStateNormal];
-                //[bookButton addTarget:self action:@selector(clickBookButton) forControlEvents:UIControlEventTouchUpInside];
+                bookButton.tag = package.packageId;
+                [bookButton addTarget:self action:@selector(clickBookButton:) forControlEvents:UIControlEventTouchUpInside];
                 [headerView addSubview:bookButton];
                 
                 break;

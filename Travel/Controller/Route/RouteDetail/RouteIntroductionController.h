@@ -14,7 +14,7 @@
 @protocol RouteIntroductionControllerDelegate <NSObject>
 
 @optional
-- (void)didClickBookButton;
+- (void)didClickBookButton:(int)packageId;
 - (void)didSelectedPlace:(int)placeId;
 - (void)didClickFlight:(int)packageId;
 

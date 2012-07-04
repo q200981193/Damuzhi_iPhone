@@ -305,6 +305,7 @@ static BOOL _showUserLocateDenyAlert = YES;
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:isShow forKey:KEY_IS_SHOW_IMAGE];
+    [userDefaults synchronize];
 }
 
 + (NSString*)getCategoryIcon:(int)categoryId

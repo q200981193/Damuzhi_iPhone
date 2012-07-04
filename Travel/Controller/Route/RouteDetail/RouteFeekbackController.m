@@ -11,7 +11,7 @@
 #import "PPNetworkRequest.h"
 #import "RouteFeekbackCell.h"
 #import "ImageManager.h"
-
+#import "UIViewUtils.h"
 #import "AppManager.h"
 
 #define TAG_DEPART_CITY_LABEL 18
@@ -156,12 +156,10 @@
     [dataTableView reloadData];
 }
 
-
-                         
-                             
-
 -(void) showInView:(UIView *)superView
 {
+    [superView removeAllSubviews];
+    
     self.view.frame = superView.bounds;
     [superView addSubview:self.view];
 }

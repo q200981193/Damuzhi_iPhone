@@ -38,10 +38,13 @@
 #define URL_TRAVEL_QUERY_VERSION    (URL_SERVICE@"iphoneVersion.txt")
 #define URL_TRAVEL_SUBMIT_FEEKBACK  (URL_SERVICE@"feedback.aspx?")
 
+#define URL_TRAVEL_MEMBER_LOGIN         (URL_SERVICE@"memberLogin.aspx?")
+#define URL_TRAVEL_MEMBER_LOGOUT        (URL_SERVICE@"memberLogout.aspx?")
+
 #define URL_TRAVEL_MEMBER_REGISTER      (URL_SERVICE@"memberRegister.aspx?")
 #define URL_TRAVEL_MEMBER_VERIFICATION  (URL_SERVICE@"memberVerification.aspx?")
-#define URL_TRAVEL_RETRIEVE_PASSWORD  (URL_SERVICE@"retrievePassword.aspx?")
-#define URL_TRAVEL_PLACE_ORDER  (URL_SERVICE@"placeOrder.aspx?")
+#define URL_TRAVEL_RETRIEVE_PASSWORD    (URL_SERVICE@"retrievePassword.aspx?")
+#define URL_TRAVEL_PLACE_ORDER          (URL_SERVICE@"placeOrder.aspx?")
 
 
 // Output Format
