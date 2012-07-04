@@ -25,11 +25,18 @@ enum{
 #define TITLE_SECTION_1_ROW_1   NSLS(@"资料修改")
 
 @interface PersonalInfoController ()
-
+{
+    UITextField *_currentInputTextField;
+}
 @property (retain ,nonatomic) NSString *userName;
 @property (retain ,nonatomic) NSString *nickName;
 
+- (void)removeHideKeyboardButton;
+- (void)addHideKeyboardButton;
+- (void)clickHideKeyboardButton:(id)sender;
+
 @end
+
 
 @implementation PersonalInfoController
 @synthesize userName = _userName;
@@ -54,18 +61,18 @@ enum{
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickOK:)];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:239.0/255.0 blue:248.0/255.0 alpha:1]];
     
-    UITapGestureRecognizer* singleTapRecognizer;
-    singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapFrom:)];
-    singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
-    [self.view addGestureRecognizer:singleTapRecognizer];
-    [singleTapRecognizer release];
+//    UITapGestureRecognizer* singleTapRecognizer;
+//    singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapFrom:)];
+//    singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
+//    [self.dataTableView addGestureRecognizer:singleTapRecognizer];
+//    [singleTapRecognizer release];
 }
 
-- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer {
-    //[self hideKeyboard];
-}
+//- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer {
+//    [_currentInputTextField resignFirstResponder];
+//}
 
 - (void)viewDidUnload
 {
@@ -93,6 +100,11 @@ enum{
 }
 
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [PersonalInfoCell getCellHeight];
@@ -105,6 +117,8 @@ enum{
     if (cell == nil) {
         cell = [PersonalInfoCell createCell:self];
     }
+    [cell setPersonalInfoCellDelegate:self];
+    [cell setCellIndexPath:indexPath];
     
     cell.inputTextField.hidden = YES;
     cell.accessoryType = UITableViewCellAccessoryNone;
@@ -138,9 +152,51 @@ enum{
     
 }
 
-- (void)clickOk:(id)sender
+
+- (void)clickOK:(id)sender
 {
     
 }
+
+#pragma mark - PersonalInfoCellDelegate methods
+- (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath
+{
+    [self addHideKeyboardButton];
+    
+    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
+    _currentInputTextField = cell.inputTextField;
+}
+
+
+- (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath
+{
+    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
+    _currentInputTextField = cell.inputTextField;
+}
+
+#define HIDE_KEYBOARDBUTTON_TAG 77
+#define TOP_HEIGHT 100
+- (void)removeHideKeyboardButton
+{
+    UIButton *button = (UIButton*)[self.view viewWithTag:HIDE_KEYBOARDBUTTON_TAG];
+    [button removeFromSuperview];
+}
+
+- (void)addHideKeyboardButton
+{
+    [self removeHideKeyboardButton];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, TOP_HEIGHT, self.view.frame.size.width, self.view.frame.size.height-TOP_HEIGHT)];
+    button.tag = HIDE_KEYBOARDBUTTON_TAG;
+    [button addTarget:self action:@selector(clickHideKeyboardButton:) forControlEvents:UIControlEventAllTouchEvents];
+    [self.view addSubview:button];
+    [button release];
+}
+
+- (void)clickHideKeyboardButton:(id)sender
+{
+    [_currentInputTextField resignFirstResponder];
+    [self removeHideKeyboardButton];
+}
+
 
 @end
