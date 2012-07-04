@@ -593,6 +593,10 @@
 		EA328A141542A234001ACFF4 /* pin_jd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA328A0C1542A234001ACFF4 /* pin_jd@2x.png */; };
 		EA5C766A1534575B0025AFB2 /* TravelPreparationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */; };
 		EA5C766D1534579A0025AFB2 /* TravelTransportDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */; };
+		EAC88F9F15A441510068C3C0 /* PersonalInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC88F9A15A441510068C3C0 /* PersonalInfoCell.m */; };
+		EAC88FA015A441510068C3C0 /* PersonalInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC88F9B15A441510068C3C0 /* PersonalInfoCell.xib */; };
+		EAC88FA115A441510068C3C0 /* PersonalInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC88F9D15A441510068C3C0 /* PersonalInfoController.m */; };
+		EAC88FA215A441510068C3C0 /* PersonalInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAC88F9E15A441510068C3C0 /* PersonalInfoController.xib */; };
 		EAE4F094154EAFEB00A656FF /* MapUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE4F093154EAFEB00A656FF /* MapUtils.m */; };
 		EAE5594E15158FBF004CEFED /* SpotDetailViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */; };
 		EAE654DA153C398700AAE451 /* detail_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE654D8153C398700AAE451 /* detail_shadow@2x.png */; };
@@ -1558,6 +1562,12 @@
 		EA5C76691534575B0025AFB2 /* TravelPreparationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TravelPreparationDataSource.m; path = Common/TravelPreparationDataSource.m; sourceTree = "<group>"; };
 		EA5C766B1534579A0025AFB2 /* TravelTransportDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTransportDataSource.h; sourceTree = "<group>"; };
 		EA5C766C1534579A0025AFB2 /* TravelTransportDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTransportDataSource.m; sourceTree = "<group>"; };
+		EAC88F9915A441510068C3C0 /* PersonalInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoCell.h; sourceTree = "<group>"; };
+		EAC88F9A15A441510068C3C0 /* PersonalInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoCell.m; sourceTree = "<group>"; };
+		EAC88F9B15A441510068C3C0 /* PersonalInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalInfoCell.xib; sourceTree = "<group>"; };
+		EAC88F9C15A441510068C3C0 /* PersonalInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoController.h; sourceTree = "<group>"; };
+		EAC88F9D15A441510068C3C0 /* PersonalInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoController.m; sourceTree = "<group>"; };
+		EAC88F9E15A441510068C3C0 /* PersonalInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalInfoController.xib; sourceTree = "<group>"; };
 		EAE4F092154EAFEB00A656FF /* MapUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapUtils.h; sourceTree = "<group>"; };
 		EAE4F093154EAFEB00A656FF /* MapUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapUtils.m; sourceTree = "<group>"; };
 		EAE5594D15158FBF004CEFED /* SpotDetailViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpotDetailViewHandler.m; sourceTree = "<group>"; };
@@ -2111,6 +2121,12 @@
 		A48782BC15071BAA00A0D91E /* More */ = {
 			isa = PBXGroup;
 			children = (
+				EAC88F9915A441510068C3C0 /* PersonalInfoCell.h */,
+				EAC88F9A15A441510068C3C0 /* PersonalInfoCell.m */,
+				EAC88F9B15A441510068C3C0 /* PersonalInfoCell.xib */,
+				EAC88F9C15A441510068C3C0 /* PersonalInfoController.h */,
+				EAC88F9D15A441510068C3C0 /* PersonalInfoController.m */,
+				EAC88F9E15A441510068C3C0 /* PersonalInfoController.xib */,
 				A48E058E15341B3A00B2695E /* FeekbackController.h */,
 				A48E058F15341B3A00B2695E /* FeekbackController.m */,
 				A48E059015341B3A00B2695E /* FeekbackController.xib */,
@@ -4224,6 +4240,8 @@
 				A43BB00015A2FA70008F3AFC /* fly_p4@2x.png in Resources */,
 				A43BB00115A2FA70008F3AFC /* fly_p5@2x.png in Resources */,
 				A440FD9215A3FA18005C4759 /* UnPackageTourHomePageController.xib in Resources */,
+				EAC88FA015A441510068C3C0 /* PersonalInfoCell.xib in Resources */,
+				EAC88FA215A441510068C3C0 /* PersonalInfoController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4528,6 +4546,8 @@
 				A4CD756A15A2D14600713F0B /* FlightController.m in Sources */,
 				A3E1956415A2F0B600972886 /* RankView.m in Sources */,
 				A440FD9115A3FA18005C4759 /* UnPackageTourHomePageController.m in Sources */,
+				EAC88F9F15A441510068C3C0 /* PersonalInfoCell.m in Sources */,
+				EAC88FA115A441510068C3C0 /* PersonalInfoController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
