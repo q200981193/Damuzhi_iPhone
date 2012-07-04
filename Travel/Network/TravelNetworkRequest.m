@@ -794,6 +794,7 @@
         str = [str stringByAddQueryParameter:PARA_TRAVEL_ROUTE_ID intValue:routeId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_PACKAGE_ID intValue:packageId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_DEPART_DATE value:departDate];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_ADULT intValue:adult];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CHILDREN intValue:children];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_CONTACT_PERSION value:contactPersion];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];

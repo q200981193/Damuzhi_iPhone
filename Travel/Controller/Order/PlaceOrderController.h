@@ -10,8 +10,9 @@
 #import "TouristRoute.pb.h"
 #import "MonthViewController.h"
 #import "SelectController.h"
+#import "OrderService.h"
 
-@interface PlaceOrderController : PPViewController <MonthViewControllerDelegate, SelectControllerDelegate>
+@interface PlaceOrderController : PPViewController <MonthViewControllerDelegate, SelectControllerDelegate, OrderServiceDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *routeNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *routeIdLabel;
@@ -25,6 +26,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *priceLabel;
 
 @property (retain, nonatomic) IBOutlet UILabel *noteLabel;
-- (id)initWithRoute:(TouristRoute *)route;
+
+- (id)initWithRoute:(TouristRoute *)route packageId:(int)packageId;
 
 @end
