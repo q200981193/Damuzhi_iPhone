@@ -22,6 +22,7 @@
 #import "FavoriteController.h"
 #import "ShareToSinaController.h"
 #import "ShareToQQController.h"
+#import "PersonalInfoController.h"
 
 @interface MoreController ()
 
@@ -316,7 +317,7 @@
         [self showOrderManager];
     }
     else if ([title isEqualToString:USER_INFO]) {
-        
+        [self showUserInfo];
     }
     else if ([title isEqualToString:MY_FAVORITE]) {
         [self showFavorite];
@@ -344,6 +345,13 @@
 - (void)showOrderManager
 {
     OrderManagerController *controller  = [[OrderManagerController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+- (void)showUserInfo
+{
+    PersonalInfoController *controller = [[PersonalInfoController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
