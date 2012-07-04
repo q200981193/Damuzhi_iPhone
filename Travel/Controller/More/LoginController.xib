@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">11D50b</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<int key="IBDocument.SystemTarget">1280</int>
+		<string key="IBDocument.SystemVersion">11A2061</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
+		<string key="IBDocument.AppKitVersion">1138.1</string>
+		<string key="IBDocument.HIToolboxVersion">566.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">933</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUITextField</string>
@@ -122,7 +122,7 @@
 					<object class="IBUILabel" id="121940159">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{26, 24}, {68, 21}}</string>
+						<string key="NSFrame">{{26, 24}, {68, 21.5}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="738815227"/>
 						<string key="NSReuseIdentifierKey">_NS:328</string>
@@ -300,6 +300,10 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{75.5, 179}, {152.5, 29}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+<<<<<<< HEAD
+						<reference key="NSNextKeyView"/>
+=======
+>>>>>>> origin/master
 						<string key="NSReuseIdentifierKey">_NS:225</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -10291,14 +10295,6 @@ AAEAAQABA</bytes>
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">loginIdTextField</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="738815227"/>
-					</object>
-					<int key="connectionID">43</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">passwordTextField</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="422751107"/>
@@ -10323,13 +10319,21 @@ AAEAAQABA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+<<<<<<< HEAD
+						<string key="label">loginIdTextField</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="121940159"/>
+=======
 						<string key="label">autoLoginButton</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="555256095"/>
+>>>>>>> origin/master
 					</object>
 					<int key="connectionID">74</int>
 				</object>
 				<object class="IBConnectionRecord">
+<<<<<<< HEAD
+=======
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">rememberLoginIdbutton</string>
 						<reference key="source" ref="372490531"/>
@@ -10346,6 +10350,7 @@ AAEAAQABA</bytes>
 					<int key="connectionID">76</int>
 				</object>
 				<object class="IBConnectionRecord">
+>>>>>>> origin/master
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">textFieldDoneEditing:</string>
 						<reference key="source" ref="422751107"/>
@@ -10582,14 +10587,18 @@ AAEAAQABA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
+<<<<<<< HEAD
+			<int key="maxID">74</int>
+=======
 			<int key="maxID">76</int>
+>>>>>>> origin/master
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1296" key="NS.object.0"/>
+			<real value="1280" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
@@ -10599,6 +10608,6 @@ AAEAAQABA</bytes>
 			<string key="no_s@2x.png">{53, 70}</string>
 			<string key="yes_s@2x.png">{53, 70}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
 </archive>

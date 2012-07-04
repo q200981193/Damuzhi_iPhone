@@ -19,4 +19,7 @@
 
 + (Booking *)bookingOfDay:(int)passDaySince1970 bookings:(NSArray *)bookings;
 
++ (TravelPackage *)findPackageByPackageId:(int)packageId fromPackageList:(NSArray *)packageList;
+
+
 @end
