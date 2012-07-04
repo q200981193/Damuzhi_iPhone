@@ -20,6 +20,8 @@
 - (void)verificationDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)verificationDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+- (void)loginoutDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+
 - (void)retrievePasswordDidSend:(int)resultCode;
 
 @end
@@ -45,7 +47,7 @@
      delegate:(id<UserServiceDelegate>)delegate;
 
 // 用户登出接口
-- (void)logout;
+- (void)logout:(id<UserServiceDelegate>)delegate;
 
 // 注册接口
 - (void)signUp:(NSString *)loginId 

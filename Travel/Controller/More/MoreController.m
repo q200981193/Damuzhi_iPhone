@@ -25,23 +25,18 @@
 
 @interface MoreController ()
 
+@property (retain, nonatomic) UIButton *loginoutButton;
+
 @property (retain, nonatomic) NSMutableDictionary *dataDictionary;
 @property (nonatomic, retain) UISwitch *showImageSwitch;
 
 @end
 
 @implementation MoreController
+
+@synthesize loginoutButton = _loginoutButton;
 @synthesize dataDictionary;
 @synthesize showImageSwitch;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 #define CITIES              NSLS(@"已开通城市")
 #define VERSION             NSLS(@"版本更新")
@@ -56,19 +51,23 @@
 #define SHARE               NSLS(@"推荐给好友")
 
 
+- (void)dealloc
+{
+    [_loginoutButton release];
+    [showImageSwitch release];
+    [dataDictionary release];
+    [super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-
 
     // Do any additional setup after loading the view from its nib.
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
-    
-    [self updateDataSource];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
     
@@ -78,6 +77,14 @@
     self.showImageSwitch = aSwitch;
     [aSwitch release];
     showImageSwitch.on = [AppUtils isShowImage];
+    
+    [self updateDataSource];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self updateDataSource];
+    [super viewDidAppear:animated];
 }
 
 - (void)updateDataSource
@@ -138,12 +145,6 @@
     
 }
 
-- (void)dealloc
-{
-    [showImageSwitch release];
-    [dataDictionary release];
-    [super dealloc];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -337,11 +338,6 @@
 - (void)clickLogin:(id)sender
 {
     LoginController *controller = [[[LoginController alloc] init] autorelease];
-
-    
-//    [[[UINavigationController alloc] initWithRootViewController:controller] autorelease];
-    
-    
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -368,8 +364,20 @@
 
 - (void)clickLogout:(id)sender
 {
-    [[UserService defaultService] logout];
+    self.loginoutButton = (UIButton *)sender;
+    _loginoutButton.enabled = NO;
+    
+    [[UserService defaultService] logout:self];
 }
+
+- (void)loginoutDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    _loginoutButton.enabled = YES;
+    
+    [self updateDataSource];
+    [dataTableView reloadData];
+}
+
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {

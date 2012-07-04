@@ -63,10 +63,7 @@
                                                    orderType:_orderType 
                                                     delegate:self];
     }else {
-//        [[OrderService defaultService] findOrderUsingUserId:[[UserManager defaultManager] getUserId] 
-//                                                  orderType:_orderType
-//                                                   delegate:self];
-        [[OrderService defaultService] findOrderUsingUserId:@"user_100018" 
+        [[OrderService defaultService] findOrderUsingUserId:[[UserManager defaultManager] getUserId] 
                                                   orderType:_orderType
                                                    delegate:self];
     }

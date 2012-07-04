@@ -16,16 +16,23 @@
 #import "StringUtil.h"
 
 @interface LoginController ()
+
 @property (copy, nonatomic) NSString *loginId;
 @property (copy, nonatomic) NSString *password;
+@property (retain, nonatomic) UIButton *loginButton;
+
 @end
 
 @implementation LoginController
+@synthesize autoLoginButton;
+@synthesize rememberLoginIdbutton;
+@synthesize rememberPasswordButton;
 
 @synthesize loginIdTextField;
 @synthesize passwordTextField;
 @synthesize checkOrdersButton;
 
+@synthesize loginButton = _loginButton;
 @synthesize loginId = _loginId;
 @synthesize password = _password;
 
@@ -34,11 +41,15 @@
 - (void)dealloc {
     [_loginId release];
     [_password release];
+    [_loginButton release];
     
     [loginIdTextField release];
     [passwordTextField release];
     
     [checkOrdersButton release];
+    [autoLoginButton release];
+    [rememberLoginIdbutton release];
+    [rememberPasswordButton release];
      [super dealloc];
 }
 
@@ -56,9 +67,11 @@
                             action:@selector(clickLogin:)];
     
     UIImage *buttonImageBackground = [UIImage strectchableImageName:@"line_btn1.png"leftCapWidth:20];
-    
     [checkOrdersButton setBackgroundImage:buttonImageBackground forState:UIControlStateNormal];
-
+    
+    autoLoginButton.selected = [[UserManager defaultManager] isAutoLogin];
+    rememberLoginIdbutton.selected = [[UserManager defaultManager] isRememberLoginId];
+    rememberPasswordButton.selected = [[UserManager defaultManager]  isRememberPassword];
 }
 
 - (void)viewDidUnload
@@ -67,6 +80,9 @@
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
     [self setCheckOrdersButton:nil];
+    [self setAutoLoginButton:nil];
+    [self setRememberLoginIdbutton:nil];
+    [self setRememberPasswordButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -100,6 +116,8 @@
         return;
     }
     
+    self.loginButton = (UIButton *)sender;
+    _loginButton.enabled = NO;
     [[UserService defaultService] login:loginIdTextField.text
                                password:passwordTextField.text
                                delegate:self];
@@ -138,18 +156,22 @@
 - (IBAction)clickAutoLoginButton:(id)sender {
     UIButton *button = (UIButton *)sender;
     button.selected = !button.selected; 
+    
+    [[UserManager defaultManager] setAutoLogin:button.selected];
 }
 
 - (IBAction)clickRememberLoginIdButton:(id)sender {
     UIButton *button = (UIButton *)sender;
-    [[UserManager defaultManager] rememberLoginId:button.selected];  
     button.selected = !button.selected;
+    
+    [[UserManager defaultManager] rememberLoginId:button.selected];  
 }
 
 - (IBAction)clickRememberPasswordButton:(id)sender {
     UIButton *button = (UIButton *)sender;
-    [[UserManager defaultManager] rememberPassword:button.selected]; 
     button.selected = !button.selected;
+    
+    [[UserManager defaultManager] rememberPassword:button.selected]; 
 }
 
 
@@ -163,6 +185,7 @@
 
 - (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
 {
+    _loginButton.enabled = YES;
     if (resultCode != ERROR_SUCCESS) {
         [self popupMessage:NSLS(@"您的网络不稳定，登录失败") title:nil];
         return;
@@ -175,8 +198,8 @@
     }
     
     [self popupMessage:NSLS(@"登陆成功") title:nil];
-
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 

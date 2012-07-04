@@ -18,5 +18,8 @@
 
 -(IBAction)textFieldDoneEditing:(id)sender;
 
+@property (retain, nonatomic) IBOutlet UIButton *autoLoginButton;
+@property (retain, nonatomic) IBOutlet UIButton *rememberLoginIdbutton;
+@property (retain, nonatomic) IBOutlet UIButton *rememberPasswordButton;
 
 @end
