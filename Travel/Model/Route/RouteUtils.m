@@ -85,10 +85,11 @@
 }
 
 
-+ (Booking *)bookingOfDay:(int)passDaySince1970 bookings:(NSArray *)bookings
++ (Booking *)bookingOfDate:(NSDate *)date bookings:(NSArray *)bookings
 {
+    int passDay = [date timeIntervalSince1970] / 86400;
     for (Booking *booking in bookings) {
-        if (passDaySince1970 == booking.date / 86400) {
+        if (passDay == booking.date / 86400) {
             return booking;
         }
     }

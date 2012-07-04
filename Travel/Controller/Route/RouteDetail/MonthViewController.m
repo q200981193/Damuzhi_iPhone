@@ -169,13 +169,13 @@
 {
     NSString *bookingInfo = @"";
     
-    int passDay = [date timeIntervalSince1970] / 86400;
-    Booking *booking = [RouteUtils bookingOfDay:passDay bookings:_bookings];
+    Booking *booking = [RouteUtils bookingOfDate:date bookings:_bookings];
     if (booking != nil) {
         if (booking.status == 1) {
             bookingInfo = NSLS(@"未开售") ;
         }else if (booking.status == 2) {
-            bookingInfo = [NSString stringWithFormat:@"%@\n%@", booking.adultPrice, booking.remainder];
+            NSString *remainder = ([booking.remainder intValue] > 9) ? NSLS(@">9") : booking.remainder; 
+            bookingInfo = [NSString stringWithFormat:@"%@\n可报%@", booking.adultPrice, remainder];
         }else if (booking.status == 3) {
             bookingInfo = NSLS(@"满");
         }
@@ -201,8 +201,15 @@
 - (void) calendarMonthView:(TKCalendarMonthView*)monthView didSelectDate:(NSDate*)date
 {
     if ([_aDelegate respondsToSelector:@selector(didSelecteDate:)]) {
-        [_aDelegate didSelecteDate:date];
+        Booking *booking = [RouteUtils bookingOfDate:date bookings:_bookings];
         
+        if (booking.status == 1) {
+            [self popupMessage:NSLS(@"该日期未开售") title:nil];
+        }else if (booking.status == 2) {
+            [_aDelegate didSelecteDate:date];
+        }else if (booking.status == 3) {
+            [self popupMessage:NSLS(@"该日期已满") title:nil];
+        }
     }
 }
 
