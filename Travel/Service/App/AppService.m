@@ -154,6 +154,7 @@ static AppService* _defaultAppService = nil;
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:version forKey:KEY_HELP_HTML_FILE_VERSION];
+    [userDefaults synchronize];
 }
 
 - (void)updateAppData

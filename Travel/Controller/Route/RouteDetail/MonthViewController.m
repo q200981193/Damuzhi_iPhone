@@ -54,8 +54,12 @@
 
 - (void)viewDidLoad
 {
+    self.title = NSLS(@"出发日期");
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setNavigationLeftButton:NSLS(@" 返回") 
+                        imageName:@"back.png" 
+                           action:@selector(clickBack:)];
     
     NSDate *now = [NSDate date];
     self.monthView = [[[TKCalendarMonthView alloc] initWithSundayAsFirst:NO 
