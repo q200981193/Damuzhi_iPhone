@@ -12,6 +12,7 @@
 #import "TimeUtils.h"
 #import "TouristRoute.pb.h"
 #import "NSDate+TKCategory.h"
+#import "UIViewUtils.h"
 
 
 @interface MonthViewController ()
@@ -187,6 +188,8 @@
 
 - (void)showInView:(UIView *)superView
 {
+    [superView removeAllSubviews];
+
     CGFloat scale = superView.frame.size.width / self.view.frame.size.width;
     CGAffineTransform transform =  CGAffineTransformMakeScale(scale, scale);
     _monthView.transform = transform;

@@ -7,6 +7,7 @@
 //
 
 #import "UnPackageTourHomePageController.h"
+#import "LocaleUtils.h"
 
 @interface UnPackageTourHomePageController ()
 
@@ -16,7 +17,7 @@
 
 - (void)viewDidLoad
 {
-    self.title = NSLS("自由行");
+    self.title = NSLS(@"自由行");
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     

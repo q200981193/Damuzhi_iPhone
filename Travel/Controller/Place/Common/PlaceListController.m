@@ -22,6 +22,7 @@
 #import "AppUtils.h"
 #import "ImageManager.h"
 #import "PlaceMapAnnotation.h"
+#import "UIViewUtils.h"
 
 #define TAG_USER_LOCATE_DENY_ALERT_VIEW 111
 
@@ -117,7 +118,9 @@
 }
 
 - (void)showInView:(UIView*)superView 
-{    
+{   
+    [superView removeAllSubviews];
+
     [self.view setFrame:superView.bounds];
     [superView addSubview:self.view];
 }
