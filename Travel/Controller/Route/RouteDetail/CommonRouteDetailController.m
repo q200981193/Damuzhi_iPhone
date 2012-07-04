@@ -15,6 +15,8 @@
 #import "CommonWebController.h"
 #import "CommonPlaceDetailController.h"
 #import "FlightController.h"
+#import "RouteUtils.h"
+#import "PPDebug.h"
 
 @interface CommonRouteDetailController ()
 
@@ -224,7 +226,14 @@
 
 - (void)didClickFlight:(int)packageId
 {
-    FlightController *controller = [[FlightController alloc] init];
+    PPDebug(@"packageId is %d", packageId);
+    
+    TravelPackage *package = [RouteUtils findPackageByPackageId:packageId fromPackageList:_route.packagesList];
+    
+    FlightController *controller = [[FlightController alloc] initWithDepartFlight:package.departFlight returnFlight:package.returnFlight];
+    
+    
+    
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

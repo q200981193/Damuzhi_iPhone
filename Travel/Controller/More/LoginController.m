@@ -39,6 +39,7 @@
     [passwordTextField release];
     
     [checkOrdersButton release];
+    [loginIdTextField release];
      [super dealloc];
 }
 
@@ -67,6 +68,7 @@
     [self setLoginIdTextField:nil];
     [self setPasswordTextField:nil];
     [self setCheckOrdersButton:nil];
+    [self setLoginIdTextField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

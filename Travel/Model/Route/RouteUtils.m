@@ -72,5 +72,17 @@
     return retArray; 
 }
 
++ (TravelPackage *)findPackageByPackageId:(int)packageId fromPackageList:(NSArray *)packageList
+{
+    TravelPackage *package;
+    for (package in packageList) {
+        if (package.packageId == packageId) {
+            return package;
+        }
+    }
+    
+    return nil;
+}
+
 
 @end

@@ -63,7 +63,6 @@
 		A406A2B11597FD7E00CE938A /* PlaceOrderController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A406A2AF1597FD7E00CE938A /* PlaceOrderController.xib */; };
 		A406A2B51597FFEE00CE938A /* MonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A406A2B31597FFEE00CE938A /* MonthViewController.m */; };
 		A406A2B61597FFEE00CE938A /* MonthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A406A2B41597FFEE00CE938A /* MonthViewController.xib */; };
-		A406BA51157C4A3800257DED /* RouteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A406BA50157C4A3800257DED /* RouteManager.m */; };
 		A406BA57157C4D5B00257DED /* TravelTipsService.m in Sources */ = {isa = PBXBuildFile; fileRef = A406BA56157C4D5B00257DED /* TravelTipsService.m */; };
 		A406BA5B157C4E0500257DED /* RouteService.m in Sources */ = {isa = PBXBuildFile; fileRef = A406BA5A157C4E0500257DED /* RouteService.m */; };
 		A406BA64157CAC2200257DED /* RouteUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A406BA63157CAC2200257DED /* RouteUtils.m */; };
@@ -752,8 +751,6 @@
 		A406A2B21597FFEE00CE938A /* MonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthViewController.h; sourceTree = "<group>"; };
 		A406A2B31597FFEE00CE938A /* MonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthViewController.m; sourceTree = "<group>"; };
 		A406A2B41597FFEE00CE938A /* MonthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonthViewController.xib; sourceTree = "<group>"; };
-		A406BA4F157C4A3800257DED /* RouteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteManager.h; sourceTree = "<group>"; };
-		A406BA50157C4A3800257DED /* RouteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteManager.m; sourceTree = "<group>"; };
 		A406BA55157C4D5B00257DED /* TravelTipsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TravelTipsService.h; path = Travel/Service/TravelTips/TravelTipsService.h; sourceTree = SOURCE_ROOT; };
 		A406BA56157C4D5B00257DED /* TravelTipsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TravelTipsService.m; path = Travel/Service/TravelTips/TravelTipsService.m; sourceTree = SOURCE_ROOT; };
 		A406BA59157C4E0500257DED /* RouteService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteService.h; sourceTree = "<group>"; };
@@ -1841,8 +1838,6 @@
 		A406BA4E157C49F000257DED /* Route */ = {
 			isa = PBXGroup;
 			children = (
-				A406BA4F157C4A3800257DED /* RouteManager.h */,
-				A406BA50157C4A3800257DED /* RouteManager.m */,
 				A406BA62157CAC2200257DED /* RouteUtils.h */,
 				A406BA63157CAC2200257DED /* RouteUtils.m */,
 				A455F8181582F58100CA5743 /* RouteExtend.h */,
@@ -4486,7 +4481,6 @@
 				A3ED59661557742900312715 /* ResendService.m in Sources */,
 				A3ED596A15577CA700312715 /* ResendManager.m in Sources */,
 				A4EBF07815776E2000B088A0 /* TouristRoute.pb.m in Sources */,
-				A406BA51157C4A3800257DED /* RouteManager.m in Sources */,
 				A406BA57157C4D5B00257DED /* TravelTipsService.m in Sources */,
 				A406BA5B157C4E0500257DED /* RouteService.m in Sources */,
 				A406BA64157CAC2200257DED /* RouteUtils.m in Sources */,
