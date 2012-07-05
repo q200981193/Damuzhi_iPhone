@@ -14,26 +14,33 @@
 - (id)initWithDepartFlight:(Flight *)departFlight returnFlight:(Flight *)returnFlight;
 
 
-@property (retain, nonatomic) IBOutlet UILabel *departFlightTextField;
+@property (retain, nonatomic) IBOutlet UILabel *departFlightLabel;
 
 
-@property (retain, nonatomic) IBOutlet UILabel *departFlightLaunchInfoTextField;
-
-@property (retain, nonatomic) IBOutlet UILabel *departFlightDescendInfoTextField;
-
-@property (retain, nonatomic) IBOutlet UILabel *departFlightNumberTextField;
+@property (retain, nonatomic) IBOutlet UILabel *departFlightLaunchInfoLabel;
 
 
 
-@property (retain, nonatomic) IBOutlet UILabel *returnFlightTextField;
-
-@property (retain, nonatomic) IBOutlet UILabel *returnFlightLaunchInfoTextField;
+@property (retain, nonatomic) IBOutlet UILabel *departFlightDescendInfoLabel;
 
 
-@property (retain, nonatomic) IBOutlet UILabel *returnFlightDescendInfoTextField;
-
-@property (retain, nonatomic) IBOutlet UILabel *returnFlightNumberTextField;
+@property (retain, nonatomic) IBOutlet UILabel *departFlightModeLabel;
 
 
 
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightLabel;
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightLaunchInforLabel;
+
+
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightDescendInforLabel;
+
+
+@property (retain, nonatomic) IBOutlet UILabel *returnFlightModeLabel;
+
+
+@property (retain, nonatomic) IBOutlet UIImageView *returnFlightBackgroundImage;
+
+@property (retain, nonatomic) IBOutlet UIImageView *returnFlightBackgroundImage2;
 @end
