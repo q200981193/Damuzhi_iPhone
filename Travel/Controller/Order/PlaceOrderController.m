@@ -11,7 +11,6 @@
 #import "TKCalendarMonthView.h"
 #import "AppManager.h"
 #import "TimeUtils.h"
-#import "NonMemberOrderController.h"
 #import "ImageManager.h"
 #import "UserManager.h"
 #import "LoginController.h"
@@ -29,6 +28,7 @@
 @property (retain, nonatomic) NSMutableArray *selectedAdultIdList;
 @property (retain, nonatomic) NSMutableArray *selectedChildrenIdList;
 @property (assign, nonatomic) int packageId;
+@property (retain, nonatomic) NonMemberOrderController *nonMemberOrderController;
 
 @end
 
@@ -47,6 +47,7 @@
 @synthesize adult = _adult;
 @synthesize children = _children;
 @synthesize packageId = _packageId;
+@synthesize nonMemberOrderController = _nonMemberOrderController;
 
 @synthesize selectedAdultIdList = _selectedAdultIdList;
 @synthesize selectedChildrenIdList = _selectedChildrenIdList;
@@ -68,6 +69,7 @@
     [_adultButton release];
     [_childrenButton release];
     [_noteLabel release];
+    PPRelease(_nonMemberOrderController);
     [super dealloc];
 }
 
@@ -199,8 +201,17 @@
         return;
     }
     
-    NonMemberOrderController *controller = [[[NonMemberOrderController alloc] initWithRoute:_route departDate:_departDate adult:_adult children:_children] autorelease];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (_nonMemberOrderController == nil) {
+        NonMemberOrderController *controller = [[NonMemberOrderController alloc] initWithRoute:_route 
+                                                                                     departDate:_departDate 
+                                                                                          adult:_adult 
+                                                                                       children:_children];
+        controller.delegate = self;
+        self.nonMemberOrderController = controller;
+        [controller release];
+    }
+    
+    [self.navigationController pushViewController:_nonMemberOrderController animated:YES];
 }
 
 - (void)didSelecteDate:(NSDate *)date
@@ -232,6 +243,26 @@
     }else {
         [self popupMessage:NSLS(@"网络弱，请稍后再试") title:nil];
     }
+}
+
+#pragma mark - NonMemberOrderDelegate
+- (void)didclickSubmit:(NSString *)contactPerson telephone:(NSString *)telephone
+{
+    UserManager *manager = [UserManager defaultManager];
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateFormat:@"yyyyMMdd"];
+    NSString *departDateStr = [dateFormatter stringFromDate:self.departDate];
+    
+    OrderService *service = [OrderService defaultService];
+    [service placeOrderUsingUserId:[manager getUserId]  
+                           routeId:_route.routeId  
+                         packageId:_packageId 
+                        departDate:departDateStr 
+                             adult:_adult 
+                          children:_children 
+                     contactPerson:contactPerson 
+                         telephone:telephone 
+                          delegate:self];
 }
 
 @end

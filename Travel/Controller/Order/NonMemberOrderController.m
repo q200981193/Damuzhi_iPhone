@@ -34,6 +34,7 @@
 @synthesize routeNameLabel;
 @synthesize contactPersonTextField;
 @synthesize telephoneTextField;
+@synthesize delegate;
 
 - (void)dealloc {
     [_route release];
@@ -69,6 +70,8 @@
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
+    
+    self.navigationItem.title = NSLS(@"确认预订");
     
     [self setNavigationRightButton:NSLS(@"确认") 
                          imageName:@"topmenu_btn_right.png" 
@@ -136,39 +139,22 @@
     NSString *contactPerson = contactPersonTextField.text;
     NSString *telephone = telephoneTextField.text;
     
+    if (contactPerson == nil || [contactPerson length] == 0) {
+        [self popupMessage:NSLS(@"请输入你的姓名") title:nil];
+        return;
+    }
+    
     if (!NSStringIsValidPhone(telephoneTextField.text)) {
         [self popupMessage:NSLS(@"您输入的手机号码有误，请重新输入") title:nil];
         return;
     }
     
-    NSString *userId = [[UserManager defaultManager] getUserId]; 
-    NSString *date = dateToStringByFormat(_departDate, @"yyyyMMdd");
-    [[OrderService defaultService] placeOrderUsingUserId:userId
-                                                 routeId:_route.routeId 
-                                               packageId:0
-                                              departDate:date
-                                                   adult:1
-                                                children:1 
-                                           contactPerson:contactPerson
-                                               telephone:telephone 
-                                                delegate:self];
+    if (delegate && [delegate respondsToSelector:@selector(didclickSubmit:telephone:)]) {
+        [delegate didclickSubmit:contactPerson telephone:telephone];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
-- (void)placeOrderDone:(int)resultCode result:(int)result reusultInfo:(NSString *)resultInfo
-{
-    if (resultCode != ERROR_SUCCESS) {
-        [self popupMessage:NSLS(@"网络弱，请稍后再试") title:nil];
-        return;
-    }
-    
-    if (result == 0) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [self popupMessage:NSLS(@"预订成功") title:nil];
-        return;
-    }
-    
-    NSString *str = [NSString stringWithFormat:NSLS(@"预订失败：%@"), resultInfo];
-    [self popupMessage:str title:nil];
-}
 
 @end

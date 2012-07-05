@@ -8,13 +8,20 @@
 
 #import "PPViewController.h"
 #import "TouristRoute.pb.h"
-#import "OrderService.h"
 
-@interface NonMemberOrderController : PPViewController <UITextFieldDelegate, OrderServiceDelegate>
+@protocol NonMemberOrderDelegate <NSObject>
+
+- (void)didclickSubmit:(NSString *)contactPerson telephone:(NSString *)telephone;
+
+@end
+
+
+@interface NonMemberOrderController : PPViewController <UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *routeNameLabel;
 @property (retain, nonatomic) IBOutlet UITextField *contactPersonTextField;
 @property (retain, nonatomic) IBOutlet UITextField *telephoneTextField;
+@property (assign, nonatomic) id<NonMemberOrderDelegate>  delegate;
 
 - (id)initWithRoute:(TouristRoute *)route
          departDate:(NSDate *)departDate
