@@ -25,6 +25,8 @@
 @property (retain, nonatomic) IBOutlet UIButton *childrenButton;
 
 @property (retain, nonatomic) IBOutlet UILabel *priceLabel;
+@property (retain, nonatomic) IBOutlet UILabel *packageIdLabel;
+@property (retain, nonatomic) IBOutlet UILabel *packageIdTitleLabel;
 
 @property (retain, nonatomic) IBOutlet UILabel *noteLabel;
 

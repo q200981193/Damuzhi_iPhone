@@ -11,7 +11,6 @@
 #import "AppManager.h"
 #import "ImageManager.h"
 #import "TravelNetworkConstants.h"
-#import "DailyScheduleCell.h"
 #import "CharacticsCell.h"
 #import "BookingCell.h"
 #import "SlideImageView.h"
@@ -407,7 +406,7 @@
     }
     
     DailyScheduleCell *dailySchedulesCell = (DailyScheduleCell *)cell;
-    
+    dailySchedulesCell.aDelegate = self;
     [dailySchedulesCell setCellData:[[_route dailySchedulesList] objectAtIndex:indexPath.row] rowNum:indexPath.row rowCount:[self cellCountForSection:indexPath.section]];
     
     return cell;
@@ -657,8 +656,10 @@
     //出发日期
     if([label.text isEqualToString:SECTION_TITLE_BOOKING]) {
         UILabel *noteLabel = [self headerNote];
-        noteLabel.text = [NSString  stringWithFormat:@"(%@)", _route.bookingNote];
-        noteLabel.text = [NSString  stringWithFormat:@"(%@)", @"提前10天"];
+        if (_route.bookingNote && [_route.bookingNote length] >0) {
+            noteLabel.text = [NSString  stringWithFormat:@"(%@)", _route.bookingNote];
+        }
+        //noteLabel.text = [NSString  stringWithFormat:@"(%@)", @"提前10天"];
         [headerView addSubview:noteLabel];
     }
         
@@ -725,6 +726,13 @@
 }
 
 - (void)didClickAccommodation:(int)hotelId
+{
+    if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
+        [_aDelegate didSelectedPlace:hotelId];
+    }
+}
+
+- (void)didClickHotel:(int)hotelId
 {
     if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
         [_aDelegate didSelectedPlace:hotelId];

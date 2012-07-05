@@ -147,8 +147,7 @@
         return;
     }
     
-    [self popupMessage:NSLS(@"注册成功") title:nil];
-    VerificationController *controller = [[[VerificationController alloc] init] autorelease];
+    VerificationController *controller = [[[VerificationController alloc] initWithTelephone:_loginId] autorelease];
     controller.loginController = self.superController;
     [self.navigationController pushViewController:controller animated:YES];
 

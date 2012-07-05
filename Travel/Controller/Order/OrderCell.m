@@ -31,6 +31,7 @@
 @synthesize personCountLabel;
 @synthesize priceLabel;
 @synthesize orderStatusLabel;
+@synthesize packageIdLabel;
 
 - (void)dealloc {
     [_order release];
@@ -43,6 +44,7 @@
     [personCountLabel release];
     [priceLabel release];
     [orderStatusLabel release];
+    [packageIdLabel release];
     [super dealloc];
 }
 

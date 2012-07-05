@@ -20,6 +20,8 @@
 @property (retain, nonatomic) IBOutlet UIImageView *backgroundImageVeiw;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UITextField *inputTextField;
+@property (retain, nonatomic) IBOutlet UIImageView *pointImageView;
+
 @property (assign, nonatomic) id<PersonalInfoCellDelegate> personalInfoCellDelegate;
 
 - (void)setCellIndexPath:(NSIndexPath *)aIndexPath;

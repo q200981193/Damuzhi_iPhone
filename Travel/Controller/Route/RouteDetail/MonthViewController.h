@@ -20,6 +20,8 @@
 
 @property (assign, nonatomic) id<MonthViewControllerDelegate> aDelegate;
 
+@property (retain, nonatomic) IBOutlet UIView *aBgView;
+
 @property (retain, nonatomic) IBOutlet UIButton *currentMonthButton;
 @property (retain, nonatomic) IBOutlet UIButton *nextMonthButton;
 @property (retain, nonatomic) IBOutlet UIView *monthHolderView;

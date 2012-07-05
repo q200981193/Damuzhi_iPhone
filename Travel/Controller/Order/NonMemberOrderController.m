@@ -77,7 +77,8 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickSubmit:)];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
+    
     routeNameLabel.text = _route.name;
     
     contactPersonTextField.tag = TAG_TEXT_FIELD_CONTACT_PERSON;

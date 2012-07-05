@@ -26,6 +26,7 @@
 
 @implementation MonthViewController
 @synthesize aDelegate = _aDelegate;
+@synthesize aBgView = _aBgView;
 @synthesize currentMonthButton = _currentMonthButton;
 @synthesize nextMonthButton = _nextMonthButton;
 @synthesize monthHolderView = _monthHolderView;
@@ -42,6 +43,7 @@
     [_currentMonthButton release];
     [_nextMonthButton release];
     [_monthHolderView release];
+    [_aBgView release];
     [super dealloc];
 }
 
@@ -91,6 +93,7 @@
     [self setCurrentMonthButton:nil];
     [self setNextMonthButton:nil];
     [self setMonthHolderView:nil];
+    [self setABgView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
