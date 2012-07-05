@@ -168,7 +168,7 @@
 					<object class="IBUITextField" id="1070658735">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{103, 62}, {191, 31}}</string>
+						<string key="NSFrame">{{102, 61}, {191, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="491382094"/>
@@ -188,6 +188,7 @@
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIKeyboardType">1</int>
 							<int key="IBUIReturnKeyType">4</int>
+							<bool key="IBUISecureTextEntry">YES</bool>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="550376630"/>
@@ -215,6 +216,7 @@
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIKeyboardType">1</int>
 							<int key="IBUIReturnKeyType">9</int>
+							<bool key="IBUISecureTextEntry">YES</bool>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="550376630"/>
@@ -289,8 +291,8 @@
 							<reference ref="224719338"/>
 							<reference ref="237675696"/>
 							<reference ref="1067418712"/>
-							<reference ref="1070658735"/>
 							<reference ref="776686693"/>
+							<reference ref="1070658735"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

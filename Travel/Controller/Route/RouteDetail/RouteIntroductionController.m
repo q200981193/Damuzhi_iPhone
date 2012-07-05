@@ -11,7 +11,6 @@
 #import "AppManager.h"
 #import "ImageManager.h"
 #import "TravelNetworkConstants.h"
-#import "DailyScheduleCell.h"
 #import "CharacticsCell.h"
 #import "BookingCell.h"
 #import "SlideImageView.h"
@@ -407,7 +406,7 @@
     }
     
     DailyScheduleCell *dailySchedulesCell = (DailyScheduleCell *)cell;
-    
+    dailySchedulesCell.aDelegate = self;
     [dailySchedulesCell setCellData:[[_route dailySchedulesList] objectAtIndex:indexPath.row] rowNum:indexPath.row rowCount:[self cellCountForSection:indexPath.section]];
     
     return cell;
@@ -726,6 +725,13 @@
 }
 
 - (void)didClickAccommodation:(int)hotelId
+{
+    if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
+        [_aDelegate didSelectedPlace:hotelId];
+    }
+}
+
+- (void)didClickHotel:(int)hotelId
 {
     if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
         [_aDelegate didSelectedPlace:hotelId];

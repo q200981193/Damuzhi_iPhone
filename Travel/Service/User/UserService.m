@@ -193,7 +193,7 @@ static UserService* _defaultUserService = nil;
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (delegate && [delegate respondsToSelector:@selector(verificationDidFinish:)]) {
+            if ([delegate respondsToSelector:@selector(verificationDidFinish:result:resultInfo:)]) {
                 [delegate verificationDidFinish:output.resultCode result:result resultInfo:resultInfo];
             }
         });

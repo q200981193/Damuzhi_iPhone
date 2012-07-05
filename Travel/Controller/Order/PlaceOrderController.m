@@ -135,9 +135,11 @@
 }
 
 - (IBAction)clickDepartDateButton:(id)sender {
-    self.monthViewController = [[[MonthViewController alloc] initWithBookings:_route.bookingsList] autorelease];
-    _monthViewController.aDelegate = self;
+    self.monthViewController = [[[MonthViewController alloc] initWithBookings:_route.bookingsList] autorelease];   
     [_monthViewController.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
+    _monthViewController.aBgView.backgroundColor = [UIColor colorWithRed:220/255. green:219/255. blue:223/255.0 alpha:1];
+    _monthViewController.aDelegate = self;
+
     [self.navigationController pushViewController:_monthViewController animated:YES];
 }
 

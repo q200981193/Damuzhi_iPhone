@@ -112,12 +112,15 @@ message Order {
   optional int32 agencyId = 5;          // 旅行社id
 
   optional string departCityName = 6;	// 出发城市名称
-  optional int32 departDate = 7;          // 出发日期，从1970年1月1日0时0分0秒算起，经过的秒数。
+  optional int32 departDate = 7;        // 出发日期，从1970年1月1日0时0分0秒算起，经过的秒数。
   optional int32 adult = 8;             // 成人个数
   optional int32 children = 9 ;         // 儿童个数
 
   optional string price = 10;           // 大拇指价
   optional string priceStatus = 11;     // 价格状态
-  optional int32 status = 12;             // 订单状态
+  optional int32 status = 12;           // 订单状态
+  
+    
+  optional int32 packageId = 20;        // 套餐Id
 }
 

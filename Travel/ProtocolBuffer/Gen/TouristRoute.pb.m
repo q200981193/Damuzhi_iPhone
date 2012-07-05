@@ -4046,6 +4046,7 @@ static OrderList* defaultOrderListInstance = nil;
 @property (retain) NSString* price;
 @property (retain) NSString* priceStatus;
 @property int32_t status;
+@property int32_t packageId;
 @end
 
 @implementation Order
@@ -4134,6 +4135,13 @@ static OrderList* defaultOrderListInstance = nil;
   hasStatus_ = !!value;
 }
 @synthesize status;
+- (BOOL) hasPackageId {
+  return !!hasPackageId_;
+}
+- (void) setHasPackageId:(BOOL) value {
+  hasPackageId_ = !!value;
+}
+@synthesize packageId;
 - (void) dealloc {
   self.routeName = nil;
   self.departCityName = nil;
@@ -4155,6 +4163,7 @@ static OrderList* defaultOrderListInstance = nil;
     self.price = @"";
     self.priceStatus = @"";
     self.status = 0;
+    self.packageId = 0;
   }
   return self;
 }
@@ -4219,6 +4228,9 @@ static Order* defaultOrderInstance = nil;
   if (self.hasStatus) {
     [output writeInt32:12 value:self.status];
   }
+  if (self.hasPackageId) {
+    [output writeInt32:20 value:self.packageId];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -4263,6 +4275,9 @@ static Order* defaultOrderInstance = nil;
   }
   if (self.hasStatus) {
     size += computeInt32Size(12, self.status);
+  }
+  if (self.hasPackageId) {
+    size += computeInt32Size(20, self.packageId);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -4375,6 +4390,9 @@ static Order* defaultOrderInstance = nil;
   if (other.hasStatus) {
     [self setStatus:other.status];
   }
+  if (other.hasPackageId) {
+    [self setPackageId:other.packageId];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -4442,6 +4460,10 @@ static Order* defaultOrderInstance = nil;
       }
       case 96: {
         [self setStatus:[input readInt32]];
+        break;
+      }
+      case 160: {
+        [self setPackageId:[input readInt32]];
         break;
       }
     }
@@ -4637,6 +4659,22 @@ static Order* defaultOrderInstance = nil;
 - (Order_Builder*) clearStatus {
   result.hasStatus = NO;
   result.status = 0;
+  return self;
+}
+- (BOOL) hasPackageId {
+  return result.hasPackageId;
+}
+- (int32_t) packageId {
+  return result.packageId;
+}
+- (Order_Builder*) setPackageId:(int32_t) value {
+  result.hasPackageId = YES;
+  result.packageId = value;
+  return self;
+}
+- (Order_Builder*) clearPackageId {
+  result.hasPackageId = NO;
+  result.packageId = 0;
   return self;
 }
 @end

@@ -52,7 +52,6 @@
 @implementation CommonRouteListController
 
 @synthesize allRouteList = _allRouteList;
-//@synthesize routeList = _routeList;
 @synthesize hasStatisticsView = _hasStatisticsView;
 
 @synthesize departCityId = _departCityId;
@@ -416,5 +415,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)clickMyFollow:(id)sender
+{
+    [self popupMessage:NSLS(@"待实现") title:nil];
+}
 
 @end
