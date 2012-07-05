@@ -9,6 +9,7 @@
 #import "PersonalInfoController.h"
 #import "PersonalInfoCell.h"
 #import "ImageManager.h"
+#import "ChangePasswordController.h"
 
 enum{
     SECTION_0 = 0,
@@ -62,18 +63,8 @@ enum{
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickOK:)];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:222.0/255.0 green:239.0/255.0 blue:248.0/255.0 alpha:1]];
-    
-//    UITapGestureRecognizer* singleTapRecognizer;
-//    singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapFrom:)];
-//    singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
-//    [self.dataTableView addGestureRecognizer:singleTapRecognizer];
-//    [singleTapRecognizer release];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
 }
-
-//- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer {
-//    [_currentInputTextField resignFirstResponder];
-//}
 
 - (void)viewDidUnload
 {
@@ -157,7 +148,14 @@ enum{
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    PersonalInfoCell *cell = (PersonalInfoCell *)[dataTableView cellForRowAtIndexPath:indexPath];
+    NSString *title = cell.titleLabel.text;
     
+    if ([title isEqualToString:TITLE_SECTION_1_ROW_0]) {
+        ChangePasswordController *contrller = [[ChangePasswordController alloc] init];
+        [self.navigationController pushViewController:contrller animated:YES];
+        [contrller release];
+    }
 }
 
 

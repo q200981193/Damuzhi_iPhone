@@ -70,7 +70,8 @@
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
+    //[self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
     UISwitch *aSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(206, 8, 79, 27)];
     aSwitch.transform = CGAffineTransformMakeScale(0.7, 0.7);

@@ -658,8 +658,10 @@
     //出发日期
     if([label.text isEqualToString:SECTION_TITLE_BOOKING]) {
         UILabel *noteLabel = [self headerNote];
-        noteLabel.text = [NSString  stringWithFormat:@"(%@)", _route.bookingNote];
-        noteLabel.text = [NSString  stringWithFormat:@"(%@)", @"提前10天"];
+        if (_route.bookingNote && [_route.bookingNote length] >0) {
+            noteLabel.text = [NSString  stringWithFormat:@"(%@)", _route.bookingNote];
+        }
+        //noteLabel.text = [NSString  stringWithFormat:@"(%@)", @"提前10天"];
         [headerView addSubview:noteLabel];
     }
         

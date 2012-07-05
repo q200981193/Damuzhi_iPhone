@@ -14,6 +14,7 @@
 #import "ImageManager.h"
 #import "UserManager.h"
 #import "LoginController.h"
+#import "TravelNetworkConstants.h"
 
 @interface PlaceOrderController ()
 {
@@ -40,6 +41,8 @@
 @synthesize adultButton = _adultButton;
 @synthesize childrenButton = _childrenButton;
 @synthesize priceLabel = _priceLabel;
+@synthesize packageIdLabel = _packageIdLabel;
+@synthesize packageIdTitleLabel = _packageIdTitleLabel;
 @synthesize noteLabel = _noteLabel;
 @synthesize route = _route;
 @synthesize monthViewController = _monthViewController;
@@ -70,6 +73,8 @@
     [_childrenButton release];
     [_noteLabel release];
     PPRelease(_nonMemberOrderController);
+    [_packageIdLabel release];
+    [_packageIdTitleLabel release];
     [super dealloc];
 }
 
@@ -111,6 +116,16 @@
     
     self.routeNameLabel.text = _route.name;
     self.routeIdLabel.text = [NSString stringWithFormat:@"%d", _route.routeId];
+    
+    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
+        self.packageIdTitleLabel.hidden = YES;
+        self.packageIdLabel.hidden = YES;
+        
+    } else if (_routeType == OBJECT_LIST_ROUTE_UNPACKAGE_TOUR) {
+        
+        self.packageIdLabel.text = [NSString stringWithFormat:@"%d", _packageId];
+    }
+    
     self.departCityLabel.text = [[AppManager defaultManager] getDepartCityName:_route.departCityId];
     self.priceLabel.text = _route.price;
     
@@ -131,6 +146,8 @@
     [self setAdultButton:nil];
     [self setChildrenButton:nil];
     [self setNoteLabel:nil];
+    [self setPackageIdLabel:nil];
+    [self setPackageIdTitleLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
