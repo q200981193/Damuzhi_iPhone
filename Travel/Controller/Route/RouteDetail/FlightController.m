@@ -9,7 +9,8 @@
 #import "FlightController.h"
 #import "PPDebug.h"
 #import "TouristRoute.pb.h"
-
+#import "ImageManager.h"
+#import "UIImageUtil.h"
 @interface FlightController ()
 
 @property (retain, nonatomic) Flight *departFlight;
@@ -20,29 +21,32 @@
 
 @synthesize departFlight = _departFlight;
 @synthesize returnFlight = _returnFlight;
+@synthesize departFlightLabel;
+@synthesize departFlightLaunchInfoLabel;
+@synthesize departFlightDescendInfoLabel;
+@synthesize departFlightModeLabel;
+@synthesize returnFlightLabel;
+@synthesize returnFlightLaunchInforLabel;
+@synthesize returnFlightDescendInforLabel;
+@synthesize returnFlightModeLabel;
+@synthesize returnFlightBackgroundImage;
+@synthesize returnFlightBackgroundImage2;
 
-@synthesize departFlightTextField;
-@synthesize departFlightLaunchInfoTextField;
-@synthesize departFlightDescendInfoTextField;
-@synthesize departFlightNumberTextField;
-@synthesize returnFlightTextField;
-@synthesize returnFlightLaunchInfoTextField;
-@synthesize returnFlightDescendInfoTextField;
-@synthesize returnFlightNumberTextField;
 
 
 - (void)dealloc {
     [_departFlight release];
-    
-    [departFlightTextField release];
-    [departFlightLaunchInfoTextField release];
-    [departFlightDescendInfoTextField release];
-    [departFlightNumberTextField release];
-    [returnFlightTextField release];
-    [returnFlightLaunchInfoTextField release];
-    [returnFlightDescendInfoTextField release];
-    [returnFlightNumberTextField release];
-    [departFlightTextField release];
+
+    [returnFlightBackgroundImage release];
+    [returnFlightBackgroundImage2 release];
+    [departFlightLabel release];
+    [departFlightLaunchInfoLabel release];
+    [departFlightDescendInfoLabel release];
+    [departFlightModeLabel release];
+    [returnFlightLabel release];
+    [returnFlightLaunchInforLabel release];
+    [returnFlightDescendInforLabel release];
+    [returnFlightModeLabel release];
     [super dealloc];
 }
 
@@ -67,26 +71,51 @@
                            action:@selector(clickBack:)];
     
     self.navigationItem.title = NSLS(@"机票详情");
-
+    
+    
+    
+    
+//    UIImage *background = [UIImage strectchableImageName:@"line_table_4a@2x.png"leftCapWidth:20];
+//    returnFlightBackgroundImage.image = background;
+    
+    UIImage *returnBackground = [UIImage imageNamed:@"line_table_4a@2x.png"];
+    UIImage *stretchBackgroundImage = [returnBackground stretchableImageWithLeftCapWidth:12 topCapHeight:0]; 
+    returnFlightBackgroundImage.image = stretchBackgroundImage;
+    
+//    
+//    UIImage *returnBackground2 = [UIImage strectchableImageName:@"line_table_4b@2x.png" leftCapWidth:20 topCapHeight:20];
+//    returnFlightBackgroundImage.image = returnBackground2;  
+    
+    
     
     PPDebug(@"_departFlight is %@", _departFlight);
     
     
-    departFlightTextField.text = _departFlight.note;
-//    
+//    departFlightLabel.text = _departFlight.note;
+    departFlightLabel.text = NSLS(@"出发 : 北京 - 泰国   南航 NF102");
+    departFlightLaunchInfoLabel.text = NSLS(@"20:45 起飞 首都国际机场");
+    departFlightDescendInfoLabel.text = NSLS(@"22:45 降落 曼谷机场");
+    departFlightModeLabel.text = NSLS(@"波音747");
+    returnFlightLabel.text = NSLS(@"回程 : 泰国 - 北京   泰国航空 TG0103");
+    returnFlightLaunchInforLabel.text = NSLS(@"20:45 起飞 曼谷机场");
+    returnFlightDescendInforLabel.text = NSLS(@"22.55 降落 首都国际机场");
+    returnFlightModeLabel.text = NSLS(@"机型待定");
+    
 }  
 
 - (void)viewDidUnload
 {    
-    [self setDepartFlightTextField:nil];
-    [self setDepartFlightLaunchInfoTextField:nil];
-    [self setDepartFlightDescendInfoTextField:nil];
-    [self setDepartFlightNumberTextField:nil];
-    
-    [self setReturnFlightTextField:nil];
-    [self setReturnFlightLaunchInfoTextField:nil];
-    [self setReturnFlightDescendInfoTextField:nil];
-    [self setReturnFlightNumberTextField:nil];
+   
+    [self setReturnFlightBackgroundImage:nil];
+    [self setReturnFlightBackgroundImage2:nil];
+    [self setDepartFlightLabel:nil];
+    [self setDepartFlightLaunchInfoLabel:nil];
+    [self setDepartFlightDescendInfoLabel:nil];
+    [self setDepartFlightModeLabel:nil];
+    [self setReturnFlightLabel:nil];
+    [self setReturnFlightLaunchInforLabel:nil];
+    [self setReturnFlightDescendInforLabel:nil];
+    [self setReturnFlightModeLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

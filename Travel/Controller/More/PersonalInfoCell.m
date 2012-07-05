@@ -18,6 +18,7 @@
 @synthesize backgroundImageVeiw;
 @synthesize titleLabel;
 @synthesize inputTextField;
+@synthesize pointImageView;
 @synthesize indexPath = _indexPath;
 @synthesize personalInfoCellDelegate;
 
@@ -26,6 +27,7 @@
     [titleLabel release];
     [inputTextField release];
     [backgroundImageVeiw release];
+    [pointImageView release];
     [super dealloc];
 }
 
