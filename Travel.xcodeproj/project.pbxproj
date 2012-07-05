@@ -373,6 +373,12 @@
 		A4FB94D11536B74300DDC76E /* default_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94CF1536B74300DDC76E /* default_b@2x.png */; };
 		A4FB94D21536B74300DDC76E /* detail_tr_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94D01536B74300DDC76E /* detail_tr_bg@2x.png */; };
 		A4FCE24115170A830077A333 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FCE24015170A830077A333 /* AppUtils.m */; };
+		C28C756315A571BB00D65AF9 /* fly_t_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */; };
+		C28C756915A571CA00D65AF9 /* fly_t_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */; };
+		C28C756A15A571CA00D65AF9 /* fly_t_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */; };
+		C28C756B15A571CA00D65AF9 /* fly_t_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756615A571CA00D65AF9 /* fly_t_4@2x.png */; };
+		C28C756C15A571CA00D65AF9 /* fly_t_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756715A571CA00D65AF9 /* fly_t_3@2x.png */; };
+		C28C756D15A571CA00D65AF9 /* fly_t_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756815A571CA00D65AF9 /* fly_t_2@2x.png */; };
 		CA103AEF1503355F00F60C03 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AEE1503355F00F60C03 /* UserManager.m */; };
 		CA103AF7150467B200F60C03 /* PlaceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA103AF5150467B200F60C03 /* PlaceMapViewController.m */; };
 		CA103AF8150467B200F60C03 /* PlaceMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA103AF6150467B200F60C03 /* PlaceMapViewController.xib */; };
@@ -1146,6 +1152,12 @@
 		A4FCE23E1516FF9F0077A333 /* AppConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		A4FCE23F15170A830077A333 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		A4FCE24015170A830077A333 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
+		C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_1@2x.png"; sourceTree = "<group>"; };
+		C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_6@2x.png"; sourceTree = "<group>"; };
+		C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_5@2x.png"; sourceTree = "<group>"; };
+		C28C756615A571CA00D65AF9 /* fly_t_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_4@2x.png"; sourceTree = "<group>"; };
+		C28C756715A571CA00D65AF9 /* fly_t_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_3@2x.png"; sourceTree = "<group>"; };
+		C28C756815A571CA00D65AF9 /* fly_t_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_2@2x.png"; sourceTree = "<group>"; };
 		CA103AED1503355F00F60C03 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		CA103AEE1503355F00F60C03 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		CA103AF4150467B200F60C03 /* PlaceMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceMapViewController.h; sourceTree = "<group>"; };
@@ -1951,6 +1963,12 @@
 		A455F85A1585A0F800CA5743 /* route_detail */ = {
 			isa = PBXGroup;
 			children = (
+				C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */,
+				C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */,
+				C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */,
+				C28C756615A571CA00D65AF9 /* fly_t_4@2x.png */,
+				C28C756715A571CA00D65AF9 /* fly_t_3@2x.png */,
+				C28C756815A571CA00D65AF9 /* fly_t_2@2x.png */,
 				A43BAFF815A2FA70008F3AFC /* fly_p1@2x.png */,
 				A43BAFF915A2FA70008F3AFC /* fly_p2@2x.png */,
 				A43BAFFA15A2FA70008F3AFC /* fly_p3@2x.png */,
@@ -4242,6 +4260,12 @@
 				A440FD9215A3FA18005C4759 /* UnPackageTourHomePageController.xib in Resources */,
 				EAC88FA015A441510068C3C0 /* PersonalInfoCell.xib in Resources */,
 				EAC88FA215A441510068C3C0 /* PersonalInfoController.xib in Resources */,
+				C28C756315A571BB00D65AF9 /* fly_t_1@2x.png in Resources */,
+				C28C756915A571CA00D65AF9 /* fly_t_6@2x.png in Resources */,
+				C28C756A15A571CA00D65AF9 /* fly_t_5@2x.png in Resources */,
+				C28C756B15A571CA00D65AF9 /* fly_t_4@2x.png in Resources */,
+				C28C756C15A571CA00D65AF9 /* fly_t_3@2x.png in Resources */,
+				C28C756D15A571CA00D65AF9 /* fly_t_2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

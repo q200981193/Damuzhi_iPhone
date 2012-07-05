@@ -450,8 +450,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[RelatedPlaceCell getCellIdentifier]];
     
     if (cell == nil) {
-        cell = [RelatedPlaceCell createCell:self];				            
-
+        cell = [RelatedPlaceCell createCell:self];
     }
 
     RelatedPlaceCell *relatedPlaceCell = (RelatedPlaceCell *)cell;

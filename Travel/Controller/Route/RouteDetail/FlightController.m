@@ -78,10 +78,10 @@
 //    UIImage *background = [UIImage strectchableImageName:@"line_table_4a@2x.png"leftCapWidth:20];
 //    returnFlightBackgroundImage.image = background;
     
-    UIImage *returnBackground = [UIImage imageNamed:@"line_table_4a@2x.png"];
-    UIImage *stretchBackgroundImage = [returnBackground stretchableImageWithLeftCapWidth:12 topCapHeight:0]; 
-    returnFlightBackgroundImage.image = stretchBackgroundImage;
-    
+//    UIImage *returnBackground = [UIImage imageNamed:@"line_table_4a@2x.png"];
+//    UIImage *stretchBackgroundImage = [returnBackground stretchableImageWithLeftCapWidth:12 topCapHeight:0]; 
+//    returnFlightBackgroundImage.image = stretchBackgroundImage;
+//    
 //    
 //    UIImage *returnBackground2 = [UIImage strectchableImageName:@"line_table_4b@2x.png" leftCapWidth:20 topCapHeight:20];
 //    returnFlightBackgroundImage.image = returnBackground2;  

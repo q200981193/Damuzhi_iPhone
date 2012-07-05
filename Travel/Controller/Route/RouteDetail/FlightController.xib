@@ -61,9 +61,9 @@
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage" id="802798431">
+						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">line_table_5@2x.png</string>
+							<string key="NSResourceName">fly_t_6@2x.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="291407528">
@@ -76,19 +76,25 @@
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="802798431"/>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">fly_t_2@2x.png</string>
+						</object>
 					</object>
 					<object class="IBUIImageView" id="892358530">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{219.5, 54}, {89, 87}}</string>
+						<string key="NSFrame">{{220.5, 54}, {89, 87}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="271911072"/>
 						<string key="NSReuseIdentifierKey">_NS:567</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<reference key="IBUIImage" ref="802798431"/>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">fly_t_3@2x.png</string>
+						</object>
 					</object>
 					<object class="IBUIImageView" id="2489875">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -102,7 +108,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">line_table_4b@2x.png</string>
+							<string key="NSResourceName">fly_t_5@2x.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="944249425">
@@ -117,7 +123,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">line_table_4a@2x.png</string>
+							<string key="NSResourceName">fly_t_4@2x.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="196711621">
@@ -132,7 +138,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">fly_p5@2x.png</string>
+							<string key="NSResourceName">fly_t_1@2x.png</string>
 						</object>
 					</object>
 					<object class="IBUIImageView" id="45199110">
@@ -347,7 +353,7 @@
 					<object class="IBUILabel" id="829168246">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{219, 55}, {89, 87}}</string>
+						<string key="NSFrame">{{220, 54}, {88, 88}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="792969908"/>
@@ -369,7 +375,7 @@
 					<object class="IBUILabel" id="494511052">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{221, 177}, {89, 62}}</string>
+						<string key="NSFrame">{{220, 176.5}, {90, 62.5}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView"/>
@@ -558,7 +564,6 @@
 							<reference ref="291407528"/>
 							<reference ref="944249425"/>
 							<reference ref="271911072"/>
-							<reference ref="2489875"/>
 							<reference ref="83347466"/>
 							<reference ref="506596406"/>
 							<reference ref="494511052"/>
@@ -567,6 +572,7 @@
 							<reference ref="224135560"/>
 							<reference ref="829168246"/>
 							<reference ref="304390899"/>
+							<reference ref="2489875"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -814,10 +820,12 @@
 			<string key="fly_p2@2x.png">{32, 32}</string>
 			<string key="fly_p3@2x.png">{32, 32}</string>
 			<string key="fly_p4@2x.png">{32, 32}</string>
-			<string key="fly_p5@2x.png">{604, 88}</string>
-			<string key="line_table_4a@2x.png">{102, 52}</string>
-			<string key="line_table_4b@2x.png">{514, 52}</string>
-			<string key="line_table_5@2x.png">{616, 68}</string>
+			<string key="fly_t_1@2x.png">{604, 88}</string>
+			<string key="fly_t_2@2x.png">{416, 174}</string>
+			<string key="fly_t_3@2x.png">{188, 174}</string>
+			<string key="fly_t_4@2x.png">{416, 122}</string>
+			<string key="fly_t_5@2x.png">{188, 122}</string>
+			<string key="fly_t_6@2x.png">{604, 80}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
