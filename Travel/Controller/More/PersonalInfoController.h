@@ -7,7 +7,8 @@
 //
 
 #import "PPTableViewController.h"
+#import "PersonalInfoCell.h"
 
-@interface PersonalInfoController : PPTableViewController
+@interface PersonalInfoController : PPTableViewController <PersonalInfoCellDelegate>
 
 @end

@@ -11,8 +11,9 @@
 #import "MonthViewController.h"
 #import "SelectController.h"
 #import "OrderService.h"
+#import "NonMemberOrderController.h"
 
-@interface PlaceOrderController : PPViewController <MonthViewControllerDelegate, SelectControllerDelegate, OrderServiceDelegate>
+@interface PlaceOrderController : PPViewController <MonthViewControllerDelegate, SelectControllerDelegate, OrderServiceDelegate, NonMemberOrderDelegate>
 
 @property (retain, nonatomic) IBOutlet UILabel *routeNameLabel;
 @property (retain, nonatomic) IBOutlet UILabel *routeIdLabel;

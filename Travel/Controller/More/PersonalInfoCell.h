@@ -8,11 +8,20 @@
 
 #import "PPTableViewCell.h"
 
-@interface PersonalInfoCell : PPTableViewCell
+@protocol PersonalInfoCellDelegate <NSObject>
+
+- (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath;
+- (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath;
+
+@end
+
+@interface PersonalInfoCell : PPTableViewCell<UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UIImageView *backgroundImageVeiw;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UITextField *inputTextField;
+@property (assign, nonatomic) id<PersonalInfoCellDelegate> personalInfoCellDelegate;
 
+- (void)setCellIndexPath:(NSIndexPath *)aIndexPath;
 
 @end
