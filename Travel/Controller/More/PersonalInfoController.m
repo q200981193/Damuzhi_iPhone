@@ -8,6 +8,7 @@
 
 #import "PersonalInfoController.h"
 #import "PersonalInfoCell.h"
+#import "ImageManager.h"
 
 enum{
     SECTION_0 = 0,
@@ -123,11 +124,16 @@ enum{
     cell.inputTextField.hidden = YES;
     cell.accessoryType = UITableViewCellAccessoryNone;
     
+    
+    
     if (indexPath.section == SECTION_0) {
+        [cell.pointImageView setImage:[[ImageManager defaultManager] orangePoint]];
+        
         if (indexPath.row == 0) {
             cell.inputTextField.hidden = NO;
             cell.inputTextField.placeholder = NSLS(@"请输入用户名");
             cell.titleLabel.text = TITLE_SECTION_0_ROW_0;
+            
         } else if (indexPath.row == 1) {
             cell.inputTextField.hidden = NO;
             cell.inputTextField.placeholder = NSLS(@"请输入昵称");
@@ -135,6 +141,8 @@ enum{
         }
         
     } else if (indexPath.section == SECTION_1) {
+        [cell.pointImageView setImage:[[ImageManager defaultManager] morePointImage]];
+        
         if (indexPath.row == 0) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.titleLabel.text = TITLE_SECTION_1_ROW_0;
