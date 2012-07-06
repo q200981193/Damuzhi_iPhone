@@ -13,12 +13,6 @@
 
 @interface CommonRouteDetailController : PPTableViewController <RouteServiceDelegate, RouteIntroductionControllerDelegate, PlaceServiceDelegate>
 
-
-
-
-
-
-
 @property (retain, nonatomic) IBOutlet UIButton *introductionButton;
 @property (retain, nonatomic) IBOutlet UIButton *costDescriptionButton;
 @property (retain, nonatomic) IBOutlet UIButton *bookingPolicyButton;

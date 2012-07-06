@@ -18,9 +18,7 @@
 
 //#define URL_SERVICE                 @"http://api.trip8888.com/service/"
 
-
-//#define URL_SERVICE                 @"http://api.trip8888.com/service/"
-////#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
+//#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
 
 
 // URL

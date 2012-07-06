@@ -88,6 +88,7 @@
 								<string key="NSFrame">{{6, 36}, {52, 25}}</string>
 								<reference key="NSSuperview" ref="692714234"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="980311250"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -200,6 +201,10 @@
 								<reference key="NSSuperview" ref="692714234"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor" id="968235360">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4xNDUwOTgwMzkyIDAuMjU4ODIzNTI5NCAwLjMxMzcyNTQ5MDIAA</bytes>
+								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentVerticalAlignment">0</int>
@@ -210,7 +215,7 @@
 								<double key="IBUIContentEdgeInsets.right">0.0</double>
 								<string key="IBUINormalTitle">洲际酒店</string>
 								<reference key="IBUIHighlightedTitleColor" ref="739842588"/>
-								<reference key="IBUINormalTitleColor" ref="785788731"/>
+								<reference key="IBUINormalTitleColor" ref="968235360"/>
 								<reference key="IBUINormalTitleShadowColor" ref="945376462"/>
 								<reference key="IBUINormalBackgroundImage" ref="145076341"/>
 								<reference key="IBUIFontDescription" ref="332238732"/>
@@ -222,6 +227,7 @@
 								<string key="NSFrame">{{57, 36}, {257, 25}}</string>
 								<reference key="NSSuperview" ref="692714234"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="494637190"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

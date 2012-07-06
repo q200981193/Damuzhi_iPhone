@@ -14,9 +14,12 @@
 #import "NSDate+TKCategory.h"
 #import "UIViewUtils.h"
 #import "RouteUtils.h"
-
+#import "TravelNetworkConstants.h"
 
 @interface MonthViewController ()
+{
+    int _routeType;
+}
 
 @property (retain, nonatomic) TKCalendarMonthView *monthView;
 @property (retain, nonatomic) NSArray *bookings;
@@ -47,10 +50,11 @@
     [super dealloc];
 }
 
-- (id)initWithBookings:(NSArray *)bookings
+- (id)initWithBookings:(NSArray *)bookings routeType:(int)routeType
 {
     if (self= [super init]) {
         self.bookings = bookings;
+        _routeType = routeType;
     }
     
     return self;
@@ -98,9 +102,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
-
-
 
 - (NSArray*) calendarMonthView:(TKCalendarMonthView*)monthView marksFromDate:(NSDate*)startDate toDate:(NSDate*)lastDate
 {
@@ -174,13 +175,17 @@
     
     Booking *booking = [RouteUtils bookingOfDate:date bookings:_bookings];
     if (booking != nil) {
-        if (booking.status == 1) {
-            bookingInfo = NSLS(@"未开售") ;
-        }else if (booking.status == 2) {
-            NSString *remainder = ([booking.remainder intValue] > 9) ? NSLS(@">9") : booking.remainder; 
-            bookingInfo = [NSString stringWithFormat:@"%@\n可报%@", booking.adultPrice, remainder];
-        }else if (booking.status == 3) {
-            bookingInfo = NSLS(@"满");
+        if (_routeType == OBJECT_LIST_PACKAGE_TOUR_ORDER) {
+            if (booking.status == 1) {
+                bookingInfo = NSLS(@"未开售") ;
+            }else if (booking.status == 2) {            
+                NSString *remainder = ([booking.remainder intValue] > 9) ? NSLS(@">9") : booking.remainder; 
+                bookingInfo = [NSString stringWithFormat:@"%@\n可报%@", booking.adultPrice, remainder];
+            }else if (booking.status == 3) {
+                bookingInfo = NSLS(@"满");
+            }
+        }else {
+            bookingInfo = [NSString stringWithFormat:@"%@", booking.adultPrice];
         }
     }
     

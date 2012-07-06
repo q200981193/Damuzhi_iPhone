@@ -633,6 +633,16 @@
         for (TravelPackage * package in _route.packagesList) {
             
             if ([label.text isEqualToString:package.name]) {
+                UILabel *noteLabel = [self headerNote];
+                if (package.note && [package.note length] >0) {
+                    noteLabel.text = [NSString  stringWithFormat:@"(%@)", package.note];
+                }
+                //noteLabel.text = @"(机票+酒店)";
+                CGSize labelTextSize = [label.text sizeWithFont:label.font];
+                noteLabel.frame = CGRectMake(label.frame.origin.x + labelTextSize.width + 5, noteLabel.frame.origin.y, noteLabel.frame.size.width, noteLabel.frame.size.height);
+                [headerView addSubview:noteLabel];
+                
+                
                 UILabel *priceLabel = [self genPriceLabelWithFrame:CGRectMake(150, 0, 40, 30)];
                 priceLabel.text = package.price;
                 [headerView addSubview:priceLabel];
@@ -659,7 +669,7 @@
         if (_route.bookingNote && [_route.bookingNote length] >0) {
             noteLabel.text = [NSString  stringWithFormat:@"(%@)", _route.bookingNote];
         }
-        //noteLabel.text = [NSString  stringWithFormat:@"(%@)", @"提前10天"];
+        //noteLabel.text = @"提前10天";
         [headerView addSubview:noteLabel];
     }
         
