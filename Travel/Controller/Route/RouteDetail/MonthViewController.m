@@ -175,7 +175,8 @@
     
     Booking *booking = [RouteUtils bookingOfDate:date bookings:_bookings];
     if (booking != nil) {
-        if (_routeType == OBJECT_LIST_PACKAGE_TOUR_ORDER) {
+        PPDebug(@"routeType = %d", _routeType);
+        if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
             if (booking.status == 1) {
                 bookingInfo = NSLS(@"未开售") ;
             }else if (booking.status == 2) {            
