@@ -26,7 +26,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *nextMonthButton;
 @property (retain, nonatomic) IBOutlet UIView *monthHolderView;
 
-- (id)initWithBookings:(NSArray *)bookings;
+- (id)initWithBookings:(NSArray *)bookings routeType:(int)routeType;
 - (void)showInView:(UIView *)superView;
 
 @end

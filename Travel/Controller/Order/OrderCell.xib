@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1179</string>
+			<string key="NS.object.0">1181</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUITableViewCell</string>
@@ -115,7 +115,7 @@
 							<object class="IBUILabel" id="169728015">
 								<reference key="NSNextResponder" ref="132297663"/>
 								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{156, 29}, {65, 25}}</string>
+								<string key="NSFrame">{{137, 29}, {69, 25}}</string>
 								<reference key="NSSuperview" ref="132297663"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -315,7 +315,7 @@
 							<object class="IBUILabel" id="1012594070">
 								<reference key="NSNextResponder" ref="132297663"/>
 								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{217, 29}, {68, 25}}</string>
+								<string key="NSFrame">{{201, 29}, {86, 25}}</string>
 								<reference key="NSSuperview" ref="132297663"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -951,6 +951,6 @@
 			<string key="order_btn_2@2x.png">{160, 56}</string>
 			<string key="order_list_4@2x.png">{604, 2}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1179</string>
+		<string key="IBCocoaTouchPluginVersion">1181</string>
 	</data>
 </archive>
