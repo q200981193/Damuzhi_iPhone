@@ -272,7 +272,7 @@
     [self updateSelectedButton:button];
     
     NSObject<RouteListFilterProtocol>* filter = [UnPackageTourListFilter createFilter];
-    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:NO];
+    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:7 destinationCityId:0 hasStatisticsLabel:NO];
         
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -284,7 +284,7 @@
     [self updateSelectedButton:button];
     
     NSObject<RouteListFilterProtocol>* filter = [PackageTourListFilter createFilter];
-    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:1 destinationCityId:0 hasStatisticsLabel:NO];
+    CommonRouteListController *controller = [[CommonRouteListController alloc] initWithFilterHandler:filter DepartCityId:7 destinationCityId:0 hasStatisticsLabel:NO];
         
     [self.navigationController pushViewController:controller animated:YES];
 }

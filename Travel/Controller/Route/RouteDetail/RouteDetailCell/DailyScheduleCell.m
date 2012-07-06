@@ -64,7 +64,7 @@
     [diningTagButton setTitleColor:COLOR_CONTENT forState:UIControlStateNormal];
     [hotelTagButton setTitleColor:COLOR_CONTENT forState:UIControlStateNormal];
     [diningButton setTitleColor:COLOR_CONTENT forState:UIControlStateNormal];
-    [hotelButton setTitleColor:COLOR_CONTENT forState:UIControlStateNormal];
+    [hotelButton setTitleColor:[UIColor colorWithRed:37/255. green:66/255. blue:80/255. alpha:1] forState:UIControlStateNormal];
     
     [titleButton setTitle:dailySchedule.title forState:UIControlStateNormal];
     [titleButton setBackgroundImage:[[ImageManager defaultManager] dailyScheduleTitleBgImageWithRowNum:rowNum rowCount:rowCount]forState:UIControlStateNormal];
