@@ -230,7 +230,7 @@
     
     TravelPackage *package = [RouteUtils findPackageByPackageId:packageId fromPackageList:_route.packagesList];
     
-    FlightController *controller = [[FlightController alloc] initWithDepartFlight:package.departFlight returnFlight:package.returnFlight];
+    FlightController *controller = [[FlightController alloc] initWithDepartReturnFlight:package.departFlight returnFlight:package.returnFlight];
     
     
     

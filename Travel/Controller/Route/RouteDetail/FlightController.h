@@ -11,7 +11,7 @@
 
 @interface FlightController : PPTableViewController
 
-- (id)initWithDepartFlight:(Flight *)departFlight returnFlight:(Flight *)returnFlight;
+- (id)initWithDepartReturnFlight:(Flight *)departFlight returnFlight:(Flight *)returnFlight;
 
 
 @property (retain, nonatomic) IBOutlet UILabel *departFlightLabel;

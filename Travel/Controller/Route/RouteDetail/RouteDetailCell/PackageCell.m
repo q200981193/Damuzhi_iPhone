@@ -44,7 +44,7 @@
 
 - (void)setCellData:(TravelPackage *)package
 {
-    self.package = _package;
+    self.package = package;
     
     NSString *flight = [NSString stringWithFormat:NSLS(@"往：%@%@ 返：%@%@"), package.departFlight.company, package.departFlight.flightId, package.returnFlight.company, package.returnFlight.flightId];
     
