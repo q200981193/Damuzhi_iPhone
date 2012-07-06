@@ -114,7 +114,7 @@
 							</object>
 							<object class="IBUILabel" id="169728015">
 								<reference key="NSNextResponder" ref="132297663"/>
-								<int key="NSvFlags">-2147483356</int>
+								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{156, 29}, {65, 25}}</string>
 								<reference key="NSSuperview" ref="132297663"/>
 								<reference key="NSWindow"/>
@@ -314,7 +314,7 @@
 							</object>
 							<object class="IBUILabel" id="1012594070">
 								<reference key="NSNextResponder" ref="132297663"/>
-								<int key="NSvFlags">-2147483356</int>
+								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{217, 29}, {68, 25}}</string>
 								<reference key="NSSuperview" ref="132297663"/>
 								<reference key="NSWindow"/>
@@ -583,14 +583,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">packageIdLabel</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="1012594070"/>
-					</object>
-					<int key="connectionID">52</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">routeNameLabel</string>
 						<reference key="source" ref="338609008"/>
 						<reference key="destination" ref="44970350"/>
@@ -652,6 +644,22 @@
 						<reference key="destination" ref="429216292"/>
 					</object>
 					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">packageIdTitleLabel</string>
+						<reference key="source" ref="338609008"/>
+						<reference key="destination" ref="169728015"/>
+					</object>
+					<int key="connectionID">54</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">packageIdLabel</string>
+						<reference key="source" ref="338609008"/>
+						<reference key="destination" ref="1012594070"/>
+					</object>
+					<int key="connectionID">55</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -867,7 +875,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">55</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -880,6 +888,7 @@
 						<string key="departDateLabel">UILabel</string>
 						<string key="orderStatusLabel">UILabel</string>
 						<string key="packageIdLabel">UILabel</string>
+						<string key="packageIdTitleLabel">UILabel</string>
 						<string key="personCountLabel">UILabel</string>
 						<string key="priceLabel">UILabel</string>
 						<string key="routeIdLabel">UILabel</string>
@@ -904,6 +913,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="packageIdLabel">
 							<string key="name">packageIdLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="packageIdTitleLabel">
+							<string key="name">packageIdTitleLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="personCountLabel">

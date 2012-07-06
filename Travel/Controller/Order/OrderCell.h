@@ -30,6 +30,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *priceLabel;
 @property (retain, nonatomic) IBOutlet UILabel *orderStatusLabel;
 @property (retain, nonatomic) IBOutlet UILabel *packageIdLabel;
+@property (retain, nonatomic) IBOutlet UILabel *packageIdTitleLabel;
 
 
 - (void)setCellData:(Order *)order;
