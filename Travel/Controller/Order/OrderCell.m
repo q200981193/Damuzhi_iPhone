@@ -32,6 +32,7 @@
 @synthesize priceLabel;
 @synthesize orderStatusLabel;
 @synthesize packageIdLabel;
+@synthesize packageIdTitleLabel;
 
 - (void)dealloc {
     [_order release];
@@ -45,6 +46,7 @@
     [priceLabel release];
     [orderStatusLabel release];
     [packageIdLabel release];
+    [packageIdTitleLabel release];
     [super dealloc];
 }
 
@@ -77,6 +79,15 @@
     priceLabel.text = [NSString stringWithFormat:NSLS(@"%@(%@)"), order.price, order.priceStatus];
     
     orderStatusLabel.text = [self orderStatusString:order.status];
+    
+    if (order.packageId == 0) {
+        packageIdTitleLabel.hidden = YES;
+        packageIdLabel.hidden = YES;
+    } else {
+        packageIdTitleLabel.hidden = NO;
+        packageIdTitleLabel.hidden = NO;
+        packageIdLabel.text = [NSString stringWithFormat:@"%d",  order.packageId];
+    }
 }
 
 - (IBAction)clickRouteFeekbackButton:(id)sender {

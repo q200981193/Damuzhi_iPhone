@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1181</string>
+			<string key="NS.object.0">1179</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUITableViewCell</string>
@@ -115,8 +115,8 @@
 							</object>
 							<object class="IBUILabel" id="169728015">
 								<reference key="NSNextResponder" ref="132297663"/>
-								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{137, 29}, {69, 25}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{156, 29}, {65, 25}}</string>
 								<reference key="NSSuperview" ref="132297663"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1012594070"/>
@@ -316,8 +316,8 @@
 							</object>
 							<object class="IBUILabel" id="1012594070">
 								<reference key="NSNextResponder" ref="132297663"/>
-								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{201, 29}, {86, 25}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{217, 29}, {68, 25}}</string>
 								<reference key="NSSuperview" ref="132297663"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="798239653"/>
@@ -587,14 +587,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">packageIdLabel</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="1012594070"/>
-					</object>
-					<int key="connectionID">52</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">routeNameLabel</string>
 						<reference key="source" ref="338609008"/>
 						<reference key="destination" ref="44970350"/>
@@ -656,6 +648,22 @@
 						<reference key="destination" ref="429216292"/>
 					</object>
 					<int key="connectionID">44</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">packageIdTitleLabel</string>
+						<reference key="source" ref="338609008"/>
+						<reference key="destination" ref="169728015"/>
+					</object>
+					<int key="connectionID">54</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">packageIdLabel</string>
+						<reference key="source" ref="338609008"/>
+						<reference key="destination" ref="1012594070"/>
+					</object>
+					<int key="connectionID">55</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -871,7 +879,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">55</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -884,6 +892,7 @@
 						<string key="departDateLabel">UILabel</string>
 						<string key="orderStatusLabel">UILabel</string>
 						<string key="packageIdLabel">UILabel</string>
+						<string key="packageIdTitleLabel">UILabel</string>
 						<string key="personCountLabel">UILabel</string>
 						<string key="priceLabel">UILabel</string>
 						<string key="routeIdLabel">UILabel</string>
@@ -908,6 +917,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="packageIdLabel">
 							<string key="name">packageIdLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="packageIdTitleLabel">
+							<string key="name">packageIdTitleLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="personCountLabel">
@@ -955,6 +968,6 @@
 			<string key="order_btn_2@2x.png">{160, 56}</string>
 			<string key="order_list_4@2x.png">{604, 2}</string>
 		</dictionary>
-		<string key="IBCocoaTouchPluginVersion">1181</string>
+		<string key="IBCocoaTouchPluginVersion">1179</string>
 	</data>
 </archive>
