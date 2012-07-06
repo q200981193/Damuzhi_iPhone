@@ -191,9 +191,9 @@
     
     switch (_routeType) {
         case OBJECT_LIST_ROUTE_PACKAGE_TOUR:
-            origin_x = 180;
+            origin_x = 140;
             origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_LABEL/2; 
-            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 40, HEIGHT_PRICE_LABEL)];
+            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 80, HEIGHT_PRICE_LABEL)];
             [agencyInfoHolderView addSubview:priceLabel];
             
             origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
@@ -239,7 +239,7 @@
     [priceLabel setTextColor:[UIColor colorWithRed:255.0/255.0 green:96.0/255.0 blue:0 alpha:1]];
     [priceLabel setTextAlignment:UITextAlignmentRight];
     [priceLabel setFont:[UIFont systemFontOfSize:16]];
-    [priceLabel setText:[NSString stringWithFormat:@"%d元", [_route.price intValue]]];
+    [priceLabel setText:_route.price];
     [priceLabel setBackgroundColor:[UIColor clearColor]];
     
     return priceLabel;
