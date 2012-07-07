@@ -79,7 +79,7 @@ message Agency {
 message RouteCity {
   required int32 routeCityId = 1;		// 线路城市id
   required string cityName = 2;         // 城市名
-  optional string countryName = 6;		// 国家名称
+  required string countryName = 3;		// 国家名称
   optional int32 regionId = 8;          // 区域Id
 }
 
