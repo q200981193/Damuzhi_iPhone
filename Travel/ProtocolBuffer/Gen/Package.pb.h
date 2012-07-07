@@ -58,6 +58,8 @@
 @class Place_Builder;
 @class RecommendedApp;
 @class RecommendedApp_Builder;
+@class Region;
+@class Region_Builder;
 @class RouteCity;
 @class RouteCity_Builder;
 @class RouteFeekback;

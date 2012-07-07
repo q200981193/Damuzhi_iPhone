@@ -2492,6 +2492,7 @@ static Agency* defaultAgencyInstance = nil;
 @property int32_t routeCityId;
 @property (retain) NSString* cityName;
 @property (retain) NSString* countryName;
+@property int32_t regionId;
 @end
 
 @implementation RouteCity
@@ -2517,6 +2518,13 @@ static Agency* defaultAgencyInstance = nil;
   hasCountryName_ = !!value;
 }
 @synthesize countryName;
+- (BOOL) hasRegionId {
+  return !!hasRegionId_;
+}
+- (void) setHasRegionId:(BOOL) value {
+  hasRegionId_ = !!value;
+}
+@synthesize regionId;
 - (void) dealloc {
   self.cityName = nil;
   self.countryName = nil;
@@ -2527,6 +2535,7 @@ static Agency* defaultAgencyInstance = nil;
     self.routeCityId = 0;
     self.cityName = @"";
     self.countryName = @"";
+    self.regionId = 0;
   }
   return self;
 }
@@ -2549,9 +2558,6 @@ static RouteCity* defaultRouteCityInstance = nil;
   if (!self.hasCityName) {
     return NO;
   }
-  if (!self.hasCountryName) {
-    return NO;
-  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
@@ -2562,7 +2568,10 @@ static RouteCity* defaultRouteCityInstance = nil;
     [output writeString:2 value:self.cityName];
   }
   if (self.hasCountryName) {
-    [output writeString:3 value:self.countryName];
+    [output writeString:6 value:self.countryName];
+  }
+  if (self.hasRegionId) {
+    [output writeInt32:8 value:self.regionId];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -2580,7 +2589,10 @@ static RouteCity* defaultRouteCityInstance = nil;
     size += computeStringSize(2, self.cityName);
   }
   if (self.hasCountryName) {
-    size += computeStringSize(3, self.countryName);
+    size += computeStringSize(6, self.countryName);
+  }
+  if (self.hasRegionId) {
+    size += computeInt32Size(8, self.regionId);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -2666,6 +2678,9 @@ static RouteCity* defaultRouteCityInstance = nil;
   if (other.hasCountryName) {
     [self setCountryName:other.countryName];
   }
+  if (other.hasRegionId) {
+    [self setRegionId:other.regionId];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -2695,8 +2710,12 @@ static RouteCity* defaultRouteCityInstance = nil;
         [self setCityName:[input readString]];
         break;
       }
-      case 26: {
+      case 50: {
         [self setCountryName:[input readString]];
+        break;
+      }
+      case 64: {
+        [self setRegionId:[input readInt32]];
         break;
       }
     }
@@ -2750,6 +2769,244 @@ static RouteCity* defaultRouteCityInstance = nil;
   result.countryName = @"";
   return self;
 }
+- (BOOL) hasRegionId {
+  return result.hasRegionId;
+}
+- (int32_t) regionId {
+  return result.regionId;
+}
+- (RouteCity_Builder*) setRegionId:(int32_t) value {
+  result.hasRegionId = YES;
+  result.regionId = value;
+  return self;
+}
+- (RouteCity_Builder*) clearRegionId {
+  result.hasRegionId = NO;
+  result.regionId = 0;
+  return self;
+}
+@end
+
+@interface Region ()
+@property int32_t regionId;
+@property (retain) NSString* regionName;
+@end
+
+@implementation Region
+
+- (BOOL) hasRegionId {
+  return !!hasRegionId_;
+}
+- (void) setHasRegionId:(BOOL) value {
+  hasRegionId_ = !!value;
+}
+@synthesize regionId;
+- (BOOL) hasRegionName {
+  return !!hasRegionName_;
+}
+- (void) setHasRegionName:(BOOL) value {
+  hasRegionName_ = !!value;
+}
+@synthesize regionName;
+- (void) dealloc {
+  self.regionName = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.regionId = 0;
+    self.regionName = @"";
+  }
+  return self;
+}
+static Region* defaultRegionInstance = nil;
++ (void) initialize {
+  if (self == [Region class]) {
+    defaultRegionInstance = [[Region alloc] init];
+  }
+}
++ (Region*) defaultInstance {
+  return defaultRegionInstance;
+}
+- (Region*) defaultInstance {
+  return defaultRegionInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasRegionId) {
+    return NO;
+  }
+  if (!self.hasRegionName) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasRegionId) {
+    [output writeInt32:1 value:self.regionId];
+  }
+  if (self.hasRegionName) {
+    [output writeString:2 value:self.regionName];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasRegionId) {
+    size += computeInt32Size(1, self.regionId);
+  }
+  if (self.hasRegionName) {
+    size += computeStringSize(2, self.regionName);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (Region*) parseFromData:(NSData*) data {
+  return (Region*)[[[Region builder] mergeFromData:data] build];
+}
++ (Region*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (Region*)[[[Region builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (Region*) parseFromInputStream:(NSInputStream*) input {
+  return (Region*)[[[Region builder] mergeFromInputStream:input] build];
+}
++ (Region*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (Region*)[[[Region builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (Region*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (Region*)[[[Region builder] mergeFromCodedInputStream:input] build];
+}
++ (Region*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (Region*)[[[Region builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (Region_Builder*) builder {
+  return [[[Region_Builder alloc] init] autorelease];
+}
++ (Region_Builder*) builderWithPrototype:(Region*) prototype {
+  return [[Region builder] mergeFrom:prototype];
+}
+- (Region_Builder*) builder {
+  return [Region builder];
+}
+@end
+
+@interface Region_Builder()
+@property (retain) Region* result;
+@end
+
+@implementation Region_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[Region alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (Region_Builder*) clear {
+  self.result = [[[Region alloc] init] autorelease];
+  return self;
+}
+- (Region_Builder*) clone {
+  return [Region builderWithPrototype:result];
+}
+- (Region*) defaultInstance {
+  return [Region defaultInstance];
+}
+- (Region*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (Region*) buildPartial {
+  Region* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (Region_Builder*) mergeFrom:(Region*) other {
+  if (other == [Region defaultInstance]) {
+    return self;
+  }
+  if (other.hasRegionId) {
+    [self setRegionId:other.regionId];
+  }
+  if (other.hasRegionName) {
+    [self setRegionName:other.regionName];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (Region_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (Region_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 8: {
+        [self setRegionId:[input readInt32]];
+        break;
+      }
+      case 18: {
+        [self setRegionName:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasRegionId {
+  return result.hasRegionId;
+}
+- (int32_t) regionId {
+  return result.regionId;
+}
+- (Region_Builder*) setRegionId:(int32_t) value {
+  result.hasRegionId = YES;
+  result.regionId = value;
+  return self;
+}
+- (Region_Builder*) clearRegionId {
+  result.hasRegionId = NO;
+  result.regionId = 0;
+  return self;
+}
+- (BOOL) hasRegionName {
+  return result.hasRegionName;
+}
+- (NSString*) regionName {
+  return result.regionName;
+}
+- (Region_Builder*) setRegionName:(NSString*) value {
+  result.hasRegionName = YES;
+  result.regionName = value;
+  return self;
+}
+- (Region_Builder*) clearRegionName {
+  result.hasRegionName = NO;
+  result.regionName = @"";
+  return self;
+}
 @end
 
 @interface App ()
@@ -2758,6 +3015,7 @@ static RouteCity* defaultRouteCityInstance = nil;
 @property (retain) NSMutableArray* mutableTestCitiesList;
 @property (retain) NSMutableArray* mutablePlaceMetaDataListList;
 @property (retain) NSMutableArray* mutableRecommendedAppsList;
+@property (retain) NSMutableArray* mutableRegionsList;
 @property (retain) NSMutableArray* mutableDepartCitiesList;
 @property (retain) NSMutableArray* mutableDestinationCitiesList;
 @property (retain) NSMutableArray* mutableRouteThemesList;
@@ -2778,6 +3036,7 @@ static RouteCity* defaultRouteCityInstance = nil;
 @synthesize mutableTestCitiesList;
 @synthesize mutablePlaceMetaDataListList;
 @synthesize mutableRecommendedAppsList;
+@synthesize mutableRegionsList;
 @synthesize mutableDepartCitiesList;
 @synthesize mutableDestinationCitiesList;
 @synthesize mutableRouteThemesList;
@@ -2789,6 +3048,7 @@ static RouteCity* defaultRouteCityInstance = nil;
   self.mutableTestCitiesList = nil;
   self.mutablePlaceMetaDataListList = nil;
   self.mutableRecommendedAppsList = nil;
+  self.mutableRegionsList = nil;
   self.mutableDepartCitiesList = nil;
   self.mutableDestinationCitiesList = nil;
   self.mutableRouteThemesList = nil;
@@ -2840,6 +3100,13 @@ static App* defaultAppInstance = nil;
 }
 - (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index {
   id value = [mutableRecommendedAppsList objectAtIndex:index];
+  return value;
+}
+- (NSArray*) regionsList {
+  return mutableRegionsList;
+}
+- (Region*) regionsAtIndex:(int32_t) index {
+  id value = [mutableRegionsList objectAtIndex:index];
   return value;
 }
 - (NSArray*) departCitiesList {
@@ -2901,6 +3168,11 @@ static App* defaultAppInstance = nil;
       return NO;
     }
   }
+  for (Region* element in self.regionsList) {
+    if (!element.isInitialized) {
+      return NO;
+    }
+  }
   for (RouteCity* element in self.departCitiesList) {
     if (!element.isInitialized) {
       return NO;
@@ -2944,6 +3216,9 @@ static App* defaultAppInstance = nil;
   for (RecommendedApp* element in self.recommendedAppsList) {
     [output writeMessage:10 value:element];
   }
+  for (Region* element in self.regionsList) {
+    [output writeMessage:15 value:element];
+  }
   for (RouteCity* element in self.departCitiesList) {
     [output writeMessage:20 value:element];
   }
@@ -2982,6 +3257,9 @@ static App* defaultAppInstance = nil;
   }
   for (RecommendedApp* element in self.recommendedAppsList) {
     size += computeMessageSize(10, element);
+  }
+  for (Region* element in self.regionsList) {
+    size += computeMessageSize(15, element);
   }
   for (RouteCity* element in self.departCitiesList) {
     size += computeMessageSize(20, element);
@@ -3100,6 +3378,12 @@ static App* defaultAppInstance = nil;
     }
     [result.mutableRecommendedAppsList addObjectsFromArray:other.mutableRecommendedAppsList];
   }
+  if (other.mutableRegionsList.count > 0) {
+    if (result.mutableRegionsList == nil) {
+      result.mutableRegionsList = [NSMutableArray array];
+    }
+    [result.mutableRegionsList addObjectsFromArray:other.mutableRegionsList];
+  }
   if (other.mutableDepartCitiesList.count > 0) {
     if (result.mutableDepartCitiesList == nil) {
       result.mutableDepartCitiesList = [NSMutableArray array];
@@ -3177,6 +3461,12 @@ static App* defaultAppInstance = nil;
         RecommendedApp_Builder* subBuilder = [RecommendedApp builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addRecommendedApps:[subBuilder buildPartial]];
+        break;
+      }
+      case 122: {
+        Region_Builder* subBuilder = [Region builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addRegions:[subBuilder buildPartial]];
         break;
       }
       case 162: {
@@ -3342,6 +3632,35 @@ static App* defaultAppInstance = nil;
     result.mutableRecommendedAppsList = [NSMutableArray array];
   }
   [result.mutableRecommendedAppsList addObject:value];
+  return self;
+}
+- (NSArray*) regionsList {
+  if (result.mutableRegionsList == nil) { return [NSArray array]; }
+  return result.mutableRegionsList;
+}
+- (Region*) regionsAtIndex:(int32_t) index {
+  return [result regionsAtIndex:index];
+}
+- (App_Builder*) replaceRegionsAtIndex:(int32_t) index with:(Region*) value {
+  [result.mutableRegionsList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (App_Builder*) addAllRegions:(NSArray*) values {
+  if (result.mutableRegionsList == nil) {
+    result.mutableRegionsList = [NSMutableArray array];
+  }
+  [result.mutableRegionsList addObjectsFromArray:values];
+  return self;
+}
+- (App_Builder*) clearRegionsList {
+  result.mutableRegionsList = nil;
+  return self;
+}
+- (App_Builder*) addRegions:(Region*) value {
+  if (result.mutableRegionsList == nil) {
+    result.mutableRegionsList = [NSMutableArray array];
+  }
+  [result.mutableRegionsList addObject:value];
   return self;
 }
 - (NSArray*) departCitiesList {
