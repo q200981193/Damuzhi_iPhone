@@ -377,6 +377,8 @@
 		A4FB94D11536B74300DDC76E /* default_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94CF1536B74300DDC76E /* default_b@2x.png */; };
 		A4FB94D21536B74300DDC76E /* detail_tr_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94D01536B74300DDC76E /* detail_tr_bg@2x.png */; };
 		A4FCE24115170A830077A333 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FCE24015170A830077A333 /* AppUtils.m */; };
+		C26301E615A8286B0082F0E2 /* RetrievePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = C26301E415A8286B0082F0E2 /* RetrievePasswordController.m */; };
+		C26301E715A8286B0082F0E2 /* RetrievePasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C26301E515A8286B0082F0E2 /* RetrievePasswordController.xib */; };
 		C28C756315A571BB00D65AF9 /* fly_t_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */; };
 		C28C756915A571CA00D65AF9 /* fly_t_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */; };
 		C28C756A15A571CA00D65AF9 /* fly_t_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */; };
@@ -1162,6 +1164,9 @@
 		A4FCE23E1516FF9F0077A333 /* AppConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		A4FCE23F15170A830077A333 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		A4FCE24015170A830077A333 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
+		C26301E315A8286B0082F0E2 /* RetrievePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetrievePasswordController.h; sourceTree = "<group>"; };
+		C26301E415A8286B0082F0E2 /* RetrievePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetrievePasswordController.m; sourceTree = "<group>"; };
+		C26301E515A8286B0082F0E2 /* RetrievePasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetrievePasswordController.xib; sourceTree = "<group>"; };
 		C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_1@2x.png"; sourceTree = "<group>"; };
 		C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_6@2x.png"; sourceTree = "<group>"; };
 		C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_5@2x.png"; sourceTree = "<group>"; };
@@ -2152,6 +2157,9 @@
 		A48782BC15071BAA00A0D91E /* More */ = {
 			isa = PBXGroup;
 			children = (
+				C26301E315A8286B0082F0E2 /* RetrievePasswordController.h */,
+				C26301E415A8286B0082F0E2 /* RetrievePasswordController.m */,
+				C26301E515A8286B0082F0E2 /* RetrievePasswordController.xib */,
 				A48E058E15341B3A00B2695E /* FeekbackController.h */,
 				A48E058F15341B3A00B2695E /* FeekbackController.m */,
 				A48E059015341B3A00B2695E /* FeekbackController.xib */,
@@ -4284,6 +4292,7 @@
 				C28C756D15A571CA00D65AF9 /* fly_t_2@2x.png in Resources */,
 				A3A9797015A5A3CA0071B282 /* ChangePasswordController.xib in Resources */,
 				A3063DFA15A82579003CD45E /* SelectCityController.xib in Resources */,
+				C26301E715A8286B0082F0E2 /* RetrievePasswordController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4592,6 +4601,7 @@
 				EAC88FA115A441510068C3C0 /* PersonalInfoController.m in Sources */,
 				A3A9796F15A5A3CA0071B282 /* ChangePasswordController.m in Sources */,
 				A3063DF915A82579003CD45E /* SelectCityController.m in Sources */,
+				C26301E615A8286B0082F0E2 /* RetrievePasswordController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
