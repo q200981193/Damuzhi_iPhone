@@ -16,6 +16,8 @@
 #import "SelectedItemIdsManager.h"
 #import "CommonPlace.h"
 #import "CommonRouteDetailController.h"
+#import "SelectCityController.h"
+#import "Item.h"
 
 #define TAG_DEPART_CITY_LABEL 18
 #define TAG_AGENCY_LABEL 19
@@ -395,14 +397,21 @@
     NSArray *itemList = nil;
     switch (button.tag) {
         case TAG_FILTER_BTN_DEPART_CITY:
+        {
             itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-            [self pushSelectedControllerWithTitle:NSLS(@"出发城市")
-                                         itemList:itemList
-                                  selectedItemIds:_selectedItemIds.departCityIds
-                                     multiOptions:NO 
-                                      needConfirm:YES 
-                                    needShowCount:YES];
+//            [self pushSelectedControllerWithTitle:NSLS(@"出发城市")
+//                                         itemList:itemList
+//                                  selectedItemIds:_selectedItemIds.departCityIds
+//                                     multiOptions:NO 
+//                                      needConfirm:YES 
+//                                    needShowCount:YES];
+            SelectCityController *controller = [[SelectCityController alloc] initWithItemList:[[AppManager defaultManager] getDepartCityItemList:dataList] delegate:self];
+            [self.navigationController pushViewController:controller animated:YES];
             break;
+        }
+           
+            
+
             
         default:
             break;
@@ -418,6 +427,13 @@
 - (void)clickMyFollow:(id)sender
 {
     [self popupMessage:NSLS(@"待实现") title:nil];
+}
+
+
+#pragma mark - SelectCityDelegate methods
+- (void)didSelectCity:(Item *)item
+{
+    PPDebug(@"%@", item.itemName);
 }
 
 @end
