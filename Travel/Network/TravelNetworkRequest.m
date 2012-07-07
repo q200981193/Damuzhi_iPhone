@@ -680,8 +680,7 @@
 }
 
 
-+ (CommonNetworkOutput*)retrievePassword:(NSString *)loginId
-                               telephone:(NSString *)telephone
++ (CommonNetworkOutput*)retrievePassword:(NSString *)telephone
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -690,7 +689,6 @@
         //set input parameters
         NSString* str = [NSString stringWithString:baseURL];        
         
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];
         
         return str;

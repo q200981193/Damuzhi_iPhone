@@ -14,7 +14,7 @@
 #import "OrderManagerController.h"
 
 #import "StringUtil.h"
-
+#import "RetrievePasswordController.h"
 @interface LoginController ()
 
 @property (copy, nonatomic) NSString *loginId;
@@ -148,7 +148,9 @@
 }
 
 - (IBAction)clickRetrievePasswordButton:(id)sender {
-    
+    RetrievePasswordController *controller = [[RetrievePasswordController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
     
     
 }

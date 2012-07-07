@@ -22,7 +22,7 @@
 - (void)loginDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)loginoutDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 
-- (void)retrievePasswordDidSend:(int)resultCode;
+- (void)retrievePasswordDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 
 @end
 
@@ -66,8 +66,7 @@
 
 
 // 找回密码接口
-- (void)retrievePassword:(NSString *)loginId 
-               telephone:(NSString *)telephone
+- (void)retrievePassword:(NSString *)telephone
                 delegate:(id<UserServiceDelegate>)delegate;
 
 - (void)modifyUserInfo:(NSString *)loginId
