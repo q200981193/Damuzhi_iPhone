@@ -399,19 +399,21 @@
         case TAG_FILTER_BTN_DEPART_CITY:
         {
             itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-//            [self pushSelectedControllerWithTitle:NSLS(@"出发城市")
-//                                         itemList:itemList
-//                                  selectedItemIds:_selectedItemIds.departCityIds
-//                                     multiOptions:NO 
-//                                      needConfirm:YES 
-//                                    needShowCount:YES];
-            SelectCityController *controller = [[SelectCityController alloc] initWithItemList:[[AppManager defaultManager] getDepartCityItemList:dataList] delegate:self];
+            SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
+                                                                                selectedItemList:_selectedItemIds.departCityIds 
+                                                                                        delegate:self];
             [self.navigationController pushViewController:controller animated:YES];
             break;
         }
-           
-            
-
+        case TAG_FILTER_BTN_DESTINATION_CITY:
+        {
+            itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
+            SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
+                                                                                selectedItemList:_selectedItemIds.destinationCityIds 
+                                                                                        delegate:self];
+            [self.navigationController pushViewController:controller animated:YES];
+            break;
+        }
             
         default:
             break;
@@ -431,9 +433,10 @@
 
 
 #pragma mark - SelectCityDelegate methods
-- (void)didSelectCity:(Item *)item
+- (void)didSelectCity:(NSArray *)selectedItemList
 {
-    PPDebug(@"%@", item.itemName);
+    //to do
+    //PPDebug(@"didSelectCity %@", selectedItemList);
 }
 
 @end

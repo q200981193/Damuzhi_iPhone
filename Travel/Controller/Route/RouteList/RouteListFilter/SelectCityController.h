@@ -12,7 +12,7 @@
 @protocol SelectCityDelegate <NSObject>
 
 @optional
-- (void)didSelectCity:(Item *)item;
+- (void)didSelectCity:(NSArray *)selectedItemList;
 
 @end
 
@@ -20,6 +20,8 @@
 @interface SelectCityController : PPTableViewController <UISearchBarDelegate>
 @property (retain, nonatomic) IBOutlet UISearchBar *searchBar;
 
-- (id)initWithItemList:(NSArray *)itemsList delegate:(id<SelectCityDelegate>)delegate;
+- (id)initWithAllItemList:(NSArray *)itemsList 
+         selectedItemList:(NSMutableArray *)selectedItemIds 
+                 delegate:(id<SelectCityDelegate>)delegate;
 
 @end

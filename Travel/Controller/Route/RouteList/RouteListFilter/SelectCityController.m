@@ -15,26 +15,36 @@
 @property (retain, nonatomic) NSArray *allDataList;
 @property (assign, nonatomic) id<SelectCityDelegate> delegate;
 
+@property (retain, nonatomic) NSMutableArray *selectedItemIds;
+@property (retain, nonatomic) NSMutableArray *selectedItemIdsBeforConfirm;
+
 @end
 
 @implementation SelectCityController
 @synthesize searchBar = _searchBar;
 @synthesize delegate = _delegate;
 @synthesize allDataList = _allDataList;
+@synthesize selectedItemIds = _selectedItemIds;
+@synthesize selectedItemIdsBeforConfirm = _selectedItemIdsBeforConfirm;
 
 - (void)dealloc
 {
     PPRelease(_allDataList);
-    [_searchBar release];
+    PPRelease(_searchBar);
+    PPRelease(_selectedItemIds);
     [super dealloc];
 }
 
-- (id)initWithItemList:(NSArray *)itemsList delegate:(id<SelectCityDelegate>)delegate
+- (id)initWithAllItemList:(NSArray *)itemsList 
+         selectedItemList:(NSMutableArray *)selectedItemIds 
+                 delegate:(id<SelectCityDelegate>)delegate
 {
     self = [super init];
     if (self) {
         self.allDataList = itemsList;
         self.dataList = itemsList;
+        self.selectedItemIds = selectedItemIds;
+        self.selectedItemIdsBeforConfirm = [NSMutableArray arrayWithArray:selectedItemIds];
         self.delegate = delegate;
     }
     return self;
@@ -49,6 +59,10 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"出发城市");
+    
+    [self setNavigationRightButton:NSLS(@"确定") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickSubmit:)];
     
     dataTableView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
 }
@@ -88,6 +102,17 @@
     cell.textLabel.text = item.itemName;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
     
+    BOOL found = NO;
+    for (NSNumber *findItemId in self.selectedItemIdsBeforConfirm) {
+        if ([findItemId intValue] == item.itemId) {
+            found = YES;
+            break;
+        }
+    }
+    if (found) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    
     return cell;
 }
 
@@ -95,11 +120,28 @@
 {
     Item *item = [dataList objectAtIndex:indexPath.row];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
-        [_delegate didSelectCity:item];
+    BOOL found = NO;
+    NSNumber *findItemId;
+    for (findItemId in self.selectedItemIdsBeforConfirm) {
+        if ([findItemId intValue] == item.itemId) {
+            found = YES;
+            break;
+        }
     }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    if (found) {
+        [_selectedItemIdsBeforConfirm removeObject:findItemId];
+    } else {
+        [_selectedItemIdsBeforConfirm addObject:[NSNumber numberWithInt:item.itemId]];
+    }
+    
+    [dataTableView reloadData];
+    
+//    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
+//        [_delegate didSelectCity:item];
+//    }
+    
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -149,6 +191,23 @@
 {
     [self.searchBar setShowsCancelButton:NO animated:YES];
 }
+
+
+#pragma mark - custom methods
+- (void)clickSubmit:(id)sender
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
+        
+        [_selectedItemIds removeAllObjects];
+        for (NSNumber *itemId in _selectedItemIdsBeforConfirm) {
+            [_selectedItemIds addObject:itemId];
+        }
+        
+        [_delegate didSelectCity:_selectedItemIds];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)updateHideKeyboardButton
 {

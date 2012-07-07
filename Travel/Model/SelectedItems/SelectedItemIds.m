@@ -101,6 +101,8 @@
         self.themeIds = [[[NSMutableArray alloc] init] autorelease];
         self.routeTypeIds = [[[NSMutableArray alloc] init] autorelease];
         
+        [self.departCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.destinationCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.agencyIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.themeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.routeTypeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
@@ -117,6 +119,8 @@
     [self.themeIds removeAllObjects];
     [self.routeTypeIds removeAllObjects];
     
+    [self.departCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.destinationCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.agencyIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.themeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.routeTypeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];

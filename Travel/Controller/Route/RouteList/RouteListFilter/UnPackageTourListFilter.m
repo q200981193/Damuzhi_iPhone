@@ -73,6 +73,7 @@
     CGRect rect2 = CGRectMake(origin_x, origin_y, 60, HEIGHT_FILTER_BTN);
     UIButton *destFilterBtn = [CommonRouteListFilter createFilterButton:rect2 title:NSLS(@"目的地")];
     destFilterBtn.tag = TAG_FILTER_BTN_DESTINATION_CITY;
+    [destFilterBtn addTarget:controller action:@selector(clickFitlerButton:) forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:destFilterBtn];
     
     origin_x = destFilterBtn.frame.size.width + destFilterBtn.frame.origin.x + BTN_EDGE;
