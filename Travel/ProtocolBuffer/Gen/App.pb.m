@@ -2558,6 +2558,9 @@ static RouteCity* defaultRouteCityInstance = nil;
   if (!self.hasCityName) {
     return NO;
   }
+  if (!self.hasCountryName) {
+    return NO;
+  }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
@@ -2568,7 +2571,7 @@ static RouteCity* defaultRouteCityInstance = nil;
     [output writeString:2 value:self.cityName];
   }
   if (self.hasCountryName) {
-    [output writeString:6 value:self.countryName];
+    [output writeString:3 value:self.countryName];
   }
   if (self.hasRegionId) {
     [output writeInt32:8 value:self.regionId];
@@ -2589,7 +2592,7 @@ static RouteCity* defaultRouteCityInstance = nil;
     size += computeStringSize(2, self.cityName);
   }
   if (self.hasCountryName) {
-    size += computeStringSize(6, self.countryName);
+    size += computeStringSize(3, self.countryName);
   }
   if (self.hasRegionId) {
     size += computeInt32Size(8, self.regionId);
@@ -2710,7 +2713,7 @@ static RouteCity* defaultRouteCityInstance = nil;
         [self setCityName:[input readString]];
         break;
       }
-      case 50: {
+      case 26: {
         [self setCountryName:[input readString]];
         break;
       }
