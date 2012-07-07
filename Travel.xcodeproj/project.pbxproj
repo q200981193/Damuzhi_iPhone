@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3063DF915A82579003CD45E /* SelectCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3063DF715A82579003CD45E /* SelectCityController.m */; };
+		A3063DFA15A82579003CD45E /* SelectCityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3063DF815A82579003CD45E /* SelectCityController.xib */; };
 		A3065279154A50000074B175 /* GeocoderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3065278154A50000074B175 /* GeocoderManager.m */; };
 		A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A30D610915354943007CE0F4 /* PlaceUtils.m */; };
 		A31115161532DBEB00E33BB2 /* NSData+QBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115041532DBEB00E33BB2 /* NSData+QBase64.m */; };
@@ -667,6 +669,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3063DF615A82579003CD45E /* SelectCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCityController.h; sourceTree = "<group>"; };
+		A3063DF715A82579003CD45E /* SelectCityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCityController.m; sourceTree = "<group>"; };
+		A3063DF815A82579003CD45E /* SelectCityController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCityController.xib; sourceTree = "<group>"; };
 		A3065277154A50000074B175 /* GeocoderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocoderManager.h; sourceTree = "<group>"; };
 		A3065278154A50000074B175 /* GeocoderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocoderManager.m; sourceTree = "<group>"; };
 		A30D610815354943007CE0F4 /* PlaceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceUtils.h; sourceTree = "<group>"; };
@@ -2076,6 +2081,9 @@
 		A455F8DE1585D43900CA5743 /* RouteListFilter */ = {
 			isa = PBXGroup;
 			children = (
+				A3063DF615A82579003CD45E /* SelectCityController.h */,
+				A3063DF715A82579003CD45E /* SelectCityController.m */,
+				A3063DF815A82579003CD45E /* SelectCityController.xib */,
 				A455F8DF1585D43900CA5743 /* CommonRouteListFilter.h */,
 				A455F8E01585D43900CA5743 /* CommonRouteListFilter.m */,
 				A455F8E11585D43900CA5743 /* PackageTourListFilter.h */,
@@ -4275,6 +4283,7 @@
 				C28C756C15A571CA00D65AF9 /* fly_t_3@2x.png in Resources */,
 				C28C756D15A571CA00D65AF9 /* fly_t_2@2x.png in Resources */,
 				A3A9797015A5A3CA0071B282 /* ChangePasswordController.xib in Resources */,
+				A3063DFA15A82579003CD45E /* SelectCityController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4582,6 +4591,7 @@
 				EAC88F9F15A441510068C3C0 /* PersonalInfoCell.m in Sources */,
 				EAC88FA115A441510068C3C0 /* PersonalInfoController.m in Sources */,
 				A3A9796F15A5A3CA0071B282 /* ChangePasswordController.m in Sources */,
+				A3063DF915A82579003CD45E /* SelectCityController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
