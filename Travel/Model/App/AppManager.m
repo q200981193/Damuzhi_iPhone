@@ -125,21 +125,21 @@ static AppManager* _defaultAppManager = nil;
     
     self.app = appData;    
     
-//    NSArray *cityList = [appData citiesList];
-//    for (City *city in cityList) {
-//        PPDebug(@"city = %@", city.cityName);
-//        PPDebug(@"city size = %d", city.dataSize);
-//    }
-//    
-//    NSArray *testCityList = [appData testCitiesList];
-//    for (City *city in testCityList) {
-//        PPDebug(@"testcity = %@", city.cityName);
-//        PPDebug(@"city size = %d", city.dataSize);
-//    }
-//    
-//    for (RecommendedApp *app in appData.recommendedAppsList) {
-//        PPDebug(@"app.name = %@", app.name);
-//    }
+    NSArray *cityList = [appData citiesList];
+    for (City *city in cityList) {
+        PPDebug(@"city = %@", city.cityName);
+        PPDebug(@"city size = %d", city.dataSize);
+    }
+    
+    NSArray *testCityList = [appData testCitiesList];
+    for (City *city in testCityList) {
+        PPDebug(@"testcity = %@", city.cityName);
+        PPDebug(@"city size = %d", city.dataSize);
+    }
+    
+    for (RecommendedApp *app in appData.recommendedAppsList) {
+        PPDebug(@"app.name = %@", app.name);
+    }
     
    [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
