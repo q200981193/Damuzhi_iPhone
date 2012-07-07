@@ -36,6 +36,8 @@
 @class PlaceTour_Builder;
 @class RecommendedApp;
 @class RecommendedApp_Builder;
+@class Region;
+@class Region_Builder;
 @class RouteCity;
 @class RouteCity_Builder;
 @class TouristRoute;
@@ -660,18 +662,22 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 @interface RouteCity : PBGeneratedMessage {
 @private
   BOOL hasRouteCityId_:1;
+  BOOL hasRegionId_:1;
   BOOL hasCityName_:1;
   BOOL hasCountryName_:1;
   int32_t routeCityId;
+  int32_t regionId;
   NSString* cityName;
   NSString* countryName;
 }
 - (BOOL) hasRouteCityId;
 - (BOOL) hasCityName;
 - (BOOL) hasCountryName;
+- (BOOL) hasRegionId;
 @property (readonly) int32_t routeCityId;
 @property (readonly, retain) NSString* cityName;
 @property (readonly, retain) NSString* countryName;
+@property (readonly) int32_t regionId;
 
 + (RouteCity*) defaultInstance;
 - (RouteCity*) defaultInstance;
@@ -721,6 +727,68 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (NSString*) countryName;
 - (RouteCity_Builder*) setCountryName:(NSString*) value;
 - (RouteCity_Builder*) clearCountryName;
+
+- (BOOL) hasRegionId;
+- (int32_t) regionId;
+- (RouteCity_Builder*) setRegionId:(int32_t) value;
+- (RouteCity_Builder*) clearRegionId;
+@end
+
+@interface Region : PBGeneratedMessage {
+@private
+  BOOL hasRegionId_:1;
+  BOOL hasRegionName_:1;
+  int32_t regionId;
+  NSString* regionName;
+}
+- (BOOL) hasRegionId;
+- (BOOL) hasRegionName;
+@property (readonly) int32_t regionId;
+@property (readonly, retain) NSString* regionName;
+
++ (Region*) defaultInstance;
+- (Region*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (Region_Builder*) builder;
++ (Region_Builder*) builder;
++ (Region_Builder*) builderWithPrototype:(Region*) prototype;
+
++ (Region*) parseFromData:(NSData*) data;
++ (Region*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (Region*) parseFromInputStream:(NSInputStream*) input;
++ (Region*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (Region*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (Region*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface Region_Builder : PBGeneratedMessage_Builder {
+@private
+  Region* result;
+}
+
+- (Region*) defaultInstance;
+
+- (Region_Builder*) clear;
+- (Region_Builder*) clone;
+
+- (Region*) build;
+- (Region*) buildPartial;
+
+- (Region_Builder*) mergeFrom:(Region*) other;
+- (Region_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (Region_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasRegionId;
+- (int32_t) regionId;
+- (Region_Builder*) setRegionId:(int32_t) value;
+- (Region_Builder*) clearRegionId;
+
+- (BOOL) hasRegionName;
+- (NSString*) regionName;
+- (Region_Builder*) setRegionName:(NSString*) value;
+- (Region_Builder*) clearRegionName;
 @end
 
 @interface App : PBGeneratedMessage {
@@ -731,6 +799,7 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   NSMutableArray* mutableTestCitiesList;
   NSMutableArray* mutablePlaceMetaDataListList;
   NSMutableArray* mutableRecommendedAppsList;
+  NSMutableArray* mutableRegionsList;
   NSMutableArray* mutableDepartCitiesList;
   NSMutableArray* mutableDestinationCitiesList;
   NSMutableArray* mutableRouteThemesList;
@@ -747,6 +816,8 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (PlaceMeta*) placeMetaDataListAtIndex:(int32_t) index;
 - (NSArray*) recommendedAppsList;
 - (RecommendedApp*) recommendedAppsAtIndex:(int32_t) index;
+- (NSArray*) regionsList;
+- (Region*) regionsAtIndex:(int32_t) index;
 - (NSArray*) departCitiesList;
 - (RouteCity*) departCitiesAtIndex:(int32_t) index;
 - (NSArray*) destinationCitiesList;
@@ -824,6 +895,13 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) addRecommendedApps:(RecommendedApp*) value;
 - (App_Builder*) addAllRecommendedApps:(NSArray*) values;
 - (App_Builder*) clearRecommendedAppsList;
+
+- (NSArray*) regionsList;
+- (Region*) regionsAtIndex:(int32_t) index;
+- (App_Builder*) replaceRegionsAtIndex:(int32_t) index with:(Region*) value;
+- (App_Builder*) addRegions:(Region*) value;
+- (App_Builder*) addAllRegions:(NSArray*) values;
+- (App_Builder*) clearRegionsList;
 
 - (NSArray*) departCitiesList;
 - (RouteCity*) departCitiesAtIndex:(int32_t) index;
