@@ -54,6 +54,18 @@ message RouteFeekback {
   optional string content = 6;      // 反馈内容
 }
 
+message Statistics{
+  required int32 id;
+  required string name;
+  required int32 count;
+}
+
+message PlaceStatistics{
+  repeated Statistics subCategoryStatics;
+  repeated Statistics areaStatics;
+  repeated Statistics serviceStatics;
+}
+
 message TravelResponse{
   required int32 resultCode = 1 [default=0];
   optional string resultInfo = 2;
@@ -65,6 +77,8 @@ message TravelResponse{
   optional CityList cityList = 8;
   optional App appInfo = 9;   
   optional CommonTravelTipList travelTipList = 10;
+  
+  optional PlaceStatistics placeStatistics = 12;
   
   optional int32 totalCount = 13;                       // 用于返回符合查询条件的列表的行总数
   

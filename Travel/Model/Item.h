@@ -22,11 +22,4 @@
 + (Item *)itemWithNameIdPair:(NameIdPair *)pair
                        count:(int)count;
 
-//- (Item*)initWithItemId:(int)itemId
-//               itemName:(NSString *)itemName
-//                  count:(int)count;
-//
-//- (Item*)initWithNameIdPair:(NameIdPair*)nameIdPair
-//                      count:(int)count;
-
 @end
