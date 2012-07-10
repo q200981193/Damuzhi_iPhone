@@ -371,18 +371,11 @@
 
 - (void)pushDepartCitySelectController
 {
-    NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-    
-    SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"出发城市")
-                                                                  itemList:itemList
-                                                           selectedItemIds:_selectedItemIds.departCityIds
-                                                              multiOptions:NO 
-                                                               needConfirm:YES
-                                                             needShowCount:YES];
-    
-    
-    controller.delegate = self;
-    
+    NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
+    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
+                                                                        selectedItemList:_selectedItemIds.departCityIds 
+                                                                                    type:depart
+                                                                                delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -433,8 +426,10 @@
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
             [self pushDestinationCitySelectController];
+            break;
         case TAG_FILTER_BTN_AGENCY:
             [self pushAgencySelectController];
+            break;
         default:
             break;
     }
