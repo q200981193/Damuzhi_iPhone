@@ -200,15 +200,19 @@ static UserService* _defaultUserService = nil;
     });
 }
 
-- (void)retrievePassword:(NSString *)loginId 
-               telephone:(NSString *)telephone 
+- (void)retrievePassword:(NSString *)telephone 
                 delegate:(id<UserServiceDelegate>)delegate
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        CommonNetworkOutput *output = [TravelNetworkRequest retrievePassword:loginId telephone:telephone];   
+        CommonNetworkOutput *output = [TravelNetworkRequest retrievePassword:telephone];   
+        
+        NSDictionary* jsonDict = [output.textData JSONValue];
+        int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+        NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (delegate && [delegate respondsToSelector:@selector(retrievePasswordDidSend:)]) {
-                [delegate retrievePasswordDidSend:output.resultCode];
+            if (delegate && [delegate respondsToSelector:@selector(retrievePasswordDidSend:result:resultInfo:)]) {
+                [delegate retrievePasswordDidSend:output.resultCode result:result resultInfo:resultInfo];
             }
         });
     });

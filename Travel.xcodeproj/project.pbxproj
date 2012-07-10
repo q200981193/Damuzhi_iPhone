@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A3063DF915A82579003CD45E /* SelectCityController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3063DF715A82579003CD45E /* SelectCityController.m */; };
+		A3063DFA15A82579003CD45E /* SelectCityController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3063DF815A82579003CD45E /* SelectCityController.xib */; };
 		A3065279154A50000074B175 /* GeocoderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3065278154A50000074B175 /* GeocoderManager.m */; };
 		A30D610A15354943007CE0F4 /* PlaceUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A30D610915354943007CE0F4 /* PlaceUtils.m */; };
 		A31115161532DBEB00E33BB2 /* NSData+QBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = A31115041532DBEB00E33BB2 /* NSData+QBase64.m */; };
@@ -294,10 +296,10 @@
 		A48E062B15358FD600B2695E /* CommonWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = A48E062915358FD600B2695E /* CommonWebController.m */; };
 		A48E062C15358FD600B2695E /* CommonWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A48E062A15358FD600B2695E /* CommonWebController.xib */; };
 		A48FA65C153803BA00422DB7 /* detail_top_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A48FA65B153803B900422DB7 /* detail_top_bg@2x.png */; };
-		A49098FC15AA8715004E59D3 /* RouteSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = A49098FA15AA8713004E59D3 /* RouteSelectController.m */; };
-		A49098FD15AA8715004E59D3 /* RouteSelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A49098FB15AA8714004E59D3 /* RouteSelectController.xib */; };
-		A490990115AA8747004E59D3 /* RouteSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A49098FF15AA8744004E59D3 /* RouteSelectCell.m */; };
-		A490990215AA8747004E59D3 /* RouteSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A490990015AA8745004E59D3 /* RouteSelectCell.xib */; };
+		A490991E15ABD189004E59D3 /* RouteSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A490991915ABD183004E59D3 /* RouteSelectCell.m */; };
+		A490991F15ABD189004E59D3 /* RouteSelectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A490991A15ABD184004E59D3 /* RouteSelectCell.xib */; };
+		A490992015ABD189004E59D3 /* RouteSelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = A490991C15ABD187004E59D3 /* RouteSelectController.m */; };
+		A490992115ABD189004E59D3 /* RouteSelectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A490991D15ABD187004E59D3 /* RouteSelectController.xib */; };
 		A49B7948159982CE00F3A926 /* line_p1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49B7946159982CE00F3A926 /* line_p1@2x.png */; };
 		A49B7949159982CE00F3A926 /* line_p2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49B7947159982CE00F3A926 /* line_p2@2x.png */; };
 		A49B794B15999CB600F3A926 /* line_btn1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A49B794A15999CB600F3A926 /* line_btn1@2x.png */; };
@@ -379,6 +381,8 @@
 		A4FB94D11536B74300DDC76E /* default_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94CF1536B74300DDC76E /* default_b@2x.png */; };
 		A4FB94D21536B74300DDC76E /* detail_tr_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A4FB94D01536B74300DDC76E /* detail_tr_bg@2x.png */; };
 		A4FCE24115170A830077A333 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A4FCE24015170A830077A333 /* AppUtils.m */; };
+		C26301E615A8286B0082F0E2 /* RetrievePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = C26301E415A8286B0082F0E2 /* RetrievePasswordController.m */; };
+		C26301E715A8286B0082F0E2 /* RetrievePasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C26301E515A8286B0082F0E2 /* RetrievePasswordController.xib */; };
 		C28C756315A571BB00D65AF9 /* fly_t_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */; };
 		C28C756915A571CA00D65AF9 /* fly_t_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */; };
 		C28C756A15A571CA00D65AF9 /* fly_t_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */; };
@@ -671,6 +675,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A3063DF615A82579003CD45E /* SelectCityController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCityController.h; sourceTree = "<group>"; };
+		A3063DF715A82579003CD45E /* SelectCityController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCityController.m; sourceTree = "<group>"; };
+		A3063DF815A82579003CD45E /* SelectCityController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCityController.xib; sourceTree = "<group>"; };
 		A3065277154A50000074B175 /* GeocoderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeocoderManager.h; sourceTree = "<group>"; };
 		A3065278154A50000074B175 /* GeocoderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeocoderManager.m; sourceTree = "<group>"; };
 		A30D610815354943007CE0F4 /* PlaceUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceUtils.h; sourceTree = "<group>"; };
@@ -1051,12 +1058,12 @@
 		A48E062915358FD600B2695E /* CommonWebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonWebController.m; sourceTree = "<group>"; };
 		A48E062A15358FD600B2695E /* CommonWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonWebController.xib; sourceTree = "<group>"; };
 		A48FA65B153803B900422DB7 /* detail_top_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail_top_bg@2x.png"; sourceTree = "<group>"; };
-		A49098F915AA8712004E59D3 /* RouteSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSelectController.h; sourceTree = "<group>"; };
-		A49098FA15AA8713004E59D3 /* RouteSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteSelectController.m; sourceTree = "<group>"; };
-		A49098FB15AA8714004E59D3 /* RouteSelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteSelectController.xib; sourceTree = "<group>"; };
-		A49098FE15AA8743004E59D3 /* RouteSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteSelectCell.h; sourceTree = "<group>"; };
-		A49098FF15AA8744004E59D3 /* RouteSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteSelectCell.m; sourceTree = "<group>"; };
-		A490990015AA8745004E59D3 /* RouteSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RouteSelectCell.xib; sourceTree = "<group>"; };
+		A490991815ABD183004E59D3 /* RouteSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteSelectCell.h; path = RouteListFilter/RouteSelectCell.h; sourceTree = "<group>"; };
+		A490991915ABD183004E59D3 /* RouteSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteSelectCell.m; path = RouteListFilter/RouteSelectCell.m; sourceTree = "<group>"; };
+		A490991A15ABD184004E59D3 /* RouteSelectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RouteSelectCell.xib; path = RouteListFilter/RouteSelectCell.xib; sourceTree = "<group>"; };
+		A490991B15ABD186004E59D3 /* RouteSelectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteSelectController.h; path = RouteListFilter/RouteSelectController.h; sourceTree = "<group>"; };
+		A490991C15ABD187004E59D3 /* RouteSelectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteSelectController.m; path = RouteListFilter/RouteSelectController.m; sourceTree = "<group>"; };
+		A490991D15ABD187004E59D3 /* RouteSelectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RouteSelectController.xib; path = RouteListFilter/RouteSelectController.xib; sourceTree = "<group>"; };
 		A49B7946159982CE00F3A926 /* line_p1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line_p1@2x.png"; sourceTree = "<group>"; };
 		A49B7947159982CE00F3A926 /* line_p2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line_p2@2x.png"; sourceTree = "<group>"; };
 		A49B794A15999CB600F3A926 /* line_btn1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line_btn1@2x.png"; sourceTree = "<group>"; };
@@ -1167,6 +1174,9 @@
 		A4FCE23E1516FF9F0077A333 /* AppConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		A4FCE23F15170A830077A333 /* AppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
 		A4FCE24015170A830077A333 /* AppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
+		C26301E315A8286B0082F0E2 /* RetrievePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetrievePasswordController.h; sourceTree = "<group>"; };
+		C26301E415A8286B0082F0E2 /* RetrievePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RetrievePasswordController.m; sourceTree = "<group>"; };
+		C26301E515A8286B0082F0E2 /* RetrievePasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetrievePasswordController.xib; sourceTree = "<group>"; };
 		C28C756215A571BB00D65AF9 /* fly_t_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_1@2x.png"; sourceTree = "<group>"; };
 		C28C756415A571CA00D65AF9 /* fly_t_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_6@2x.png"; sourceTree = "<group>"; };
 		C28C756515A571CA00D65AF9 /* fly_t_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fly_t_5@2x.png"; sourceTree = "<group>"; };
@@ -2072,6 +2082,12 @@
 		A455F8D71585D43900CA5743 /* RouteList */ = {
 			isa = PBXGroup;
 			children = (
+				A490991815ABD183004E59D3 /* RouteSelectCell.h */,
+				A490991915ABD183004E59D3 /* RouteSelectCell.m */,
+				A490991A15ABD184004E59D3 /* RouteSelectCell.xib */,
+				A490991B15ABD186004E59D3 /* RouteSelectController.h */,
+				A490991C15ABD187004E59D3 /* RouteSelectController.m */,
+				A490991D15ABD187004E59D3 /* RouteSelectController.xib */,
 				A455F8D81585D43900CA5743 /* CommonRouteListController.h */,
 				A455F8D91585D43900CA5743 /* CommonRouteListController.m */,
 				A455F8DA1585D43900CA5743 /* CommonRouteListController.xib */,
@@ -2086,18 +2102,15 @@
 		A455F8DE1585D43900CA5743 /* RouteListFilter */ = {
 			isa = PBXGroup;
 			children = (
+				A3063DF615A82579003CD45E /* SelectCityController.h */,
+				A3063DF715A82579003CD45E /* SelectCityController.m */,
+				A3063DF815A82579003CD45E /* SelectCityController.xib */,
 				A455F8DF1585D43900CA5743 /* CommonRouteListFilter.h */,
 				A455F8E01585D43900CA5743 /* CommonRouteListFilter.m */,
 				A455F8E11585D43900CA5743 /* PackageTourListFilter.h */,
 				A455F8E21585D43900CA5743 /* PackageTourListFilter.m */,
 				A455F8E31585D43900CA5743 /* UnPackageTourListFilter.h */,
 				A455F8E41585D43900CA5743 /* UnPackageTourListFilter.m */,
-				A49098F915AA8712004E59D3 /* RouteSelectController.h */,
-				A49098FA15AA8713004E59D3 /* RouteSelectController.m */,
-				A49098FB15AA8714004E59D3 /* RouteSelectController.xib */,
-				A49098FE15AA8743004E59D3 /* RouteSelectCell.h */,
-				A49098FF15AA8744004E59D3 /* RouteSelectCell.m */,
-				A490990015AA8745004E59D3 /* RouteSelectCell.xib */,
 			);
 			path = RouteListFilter;
 			sourceTree = "<group>";
@@ -2160,6 +2173,9 @@
 		A48782BC15071BAA00A0D91E /* More */ = {
 			isa = PBXGroup;
 			children = (
+				C26301E315A8286B0082F0E2 /* RetrievePasswordController.h */,
+				C26301E415A8286B0082F0E2 /* RetrievePasswordController.m */,
+				C26301E515A8286B0082F0E2 /* RetrievePasswordController.xib */,
 				A48E058E15341B3A00B2695E /* FeekbackController.h */,
 				A48E058F15341B3A00B2695E /* FeekbackController.m */,
 				A48E059015341B3A00B2695E /* FeekbackController.xib */,
@@ -4291,8 +4307,10 @@
 				C28C756C15A571CA00D65AF9 /* fly_t_3@2x.png in Resources */,
 				C28C756D15A571CA00D65AF9 /* fly_t_2@2x.png in Resources */,
 				A3A9797015A5A3CA0071B282 /* ChangePasswordController.xib in Resources */,
-				A49098FD15AA8715004E59D3 /* RouteSelectController.xib in Resources */,
-				A490990215AA8747004E59D3 /* RouteSelectCell.xib in Resources */,
+				A3063DFA15A82579003CD45E /* SelectCityController.xib in Resources */,
+				C26301E715A8286B0082F0E2 /* RetrievePasswordController.xib in Resources */,
+				A490991F15ABD189004E59D3 /* RouteSelectCell.xib in Resources */,
+				A490992115ABD189004E59D3 /* RouteSelectController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4600,8 +4618,10 @@
 				EAC88F9F15A441510068C3C0 /* PersonalInfoCell.m in Sources */,
 				EAC88FA115A441510068C3C0 /* PersonalInfoController.m in Sources */,
 				A3A9796F15A5A3CA0071B282 /* ChangePasswordController.m in Sources */,
-				A49098FC15AA8715004E59D3 /* RouteSelectController.m in Sources */,
-				A490990115AA8747004E59D3 /* RouteSelectCell.m in Sources */,
+				A3063DF915A82579003CD45E /* SelectCityController.m in Sources */,
+				C26301E615A8286B0082F0E2 /* RetrievePasswordController.m in Sources */,
+				A490991E15ABD189004E59D3 /* RouteSelectCell.m in Sources */,
+				A490992015ABD189004E59D3 /* RouteSelectController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4670,8 +4690,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4686,8 +4706,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PROVISIONING_PROFILE = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 			};
@@ -4701,8 +4721,8 @@
 					armv7,
 					armv6,
 				);
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -4711,8 +4731,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS";
 				VALIDATE_PRODUCT = YES;
@@ -4722,8 +4742,8 @@
 		CA49071314F5F05B00228C37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -4734,8 +4754,8 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;
@@ -4745,8 +4765,8 @@
 		CA49071414F5F05B00228C37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Zhonghan Pei (7DWV8HMYHX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lingzhe Peng (9WG829Y3AG)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Travel/Travel-Prefix.pch";
 				INFOPLIST_FILE = "Travel/Travel-Info.plist";
@@ -4757,8 +4777,8 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EEBACA6B-088D-4C53-A7F0-9BE6C565AC13";
+				PROVISIONING_PROFILE = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A1B239D-88C8-4BC0-89C4-3136B32A5ADA";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/Classes/ ../Common_iPhone_20/3PP-SDK/QWeiboSDK4iOS/QWeiboSDK4iOS";
 				WRAPPER_EXTENSION = app;

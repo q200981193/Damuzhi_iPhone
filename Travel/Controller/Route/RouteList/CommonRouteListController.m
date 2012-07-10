@@ -18,6 +18,9 @@
 #import "CommonRouteDetailController.h"
 #import "AppConstants.h"
 #import "RouteSelectController.h"
+#import "SelectCityController.h"
+#import "Item.h"
+
 
 #define TAG_DEPART_CITY_LABEL 18
 #define TAG_AGENCY_LABEL 19
@@ -400,6 +403,15 @@
         case TAG_FILTER_BTN_CLASSIFY:
             [self pushRouteSelectController];
             break;
+        case TAG_FILTER_BTN_DESTINATION_CITY:
+        {
+            itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
+            SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
+                                                                                selectedItemList:_selectedItemIds.destinationCityIds 
+                                                                                        delegate:self];
+            [self.navigationController pushViewController:controller animated:YES];
+            break;
+        }
             
         default:
             break;
@@ -422,6 +434,14 @@
 - (void)clickMyFollow:(id)sender
 {
     [self popupMessage:NSLS(@"待实现") title:nil];
+}
+
+
+#pragma mark - SelectCityDelegate methods
+- (void)didSelectCity:(NSArray *)selectedItemList
+{
+    //to do
+    //PPDebug(@"didSelectCity %@", selectedItemList);
 }
 
 @end

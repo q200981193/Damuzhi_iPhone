@@ -79,7 +79,7 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
 
 + (CommonNetworkOutput*)verificate:(NSString *)loginId telephone:(NSString *)telephone;
 + (CommonNetworkOutput*)verificate:(NSString *)loginId code:(NSString *)code;
-+ (CommonNetworkOutput*)retrievePassword:(NSString *)loginId telephone:(NSString *)telephone;
++ (CommonNetworkOutput*)retrievePassword:(NSString *)telephone;
 
 + (CommonNetworkOutput*)placeOrderWithUserId:(NSString *)userId 
                                      routeId:(int)routeId
