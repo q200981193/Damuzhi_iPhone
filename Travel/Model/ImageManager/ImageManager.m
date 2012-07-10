@@ -215,14 +215,10 @@ static ImageManager *_defaultManager = nil;
     return [UIImage imageNamed:@"more_icon.png"];
 }
 
-
-
 - (UIImage *)accessoryImage
 {
     return [UIImage imageNamed:@"go_btn.png"];
 }
-
-
 
 - (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount
 {
@@ -261,5 +257,96 @@ static ImageManager *_defaultManager = nil;
 {
     return [UIImage imageNamed:@"order_tel.png"];
 }
+
+- (UIImage *)routeClassifyButtonBgImage1WithRow:(int)row
+                                         column:(int)column
+                                      totalRows:(int)totalRows  
+                                    totalColumn:(int)totalColumn
+{
+    if (totalColumn <= 1 || totalRows < 1) {
+        return nil;
+    }
+    
+    if (totalRows == 1) {
+        if (row == 0 &&  column == 0) {
+            return [UIImage imageNamed:@"filter_1_off.png"];
+        }else if (row == 0 &&  column == totalColumn - 1) {
+            return [UIImage imageNamed:@"filter_3_off.png"];
+        }else {
+            return [UIImage imageNamed:@"filter_2_off.png"];
+        }
+    }else {
+        if (row == 0) {
+            if (column == 0) {
+                return [UIImage imageNamed:@"filter_4_off.png"]; 
+            }else if (column == totalColumn - 1) {
+                return [UIImage imageNamed:@"filter_5_off.png"]; 
+            }else {
+                return [UIImage imageNamed:@"filter_2_off.png"]; 
+            }
+        }else if (row == totalRows - 1) {
+            if (column == 0) {
+                return [UIImage imageNamed:@"filter_8_off.png"]; 
+            }else if (column == totalColumn - 1) {
+                return [UIImage imageNamed:@"filter_9_off.png"]; 
+            }else {
+                return [UIImage imageNamed:@"filter_6_off.png"]; 
+            }
+        }else {
+            if (column == totalColumn - 1) {
+                return [UIImage imageNamed:@"filter_7_off.png"]; 
+            }else {
+                return [UIImage imageNamed:@"filter_6_off.png"]; 
+            }
+        }
+        
+    }
+}
+
+- (UIImage *)routeClassifyButtonBgImage2WithRow:(int)row
+                                         column:(int)column
+                                      totalRows:(int)totalRows  
+                                    totalColumn:(int)totalColumn
+{
+    if (totalColumn <= 1 || totalRows < 1) {
+        return nil;
+    }
+    
+    if (totalRows == 1) {
+        if (row == 0 &&  column == 0) {
+            return [UIImage imageNamed:@"filter_1_on.png"];
+        }else if (row == 0 &&  column == totalColumn - 1) {
+            return [UIImage imageNamed:@"filter_3_on.png"];
+        }else {
+            return [UIImage imageNamed:@"filter_2_on.png"];
+        }
+    }else {
+        if (row == 0) {
+            if (column == 0) {
+                return [UIImage imageNamed:@"filter_4_on.png"]; 
+            }else if (column == totalColumn - 1) {
+                return [UIImage imageNamed:@"filter_5_on.png"]; 
+            }else {
+                return [UIImage imageNamed:@"filter_2_on.png"]; 
+            }
+        }else if (row == totalRows - 1) {
+            if (column == 0) {
+                return [UIImage imageNamed:@"filter_8_on.png"]; 
+            }else if (column == totalColumn - 1) {
+                return [UIImage imageNamed:@"filter_9_on.png"]; 
+            }else {
+                return [UIImage imageNamed:@"filter_6_on.png"]; 
+            }
+        }else {
+            if (column == totalColumn - 1) {
+                return [UIImage imageNamed:@"filter_7_on.png"]; 
+            }else {
+                return [UIImage imageNamed:@"filter_6_on.png"]; 
+            }
+        }
+        
+    }
+}
+
 
 @end

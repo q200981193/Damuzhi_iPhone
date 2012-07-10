@@ -11,16 +11,7 @@
 #define HEIGHT_SELECT_BUTTON 46
 #define NUM_OF_SELECT_BUTTON_IN_LINE 4
 
-@protocol RouteSelectCellDelegate <NSObject>
-
-@optional
-- (void)selectdItemsDidChange;
-
-@end
-
 @interface RouteSelectCell : PPTableViewCell
-
-@property (assign, nonatomic) id<RouteSelectCellDelegate> aDelegate;
 
 - (void)setCellData:(NSArray *)itemList
     selectedItemIds:(NSMutableArray *)selectedItemIds

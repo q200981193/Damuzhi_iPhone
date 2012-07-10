@@ -10,6 +10,7 @@
 #import "RouteService.h"
 #import "SelectController.h"
 #import "SelectCityController.h"
+#import "RouteSelectController.h"
 
 @protocol RouteListFilterProtocol <NSObject>
 
@@ -29,7 +30,7 @@
 
 @end
 
-@interface CommonRouteListController : PPTableViewController <RouteServiceDelegate, SelectControllerDelegate, SelectCityDelegate>
+@interface CommonRouteListController : PPTableViewController <RouteServiceDelegate, SelectControllerDelegate, SelectCityDelegate, RouteSelectControllerDelegate>
 
 - (id)initWithFilterHandler:(NSObject<RouteListFilterProtocol>*)filterHandler
                DepartCityId:(int)departCityId

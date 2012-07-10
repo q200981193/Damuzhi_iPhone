@@ -59,4 +59,15 @@
 
 - (UIImage *)routeFeekbackBgImage1;
 - (UIImage *)routeFeekbackBgImage2;
+
+- (UIImage *)routeClassifyButtonBgImage1WithRow:(int)row
+                                         column:(int)column
+                                      totalRows:(int)totalRows  
+                                    totalColumn:(int)totalColumn;
+
+- (UIImage *)routeClassifyButtonBgImage2WithRow:(int)row
+                                         column:(int)column
+                                      totalRows:(int)totalRows  
+                                    totalColumn:(int)totalColumn;
+
 @end

@@ -17,7 +17,6 @@
 #import "CommonPlace.h"
 #import "CommonRouteDetailController.h"
 #import "AppConstants.h"
-#import "RouteSelectController.h"
 #import "SelectCityController.h"
 #import "Item.h"
 
@@ -446,6 +445,7 @@
 - (void)pushRouteSelectController
 {    
     RouteSelectController *controller = [[[RouteSelectController alloc] initWithRouteType:[_filterHandler getRouteType] selectedItemIds:_selectedItemIds] autorelease];
+    controller.aDelegate = self;
     
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -468,5 +468,13 @@
     //to do
     //PPDebug(@"didSelectCity %@", selectedItemList);
 }
+
+#pragma mark - 
+#pragma mark: Implementation of RouteSelectControllerDelegate.
+- (void)didClickFinish
+{
+    
+}
+
 
 @end

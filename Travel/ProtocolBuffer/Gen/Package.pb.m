@@ -1434,35 +1434,21 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
 @end
 
 @interface RouteStatistics ()
-@property (retain) Statistics* departCityStatistics;
-@property (retain) Statistics* agencyStatistics;
+@property (retain) NSMutableArray* mutableDepartCityStatisticsList;
+@property (retain) NSMutableArray* mutableAgencyStatisticsList;
 @end
 
 @implementation RouteStatistics
 
-- (BOOL) hasDepartCityStatistics {
-  return !!hasDepartCityStatistics_;
-}
-- (void) setHasDepartCityStatistics:(BOOL) value {
-  hasDepartCityStatistics_ = !!value;
-}
-@synthesize departCityStatistics;
-- (BOOL) hasAgencyStatistics {
-  return !!hasAgencyStatistics_;
-}
-- (void) setHasAgencyStatistics:(BOOL) value {
-  hasAgencyStatistics_ = !!value;
-}
-@synthesize agencyStatistics;
+@synthesize mutableDepartCityStatisticsList;
+@synthesize mutableAgencyStatisticsList;
 - (void) dealloc {
-  self.departCityStatistics = nil;
-  self.agencyStatistics = nil;
+  self.mutableDepartCityStatisticsList = nil;
+  self.mutableAgencyStatisticsList = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
-    self.departCityStatistics = [Statistics defaultInstance];
-    self.agencyStatistics = [Statistics defaultInstance];
   }
   return self;
 }
@@ -1478,25 +1464,39 @@ static RouteStatistics* defaultRouteStatisticsInstance = nil;
 - (RouteStatistics*) defaultInstance {
   return defaultRouteStatisticsInstance;
 }
+- (NSArray*) departCityStatisticsList {
+  return mutableDepartCityStatisticsList;
+}
+- (Statistics*) departCityStatisticsAtIndex:(int32_t) index {
+  id value = [mutableDepartCityStatisticsList objectAtIndex:index];
+  return value;
+}
+- (NSArray*) agencyStatisticsList {
+  return mutableAgencyStatisticsList;
+}
+- (Statistics*) agencyStatisticsAtIndex:(int32_t) index {
+  id value = [mutableAgencyStatisticsList objectAtIndex:index];
+  return value;
+}
 - (BOOL) isInitialized {
-  if (self.hasDepartCityStatistics) {
-    if (!self.departCityStatistics.isInitialized) {
+  for (Statistics* element in self.departCityStatisticsList) {
+    if (!element.isInitialized) {
       return NO;
     }
   }
-  if (self.hasAgencyStatistics) {
-    if (!self.agencyStatistics.isInitialized) {
+  for (Statistics* element in self.agencyStatisticsList) {
+    if (!element.isInitialized) {
       return NO;
     }
   }
   return YES;
 }
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasDepartCityStatistics) {
-    [output writeMessage:1 value:self.departCityStatistics];
+  for (Statistics* element in self.departCityStatisticsList) {
+    [output writeMessage:1 value:element];
   }
-  if (self.hasAgencyStatistics) {
-    [output writeMessage:2 value:self.agencyStatistics];
+  for (Statistics* element in self.agencyStatisticsList) {
+    [output writeMessage:2 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -1507,11 +1507,11 @@ static RouteStatistics* defaultRouteStatisticsInstance = nil;
   }
 
   size = 0;
-  if (self.hasDepartCityStatistics) {
-    size += computeMessageSize(1, self.departCityStatistics);
+  for (Statistics* element in self.departCityStatisticsList) {
+    size += computeMessageSize(1, element);
   }
-  if (self.hasAgencyStatistics) {
-    size += computeMessageSize(2, self.agencyStatistics);
+  for (Statistics* element in self.agencyStatisticsList) {
+    size += computeMessageSize(2, element);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -1588,11 +1588,17 @@ static RouteStatistics* defaultRouteStatisticsInstance = nil;
   if (other == [RouteStatistics defaultInstance]) {
     return self;
   }
-  if (other.hasDepartCityStatistics) {
-    [self mergeDepartCityStatistics:other.departCityStatistics];
+  if (other.mutableDepartCityStatisticsList.count > 0) {
+    if (result.mutableDepartCityStatisticsList == nil) {
+      result.mutableDepartCityStatisticsList = [NSMutableArray array];
+    }
+    [result.mutableDepartCityStatisticsList addObjectsFromArray:other.mutableDepartCityStatisticsList];
   }
-  if (other.hasAgencyStatistics) {
-    [self mergeAgencyStatistics:other.agencyStatistics];
+  if (other.mutableAgencyStatisticsList.count > 0) {
+    if (result.mutableAgencyStatisticsList == nil) {
+      result.mutableAgencyStatisticsList = [NSMutableArray array];
+    }
+    [result.mutableAgencyStatisticsList addObjectsFromArray:other.mutableAgencyStatisticsList];
   }
   [self mergeUnknownFields:other.unknownFields];
   return self;
@@ -1617,83 +1623,75 @@ static RouteStatistics* defaultRouteStatisticsInstance = nil;
       }
       case 10: {
         Statistics_Builder* subBuilder = [Statistics builder];
-        if (self.hasDepartCityStatistics) {
-          [subBuilder mergeFrom:self.departCityStatistics];
-        }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self setDepartCityStatistics:[subBuilder buildPartial]];
+        [self addDepartCityStatistics:[subBuilder buildPartial]];
         break;
       }
       case 18: {
         Statistics_Builder* subBuilder = [Statistics builder];
-        if (self.hasAgencyStatistics) {
-          [subBuilder mergeFrom:self.agencyStatistics];
-        }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
-        [self setAgencyStatistics:[subBuilder buildPartial]];
+        [self addAgencyStatistics:[subBuilder buildPartial]];
         break;
       }
     }
   }
 }
-- (BOOL) hasDepartCityStatistics {
-  return result.hasDepartCityStatistics;
+- (NSArray*) departCityStatisticsList {
+  if (result.mutableDepartCityStatisticsList == nil) { return [NSArray array]; }
+  return result.mutableDepartCityStatisticsList;
 }
-- (Statistics*) departCityStatistics {
-  return result.departCityStatistics;
+- (Statistics*) departCityStatisticsAtIndex:(int32_t) index {
+  return [result departCityStatisticsAtIndex:index];
 }
-- (RouteStatistics_Builder*) setDepartCityStatistics:(Statistics*) value {
-  result.hasDepartCityStatistics = YES;
-  result.departCityStatistics = value;
+- (RouteStatistics_Builder*) replaceDepartCityStatisticsAtIndex:(int32_t) index with:(Statistics*) value {
+  [result.mutableDepartCityStatisticsList replaceObjectAtIndex:index withObject:value];
   return self;
 }
-- (RouteStatistics_Builder*) setDepartCityStatisticsBuilder:(Statistics_Builder*) builderForValue {
-  return [self setDepartCityStatistics:[builderForValue build]];
-}
-- (RouteStatistics_Builder*) mergeDepartCityStatistics:(Statistics*) value {
-  if (result.hasDepartCityStatistics &&
-      result.departCityStatistics != [Statistics defaultInstance]) {
-    result.departCityStatistics =
-      [[[Statistics builderWithPrototype:result.departCityStatistics] mergeFrom:value] buildPartial];
-  } else {
-    result.departCityStatistics = value;
+- (RouteStatistics_Builder*) addAllDepartCityStatistics:(NSArray*) values {
+  if (result.mutableDepartCityStatisticsList == nil) {
+    result.mutableDepartCityStatisticsList = [NSMutableArray array];
   }
-  result.hasDepartCityStatistics = YES;
+  [result.mutableDepartCityStatisticsList addObjectsFromArray:values];
   return self;
 }
-- (RouteStatistics_Builder*) clearDepartCityStatistics {
-  result.hasDepartCityStatistics = NO;
-  result.departCityStatistics = [Statistics defaultInstance];
+- (RouteStatistics_Builder*) clearDepartCityStatisticsList {
+  result.mutableDepartCityStatisticsList = nil;
   return self;
 }
-- (BOOL) hasAgencyStatistics {
-  return result.hasAgencyStatistics;
-}
-- (Statistics*) agencyStatistics {
-  return result.agencyStatistics;
-}
-- (RouteStatistics_Builder*) setAgencyStatistics:(Statistics*) value {
-  result.hasAgencyStatistics = YES;
-  result.agencyStatistics = value;
-  return self;
-}
-- (RouteStatistics_Builder*) setAgencyStatisticsBuilder:(Statistics_Builder*) builderForValue {
-  return [self setAgencyStatistics:[builderForValue build]];
-}
-- (RouteStatistics_Builder*) mergeAgencyStatistics:(Statistics*) value {
-  if (result.hasAgencyStatistics &&
-      result.agencyStatistics != [Statistics defaultInstance]) {
-    result.agencyStatistics =
-      [[[Statistics builderWithPrototype:result.agencyStatistics] mergeFrom:value] buildPartial];
-  } else {
-    result.agencyStatistics = value;
+- (RouteStatistics_Builder*) addDepartCityStatistics:(Statistics*) value {
+  if (result.mutableDepartCityStatisticsList == nil) {
+    result.mutableDepartCityStatisticsList = [NSMutableArray array];
   }
-  result.hasAgencyStatistics = YES;
+  [result.mutableDepartCityStatisticsList addObject:value];
   return self;
 }
-- (RouteStatistics_Builder*) clearAgencyStatistics {
-  result.hasAgencyStatistics = NO;
-  result.agencyStatistics = [Statistics defaultInstance];
+- (NSArray*) agencyStatisticsList {
+  if (result.mutableAgencyStatisticsList == nil) { return [NSArray array]; }
+  return result.mutableAgencyStatisticsList;
+}
+- (Statistics*) agencyStatisticsAtIndex:(int32_t) index {
+  return [result agencyStatisticsAtIndex:index];
+}
+- (RouteStatistics_Builder*) replaceAgencyStatisticsAtIndex:(int32_t) index with:(Statistics*) value {
+  [result.mutableAgencyStatisticsList replaceObjectAtIndex:index withObject:value];
+  return self;
+}
+- (RouteStatistics_Builder*) addAllAgencyStatistics:(NSArray*) values {
+  if (result.mutableAgencyStatisticsList == nil) {
+    result.mutableAgencyStatisticsList = [NSMutableArray array];
+  }
+  [result.mutableAgencyStatisticsList addObjectsFromArray:values];
+  return self;
+}
+- (RouteStatistics_Builder*) clearAgencyStatisticsList {
+  result.mutableAgencyStatisticsList = nil;
+  return self;
+}
+- (RouteStatistics_Builder*) addAgencyStatistics:(Statistics*) value {
+  if (result.mutableAgencyStatisticsList == nil) {
+    result.mutableAgencyStatisticsList = [NSMutableArray array];
+  }
+  [result.mutableAgencyStatisticsList addObject:value];
   return self;
 }
 @end

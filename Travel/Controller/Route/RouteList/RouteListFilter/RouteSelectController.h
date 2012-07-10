@@ -9,7 +9,16 @@
 #import "PPTableViewController.h"
 #import "SelectedItemIdsManager.h"
 
+@protocol RouteSelectControllerDelegate <NSObject>
+
+@optional
+- (void)didClickFinish;
+
+@end
+
 @interface RouteSelectController : PPTableViewController
+
+@property (assign, nonatomic) id<RouteSelectControllerDelegate> aDelegate;
 
 - (id)initWithRouteType:(int)routeType
         selectedItemIds:(RouteSelectedItemIds *)selectedItemIds;
