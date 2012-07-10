@@ -385,6 +385,7 @@
     controller.delegate = self;
     
     [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (void)pushDestinationCitySelectController
@@ -392,8 +393,27 @@
     NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
     SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
                                                                         selectedItemList:_selectedItemIds.destinationCityIds 
+                                                                                    type:destination
                                                                                 delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
+}
+
+- (void)pushAgencySelectController
+{
+     NSArray *itemList = [[AppManager defaultManager] getAgencyItemList:dataList];
+    
+    SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"旅行社选择")
+                                                                  itemList:itemList
+                                                           selectedItemIds:_selectedItemIds.agencyIds
+                                                              multiOptions:YES 
+                                                               needConfirm:YES
+                                                             needShowCount:NO];
+    
+    
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 - (void)loadMoreTableViewDataSource
@@ -414,7 +434,8 @@
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
             [self pushDestinationCitySelectController];
-            
+        case TAG_FILTER_BTN_AGENCY:
+            [self pushAgencySelectController];
         default:
             break;
     }

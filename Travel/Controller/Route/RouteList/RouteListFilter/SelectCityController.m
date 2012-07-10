@@ -11,6 +11,9 @@
 
 
 @interface SelectCityController ()
+{
+    typeCity _typeCity;
+}
 
 @property (retain, nonatomic) NSArray *allDataList;
 @property (assign, nonatomic) id<SelectCityDelegate> delegate;
@@ -18,25 +21,33 @@
 @property (retain, nonatomic) NSMutableArray *selectedItemIds;
 @property (retain, nonatomic) NSMutableArray *selectedItemIdsBeforConfirm;
 
+@property (retain, nonatomic) NSArray *areaList;
+
 @end
 
 @implementation SelectCityController
 @synthesize searchBar = _searchBar;
+@synthesize areaView = _areaView;
 @synthesize delegate = _delegate;
 @synthesize allDataList = _allDataList;
 @synthesize selectedItemIds = _selectedItemIds;
 @synthesize selectedItemIdsBeforConfirm = _selectedItemIdsBeforConfirm;
+@synthesize areaList = _areaList;
 
 - (void)dealloc
 {
     PPRelease(_allDataList);
     PPRelease(_searchBar);
     PPRelease(_selectedItemIds);
+    PPRelease(_selectedItemIdsBeforConfirm);
+    PPRelease(_areaList);
+    [_areaView release];
     [super dealloc];
 }
 
 - (id)initWithAllItemList:(NSArray *)itemsList 
-         selectedItemList:(NSMutableArray *)selectedItemIds 
+         selectedItemList:(NSMutableArray *)selectedItemIds
+                     type:(typeCity)typeCity
                  delegate:(id<SelectCityDelegate>)delegate
 {
     self = [super init];
@@ -45,6 +56,7 @@
         self.dataList = itemsList;
         self.selectedItemIds = selectedItemIds;
         self.selectedItemIdsBeforConfirm = [NSMutableArray arrayWithArray:selectedItemIds];
+        _typeCity = typeCity;
         self.delegate = delegate;
     }
     return self;
@@ -53,23 +65,34 @@
 
 - (void)viewDidLoad
 {
+    self.title = NSLS(@"出发城市");
+    
     [super viewDidLoad];
     
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
-    self.navigationItem.title = NSLS(@"出发城市");
+    
     
     [self setNavigationRightButton:NSLS(@"确定") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickSubmit:)];
     
     dataTableView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
+    _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, 0);
+    
+    if (_typeCity == destination) {
+        //test data
+        self.areaList = [NSArray arrayWithObjects:@"国内", @"日韩", @"东南亚", @"澳洲", @"欧洲", @"中东", @"美洲", @"非洲", nil];
+        
+        [self addAreaButton];
+    }
 }
 
 - (void)viewDidUnload
 {
     [self setSearchBar:nil];
+    [self setAreaView:nil];
     [super viewDidUnload];
 }
 
@@ -246,6 +269,46 @@
 {
     [self.searchBar resignFirstResponder];
     [self removeHideKeyboardButton];
+}
+
+- (void)addAreaButton
+{
+    if ([_areaList count] <= 1) {
+        return;
+    }
+
+    CGFloat buttonWidth = 80;
+    CGFloat buttonHeight = 20;
+    
+
+    CGFloat totalHeight = ([_areaList count] / 4 + 1) * buttonHeight; 
+    _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, totalHeight);
+    
+    CGFloat x;
+    CGFloat y;
+    int count = 0;
+    for (NSString *areaName in _areaList) {
+        int column = count % 4;
+        int row = count / 4;
+        x = column * buttonWidth;
+        y = row * buttonHeight;
+        CGRect frame = CGRectMake(x, y, buttonWidth, buttonHeight);
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:frame];
+        button.tag = 100+count;
+        [button addTarget:self action:@selector(clickAreaButton:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:areaName forState:UIControlStateNormal];
+        [_areaView addSubview:button];
+        [button release];
+        count++;
+    }
+}
+
+
+- (void)clickAreaButton:(id)sender
+{
+    //UIButton *button = (UIButton *)sender;
+    
 }
 
 @end

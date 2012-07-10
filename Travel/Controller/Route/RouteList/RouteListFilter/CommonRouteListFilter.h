@@ -14,6 +14,11 @@
 #define TAG_FILTER_BTN_CLASSIFY 21
 #define TAG_SORT_BTN 22
 
+typedef enum{
+    depart = 0,
+    destination = 1
+} typeCity;
+
 @interface CommonRouteListFilter : NSObject
 
 + (UIButton*)createFilterButton:(CGRect)frame title:(NSString*)title;

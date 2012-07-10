@@ -7,6 +7,7 @@
 //
 
 #import "PPTableViewController.h"
+#import "CommonRouteListFilter.h"
 
 @class Item;
 @protocol SelectCityDelegate <NSObject>
@@ -19,9 +20,11 @@
 
 @interface SelectCityController : PPTableViewController <UISearchBarDelegate>
 @property (retain, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (retain, nonatomic) IBOutlet UIView *areaView;
 
 - (id)initWithAllItemList:(NSArray *)itemsList 
-         selectedItemList:(NSMutableArray *)selectedItemIds 
+         selectedItemList:(NSMutableArray *)selectedItemIds
+                     type:(typeCity)typeCity
                  delegate:(id<SelectCityDelegate>)delegate;
 
 @end
