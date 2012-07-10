@@ -438,15 +438,13 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 
 @interface RouteStatistics : PBGeneratedMessage {
 @private
-  BOOL hasDepartCityStatistics_:1;
-  BOOL hasAgencyStatistics_:1;
-  Statistics* departCityStatistics;
-  Statistics* agencyStatistics;
+  NSMutableArray* mutableDepartCityStatisticsList;
+  NSMutableArray* mutableAgencyStatisticsList;
 }
-- (BOOL) hasDepartCityStatistics;
-- (BOOL) hasAgencyStatistics;
-@property (readonly, retain) Statistics* departCityStatistics;
-@property (readonly, retain) Statistics* agencyStatistics;
+- (NSArray*) departCityStatisticsList;
+- (Statistics*) departCityStatisticsAtIndex:(int32_t) index;
+- (NSArray*) agencyStatisticsList;
+- (Statistics*) agencyStatisticsAtIndex:(int32_t) index;
 
 + (RouteStatistics*) defaultInstance;
 - (RouteStatistics*) defaultInstance;
@@ -482,19 +480,19 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (RouteStatistics_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (RouteStatistics_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasDepartCityStatistics;
-- (Statistics*) departCityStatistics;
-- (RouteStatistics_Builder*) setDepartCityStatistics:(Statistics*) value;
-- (RouteStatistics_Builder*) setDepartCityStatisticsBuilder:(Statistics_Builder*) builderForValue;
-- (RouteStatistics_Builder*) mergeDepartCityStatistics:(Statistics*) value;
-- (RouteStatistics_Builder*) clearDepartCityStatistics;
+- (NSArray*) departCityStatisticsList;
+- (Statistics*) departCityStatisticsAtIndex:(int32_t) index;
+- (RouteStatistics_Builder*) replaceDepartCityStatisticsAtIndex:(int32_t) index with:(Statistics*) value;
+- (RouteStatistics_Builder*) addDepartCityStatistics:(Statistics*) value;
+- (RouteStatistics_Builder*) addAllDepartCityStatistics:(NSArray*) values;
+- (RouteStatistics_Builder*) clearDepartCityStatisticsList;
 
-- (BOOL) hasAgencyStatistics;
-- (Statistics*) agencyStatistics;
-- (RouteStatistics_Builder*) setAgencyStatistics:(Statistics*) value;
-- (RouteStatistics_Builder*) setAgencyStatisticsBuilder:(Statistics_Builder*) builderForValue;
-- (RouteStatistics_Builder*) mergeAgencyStatistics:(Statistics*) value;
-- (RouteStatistics_Builder*) clearAgencyStatistics;
+- (NSArray*) agencyStatisticsList;
+- (Statistics*) agencyStatisticsAtIndex:(int32_t) index;
+- (RouteStatistics_Builder*) replaceAgencyStatisticsAtIndex:(int32_t) index with:(Statistics*) value;
+- (RouteStatistics_Builder*) addAgencyStatistics:(Statistics*) value;
+- (RouteStatistics_Builder*) addAllAgencyStatistics:(NSArray*) values;
+- (RouteStatistics_Builder*) clearAgencyStatisticsList;
 @end
 
 @interface TravelResponse : PBGeneratedMessage {

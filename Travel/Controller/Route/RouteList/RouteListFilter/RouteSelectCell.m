@@ -14,6 +14,8 @@
 #define WIDTH_SELECT_BUTTON 75
 #define EDGE ((320 - WIDTH_SELECT_BUTTON * NUM_OF_SELECT_BUTTON_IN_LINE) / 2)
 #define INVALID_ITEM_ID -99
+#define FONT_BUTTON_TITLE [UIFont systemFontOfSize:15]
+
 
 @interface RouteSelectCell ()
 
@@ -88,7 +90,7 @@
         enabled = (item == nil) ? NO : YES;
 
         row = i / NUM_OF_SELECT_BUTTON_IN_LINE;
-        column = [itemList count] % 4;
+        column = i % 4;
         rect = CGRectMake(EDGE + column * WIDTH_SELECT_BUTTON, row * HEIGHT_SELECT_BUTTON, WIDTH_SELECT_BUTTON, HEIGHT_SELECT_BUTTON);
         
         UIButton *button = [self buttonWithFrame:rect
@@ -114,6 +116,8 @@
     UIButton *button = [[[UIButton alloc] initWithFrame:frame] autorelease];
     button.tag = tag;
     button.enabled = enabled;
+    button.titleLabel.font = FONT_BUTTON_TITLE;
+//    [button setTintColor:[UIColor blackColor]];
     [button setTitle:title forState:UIControlStateNormal];
     [button setImage:nil forState:UIControlStateNormal];
     [button setImage:nil forState:UIControlStateSelected];
