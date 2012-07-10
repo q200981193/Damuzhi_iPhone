@@ -23,18 +23,22 @@
 @property (retain, nonatomic) NSMutableDictionary *sectionTitleDic;
 @property (retain, nonatomic) NSMutableDictionary *itemListInfoDic;
 @property (retain, nonatomic) NSMutableDictionary *selectedItemListInfoDic;
+@property (retain, nonatomic) NSMutableDictionary *selectedItemListInfoDicBeforeComfirm;
 
 @property (retain, nonatomic) RouteSelectedItemIds *selectedItemIds;
+
 
 @end
 
 @implementation RouteSelectController
 
+@synthesize aDelegate = _aDelegate;
+
 @synthesize routeType = _routeType;
 @synthesize sectionTitleDic = _sectionTitleDic;
 @synthesize itemListInfoDic = _itemListInfoDic;
 @synthesize selectedItemListInfoDic = _selectedItemListInfoDic;
-
+@synthesize selectedItemListInfoDicBeforeComfirm = _selectedItemListInfoDicBeforeComfirm;
 @synthesize selectedItemIds = _selectedItemIds;
 
 - (void)dealloc
@@ -42,7 +46,8 @@
     [_sectionTitleDic release];
     [_itemListInfoDic release];
     [_selectedItemListInfoDic release];
-        
+    [_selectedItemListInfoDicBeforeComfirm release];
+    
     [_selectedItemIds release];
     
     [super dealloc];
@@ -57,6 +62,7 @@
         self.sectionTitleDic = [NSMutableDictionary dictionary];
         self.itemListInfoDic = [NSMutableDictionary dictionary];
         self.selectedItemListInfoDic = [NSMutableDictionary dictionary];
+        self.selectedItemListInfoDicBeforeComfirm = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -100,7 +106,10 @@
                                         forKey:SECTION_TITLE_DAYS_RANGE];
         [self.selectedItemListInfoDic setObject:_selectedItemIds.themeIds 
                                         forKey:SECTION_TITLE_ROUTE_THEME];
-
+        
+        [self.selectedItemListInfoDicBeforeComfirm setObject:[NSMutableArray arrayWithArray:_selectedItemIds.priceRankItemIds] forKey:SECTION_TITLE_PRICE_RANK];
+        [self.selectedItemListInfoDicBeforeComfirm setObject:[NSMutableArray arrayWithArray:_selectedItemIds.daysRangeItemIds] forKey:SECTION_TITLE_DAYS_RANGE];
+        [self.selectedItemListInfoDicBeforeComfirm setObject:[NSMutableArray arrayWithArray:_selectedItemIds.themeIds] forKey:SECTION_TITLE_ROUTE_THEME];
         
     }else if (_routeType == OBJECT_LIST_ROUTE_UNPACKAGE_TOUR) {
         [self.sectionTitleDic setObject:SECTION_TITLE_PRICE_RANK forKey:[NSNumber numberWithInt:row++]];
@@ -113,6 +122,9 @@
                                         forKey:SECTION_TITLE_PRICE_RANK];
         [self.selectedItemListInfoDic setObject:_selectedItemIds.daysRangeItemIds
                                         forKey:SECTION_TITLE_DAYS_RANGE];
+        
+        [self.selectedItemListInfoDicBeforeComfirm setObject:[NSMutableArray arrayWithArray:_selectedItemIds.priceRankItemIds] forKey:SECTION_TITLE_PRICE_RANK];
+        [self.selectedItemListInfoDicBeforeComfirm setObject:[NSMutableArray arrayWithArray:_selectedItemIds.daysRangeItemIds] forKey:SECTION_TITLE_DAYS_RANGE];
     }
 }
 
@@ -146,7 +158,7 @@
     }
     
     NSArray *itemList = [self itemListForSection:indexPath.section];
-    NSMutableArray *selectedItemIds = [self selectedItemIdsForSection:indexPath.section];
+    NSMutableArray *selectedItemIds = [self selectedItemIdsBeforeComfirmForSection:indexPath.section];
     
     RouteSelectCell* routeSelectCell = (RouteSelectCell*)cell;
     [routeSelectCell setCellData:itemList
@@ -211,6 +223,71 @@
     NSString *title = [_sectionTitleDic objectForKey:[NSNumber numberWithInt:section]];
     
     return [_selectedItemListInfoDic objectForKey:title];
+}
+
+- (NSMutableArray *)selectedItemIdsBeforeComfirmForSection:(NSInteger)section
+{
+    NSString *title = [_sectionTitleDic objectForKey:[NSNumber numberWithInt:section]];
+    
+    return [_selectedItemListInfoDicBeforeComfirm objectForKey:title];
+}
+
+- (void)clickFinish:(id)sender
+{
+    NSDictionary *dic = [self checkSelectItemList];
+    for (NSString *key in [dic allKeys]) {
+        if ([[dic valueForKey:key] boolValue] == NO) {
+            NSString *message = [NSString stringWithFormat:NSLS(@"亲，您还没有选择%@哦！"), key];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"温馨提示") message:message delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
+            
+            [alert show];
+            [alert release];
+            return;
+        }
+    }
+
+
+    [self copyAllSelectedItemIds];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    if ([_aDelegate respondsToSelector:@selector(didClickFinish)]) {
+        [_aDelegate didClickFinish];
+    }
+}
+
+- (NSDictionary *)checkSelectItemList
+{
+    NSDictionary *dic = [NSMutableDictionary dictionary];
+    NSArray *keys = [[self selectedItemListInfoDicBeforeComfirm] allKeys];
+    for (NSString *key in keys) {
+        NSArray *selectedItemList = [_selectedItemListInfoDicBeforeComfirm objectForKey:key];
+        if ([selectedItemList count] == 0) {
+            [dic setValue:[NSNumber numberWithBool:NO] forKey:key]; 
+        }else {
+            [dic setValue:[NSNumber numberWithBool:YES] forKey:key];
+        }
+    }
+    
+    return dic;
+}
+
+- (void)copyAllSelectedItemIds
+{
+    for (NSString *key in [_selectedItemListInfoDicBeforeComfirm allKeys]) {
+        NSMutableArray *array1 = [_selectedItemListInfoDicBeforeComfirm objectForKey:key];
+        NSMutableArray *array2 = [_selectedItemListInfoDic objectForKey:key];
+        [self copyItemIdsFrom:array1 To:array2];
+    }
+    
+}
+
+- (void)copyItemIdsFrom:(NSMutableArray *)itemIdsScr To:(NSMutableArray *)itemIdsDes
+{
+    [itemIdsDes removeAllObjects];
+    for (NSNumber *itemId in itemIdsScr) {
+        [itemIdsDes addObject:itemId];
+    }
 }
 
 @end

@@ -141,6 +141,10 @@ static AppManager* _defaultAppManager = nil;
         PPDebug(@"app.name = %@", app.name);
     }
     
+    for (NameIdPair *theme in appData.routeThemesList) {
+        PPDebug(@"theme.name = %@", theme.name);
+    }
+    
    [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
 
