@@ -1,18 +1,22 @@
 //
-//  RouteFeekback.h
+//  RouteFeekbackController.h
 //  Travel
 //
-//  Created by 小涛 王 on 12-6-20.
-//  Copyright (c) 2012年 甘橙软件. All rights reserved.
+//  Created by Orange on 12-7-7.
+//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import "PPTableViewController.h"
-#import "RouteService.h"
+#import "UserService.h"
+@interface RouteFeekbackController : PPTableViewController <UserServiceDelegate,
+UITextViewDelegate>
+@property (retain, nonatomic) IBOutlet UIButton *backgroundImage1;
+@property (retain, nonatomic) IBOutlet UIButton *backgroundImage2;
+@property (retain, nonatomic) IBOutlet UIButton *backgroundImage3;
 
-@interface RouteFeekbackController : PPTableViewController <RouteServiceDelegate>
+@property (retain, nonatomic) IBOutlet UITextView *feekbackTextViewField;
 
-- (id)initWithRouteId:(int)routeId;
-
-- (void)showInView:(UIView *)superView;
+@property (retain, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @end
