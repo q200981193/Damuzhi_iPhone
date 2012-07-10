@@ -54,6 +54,11 @@ message RouteFeekback {
   optional string content = 6;      // 反馈内容
 }
 
+message RouteStatistics{
+  repeated Statistics departCityStatistics = 1;
+  repeated Statistics agencyStatistics = 2;
+}
+
 message TravelResponse{
   required int32 resultCode = 1 [default=0];
   optional string resultInfo = 2;
@@ -66,12 +71,16 @@ message TravelResponse{
   optional App appInfo = 9;   
   optional CommonTravelTipList travelTipList = 10;
   
+  optional PlaceStatistics placeStatistics = 12;        // 地点统计信息
+  
   optional int32 totalCount = 13;                       // 用于返回符合查询条件的列表的行总数
   
   optional UserInfo userInfo = 15;                      // 用户资料
   
   optional TouristRoute route = 20;                     // 线路详情
   optional TouristRouteList routeList = 21;             // 线路列表
+  
+  optional RouteStatistics routeStatistics = 25;        // 线路统计信息
   
   optional RouteFeekbackList routeFeekbackList= 30;     // 线路反馈
   

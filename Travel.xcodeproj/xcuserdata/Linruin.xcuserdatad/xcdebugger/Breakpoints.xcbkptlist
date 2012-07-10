@@ -21,12 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Travel/Model/App/AppManager.m"
-         timestampString = "362657165.618424"
+         timestampString = "363605711.157052"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "242"
-         endingLineNumber = "242"
-         landmarkName = "-getCityDownloadUrl:"
+         startingLineNumber = "246"
+         endingLineNumber = "246"
+         landmarkName = "-updateAppData:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -92,45 +92,6 @@
          startingLineNumber = "108"
          endingLineNumber = "108"
          landmarkName = "-clickFinish:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Travel/Service/User/UserService.m"
-         timestampString = "363259097.466348"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
-         landmarkName = "-verificate:code:delegate:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Travel/Service/User/UserService.m"
-         timestampString = "363259102.285638"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "189"
-         endingLineNumber = "189"
-         landmarkName = "-verificate:code:delegate:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Travel/Service/User/UserService.m"
-         timestampString = "363259109.82123"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "196"
-         endingLineNumber = "196"
-         landmarkName = "-verificate:code:delegate:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

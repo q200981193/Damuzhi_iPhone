@@ -25,7 +25,7 @@ message TouristRoute {
   optional string tour = 11;                        // 线路列表中显示经过的地方
   optional int32 days = 12;                         // 线路游览天数
   repeated int32 themeIds = 13;                     // 线路主题id：赏花，登山。基础数据
-  optional int32 categoryId = 14;                   // 线路分类id：国内游，东南亚，欧洲。基础数据
+  optional int32 categoryId = 14;                   // 线路分类id：国内游，东南亚，欧洲。基础数据，已废弃，但切勿删除。
   optional int32 followUserCount = 15;              // 线路关注的用户总数	
 
   // 路线详情

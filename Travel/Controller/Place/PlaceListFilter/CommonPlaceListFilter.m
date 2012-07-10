@@ -15,6 +15,7 @@
 #import "ImageName.h"
 #import "PlaceUtils.h"
 #import "ImageManager.h"
+#import "AppConstants.h"
 
 @implementation CommonPlaceListFilter
 
@@ -177,7 +178,7 @@
             array = [PlaceUtils sortedByDistance:currentLocation array:placeList type:[sortId intValue]];
             break;
             
-        case SORT_BY_STARTS:
+        case SORT_BY_HOTEL_STARTS:
             array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
                 int rank1 = [place1 hotelStar];
                 int rank2 = [place2 hotelStar];

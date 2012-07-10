@@ -155,16 +155,11 @@
     
 }
 
-
-
-
 - (IBAction)clickCheckOrdersButton:(id)sender {
     OrderManagerController *controller = [[OrderManagerController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
-
-
 
 - (IBAction)clickAutoLoginButton:(id)sender {
     UIButton *button = (UIButton *)sender;
