@@ -387,6 +387,15 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)pushDestinationCitySelectController
+{
+    NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
+    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
+                                                                        selectedItemList:_selectedItemIds.destinationCityIds 
+                                                                                delegate:self];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)loadMoreTableViewDataSource
 {
     [self fechMoreRouteList];
@@ -404,19 +413,14 @@
             [self pushRouteSelectController];
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
-        {
-            itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
-            SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
-                                                                                selectedItemList:_selectedItemIds.destinationCityIds 
-                                                                                        delegate:self];
-            [self.navigationController pushViewController:controller animated:YES];
-            break;
-        }
+            [self pushDestinationCitySelectController];
             
         default:
             break;
     }
 }
+
+
 
 - (void)pushRouteSelectController
 {    
