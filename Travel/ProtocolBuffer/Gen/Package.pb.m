@@ -1433,6 +1433,271 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
 }
 @end
 
+@interface RouteStatistics ()
+@property (retain) Statistics* departCityStatistics;
+@property (retain) Statistics* agencyStatistics;
+@end
+
+@implementation RouteStatistics
+
+- (BOOL) hasDepartCityStatistics {
+  return !!hasDepartCityStatistics_;
+}
+- (void) setHasDepartCityStatistics:(BOOL) value {
+  hasDepartCityStatistics_ = !!value;
+}
+@synthesize departCityStatistics;
+- (BOOL) hasAgencyStatistics {
+  return !!hasAgencyStatistics_;
+}
+- (void) setHasAgencyStatistics:(BOOL) value {
+  hasAgencyStatistics_ = !!value;
+}
+@synthesize agencyStatistics;
+- (void) dealloc {
+  self.departCityStatistics = nil;
+  self.agencyStatistics = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.departCityStatistics = [Statistics defaultInstance];
+    self.agencyStatistics = [Statistics defaultInstance];
+  }
+  return self;
+}
+static RouteStatistics* defaultRouteStatisticsInstance = nil;
++ (void) initialize {
+  if (self == [RouteStatistics class]) {
+    defaultRouteStatisticsInstance = [[RouteStatistics alloc] init];
+  }
+}
++ (RouteStatistics*) defaultInstance {
+  return defaultRouteStatisticsInstance;
+}
+- (RouteStatistics*) defaultInstance {
+  return defaultRouteStatisticsInstance;
+}
+- (BOOL) isInitialized {
+  if (self.hasDepartCityStatistics) {
+    if (!self.departCityStatistics.isInitialized) {
+      return NO;
+    }
+  }
+  if (self.hasAgencyStatistics) {
+    if (!self.agencyStatistics.isInitialized) {
+      return NO;
+    }
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasDepartCityStatistics) {
+    [output writeMessage:1 value:self.departCityStatistics];
+  }
+  if (self.hasAgencyStatistics) {
+    [output writeMessage:2 value:self.agencyStatistics];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (int32_t) serializedSize {
+  int32_t size = memoizedSerializedSize;
+  if (size != -1) {
+    return size;
+  }
+
+  size = 0;
+  if (self.hasDepartCityStatistics) {
+    size += computeMessageSize(1, self.departCityStatistics);
+  }
+  if (self.hasAgencyStatistics) {
+    size += computeMessageSize(2, self.agencyStatistics);
+  }
+  size += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size;
+  return size;
+}
++ (RouteStatistics*) parseFromData:(NSData*) data {
+  return (RouteStatistics*)[[[RouteStatistics builder] mergeFromData:data] build];
+}
++ (RouteStatistics*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteStatistics*)[[[RouteStatistics builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (RouteStatistics*) parseFromInputStream:(NSInputStream*) input {
+  return (RouteStatistics*)[[[RouteStatistics builder] mergeFromInputStream:input] build];
+}
++ (RouteStatistics*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteStatistics*)[[[RouteStatistics builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RouteStatistics*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (RouteStatistics*)[[[RouteStatistics builder] mergeFromCodedInputStream:input] build];
+}
++ (RouteStatistics*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (RouteStatistics*)[[[RouteStatistics builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (RouteStatistics_Builder*) builder {
+  return [[[RouteStatistics_Builder alloc] init] autorelease];
+}
++ (RouteStatistics_Builder*) builderWithPrototype:(RouteStatistics*) prototype {
+  return [[RouteStatistics builder] mergeFrom:prototype];
+}
+- (RouteStatistics_Builder*) builder {
+  return [RouteStatistics builder];
+}
+@end
+
+@interface RouteStatistics_Builder()
+@property (retain) RouteStatistics* result;
+@end
+
+@implementation RouteStatistics_Builder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+  [super dealloc];
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[[RouteStatistics alloc] init] autorelease];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (RouteStatistics_Builder*) clear {
+  self.result = [[[RouteStatistics alloc] init] autorelease];
+  return self;
+}
+- (RouteStatistics_Builder*) clone {
+  return [RouteStatistics builderWithPrototype:result];
+}
+- (RouteStatistics*) defaultInstance {
+  return [RouteStatistics defaultInstance];
+}
+- (RouteStatistics*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (RouteStatistics*) buildPartial {
+  RouteStatistics* returnMe = [[result retain] autorelease];
+  self.result = nil;
+  return returnMe;
+}
+- (RouteStatistics_Builder*) mergeFrom:(RouteStatistics*) other {
+  if (other == [RouteStatistics defaultInstance]) {
+    return self;
+  }
+  if (other.hasDepartCityStatistics) {
+    [self mergeDepartCityStatistics:other.departCityStatistics];
+  }
+  if (other.hasAgencyStatistics) {
+    [self mergeAgencyStatistics:other.agencyStatistics];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (RouteStatistics_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (RouteStatistics_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSet_Builder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    int32_t tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        Statistics_Builder* subBuilder = [Statistics builder];
+        if (self.hasDepartCityStatistics) {
+          [subBuilder mergeFrom:self.departCityStatistics];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setDepartCityStatistics:[subBuilder buildPartial]];
+        break;
+      }
+      case 18: {
+        Statistics_Builder* subBuilder = [Statistics builder];
+        if (self.hasAgencyStatistics) {
+          [subBuilder mergeFrom:self.agencyStatistics];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setAgencyStatistics:[subBuilder buildPartial]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasDepartCityStatistics {
+  return result.hasDepartCityStatistics;
+}
+- (Statistics*) departCityStatistics {
+  return result.departCityStatistics;
+}
+- (RouteStatistics_Builder*) setDepartCityStatistics:(Statistics*) value {
+  result.hasDepartCityStatistics = YES;
+  result.departCityStatistics = value;
+  return self;
+}
+- (RouteStatistics_Builder*) setDepartCityStatisticsBuilder:(Statistics_Builder*) builderForValue {
+  return [self setDepartCityStatistics:[builderForValue build]];
+}
+- (RouteStatistics_Builder*) mergeDepartCityStatistics:(Statistics*) value {
+  if (result.hasDepartCityStatistics &&
+      result.departCityStatistics != [Statistics defaultInstance]) {
+    result.departCityStatistics =
+      [[[Statistics builderWithPrototype:result.departCityStatistics] mergeFrom:value] buildPartial];
+  } else {
+    result.departCityStatistics = value;
+  }
+  result.hasDepartCityStatistics = YES;
+  return self;
+}
+- (RouteStatistics_Builder*) clearDepartCityStatistics {
+  result.hasDepartCityStatistics = NO;
+  result.departCityStatistics = [Statistics defaultInstance];
+  return self;
+}
+- (BOOL) hasAgencyStatistics {
+  return result.hasAgencyStatistics;
+}
+- (Statistics*) agencyStatistics {
+  return result.agencyStatistics;
+}
+- (RouteStatistics_Builder*) setAgencyStatistics:(Statistics*) value {
+  result.hasAgencyStatistics = YES;
+  result.agencyStatistics = value;
+  return self;
+}
+- (RouteStatistics_Builder*) setAgencyStatisticsBuilder:(Statistics_Builder*) builderForValue {
+  return [self setAgencyStatistics:[builderForValue build]];
+}
+- (RouteStatistics_Builder*) mergeAgencyStatistics:(Statistics*) value {
+  if (result.hasAgencyStatistics &&
+      result.agencyStatistics != [Statistics defaultInstance]) {
+    result.agencyStatistics =
+      [[[Statistics builderWithPrototype:result.agencyStatistics] mergeFrom:value] buildPartial];
+  } else {
+    result.agencyStatistics = value;
+  }
+  result.hasAgencyStatistics = YES;
+  return self;
+}
+- (RouteStatistics_Builder*) clearAgencyStatistics {
+  result.hasAgencyStatistics = NO;
+  result.agencyStatistics = [Statistics defaultInstance];
+  return self;
+}
+@end
+
 @interface TravelResponse ()
 @property int32_t resultCode;
 @property (retain) NSString* resultInfo;
@@ -1444,10 +1709,12 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
 @property (retain) CityList* cityList;
 @property (retain) App* appInfo;
 @property (retain) CommonTravelTipList* travelTipList;
+@property (retain) PlaceStatistics* placeStatistics;
 @property int32_t totalCount;
 @property (retain) UserInfo* userInfo;
 @property (retain) TouristRoute* route;
 @property (retain) TouristRouteList* routeList;
+@property (retain) RouteStatistics* routeStatistics;
 @property (retain) RouteFeekbackList* routeFeekbackList;
 @property (retain) OrderList* orderList;
 @property (retain) CityImageList* cityImageList;
@@ -1525,6 +1792,13 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   hasTravelTipList_ = !!value;
 }
 @synthesize travelTipList;
+- (BOOL) hasPlaceStatistics {
+  return !!hasPlaceStatistics_;
+}
+- (void) setHasPlaceStatistics:(BOOL) value {
+  hasPlaceStatistics_ = !!value;
+}
+@synthesize placeStatistics;
 - (BOOL) hasTotalCount {
   return !!hasTotalCount_;
 }
@@ -1553,6 +1827,13 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   hasRouteList_ = !!value;
 }
 @synthesize routeList;
+- (BOOL) hasRouteStatistics {
+  return !!hasRouteStatistics_;
+}
+- (void) setHasRouteStatistics:(BOOL) value {
+  hasRouteStatistics_ = !!value;
+}
+@synthesize routeStatistics;
 - (BOOL) hasRouteFeekbackList {
   return !!hasRouteFeekbackList_;
 }
@@ -1584,9 +1865,11 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
   self.cityList = nil;
   self.appInfo = nil;
   self.travelTipList = nil;
+  self.placeStatistics = nil;
   self.userInfo = nil;
   self.route = nil;
   self.routeList = nil;
+  self.routeStatistics = nil;
   self.routeFeekbackList = nil;
   self.orderList = nil;
   self.cityImageList = nil;
@@ -1604,10 +1887,12 @@ static RouteFeekback* defaultRouteFeekbackInstance = nil;
     self.cityList = [CityList defaultInstance];
     self.appInfo = [App defaultInstance];
     self.travelTipList = [CommonTravelTipList defaultInstance];
+    self.placeStatistics = [PlaceStatistics defaultInstance];
     self.totalCount = 0;
     self.userInfo = [UserInfo defaultInstance];
     self.route = [TouristRoute defaultInstance];
     self.routeList = [TouristRouteList defaultInstance];
+    self.routeStatistics = [RouteStatistics defaultInstance];
     self.routeFeekbackList = [RouteFeekbackList defaultInstance];
     self.orderList = [OrderList defaultInstance];
     self.cityImageList = [CityImageList defaultInstance];
@@ -1665,6 +1950,11 @@ static TravelResponse* defaultTravelResponseInstance = nil;
       return NO;
     }
   }
+  if (self.hasPlaceStatistics) {
+    if (!self.placeStatistics.isInitialized) {
+      return NO;
+    }
+  }
   if (self.hasUserInfo) {
     if (!self.userInfo.isInitialized) {
       return NO;
@@ -1677,6 +1967,11 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasRouteList) {
     if (!self.routeList.isInitialized) {
+      return NO;
+    }
+  }
+  if (self.hasRouteStatistics) {
+    if (!self.routeStatistics.isInitialized) {
       return NO;
     }
   }
@@ -1728,6 +2023,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasTravelTipList) {
     [output writeMessage:10 value:self.travelTipList];
   }
+  if (self.hasPlaceStatistics) {
+    [output writeMessage:12 value:self.placeStatistics];
+  }
   if (self.hasTotalCount) {
     [output writeInt32:13 value:self.totalCount];
   }
@@ -1739,6 +2037,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasRouteList) {
     [output writeMessage:21 value:self.routeList];
+  }
+  if (self.hasRouteStatistics) {
+    [output writeMessage:25 value:self.routeStatistics];
   }
   if (self.hasRouteFeekbackList) {
     [output writeMessage:30 value:self.routeFeekbackList];
@@ -1788,6 +2089,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (self.hasTravelTipList) {
     size += computeMessageSize(10, self.travelTipList);
   }
+  if (self.hasPlaceStatistics) {
+    size += computeMessageSize(12, self.placeStatistics);
+  }
   if (self.hasTotalCount) {
     size += computeInt32Size(13, self.totalCount);
   }
@@ -1799,6 +2103,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (self.hasRouteList) {
     size += computeMessageSize(21, self.routeList);
+  }
+  if (self.hasRouteStatistics) {
+    size += computeMessageSize(25, self.routeStatistics);
   }
   if (self.hasRouteFeekbackList) {
     size += computeMessageSize(30, self.routeFeekbackList);
@@ -1914,6 +2221,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   if (other.hasTravelTipList) {
     [self mergeTravelTipList:other.travelTipList];
   }
+  if (other.hasPlaceStatistics) {
+    [self mergePlaceStatistics:other.placeStatistics];
+  }
   if (other.hasTotalCount) {
     [self setTotalCount:other.totalCount];
   }
@@ -1925,6 +2235,9 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   }
   if (other.hasRouteList) {
     [self mergeRouteList:other.routeList];
+  }
+  if (other.hasRouteStatistics) {
+    [self mergeRouteStatistics:other.routeStatistics];
   }
   if (other.hasRouteFeekbackList) {
     [self mergeRouteFeekbackList:other.routeFeekbackList];
@@ -2036,6 +2349,15 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         [self setTravelTipList:[subBuilder buildPartial]];
         break;
       }
+      case 98: {
+        PlaceStatistics_Builder* subBuilder = [PlaceStatistics builder];
+        if (self.hasPlaceStatistics) {
+          [subBuilder mergeFrom:self.placeStatistics];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setPlaceStatistics:[subBuilder buildPartial]];
+        break;
+      }
       case 104: {
         [self setTotalCount:[input readInt32]];
         break;
@@ -2065,6 +2387,15 @@ static TravelResponse* defaultTravelResponseInstance = nil;
         }
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self setRouteList:[subBuilder buildPartial]];
+        break;
+      }
+      case 202: {
+        RouteStatistics_Builder* subBuilder = [RouteStatistics builder];
+        if (self.hasRouteStatistics) {
+          [subBuilder mergeFrom:self.routeStatistics];
+        }
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self setRouteStatistics:[subBuilder buildPartial]];
         break;
       }
       case 242: {
@@ -2369,6 +2700,36 @@ static TravelResponse* defaultTravelResponseInstance = nil;
   result.travelTipList = [CommonTravelTipList defaultInstance];
   return self;
 }
+- (BOOL) hasPlaceStatistics {
+  return result.hasPlaceStatistics;
+}
+- (PlaceStatistics*) placeStatistics {
+  return result.placeStatistics;
+}
+- (TravelResponse_Builder*) setPlaceStatistics:(PlaceStatistics*) value {
+  result.hasPlaceStatistics = YES;
+  result.placeStatistics = value;
+  return self;
+}
+- (TravelResponse_Builder*) setPlaceStatisticsBuilder:(PlaceStatistics_Builder*) builderForValue {
+  return [self setPlaceStatistics:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergePlaceStatistics:(PlaceStatistics*) value {
+  if (result.hasPlaceStatistics &&
+      result.placeStatistics != [PlaceStatistics defaultInstance]) {
+    result.placeStatistics =
+      [[[PlaceStatistics builderWithPrototype:result.placeStatistics] mergeFrom:value] buildPartial];
+  } else {
+    result.placeStatistics = value;
+  }
+  result.hasPlaceStatistics = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearPlaceStatistics {
+  result.hasPlaceStatistics = NO;
+  result.placeStatistics = [PlaceStatistics defaultInstance];
+  return self;
+}
 - (BOOL) hasTotalCount {
   return result.hasTotalCount;
 }
@@ -2473,6 +2834,36 @@ static TravelResponse* defaultTravelResponseInstance = nil;
 - (TravelResponse_Builder*) clearRouteList {
   result.hasRouteList = NO;
   result.routeList = [TouristRouteList defaultInstance];
+  return self;
+}
+- (BOOL) hasRouteStatistics {
+  return result.hasRouteStatistics;
+}
+- (RouteStatistics*) routeStatistics {
+  return result.routeStatistics;
+}
+- (TravelResponse_Builder*) setRouteStatistics:(RouteStatistics*) value {
+  result.hasRouteStatistics = YES;
+  result.routeStatistics = value;
+  return self;
+}
+- (TravelResponse_Builder*) setRouteStatisticsBuilder:(RouteStatistics_Builder*) builderForValue {
+  return [self setRouteStatistics:[builderForValue build]];
+}
+- (TravelResponse_Builder*) mergeRouteStatistics:(RouteStatistics*) value {
+  if (result.hasRouteStatistics &&
+      result.routeStatistics != [RouteStatistics defaultInstance]) {
+    result.routeStatistics =
+      [[[RouteStatistics builderWithPrototype:result.routeStatistics] mergeFrom:value] buildPartial];
+  } else {
+    result.routeStatistics = value;
+  }
+  result.hasRouteStatistics = YES;
+  return self;
+}
+- (TravelResponse_Builder*) clearRouteStatistics {
+  result.hasRouteStatistics = NO;
+  result.routeStatistics = [RouteStatistics defaultInstance];
   return self;
 }
 - (BOOL) hasRouteFeekbackList {

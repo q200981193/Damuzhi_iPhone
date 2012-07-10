@@ -16,6 +16,8 @@
 #import "SelectedItemIdsManager.h"
 #import "CommonPlace.h"
 #import "CommonRouteDetailController.h"
+#import "AppConstants.h"
+#import "RouteSelectController.h"
 
 #define TAG_DEPART_CITY_LABEL 18
 #define TAG_AGENCY_LABEL 19
@@ -365,20 +367,18 @@
                                 viewController:self];
 }
 
-- (void)pushSelectedControllerWithTitle:(NSString *)title
-                               itemList:(NSArray *)itemList
-                        selectedItemIds:(NSMutableArray *)selectedItemIds 
-                           multiOptions:(BOOL)multiOptions 
-                            needConfirm:(BOOL)needConfirm
-                          needShowCount:(BOOL)needShowCount;
+- (void)pushDepartCitySelectController
 {
-    SelectController *controller = [[SelectController alloc] initWithTitle:title
+    NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
+    
+    SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"出发城市")
                                                                   itemList:itemList
-                                                           selectedItemIds:selectedItemIds
-                                                              multiOptions:multiOptions 
-                                                               needConfirm:needConfirm
-                                                             needShowCount:needShowCount];
-     
+                                                           selectedItemIds:_selectedItemIds.departCityIds
+                                                              multiOptions:NO 
+                                                               needConfirm:YES
+                                                             needShowCount:YES];
+    
+    
     controller.delegate = self;
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -392,21 +392,25 @@
 - (void)clickFitlerButton:(id)sender
 {
     UIButton *button = (UIButton *)sender;
-    NSArray *itemList = nil;
     switch (button.tag) {
         case TAG_FILTER_BTN_DEPART_CITY:
-            itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-            [self pushSelectedControllerWithTitle:NSLS(@"出发城市")
-                                         itemList:itemList
-                                  selectedItemIds:_selectedItemIds.departCityIds
-                                     multiOptions:NO 
-                                      needConfirm:YES 
-                                    needShowCount:YES];
+            [self pushDepartCitySelectController];
+            break;
+            
+        case TAG_FILTER_BTN_CLASSIFY:
+            [self pushRouteSelectController];
             break;
             
         default:
             break;
     }
+}
+
+- (void)pushRouteSelectController
+{    
+    RouteSelectController *controller = [[[RouteSelectController alloc] initWithRouteType:[_filterHandler getRouteType] selectedItemIds:_selectedItemIds] autorelease];
+    
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clickBack:(id)sender

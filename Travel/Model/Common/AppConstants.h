@@ -82,4 +82,6 @@
 #define ALERT_USING_CELL_NEWORK 1
 #define ALERT_DELETE_CITY 2
 
+#define ALL_CATEGORY   (-1)
+
 #endif

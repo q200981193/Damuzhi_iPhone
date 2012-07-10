@@ -9,6 +9,7 @@
 #import "SelectedItemIdsManager.h"
 #import "CommonPlace.h"
 #import "Item.h"
+#import "AppConstants.h"
 
 @implementation PlaceSelectedItemIds
 
@@ -78,6 +79,8 @@
 @synthesize departCityIds = _departCityIds;
 @synthesize destinationCityIds = _destinationCityIds;
 @synthesize agencyIds = _agencyIds;
+@synthesize priceRankItemIds = _priceRankItemIds;
+@synthesize daysRangeItemIds = _daysRangeItemIds;
 @synthesize themeIds = _themeIds;
 @synthesize routeTypeIds = _routeTypeIds;
 
@@ -85,6 +88,8 @@
     [_departCityIds release];
     [_destinationCityIds release];
     [_agencyIds release];
+    [_priceRankItemIds release];
+    [_daysRangeItemIds release];
     [_themeIds release];
     [_routeTypeIds release];
     [super dealloc];
@@ -95,15 +100,19 @@
     self = [super init];
     if (self) {
         
-        self.departCityIds = [[[NSMutableArray alloc] init] autorelease];
-        self.destinationCityIds = [[[NSMutableArray alloc] init] autorelease];
-        self.agencyIds = [[[NSMutableArray alloc] init] autorelease];
-        self.themeIds = [[[NSMutableArray alloc] init] autorelease];
-        self.routeTypeIds = [[[NSMutableArray alloc] init] autorelease];
+        self.departCityIds = [NSMutableArray array];
+        self.destinationCityIds = [NSMutableArray array];
+        self.agencyIds = [NSMutableArray array];
+        self.priceRankItemIds = [NSMutableArray array];
+        self.daysRangeItemIds = [NSMutableArray array];
+        self.themeIds = [NSMutableArray array];
+        self.routeTypeIds = [NSMutableArray array];
         
         [self.departCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.destinationCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.agencyIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.priceRankItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.daysRangeItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.themeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.routeTypeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     }
@@ -116,12 +125,16 @@
     [self.departCityIds removeAllObjects];
     [self.destinationCityIds removeAllObjects];
     [self.agencyIds removeAllObjects];
+    [self.priceRankItemIds removeAllObjects];
+    [self.daysRangeItemIds removeAllObjects];
     [self.themeIds removeAllObjects];
     [self.routeTypeIds removeAllObjects];
     
     [self.departCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.destinationCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.agencyIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.priceRankItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.daysRangeItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.themeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.routeTypeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
 }

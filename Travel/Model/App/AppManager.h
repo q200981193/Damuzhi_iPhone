@@ -11,6 +11,18 @@
 #import "App.pb.h"
 #import "LocalCity.h"
 
+enum{
+    PRICE_BELOW_1500 = 1,
+    PRICE_1500_4000 = 2,
+    PRICE_MORE_THAN_4000 = 3
+};
+
+enum{
+    DAYS_1_3 = 1,
+    DAYS_3_8 = 2,
+    DAYS_MORE_THAN_8 = 3
+};
+
 @interface AppManager : NSObject<CommonManagerProtocol>
 
 @property (retain, nonatomic) App *app;
@@ -56,8 +68,8 @@
 // Get angency list 
 - (NSArray *)getDepartCityItemList:(NSArray *)routeList;
 - (NSArray *)getDestinationCityItemList:(NSArray *)routeList;
-- (NSArray *)getRouteThemeItemList:(NSArray *)routeList;
-- (NSArray *)getRouteCategoryItemList:(NSArray *)routeList;
+- (NSArray *)getRouteThemeItemList;
+//- (NSArray *)getRouteCategoryItemList:(NSArray *)routeList;
 - (NSArray *)getAgencyItemList:(NSArray *)routeList;
 
 - (NSString*)getDepartCityName:(int)routeCityId;
@@ -65,5 +77,9 @@
 
 - (NSArray*)buildAdultItemList;
 - (NSArray*)buildChildrenItemList;
+
+- (NSArray *)buildRoutePriceRankItemList;
+- (NSArray *)buildDaysRangeItemList;
+
 
 @end
