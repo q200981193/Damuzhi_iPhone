@@ -45,21 +45,17 @@ static RouteService *_defaultRouteService = nil;
 - (void)findRoutesWithType:(int)routeType
                      start:(int)start
                      count:(int)count 
-            needStatistics:(BOOL)needStatistics 
-                      test:(BOOL)test
       routeSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
+            needStatistics:(BOOL)needStatistics 
             viewController:(PPViewController<RouteServiceDelegate>*)viewController
 {
     [viewController showActivityWithText:NSLS(@"数据加载中......")];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        int needStatisticsInt = (needStatistics ? 1 : 0);
-        int testInt = (test ? 1 : 0);
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:routeType 
                                                                 start:start 
                                                                 count:count 
                                                                  lang:LanguageTypeZhHans 
-                                                       needStatistics:needStatisticsInt 
                                                      departCityIdList:routeSelectedItemIds.departCityIds 
                                                 destinationCityIdList:routeSelectedItemIds.destinationCityIds 
                                                          agencyIdList:routeSelectedItemIds.agencyIds 
@@ -67,33 +63,35 @@ static RouteService *_defaultRouteService = nil;
                                                       daysRangeIdList:routeSelectedItemIds.daysRangeItemIds 
                                                           themeIdList:routeSelectedItemIds.themeIds 
                                                          sortTypeList:routeSelectedItemIds.sortIds 
-                                                                 test:testInt];
+                                                       needStatistics:needStatistics 
+                                                                 test:NO];
         
         int totalCount;
         NSArray *routeList;
+        RouteStatistics *statistics;
         if (output.resultCode == ERROR_SUCCESS){
             @try{
                 TravelResponse *travelResponse = [TravelResponse parseFromData:output.responseData];
             
                 totalCount = [travelResponse totalCount];
                 routeList = [[travelResponse routeList] routesList];
+                statistics = (needStatistics == NO) ? nil : [travelResponse routeStatistics];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [viewController hideActivity];   
                     
-                    if ([viewController respondsToSelector:@selector(findRequestDone:totalCount:list:)]) {
+                    if ([viewController respondsToSelector:@selector(findRequestDone:totalCount:list:statistics:)]) {
                         [viewController findRequestDone:output.resultCode 
                                              totalCount:totalCount
-                                                   list:routeList];
+                                                   list:routeList
+                                             statistics:statistics];
                     }
                 });
-                
-
             }
             @catch (NSException *exception){
+                PPDebug(@"<Catch Exception in findRoutesWithType>");
             }
         }
-        
 
     });    
 }

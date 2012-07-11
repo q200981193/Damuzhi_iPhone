@@ -22,10 +22,12 @@
 @property (retain, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (retain, nonatomic) IBOutlet UIView *areaView;
 
-- (id)initWithAllItemList:(NSArray *)itemsList 
-         selectedItemList:(NSMutableArray *)selectedItemIds
-                     type:(typeCity)typeCity
-             multiOptions:(BOOL)multiOptions
-                 delegate:(id<SelectCityDelegate>)delegate;
+- (id)initWithTitle:(NSString *)title 
+         regionList:(NSArray *)regionList
+           itemList:(NSArray *)itemList
+ selectedItemIdList:(NSMutableArray *)selectedItemIdList
+               type:(typeCity)typeCity
+       multiOptions:(BOOL)multiOptions
+           delegate:(id<SelectCityDelegate>)delegate;
 
 @end

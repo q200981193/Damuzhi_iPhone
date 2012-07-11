@@ -47,6 +47,8 @@
 
 @property (retain, nonatomic) NSObject<RouteListFilterProtocol> *filterHandler;
 
+@property (retain, nonatomic) RouteStatistics *routeStatistics;
+
 - (UIView*)genStatisticsView;
 - (void)updateStatisticsData;
 
@@ -69,6 +71,8 @@
 
 @synthesize filterHandler = _filterHandler;
 
+@synthesize routeStatistics = _routeStatistics;
+
 #pragma mark - View lifecycle
 - (void)dealloc
 {
@@ -79,6 +83,7 @@
     [_statisticsView release];
     [_buttonsHolderView release];
     [_filterHandler release];
+    [_routeStatistics release];
     
     [super dealloc];
 }
@@ -142,13 +147,12 @@
         [lineView setImage:[[ImageManager defaultManager] lineImage]];
         //    [_statisticsView addSubview:lineView];
         [_buttonsHolderView addSubview:lineView];
+        //    // Init statistics data
+        [self updateStatisticsData];
     }
 
     CGRect rect = CGRectMake(0, _buttonsHolderView.frame.origin.y + _buttonsHolderView.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - _buttonsHolderView.frame.size.height - _statisticsView.frame.size.height);
     self.dataTableView.frame = rect;    
-    
-//    // Init statistics data
-    [self updateStatisticsData];
     
     // Init filter view
     [_filterHandler createFilterButtons:self.buttonsHolderView controller:self];
@@ -156,9 +160,8 @@
     // Find route list
     [_filterHandler findRoutesWithStart:_start 
                                   count:COUNT_EACH_FETCH 
-                         needStatistics:YES 
-                                   test:YES 
                    RouteSelectedItemIds:_selectedItemIds 
+                         needStatistics:YES 
                          viewController:self];
     
     dataTableView.backgroundColor = [UIColor whiteColor];
@@ -175,10 +178,17 @@
 }
 
 #pragma mark - RouteServiceDelegate
-- (void)findRequestDone:(int)result totalCount:(int)totalCount list:(NSArray *)routeList
+- (void)findRequestDone:(int)result
+             totalCount:(int)totalCount 
+                   list:(NSArray *)routeList 
+             statistics:(RouteStatistics *)statistics
 {
     [self dataSourceDidFinishLoadingNewData];
     [self dataSourceDidFinishLoadingMoreData];
+    
+    if (_routeStatistics == nil) {
+        self.routeStatistics = statistics;
+    }
     
     if (result != ERROR_SUCCESS) {
         [self popupMessage:@"网络弱，数据加载失败" title:nil];
@@ -332,7 +342,7 @@
     
     int agencyCount = 0;
     if ([[_selectedItemIds.agencyIds objectAtIndex:0] intValue] == ALL_CATEGORY) {
-        agencyCount = [[[AppManager defaultManager] getAgencyItemList:dataList] count] - 1;
+        agencyCount = [[[AppManager defaultManager] getAgencyItemList:_routeStatistics.agencyStatisticsList] count] - 1;
     }else {
         [_selectedItemIds.agencyIds count];
     }
@@ -352,9 +362,8 @@
     else {
         [_filterHandler findRoutesWithStart:_start 
                                       count:COUNT_EACH_FETCH 
-                             needStatistics:YES 
-                                       test:YES 
                        RouteSelectedItemIds:_selectedItemIds 
+                             needStatistics:NO 
                              viewController:self];
     }
 }
@@ -365,46 +374,52 @@
     // Find route list
     [_filterHandler findRoutesWithStart:_start 
                                   count:COUNT_EACH_FETCH 
-                         needStatistics:YES 
-                                   test:YES 
                    RouteSelectedItemIds:_selectedItemIds 
+                         needStatistics:NO
                          viewController:self];
 }
 
 - (void)pushDepartCitySelectController
 {
+    NSArray *regionList = [[AppManager defaultManager] getRegions];
     NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
-                                                                        selectedItemList:_selectedItemIds.departCityIds 
-                                                                                    type:depart 
-                                                                            multiOptions:NO
-                                                                                delegate:self];
+    SelectCityController *controller = [[SelectCityController alloc] initWithTitle:NSLS(@"出发城市") 
+                                                                        regionList:regionList 
+                                                                          itemList:itemList
+                                                                selectedItemIdList:_selectedItemIds.departCityIds 
+                                                                              type:depart 
+                                                                      multiOptions:NO
+                                                                          delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
 - (void)pushDestinationCitySelectController
 {
+    NSArray *regionList = [[AppManager defaultManager] getRegions];
     NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
-    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
-                                                                        selectedItemList:_selectedItemIds.destinationCityIds 
-                                                                                    type:destination
-                                                                            multiOptions:YES
-                                                                                delegate:self];
+    SelectCityController *controller = [[SelectCityController alloc] initWithTitle:NSLS(@"目的城市") 
+                                                                        regionList:regionList 
+                                                                          itemList:itemList
+                                                                selectedItemIdList:_selectedItemIds.destinationCityIds 
+                                                                              type:destination
+                                                                      multiOptions:YES
+                                                                          delegate:self];
+    
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
 - (void)pushAgencySelectController
 {
-     NSArray *itemList = [[AppManager defaultManager] getAgencyItemList:dataList];
+     NSArray *itemList = [[AppManager defaultManager] getAgencyItemList:_routeStatistics.agencyStatisticsList];
     
     SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"旅行社选择")
                                                                   itemList:itemList
                                                            selectedItemIds:_selectedItemIds.agencyIds
                                                               multiOptions:YES 
                                                                needConfirm:YES
-                                                             needShowCount:NO];
+                                                             needShowCount:YES];
     
     
     controller.delegate = self;
@@ -447,6 +462,7 @@
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
             [self pushDestinationCitySelectController];
+            break;
             
         case TAG_SORT_BTN:
             [self pushSortTypeSelectController];
@@ -493,11 +509,12 @@
 #pragma mark: Implementation of RouteSelectControllerDelegate.
 - (void)didClickFinish
 {
+    self.start = 0;
+
     [_filterHandler findRoutesWithStart:_start 
                                   count:COUNT_EACH_FETCH 
-                         needStatistics:YES 
-                                   test:YES 
                    RouteSelectedItemIds:_selectedItemIds 
+                         needStatistics:NO 
                          viewController:self];
 }
 

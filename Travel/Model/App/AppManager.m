@@ -675,6 +675,26 @@ static AppManager* _defaultAppManager = nil;
 }
 
 // Get angency list 
+- (NSArray *)getRegions
+{
+    return _app.regionsList;
+}
+
+- (int)getGegionIdByCityId:(int)cityId
+{
+    int reId = -1;
+    
+    for (RouteCity *city in _app.destinationCitiesList) {
+        if (city.routeCityId == cityId) {
+            reId = city.regionId;
+            break;
+        }
+    }
+    
+    return reId;
+}
+
+
 - (NSArray *)getDepartCityItemList:(NSArray *)routeList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
@@ -691,23 +711,15 @@ static AppManager* _defaultAppManager = nil;
     return retArray;
 }
 
-- (NSArray *)getDestinationCityItemList:(NSArray *)routeList
+- (NSArray *)getDestinationCityItemList:(NSArray *)staticticsList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-    [retArray addObject:[Item itemWithId:ALL_CATEGORY 
-                                itemName:NSLS(@"全部") 
-                                   count:0]];
     
-    for (RouteCity *city in _app.destinationCitiesList) {
-//        int count = [[RouteUtils getRouteList:routeList headForCity:city.routeCityId] count];
-//        if (count != 0) {
-            [retArray addObject:[Item itemWithId:city.routeCityId 
-                                        itemName:city.cityName
-                                           count:0]];
-//        }
+    for (Statistics *statistics in staticticsList) {
+        [retArray addObject:[Item itemWithStatistics:statistics]];
     }
     
-    return retArray; 
+    return retArray;
 }
 
 - (NSArray *)getRouteThemeItemList;
@@ -747,23 +759,14 @@ static AppManager* _defaultAppManager = nil;
     return retArray; 
 }
 
-- (NSArray *)getAgencyItemList:(NSArray *)routeList
+- (NSArray *)getAgencyItemList:(NSArray *)staticticsList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
     
-    [retArray addObject:[Item itemWithId:ALL_CATEGORY 
-                                itemName:NSLS(@"全部") 
-                                   count:[routeList count]]];
-    
-    for (Agency *agency in _app.agenciesList) {
-//        int count = [[RouteUtils getRouteList:routeList providedByAngency:agency.agencyId] count];
-//        if (count != 0) {
-            [retArray addObject:[Item itemWithId:agency.agencyId
-                                        itemName:agency.name
-                                           count:0]];
-//        }
+    for (Statistics *statistics in staticticsList) {
+        [retArray addObject:[Item itemWithStatistics:statistics]];
     }
-    
+
     return retArray;
 }
 
@@ -901,7 +904,7 @@ static AppManager* _defaultAppManager = nil;
                                             count:0]];
     
     [daysRangeItemList addObject:[Item itemWithId:DAYS_3_8
-                                         itemName:NSLS(@"3-8天") 
+                                         itemName:NSLS(@"4-8天") 
                                             count:0]];
     
     [daysRangeItemList addObject:[Item itemWithId:DAYS_MORE_THAN_8
@@ -945,6 +948,5 @@ static AppManager* _defaultAppManager = nil;
     
     return routeSortItems;
 }
-
 
 @end

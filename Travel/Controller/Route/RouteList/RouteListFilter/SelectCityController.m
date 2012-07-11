@@ -15,7 +15,7 @@
     typeCity _typeCity;
     BOOL _multiOptions;
 }
-
+@property (copy, nonatomic) NSString *navigationTitle;
 @property (retain, nonatomic) NSArray *allDataList;
 @property (assign, nonatomic) id<SelectCityDelegate> delegate;
 @property (retain, nonatomic) NSMutableArray *selectedItemIds;
@@ -26,6 +26,7 @@
 @end
 
 @implementation SelectCityController
+@synthesize navigationTitle = _navigationTitle;
 @synthesize searchBar = _searchBar;
 @synthesize areaView = _areaView;
 @synthesize delegate = _delegate;
@@ -36,27 +37,32 @@
 
 - (void)dealloc
 {
+    PPRelease(_navigationTitle);
     PPRelease(_allDataList);
     PPRelease(_searchBar);
     PPRelease(_selectedItemIds);
     PPRelease(_selectedItemIdsBeforConfirm);
     PPRelease(_areaList);
-    [_areaView release];
+    PPRelease(_areaView);
     [super dealloc];
 }
 
-- (id)initWithAllItemList:(NSArray *)itemsList 
-         selectedItemList:(NSMutableArray *)selectedItemIds
-                     type:(typeCity)typeCity
-             multiOptions:(BOOL)multiOptions
-                 delegate:(id<SelectCityDelegate>)delegate
+- (id)initWithTitle:(NSString *)title 
+         regionList:(NSArray *)regionList
+           itemList:(NSArray *)itemList
+   selectedItemIdList:(NSMutableArray *)selectedItemIdList
+               type:(typeCity)typeCity
+       multiOptions:(BOOL)multiOptions
+           delegate:(id<SelectCityDelegate>)delegate
 {
     self = [super init];
     if (self) {
-        self.allDataList = itemsList;
-        self.dataList = itemsList;
-        self.selectedItemIds = selectedItemIds;
-        self.selectedItemIdsBeforConfirm = [NSMutableArray arrayWithArray:selectedItemIds];
+        self.navigationTitle = title;
+        self.areaList = regionList;
+        self.allDataList = itemList;
+        self.dataList = itemList;
+        self.selectedItemIds = selectedItemIdList;
+        self.selectedItemIdsBeforConfirm = [NSMutableArray arrayWithArray:selectedItemIdList];
         _typeCity = typeCity;
         _multiOptions = multiOptions;
         self.delegate = delegate;
@@ -67,8 +73,8 @@
 
 - (void)viewDidLoad
 {
-    self.title = NSLS(@"出发城市");
     [super viewDidLoad];
+     [self setTitle:_navigationTitle];
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
@@ -80,9 +86,6 @@
     _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, 0);
     
     if (_typeCity == destination) {
-        //test data
-        self.areaList = [NSArray arrayWithObjects:@"国内", @"日韩", @"东南亚", @"澳洲", @"欧洲", @"中东", @"美洲", @"非洲", nil];
-        
         [self addAreaButton];
     }
 }
@@ -164,12 +167,6 @@
     }
 
     [dataTableView reloadData];
-    
-//    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
-//        [_delegate didSelectCity:item];
-//    }
-    
-    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -283,16 +280,17 @@
     }
 
     CGFloat buttonWidth = 80;
-    CGFloat buttonHeight = 20;
+    CGFloat buttonHeight = 30;
     
-
     CGFloat totalHeight = ([_areaList count] / 4 + 1) * buttonHeight; 
     _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, totalHeight);
     
     CGFloat x;
     CGFloat y;
     int count = 0;
-    for (NSString *areaName in _areaList) {
+    for (Region *region in _areaList) {
+        PPDebug(@"<SelectCityController> Region:%d n:%@",region.regionId, region.regionName);
+        
         int column = count % 4;
         int row = count / 4;
         x = column * buttonWidth;
@@ -301,8 +299,12 @@
         UIButton *button = [[UIButton alloc] initWithFrame:frame];
         button.tag = 100+count;
         [button addTarget:self action:@selector(clickAreaButton:) forControlEvents:UIControlEventTouchUpInside];
+        [button setBackgroundImage:[UIImage imageNamed:@"filter_2_off.png"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"filter_2_on.png"] forState:UIControlStateSelected];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitle:areaName forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        button.titleLabel.font = [UIFont systemFontOfSize:16];
+        [button setTitle:region.regionName forState:UIControlStateNormal];
         [_areaView addSubview:button];
         [button release];
         count++;
@@ -312,8 +314,12 @@
 
 - (void)clickAreaButton:(id)sender
 {
-    //UIButton *button = (UIButton *)sender;
+    UIButton *button = (UIButton *)sender;
+    button.selected = !button.selected;
     
+    if (button.selected) {
+        
+    }
 }
 
 @end
