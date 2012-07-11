@@ -57,6 +57,8 @@
 - (NSArray *)getSortItemList:(int)categoryId;
 
 // Get angency list 
+- (NSArray *)getRegions;
+- (int)getGegionIdByCityId:(int)cityId;
 - (NSArray *)getDepartCityItemList:(NSArray *)routeList;
 - (NSArray *)getDestinationCityItemList:(NSArray *)routeList;
 - (NSArray *)getRouteThemeItemList;

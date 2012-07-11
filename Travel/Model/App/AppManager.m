@@ -675,6 +675,26 @@ static AppManager* _defaultAppManager = nil;
 }
 
 // Get angency list 
+- (NSArray *)getRegions
+{
+    return _app.regionsList;
+}
+
+- (int)getGegionIdByCityId:(int)cityId
+{
+    int reId = -1;
+    
+    for (RouteCity *city in _app.destinationCitiesList) {
+        if (city.routeCityId == cityId) {
+            reId = city.regionId;
+            break;
+        }
+    }
+    
+    return reId;
+}
+
+
 - (NSArray *)getDepartCityItemList:(NSArray *)routeList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];

@@ -373,24 +373,31 @@
 
 - (void)pushDepartCitySelectController
 {
+    NSArray *regionList = [[AppManager defaultManager] getRegions];
     NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
-                                                                        selectedItemList:_selectedItemIds.departCityIds 
-                                                                                    type:depart 
-                                                                            multiOptions:NO
-                                                                                delegate:self];
+    SelectCityController *controller = [[SelectCityController alloc] initWithTitle:NSLS(@"出发城市") 
+                                                                        regionList:regionList 
+                                                                          itemList:itemList
+                                                                selectedItemIdList:_selectedItemIds.departCityIds 
+                                                                              type:depart 
+                                                                      multiOptions:NO
+                                                                          delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
 
 - (void)pushDestinationCitySelectController
 {
+    NSArray *regionList = [[AppManager defaultManager] getRegions];
     NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
-    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
-                                                                        selectedItemList:_selectedItemIds.destinationCityIds 
-                                                                                    type:destination
-                                                                            multiOptions:YES
-                                                                                delegate:self];
+    SelectCityController *controller = [[SelectCityController alloc] initWithTitle:NSLS(@"目的城市") 
+                                                                        regionList:regionList 
+                                                                          itemList:itemList
+                                                                selectedItemIdList:_selectedItemIds.destinationCityIds 
+                                                                              type:destination
+                                                                      multiOptions:YES
+                                                                          delegate:self];
+    
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -447,6 +454,7 @@
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
             [self pushDestinationCitySelectController];
+            break;
             
         case TAG_SORT_BTN:
             [self pushSortTypeSelectController];
