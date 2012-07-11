@@ -528,7 +528,8 @@
                      agencyIdList:(NSArray *)agencyIdList 
                   priceRankIdList:(NSArray *)priceRankIdList
                   daysRangeIdList:(NSArray *)daysRangeIdList 
-                      themeIdList:(NSArray *)themeIdList
+                      themeIdList:(NSArray *)themeIdList 
+                     sortTypeList:(NSArray *)sortTypeList
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -560,6 +561,9 @@
         
         valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:themeIdList];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_THEME_ID value:valueString];
+        
+        valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:sortTypeList];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_SORT_TYPE value:valueString];
         
         return str;
     };

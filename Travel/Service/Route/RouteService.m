@@ -61,7 +61,8 @@ static RouteService *_defaultRouteService = nil;
                                                           agencyIdList:routeSelectedItemIds.agencyIds 
                                                        priceRankIdList:routeSelectedItemIds.priceRankItemIds
                                                        daysRangeIdList:routeSelectedItemIds.daysRangeItemIds 
-                                                           themeIdList:routeSelectedItemIds.themeIds];
+                                                           themeIdList:routeSelectedItemIds.themeIds 
+                                                          sortTypeList:routeSelectedItemIds.sortIds];
         
         int totalCount;
         NSArray *routeList;

@@ -73,7 +73,8 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                      agencyIdList:(NSArray *)agencyIdList 
                   priceRankIdList:(NSArray *)priceRankIdList
                   daysRangeIdList:(NSArray *)daysRangeIdList 
-                      themeIdList:(NSArray *)themeIdList;
+                      themeIdList:(NSArray *)themeIdList 
+                     sortTypeList:(NSArray *)sortTypeList;
 
 + (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password;
 + (CommonNetworkOutput*)logout:(NSString *)loginId token:(NSString *)token;
