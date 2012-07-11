@@ -8,7 +8,7 @@
 
 #import "CommonPlaceListFilter.h"
 #import "Place.pb.h"
-#import "CommonPlace.h"
+#import "AppManager.h"
 #import "PlaceService.h"
 #import "LogUtil.h"
 #import "LocaleUtils.h"
@@ -148,7 +148,7 @@
             }];
             break;
             
-        case SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP:
+        case SORT_BY_PRICE_FROM_EXPENSIVE_TO_CHEAP:
             array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
                 float price1 = [[place1 price] floatValue];
                 float price2 = [[place2 price] floatValue] ;
@@ -161,7 +161,7 @@
             }];
             break;
             
-        case SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE:
+        case SORT_BY_PRICE_FROM_CHEAP_TO_EXPENSIVE:
             array = [placeList sortedArrayUsingComparator:^NSComparisonResult(id place1, id place2){
                 float price1 = [[place1 price] floatValue];
                 float price2 = [[place2 price] floatValue] ;

@@ -29,7 +29,7 @@
 @property (retain, nonatomic) NSMutableArray *priceRankItemIds;
 @property (retain, nonatomic) NSMutableArray *daysRangeItemIds;
 @property (retain, nonatomic) NSMutableArray *themeIds;
-@property (retain, nonatomic) NSMutableArray *routeTypeIds;
+@property (retain, nonatomic) NSMutableArray *sortIds;
 
 - (void)reset;
 

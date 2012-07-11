@@ -7,7 +7,6 @@
 //
 
 #import "PlaceExtend.h"
-#import "CommonPlace.h"
 #import "Place.pb.h"
 #import "App.pb.h"
 #import "AppConstants.h"

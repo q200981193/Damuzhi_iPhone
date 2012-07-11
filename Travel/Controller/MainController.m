@@ -18,7 +18,6 @@
 #import "TravelPreparationDataSource.h"
 #import "TravelUtilityDataSource.h"
 #import "TravelTransportDataSource.h"
-#import "CommonPlace.h"
 #import "AppDelegate.h"
 #import "PPNetworkRequest.h"
 

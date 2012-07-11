@@ -7,7 +7,6 @@
 //
 
 #import "RouteExtend.h"
-#import "CommonPlace.h"
 #import "AppConstants.h"
 
 @implementation TouristRoute (RouteExtend)

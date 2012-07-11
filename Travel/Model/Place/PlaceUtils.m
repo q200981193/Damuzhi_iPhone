@@ -9,7 +9,6 @@
 #import "PlaceUtils.h"
 #import "LocaleUtils.h"
 #import "AppManager.h"
-#import "CommonPlace.h"
 #import "PlaceExtend.h"
 #import "AppConstants.h"
 
