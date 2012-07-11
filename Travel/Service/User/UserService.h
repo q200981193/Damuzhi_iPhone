@@ -16,6 +16,8 @@
 - (void)queryVersionFinish:(NSString*)version dataVersion:(NSString*)dataVersion;
 - (void)submitFeekbackDidFinish:(int)resultCode;
 
+
+
 - (void)signUpDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)verificationDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)verificationDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;

@@ -12,6 +12,7 @@
 #import "TimeUtils.h"
 #import "LocaleUtils.h"
 
+
 @interface OrderCell ()
 
 @property (retain, nonatomic) Order *order;
@@ -94,6 +95,7 @@
     if ([_delegate respondsToSelector:@selector(didClickRouteFeekback:)]){
         [_delegate didClickRouteFeekback:_order.routeId];
     }
+    
 }
 
 - (IBAction)clickRouteDetailButton:(id)sender {

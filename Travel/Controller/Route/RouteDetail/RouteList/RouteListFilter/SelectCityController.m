@@ -13,15 +13,15 @@
 @interface SelectCityController ()
 {
     typeCity _typeCity;
-    BOOL _multiOptions;
 }
 
 @property (retain, nonatomic) NSArray *allDataList;
 @property (assign, nonatomic) id<SelectCityDelegate> delegate;
+
 @property (retain, nonatomic) NSMutableArray *selectedItemIds;
 @property (retain, nonatomic) NSMutableArray *selectedItemIdsBeforConfirm;
-@property (retain, nonatomic) NSArray *areaList;
 
+@property (retain, nonatomic) NSArray *areaList;
 
 @end
 
@@ -48,7 +48,6 @@
 - (id)initWithAllItemList:(NSArray *)itemsList 
          selectedItemList:(NSMutableArray *)selectedItemIds
                      type:(typeCity)typeCity
-             multiOptions:(BOOL)multiOptions
                  delegate:(id<SelectCityDelegate>)delegate
 {
     self = [super init];
@@ -58,7 +57,6 @@
         self.selectedItemIds = selectedItemIds;
         self.selectedItemIdsBeforConfirm = [NSMutableArray arrayWithArray:selectedItemIds];
         _typeCity = typeCity;
-        _multiOptions = multiOptions;
         self.delegate = delegate;
     }
     return self;
@@ -68,10 +66,14 @@
 - (void)viewDidLoad
 {
     self.title = NSLS(@"出发城市");
+    
     [super viewDidLoad];
+    
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
+    
+    
     [self setNavigationRightButton:NSLS(@"确定") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickSubmit:)];
@@ -132,8 +134,6 @@
     }
     if (found) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     return cell;
@@ -152,17 +152,12 @@
         }
     }
     
-    if (_multiOptions) {
-        if (found) {
-            [_selectedItemIdsBeforConfirm removeObject:findItemId];
-        } else {
-            [_selectedItemIdsBeforConfirm addObject:[NSNumber numberWithInt:item.itemId]];
-        }
+    if (found) {
+        [_selectedItemIdsBeforConfirm removeObject:findItemId];
     } else {
-        [_selectedItemIdsBeforConfirm removeAllObjects];
         [_selectedItemIdsBeforConfirm addObject:[NSNumber numberWithInt:item.itemId]];
     }
-
+    
     [dataTableView reloadData];
     
 //    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
@@ -298,10 +293,10 @@
         x = column * buttonWidth;
         y = row * buttonHeight;
         CGRect frame = CGRectMake(x, y, buttonWidth, buttonHeight);
+        
         UIButton *button = [[UIButton alloc] initWithFrame:frame];
         button.tag = 100+count;
         [button addTarget:self action:@selector(clickAreaButton:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitle:areaName forState:UIControlStateNormal];
         [_areaView addSubview:button];
         [button release];

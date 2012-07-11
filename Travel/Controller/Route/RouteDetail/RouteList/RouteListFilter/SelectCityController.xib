@@ -40,7 +40,7 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="247300950">
+							<object class="IBUIView" id="431764742">
 								<reference key="NSNextResponder" ref="10578189"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 2}</string>
@@ -71,7 +71,7 @@
 						<float key="IBUIRowHeight">44</float>
 						<float key="IBUISectionHeaderHeight">22</float>
 						<float key="IBUISectionFooterHeight">22</float>
-						<reference key="IBUITableHeaderView" ref="247300950"/>
+						<reference key="IBUITableHeaderView" ref="431764742"/>
 					</object>
 					<object class="IBUISearchBar" id="96087049">
 						<reference key="NSNextResponder" ref="191373211"/>
@@ -81,14 +81,13 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="10578189"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<object class="NSColor" key="IBUIBackgroundColor" id="682559101">
+						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC44MDM5MjE1Njg2IDAuODAzOTIxNTY4NiAwLjgwMzkyMTU2ODYAA</bytes>
+							<bytes key="NSRGB">MC43ODQzMTM3MjU1IDAuNzg0MzEzNzI1NSAwLjc4NDMxMzcyNTUAA</bytes>
 						</object>
 						<int key="IBUIContentMode">3</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBPlaceholder">请输入城市名称</string>
-						<reference key="IBTintColor" ref="682559101"/>
 						<object class="IBUITextInputTraits" key="IBTextInputTraits">
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
@@ -164,7 +163,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">areaView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="247300950"/>
+						<reference key="destination" ref="431764742"/>
 					</object>
 					<int key="connectionID">13</int>
 				</object>
@@ -225,7 +224,7 @@
 						<int key="objectID">4</int>
 						<reference key="object" ref="10578189"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="247300950"/>
+							<reference ref="431764742"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -236,7 +235,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
-						<reference key="object" ref="247300950"/>
+						<reference key="object" ref="431764742"/>
 						<reference key="parent" ref="10578189"/>
 					</object>
 				</array>

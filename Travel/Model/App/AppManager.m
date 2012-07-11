@@ -694,6 +694,9 @@ static AppManager* _defaultAppManager = nil;
 - (NSArray *)getDestinationCityItemList:(NSArray *)routeList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    [retArray addObject:[Item itemWithId:ALL_CATEGORY 
+                                itemName:NSLS(@"全部") 
+                                   count:0]];
     
     for (RouteCity *city in _app.destinationCitiesList) {
 //        int count = [[RouteUtils getRouteList:routeList headForCity:city.routeCityId] count];

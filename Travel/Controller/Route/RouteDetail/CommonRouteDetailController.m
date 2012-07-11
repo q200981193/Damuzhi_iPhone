@@ -10,7 +10,7 @@
 #import "TouristRoute.pb.h"
 #import "PPNetworkRequest.h"
 #import "ImageManager.h"
-#import "RouteFeekbackController.h"
+#import "RouteFeekbackListController.h"
 #import "PlaceOrderController.h"
 #import "CommonWebController.h"
 #import "CommonPlaceDetailController.h"
@@ -27,7 +27,7 @@
 @property (retain, nonatomic) RouteIntroductionController *introductionController;
 @property (retain, nonatomic) CommonWebController *feeController;
 @property (retain, nonatomic) CommonWebController *bookingPolicyController;
-@property (retain, nonatomic) RouteFeekbackController *userFeekbackController;
+@property (retain, nonatomic) RouteFeekbackListController *feekbackListController;
 
 @property (retain, nonatomic) UIButton *currentSelectedButton;
 
@@ -42,7 +42,7 @@
 @synthesize introductionController = _introductionController;
 @synthesize feeController = _feeController;
 @synthesize bookingPolicyController = _bookingPolicyController;
-@synthesize userFeekbackController = _userFeekbackController;
+@synthesize feekbackListController = _feekbackListController;
 
 @synthesize introductionButton = _introductionButton;
 @synthesize costDescriptionButton = _costDescriptionButton;
@@ -57,7 +57,7 @@
     [_route release];
     [_introductionController release];
     [_feeController release];
-    [_userFeekbackController release];
+    [_feekbackListController release];
     
     [_introductionButton release];
     [_costDescriptionButton release];
@@ -169,12 +169,12 @@
     UIButton *button  = (UIButton *)sender;
     [self updateSelectedButton:button];
     
-    if (_userFeekbackController == nil) {
-        self.userFeekbackController = [[[RouteFeekbackController alloc] initWithRouteId:_routeId] autorelease];
+    if (_feekbackListController == nil) {
+        self.feekbackListController = [[[RouteFeekbackListController alloc] initWithRouteId:_routeId] autorelease];
 
     }
 
-    [_userFeekbackController showInView:self.contentScrollView];   
+    [_feekbackListController showInView:self.contentScrollView];   
 }
 
 - (void)findRequestDone:(int)result route:(TouristRoute *)route

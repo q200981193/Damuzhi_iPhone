@@ -14,6 +14,8 @@
 #import "CommonRouteDetailController.h"
 #import "TravelNetworkConstants.h"
 
+#import "RouteFeekbackController.h"
+
 #define HEIGHT_HEADER_VIEW 44
 #define TAG_HEADER_VIEW_BG_IMAGE_VIEW 102
 
@@ -262,11 +264,14 @@
     return routeType;
 }
 
+
+
+
 - (void)didClickRouteFeekback:(int)routeId
 {
-    
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
-
-
 
 @end

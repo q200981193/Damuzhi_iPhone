@@ -7,7 +7,9 @@
 //
 
 #import "ChangePasswordController.h"
-
+#import "PPDebug.h"
+#import "PPViewController.h"
+#import "PPTableViewController.h"
 #define ROWS_COUNT 3
 
 #define TITLE_OLD_PASSWORD          NSLS(@"原  密  码:")
@@ -22,10 +24,18 @@
 {
     UITextField *_currentInputTextField;
 }
+@property (retain, nonatomic) NSString *oldPassword;
+@property (retain, nonatomic) NSString *lastPassword;
+@property (retain, nonatomic) NSString *lastPasswordAgain;
+
 @end
 
 
 @implementation ChangePasswordController
+@synthesize oldPassword;
+@synthesize lastPassword;
+@synthesize lastPasswordAgain;
+
 
 - (void)viewDidLoad
 {
@@ -88,7 +98,7 @@
         cell.titleLabel.text = TITLE_NEW_PASSWORD_AGAIN;
         cell.inputTextField.placeholder = PLACEHOLDER_3;
     }
-                
+    PPDebug(@"flag is %d", 1);
     return cell;
 }
 
@@ -100,7 +110,7 @@
 
 - (void)clickSubmit:(id)sender
 {
-    
+    [self popupMessage:@"密码" title:nil];
 }
 
 #pragma mark - PersonalInfoCellDelegate methods
@@ -108,6 +118,11 @@
 {
     PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
     _currentInputTextField = cell.inputTextField;
+    
+//    if (aIndexPath.row == 0)
+//    {
+//        oldPassword = _currentInputTextField.text;
+//    } else ()
 }
 
 
