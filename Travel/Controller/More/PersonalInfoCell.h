@@ -27,3 +27,4 @@
 - (void)setCellIndexPath:(NSIndexPath *)aIndexPath;
 
 @end
+    

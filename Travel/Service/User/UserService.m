@@ -11,6 +11,9 @@
 #import "TravelNetworkRequest.h"
 #import "JSON.h"
 #import "LogUtil.h"
+#import "LocaleUtils.h"
+
+#define SERVICE_ERROR_NO_INFO NSLS(@"服务器响应失败,未返回错误信息")
 
 @implementation UserService
 
@@ -96,7 +99,7 @@ static UserService* _defaultUserService = nil;
 - (void)autoLogin:(id<UserServiceDelegate>)delegate
 {
     if ([[UserManager defaultManager] isAutoLogin]) {
-            [self login:[[UserManager defaultManager] loginId] password:[[UserManager defaultManager] password] delegate:delegate];
+        [self login:[[UserManager defaultManager] loginId] password:[[UserManager defaultManager] password] delegate:delegate];
     }
 }
 
@@ -114,6 +117,10 @@ static UserService* _defaultUserService = nil;
             result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
             resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
             NSString *token = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_TOKEN];
+            if (resultInfo == nil) {
+                resultInfo = SERVICE_ERROR_NO_INFO;
+            }
+            
             if (result == 0) {
                 [[UserManager defaultManager] loginWithLoginId:loginId password:password token:token];
             }
@@ -155,6 +162,9 @@ static UserService* _defaultUserService = nil;
         NSDictionary* jsonDict = [output.textData JSONValue];
         int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
 
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(signUpDidFinish:result:resultInfo:)]) {
@@ -174,6 +184,9 @@ static UserService* _defaultUserService = nil;
         NSDictionary* jsonDict = [output.textData JSONValue];
         int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([delegate respondsToSelector:@selector(verificationDidSend:result:resultInfo:)]) {
@@ -193,6 +206,9 @@ static UserService* _defaultUserService = nil;
         NSDictionary* jsonDict = [output.textData JSONValue];
         int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([delegate respondsToSelector:@selector(verificationDidFinish:result:resultInfo:)]) {
@@ -211,6 +227,9 @@ static UserService* _defaultUserService = nil;
         NSDictionary* jsonDict = [output.textData JSONValue];
         int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate && [delegate respondsToSelector:@selector(retrievePasswordDidSend:result:resultInfo:)]) {
@@ -247,6 +266,9 @@ static UserService* _defaultUserService = nil;
         NSDictionary* jsonDict = [output.textData JSONValue];
         int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([delegate respondsToSelector:@selector(modifyPasswordDidDone:result:resultInfo:)]) {
@@ -266,6 +288,9 @@ static UserService* _defaultUserService = nil;
         NSDictionary* jsonDict = [output.textData JSONValue];
         int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
         NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([delegate respondsToSelector:@selector(retrieveUserInfoDidDone:result:resultInfo:)]) {

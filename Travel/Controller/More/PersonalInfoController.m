@@ -10,6 +10,7 @@
 #import "PersonalInfoCell.h"
 #import "ImageManager.h"
 #import "ChangePasswordController.h"
+#import "UserManager.h"
 
 enum{
     SECTION_0 = 0,
@@ -120,10 +121,13 @@ enum{
     if (indexPath.section == SECTION_0) {
         [cell.pointImageView setImage:[[ImageManager defaultManager] orangePoint]];
         
-        if (indexPath.row == 0) {
-            cell.inputTextField.hidden = NO;
-            cell.inputTextField.placeholder = NSLS(@"请输入用户名");
+        
+        
+        if (indexPath.row == 0) { 
             cell.titleLabel.text = TITLE_SECTION_0_ROW_0;
+            cell.inputTextField.enabled = NO;
+            cell.inputTextField.hidden = NO;
+            cell.inputTextField.text = [[UserManager defaultManager] loginId];
             
         } else if (indexPath.row == 1) {
             cell.inputTextField.hidden = NO;

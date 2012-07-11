@@ -10,6 +10,7 @@
 #import "PPDebug.h"
 #import "PPViewController.h"
 #import "PPTableViewController.h"
+#import "PPNetworkRequest.h"
 
 //#import "UserService.h"
 #define ROWS_COUNT 3
@@ -100,7 +101,6 @@
         cell.titleLabel.text = TITLE_NEW_PASSWORD_AGAIN;
         cell.inputTextField.placeholder = PLACEHOLDER_3;
     }
-    PPDebug(@"flag is %d", 1);
     return cell;
 }
 
@@ -112,33 +112,42 @@
 - (void)clickSubmit:(id)sender
 {
     [_currentInputTextField resignFirstResponder];
-    if (!NSStringIsValidPhone(oldPassword)) {
-        [self popupMessage:NSLS(@"您输入的号码格式不正确") title:nil];
-        return;
-    }
+
     if (oldPassword.length < 6 || oldPassword.length > 16) {
-        [self popupMessage:NSLS(@"您输入的原密码错误") title:nil];
-    }
-    
-    if (lastPassword.length < 6) {
-        [self popupMessage:NSLS(@"您输入的新密码太短") title:nil];
+        [self popupMessage:NSLS(@"您输入的原密码长度不对") title:nil];
         return;
     }
     
-    if (lastPassword.length > 16) {
-        [self popupMessage:NSLS(@"您输入的新密码长度太长") title:nil];
+    if (lastPassword.length < 6 || lastPassword.length > 16) {
+        [self popupMessage:NSLS(@"您输入的新密码长度不对") title:nil];
         return;
     }
     
     if (![lastPassword isEqualToString:lastPasswordAgain]) {
-        [self popupMessage:NSLS(@"您输入的确认密码和新密码不一致") title:nil];
+        [self popupMessage:NSLS(@"您两次输入的密码不一致") title:nil];
         return;
     }
     
-//    [[UserService defaultService] modifyPassword:self
-//                                originalPassword:oldPassword
-//                                    lastPassword:lastPassword];
+    [[UserService defaultService] modifyPassword:oldPassword
+                                newPassword:lastPassword
+                                    delegate:self];
     
+}
+
+
+-(void) modifyPasswordDidDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    if (resultCode != ERROR_SUCCESS) {
+        [self popupMessage:NSLS(@"您的网络不稳定，修改失败") title:nil];
+        return;
+    }
+    
+    if (result != 0) {
+        [self popupMessage:resultInfo title:nil];
+        return;
+    }
+    
+    [self popupMessage:NSLS(@"修改成功") title:nil];
 }
 
 #pragma mark - PersonalInfoCellDelegate methods
@@ -157,7 +166,6 @@
     if (aIndexPath.row == 0)
     {
         oldPassword = _currentInputTextField.text;
-        NSLog(@"haha");
     }    
     else if(aIndexPath.row == 1)
     {
