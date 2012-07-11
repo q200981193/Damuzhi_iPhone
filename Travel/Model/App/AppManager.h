@@ -10,7 +10,7 @@
 #import "CommonService.h"
 #import "App.pb.h"
 #import "LocalCity.h"
-
+#import "Package.pb.h"
 
 
 
@@ -58,10 +58,10 @@
 
 // Get angency list 
 - (NSArray *)getDepartCityItemList:(NSArray *)routeList;
-- (NSArray *)getDestinationCityItemList:(NSArray *)routeList;
+- (NSArray *)getDestinationCityItemList:(NSArray *)staticticsList;
 - (NSArray *)getRouteThemeItemList;
 //- (NSArray *)getRouteCategoryItemList:(NSArray *)routeList;
-- (NSArray *)getAgencyItemList:(NSArray *)routeList;
+- (NSArray *)getAgencyItemList:(NSArray *)staticticsList;
 
 - (NSString*)getDepartCityName:(int)routeCityId;
 - (NSString*)getAgencyName:(int)agencyId;
@@ -72,6 +72,7 @@
 - (NSArray *)buildRoutePriceRankItemList;
 - (NSArray *)buildDaysRangeItemList;
 - (NSArray *)buildRouteSortItemList;
+
 
 
 @end

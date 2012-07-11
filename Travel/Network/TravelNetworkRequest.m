@@ -523,7 +523,6 @@
                             start:(int)start
                             count:(int)count
                              lang:(int)lang 
-                   needStatistics:(int)needStatistics
                  departCityIdList:(NSArray *)departCityIdList 
             destinationCityIdList:(NSArray *)destinationCityIdList 
                      agencyIdList:(NSArray *)agencyIdList 
@@ -531,7 +530,8 @@
                   daysRangeIdList:(NSArray *)daysRangeIdList 
                       themeIdList:(NSArray *)themeIdList 
                      sortTypeList:(NSArray *)sortTypeList 
-                             test:(int)test
+                   needStatistics:(BOOL)needStatistics
+                             test:(BOOL)test
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
     
@@ -544,7 +544,6 @@
         str = [str stringByAddQueryParameter:PARA_TRAVEL_START intValue:start];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_COUNT intValue:count];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_NEED_STATISTICS intValue:needStatistics];
         
         NSString *valueString;
         valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:departCityIdList];
@@ -568,7 +567,9 @@
         valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:sortTypeList];
         str = [str stringByAddQueryParameter:PARA_TRAVEL_SORT_TYPE value:valueString];
         
-        str = [str stringByAddQueryParameter:PARA_TRAVEL_TEST intValue:test];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_NEED_STATISTICS boolValue:needStatistics];
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TEST boolValue:test];
         
         return str;
     };
