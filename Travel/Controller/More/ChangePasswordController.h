@@ -8,7 +8,7 @@
 
 #import "PPTableViewController.h"
 #import "PersonalInfoCell.h"
-
-@interface ChangePasswordController : PPTableViewController <PersonalInfoCellDelegate>
+#import "UserService.h"
+@interface ChangePasswordController : PPTableViewController <PersonalInfoCellDelegate, UserServiceDelegate>
 
 @end

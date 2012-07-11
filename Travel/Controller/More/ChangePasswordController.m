@@ -10,6 +10,8 @@
 #import "PPDebug.h"
 #import "PPViewController.h"
 #import "PPTableViewController.h"
+
+//#import "UserService.h"
 #define ROWS_COUNT 3
 
 #define TITLE_OLD_PASSWORD          NSLS(@"原  密  码:")
@@ -107,10 +109,36 @@
     
 }
 
-
 - (void)clickSubmit:(id)sender
 {
-    [self popupMessage:@"密码" title:nil];
+    [_currentInputTextField resignFirstResponder];
+    if (!NSStringIsValidPhone(oldPassword)) {
+        [self popupMessage:NSLS(@"您输入的号码格式不正确") title:nil];
+        return;
+    }
+    if (oldPassword.length < 6 || oldPassword.length > 16) {
+        [self popupMessage:NSLS(@"您输入的原密码错误") title:nil];
+    }
+    
+    if (lastPassword.length < 6) {
+        [self popupMessage:NSLS(@"您输入的新密码太短") title:nil];
+        return;
+    }
+    
+    if (lastPassword.length > 16) {
+        [self popupMessage:NSLS(@"您输入的新密码长度太长") title:nil];
+        return;
+    }
+    
+    if (![lastPassword isEqualToString:lastPasswordAgain]) {
+        [self popupMessage:NSLS(@"您输入的确认密码和新密码不一致") title:nil];
+        return;
+    }
+    
+//    [[UserService defaultService] modifyPassword:self
+//                                originalPassword:oldPassword
+//                                    lastPassword:lastPassword];
+    
 }
 
 #pragma mark - PersonalInfoCellDelegate methods
@@ -118,11 +146,7 @@
 {
     PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
     _currentInputTextField = cell.inputTextField;
-    
-//    if (aIndexPath.row == 0)
-//    {
-//        oldPassword = _currentInputTextField.text;
-//    } else ()
+
 }
 
 
@@ -130,6 +154,22 @@
 {
     PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
     _currentInputTextField = cell.inputTextField;
+    if (aIndexPath.row == 0)
+    {
+        oldPassword = _currentInputTextField.text;
+        NSLog(@"haha");
+    }    
+    else if(aIndexPath.row == 1)
+    {
+        lastPassword = _currentInputTextField.text;
+    }
+    else if (aIndexPath.row == 2)
+    {
+        lastPasswordAgain = _currentInputTextField.text;
+    }
+    
+
+    
 }
 
 
