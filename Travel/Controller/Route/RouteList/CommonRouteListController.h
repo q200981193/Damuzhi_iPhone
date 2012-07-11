@@ -22,11 +22,10 @@
 
 - (NSString*)getRouteTypeName;
 
-- (void)findRoutesWithDepartCityId:(int)departCityId
-                 destinationCityId:(int)destinationCityId
-                             start:(int)start
-                             count:(int)count
-                    viewController:(PPViewController<RouteServiceDelegate>*)viewController;
+- (void)findRoutesWithStart:(int)start 
+                      count:(int)count 
+       RouteSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
+             viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 
 @end
 

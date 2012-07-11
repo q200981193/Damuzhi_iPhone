@@ -65,11 +65,15 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                            placeId:(NSString*)placeId;
 
 + (CommonNetworkOutput*)queryList:(int)type 
-                     departCityId:(int)departCityId 
-                destinationCityId:(int)destinationCityId
                             start:(int)start
                             count:(int)count
-                             lang:(int)lang;
+                             lang:(int)lang
+                 departCityIdList:(NSArray *)departCityIdList 
+            destinationCityIdList:(NSArray *)destinationCityIdList 
+                     agencyIdList:(NSArray *)agencyIdList 
+                  priceRankIdList:(NSArray *)priceRankIdList
+                  daysRangeIdList:(NSArray *)daysRangeIdList 
+                      themeIdList:(NSArray *)themeIdList;
 
 + (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password;
 + (CommonNetworkOutput*)logout:(NSString *)loginId token:(NSString *)token;

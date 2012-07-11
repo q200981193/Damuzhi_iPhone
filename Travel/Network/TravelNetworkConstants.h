@@ -80,6 +80,10 @@
 #define PARA_TRAVEL_DESTINATION_CITY_ID     @"destinationCityId"
 #define PARA_TRAVEL_START                   @"start"
 #define PARA_TRAVEL_COUNT                   @"count"
+#define PARA_TRAVEL_AGENCY_ID               @"agencyId"
+#define PARA_TRAVEL_PRICE_RANK_ID           @"priceRankId"
+#define PARA_TRAVEL_DAYS_RANGE_ID           @"daysRangeId"
+#define PARA_TRAVEL_THEME_ID                @"themeId"
 
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"
@@ -154,5 +158,8 @@
 #define OBJECT_TYPE_HELP_INOF                   8
 #define OBJECT_TYPE_APP_DATA                    10
 #define OBJECT_TYPE_ROUTE_DETAIL                50
+
+
+#define STRING_SEPARATOR    @","
 
 #endif

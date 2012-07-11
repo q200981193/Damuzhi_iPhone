@@ -25,15 +25,16 @@
 
 @end
 
+
+@class RouteSelectedItemIds;
 @interface RouteService : CommonService
 
 + (RouteService*)defaultService;
 
 - (void)findRoutesWithType:(int)routeType
-              departCityId:(int)departCityId
-         destinationCityId:(int)destinationCityId
                      start:(int)start
                      count:(int)count
+      routeSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
             viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 
 - (void)findRouteWithRouteId:(int)routeId viewController:(PPViewController<RouteServiceDelegate>*)viewController;

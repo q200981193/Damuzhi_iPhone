@@ -155,11 +155,10 @@
     [_filterHandler createFilterButtons:self.buttonsHolderView controller:self];
 
     // Find route list
-    [_filterHandler findRoutesWithDepartCityId:_departCityId
-                             destinationCityId:_destinationCityId 
-                                         start:_start
-                                         count:COUNT_EACH_FETCH 
-                                viewController:self];
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         viewController:self];
     
     dataTableView.backgroundColor = [UIColor whiteColor];
     
@@ -350,11 +349,10 @@
     }
     
     else {
-        [_filterHandler findRoutesWithDepartCityId:_departCityId
-                                 destinationCityId:_destinationCityId 
-                                             start:_start
-                                             count:COUNT_EACH_FETCH
-                                    viewController:self];
+        [_filterHandler findRoutesWithStart:_start 
+                                      count:COUNT_EACH_FETCH 
+                       RouteSelectedItemIds:_selectedItemIds 
+                             viewController:self];
     }
 }
 
@@ -362,11 +360,10 @@
 {
     self.start = 0;
     // Find route list
-    [_filterHandler findRoutesWithDepartCityId:_departCityId
-                             destinationCityId:_destinationCityId 
-                                         start:_start
-                                         count:COUNT_EACH_FETCH 
-                                viewController:self];
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         viewController:self];
 }
 
 - (void)pushDepartCitySelectController
