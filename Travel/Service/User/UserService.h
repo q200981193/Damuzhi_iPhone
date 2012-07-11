@@ -16,8 +16,6 @@
 - (void)queryVersionFinish:(NSString*)version dataVersion:(NSString*)dataVersion;
 - (void)submitFeekbackDidFinish:(int)resultCode;
 
-
-
 - (void)signUpDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)verificationDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 - (void)verificationDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
@@ -25,6 +23,9 @@
 - (void)loginoutDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 
 - (void)retrievePasswordDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+
+- (void)modifyPasswordDidDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+- (void)retrieveUserInfoDidDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 
 @end
 
@@ -71,21 +72,18 @@
 - (void)retrievePassword:(NSString *)telephone
                 delegate:(id<UserServiceDelegate>)delegate;
 
-- (void)modifyUserInfo:(NSString *)loginId
-                 token:(NSString *)token 
-              fullName:(NSString *)fullName
-              nickName:(NSString *)nickName
-                gender:(int)gender
-             telephone:(NSString *)telephone
-                 email:(NSString *)email
-               address:(NSString *)address;
+- (void)modifyUserFullName:(NSString *)fullName
+                  nickName:(NSString *)nickName
+                    gender:(int)gender
+                 telephone:(NSString *)telephone
+                     email:(NSString *)email
+                   address:(NSString *)address
+                  delegate:(id<UserServiceDelegate>)delegate;
     
-- (void)modifyPassword:(NSString *)loginId
-                 token:(NSString *)token 
-           oldPassword:(NSString *)oldPassword
-                newPassword:(NSString *)newPassword;
+- (void)modifyPassword:(NSString *)oldPassword
+           newPassword:(NSString *)newPassword
+              delegate:(id<UserServiceDelegate>)delegate;
 
-- (void)retrieveUserInfo:(NSString *)loginId
-        token:(NSString *)token;
+- (void)retrieveUserInfo:(id<UserServiceDelegate>)delegate;
 
 @end

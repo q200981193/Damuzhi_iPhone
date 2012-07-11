@@ -71,15 +71,30 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                             count:(int)count
                              lang:(int)lang;
 
-+ (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password;
-+ (CommonNetworkOutput*)logout:(NSString *)loginId token:(NSString *)token;
++ (CommonNetworkOutput*)login:(NSString *)loginId 
+                     password:(NSString *)password;
+
++ (CommonNetworkOutput*)logout:(NSString *)loginId
+                         token:(NSString *)token;
 
 + (CommonNetworkOutput*)signUp:(NSString *)loginId
                       password:(NSString *)password;
 
-+ (CommonNetworkOutput*)verificate:(NSString *)loginId telephone:(NSString *)telephone;
-+ (CommonNetworkOutput*)verificate:(NSString *)loginId code:(NSString *)code;
++ (CommonNetworkOutput*)verificate:(NSString *)loginId 
+                         telephone:(NSString *)telephone;
+
++ (CommonNetworkOutput*)verificate:(NSString *)loginId
+                              code:(NSString *)code;
+
 + (CommonNetworkOutput*)retrievePassword:(NSString *)telephone;
+
++ (CommonNetworkOutput*)modifyPassword:(NSString *)loginId
+                                 token:(NSString *)token 
+                           oldPassword:(NSString *)oldPassword
+                           newPassword:(NSString *)newPassword;
+
++ (CommonNetworkOutput*)retrieveUserInfo:(NSString *)loginId
+                                   token:(NSString *)token;
 
 + (CommonNetworkOutput*)placeOrderWithUserId:(NSString *)userId 
                                      routeId:(int)routeId
