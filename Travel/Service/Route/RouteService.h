@@ -33,7 +33,9 @@
 
 - (void)findRoutesWithType:(int)routeType
                      start:(int)start
-                     count:(int)count
+                     count:(int)count 
+            needStatistics:(BOOL)needStatistics 
+                      test:(BOOL)test
       routeSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
             viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 

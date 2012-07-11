@@ -85,6 +85,8 @@
 #define PARA_TRAVEL_DAYS_RANGE_ID           @"daysRangeId"
 #define PARA_TRAVEL_THEME_ID                @"themeId"
 #define PARA_TRAVEL_SORT_TYPE               @"sortType"
+#define PARA_TRAVEL_NEED_STATISTICS         @"needStatistics"
+#define PARA_TRAVEL_TEST                    @"test"
 
 
 #define PARA_TRAVEL_PLACE_FAVORITE_COUNT    @"placeFavoriteCount"

@@ -27,7 +27,7 @@
 #define HEIGHT_STATISTICS_VIEW 20
 #define HEIGHT_FILTER_HOLDER_VIEW 40
 
-#define COUNT_EACH_FETCH 20
+#define COUNT_EACH_FETCH 5
 
 @interface CommonRouteListController ()
 
@@ -156,6 +156,8 @@
     // Find route list
     [_filterHandler findRoutesWithStart:_start 
                                   count:COUNT_EACH_FETCH 
+                         needStatistics:YES 
+                                   test:YES 
                    RouteSelectedItemIds:_selectedItemIds 
                          viewController:self];
     
@@ -350,6 +352,8 @@
     else {
         [_filterHandler findRoutesWithStart:_start 
                                       count:COUNT_EACH_FETCH 
+                             needStatistics:YES 
+                                       test:YES 
                        RouteSelectedItemIds:_selectedItemIds 
                              viewController:self];
     }
@@ -361,6 +365,8 @@
     // Find route list
     [_filterHandler findRoutesWithStart:_start 
                                   count:COUNT_EACH_FETCH 
+                         needStatistics:YES 
+                                   test:YES 
                    RouteSelectedItemIds:_selectedItemIds 
                          viewController:self];
 }
@@ -487,7 +493,12 @@
 #pragma mark: Implementation of RouteSelectControllerDelegate.
 - (void)didClickFinish
 {
-    
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                         needStatistics:YES 
+                                   test:YES 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         viewController:self];
 }
 
 
