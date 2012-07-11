@@ -86,17 +86,15 @@
 
 - (void)findRoutesWithStart:(int)start 
                       count:(int)count 
-             needStatistics:(BOOL)needStatistics 
-                       test:(BOOL)test
        RouteSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
+             needStatistics:(BOOL)needStatistics 
              viewController:(PPViewController<RouteServiceDelegate>*)viewController
 {
     [[RouteService defaultService] findRoutesWithType:[self getRouteType] 
                                                 start:start 
                                                 count:count 
-                                       needStatistics:needStatistics 
-                                                 test:test
                                  routeSelectedItemIds:routeSelectedItemIds 
+                                       needStatistics:needStatistics 
                                        viewController:viewController];
     
     return;

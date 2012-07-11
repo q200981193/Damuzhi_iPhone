@@ -23,10 +23,10 @@ typedef enum{
 
 + (UIButton*)createFilterButton:(CGRect)frame title:(NSString*)title;
 
-+ (NSArray *)filterRouteList:(NSArray *)routeList byAgencyIdList:(NSArray *)agencyIdList;
-+ (NSArray *)filterRouteList:(NSArray *)routeList byThemeIdList:(NSArray *)themeIdList;
-+ (NSArray *)filterRouteList:(NSArray *)routeList byCategoryIdList:(NSArray *)categoryIdList;
-+ (NSArray *)filterRouteList:(NSArray *)routeList byDepartCityId:(int)departCityId;
-+ (NSArray *)filterRouteList:(NSArray *)routeList byDestinationCityId:(int)destinationCityId;
+//+ (NSArray *)filterRouteList:(NSArray *)routeList byAgencyIdList:(NSArray *)agencyIdList;
+//+ (NSArray *)filterRouteList:(NSArray *)routeList byThemeIdList:(NSArray *)themeIdList;
+//+ (NSArray *)filterRouteList:(NSArray *)routeList byCategoryIdList:(NSArray *)categoryIdList;
+//+ (NSArray *)filterRouteList:(NSArray *)routeList byDepartCityId:(int)departCityId;
+//+ (NSArray *)filterRouteList:(NSArray *)routeList byDestinationCityId:(int)destinationCityId;
 
 @end

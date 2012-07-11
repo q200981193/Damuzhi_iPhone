@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "App.pb.h"
+#import "Package.pb.h"
 
 @interface Item : NSObject
 
@@ -21,5 +22,7 @@
 
 + (Item *)itemWithNameIdPair:(NameIdPair *)pair
                        count:(int)count;
+
++ (Item *)itemWithStatistics:(Statistics *)statics;
 
 @end

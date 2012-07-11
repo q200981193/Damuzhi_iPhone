@@ -68,7 +68,6 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                             start:(int)start
                             count:(int)count
                              lang:(int)lang 
-                   needStatistics:(int)needStatistics
                  departCityIdList:(NSArray *)departCityIdList 
             destinationCityIdList:(NSArray *)destinationCityIdList 
                      agencyIdList:(NSArray *)agencyIdList 
@@ -76,17 +75,33 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                   daysRangeIdList:(NSArray *)daysRangeIdList 
                       themeIdList:(NSArray *)themeIdList 
                      sortTypeList:(NSArray *)sortTypeList 
-                             test:(int)test;
+                   needStatistics:(BOOL)needStatistics
+                             test:(BOOL)test;
 
-+ (CommonNetworkOutput*)login:(NSString *)loginId password:(NSString *)password;
-+ (CommonNetworkOutput*)logout:(NSString *)loginId token:(NSString *)token;
++ (CommonNetworkOutput*)login:(NSString *)loginId 
+                     password:(NSString *)password;
+
++ (CommonNetworkOutput*)logout:(NSString *)loginId
+                         token:(NSString *)token;
 
 + (CommonNetworkOutput*)signUp:(NSString *)loginId
                       password:(NSString *)password;
 
-+ (CommonNetworkOutput*)verificate:(NSString *)loginId telephone:(NSString *)telephone;
-+ (CommonNetworkOutput*)verificate:(NSString *)loginId code:(NSString *)code;
++ (CommonNetworkOutput*)verificate:(NSString *)loginId 
+                         telephone:(NSString *)telephone;
+
++ (CommonNetworkOutput*)verificate:(NSString *)loginId
+                              code:(NSString *)code;
+
 + (CommonNetworkOutput*)retrievePassword:(NSString *)telephone;
+
++ (CommonNetworkOutput*)modifyPassword:(NSString *)loginId
+                                 token:(NSString *)token 
+                           oldPassword:(NSString *)oldPassword
+                           newPassword:(NSString *)newPassword;
+
++ (CommonNetworkOutput*)retrieveUserInfo:(NSString *)loginId
+                                   token:(NSString *)token;
 
 + (CommonNetworkOutput*)placeOrderWithUserId:(NSString *)userId 
                                      routeId:(int)routeId
