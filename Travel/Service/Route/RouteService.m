@@ -10,6 +10,7 @@
 #import "TravelNetworkRequest.h"
 #import "LocaleUtils.h"
 #import "PPViewController.h"
+#import "SelectedItemIds.h"
 
 @interface RouteService ()
 
@@ -42,21 +43,32 @@ static RouteService *_defaultRouteService = nil;
 }
 
 - (void)findRoutesWithType:(int)routeType
-              departCityId:(int)departCityId
-         destinationCityId:(int)destinationCityId
                      start:(int)start
-                     count:(int)count
+                     count:(int)count 
+            needStatistics:(BOOL)needStatistics 
+                      test:(BOOL)test
+      routeSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
             viewController:(PPViewController<RouteServiceDelegate>*)viewController
 {
     [viewController showActivityWithText:NSLS(@"数据加载中......")];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        int needStatisticsInt = (needStatistics ? 1 : 0);
+        int testInt = (test ? 1 : 0);
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:routeType 
-                                                         departCityId:departCityId 
-                                                    destinationCityId:destinationCityId 
                                                                 start:start 
                                                                 count:count 
-                                                                 lang:LanguageTypeZhHans];
+                                                                 lang:LanguageTypeZhHans 
+                                                       needStatistics:needStatisticsInt 
+                                                     departCityIdList:routeSelectedItemIds.departCityIds 
+                                                destinationCityIdList:routeSelectedItemIds.destinationCityIds 
+                                                         agencyIdList:routeSelectedItemIds.agencyIds 
+                                                      priceRankIdList:routeSelectedItemIds.priceRankItemIds
+                                                      daysRangeIdList:routeSelectedItemIds.daysRangeItemIds 
+                                                          themeIdList:routeSelectedItemIds.themeIds 
+                                                         sortTypeList:routeSelectedItemIds.sortIds 
+                                                                 test:testInt];
+        
         int totalCount;
         NSArray *routeList;
         if (output.resultCode == ERROR_SUCCESS){
