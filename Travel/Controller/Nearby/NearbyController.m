@@ -10,7 +10,7 @@
 #import "PlaceListController.h"
 #import "PlaceService.h"
 #import "PPViewController.h"
-#import "CommonPlace.h"
+#import "AppConstants.h"
 #import "Place.pb.h"
 #import "ImageName.h"
 #import "UIImageUtil.h"

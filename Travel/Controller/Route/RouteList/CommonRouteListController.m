@@ -14,7 +14,6 @@
 #import "CommonRouteListFilter.h"
 #import "ImageManager.h"
 #import "SelectedItemIdsManager.h"
-#import "CommonPlace.h"
 #import "CommonRouteDetailController.h"
 #import "AppConstants.h"
 #import "SelectCityController.h"
@@ -28,7 +27,7 @@
 #define HEIGHT_STATISTICS_VIEW 20
 #define HEIGHT_FILTER_HOLDER_VIEW 40
 
-#define COUNT_EACH_FETCH 20
+#define COUNT_EACH_FETCH 5
 
 @interface CommonRouteListController ()
 
@@ -155,11 +154,12 @@
     [_filterHandler createFilterButtons:self.buttonsHolderView controller:self];
 
     // Find route list
-    [_filterHandler findRoutesWithDepartCityId:_departCityId
-                             destinationCityId:_destinationCityId 
-                                         start:_start
-                                         count:COUNT_EACH_FETCH 
-                                viewController:self];
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                         needStatistics:YES 
+                                   test:YES 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         viewController:self];
     
     dataTableView.backgroundColor = [UIColor whiteColor];
     
@@ -350,11 +350,12 @@
     }
     
     else {
-        [_filterHandler findRoutesWithDepartCityId:_departCityId
-                                 destinationCityId:_destinationCityId 
-                                             start:_start
-                                             count:COUNT_EACH_FETCH
-                                    viewController:self];
+        [_filterHandler findRoutesWithStart:_start 
+                                      count:COUNT_EACH_FETCH 
+                             needStatistics:YES 
+                                       test:YES 
+                       RouteSelectedItemIds:_selectedItemIds 
+                             viewController:self];
     }
 }
 
@@ -362,27 +363,22 @@
 {
     self.start = 0;
     // Find route list
-    [_filterHandler findRoutesWithDepartCityId:_departCityId
-                             destinationCityId:_destinationCityId 
-                                         start:_start
-                                         count:COUNT_EACH_FETCH 
-                                viewController:self];
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                         needStatistics:YES 
+                                   test:YES 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         viewController:self];
 }
 
 - (void)pushDepartCitySelectController
 {
     NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
-    
-    SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"出发城市")
-                                                                  itemList:itemList
-                                                           selectedItemIds:_selectedItemIds.departCityIds
-                                                              multiOptions:NO 
-                                                               needConfirm:YES
-                                                             needShowCount:YES];
-    
-    
-    controller.delegate = self;
-    
+    SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
+                                                                        selectedItemList:_selectedItemIds.departCityIds 
+                                                                                    type:depart 
+                                                                            multiOptions:NO
+                                                                                delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -393,6 +389,7 @@
     SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
                                                                         selectedItemList:_selectedItemIds.destinationCityIds 
                                                                                     type:destination
+                                                                            multiOptions:YES
                                                                                 delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
@@ -415,6 +412,23 @@
     [controller release];
 }
 
+- (void)pushSortTypeSelectController
+{
+    NSArray *itemList = [[AppManager defaultManager] buildRouteSortItemList];
+    
+    SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"排序")
+                                                                  itemList:itemList
+                                                           selectedItemIds:_selectedItemIds.sortIds
+                                                              multiOptions:NO 
+                                                               needConfirm:YES
+                                                             needShowCount:NO];
+    
+    
+    controller.delegate = self;
+    
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)loadMoreTableViewDataSource
 {
     [self fechMoreRouteList];
@@ -433,8 +447,14 @@
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
             [self pushDestinationCitySelectController];
+            
+        case TAG_SORT_BTN:
+            [self pushSortTypeSelectController];
+            break;
         case TAG_FILTER_BTN_AGENCY:
             [self pushAgencySelectController];
+            break;
+
         default:
             break;
     }
@@ -473,8 +493,16 @@
 #pragma mark: Implementation of RouteSelectControllerDelegate.
 - (void)didClickFinish
 {
-    
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                         needStatistics:YES 
+                                   test:YES 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         viewController:self];
 }
+
+
+
 
 
 @end

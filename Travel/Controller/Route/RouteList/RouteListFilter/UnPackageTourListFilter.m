@@ -106,18 +106,21 @@
     [superView addSubview:sortBtn];
 }
 
-- (void)findRoutesWithDepartCityId:(int)departCityId
-                 destinationCityId:(int)destinationCityId
-                             start:(int)start
-                             count:(int)count
-                    viewController:(PPViewController<RouteServiceDelegate>*)viewController
-{
-    [[RouteService defaultService] findRoutesWithType:[self getRouteType]
-                                         departCityId:departCityId
-                                    destinationCityId:destinationCityId 
+- (void)findRoutesWithStart:(int)start 
+                      count:(int)count 
+             needStatistics:(BOOL)needStatistics 
+                       test:(BOOL)test
+       RouteSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
+             viewController:(PPViewController<RouteServiceDelegate>*)viewController
+{    
+    [[RouteService defaultService] findRoutesWithType:[self getRouteType] 
                                                 start:start 
                                                 count:count 
+                                       needStatistics:needStatistics 
+                                                 test:test
+                                 routeSelectedItemIds:routeSelectedItemIds 
                                        viewController:viewController];
+    
     return;
 }
 

@@ -10,7 +10,6 @@
 #import "App.pb.h"
 #import "ImageName.h"
 #import "LogUtil.h"
-#import "CommonPlace.h"
 #import "LocaleUtils.h"
 #import "AppConstants.h"
 #import "AppUtils.h"
@@ -580,7 +579,7 @@ static AppManager* _defaultAppManager = nil;
                                       itemName:NSLS(@"距离近至远") 
                                          count:0]];
     
-    [spotSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP
+    [spotSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_EXPENSIVE_TO_CHEAP
                                       itemName:NSLS(@"门票价格高到低") 
                                          count:0]];
     
@@ -599,11 +598,11 @@ static AppManager* _defaultAppManager = nil;
                                       itemName:NSLS(@"星级高至低") 
                                          count:0]];
     
-    [hotelSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP
+    [hotelSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_EXPENSIVE_TO_CHEAP
                                       itemName:NSLS(@"价格高至低") 
                                          count:0]];
     
-    [hotelSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE
+    [hotelSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_CHEAP_TO_EXPENSIVE
                                       itemName:NSLS(@"价格低至高") 
                                          count:0]];
     
@@ -622,11 +621,11 @@ static AppManager* _defaultAppManager = nil;
                                            itemName:NSLS(@"大拇指推荐高至低") 
                                               count:0]];
     
-    [hestaurantSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP
+    [hestaurantSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_EXPENSIVE_TO_CHEAP
                                            itemName:NSLS(@"价格高至低") 
                                               count:0]];
     
-    [hestaurantSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE
+    [hestaurantSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_CHEAP_TO_EXPENSIVE
                                            itemName:NSLS(@"价格低至高") 
                                               count:0]];
     
@@ -660,11 +659,11 @@ static AppManager* _defaultAppManager = nil;
                                               itemName:NSLS(@"大拇指推荐高至低") 
                                                  count:0]];
     
-    [entertainmentSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_EXPENSIVE_TO_CHEAP
+    [entertainmentSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_EXPENSIVE_TO_CHEAP
                                               itemName:NSLS(@"价格高至低") 
                                                  count:0]];
     
-    [entertainmentSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FORM_CHEAP_TO_EXPENSIVE
+    [entertainmentSortItems addObject:[Item itemWithId:SORT_BY_PRICE_FROM_CHEAP_TO_EXPENSIVE
                                               itemName:NSLS(@"价格低至高") 
                                                  count:0]];
     
@@ -695,6 +694,9 @@ static AppManager* _defaultAppManager = nil;
 - (NSArray *)getDestinationCityItemList:(NSArray *)routeList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    [retArray addObject:[Item itemWithId:ALL_CATEGORY 
+                                itemName:NSLS(@"全部") 
+                                   count:0]];
     
     for (RouteCity *city in _app.destinationCitiesList) {
 //        int count = [[RouteUtils getRouteList:routeList headForCity:city.routeCityId] count];
@@ -908,5 +910,41 @@ static AppManager* _defaultAppManager = nil;
     
     return daysRangeItemList;
 }
+
+- (NSArray *)buildRouteSortItemList
+{
+    NSMutableArray *routeSortItems = [[[NSMutableArray alloc] init] autorelease];    
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_DEFAULT
+                                              itemName:NSLS(@"默认排序") 
+                                                 count:0]];
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_FOLLOW_COUNT_FROM_MORE_TO_LESS
+                                              itemName:NSLS(@"关注度从高到低") 
+                                                 count:0]];
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_SORT_BY_RECOMMEND
+                                      itemName:NSLS(@"大拇指评价从高到低") 
+                                         count:0]];
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_PRICE_FROM_CHEAP_TO_EXPENSIVE
+                                              itemName:NSLS(@"价格从低到高") 
+                                                 count:0]];
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_PRICE_FROM_EXPENSIVE_TO_CHEAP
+                                              itemName:NSLS(@"价格从高到低") 
+                                                 count:0]];
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_DAYS_FROM_MORE_TO_LESS
+                                      itemName:NSLS(@"出行天数从多到少") 
+                                         count:0]];
+    
+    [routeSortItems addObject:[Item itemWithId:ROUTE_SORT_BY_DAYS_FROM_LESS_TO_MORE
+                                      itemName:NSLS(@"出行天数从少到多") 
+                                         count:0]];
+    
+    return routeSortItems;
+}
+
 
 @end
