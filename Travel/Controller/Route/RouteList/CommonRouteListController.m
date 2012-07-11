@@ -14,7 +14,6 @@
 #import "CommonRouteListFilter.h"
 #import "ImageManager.h"
 #import "SelectedItemIdsManager.h"
-#import "CommonPlace.h"
 #import "CommonRouteDetailController.h"
 #import "AppConstants.h"
 #import "SelectCityController.h"
@@ -395,6 +394,23 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (void)pushSortTypeSelectController
+{
+    NSArray *itemList = [[AppManager defaultManager] buildRouteSortItemList];
+    
+    SelectController *controller = [[SelectController alloc] initWithTitle:NSLS(@"排序")
+                                                                  itemList:itemList
+                                                           selectedItemIds:_selectedItemIds.sortIds
+                                                              multiOptions:NO 
+                                                               needConfirm:YES
+                                                             needShowCount:NO];
+    
+    
+    controller.delegate = self;
+    
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 - (void)loadMoreTableViewDataSource
 {
     [self fechMoreRouteList];
@@ -413,6 +429,9 @@
             break;
         case TAG_FILTER_BTN_DESTINATION_CITY:
             [self pushDestinationCitySelectController];
+            
+        case TAG_SORT_BTN:
+            [self pushSortTypeSelectController];
             
         default:
             break;
@@ -454,6 +473,9 @@
 {
     
 }
+
+
+
 
 
 @end

@@ -11,7 +11,6 @@
 #import "FileUtil.h"
 #import "SSZipArchive.h"
 #import "PPDebug.h"
-#import "CommonPlace.h"
 #import "LocaleUtils.h"
 #import "AppConstants.h"
 #import "App.pb.h"

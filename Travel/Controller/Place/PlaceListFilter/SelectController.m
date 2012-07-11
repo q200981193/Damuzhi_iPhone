@@ -10,7 +10,6 @@
 #import "PPTableViewCell.h"
 #import "PPDebug.h"
 #import "AppManager.h"
-#import "CommonPlace.h"
 #import "UIImageUtil.h"
 #import "PlaceUtils.h"
 #import "Item.h"

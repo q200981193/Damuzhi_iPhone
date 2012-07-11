@@ -11,7 +11,6 @@
 #import "PlaceStorage.h"
 #import "LogUtil.h"
 #import "Place.pb.h"
-#import "CommonPlace.h"
 #import "ImageName.h"
 #import "PlaceService.h"
 #import "TravelNetworkConstants.h"

@@ -422,7 +422,6 @@
 		CA238F3F14FB526C00114175 /* Place.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3914FB526C00114175 /* Place.pb.m */; };
 		CA238F4014FB526C00114175 /* TravelTips.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238F3B14FB526C00114175 /* TravelTips.pb.m */; };
 		CA238F9D14FB566800114175 /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA238F9814FB562500114175 /* libProtocolBuffers.a */; };
-		CA238FAD14FCDB0700114175 /* CommonPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FAC14FCDB0700114175 /* CommonPlace.m */; };
 		CA238FB014FCDB1500114175 /* PlaceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FAF14FCDB1500114175 /* PlaceManager.m */; };
 		CA238FB714FCDDFC00114175 /* Documentation.html in Resources */ = {isa = PBXBuildFile; fileRef = CA238FB214FCDDFC00114175 /* Documentation.html */; };
 		CA238FB814FCDDFC00114175 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = CA238FB414FCDDFC00114175 /* GCDAsyncSocket.m */; };
@@ -1244,8 +1243,6 @@
 		CA238F3A14FB526C00114175 /* TravelTips.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TravelTips.pb.h; sourceTree = "<group>"; };
 		CA238F3B14FB526C00114175 /* TravelTips.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TravelTips.pb.m; sourceTree = "<group>"; };
 		CA238F8D14FB562400114175 /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = "../Common_iPhone_20/Components/Component-Network/ProtocolBuffer/objectivec/ProtocolBuffers.xcodeproj"; sourceTree = "<group>"; };
-		CA238FAB14FCDB0700114175 /* CommonPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonPlace.h; sourceTree = "<group>"; };
-		CA238FAC14FCDB0700114175 /* CommonPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonPlace.m; sourceTree = "<group>"; };
 		CA238FAE14FCDB1500114175 /* PlaceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceManager.h; sourceTree = "<group>"; };
 		CA238FAF14FCDB1500114175 /* PlaceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceManager.m; sourceTree = "<group>"; };
 		CA238FB214FCDDFC00114175 /* Documentation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Documentation.html; sourceTree = "<group>"; };
@@ -2819,8 +2816,6 @@
 			children = (
 				A30D610815354943007CE0F4 /* PlaceUtils.h */,
 				A30D610915354943007CE0F4 /* PlaceUtils.m */,
-				CA238FAB14FCDB0700114175 /* CommonPlace.h */,
-				CA238FAC14FCDB0700114175 /* CommonPlace.m */,
 				CA238FAE14FCDB1500114175 /* PlaceManager.h */,
 				CA238FAF14FCDB1500114175 /* PlaceManager.m */,
 				CA42160915219CE100FAA008 /* PlaceStorage.h */,
@@ -4554,7 +4549,6 @@
 				CA238F3E14FB526C00114175 /* Package.pb.m in Sources */,
 				CA238F3F14FB526C00114175 /* Place.pb.m in Sources */,
 				CA238F4014FB526C00114175 /* TravelTips.pb.m in Sources */,
-				CA238FAD14FCDB0700114175 /* CommonPlace.m in Sources */,
 				CA238FB014FCDB1500114175 /* PlaceManager.m in Sources */,
 				CA238FB814FCDDFC00114175 /* GCDAsyncSocket.m in Sources */,
 				CA238FB914FCDDFC00114175 /* GCDAsyncUdpSocket.m in Sources */,

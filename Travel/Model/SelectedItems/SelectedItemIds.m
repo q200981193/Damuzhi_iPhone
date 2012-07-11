@@ -7,7 +7,6 @@
 //
 
 #import "SelectedItemIdsManager.h"
-#import "CommonPlace.h"
 #import "Item.h"
 #import "AppConstants.h"
 
@@ -82,7 +81,7 @@
 @synthesize priceRankItemIds = _priceRankItemIds;
 @synthesize daysRangeItemIds = _daysRangeItemIds;
 @synthesize themeIds = _themeIds;
-@synthesize routeTypeIds = _routeTypeIds;
+@synthesize sortIds = _sortIds;
 
 - (void)dealloc {
     [_departCityIds release];
@@ -91,7 +90,7 @@
     [_priceRankItemIds release];
     [_daysRangeItemIds release];
     [_themeIds release];
-    [_routeTypeIds release];
+    [_sortIds release];
     [super dealloc];
 }
 
@@ -106,7 +105,7 @@
         self.priceRankItemIds = [NSMutableArray array];
         self.daysRangeItemIds = [NSMutableArray array];
         self.themeIds = [NSMutableArray array];
-        self.routeTypeIds = [NSMutableArray array];
+        self.sortIds = [NSMutableArray array];
         
         [self.departCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.destinationCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
@@ -114,7 +113,7 @@
         [self.priceRankItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.daysRangeItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.themeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        [self.routeTypeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+        [self.sortIds addObject:[NSNumber numberWithInt:ROUTE_SORT_BY_DEFAULT]];
     }
     
     return self;
@@ -128,7 +127,7 @@
     [self.priceRankItemIds removeAllObjects];
     [self.daysRangeItemIds removeAllObjects];
     [self.themeIds removeAllObjects];
-    [self.routeTypeIds removeAllObjects];
+    [self.sortIds removeAllObjects];
     
     [self.departCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.destinationCityIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
@@ -136,7 +135,7 @@
     [self.priceRankItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.daysRangeItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.themeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-    [self.routeTypeIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+    [self.sortIds addObject:[NSNumber numberWithInt:ROUTE_SORT_BY_DEFAULT]];
 }
 
 @end

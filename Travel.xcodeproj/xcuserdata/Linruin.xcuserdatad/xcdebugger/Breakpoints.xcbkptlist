@@ -21,12 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Travel/Model/App/AppManager.m"
-         timestampString = "363605711.157052"
+         timestampString = "363673498.519805"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "246"
-         endingLineNumber = "246"
-         landmarkName = "-updateAppData:"
+         startingLineNumber = "245"
+         endingLineNumber = "245"
+         landmarkName = "-getCityDownloadUrl:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
