@@ -371,10 +371,11 @@
 
 - (void)pushDepartCitySelectController
 {
-    NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
+    NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
     SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
                                                                         selectedItemList:_selectedItemIds.departCityIds 
-                                                                                    type:depart
+                                                                                    type:depart 
+                                                                            multiOptions:NO
                                                                                 delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
@@ -386,6 +387,7 @@
     SelectCityController *controller = [[SelectCityController alloc] initWithAllItemList:itemList 
                                                                         selectedItemList:_selectedItemIds.destinationCityIds 
                                                                                     type:destination
+                                                                            multiOptions:YES
                                                                                 delegate:self];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];

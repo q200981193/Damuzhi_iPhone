@@ -25,6 +25,7 @@
 - (id)initWithAllItemList:(NSArray *)itemsList 
          selectedItemList:(NSMutableArray *)selectedItemIds
                      type:(typeCity)typeCity
+             multiOptions:(BOOL)multiOptions
                  delegate:(id<SelectCityDelegate>)delegate;
 
 @end
