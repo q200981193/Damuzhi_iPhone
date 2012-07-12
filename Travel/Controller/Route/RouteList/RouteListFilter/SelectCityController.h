@@ -11,10 +11,8 @@
 
 @class Item;
 @protocol SelectCityDelegate <NSObject>
-
 @optional
 - (void)didSelectCity:(NSArray *)selectedItemList;
-
 @end
 
 

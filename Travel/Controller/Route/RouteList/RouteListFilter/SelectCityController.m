@@ -10,6 +10,7 @@
 #import "Item.h"
 #import "AppConstants.h"
 #import "AppManager.h"
+#import "StringUtil.h"
 
 @interface SelectCityController ()
 {
@@ -23,10 +24,10 @@
 @property (retain, nonatomic) NSMutableArray *selectedItemIdsBeforConfirm;
 @property (retain, nonatomic) NSArray *areaList;
 
-
 @end
 
 @implementation SelectCityController
+
 @synthesize navigationTitle = _navigationTitle;
 @synthesize searchBar = _searchBar;
 @synthesize areaView = _areaView;
@@ -35,6 +36,7 @@
 @synthesize selectedItemIds = _selectedItemIds;
 @synthesize selectedItemIdsBeforConfirm = _selectedItemIdsBeforConfirm;
 @synthesize areaList = _areaList;
+
 
 - (void)dealloc
 {
@@ -47,6 +49,7 @@
     PPRelease(_areaView);
     [super dealloc];
 }
+
 
 - (id)initWithTitle:(NSString *)title 
          regionList:(NSArray *)regionList
@@ -75,14 +78,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     [self setTitle:_navigationTitle];
+    [self setTitle:_navigationTitle];
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     [self setNavigationRightButton:NSLS(@"确定") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickSubmit:)];
-    
     dataTableView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:239.0/255.0 alpha:1];
     _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, 0);
     
@@ -90,6 +92,7 @@
         [self addAreaButton];
     }
 }
+
 
 - (void)viewDidUnload
 {
@@ -105,15 +108,12 @@
     return 44;
 }
 
-//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-//{
-//    return [NSArray arrayWithObjects:@"A", @"B", @"C", @"D",@"E", @"F",@"G", @"H",nil];
-//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [dataList count];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -143,6 +143,7 @@
     return cell;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Item *item = [dataList objectAtIndex:indexPath.row];
@@ -171,6 +172,75 @@
     [dataTableView reloadData];
 }
 
+
+#pragma mark - UIScrollViewDelegate methods
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.searchBar resignFirstResponder];
+}
+
+
+#pragma mark - searchbar delegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar; 
+{
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+    [self updateHideKeyboardButton];
+}
+
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self update:searchBar.text];
+    [self.searchBar resignFirstResponder];
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self updateHideKeyboardButton];
+    [self update:searchBar.text];
+    
+    NSArray *list = [self buttonList];
+    for (UIButton *button in list) {
+        button.selected = NO;
+    }
+}
+
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self.searchBar setShowsCancelButton:NO animated:YES];
+}
+
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [self clickHideKeyboardButton:nil];
+}
+
+
+#pragma mark - button action
+- (void)clickSubmit:(id)sender
+{
+    if ([_selectedItemIdsBeforConfirm count] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"温馨提示") message:NSLS(@"亲，您还没有选择哦！") delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
+        
+        [_selectedItemIds removeAllObjects];
+        for (NSNumber *itemId in _selectedItemIdsBeforConfirm) {
+            [_selectedItemIds addObject:itemId];
+        }
+        [_delegate didSelectCity:_selectedItemIds];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - custom methods
 - (BOOL)isSelectedId:(int)itemId
 {
     if ([self findSelectedId:itemId] != nil)
@@ -178,6 +248,7 @@
     else 
         return NO;
 }
+
 
 - (NSNumber *)findSelectedId:(int)itemId
 {
@@ -193,18 +264,12 @@
 }
 
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    [self.searchBar resignFirstResponder];
-}
-
-//根据关键字查询,更新表视图
 - (void)update:(NSString *)keyword
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for(Item *item in self.allDataList){
         int i=[item.itemName rangeOfString:keyword].location;
-        if(i<item.itemName.length){
+        if(i<item.itemName.length || [keyword isEqualToString:[item.itemName pinyinFirstLetter]]){
             [array addObject:item];
         }
     }
@@ -217,55 +282,6 @@
     [dataTableView reloadData];
 }
 
-#pragma mark - searchbar delegate
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar; 
-{
-    [self.searchBar setShowsCancelButton:YES animated:YES];
-    
-    [self updateHideKeyboardButton];
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self updateHideKeyboardButton];
-    [self update:searchBar.text];
-}
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
-{
-    [self updateHideKeyboardButton];
-    [self update:searchBar.text];
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    [self.searchBar setShowsCancelButton:NO animated:YES];
-}
-
-
-#pragma mark - custom methods
-- (void)clickSubmit:(id)sender
-{
-    if ([_selectedItemIdsBeforConfirm count] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"温馨提示") message:NSLS(@"亲，您还没有选择哦！") delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
-        
-        [alert show];
-        [alert release];
-        
-        return;
-    }
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
-        
-        [_selectedItemIds removeAllObjects];
-        for (NSNumber *itemId in _selectedItemIdsBeforConfirm) {
-            [_selectedItemIds addObject:itemId];
-        }
-        
-        [_delegate didSelectCity:_selectedItemIds];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 
 - (void)updateHideKeyboardButton
 {
@@ -276,10 +292,6 @@
     }
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [self clickHideKeyboardButton:nil];
-}
 
 #define HIDE_KEYBOARDBUTTON_TAG 77
 - (void)removeHideKeyboardButton
@@ -287,6 +299,7 @@
     UIButton *button = (UIButton*)[self.view viewWithTag:HIDE_KEYBOARDBUTTON_TAG];
     [button removeFromSuperview];
 }
+
 
 - (void)addHideKeyboardButton
 {
@@ -300,21 +313,26 @@
     [button release];
 }
 
+
 - (void)clickHideKeyboardButton:(id)sender
 {
     [self.searchBar resignFirstResponder];
     [self removeHideKeyboardButton];
 }
 
-#define BUTTON_START_TAG 100
+
+#define BUTTON_START_TAG    100
+#define BUTTON_COLUMNS      4
+#define BUTTON_WIDTH        80
+#define BUTTON_HEIGHT       30
 - (void)addAreaButton
 {
     if ([_areaList count] <= 1) {
         return;
     }
 
-    CGFloat buttonWidth = 80;
-    CGFloat buttonHeight = 30;
+    CGFloat buttonWidth = BUTTON_WIDTH;
+    CGFloat buttonHeight = BUTTON_HEIGHT;
     
     CGFloat totalHeight = (([_areaList count]-1) / 4 + 1) * buttonHeight; 
     _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, totalHeight);
@@ -324,8 +342,8 @@
     int count = 0;
     for (Region *region in _areaList) {
         //PPDebug(@"<SelectCityController> Region:%d n:%@",region.regionId, region.regionName);
-        int column = count % 4;
-        int row = count / 4;
+        int column = count % BUTTON_COLUMNS;
+        int row = count / BUTTON_COLUMNS;
         x = column * buttonWidth;
         y = row * buttonHeight;
         CGRect frame = CGRectMake(x, y, buttonWidth, buttonHeight);
@@ -344,6 +362,7 @@
     }
 }
 
+
 - (NSArray *)buttonList
 {
     NSMutableArray *mutableArray = [[[NSMutableArray alloc] init] autorelease];
@@ -357,12 +376,14 @@
     return mutableArray;
 }
 
+
 - (int)selectedRegionIdBySelectedButton:(UIButton *)button
 {
     int index = button.tag - BUTTON_START_TAG;
     Region *region = [_areaList objectAtIndex:index];
     return region.regionId;
 }
+
 
 - (void)filterByRegionId:(int)regionId
 {
@@ -380,6 +401,7 @@
     [array release];
     [dataTableView reloadData];
 }
+
 
 - (void)clickAreaButton:(id)sender
 {
