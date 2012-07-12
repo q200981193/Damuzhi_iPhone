@@ -187,20 +187,20 @@
 }
 
 - (IBAction)clickMemberBookButton:(id)sender {
-    UserManager *manager = [UserManager defaultManager];
     
-    if ([manager isLogin]) {
-        
-        NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-        [dateFormatter setDateFormat:@"yyyyMMdd"];
-        NSString *departDateStr = [dateFormatter stringFromDate:self.departDate];
-        
+    if (_departDate == nil) {
+        [self popupMessage:NSLS(@"请选择出发日期") title:nil];
+        return;
+    }
+    
+    UserManager *manager = [UserManager defaultManager];
+    if ([[UserManager defaultManager] isLogin]) {
         OrderService *service = [OrderService defaultService];
         [service placeOrderUsingLoginId:[manager loginId] 
                                   token:[manager token]
                                 routeId:_route.routeId 
                               packageId:_packageId
-                             departDate:departDateStr 
+                             departDate:_departDate
                                   adult:_adult 
                                children:_children 
                           contactPerson:nil
@@ -268,15 +268,12 @@
 - (void)didclickSubmit:(NSString *)contactPerson telephone:(NSString *)telephone
 {
     UserManager *manager = [UserManager defaultManager];
-    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-    [dateFormatter setDateFormat:@"yyyyMMdd"];
-    NSString *departDateStr = [dateFormatter stringFromDate:self.departDate];
     
     OrderService *service = [OrderService defaultService];
     [service placeOrderUsingUserId:[manager getUserId]  
                            routeId:_route.routeId  
                          packageId:_packageId 
-                        departDate:departDateStr 
+                        departDate:_departDate 
                              adult:_adult 
                           children:_children 
                      contactPerson:contactPerson 
