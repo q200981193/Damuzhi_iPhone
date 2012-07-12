@@ -212,7 +212,9 @@
         self.noMoreData = YES;
     }
     
-    [self updateStatisticsData];
+    if (_hasStatisticsView) {
+        [self updateStatisticsData];
+    }
     
     [dataTableView reloadData];
 }
@@ -523,7 +525,18 @@
 }
 
 
-
+#pragma mark - 
+#pragma mark: Implementation of SelectControllerDelegate.
+- (void)didSelectFinish:(NSArray*)selectedItems
+{
+    self.start = 0;
+    
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         needStatistics:NO 
+                         viewController:self];
+}
 
 
 @end

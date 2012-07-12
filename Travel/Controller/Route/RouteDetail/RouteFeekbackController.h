@@ -16,11 +16,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *backgroundImage2;
 @property (retain, nonatomic) IBOutlet UIButton *backgroundImage3;
 
-@property (retain, nonatomic) IBOutlet UITextView *feekbackTextViewField;
-
-
-
-
+@property (retain, nonatomic) IBOutlet UIPlaceholderTextView *feekbackTextViewField;
 
 @property (retain, nonatomic) IBOutlet UIImageView *backgroundImageView;
 

@@ -49,18 +49,13 @@
     [self setNavigationRightButton:NSLS(@"发送")
                          imageName:@"topmenu_btn_right.png"  
                             action:@selector(clickSubmit:)];
-    backgroundImage1.selected = YES;
-    backgroundImage2.selected = YES;
+    
+    // Set feekback text view delegate.
+    self.feekbackTextViewField.delegate = self;
+    self.feekbackTextViewField.placeholder = NSLS(@"请输入您的评价!(小于等于160个字)");
+    self.feekbackTextViewField.font = [UIFont systemFontOfSize:13];
 
-    
-    
-    // original location
-//    backgroundImageView.frame = CGRectMake(17, 109, 286, 75);
-//    feekbackTextViewField.frame = CGRectMake(20, 110, 280, 73);
-    
-//    backgroundImageView.frame = CGRectMake(17, 109 + 25, 286, 75);
-//    feekbackTextViewField.frame = CGRectMake(20, 110 + 25, 280, 73);
-    
+    self.feekbackTextViewField.placeholderColor = [UIColor lightGrayColor];    
 }
 -(void) clickSubmit: (id) sender
 {
@@ -69,9 +64,6 @@
         [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
         return;
     }
-    
-
-    
     
     if ([feekback lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > MAX_LENGTH_OF_FEEKBACK) {
         [self popupMessage:NSLS(@"反馈意见字数太长") title:nil];
@@ -113,24 +105,18 @@
 }
 
 - (IBAction)clickChangeBackgroundButton1:(id)sender {
-//    UIButton *button = (UIButton *)sender;
-//    button.selected = !button.selected;
     backgroundImage1.selected = YES;
     backgroundImage2.selected = NO;
     backgroundImage3.selected = NO;
 }
 
 - (IBAction)clickChangeBackgroundButton2:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected;
     backgroundImage1.selected = YES;
     backgroundImage2.selected = YES;
     backgroundImage3.selected = NO;
 }
 
 - (IBAction)clickChangeBackgroundButton3:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected;
     backgroundImage1.selected = YES;
     backgroundImage2.selected = YES;
     backgroundImage3.selected = YES;
