@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CommonService.h"
+#import "Package.pb.h"
 
 @protocol UserServiceDelegate <NSObject>
 
@@ -25,7 +26,7 @@
 - (void)retrievePasswordDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
 
 - (void)modifyPasswordDidDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
-- (void)retrieveUserInfoDidDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo;
+- (void)retrieveUserInfoDidDone:(int)resultCode userInfo:(UserInfo *)userInfo;
 
 @end
 

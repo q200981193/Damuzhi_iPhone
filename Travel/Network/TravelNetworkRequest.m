@@ -759,6 +759,35 @@
                             email:(NSString *)email
                           address:(NSString *)address
 {
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LOGIN_ID value:loginId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TOKEN value:token];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_FULL_NAME value:fullName];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_NICK_NAME value:nickName];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_GENDER intValue:gender];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TELEPHONE value:telephone];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_EMAIL value:email];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_ADRESS value:address];
+
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_MODIFY_USER_INFO
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_JSON
+                                      output:output];
+    
     return nil;
 }
 
@@ -817,7 +846,7 @@
     return [TravelNetworkRequest sendRequest:URL_TRAVEL_RETRIEVE_USER_INFO
                          constructURLHandler:constructURLHandler                         
                              responseHandler:responseHandler         
-                                outputFormat:FORMAT_TRAVEL_JSON
+                                outputFormat:FORMAT_TRAVEL_PB
                                       output:output];
     
     return nil;

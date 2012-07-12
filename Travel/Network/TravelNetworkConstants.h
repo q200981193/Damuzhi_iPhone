@@ -43,7 +43,9 @@
 #define URL_TRAVEL_MEMBER_VERIFICATION  (URL_SERVICE@"memberVerification.aspx?")
 #define URL_TRAVEL_RETRIEVE_PASSWORD    (URL_SERVICE@"retrievePassword.aspx?")
 #define URL_TRAVEL_MODIFY_PASSWORD      (URL_SERVICE@"modifyPassword.aspx?")
+
 #define URL_TRAVEL_RETRIEVE_USER_INFO   (URL_SERVICE@"retrieveMemberData.aspx?")
+#define URL_TRAVEL_MODIFY_USER_INFO     (URL_SERVICE@"modifyMemberData.aspx?")
 
 #define URL_TRAVEL_PLACE_ORDER          (URL_SERVICE@"placeOrder.aspx?")
 
@@ -59,6 +61,13 @@
 #define PARA_TRAVEL_TOKEN           @"token"
 #define PARA_TRAVEL_OLD_PASSWORD    @"oldPassword"
 #define PARA_TRAVEL_NEW_PASSWORD    @"newPassword"
+
+
+#define PARA_TRAVEL_FULL_NAME       @"fullName"
+#define PARA_TRAVEL_NICK_NAME       @"nickName"
+#define PARA_TRAVEL_GENDER          @"gender"
+#define PARA_TRAVEL_EMAIL           @"email"
+#define PARA_TRAVEL_ADRESS          @"adress"
 
 #define PARA_TRAVEL_TYPE            @"type"
 #define PARA_TRAVEL_DEVICE_TOKEN    @"deviceToken"

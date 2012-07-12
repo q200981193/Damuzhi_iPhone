@@ -247,8 +247,31 @@ static UserService* _defaultUserService = nil;
                    address:(NSString *)address
                   delegate:(id<UserServiceDelegate>)delegate
 {
-    
-
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *loginId = [[UserManager defaultManager] loginId];
+        NSString *token = [[UserManager defaultManager] token];
+        CommonNetworkOutput *output = [TravelNetworkRequest modifyUserInfo:loginId
+                                                                     token:token
+                                                                  fullName:fullName
+                                                                  nickName:nickName
+                                                                    gender:gender
+                                                                 telephone:telephone
+                                                                     email:email
+                                                                   address:address];   
+        
+        NSDictionary* jsonDict = [output.textData JSONValue];
+        int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+        NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        if (resultInfo == nil) {
+            resultInfo = SERVICE_ERROR_NO_INFO;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(modifyPasswordDidDone:result:resultInfo:)]) {
+                [delegate modifyPasswordDidDone:output.resultCode result:result resultInfo:resultInfo];
+            }
+        });
+    });
 }
 
 - (void)modifyPassword:(NSString *)oldPassword
@@ -285,19 +308,24 @@ static UserService* _defaultUserService = nil;
         NSString *token = [[UserManager defaultManager] token];
         CommonNetworkOutput *output = [TravelNetworkRequest retrieveUserInfo:loginId token:token];   
         
-        NSDictionary* jsonDict = [output.textData JSONValue];
-        int result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
-        NSString *resultInfo = (NSString*)[jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
-        if (resultInfo == nil) {
-            resultInfo = SERVICE_ERROR_NO_INFO;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(retrieveUserInfoDidDone:result:resultInfo:)]) {
-                [delegate retrieveUserInfoDidDone:output.resultCode result:result resultInfo:resultInfo];
+        TravelResponse *travelResponse = nil;
+        if (output.resultCode == ERROR_SUCCESS){
+            @try{
+                travelResponse = [TravelResponse parseFromData:output.responseData];
+                UserInfo *userInfo = [travelResponse userInfo];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([delegate respondsToSelector:@selector(retrieveUserInfoDidDone:userInfo:)]) {
+                        [delegate retrieveUserInfoDidDone:output.resultCode userInfo:userInfo];
+                    }
+                });
             }
-        });
-    });
+            @catch (NSException *exception){
+                PPDebug(@"<atch exception in retrieveUserInfo>");
+            }
+        }
+    }); 
+
 }
 
 @end

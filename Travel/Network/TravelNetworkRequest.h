@@ -103,6 +103,15 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
 + (CommonNetworkOutput*)retrieveUserInfo:(NSString *)loginId
                                    token:(NSString *)token;
 
++ (CommonNetworkOutput*)modifyUserInfo:(NSString *)loginId
+                                 token:(NSString *)token 
+                              fullName:(NSString *)fullName
+                              nickName:(NSString *)nickName
+                                gender:(int)gender
+                             telephone:(NSString *)telephone
+                                 email:(NSString *)email
+                               address:(NSString *)address;
+
 + (CommonNetworkOutput*)placeOrderWithUserId:(NSString *)userId 
                                      routeId:(int)routeId
                                    packageId:(int)packageId
