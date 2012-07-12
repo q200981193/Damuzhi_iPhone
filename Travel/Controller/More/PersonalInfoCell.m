@@ -7,10 +7,9 @@
 //
 
 #import "PersonalInfoCell.h"
+#import "LogUtil.h"
 
 @interface PersonalInfoCell()
-
-@property (retain, nonatomic) NSIndexPath *indexPath;
 
 @end
 
@@ -19,11 +18,9 @@
 @synthesize titleLabel;
 @synthesize inputTextField;
 @synthesize pointImageView;
-@synthesize indexPath = _indexPath;
 @synthesize personalInfoCellDelegate;
 
 - (void)dealloc {
-    [_indexPath release];
     [titleLabel release];
     [inputTextField release];
     [backgroundImageVeiw release];
@@ -52,21 +49,21 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidBeginEditing:)]) {
-        [personalInfoCellDelegate inputTextFieldDidBeginEditing:_indexPath];
+        [personalInfoCellDelegate inputTextFieldDidBeginEditing:self.indexPath];
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidEndEditing:)]) {
-        [personalInfoCellDelegate inputTextFieldDidEndEditing:_indexPath];
+        [personalInfoCellDelegate inputTextFieldDidEndEditing:self.indexPath];
     }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldShouldReturn:)]) {
-        [personalInfoCellDelegate inputTextFieldShouldReturn:_indexPath];
+        [personalInfoCellDelegate inputTextFieldShouldReturn:self.indexPath];
     }
     
     return YES;
