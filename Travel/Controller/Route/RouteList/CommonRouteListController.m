@@ -498,6 +498,18 @@
     [self popupMessage:NSLS(@"待实现") title:nil];
 }
 
+#pragma mark - SelectControllerDelegate method
+- (void)didSelectFinish:(NSArray*)selectedItems
+{
+    self.start = 0;
+    
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         needStatistics:NO 
+                         viewController:self]; 
+}
+
 
 #pragma mark - SelectCityDelegate methods
 - (void)didSelectCity:(NSArray *)selectedItemList
