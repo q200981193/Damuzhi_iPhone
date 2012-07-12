@@ -8,7 +8,8 @@
 
 #import "SelectCityController.h"
 #import "Item.h"
-
+#import "AppConstants.h"
+#import "AppManager.h"
 
 @interface SelectCityController ()
 {
@@ -121,18 +122,18 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     
     Item *item = [dataList objectAtIndex:indexPath.row];
-    cell.textLabel.text = item.itemName;
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
-    
-    BOOL found = NO;
-    for (NSNumber *findItemId in self.selectedItemIdsBeforConfirm) {
-        if ([findItemId intValue] == item.itemId) {
-            found = YES;
-            break;
-        }
+    NSString *text;
+    if (_typeCity == depart && item.count != 0) {
+        text = [NSString stringWithFormat:@"%@ (%d)", item.itemName, item.count];
+    } else {
+        text = item.itemName;
     }
+    cell.textLabel.text = text;
+    
+    BOOL found = [self isSelectedId: item.itemId];
     if (found) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
@@ -146,18 +147,19 @@
 {
     Item *item = [dataList objectAtIndex:indexPath.row];
     
-    BOOL found = NO;
-    NSNumber *findItemId;
-    for (findItemId in self.selectedItemIdsBeforConfirm) {
-        if ([findItemId intValue] == item.itemId) {
-            found = YES;
-            break;
-        }
-    }
+    BOOL found = [self isSelectedId:item.itemId];
     
     if (_multiOptions) {
+        if (item.itemId == ALL_CATEGORY) {
+            [_selectedItemIdsBeforConfirm removeAllObjects];
+        } else {
+            NSNumber *delNumber = [self findSelectedId:ALL_CATEGORY];
+            [_selectedItemIdsBeforConfirm removeObject:delNumber];
+        }
+        
         if (found) {
-            [_selectedItemIdsBeforConfirm removeObject:findItemId];
+            NSNumber *delNumber = [self findSelectedId:item.itemId];
+            [_selectedItemIdsBeforConfirm removeObject:delNumber];
         } else {
             [_selectedItemIdsBeforConfirm addObject:[NSNumber numberWithInt:item.itemId]];
         }
@@ -168,6 +170,28 @@
 
     [dataTableView reloadData];
 }
+
+- (BOOL)isSelectedId:(int)itemId
+{
+    if ([self findSelectedId:itemId] != nil)
+        return YES;
+    else 
+        return NO;
+}
+
+- (NSNumber *)findSelectedId:(int)itemId
+{
+    NSNumber *returnNumber = nil;
+    for (NSNumber *oneNumber in self.selectedItemIdsBeforConfirm) {
+        if ([oneNumber intValue] == itemId) {
+            returnNumber = oneNumber;
+            break;
+        }
+    }
+    
+    return returnNumber;
+}
+
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
@@ -221,6 +245,15 @@
 #pragma mark - custom methods
 - (void)clickSubmit:(id)sender
 {
+    if ([_selectedItemIdsBeforConfirm count] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLS(@"温馨提示") message:NSLS(@"亲，您还没有选择哦！") delegate:nil cancelButtonTitle:NSLS(@"好的") otherButtonTitles:nil];
+        
+        [alert show];
+        [alert release];
+        
+        return;
+    }
+    
     if (_delegate && [_delegate respondsToSelector:@selector(didSelectCity:)]) {
         
         [_selectedItemIds removeAllObjects];
@@ -273,6 +306,7 @@
     [self removeHideKeyboardButton];
 }
 
+#define BUTTON_START_TAG 100
 - (void)addAreaButton
 {
     if ([_areaList count] <= 1) {
@@ -282,22 +316,21 @@
     CGFloat buttonWidth = 80;
     CGFloat buttonHeight = 30;
     
-    CGFloat totalHeight = ([_areaList count] / 4 + 1) * buttonHeight; 
+    CGFloat totalHeight = (([_areaList count]-1) / 4 + 1) * buttonHeight; 
     _areaView.frame = CGRectMake(_areaView.frame.origin.x, _areaView.frame.origin.y, _areaView.frame.size.width, totalHeight);
     
     CGFloat x;
     CGFloat y;
     int count = 0;
     for (Region *region in _areaList) {
-        PPDebug(@"<SelectCityController> Region:%d n:%@",region.regionId, region.regionName);
-        
+        //PPDebug(@"<SelectCityController> Region:%d n:%@",region.regionId, region.regionName);
         int column = count % 4;
         int row = count / 4;
         x = column * buttonWidth;
         y = row * buttonHeight;
         CGRect frame = CGRectMake(x, y, buttonWidth, buttonHeight);
         UIButton *button = [[UIButton alloc] initWithFrame:frame];
-        button.tag = 100+count;
+        button.tag = BUTTON_START_TAG + count;
         [button addTarget:self action:@selector(clickAreaButton:) forControlEvents:UIControlEventTouchUpInside];
         [button setBackgroundImage:[UIImage imageNamed:@"filter_2_off.png"] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"filter_2_on.png"] forState:UIControlStateSelected];
@@ -311,14 +344,62 @@
     }
 }
 
+- (NSArray *)buttonList
+{
+    NSMutableArray *mutableArray = [[[NSMutableArray alloc] init] autorelease];
+    int num = 0;
+    for (Region *region in _areaList) {
+        UIButton *button = (UIButton *)[_areaView viewWithTag:BUTTON_START_TAG + num];
+        [mutableArray addObject:button];
+        
+        num ++;
+    }
+    return mutableArray;
+}
+
+- (int)selectedRegionIdBySelectedButton:(UIButton *)button
+{
+    int index = button.tag - BUTTON_START_TAG;
+    Region *region = [_areaList objectAtIndex:index];
+    return region.regionId;
+}
+
+- (void)filterByRegionId:(int)regionId
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    
+    for(Item *item in self.allDataList){
+        int cityRegionId = [[AppManager defaultManager] getRegionIdByCityId:item.itemId];
+        if (cityRegionId == regionId) {
+            [array addObject:item];
+        }
+    }
+    
+    self.dataList = array;
+    [array release];
+    [dataTableView reloadData];
+}
 
 - (void)clickAreaButton:(id)sender
 {
-    UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected;
+    UIButton *currentButton = (UIButton *)sender;
     
-    if (button.selected) {
-        
+    NSArray *list = [self buttonList];
+    for (UIButton *button in list) {
+        if (currentButton.tag != button.tag) {
+            button.selected = NO;
+        }
+    }
+    
+    currentButton.selected = !currentButton.selected;
+    
+    if (currentButton.selected) {
+        int selectedRegionId = [self selectedRegionIdBySelectedButton:currentButton];
+        [self filterByRegionId:selectedRegionId];
+    } else {
+        self.dataList = _allDataList;
+        [dataTableView reloadData];
     }
 }
 

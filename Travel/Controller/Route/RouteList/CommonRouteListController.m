@@ -381,10 +381,9 @@
 
 - (void)pushDepartCitySelectController
 {
-    NSArray *regionList = [[AppManager defaultManager] getRegions];
-    NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:dataList];
+    NSArray *itemList = [[AppManager defaultManager] getDepartCityItemList:_routeStatistics.departCityStatisticsList];
     SelectCityController *controller = [[SelectCityController alloc] initWithTitle:NSLS(@"出发城市") 
-                                                                        regionList:regionList 
+                                                                        regionList:nil 
                                                                           itemList:itemList
                                                                 selectedItemIdList:_selectedItemIds.departCityIds 
                                                                               type:depart 
@@ -397,7 +396,7 @@
 - (void)pushDestinationCitySelectController
 {
     NSArray *regionList = [[AppManager defaultManager] getRegions];
-    NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList:dataList];
+    NSArray *itemList = [[AppManager defaultManager] getDestinationCityItemList];
     SelectCityController *controller = [[SelectCityController alloc] initWithTitle:NSLS(@"目的城市") 
                                                                         regionList:regionList 
                                                                           itemList:itemList
@@ -501,8 +500,13 @@
 #pragma mark - SelectCityDelegate methods
 - (void)didSelectCity:(NSArray *)selectedItemList
 {
-    //to do
-    //PPDebug(@"didSelectCity %@", selectedItemList);
+    self.start = 0;
+    
+    [_filterHandler findRoutesWithStart:_start 
+                                  count:COUNT_EACH_FETCH 
+                   RouteSelectedItemIds:_selectedItemIds 
+                         needStatistics:NO 
+                         viewController:self];
 }
 
 #pragma mark - 
