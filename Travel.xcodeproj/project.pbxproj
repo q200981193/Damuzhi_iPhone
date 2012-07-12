@@ -54,6 +54,8 @@
 		A3EB740E152E96E4003BA8B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EB740D152E96E4003BA8B8 /* Security.framework */; };
 		A3ED59661557742900312715 /* ResendService.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ED59651557742900312715 /* ResendService.m */; };
 		A3ED596A15577CA700312715 /* ResendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ED596915577CA700312715 /* ResendManager.m */; };
+		A3F195D615AED96000756702 /* PlaceOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F195D415AED96000756702 /* PlaceOrderCell.m */; };
+		A3F195D715AED96000756702 /* PlaceOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F195D515AED96000756702 /* PlaceOrderCell.xib */; };
 		A3FE359215358DB7002190D7 /* GuideController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3FE359015358DB7002190D7 /* GuideController.m */; };
 		A3FE359315358DB7002190D7 /* GuideController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3FE359115358DB7002190D7 /* GuideController.xib */; };
 		A401AE081552175000953743 /* table5_bg1_center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A401AE051552175000953743 /* table5_bg1_center@2x.png */; };
@@ -781,6 +783,9 @@
 		A3ED59651557742900312715 /* ResendService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResendService.m; sourceTree = "<group>"; };
 		A3ED596815577CA700312715 /* ResendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResendManager.h; sourceTree = "<group>"; };
 		A3ED596915577CA700312715 /* ResendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResendManager.m; sourceTree = "<group>"; };
+		A3F195D315AED96000756702 /* PlaceOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceOrderCell.h; sourceTree = "<group>"; };
+		A3F195D415AED96000756702 /* PlaceOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceOrderCell.m; sourceTree = "<group>"; };
+		A3F195D515AED96000756702 /* PlaceOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceOrderCell.xib; sourceTree = "<group>"; };
 		A3FE358F15358DB7002190D7 /* GuideController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideController.h; sourceTree = "<group>"; };
 		A3FE359015358DB7002190D7 /* GuideController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideController.m; sourceTree = "<group>"; };
 		A3FE359115358DB7002190D7 /* GuideController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideController.xib; sourceTree = "<group>"; };
@@ -1913,6 +1918,9 @@
 				A406A2AD1597FD7E00CE938A /* PlaceOrderController.h */,
 				A406A2AE1597FD7E00CE938A /* PlaceOrderController.m */,
 				A406A2AF1597FD7E00CE938A /* PlaceOrderController.xib */,
+				A3F195D315AED96000756702 /* PlaceOrderCell.h */,
+				A3F195D415AED96000756702 /* PlaceOrderCell.m */,
+				A3F195D515AED96000756702 /* PlaceOrderCell.xib */,
 				A45663A61599537F00DD926B /* NonMemberOrderController.h */,
 				A45663A71599537F00DD926B /* NonMemberOrderController.m */,
 				A45663A81599537F00DD926B /* NonMemberOrderController.xib */,
@@ -4395,6 +4403,7 @@
 				A484A67615AEC97F009D780C /* yd_t1@2x.png in Resources */,
 				A484A67715AEC97F009D780C /* yd_t2@2x.png in Resources */,
 				A484A67815AEC97F009D780C /* yd_t3@2x.png in Resources */,
+				A3F195D715AED96000756702 /* PlaceOrderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4706,6 +4715,7 @@
 				C28AFA7E15AC3EB20025A9B3 /* RouteSelectController.m in Sources */,
 				C28AFA8015AC3EB20025A9B3 /* SelectCityController.m in Sources */,
 				C28AFA8215AC3EB20025A9B3 /* UnPackageTourListFilter.m in Sources */,
+				A3F195D615AED96000756702 /* PlaceOrderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
