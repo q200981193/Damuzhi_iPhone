@@ -133,6 +133,7 @@ enum{
             cell.inputTextField.hidden = NO;
             cell.inputTextField.placeholder = NSLS(@"请输入昵称");
             cell.titleLabel.text = TITLE_SECTION_0_ROW_1;
+            cell.inputTextField.returnKeyType = UIReturnKeyDone;
         }
         
     } else if (indexPath.section == SECTION_1) {
@@ -150,6 +151,7 @@ enum{
     return cell;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PersonalInfoCell *cell = (PersonalInfoCell *)[dataTableView cellForRowAtIndexPath:indexPath];
@@ -160,6 +162,13 @@ enum{
         [self.navigationController pushViewController:contrller animated:YES];
         [contrller release];
     }
+}
+
+
+//hide the keyboard when "Done" is tapped.
+- (void)inputTextFieldShouldReturn:(NSIndexPath *)aIndexPath
+{
+    [_currentInputTextField resignFirstResponder];
 }
 
 
