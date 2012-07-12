@@ -58,9 +58,9 @@
 
 // Get angency list 
 - (NSArray *)getRegions;
-- (int)getGegionIdByCityId:(int)cityId;
-- (NSArray *)getDepartCityItemList:(NSArray *)routeList;
-- (NSArray *)getDestinationCityItemList:(NSArray *)staticticsList;
+- (int)getRegionIdByCityId:(int)cityId;
+- (NSArray *)getDepartCityItemList:(NSArray *)staticticsList;
+- (NSArray *)getDestinationCityItemList;
 - (NSArray *)getRouteThemeItemList;
 //- (NSArray *)getRouteCategoryItemList:(NSArray *)routeList;
 - (NSArray *)getAgencyItemList:(NSArray *)staticticsList;

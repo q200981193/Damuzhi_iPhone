@@ -674,13 +674,13 @@ static AppManager* _defaultAppManager = nil;
     return entertainmentSortItems;
 }
 
-// Get angency list 
+
 - (NSArray *)getRegions
 {
     return _app.regionsList;
 }
 
-- (int)getGegionIdByCityId:(int)cityId
+- (int)getRegionIdByCityId:(int)cityId
 {
     int reId = -1;
     
@@ -695,28 +695,29 @@ static AppManager* _defaultAppManager = nil;
 }
 
 
-- (NSArray *)getDepartCityItemList:(NSArray *)routeList
-{
-    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-    
-    for (RouteCity *city in _app.departCitiesList) {
-//        int count = [[RouteUtils getRouteList:routeList departFromCity:city.routeCityId] count];
-//        if (count != 0) {
-            [retArray addObject:[Item itemWithId:city.routeCityId
-                                        itemName:city.cityName 
-                                           count:0]];
-//        }
-    }
-    
-    return retArray;
-}
-
-- (NSArray *)getDestinationCityItemList:(NSArray *)staticticsList
+- (NSArray *)getDepartCityItemList:(NSArray *)staticticsList
 {
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
     
     for (Statistics *statistics in staticticsList) {
         [retArray addObject:[Item itemWithStatistics:statistics]];
+    }
+    
+    return retArray;
+}
+
+- (NSArray *)getDestinationCityItemList
+{
+    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
+    
+    [retArray addObject:[Item itemWithId:ALL_CATEGORY 
+                                itemName:NSLS(@"全部") 
+                                   count:0]];
+    
+    for (RouteCity *city in _app.destinationCitiesList) {
+        [retArray addObject:[Item itemWithId:city.routeCityId
+                                    itemName:city.cityName 
+                                       count:0]];
     }
     
     return retArray;

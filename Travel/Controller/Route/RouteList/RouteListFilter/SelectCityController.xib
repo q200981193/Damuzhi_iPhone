@@ -87,7 +87,7 @@
 						</object>
 						<int key="IBUIContentMode">3</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBPlaceholder">请输入城市名称</string>
+						<string key="IBPlaceholder">请输入城市名称或首字母</string>
 						<reference key="IBTintColor" ref="682559101"/>
 						<object class="IBUITextInputTraits" key="IBTextInputTraits">
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
