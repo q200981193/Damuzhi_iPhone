@@ -12,12 +12,12 @@
 
 #import "UIPlaceholderTextView.h"
 @interface RouteFeekbackController : PPTableViewController <UserServiceDelegate,UITextViewDelegate>
-@property (retain, nonatomic) IBOutlet UIButton *backgroundImage1;
-@property (retain, nonatomic) IBOutlet UIButton *backgroundImage2;
-@property (retain, nonatomic) IBOutlet UIButton *backgroundImage3;
+@property (retain, nonatomic) IBOutlet UIButton *backgroundImageButton1;
+@property (retain, nonatomic) IBOutlet UIButton *backgroundImageButton2;
+@property (retain, nonatomic) IBOutlet UIButton *backgroundImageButton3;
 
-@property (retain, nonatomic) IBOutlet UIPlaceholderTextView *feekbackTextViewField;
+@property (retain, nonatomic) IBOutlet UIPlaceholderTextView *feekbackTextView;
 
-@property (retain, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (retain, nonatomic) IBOutlet UIImageView *feekbackImageView;
 
 @end

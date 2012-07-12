@@ -15,23 +15,23 @@
 #define MAX_LENGTH_OF_FEEKBACK 160
 
 @implementation RouteFeekbackController
-@synthesize backgroundImage1;
-@synthesize backgroundImage2;
-@synthesize backgroundImage3;
+@synthesize backgroundImageButton1;
+@synthesize backgroundImageButton2;
+@synthesize backgroundImageButton3;
 
-@synthesize feekbackTextViewField;
-@synthesize backgroundImageView;
+@synthesize feekbackTextView;
+@synthesize feekbackImageView;
 
 #pragma mark - View lifecycle
 
 
 - (void)dealloc {
-    [backgroundImage1 release];
-    [backgroundImage2 release];
-    [backgroundImage3 release];
+    [backgroundImageButton1 release];
+    [backgroundImageButton2 release];
+    [backgroundImageButton3 release];
     
-    [feekbackTextViewField release];
-    [backgroundImageView release];
+    [feekbackTextView release];
+    [feekbackImageView release];
     [super dealloc];
 }
 
@@ -51,15 +51,15 @@
                             action:@selector(clickSubmit:)];
     
     // Set feekback text view delegate.
-    self.feekbackTextViewField.delegate = self;
-    self.feekbackTextViewField.placeholder = NSLS(@"请输入您的评价!(小于等于160个字)");
-    self.feekbackTextViewField.font = [UIFont systemFontOfSize:13];
+    self.feekbackTextView.delegate = self;
+    self.feekbackTextView.placeholder = NSLS(@"请输入您的评价!(小于等于160个字)");
+    self.feekbackTextView.font = [UIFont systemFontOfSize:13];
 
-    self.feekbackTextViewField.placeholderColor = [UIColor lightGrayColor];    
+    self.feekbackTextView.placeholderColor = [UIColor lightGrayColor];    
 }
 -(void) clickSubmit: (id) sender
 {
-    NSString *feekback = [self.feekbackTextViewField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];    
+    NSString *feekback = [self.feekbackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];    
     if ([feekback compare:@""] == 0) {
         [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
         return;
@@ -71,7 +71,7 @@
     }
     
   
-    [feekbackTextViewField resignFirstResponder];
+    [feekbackTextView resignFirstResponder];
      [[UserService defaultService] submitFeekback:self feekback:feekback contact:nil];
 }
 
@@ -88,11 +88,11 @@
 
 - (void)viewDidUnload
 {
-    [self setBackgroundImage1:nil];
-    [self setBackgroundImage2:nil];
-    [self setBackgroundImage3:nil];
-    [self setFeekbackTextViewField:nil];
-    [self setBackgroundImageView:nil];
+    [self setBackgroundImageButton1:nil];
+    [self setBackgroundImageButton2:nil];
+    [self setBackgroundImageButton3:nil];
+    [self setFeekbackTextView:nil];
+    [self setFeekbackImageView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -105,25 +105,25 @@
 }
 
 - (IBAction)clickChangeBackgroundButton1:(id)sender {
-    backgroundImage1.selected = YES;
-    backgroundImage2.selected = NO;
-    backgroundImage3.selected = NO;
+    backgroundImageButton1.selected = YES;
+    backgroundImageButton2.selected = NO;
+    backgroundImageButton3.selected = NO;
 }
 
 - (IBAction)clickChangeBackgroundButton2:(id)sender {
-    backgroundImage1.selected = YES;
-    backgroundImage2.selected = YES;
-    backgroundImage3.selected = NO;
+    backgroundImageButton1.selected = YES;
+    backgroundImageButton2.selected = YES;
+    backgroundImageButton3.selected = NO;
 }
 
 - (IBAction)clickChangeBackgroundButton3:(id)sender {
-    backgroundImage1.selected = YES;
-    backgroundImage2.selected = YES;
-    backgroundImage3.selected = YES;
+    backgroundImageButton1.selected = YES;
+    backgroundImageButton2.selected = YES;
+    backgroundImageButton3.selected = YES;
 }
 
 - (IBAction)hideKeyboardButton:(id)sender {
-    [feekbackTextViewField resignFirstResponder];
+    [feekbackTextView resignFirstResponder];
 }
 
 

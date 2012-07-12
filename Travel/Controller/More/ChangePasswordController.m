@@ -63,7 +63,6 @@
     [_passwordDic release];
     [oldPassword release];
     [lastPassword release];
-    [lastPassword release];
     [_currentInputTextField release];
     [super dealloc];
 }
