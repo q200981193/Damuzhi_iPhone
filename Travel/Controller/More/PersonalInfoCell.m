@@ -46,22 +46,30 @@
 - (void)setCellIndexPath:(NSIndexPath *)aIndexPath
 {
     self.indexPath = aIndexPath;
-    
 }
 
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if (personalInfoCellDelegate && [personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidBeginEditing:)]) {
+    if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidBeginEditing:)]) {
         [personalInfoCellDelegate inputTextFieldDidBeginEditing:_indexPath];
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if (personalInfoCellDelegate && [personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidEndEditing:)]) {
+    if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidEndEditing:)]) {
         [personalInfoCellDelegate inputTextFieldDidEndEditing:_indexPath];
     }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldShouldReturn:)]) {
+        [personalInfoCellDelegate inputTextFieldShouldReturn:_indexPath];
+    }
+    
+    return YES;
 }
 
 @end

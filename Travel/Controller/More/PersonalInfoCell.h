@@ -12,10 +12,11 @@
 
 - (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath;
 - (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath;
+- (void)inputTextFieldShouldReturn:(NSIndexPath *)aIndexPath;
 
 @end
 
-@interface PersonalInfoCell : PPTableViewCell<UITextFieldDelegate>
+@interface PersonalInfoCell : PPTableViewCell <UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UIImageView *backgroundImageVeiw;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;

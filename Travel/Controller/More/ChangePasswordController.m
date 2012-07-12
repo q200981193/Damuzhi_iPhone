@@ -13,23 +13,34 @@
 #import "PPNetworkRequest.h"
 
 //#import "UserService.h"
-#define ROWS_COUNT 3
+
 
 #define TITLE_OLD_PASSWORD          NSLS(@"原  密  码:")
 #define TITLE_NEW_PASSWORD          NSLS(@"新  密  码:")
 #define TITLE_NEW_PASSWORD_AGAIN    NSLS(@"确认密码:")
 
-#define PLACEHOLDER_1               NSLS(@"请输入旧密码")
-#define PLACEHOLDER_2               NSLS(@"请输入新密码")
-#define PLACEHOLDER_3               NSLS(@"请再次输入新密码")
+#define PLACEHOLDER_OLD_PASSWORD               NSLS(@"请输入旧密码")
+#define PLACEHOLDER_NEW_PASSWORD               NSLS(@"请输入新密码")
+#define PLACEHOLDER_NEW_PASSWORD_AGAIN         NSLS(@"请再次输入新密码")
+
+#define CELL_ROW_OLD_PASSWORD 0
+#define CELL_ROW_NEW_PASSWORD  1
+#define CELL_ROW_NEW_PASSWORD_AGAIN  2
+
+
+
 
 @interface ChangePasswordController ()
-{
-    UITextField *_currentInputTextField;
-}
+
 @property (retain, nonatomic) NSString *oldPassword;
 @property (retain, nonatomic) NSString *lastPassword;
 @property (retain, nonatomic) NSString *lastPasswordAgain;
+
+@property (retain, nonatomic) NSMutableDictionary *titleDic;
+@property (retain, nonatomic) NSMutableDictionary *placeHolderDic;
+@property (retain, nonatomic) NSMutableDictionary *passwordDic;
+
+@property (retain, nonatomic) UITextField *currentInputTextField;
 
 @end
 
@@ -39,10 +50,26 @@
 @synthesize lastPassword;
 @synthesize lastPasswordAgain;
 
+@synthesize titleDic = _titleDic;
+@synthesize placeHolderDic = _placeHolderDic;
+@synthesize passwordDic = _passwordDic;
+
+@synthesize currentInputTextField = _currentInputTextField;
+
+- (void)dealloc
+{
+    [_titleDic release];
+    [_placeHolderDic release];
+    [_passwordDic release];
+    [oldPassword release];
+    [lastPassword release];
+    [lastPassword release];
+    [_currentInputTextField release];
+    [super dealloc];
+}
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     [super viewDidLoad];
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
@@ -52,24 +79,30 @@
     [self setNavigationRightButton:NSLS(@"确定") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickSubmit:)];
-    
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
-}
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
+    
+    self.titleDic = [NSMutableDictionary dictionary];
+    self.placeHolderDic = [NSMutableDictionary dictionary];
+    self.passwordDic = [NSMutableDictionary dictionary];
+    
+    [self.titleDic setObject:TITLE_OLD_PASSWORD forKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
+    [self.placeHolderDic setObject:PLACEHOLDER_OLD_PASSWORD forKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
+
+    [self.titleDic setObject:TITLE_NEW_PASSWORD forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
+    [self.placeHolderDic setObject:PLACEHOLDER_NEW_PASSWORD forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
+
+    [self.titleDic setObject:TITLE_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
+    [self.placeHolderDic setObject:PLACEHOLDER_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
+    
+    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
+    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
+    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return ROWS_COUNT;
-}
-
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return indexPath;
+    return [_titleDic count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -80,38 +113,32 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = [PersonalInfoCell getCellIdentifier];
-    PersonalInfoCell *cell = [dataTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    PersonalInfoCell *cell = (PersonalInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+
     if (cell == nil) {
         cell = [PersonalInfoCell createCell:self];
         cell.titleLabel.frame = CGRectOffset(cell.titleLabel.frame, -5, 0);
         cell.inputTextField.frame = CGRectOffset(cell.inputTextField.frame, 5, 0);
+        cell.inputTextField.returnKeyType = (indexPath.row == CELL_ROW_NEW_PASSWORD_AGAIN) ? UIReturnKeyDone : UIReturnKeyNext;
+        [cell.inputTextField setSecureTextEntry:YES];
     }
+    
     [cell setPersonalInfoCellDelegate:self];
-    [cell setCellIndexPath:indexPath];
+    [cell setCellIndexPath:indexPath]; 
     
-    if (indexPath.row == 0) {
-        cell.titleLabel.text = TITLE_OLD_PASSWORD;
-        cell.inputTextField.placeholder = PLACEHOLDER_1;
+    cell.titleLabel.text = [_titleDic objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    cell.inputTextField.placeholder = [_placeHolderDic objectForKey:[NSNumber numberWithInt:indexPath.row]];    
         
-    } else if (indexPath.row == 1){
-        cell.titleLabel.text = TITLE_NEW_PASSWORD;
-        cell.inputTextField.placeholder = PLACEHOLDER_2;
-    
-    } else if (indexPath.row == 2){
-        cell.titleLabel.text = TITLE_NEW_PASSWORD_AGAIN;
-        cell.inputTextField.placeholder = PLACEHOLDER_3;
-    }
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 
 - (void)clickSubmit:(id)sender
 {
     [_currentInputTextField resignFirstResponder];
+    
+    self.oldPassword = [_passwordDic objectForKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
+    self.lastPassword = [_passwordDic objectForKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
+    self.lastPasswordAgain = [_passwordDic objectForKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
 
     if (oldPassword.length < 6 || oldPassword.length > 16) {
         [self popupMessage:NSLS(@"您输入的原密码长度不对") title:nil];
@@ -150,36 +177,33 @@
     [self popupMessage:NSLS(@"修改成功") title:nil];
 }
 
-#pragma mark - PersonalInfoCellDelegate methods
-- (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath
+- (void)inputTextFieldDidBeginEditing:(NSIndexPath *)indexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
-    _currentInputTextField = cell.inputTextField;
-
+    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
+    if (cell != nil) {
+        self.currentInputTextField = cell.inputTextField;
+    }
 }
 
-
-- (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath
+- (void)inputTextFieldDidEndEditing:(NSIndexPath *)indexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
-    _currentInputTextField = cell.inputTextField;
-    if (aIndexPath.row == 0)
-    {
-        oldPassword = _currentInputTextField.text;
-    }    
-    else if(aIndexPath.row == 1)
-    {
-        lastPassword = _currentInputTextField.text;
+    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
+    if (cell != nil) {
+        [_passwordDic setObject:cell.inputTextField.text forKey:[NSNumber numberWithInt:indexPath.row]];
     }
-    else if (aIndexPath.row == 2)
-    {
-        lastPasswordAgain = _currentInputTextField.text;
-    }
-    
-
-    
 }
 
+- (void)inputTextFieldShouldReturn:(NSIndexPath *)indexPath
+{
+    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
+    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:(indexPath.row+1) inSection:indexPath.section];
+    PersonalInfoCell * nextCell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:nextIndexPath];
 
+    if (nextCell == nil) {
+        [cell.inputTextField resignFirstResponder];
+    }else{
+        [nextCell.inputTextField becomeFirstResponder];
+    }
+}
 
 @end
