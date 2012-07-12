@@ -92,6 +92,13 @@ typedef enum {
 
 BOOL LanguageTypeIsValidValue(LanguageType value);
 
+typedef enum {
+  LoginTypeTelephone = 1,
+  LoginTypeEmail = 2,
+} LoginType;
+
+BOOL LoginTypeIsValidValue(LoginType value);
+
 
 @interface PackageRoot : NSObject {
 }
@@ -178,41 +185,37 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 @private
   BOOL hasLoginType_:1;
   BOOL hasGender_:1;
-  BOOL hasUserId_:1;
-  BOOL hasPassword_:1;
-  BOOL hasTelephone_:1;
-  BOOL hasEmail_:1;
+  BOOL hasLoginId_:1;
   BOOL hasNickName_:1;
   BOOL hasFullName_:1;
+  BOOL hasTelephone_:1;
+  BOOL hasEmail_:1;
   BOOL hasAddress_:1;
   int32_t loginType;
   int32_t gender;
-  NSString* userId;
-  NSString* password;
-  NSString* telephone;
-  NSString* email;
+  NSString* loginId;
   NSString* nickName;
   NSString* fullName;
+  NSString* telephone;
+  NSString* email;
   NSString* address;
 }
-- (BOOL) hasUserId;
+- (BOOL) hasLoginId;
 - (BOOL) hasLoginType;
-- (BOOL) hasPassword;
+- (BOOL) hasNickName;
+- (BOOL) hasFullName;
 - (BOOL) hasTelephone;
 - (BOOL) hasEmail;
-- (BOOL) hasNickName;
-- (BOOL) hasGender;
-- (BOOL) hasFullName;
 - (BOOL) hasAddress;
-@property (readonly, retain) NSString* userId;
+- (BOOL) hasGender;
+@property (readonly, retain) NSString* loginId;
 @property (readonly) int32_t loginType;
-@property (readonly, retain) NSString* password;
+@property (readonly, retain) NSString* nickName;
+@property (readonly, retain) NSString* fullName;
 @property (readonly, retain) NSString* telephone;
 @property (readonly, retain) NSString* email;
-@property (readonly, retain) NSString* nickName;
-@property (readonly) int32_t gender;
-@property (readonly, retain) NSString* fullName;
 @property (readonly, retain) NSString* address;
+@property (readonly) int32_t gender;
 
 + (UserInfo*) defaultInstance;
 - (UserInfo*) defaultInstance;
@@ -248,20 +251,25 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
 - (UserInfo_Builder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
-- (BOOL) hasUserId;
-- (NSString*) userId;
-- (UserInfo_Builder*) setUserId:(NSString*) value;
-- (UserInfo_Builder*) clearUserId;
+- (BOOL) hasLoginId;
+- (NSString*) loginId;
+- (UserInfo_Builder*) setLoginId:(NSString*) value;
+- (UserInfo_Builder*) clearLoginId;
 
 - (BOOL) hasLoginType;
 - (int32_t) loginType;
 - (UserInfo_Builder*) setLoginType:(int32_t) value;
 - (UserInfo_Builder*) clearLoginType;
 
-- (BOOL) hasPassword;
-- (NSString*) password;
-- (UserInfo_Builder*) setPassword:(NSString*) value;
-- (UserInfo_Builder*) clearPassword;
+- (BOOL) hasNickName;
+- (NSString*) nickName;
+- (UserInfo_Builder*) setNickName:(NSString*) value;
+- (UserInfo_Builder*) clearNickName;
+
+- (BOOL) hasFullName;
+- (NSString*) fullName;
+- (UserInfo_Builder*) setFullName:(NSString*) value;
+- (UserInfo_Builder*) clearFullName;
 
 - (BOOL) hasTelephone;
 - (NSString*) telephone;
@@ -273,25 +281,15 @@ BOOL LanguageTypeIsValidValue(LanguageType value);
 - (UserInfo_Builder*) setEmail:(NSString*) value;
 - (UserInfo_Builder*) clearEmail;
 
-- (BOOL) hasNickName;
-- (NSString*) nickName;
-- (UserInfo_Builder*) setNickName:(NSString*) value;
-- (UserInfo_Builder*) clearNickName;
+- (BOOL) hasAddress;
+- (NSString*) address;
+- (UserInfo_Builder*) setAddress:(NSString*) value;
+- (UserInfo_Builder*) clearAddress;
 
 - (BOOL) hasGender;
 - (int32_t) gender;
 - (UserInfo_Builder*) setGender:(int32_t) value;
 - (UserInfo_Builder*) clearGender;
-
-- (BOOL) hasFullName;
-- (NSString*) fullName;
-- (UserInfo_Builder*) setFullName:(NSString*) value;
-- (UserInfo_Builder*) clearFullName;
-
-- (BOOL) hasAddress;
-- (NSString*) address;
-- (UserInfo_Builder*) setAddress:(NSString*) value;
-- (UserInfo_Builder*) clearAddress;
 @end
 
 @interface RouteFeekbackList : PBGeneratedMessage {

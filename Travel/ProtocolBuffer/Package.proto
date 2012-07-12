@@ -23,19 +23,39 @@ message Package {
   required LanguageType language = 4 [default=ZH_HANS];            // 语言类型
 }
 
+//// 用于会员资料
+//message UserInfo {
+//  required string userId = 1;		// 用户id，与设备id绑定
+//  required int32  loginType = 2;    // 当前登录类型，1：手机；2：邮箱
+//  required string password = 3;		// 密码
+//
+//  required string telephone = 10;	// 电话
+//  required string email = 11; 		// 邮箱
+//
+//  optional string nickName = 20;	// 昵称
+//  optional int32  gender = 21; 		// 性别，0为不显示，1为男，2为女，3为保密
+//  optional string fullName = 22;	// 姓名
+//  optional string address = 23;     // 住址
+//}
+
+enum LoginType{
+  TELEPHONE = 1;          // 手机登陆
+  EMAIL = 2;              // 邮箱登陆
+}
+
 // 用于会员资料
 message UserInfo {
-  required string userId = 1;		// 用户id，与设备id绑定
+  required string  loginId = 1;      // 用户名
   required int32  loginType = 2;    // 当前登录类型，1：手机；2：邮箱
-  required string password = 3;		// 密码
 
-  required string telephone = 10;	// 电话
-  required string email = 11; 		// 邮箱
+  optional string nickName = 5;	// 昵称
 
-  optional string nickName = 20;	// 昵称
-  optional int32  gender = 21; 		// 性别，0为不显示，1为男，2为女，3为保密
-  optional string fullName = 22;	// 姓名
-  optional string address = 23;     // 住址
+  optional string fullName = 10;	// 姓名
+  optional string telephone = 15;	// 电话
+  optional string email = 16; 		// 邮箱
+  
+  optional string address = 20;     // 住址
+  optional int32  gender = 30; 		// 性别，0为不显示，1为男，2为女，3为保密
 }
 
 // 用于获取线路反馈列表
