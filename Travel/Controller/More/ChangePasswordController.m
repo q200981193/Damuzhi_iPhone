@@ -122,8 +122,8 @@
         [cell.inputTextField setSecureTextEntry:YES];
     }
     
-    [cell setPersonalInfoCellDelegate:self];
-    [cell setCellIndexPath:indexPath]; 
+    cell.aDelegate = self;
+    cell.indexPath = indexPath; 
     
     cell.titleLabel.text = [_titleDic objectForKey:[NSNumber numberWithInt:indexPath.row]];
     cell.inputTextField.placeholder = [_placeHolderDic objectForKey:[NSNumber numberWithInt:indexPath.row]];    

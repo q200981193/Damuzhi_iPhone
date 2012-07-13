@@ -23,7 +23,7 @@
 @property (retain, nonatomic) IBOutlet UITextField *inputTextField;
 @property (retain, nonatomic) IBOutlet UIImageView *pointImageView;
 
-@property (assign, nonatomic) id<PersonalInfoCellDelegate> personalInfoCellDelegate;
+@property (assign, nonatomic) id<PersonalInfoCellDelegate> aDelegate;
 
 - (void)setCellIndexPath:(NSIndexPath *)aIndexPath;
 
