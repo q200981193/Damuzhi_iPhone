@@ -112,20 +112,20 @@
     
     
     
-    if (!NSStringIsValidPhone(_loginId)) {
-        [self popupMessage:NSLS(@"您输入的号码格式不正确") title:nil];
+    if (!NSStringIsValidEmail(_loginId) && !NSStringIsValidPhone(_loginId)) {
+        [self popupMessage:NSLS(@"您输入的用户名格式不正确") title:nil];
         return;
     }
     
-    if (_password.length < 6) {
-        [self popupMessage:NSLS(@"您输入的密码太短") title:nil];
-        return;
-    }
-    
-    if (_password.length > 16) {
-        [self popupMessage:NSLS(@"您输入的密码长度太长") title:nil];
-        return;
-    }
+//    if (_password.length < 6) {
+//        [self popupMessage:NSLS(@"您输入的密码太短") title:nil];
+//        return;
+//    }
+//    
+//    if (_password.length > 16) {
+//        [self popupMessage:NSLS(@"您输入的密码长度太长") title:nil];
+//        return;
+//    }
     
     self.loginButton = (UIButton *)sender;
     _loginButton.enabled = NO;
