@@ -18,7 +18,7 @@
 @synthesize titleLabel;
 @synthesize inputTextField;
 @synthesize pointImageView;
-@synthesize personalInfoCellDelegate;
+@synthesize aDelegate;
 
 - (void)dealloc {
     [titleLabel release];
@@ -48,22 +48,22 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidBeginEditing:)]) {
-        [personalInfoCellDelegate inputTextFieldDidBeginEditing:self.indexPath];
+    if ([aDelegate respondsToSelector:@selector(inputTextFieldDidBeginEditing:)]) {
+        [aDelegate inputTextFieldDidBeginEditing:self.indexPath];
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldDidEndEditing:)]) {
-        [personalInfoCellDelegate inputTextFieldDidEndEditing:self.indexPath];
+    if ([aDelegate respondsToSelector:@selector(inputTextFieldDidEndEditing:)]) {
+        [aDelegate inputTextFieldDidEndEditing:self.indexPath];
     }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if ([personalInfoCellDelegate respondsToSelector:@selector(inputTextFieldShouldReturn:)]) {
-        [personalInfoCellDelegate inputTextFieldShouldReturn:self.indexPath];
+    if ([aDelegate respondsToSelector:@selector(inputTextFieldShouldReturn:)]) {
+        [aDelegate inputTextFieldShouldReturn:self.indexPath];
     }
     
     return YES;
