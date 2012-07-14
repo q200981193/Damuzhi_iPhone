@@ -12,20 +12,20 @@
 #import "ChangePasswordController.h"
 #import "UserManager.h"
 #import "StringUtil.h"
+#import "PPNetworkRequest.h"
+#import "UIViewUtils.h"
 
 enum{
     SECTION_0 = 0,
     SECTION_1 = 1,
 };
 
-
 #define ROW_LOGINID   0
 #define ROW_MODIFY_PASSWORD   1
 
 #define ROW_NICKNAME   0
 #define ROW_FULLNAME  1
-#define ROW_EMAIL  2
-#define ROW_TELEPHONE  2
+#define ROW_TELEPHONE_OR_EMAIL 2
 
 #define SEPRATOR_STRING @"|"
 
@@ -37,42 +37,40 @@ enum{
 
 #define TITLE_NICKNAME   NSLS(@"昵   称:|请输入您的昵称")
 #define TITLE_FULLNAME   NSLS(@"姓   名:|请输入您的真实姓名")
-//
-//#define NICKNAME_PLACEHOLDER    NSLS(@"请输入您的昵称")
-//#define FULLNAME_PLACEHOLDER    NSLS(@"请输入您的真实姓名")
-//#define TELEPHONE_PLACEHOLDER   NSLS(@"请输入您的电话号码")
-//#define EMAIL_PLACEHOLDER       NSLS(@"请输入您的邮箱地址")
 
 @interface PersonalInfoController ()
 {
-    UITextField *_currentInputTextField;
+    CGPoint viewCenter;
 }
 
-@property (retain, nonatomic) NSString *nickName;
-@property (retain, nonatomic) NSString *userName;
-@property (retain, nonatomic) NSString *telephoneOrEmail;
+@property (retain, nonatomic) UserInfo *userInfo;
 
-@property (retain, nonatomic) NSMutableDictionary *sectionDic;
+@property (retain, nonatomic) NSMutableDictionary *titleDic;
+@property (retain, nonatomic) NSMutableDictionary *inputTextDic;
+
+@property (retain, nonatomic) UITextField *currentInputTextField;
 
 
-- (void)removeHideKeyboardButton;
-- (void)addHideKeyboardButton;
-- (void)clickHideKeyboardButton:(id)sender;
+//- (void)removeHideKeyboardButton;
+//- (void)addHideKeyboardButton;
+//- (void)clickHideKeyboardButton:(id)sender;
 @end
 
-
 @implementation PersonalInfoController
-@synthesize userName = _userName;
-@synthesize nickName = _nickName;
-@synthesize telephoneOrEmail = _telephoneOrEmail;
-@synthesize sectionDic = _sectionDic;
+@synthesize userInfo = _userInfo;
+
+@synthesize titleDic = _titleDic;
+@synthesize inputTextDic = _inputTextDic;
+
+@synthesize currentInputTextField  = _currentInputTextField;
 
 - (void)dealloc
 {
-    PPRelease(_userName);
-    PPRelease(_nickName);
-    PPRelease(_telephoneOrEmail);
-    PPRelease(_sectionDic);
+    PPRelease(_userInfo);
+    PPRelease(_titleDic);
+    PPRelease(_inputTextDic);
+    PPRelease(_currentInputTextField);
+
     [super dealloc];
 }
 
@@ -86,30 +84,49 @@ enum{
     
     [self setNavigationRightButton:NSLS(@"确定") 
                          imageName:@"topmenu_btn_right.png" 
-                            action:@selector(clickQuit:)];
+                            action:@selector(clickOk:)];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
     
-    self.sectionDic = [NSMutableDictionary dictionary];
+    self.titleDic = [NSMutableDictionary dictionary];
+    self.inputTextDic = [NSMutableDictionary dictionary];
     
-    NSMutableDictionary *section0Dic = [NSMutableDictionary dictionary];
-    NSMutableDictionary *section1Dic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *section0TitleDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *section1TitleDic = [NSMutableDictionary dictionary];
     
-    [section0Dic setObject:TITLE_LOGINID forKey:[NSNumber numberWithInt:ROW_LOGINID]];
-    [section0Dic setObject:TITLE_MODIFY_PASSWORD forKey:[NSNumber numberWithInt:ROW_MODIFY_PASSWORD]];
+    [section0TitleDic setObject:TITLE_LOGINID forKey:[NSNumber numberWithInt:ROW_LOGINID]];
+    [section0TitleDic setObject:TITLE_MODIFY_PASSWORD forKey:[NSNumber numberWithInt:ROW_MODIFY_PASSWORD]];
 
-    [section1Dic setObject:TITLE_NICKNAME forKey:[NSNumber numberWithInt:ROW_NICKNAME]];
-    [section1Dic setObject:TITLE_FULLNAME forKey:[NSNumber numberWithInt:ROW_FULLNAME]];
+    [section1TitleDic setObject:TITLE_NICKNAME forKey:[NSNumber numberWithInt:ROW_NICKNAME]];
+    [section1TitleDic setObject:TITLE_FULLNAME forKey:[NSNumber numberWithInt:ROW_FULLNAME]];
     
     if ( [[UserManager defaultManager] loginId]) {
-        [section1Dic setObject:TITLE_EMAIL forKey:[NSNumber numberWithInt:ROW_EMAIL]];
+        
+        [section1TitleDic setObject:TITLE_EMAIL forKey:[NSNumber numberWithInt:ROW_TELEPHONE_OR_EMAIL]];
     }else{
-        [section1Dic setObject:TITLE_TELEPHONE forKey:[NSNumber numberWithInt:ROW_TELEPHONE]];
+        [section1TitleDic setObject:TITLE_TELEPHONE forKey:[NSNumber numberWithInt:ROW_TELEPHONE_OR_EMAIL]];
     }
     
-    [self.sectionDic setObject:section0Dic forKey:[NSNumber numberWithInt:0]];
-    [self.sectionDic setObject:section1Dic forKey:[NSNumber numberWithInt:1]];
+    [self.titleDic setObject:section0TitleDic forKey:[NSNumber numberWithInt:0]];
+    [self.titleDic setObject:section1TitleDic forKey:[NSNumber numberWithInt:1]];
+    
+    NSMutableDictionary *section0InputTextDic = [NSMutableDictionary dictionary];
+    NSMutableDictionary *section1InputTextDic = [NSMutableDictionary dictionary];
+    
+    [self.inputTextDic setObject:section0InputTextDic forKey:[NSNumber numberWithInt:0]];
+    [self.inputTextDic setObject:section1InputTextDic forKey:[NSNumber numberWithInt:1]];
+    
+    viewCenter = self.view.center;
+    
+    // Add a single tap Recognizer
+    UITapGestureRecognizer* singleTapRecognizer;
+    singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapFrom:)];
+    singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
+    [self.dataTableView addGestureRecognizer:singleTapRecognizer];
+    [singleTapRecognizer release];
+    
+    [[UserService defaultService] retrieveUserInfo:self];
 }
 
 - (void)viewDidUnload
@@ -119,12 +136,12 @@ enum{
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.sectionDic count];
+    return [self.titleDic count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_sectionDic objectForKey:[NSNumber numberWithInt:section]] count];
+    return [[_titleDic objectForKey:[NSNumber numberWithInt:section]] count];
 }
 
 
@@ -138,6 +155,8 @@ enum{
     return [PersonalInfoCell getCellHeight];
 }
 
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = [PersonalInfoCell getCellIdentifier];
@@ -148,73 +167,108 @@ enum{
     cell.aDelegate = self;
     cell.indexPath = indexPath;
     
-    NSString *title = [[_sectionDic objectForKey:[NSNumber numberWithInt:indexPath.section]] objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    NSString *title = [[_titleDic objectForKey:[NSNumber numberWithInt:indexPath.section]] objectForKey:[NSNumber numberWithInt:indexPath.row]];
     
     NSArray *strArr = [title componentsSeparatedByString:SEPRATOR_STRING];
     
+    NSString *inputText = [[_inputTextDic objectForKey:[NSNumber numberWithInt:indexPath.section]] objectForKey:[NSNumber numberWithInt:indexPath.row]];
+    
     if ([strArr count] == 1) {
         cell.titleLabel.text = [strArr objectAtIndex:0];
-        cell.inputTextField.hidden = YES;
-    }
-    if ([strArr count] >=2) {
-        cell.titleLabel.text = [strArr objectAtIndex:0];
-        cell.inputTextField.placeholder = [strArr objectAtIndex:1];
-    }
-    
-    if ([title isEqualToString:TITLE_LOGINID]) {
         cell.inputTextField.enabled = NO;
     }
+    if ([strArr count] >= 2) {
+        cell.titleLabel.text = [strArr objectAtIndex:0];
+        cell.inputTextField.placeholder = [strArr objectAtIndex:1];
+        cell.inputTextField.returnKeyType = UIReturnKeyNext;
+    }
+    
+    cell.inputTextField.text = inputText;
     
     if ([title isEqualToString:TITLE_MODIFY_PASSWORD]) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
+    if ([title isEqualToString:TITLE_TELEPHONE] || [title isEqualToString:TITLE_EMAIL]) {
+        cell.inputTextField.returnKeyType = UIReturnKeyDone;
+    }
+   
     return cell;
 }
 
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//hide the keyboard when "Done" is tapped.
+- (void)inputTextFieldShouldReturn:(NSIndexPath *)aIndexPath
 {
-    PersonalInfoCell *cell = (PersonalInfoCell *)[dataTableView cellForRowAtIndexPath:indexPath];
-    NSString *title = cell.titleLabel.text;
+    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
+    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:(aIndexPath.row+1) inSection:aIndexPath.section];
+    PersonalInfoCell * nextCell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:nextIndexPath];
+
+    if (nextCell == nil) {
+        [cell.inputTextField resignFirstResponder];
+    }else{
+        [nextCell.inputTextField becomeFirstResponder];
+    }
     
-    if ([title isEqualToString:TITLE_MODIFY_PASSWORD]) {
-        ChangePasswordController *contrller = [[ChangePasswordController alloc] init];
-        [self.navigationController pushViewController:contrller animated:YES];
-        [contrller release];
+    if (nextCell == nil) {
+        [self.view moveTtoCenter:viewCenter needAnimation:YES animationDuration:0.5];
     }
 }
 
 
-//
-////hide the keyboard when "Done" is tapped.
-//- (void)inputTextFieldShouldReturn:(NSIndexPath *)aIndexPath
-//{
-//    [_currentInputTextField resignFirstResponder];
-//}
-//
-//
-//- (void)clickQuit:(id)sender
-//{
-//    [_currentInputTextField resignFirstResponder];   
-//}
+- (void)clickOk:(id)sender
+{
+    [_currentInputTextField resignFirstResponder];
+    [self.view moveTtoCenter:viewCenter needAnimation:YES animationDuration:0.5];
+
+    NSString *nickName = [[self.inputTextDic objectForKey:[NSNumber numberWithInt:1]] objectForKey:[NSNumber numberWithInt:ROW_NICKNAME]];
+    NSString *fullName = [[self.inputTextDic objectForKey:[NSNumber numberWithInt:1]] objectForKey:[NSNumber numberWithInt:ROW_FULLNAME]];
+    NSString *telephoneOrEmail = [[self.inputTextDic objectForKey:[NSNumber numberWithInt:1]] objectForKey:[NSNumber numberWithInt:ROW_TELEPHONE_OR_EMAIL]];
+    nickName = [nickName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]; 
+    fullName = [fullName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];        
+    telephoneOrEmail = [telephoneOrEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]; 
+    
+    if (telephoneOrEmail != nil && ![telephoneOrEmail isEqualToString:@""]) {
+        if (_userInfo.loginType == LoginTypeTelephone && !NSStringIsValidEmail(telephoneOrEmail)) {
+            [self popupMessage:@"您输入的邮箱格式不正确，请重新输入" title:nil];
+            return;
+        }else if(_userInfo.loginType == LoginTypeEmail && !NSStringIsValidPhone(telephoneOrEmail)){
+            [self popupMessage:@"您输入的电话号码格式不正确，请重新输入" title:nil];
+            return;
+        }
+    }
+    
+    [[UserService defaultService] modifyUserFullName:fullName
+                                            nickName:nickName
+                                              gender:3 
+                                           telephone:(_userInfo.loginType == LoginTypeTelephone) ? _userInfo.loginId : telephoneOrEmail
+                                               email:(_userInfo.loginType == LoginTypeEmail) ? _userInfo.loginId : telephoneOrEmail
+                                             address:nil
+                                            delegate:self];
+} 
 
 #pragma mark - PersonalInfoCellDelegate methods
 - (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath
 {
-//    [self addHideKeyboardButton];
-    
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
-    _currentInputTextField = cell.inputTextField;
+    PersonalInfoCell *cell = (PersonalInfoCell *)[self.dataTableView cellForRowAtIndexPath:aIndexPath];
+    self.currentInputTextField = cell.inputTextField;
+
+    if (aIndexPath.section >1 || (aIndexPath.section == 1 && aIndexPath.row >= 1)) {
+        [self.view moveTtoCenter:CGPointMake(viewCenter.x, viewCenter.y - 100) needAnimation:YES animationDuration:0.5];
+    }
 }
 
 
 - (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath
 {
     PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
-    _currentInputTextField = cell.inputTextField;
+    
+    NSMutableDictionary *sectionDic = [self.inputTextDic objectForKey:[NSNumber numberWithInt:aIndexPath.section]];
+    [sectionDic setObject:cell.inputTextField.text forKey:[NSNumber numberWithInt:aIndexPath.row]];
 }
+
+
 
 #define HIDE_KEYBOARDBUTTON_TAG 77
 #define TOP_HEIGHT 100
@@ -224,21 +278,57 @@ enum{
     [button removeFromSuperview];
 }
 
-//- (void)addHideKeyboardButton
-//{
-//    [self removeHideKeyboardButton];
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, TOP_HEIGHT, self.view.frame.size.width, self.view.frame.size.height-TOP_HEIGHT)];
-//    button.tag = HIDE_KEYBOARDBUTTON_TAG;
-//    [button addTarget:self action:@selector(clickHideKeyboardButton:) forControlEvents:UIControlEventAllTouchEvents];
-//    [self.view addSubview:button];
-//    [button release];
-//}
+- (void)retrieveUserInfoDidDone:(int)resultCode userInfo:(UserInfo *)userInfo
+{
+    if (resultCode != ERROR_SUCCESS) {
+        [self popupMessage:NSLS(@"网络不稳定，失败") title:nil];
+        return;
+    }
+    
+    self.userInfo = userInfo;
 
-//- (void)clickHideKeyboardButton:(id)sender
-//{
-//    [_currentInputTextField resignFirstResponder];
-//    [self removeHideKeyboardButton];
-//}
+    [[self.inputTextDic objectForKey:[NSNumber numberWithInt:0]] setObject:userInfo.loginId forKey:[NSNumber numberWithInt:ROW_LOGINID]];
+    [[self.inputTextDic objectForKey:[NSNumber numberWithInt:1]] setObject:userInfo.nickName forKey:[NSNumber numberWithInt:ROW_NICKNAME]];
+    [[self.inputTextDic objectForKey:[NSNumber numberWithInt:1]] setObject:userInfo.fullName forKey:[NSNumber numberWithInt:ROW_FULLNAME]];
+    
+    
+    
+    NSString *telephoneOrEmail = (userInfo.loginType == LoginTypeTelephone) ? userInfo.email : userInfo.telephone;
+    [[self.inputTextDic objectForKey:[NSNumber numberWithInt:1]] setObject:telephoneOrEmail forKey:[NSNumber numberWithInt:ROW_TELEPHONE_OR_EMAIL]];
+    
+    [dataTableView  reloadData];
+}
+
+
+
+- (void)modifyPasswordDidDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    if (resultCode != ERROR_SUCCESS) {
+        [self popupMessage:NSLS(@"您的网络不稳定，修改失败") title:nil];
+        return;
+    }
+    
+    if (result != 0) {
+        [self popupMessage:resultInfo title:nil];
+        return;
+    }
+    
+    [self popupMessage:NSLS(@"修改成功") title:nil];
+}
+
+- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer {
+    CGPoint point = [recognizer locationInView:self.dataTableView];
+    NSIndexPath *index = [self.dataTableView indexPathForRowAtPoint:point];
+    NSString *title = [[_titleDic objectForKey:[NSNumber numberWithInt:index.section]] objectForKey:[NSNumber numberWithInt:index.row]];
+    if ([title isEqualToString:TITLE_MODIFY_PASSWORD]) {
+        ChangePasswordController *contrller = [[ChangePasswordController alloc] init];
+        [self.navigationController pushViewController:contrller animated:YES];
+        [contrller release];
+    }
+    
+    [_currentInputTextField resignFirstResponder];
+    [self.view moveTtoCenter:viewCenter needAnimation:YES animationDuration:0.5];
+}
 
 
 @end

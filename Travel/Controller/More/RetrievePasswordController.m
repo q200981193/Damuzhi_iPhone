@@ -108,7 +108,7 @@
         [self popupMessage:text title:nil];
         return;
     }
-    
+    [self popupMessage:@"密码已发送到您的手机，请查收" title:nil];
 }
  
 

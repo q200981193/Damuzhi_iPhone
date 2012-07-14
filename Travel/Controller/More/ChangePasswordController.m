@@ -94,9 +94,9 @@
     [self.titleDic setObject:TITLE_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
     [self.placeHolderDic setObject:PLACEHOLDER_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
     
-    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
-    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
-    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
+//    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
+//    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
+//    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -174,6 +174,7 @@
     }
     
     [self popupMessage:NSLS(@"修改成功") title:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)inputTextFieldDidBeginEditing:(NSIndexPath *)indexPath

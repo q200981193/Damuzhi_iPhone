@@ -10,6 +10,7 @@
 #import "UserManager.h"
 #import "PPNetworkRequest.h"
 #import "StringUtil.h"
+#import "UIImageUtil.h"
 
 @interface VerificationController ()
 
@@ -63,6 +64,8 @@
                             action:@selector(clickFinish:)];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
+    
+    [retrieveCodeButton setBackgroundImage:[UIImage strectchableImageName:@"order_btn_1.png" leftCapWidth:20] forState:(UIControlStateNormal)];
         
 //    telephoneTextField.delegate = self;
     codeTextField.delegate = self;

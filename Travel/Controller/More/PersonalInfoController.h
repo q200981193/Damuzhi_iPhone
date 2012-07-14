@@ -8,7 +8,8 @@
 
 #import "PPTableViewController.h"
 #import "PersonalInfoCell.h"
+#import "UserService.h"
 
-@interface PersonalInfoController : PPTableViewController <PersonalInfoCellDelegate>
+@interface PersonalInfoController : PPTableViewController <PersonalInfoCellDelegate, UserServiceDelegate>
 
 @end
