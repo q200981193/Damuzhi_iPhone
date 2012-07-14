@@ -145,4 +145,10 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                             start:(int)start
                             count:(int)count
                              lang:(int)lang;
+
++ (CommonNetworkOutput*)followRoute:(NSString *)userId 
+                            loginId:(NSString *)loginId 
+                              token:(NSString *)token 
+                            routeId:(int)routeId;
+
 @end

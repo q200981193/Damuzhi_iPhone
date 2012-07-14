@@ -31,6 +31,9 @@
 - (void)findRequestDone:(int)result
                   route:(TouristRoute *)route;
 
+- (void)followRouteDone:(int)resultCode 
+                 result:(int)result 
+             resultInfo:(NSString *)resultInfo;
 
 @end
 
@@ -54,5 +57,8 @@
                       count:(int)count
              viewController:(PPViewController<RouteServiceDelegate>*)viewController;
                 
+- (void)followRoute:(TouristRoute *)route 
+          routeType:(int)routeType 
+     viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 
 @end

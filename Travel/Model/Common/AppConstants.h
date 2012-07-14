@@ -57,6 +57,7 @@
 
 #define DIR_OF_FAVORITE                     @"app/user/favorite/"
 #define DIR_OF_HISTORY                      @"app/user/history/"
+#define DIR_OF_FOLLOW_ROUTES                @"app/user/followRoutes/"
 
 // Under city dir, relative.
 #define FLAG_OF_UNZIP_SUCCESS               @"unzip_success" 

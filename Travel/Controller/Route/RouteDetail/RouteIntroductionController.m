@@ -725,7 +725,7 @@
 
 - (IBAction)clickFollowRoute:(id)sender
 {
-    [self popupMessage:@"关注路线" title:nil]; 
+    [[RouteService defaultService] followRoute:_route routeType:_routeType viewController:self];
 }
 
 - (void)didClickFlight:(int)packageId
@@ -747,6 +747,12 @@
     if ([_aDelegate respondsToSelector:@selector(didSelectedPlace:)]) {
         [_aDelegate didSelectedPlace:hotelId];
     }
+}
+
+#pragma mark - RouteServiceDelegate method
+- (void)followRouteDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    [self popupMessage:@"关注成功" title:nil]; 
 }
 
 

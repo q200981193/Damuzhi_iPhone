@@ -11,6 +11,9 @@
 #import "LocaleUtils.h"
 #import "PPViewController.h"
 #import "SelectedItemIds.h"
+#import "RouteStorage.h"
+#import "UserManager.h"
+#import "JSON.h"
 
 @interface RouteService ()
 
@@ -149,6 +152,50 @@ static RouteService *_defaultRouteService = nil;
             }
         }
     }); 
+}
+
+- (void)followRoute:(TouristRoute *)route 
+          routeType:(int)routeType 
+     viewController:(PPViewController<RouteServiceDelegate>*)viewController
+{
+    if (routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
+        [[RouteStorage packageFollowManager] addRoute:route];
+    } else if (routeType == OBJECT_LIST_ROUTE_UNPACKAGE_TOUR) {
+        [[RouteStorage unpackageFollowManager] addRoute:route];
+    }
+    
+    NSString *userId = nil; 
+    NSString *loginId = nil;
+    NSString *token = nil;
+    
+    if ([[UserManager defaultManager] isLogin]) {
+        loginId = [[UserManager defaultManager] loginId];
+        token = [[UserManager defaultManager] token];
+    }else {
+        userId = [[UserManager defaultManager] getUserId];
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        CommonNetworkOutput *output = [TravelNetworkRequest followRoute:userId
+                                                                loginId:loginId 
+                                                                  token:token 
+                                                                routeId:route.routeId ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            int result = -1;
+            NSString *resultInfo = nil;
+            
+            if (output.resultCode == ERROR_SUCCESS) {
+                NSDictionary* jsonDict = [output.textData JSONValue];
+                result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+                resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+            }
+            
+            if ([viewController respondsToSelector:@selector(followRouteDone:result:resultInfo:)]) {
+                [viewController followRouteDone:output.resultCode result:result resultInfo:resultInfo];
+            }
+        });                        
+    });
 }
 
 @end

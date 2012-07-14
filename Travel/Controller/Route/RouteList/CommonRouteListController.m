@@ -18,7 +18,7 @@
 #import "AppConstants.h"
 #import "SelectCityController.h"
 #import "Item.h"
-
+#import "FollowRouteController.h"
 
 #define TAG_DEPART_CITY_LABEL 18
 #define TAG_AGENCY_LABEL 19
@@ -261,7 +261,6 @@
 {
     int routeId = [[dataList objectAtIndex:indexPath.row] routeId];
     
-    
     CommonRouteDetailController *controller = [[CommonRouteDetailController alloc] initWithRouteId:routeId routeType:[_filterHandler getRouteType]];
     
     [self.navigationController pushViewController:controller animated:YES];
@@ -495,7 +494,9 @@
 
 - (void)clickMyFollow:(id)sender
 {
-    [self popupMessage:NSLS(@"待实现") title:nil];
+    FollowRouteController *controller  = [[FollowRouteController alloc] initWithRouteType:[_filterHandler getRouteType]];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller release];
 }
 
 #pragma mark - SelectControllerDelegate method
