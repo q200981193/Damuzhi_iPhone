@@ -46,7 +46,7 @@ enum LoginType{
 // 用于会员资料
 message UserInfo {
   required string  loginId = 1;      // 用户名
-  required int32  loginType = 2;    // 当前登录类型，1：手机；2：邮箱
+  required int32  loginType = 2;     // 当前登录类型，1：手机；2：邮箱
 
   optional string nickName = 5;	// 昵称
 
