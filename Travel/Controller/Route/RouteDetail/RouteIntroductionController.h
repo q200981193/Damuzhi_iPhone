@@ -11,6 +11,7 @@
 #import "RelatedPlaceCell.h"
 #import "PackageCell.h"
 #import "DailyScheduleCell.h"
+#import "RouteService.h"
 
 @protocol RouteIntroductionControllerDelegate <NSObject>
 
@@ -21,7 +22,7 @@
 
 @end
 
-@interface RouteIntroductionController : PPTableViewController <RelatedPlaceCellDelegate, DailyScheduleCellDelegate, PackageCellDelegate>
+@interface RouteIntroductionController : PPTableViewController <RelatedPlaceCellDelegate, DailyScheduleCellDelegate, PackageCellDelegate, RouteServiceDelegate>
 
 - (id)initWithRoute:(TouristRoute *)route routeType:(int)routeType;
 

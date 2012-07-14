@@ -49,6 +49,7 @@
 
 #define URL_TRAVEL_PLACE_ORDER          (URL_SERVICE@"placeOrder.aspx?")
 
+#define URL_TRAVE_FOLLOW_ROUTE          (URL_SERVICE@"followRoute.aspx?")
 
 // Output Format
 #define FORMAT_TRAVEL_JSON          1

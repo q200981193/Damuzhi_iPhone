@@ -41,6 +41,9 @@
 		A3DED49E152044040076E5CD /* PlaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A3DED49C152044040076E5CD /* PlaceCell.m */; };
 		A3DED49F152044040076E5CD /* PlaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3DED49D152044040076E5CD /* PlaceCell.xib */; };
 		A3E1956415A2F0B600972886 /* RankView.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E1956315A2F0B600972886 /* RankView.m */; };
+		A3E456AD15B1192B00430D2A /* RouteStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E456AC15B1192B00430D2A /* RouteStorage.m */; };
+		A3E456B215B136A200430D2A /* FollowRouteController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3E456B015B136A200430D2A /* FollowRouteController.m */; };
+		A3E456B315B136A200430D2A /* FollowRouteController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3E456B115B136A200430D2A /* FollowRouteController.xib */; };
 		A3EB73E4152E965C003BA8B8 /* IOS SDK Readme 2.0.0.docx in Resources */ = {isa = PBXBuildFile; fileRef = A3EB738F152E965B003BA8B8 /* IOS SDK Readme 2.0.0.docx */; };
 		A3EB73FD152E965C003BA8B8 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A3EB73BC152E965B003BA8B8 /* SFHFKeychainUtils.m */; };
 		A3EB73FE152E965C003BA8B8 /* WBAuthorize.m in Sources */ = {isa = PBXBuildFile; fileRef = A3EB73BE152E965B003BA8B8 /* WBAuthorize.m */; };
@@ -756,6 +759,11 @@
 		A3DED49D152044040076E5CD /* PlaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceCell.xib; sourceTree = "<group>"; };
 		A3E1956215A2F0B600972886 /* RankView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankView.h; sourceTree = "<group>"; };
 		A3E1956315A2F0B600972886 /* RankView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankView.m; sourceTree = "<group>"; };
+		A3E456AB15B1192B00430D2A /* RouteStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteStorage.h; sourceTree = "<group>"; };
+		A3E456AC15B1192B00430D2A /* RouteStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteStorage.m; sourceTree = "<group>"; };
+		A3E456AF15B136A200430D2A /* FollowRouteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowRouteController.h; sourceTree = "<group>"; };
+		A3E456B015B136A200430D2A /* FollowRouteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowRouteController.m; sourceTree = "<group>"; };
+		A3E456B115B136A200430D2A /* FollowRouteController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowRouteController.xib; sourceTree = "<group>"; };
 		A3EB738F152E965B003BA8B8 /* IOS SDK Readme 2.0.0.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IOS SDK Readme 2.0.0.docx"; sourceTree = "<group>"; };
 		A3EB73BB152E965B003BA8B8 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		A3EB73BC152E965B003BA8B8 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
@@ -1806,6 +1814,16 @@
 			name = "Component-Service";
 			sourceTree = "<group>";
 		};
+		A3E456AE15B1361F00430D2A /* FollowRoute */ = {
+			isa = PBXGroup;
+			children = (
+				A3E456AF15B136A200430D2A /* FollowRouteController.h */,
+				A3E456B015B136A200430D2A /* FollowRouteController.m */,
+				A3E456B115B136A200430D2A /* FollowRouteController.xib */,
+			);
+			path = FollowRoute;
+			sourceTree = "<group>";
+		};
 		A3EB737C152E965B003BA8B8 /* SinaWeiBoSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1944,6 +1962,8 @@
 				A406BA63157CAC2200257DED /* RouteUtils.m */,
 				A455F8181582F58100CA5743 /* RouteExtend.h */,
 				A455F8191582F58100CA5743 /* RouteExtend.m */,
+				A3E456AB15B1192B00430D2A /* RouteStorage.h */,
+				A3E456AC15B1192B00430D2A /* RouteStorage.m */,
 			);
 			path = Route;
 			sourceTree = "<group>";
@@ -2114,6 +2134,7 @@
 		A455F8CE1585D43900CA5743 /* Route */ = {
 			isa = PBXGroup;
 			children = (
+				A3E456AE15B1361F00430D2A /* FollowRoute */,
 				C28AFA5F15AC3EB20025A9B3 /* RouteList */,
 				A455F8CF1585D43900CA5743 /* RouteDetail */,
 				A440FD8E15A3FA18005C4759 /* UnPackageTourHomePageController.h */,
@@ -4404,6 +4425,7 @@
 				A484A67715AEC97F009D780C /* yd_t2@2x.png in Resources */,
 				A484A67815AEC97F009D780C /* yd_t3@2x.png in Resources */,
 				A3F195D715AED96000756702 /* PlaceOrderCell.xib in Resources */,
+				A3E456B315B136A200430D2A /* FollowRouteController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4716,6 +4738,8 @@
 				C28AFA8015AC3EB20025A9B3 /* SelectCityController.m in Sources */,
 				C28AFA8215AC3EB20025A9B3 /* UnPackageTourListFilter.m in Sources */,
 				A3F195D615AED96000756702 /* PlaceOrderCell.m in Sources */,
+				A3E456AD15B1192B00430D2A /* RouteStorage.m in Sources */,
+				A3E456B215B136A200430D2A /* FollowRouteController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
