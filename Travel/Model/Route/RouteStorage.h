@@ -16,5 +16,6 @@
 - (void)addRoute:(TouristRoute *)route;
 - (void)deleteRoute:(TouristRoute *)route;
 - (BOOL)isExistRoute:(int)routeId;
+- (NSArray*)findAllRoutesSortByLatest;
 
 @end

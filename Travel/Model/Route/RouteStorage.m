@@ -113,5 +113,16 @@ static RouteStorage *_followManager = nil;
     [builder release];
 }
 
+- (NSArray *)findAllRoutesSortByLatest
+{
+    NSArray *array = [self findAllRoutes];
+    NSMutableArray *mutableArray = [[[NSMutableArray alloc] init] autorelease];
+    
+    int count = [array count];
+    for (int i = count-1 ; i >= 0 ; i--) {
+        [mutableArray addObject:[array objectAtIndex:i]];
+    }
+    return mutableArray;
+}
 
 @end

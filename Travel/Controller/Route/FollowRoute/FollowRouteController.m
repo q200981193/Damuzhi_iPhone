@@ -60,7 +60,7 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    self.dataList = [[RouteStorage followManager:_routeType] findAllRoutes];
+    self.dataList = [[RouteStorage followManager:_routeType] findAllRoutesSortByLatest];
     [self updateNoDataTips];
 }
 
