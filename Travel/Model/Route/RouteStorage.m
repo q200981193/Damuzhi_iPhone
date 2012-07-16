@@ -16,43 +16,27 @@
 
 @property (assign, nonatomic) int routeType;
 
-- (id)initWithType:(int)routeType;
 - (NSString*)getFilePath;
 - (void)writeToFileWithList:(NSArray*)newList;
 
 @end
 
 
-static RouteStorage *_packageFollowManager = nil;
-static RouteStorage *_unpackageFollowManager = nil;
+static RouteStorage *_followManager = nil;
 
 @implementation RouteStorage
 @synthesize routeType = _routeType;
 
-+ (RouteStorage *)packageFollowManager
++ (RouteStorage *)followManager:(int)routeType
 {
-    if (_packageFollowManager == nil) {
-        _packageFollowManager = [[RouteStorage alloc] initWithType:OBJECT_LIST_ROUTE_PACKAGE_TOUR];
+    if (_followManager == nil) {
+        _followManager = [[RouteStorage alloc] init];
     }
-    return _packageFollowManager;
+    
+    _followManager.routeType = routeType;
+    return _followManager;
 }
 
-+ (RouteStorage *)unpackageFollowManager
-{
-    if (_unpackageFollowManager == nil) {
-        _unpackageFollowManager = [[RouteStorage alloc] initWithType:OBJECT_LIST_ROUTE_UNPACKAGE_TOUR];
-    }
-    return _unpackageFollowManager;
-}
-
-- (id)initWithType:(int)routeType
-{
-    self = [super init];
-    if (self) {
-        self.routeType = routeType;
-    }
-    return self;
-}
 
 - (NSArray*)findAllRoutes
 {
@@ -98,6 +82,17 @@ static RouteStorage *_unpackageFollowManager = nil;
     }
 }
 
+- (BOOL)isExistRoute:(int)routeId
+{
+    NSArray *array = [self findAllRoutes];
+    for (TouristRoute *routeTemp in array) {
+        if (routeTemp.routeId == routeId) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 
 - (NSString*)getFilePath
 {
@@ -117,5 +112,6 @@ static RouteStorage *_unpackageFollowManager = nil;
     } 
     [builder release];
 }
+
 
 @end
