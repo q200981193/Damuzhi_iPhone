@@ -43,7 +43,7 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickDelete:)];
     
-    self.placeList = [[PlaceStorage historyManager] allPlaces];
+    self.placeList = [[PlaceStorage historyManager] allPlacesSortByLatest];
     
     self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDownDelegate:nil] autorelease];
     
@@ -94,7 +94,7 @@
 {
     if (buttonIndex == 1) {
         [[PlaceStorage historyManager] deleteAllPlaces];
-         self.placeList = [[PlaceStorage historyManager] allPlaces];
+         self.placeList = [[PlaceStorage historyManager] allPlacesSortByLatest];
         [self.placeListController setPlaceList:_placeList];
     }
 }
