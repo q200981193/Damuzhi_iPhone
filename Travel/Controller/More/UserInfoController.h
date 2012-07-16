@@ -1,5 +1,5 @@
 //
-//  PersonalInfoController.h
+//  UserInfoController.h
 //  Travel
 //
 //  Created by haodong on 12-7-4.
@@ -7,9 +7,9 @@
 //
 
 #import "PPTableViewController.h"
-#import "PersonalInfoCell.h"
+#import "UserInfoCell.h"
 #import "UserService.h"
 
-@interface PersonalInfoController : PPTableViewController <PersonalInfoCellDelegate, UserServiceDelegate>
+@interface UserInfoController : PPTableViewController <UserInfoCellDelegate, UserServiceDelegate>
 
 @end
