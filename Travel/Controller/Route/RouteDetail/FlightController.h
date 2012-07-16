@@ -43,4 +43,9 @@
 @property (retain, nonatomic) IBOutlet UIImageView *returnFlightBackgroundImage;
 
 @property (retain, nonatomic) IBOutlet UIImageView *returnFlightBackgroundImage2;
+
+
+@property (retain, nonatomic) IBOutlet UIScrollView *backgroundScrollView;
+
+
 @end

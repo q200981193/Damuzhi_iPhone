@@ -1,13 +1,13 @@
 //
-//  PersonalInfoController.m
+//  UserInfoController.m
 //  Travel
 //
 //  Created by haodong on 12-7-4.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "PersonalInfoController.h"
-#import "PersonalInfoCell.h"
+#import "UserInfoController.h"
+#import "UserInfoCell.h"
 #import "ImageManager.h"
 #import "ChangePasswordController.h"
 #import "UserManager.h"
@@ -38,7 +38,7 @@ enum{
 #define TITLE_NICKNAME   NSLS(@"昵   称:|请输入您的昵称")
 #define TITLE_FULLNAME   NSLS(@"姓   名:|请输入您的真实姓名")
 
-@interface PersonalInfoController ()
+@interface UserInfoController ()
 {
     CGPoint viewCenter;
 }
@@ -56,7 +56,7 @@ enum{
 //- (void)clickHideKeyboardButton:(id)sender;
 @end
 
-@implementation PersonalInfoController
+@implementation UserInfoController
 @synthesize userInfo = _userInfo;
 
 @synthesize titleDic = _titleDic;
@@ -152,17 +152,17 @@ enum{
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [PersonalInfoCell getCellHeight];
+    return [UserInfoCell getCellHeight];
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = [PersonalInfoCell getCellIdentifier];
-    PersonalInfoCell *cell = [dataTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    NSString *cellIdentifier = [UserInfoCell getCellIdentifier];
+    UserInfoCell *cell = [dataTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [PersonalInfoCell createCell:self];
+        cell = [UserInfoCell createCell:self];
     }
     cell.aDelegate = self;
     cell.indexPath = indexPath;
@@ -201,9 +201,9 @@ enum{
 //hide the keyboard when "Done" is tapped.
 - (void)inputTextFieldShouldReturn:(NSIndexPath *)aIndexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
+    UserInfoCell * cell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:(aIndexPath.row+1) inSection:aIndexPath.section];
-    PersonalInfoCell * nextCell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:nextIndexPath];
+    UserInfoCell * nextCell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:nextIndexPath];
 
     if (nextCell == nil) {
         [cell.inputTextField resignFirstResponder];
@@ -248,10 +248,10 @@ enum{
                                             delegate:self];
 } 
 
-#pragma mark - PersonalInfoCellDelegate methods
+#pragma mark - UserInfoCellDelegate methods
 - (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath
 {
-    PersonalInfoCell *cell = (PersonalInfoCell *)[self.dataTableView cellForRowAtIndexPath:aIndexPath];
+    UserInfoCell *cell = (UserInfoCell *)[self.dataTableView cellForRowAtIndexPath:aIndexPath];
     self.currentInputTextField = cell.inputTextField;
 
     if (aIndexPath.section >1 || (aIndexPath.section == 1 && aIndexPath.row >= 1)) {
@@ -262,7 +262,7 @@ enum{
 
 - (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
+    UserInfoCell * cell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:aIndexPath];
     
     NSMutableDictionary *sectionDic = [self.inputTextDic objectForKey:[NSNumber numberWithInt:aIndexPath.section]];
     [sectionDic setObject:cell.inputTextField.text forKey:[NSNumber numberWithInt:aIndexPath.row]];

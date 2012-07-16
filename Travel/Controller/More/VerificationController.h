@@ -13,6 +13,7 @@
 
 - (id)initWithTelephone:(NSString *)telephone;
 
+@property (retain, nonatomic) IBOutlet UIScrollView *backgroundScrollView;
 @property (retain, nonatomic) UIViewController *loginController;
 @property (retain, nonatomic) IBOutlet UIButton *retrieveCodeButton;
 

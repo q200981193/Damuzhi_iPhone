@@ -1,19 +1,19 @@
 //
-//  PersonalInfoCell.m
+//  UserInfoCell.m
 //  Travel
 //
 //  Created by haodong on 12-7-4.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "PersonalInfoCell.h"
+#import "UserInfoCell.h"
 #import "LogUtil.h"
 
-@interface PersonalInfoCell()
+@interface UserInfoCell()
 
 @end
 
-@implementation PersonalInfoCell
+@implementation UserInfoCell
 @synthesize backgroundImageVeiw;
 @synthesize titleLabel;
 @synthesize inputTextField;
@@ -32,7 +32,7 @@
 #pragma mark: implementation of PPTableViewCellProtocol
 + (NSString*)getCellIdentifier
 {
-    return @"PersonalInfoCell";
+    return @"UserInfoCell";
 }
 
 + (CGFloat)getCellHeight

@@ -9,10 +9,8 @@
 #import "ChangePasswordController.h"
 #import "PPDebug.h"
 #import "PPViewController.h"
-#import "PPTableViewController.h"
 #import "PPNetworkRequest.h"
 
-//#import "UserService.h"
 
 
 #define TITLE_OLD_PASSWORD          NSLS(@"原  密  码:")
@@ -94,9 +92,6 @@
     [self.titleDic setObject:TITLE_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
     [self.placeHolderDic setObject:PLACEHOLDER_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
     
-//    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_OLD_PASSWORD]];
-//    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD]];
-//    [self.passwordDic setObject:@"" forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -106,16 +101,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [PersonalInfoCell getCellHeight];
+    return [UserInfoCell getCellHeight];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = [PersonalInfoCell getCellIdentifier];
-    PersonalInfoCell *cell = (PersonalInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    NSString *cellIdentifier = [UserInfoCell getCellIdentifier];
+    UserInfoCell *cell = (UserInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
     if (cell == nil) {
-        cell = [PersonalInfoCell createCell:self];
+        cell = [UserInfoCell createCell:self];
         cell.titleLabel.frame = CGRectOffset(cell.titleLabel.frame, -5, 0);
         cell.inputTextField.frame = CGRectOffset(cell.inputTextField.frame, 5, 0);
         cell.inputTextField.returnKeyType = (indexPath.row == CELL_ROW_NEW_PASSWORD_AGAIN) ? UIReturnKeyDone : UIReturnKeyNext;
@@ -179,7 +174,7 @@
 
 - (void)inputTextFieldDidBeginEditing:(NSIndexPath *)indexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
+    UserInfoCell * cell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
     if (cell != nil) {
         self.currentInputTextField = cell.inputTextField;
     }
@@ -187,7 +182,7 @@
 
 - (void)inputTextFieldDidEndEditing:(NSIndexPath *)indexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
+    UserInfoCell * cell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
     if (cell != nil) {
         [_passwordDic setObject:cell.inputTextField.text forKey:[NSNumber numberWithInt:indexPath.row]];
     }
@@ -195,9 +190,9 @@
 
 - (void)inputTextFieldShouldReturn:(NSIndexPath *)indexPath
 {
-    PersonalInfoCell * cell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
+    UserInfoCell * cell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:indexPath];
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForRow:(indexPath.row+1) inSection:indexPath.section];
-    PersonalInfoCell * nextCell = (PersonalInfoCell*)[dataTableView cellForRowAtIndexPath:nextIndexPath];
+    UserInfoCell * nextCell = (UserInfoCell*)[dataTableView cellForRowAtIndexPath:nextIndexPath];
 
     if (nextCell == nil) {
         [cell.inputTextField resignFirstResponder];

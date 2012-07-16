@@ -22,7 +22,7 @@
 #import "FavoriteController.h"
 #import "ShareToSinaController.h"
 #import "ShareToQQController.h"
-#import "PersonalInfoController.h"
+#import "UserInfoController.h"
 
 @interface MoreController ()
 
@@ -357,7 +357,7 @@
 
 - (void)showUserInfo
 {
-    PersonalInfoController *controller = [[PersonalInfoController alloc] init];
+    UserInfoController *controller = [[UserInfoController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

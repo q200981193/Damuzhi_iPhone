@@ -1,5 +1,5 @@
 //
-//  PersonalInfoCell.h
+//  UserInfoCell.h
 //  Travel
 //
 //  Created by haodong on 12-7-4.
@@ -8,7 +8,7 @@
 
 #import "PPTableViewCell.h"
 
-@protocol PersonalInfoCellDelegate <NSObject>
+@protocol UserInfoCellDelegate <NSObject>
 
 - (void)inputTextFieldDidBeginEditing:(NSIndexPath *)aIndexPath;
 - (void)inputTextFieldDidEndEditing:(NSIndexPath *)aIndexPath;
@@ -16,14 +16,14 @@
 
 @end
 
-@interface PersonalInfoCell : PPTableViewCell <UITextFieldDelegate>
+@interface UserInfoCell : PPTableViewCell <UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UIImageView *backgroundImageVeiw;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UITextField *inputTextField;
 @property (retain, nonatomic) IBOutlet UIImageView *pointImageView;
 
-@property (assign, nonatomic) id<PersonalInfoCellDelegate> aDelegate;
+@property (assign, nonatomic) id<UserInfoCellDelegate> aDelegate;
 
 - (void)setCellIndexPath:(NSIndexPath *)aIndexPath;
 
