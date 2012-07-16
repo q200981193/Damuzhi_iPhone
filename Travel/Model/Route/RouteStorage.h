@@ -11,10 +11,10 @@
 @class TouristRoute;
 @interface RouteStorage : NSObject
 
-+ (RouteStorage *)packageFollowManager;
-+ (RouteStorage *)unpackageFollowManager;
++ (RouteStorage *)followManager:(int)routeType;
 - (NSArray*)findAllRoutes;
 - (void)addRoute:(TouristRoute *)route;
 - (void)deleteRoute:(TouristRoute *)route;
+- (BOOL)isExistRoute:(int)routeId;
 
 @end

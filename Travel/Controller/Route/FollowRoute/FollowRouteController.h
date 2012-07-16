@@ -7,8 +7,9 @@
 //
 
 #import "PPTableViewController.h"
+#import "RouteService.h"
 
-@interface FollowRouteController : PPTableViewController
+@interface FollowRouteController : PPTableViewController <RouteServiceDelegate>
 
 - (id)initWithRouteType:(int)routeType;
 

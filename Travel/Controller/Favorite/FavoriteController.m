@@ -119,7 +119,7 @@
     [topController release];
     [topFavPlaceListController showInView:topFavPlaceListView];
     
-    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlacesSortByLatest];
     if ([myAllFavoritePlaceList count] != 0) {
         [self clickMyFavorite:nil];
     }else {
@@ -242,7 +242,7 @@
 {
     [[PlaceService defaultService] deletePlaceFromFavorite:self place:place];
     [[PlaceStorage favoriteManager] deletePlace:place];
-    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlacesSortByLatest];
     
     if ([self.myFavPlaceListController.dataList count] == 0) {
         [self.myFavPlaceListController hideTipsOnTableView];
@@ -306,7 +306,7 @@
 
 - (void)clickMyFavorite:(id)sender
 {
-    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlaces];
+    self.myAllFavoritePlaceList = [[PlaceStorage favoriteManager] allPlacesSortByLatest];
     
     myFavoriteButton.selected = YES;
     topFavoriteButton.selected = NO;

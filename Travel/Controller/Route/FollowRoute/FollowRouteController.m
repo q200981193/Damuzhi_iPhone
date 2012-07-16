@@ -22,6 +22,10 @@
 @implementation FollowRouteController
 @synthesize routeType = _routeType;
 
+- (void)dealloc
+{
+    [super dealloc];
+}
 
 - (id)initWithRouteType:(int)routeType
 {
@@ -41,17 +45,23 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
-    [self setNavigationRightButton:nil 
-                         imageName:@"delete.png" 
-                            action:@selector(clickClear:)];
+    UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 11, 46, 22)];
+    [deleteButton setImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    [deleteButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    [deleteButton addTarget:self action:@selector(clickClear:) forControlEvents:UIControlEventTouchUpInside];
+    UIView *rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+    [rightButtonView addSubview:deleteButton];
+    [deleteButton release];
     
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButtonView];
+    [rightButtonView release];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    [rightButtonItem release];
     
-    if (_routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        self.dataList = [[RouteStorage packageFollowManager] findAllRoutes];
-    } else  if (_routeType == OBJECT_LIST_ROUTE_UNPACKAGE_TOUR){
-        self.dataList = [[RouteStorage unpackageFollowManager] findAllRoutes];
-    }
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    self.dataList = [[RouteStorage followManager:_routeType] findAllRoutes];
+    [self updateNoDataTips];
 }
 
 
@@ -87,6 +97,13 @@
     }
     RouteListCell* routeCell = (RouteListCell*)cell;
     [routeCell setCellData:[dataList objectAtIndex:indexPath.row]];
+    
+    if (tableView.editing) {
+        routeCell.totalView.frame = CGRectOffset(routeCell.totalView.frame, 10, 0);
+    }else {
+        routeCell.totalView.frame = (CGRect){CGPointMake(0, 0), routeCell.totalView.frame.size};
+    }
+    
     return cell;
 }
 
@@ -101,9 +118,42 @@
     [controller release];
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        TouristRoute *delRoute = (TouristRoute *)[dataList objectAtIndex:indexPath.row];
+        [[RouteService defaultService] unfollowRoute:delRoute routeType:_routeType viewController:self];
+        
+        NSMutableArray *mutableDataList = [NSMutableArray arrayWithArray:dataList];
+        [mutableDataList removeObjectAtIndex:indexPath.row];
+        self.dataList = mutableDataList;
+        
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+
 - (void)clickClear:(id)sender
 {
-    //[dataTableView setEditing:!dataTableView.editing animated:YES];
+    [dataTableView setEditing:!dataTableView.editing animated:YES];
+    [dataTableView reloadData];
+}
+
+
+- (void)updateNoDataTips
+{
+    if ([dataList count] ==0 ) {
+        [self showTipsOnTableView:NSLS(@"暂没关注信息")];
+    } else {
+        [self hideTipsOnTableView];
+    }
+}
+
+
+#pragma mark - RouteServiceDelegate method
+- (void)unfollowRouteDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    [self updateNoDataTips];
 }
 
 

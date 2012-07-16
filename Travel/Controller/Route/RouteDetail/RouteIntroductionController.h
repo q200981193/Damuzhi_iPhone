@@ -37,6 +37,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *agencyNameLabel;
 
 @property (retain, nonatomic) IBOutlet UIView *agencyInfoHolderView;
+@property (retain, nonatomic) IBOutlet UIButton *followButton;
 
 - (void)showInView:(UIScrollView *)superView;
 
