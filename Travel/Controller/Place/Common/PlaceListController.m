@@ -31,7 +31,6 @@
 {
     BOOL _showMap;
     BOOL _firstIn;
-    int _updateTimes;
 }
 
 @property (assign, nonatomic) BOOL canDelete;

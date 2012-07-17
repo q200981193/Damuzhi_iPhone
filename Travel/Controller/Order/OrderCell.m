@@ -106,7 +106,7 @@
 
 - (NSString*)orderStatusString:(int)orderStatus
 {
-    NSString *string;
+    NSString *string = @"";
     switch (orderStatus) {
         case 1:
             string = NSLS(@"意向订单");

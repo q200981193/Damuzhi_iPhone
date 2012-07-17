@@ -156,7 +156,7 @@
     [view addSubview:routeIdLabel];
     [routeIdLabel release];
     
-    UILabel *bookDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 0, 80, HEIGHT_HEADER_VIEW)];
+    UILabel *bookDateLabel = [[[UILabel alloc] initWithFrame:CGRectMake(200, 0, 80, HEIGHT_HEADER_VIEW)] autorelease];
     NSDate *bookDate = [NSDate dateWithTimeIntervalSince1970:[[dataList objectAtIndex:section] bookDate]];
     bookDateLabel.backgroundColor = [UIColor clearColor];
     bookDateLabel.font = [UIFont systemFontOfSize:15];
@@ -243,7 +243,7 @@
 
 - (int)routeType
 {
-    int routeType;
+    int routeType = 0;
     switch (_orderType) {
         case OBJECT_LIST_PACKAGE_TOUR_ORDER:
             routeType = OBJECT_LIST_ROUTE_PACKAGE_TOUR;

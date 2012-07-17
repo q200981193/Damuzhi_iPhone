@@ -152,7 +152,7 @@
 
 - (NSArray*) calendarMonthView:(TKCalendarMonthView*)monthView markTextsFromDate:(NSDate*)startDate toDate:(NSDate*)lastDate
 {
-    NSMutableArray *texts = [[NSMutableArray alloc] init];
+    NSMutableArray *texts = [[[NSMutableArray alloc] init] autorelease];
     
     // 计算这个时间离1970年1月1日0时0分0秒过去的天数。
     NSDate *d = startDate;

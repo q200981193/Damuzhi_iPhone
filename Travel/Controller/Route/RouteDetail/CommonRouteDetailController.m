@@ -51,7 +51,7 @@
 @synthesize bookingPolicyButton = _bookingPolicyButton;
 @synthesize userFeekbackButton = _userFeekbackButton;
 @synthesize buttonsHolderView = _buttonsHolderView;
-@synthesize contentScrollView = _contentScrollView;
+@synthesize contentView = _contentView;
 @synthesize currentSelectedButton = _currentSelectedButton;
 @synthesize phoneList = _phoneList;
 
@@ -67,7 +67,7 @@
     [_userFeekbackButton release];
     
     [_buttonsHolderView release];
-    [_contentScrollView release];
+    [_contentView release];
     [_currentSelectedButton release];
     [_phoneList release];
     [super dealloc];
@@ -114,7 +114,7 @@
     [self setBookingPolicyButton:nil];
     [self setUserFeekbackButton:nil];
     [self setButtonsHolderView:nil];
-    [self setContentScrollView:nil];
+    [self setContentView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -138,7 +138,7 @@
         _introductionController.aDelegate = self;
     }
     
-    [_introductionController showInView:self.contentScrollView];
+    [_introductionController showInView:self.contentView];
 }
 
 
@@ -151,7 +151,7 @@
         self.feeController = [[[CommonWebController alloc] initWithWebUrl:_route.fee] autorelease];
     }
     
-    [_feeController showInView:self.contentScrollView];    
+    [_feeController showInView:self.contentView];    
 }
 
 
@@ -164,7 +164,7 @@
         self.bookingPolicyController = [[[CommonWebController alloc] initWithWebUrl:_route.bookingNotice] autorelease];
     }
     
-    [_bookingPolicyController showInView:self.contentScrollView];        
+    [_bookingPolicyController showInView:self.contentView];        
     
 }
 
@@ -178,7 +178,7 @@
 
     }
 
-    [_feekbackListController showInView:self.contentScrollView];   
+    [_feekbackListController showInView:self.contentView];   
 }
 
 - (void)findRequestDone:(int)result route:(TouristRoute *)route

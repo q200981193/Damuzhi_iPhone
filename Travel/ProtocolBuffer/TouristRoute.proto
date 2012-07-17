@@ -36,11 +36,12 @@ message TouristRoute {
   repeated TravelPackage packages= 36;              // 线路套餐，自由行特有字段
   optional string bookingNote = 40;                 // 预订备注：如“需提前10天预订”
   repeated Booking bookings = 41;                   // 线路预订情况
-  optional string reference = 45;                   // 线路参考行程，返回html的绝对url
+  optional string reference = 45;                   // 线路参考行程，返回纯文本
   repeated PlaceTour relatedplaces = 48;            // 线路相关景点
 
   optional string fee = 50;                         // 线路费用说明，返回html的绝对url
   optional string bookingNotice = 51;               // 线路预订须知，返回html的绝对url
+  optional string contactPhone = 100;               // 线路咨询电话
 }
 
 message DailySchedule {

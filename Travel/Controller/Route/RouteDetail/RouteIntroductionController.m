@@ -129,7 +129,7 @@
     
     self.dataTableView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:240.0/255.0 blue:241.0/255.0 alpha:1];
     
-    SlideImageView *slideImageView = [[SlideImageView alloc] initWithFrame:imagesHolderView.bounds];
+    SlideImageView *slideImageView = [[[SlideImageView alloc] initWithFrame:imagesHolderView.bounds] autorelease];
     slideImageView.defaultImage = IMAGE_PLACE_DETAIL;
     [slideImageView setImages:_route.detailImagesList];
     [imagesHolderView addSubview:slideImageView];
@@ -274,11 +274,11 @@
     return bookButton;
 }
 
-- (void)showInView:(UIScrollView *)superView
+- (void)showInView:(UIView *)superView
 {
     [superView removeAllSubviews];
     
-    superView.contentSize = self.view.bounds.size;
+//    superView.contentSize = self.view.bounds.size;
     [superView addSubview:self.view];
 }
 
@@ -575,22 +575,9 @@
         return nil;
     }
     
-    CGRect rect;
+    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOOTER_VIEW);
     UIView *view = [[[UIView alloc] initWithFrame:rect] autorelease];
     view.backgroundColor = [UIColor clearColor];
-    
-//    PPDebug(@"section count: %d", [self sectionCount]);
-//    PPDebug(@"section = %d", section);
-//    if (section == [self sectionCount] - 1) {
-//        view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOLLOW_VIEW);
-//        UIButton *button = [[[UIButton alloc] initWithFrame:CGRectMake(self.dataTableView.frame.size.width/2 - WIDTH_FOLLOW_BUTTON/2, 53/2 - HEIGHT_FOLLOW_BUTTOn/2, WIDTH_FOLLOW_BUTTON, HEIGHT_FOLLOW_BUTTOn)] autorelease];
-//        [button addTarget:self action:@selector(clickFollowRoute:) forControlEvents:UIControlEventTouchUpInside];
-//        [button setTitle:NSLS(@"关注路线") forState:UIControlStateNormal];
-//        [button setBackgroundImage:[UIImage imageNamed:@"favorites.png"] forState:UIControlStateNormal];
-//        [view addSubview:button];
-//    }
-
-    view.frame = CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_FOOTER_VIEW);
     
     return view;
 }

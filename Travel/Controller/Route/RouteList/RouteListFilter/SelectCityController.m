@@ -120,7 +120,7 @@
     NSString *cellIdentifier = @"SelectCityControllerCell";
     UITableViewCell *cell = [dataTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
     }
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     

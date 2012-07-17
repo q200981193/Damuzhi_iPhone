@@ -19,7 +19,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *userFeekbackButton;
 @property (retain, nonatomic) IBOutlet UIView *buttonsHolderView;
 
-@property (retain, nonatomic) IBOutlet UIScrollView *contentScrollView;
+@property (retain, nonatomic) IBOutlet UIView *contentView;
 
 - (id)initWithRouteId:(int)routeId routeType:(int)routeType;
 

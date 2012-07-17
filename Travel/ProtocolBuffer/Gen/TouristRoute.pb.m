@@ -255,6 +255,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
 @property (retain) NSMutableArray* mutableRelatedplacesList;
 @property (retain) NSString* fee;
 @property (retain) NSString* bookingNotice;
+@property (retain) NSString* contactPhone;
 @end
 
 @implementation TouristRoute
@@ -385,6 +386,13 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
   hasBookingNotice_ = !!value;
 }
 @synthesize bookingNotice;
+- (BOOL) hasContactPhone {
+  return !!hasContactPhone_;
+}
+- (void) setHasContactPhone:(BOOL) value {
+  hasContactPhone_ = !!value;
+}
+@synthesize contactPhone;
 - (void) dealloc {
   self.name = nil;
   self.mutableDestinationCityIdsList = nil;
@@ -403,6 +411,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
   self.mutableRelatedplacesList = nil;
   self.fee = nil;
   self.bookingNotice = nil;
+  self.contactPhone = nil;
   [super dealloc];
 }
 - (id) init {
@@ -424,6 +433,7 @@ static TouristRouteList* defaultTouristRouteListInstance = nil;
     self.reference = @"";
     self.fee = @"";
     self.bookingNotice = @"";
+    self.contactPhone = @"";
   }
   return self;
 }
@@ -593,6 +603,9 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (self.hasBookingNotice) {
     [output writeString:51 value:self.bookingNotice];
   }
+  if (self.hasContactPhone) {
+    [output writeString:100 value:self.contactPhone];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -688,6 +701,9 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   }
   if (self.hasBookingNotice) {
     size += computeStringSize(51, self.bookingNotice);
+  }
+  if (self.hasContactPhone) {
+    size += computeStringSize(100, self.contactPhone);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -857,6 +873,9 @@ static TouristRoute* defaultTouristRouteInstance = nil;
   if (other.hasBookingNotice) {
     [self setBookingNotice:other.bookingNotice];
   }
+  if (other.hasContactPhone) {
+    [self setContactPhone:other.contactPhone];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -980,6 +999,10 @@ static TouristRoute* defaultTouristRouteInstance = nil;
       }
       case 410: {
         [self setBookingNotice:[input readString]];
+        break;
+      }
+      case 802: {
+        [self setContactPhone:[input readString]];
         break;
       }
     }
@@ -1464,6 +1487,22 @@ static TouristRoute* defaultTouristRouteInstance = nil;
 - (TouristRoute_Builder*) clearBookingNotice {
   result.hasBookingNotice = NO;
   result.bookingNotice = @"";
+  return self;
+}
+- (BOOL) hasContactPhone {
+  return result.hasContactPhone;
+}
+- (NSString*) contactPhone {
+  return result.contactPhone;
+}
+- (TouristRoute_Builder*) setContactPhone:(NSString*) value {
+  result.hasContactPhone = YES;
+  result.contactPhone = value;
+  return self;
+}
+- (TouristRoute_Builder*) clearContactPhone {
+  result.hasContactPhone = NO;
+  result.contactPhone = @"";
   return self;
 }
 @end

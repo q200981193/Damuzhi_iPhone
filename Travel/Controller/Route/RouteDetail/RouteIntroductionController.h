@@ -24,7 +24,6 @@
 
 @interface RouteIntroductionController : PPTableViewController <RelatedPlaceCellDelegate, DailyScheduleCellDelegate, PackageCellDelegate, RouteServiceDelegate>
 
-- (id)initWithRoute:(TouristRoute *)route routeType:(int)routeType;
 
 @property (assign, nonatomic) id<RouteIntroductionControllerDelegate> aDelegate;
 
@@ -39,6 +38,7 @@
 @property (retain, nonatomic) IBOutlet UIView *agencyInfoHolderView;
 @property (retain, nonatomic) IBOutlet UIButton *followButton;
 
-- (void)showInView:(UIScrollView *)superView;
+- (id)initWithRoute:(TouristRoute *)route routeType:(int)routeType;
+- (void)showInView:(UIView *)superView;
 
 @end

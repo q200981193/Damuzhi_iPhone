@@ -95,6 +95,7 @@ BOOL BookingStatusIsValidValue(BookingStatus value);
   BOOL hasAgencyId_:1;
   BOOL hasDepartCityId_:1;
   BOOL hasRouteId_:1;
+  BOOL hasContactPhone_:1;
   BOOL hasBookingNotice_:1;
   BOOL hasFee_:1;
   BOOL hasReference_:1;
@@ -112,6 +113,7 @@ BOOL BookingStatusIsValidValue(BookingStatus value);
   int32_t agencyId;
   int32_t departCityId;
   int32_t routeId;
+  NSString* contactPhone;
   NSString* bookingNotice;
   NSString* fee;
   NSString* reference;
@@ -147,6 +149,7 @@ BOOL BookingStatusIsValidValue(BookingStatus value);
 - (BOOL) hasReference;
 - (BOOL) hasFee;
 - (BOOL) hasBookingNotice;
+- (BOOL) hasContactPhone;
 @property (readonly) int32_t routeId;
 @property (readonly, retain) NSString* name;
 @property (readonly) int32_t departCityId;
@@ -164,6 +167,7 @@ BOOL BookingStatusIsValidValue(BookingStatus value);
 @property (readonly, retain) NSString* reference;
 @property (readonly, retain) NSString* fee;
 @property (readonly, retain) NSString* bookingNotice;
+@property (readonly, retain) NSString* contactPhone;
 - (NSArray*) destinationCityIdsList;
 - (int32_t) destinationCityIdsAtIndex:(int32_t) index;
 - (NSArray*) themeIdsList;
@@ -346,6 +350,11 @@ BOOL BookingStatusIsValidValue(BookingStatus value);
 - (NSString*) bookingNotice;
 - (TouristRoute_Builder*) setBookingNotice:(NSString*) value;
 - (TouristRoute_Builder*) clearBookingNotice;
+
+- (BOOL) hasContactPhone;
+- (NSString*) contactPhone;
+- (TouristRoute_Builder*) setContactPhone:(NSString*) value;
+- (TouristRoute_Builder*) clearContactPhone;
 @end
 
 @interface DailySchedule : PBGeneratedMessage {
