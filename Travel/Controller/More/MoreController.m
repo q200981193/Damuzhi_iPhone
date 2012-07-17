@@ -182,7 +182,7 @@
 	return [dataDictionary count];			// default implementation
 }
 
-
+#define TAG_CITY_LABEL 70 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -206,8 +206,12 @@
 		return cell;
 	}
     
+    UILabel *cityLabel = (UILabel*)[cell.contentView viewWithTag:TAG_CITY_LABEL];
+    [cityLabel removeFromSuperview];
+    
     if ([CITIES isEqualToString:[dataDictionary objectForKey:[NSNumber numberWithInt:row]]]) {
         UILabel *cityLabel = [[UILabel alloc] initWithFrame:CGRectMake(114, 2, 122, MORE_TABLE_CELL_HEIGHT-4)];
+        cityLabel.tag = TAG_CITY_LABEL;
         cityLabel.text = [[AppManager defaultManager] getCurrentCityName];
         cityLabel.font = [UIFont boldSystemFontOfSize:16];
         cityLabel.textAlignment = UITextAlignmentRight;
@@ -215,7 +219,8 @@
         [cell.contentView addSubview:cityLabel];
         [cityLabel release];
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
     if ([SHOW_IMAGE isEqualToString:[dataDictionary objectForKey:[NSNumber numberWithInt:row]]]) {
