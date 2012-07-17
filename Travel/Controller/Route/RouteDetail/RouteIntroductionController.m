@@ -154,7 +154,7 @@
                 [dic setObject:package.name forKey:[NSNumber numberWithInt:row++]];
             }
             [dic setObject:SECTION_TITLE_BOOKING forKey:[NSNumber numberWithInt:row++]];
-//            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
+            [dic setObject:SECTION_TITLE_REFERENCE forKey:[NSNumber numberWithInt:row++]];
         }
         
         [dic setObject:SECTION_TITLE_RELATED_PLACE forKey:[NSNumber numberWithInt:row++]];
@@ -367,8 +367,8 @@
         cell = [self cellForBookingWithIndex:indexPath tableView:tableView];
     }else if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
         cell = [self cellForRelatedPlaceWithIndex:indexPath tableView:tableView];
-//    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
-//        
+    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
+        cell = [self cellForReferenceWithIndex:indexPath tableView:tableView];
     }else{
         for (TravelPackage *package in _route.packagesList) {
             if ([title isEqualToString:package.name]) {
@@ -400,6 +400,29 @@
 {
     CGSize withinSize = CGSizeMake(WIDTH_CHARACTICS_LABEL, MAXFLOAT);
     CGSize size = [_route.characteristic sizeWithFont:FONT_CHARACTICS_LABEL constrainedToSize:withinSize lineBreakMode:LINE_BREAK_MODE_CHARACTICS_LABEL];
+    
+    return size.height + 5;
+}
+
+- (UITableViewCell *)cellForReferenceWithIndex:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[CharacticsCell getCellIdentifier]];
+    
+    if (cell == nil) {
+        cell = [CharacticsCell createCell:self];	
+    }
+    
+    CharacticsCell *characticsCell = (CharacticsCell *)cell;
+    characticsCell.characticsLabel.textColor = COLOR_CONTENT;
+    [characticsCell setCellData:_route.reference];
+    
+    return cell;
+}
+
+- (CGFloat)cellHeightForReferenceWithIndex:(NSIndexPath *)indexPath
+{
+    CGSize withinSize = CGSizeMake(WIDTH_CHARACTICS_LABEL, MAXFLOAT);
+    CGSize size = [_route.reference sizeWithFont:FONT_CHARACTICS_LABEL constrainedToSize:withinSize lineBreakMode:LINE_BREAK_MODE_CHARACTICS_LABEL];
     
     return size.height + 5;
 }
@@ -526,8 +549,8 @@
         height = [self cellHeightForBookingWithIndex:indexPath];
     }else if ([title isEqualToString:SECTION_TITLE_RELATED_PLACE]) {
         height = [self cellHeightForRelatedPlaceWithIndex:indexPath];
-//    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
-        
+    }else if ([title isEqualToString:SECTION_TITLE_REFERENCE]) {
+         height = [self cellHeightForReferenceWithIndex:indexPath];
     }else{
         for (TravelPackage *package in _route.packagesList) {
             if ([title isEqualToString:package.name]) {
