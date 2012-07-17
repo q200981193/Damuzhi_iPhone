@@ -31,6 +31,7 @@
 @synthesize returnFlightModeLabel;
 @synthesize returnFlightBackgroundImage;
 @synthesize returnFlightBackgroundImage2;
+@synthesize backgroundScrollView;
 
 
 
@@ -47,6 +48,7 @@
     [returnFlightLaunchInforLabel release];
     [returnFlightDescendInforLabel release];
     [returnFlightModeLabel release];
+    [backgroundScrollView release];
     [super dealloc];
 }
 
@@ -76,6 +78,8 @@
     
     
     PPDebug(@"_departFlight is %@", _departFlight);
+    [self.backgroundScrollView setContentSize:CGSizeMake(self.backgroundScrollView.frame.size.width, self.backgroundScrollView.frame.size.height+1)];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
 
 
@@ -115,6 +119,7 @@
     [self setReturnFlightLaunchInforLabel:nil];
     [self setReturnFlightDescendInforLabel:nil];
     [self setReturnFlightModeLabel:nil];
+    [self setBackgroundScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

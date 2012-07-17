@@ -158,11 +158,7 @@ static RouteService *_defaultRouteService = nil;
           routeType:(int)routeType 
      viewController:(PPViewController<RouteServiceDelegate>*)viewController
 {
-    if (routeType == OBJECT_LIST_ROUTE_PACKAGE_TOUR) {
-        [[RouteStorage packageFollowManager] addRoute:route];
-    } else if (routeType == OBJECT_LIST_ROUTE_UNPACKAGE_TOUR) {
-        [[RouteStorage unpackageFollowManager] addRoute:route];
-    }
+    [[RouteStorage followManager:routeType] addRoute:route];
     
     NSString *userId = nil; 
     NSString *loginId = nil;
@@ -197,5 +193,28 @@ static RouteService *_defaultRouteService = nil;
         });                        
     });
 }
+
+- (void)unfollowRoute:(TouristRoute *)route 
+          routeType:(int)routeType 
+     viewController:(PPViewController<RouteServiceDelegate>*)viewController
+{
+    [[RouteStorage followManager:routeType] deleteRoute:route];
+    
+    //to do
+    //CommonNetworkOutput *output = 
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //to do
+        //if (output.resultCode == ERROR_SUCCESS) 
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([viewController respondsToSelector:@selector(unfollowRouteDone:result:resultInfo:)]) {
+                [viewController unfollowRouteDone:-1 result:-1 resultInfo:@"网络接口待实现"];
+            }
+        });                        
+    });
+}
+
 
 @end

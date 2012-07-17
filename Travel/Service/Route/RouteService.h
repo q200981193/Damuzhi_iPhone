@@ -35,6 +35,10 @@
                  result:(int)result 
              resultInfo:(NSString *)resultInfo;
 
+- (void)unfollowRouteDone:(int)resultCode 
+                   result:(int)result 
+               resultInfo:(NSString *)resultInfo;
+
 @end
 
 
@@ -58,6 +62,10 @@
              viewController:(PPViewController<RouteServiceDelegate>*)viewController;
                 
 - (void)followRoute:(TouristRoute *)route 
+          routeType:(int)routeType 
+     viewController:(PPViewController<RouteServiceDelegate>*)viewController;
+
+- (void)unfollowRoute:(TouristRoute *)route 
           routeType:(int)routeType 
      viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 

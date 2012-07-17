@@ -17,6 +17,7 @@
 #import "FlightController.h"
 #import "RouteUtils.h"
 #import "PPDebug.h"
+#import "UIUtils.h"
 
 @interface CommonRouteDetailController ()
 
@@ -30,6 +31,7 @@
 @property (retain, nonatomic) RouteFeekbackListController *feekbackListController;
 
 @property (retain, nonatomic) UIButton *currentSelectedButton;
+@property (retain, nonatomic) NSArray *phoneList;
 
 @end
 
@@ -51,7 +53,7 @@
 @synthesize buttonsHolderView = _buttonsHolderView;
 @synthesize contentScrollView = _contentScrollView;
 @synthesize currentSelectedButton = _currentSelectedButton;
-
+@synthesize phoneList = _phoneList;
 
 - (void)dealloc {
     [_route release];
@@ -67,7 +69,7 @@
     [_buttonsHolderView release];
     [_contentScrollView release];
     [_currentSelectedButton release];
-    
+    [_phoneList release];
     [super dealloc];
 }
 
@@ -94,6 +96,8 @@
     [self setNavigationRightButton:NSLS(@"咨询") 
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickConsult:)];
+    
+    self.phoneList = [NSArray arrayWithObjects:@"10086", nil];
     
     self.buttonsHolderView.backgroundColor = [UIColor colorWithPatternImage:[[ImageManager defaultManager] lineNavBgImage]];
     
@@ -197,7 +201,15 @@
 
 - (void)clickConsult:(id)sender
 {
-    [self popupMessage:NSLS(@"拨打电话") title:nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    
+    for(NSString* title in self.phoneList){
+        [actionSheet addButtonWithTitle:title];
+    }
+    [actionSheet addButtonWithTitle:NSLS(@"返回")];
+    [actionSheet setCancelButtonIndex:[self.phoneList count]];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
 }
 
 - (void)didSelectedPlace:(int)placeId
@@ -238,5 +250,15 @@
     [controller release];
 }
 
+
+#pragma mark - UIActionSheetDelegate method
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        return;
+    }
+    
+    [UIUtils makeCall:[self.phoneList objectAtIndex:buttonIndex]];
+}
 
 @end

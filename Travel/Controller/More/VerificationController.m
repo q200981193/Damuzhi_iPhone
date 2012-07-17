@@ -22,6 +22,7 @@
 @implementation VerificationController
 @synthesize telephone = _telephone;
 @synthesize code = _code;
+@synthesize backgroundScrollView;
 @synthesize loginController = _loginController;
 @synthesize retrieveCodeButton;
 
@@ -38,6 +39,7 @@
     [codeTextField release];
     [hideKeyboardButton release];
     [retrieveCodeButton release];
+    [backgroundScrollView release];
     [super dealloc];
 }
 
@@ -63,6 +65,8 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickFinish:)];
     
+    [self.backgroundScrollView setContentSize:CGSizeMake(self.backgroundScrollView.frame.size.width, self.backgroundScrollView.frame.size.height+1)];
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
     [retrieveCodeButton setBackgroundImage:[UIImage strectchableImageName:@"order_btn_1.png" leftCapWidth:20] forState:(UIControlStateNormal)];
@@ -79,6 +83,7 @@
     [self setCodeTextField:nil];
     [self setHideKeyboardButton:nil];
     [self setRetrieveCodeButton:nil];
+    [self setBackgroundScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

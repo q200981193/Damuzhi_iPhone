@@ -18,6 +18,9 @@
 #import "RankView.h"
 #import "PPNetworkRequest.h"
 #import "UIViewUtils.h"
+#import "RouteStorage.h"
+#import "AnimationManager.h"
+
 
 #define CELL_IDENTIFY_CHARACTICS @"CharacticsCell"
 
@@ -71,6 +74,7 @@
 @synthesize imagesHolderView;
 @synthesize agencyNameLabel;
 @synthesize agencyInfoHolderView;
+@synthesize followButton;
 
 - (void)dealloc {
     [_sectionStat release];
@@ -82,6 +86,7 @@
     [agencyNameLabel release];
     [routeNameLabel release];
     [routeIdLabel release];
+    [followButton release];
     [super dealloc];
 }
 
@@ -129,6 +134,8 @@
     [slideImageView setImages:_route.detailImagesList];
     [imagesHolderView addSubview:slideImageView];
     
+    [self updateFollowButton];
+    
     [self initSectionStat];
 }
 
@@ -166,6 +173,7 @@
     [self setAgencyNameLabel:nil];
     [self setRouteNameLabel:nil];
     [self setRouteIdLabel:nil];
+    [self setFollowButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -723,9 +731,32 @@
     }
 }
 
+#define FAVORITES_OK_VIEW 777
 - (IBAction)clickFollowRoute:(id)sender
 {
+    CGRect rect = CGRectMake(0, 0, 109, 52);
+    UIButton *button = [[UIButton alloc] initWithFrame:rect];
+    button.tag = FAVORITES_OK_VIEW;
+    button.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"favorites_ok.png"]];
+    [button setTitle:NSLS(@"关注成功") forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(-8, 20, 0, 0)];
+    CGPoint fromPosition = CGPointMake(320/2, 345);
+    CGPoint toPosition = CGPointMake(320/2, 345);
+    [self.view addSubview:button];
+    [button release];
+    
+    [AnimationManager alertView:button fromPosition:fromPosition toPosition:toPosition interval:2 delegate:self];
+    
+    
     [[RouteService defaultService] followRoute:_route routeType:_routeType viewController:self];
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    UIView *view = [self.view viewWithTag:FAVORITES_OK_VIEW];
+    [view removeFromSuperview];
 }
 
 - (void)didClickFlight:(int)packageId
@@ -749,10 +780,22 @@
     }
 }
 
+- (void)updateFollowButton
+{
+    if ([[RouteStorage followManager:_routeType] isExistRoute:_route.routeId]) {
+        [followButton setTitle:NSLS(@"已关注") forState:UIControlStateNormal];
+        [followButton setEnabled:NO];
+    }
+    else {
+        [followButton setTitle:NSLS(@"关注线路") forState:UIControlStateNormal];
+        [followButton setEnabled:YES];
+    }
+}
+
 #pragma mark - RouteServiceDelegate method
 - (void)followRouteDone:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
 {
-    [self popupMessage:@"关注成功" title:nil]; 
+    [self updateFollowButton]; 
 }
 
 

@@ -27,6 +27,7 @@
 @synthesize autoLoginButton;
 @synthesize rememberLoginIdbutton;
 @synthesize rememberPasswordButton;
+@synthesize backgroundScrollView;
 
 @synthesize loginIdTextField;
 @synthesize passwordTextField;
@@ -52,6 +53,7 @@
     [rememberLoginIdbutton release];
     [rememberPasswordButton release];
 
+    [backgroundScrollView release];
     [super dealloc];
 }
 
@@ -67,6 +69,8 @@
     [self setNavigationRightButton:NSLS(@"登录") 
                          imageName:@"topmenu_btn_right.png"
                             action:@selector(clickLogin:)];
+   [self.backgroundScrollView setContentSize:CGSizeMake(self.backgroundScrollView.frame.size.width, self.backgroundScrollView.frame.size.height+1)];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
     UIImage *buttonImageBackground = [UIImage strectchableImageName:@"line_btn1.png"leftCapWidth:20];
     [checkOrdersButton setBackgroundImage:buttonImageBackground forState:UIControlStateNormal];
@@ -82,6 +86,8 @@
     if ([[UserManager defaultManager]  isRememberPassword]) {
         passwordTextField.text = [[UserManager defaultManager] password];
     }
+    
+//    all_page_bg2@2x.jpg
 }
 
 - (void)viewDidUnload
@@ -94,6 +100,7 @@
     [self setAutoLoginButton:nil];
     [self setRememberLoginIdbutton:nil];
     [self setRememberPasswordButton:nil];
+    [self setBackgroundScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -110,7 +117,7 @@
                     stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     self.password = self.passwordTextField.text;
     
-    
+ 
     
     if (!NSStringIsValidEmail(_loginId) && !NSStringIsValidPhone(_loginId)) {
         [self popupMessage:NSLS(@"您输入的用户名格式不正确") title:nil];
@@ -142,9 +149,8 @@
 
 
 - (IBAction)clickSignUpButton:(id)sender {
-    SignUpController *contoller = [[[SignUpController alloc] init] autorelease];
-    contoller.superController = self;
-    [self.navigationController pushViewController:contoller animated:YES];
+    SignUpController *controller = [[[SignUpController alloc] init] autorelease];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (IBAction)clickRetrievePasswordButton:(id)sender {
