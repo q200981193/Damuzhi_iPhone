@@ -31,8 +31,6 @@
 
 @interface CommonRouteListController ()
 
-@property (retain, nonatomic) NSMutableArray *allRouteList;
-//@property (retain, nonatomic) NSMutableArray *routeList;
 @property (assign, nonatomic) BOOL hasStatisticsView;
 
 @property (assign, nonatomic) int departCityId;
@@ -56,7 +54,6 @@
 
 @implementation CommonRouteListController
 
-@synthesize allRouteList = _allRouteList;
 @synthesize hasStatisticsView = _hasStatisticsView;
 
 @synthesize departCityId = _departCityId;
@@ -76,8 +73,6 @@
 #pragma mark - View lifecycle
 - (void)dealloc
 {
-    [_allRouteList release];
-//    [_routeList release];
     [_selectedItemIds release];
     
     [_statisticsView release];
@@ -100,8 +95,6 @@
         self.destinationCityId = destinationCityId;
         self.hasStatisticsView = hasStatisticsLabel;
         
-        self.allRouteList = [[[NSMutableArray alloc] init] autorelease];
-        //        self.routeList = [[[NSMutableArray alloc] init] autorelease];
         self.dataList = [NSArray array];
         self.start = 0;
         
@@ -197,14 +190,12 @@
     
     if (_start == 0) {
         self.noMoreData = NO;
-        [self.allRouteList removeAllObjects];
         self.dataList = [NSArray array];
     }
     
     self.start += [routeList count];
     self.totalCount = totalCount;
     
-    [_allRouteList addObjectsFromArray:routeList];
     self.dataList = [dataList arrayByAddingObjectsFromArray:routeList];     
     
     

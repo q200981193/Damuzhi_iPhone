@@ -17,6 +17,7 @@
 #import "Item.h"
 #import "PlaceUtils.h"
 #import "RouteUtils.h"
+#import "PlaceItemList.h"
 
 #define TEST_CITY
 
@@ -29,6 +30,7 @@
 @interface AppManager ()
 
 @property (retain, nonatomic) NSArray *allCities;
+@property (retain, nonatomic) NSMutableDictionary *placeItemDic;
 
 @end
 
@@ -38,6 +40,7 @@ static AppManager* _defaultAppManager = nil;
 
 @synthesize app = _app;
 @synthesize allCities = _allCities;
+@synthesize placeItemDic = _placeItemDic;
 
 + (id)defaultManager
 {
@@ -46,6 +49,30 @@ static AppManager* _defaultAppManager = nil;
     }
     
     return _defaultAppManager;
+}
+
+- (id)init
+{
+    if (self = [super init]) {
+        self.placeItemDic = [NSMutableDictionary dictionary];
+        
+        PlaceItemList *spotItemList = [[[PlaceItemList alloc] init] autorelease];
+        [self.placeItemDic setObject:spotItemList forKey:[NSNumber numberWithInt:PlaceCategoryTypePlaceSpot]];
+        
+        PlaceItemList *hotelItemList = [[[PlaceItemList alloc] init] autorelease];
+        [self.placeItemDic setObject:hotelItemList forKey:[NSNumber numberWithInt:PlaceCategoryTypePlaceHotel]];
+        
+        PlaceItemList *restaurantItemList = [[[PlaceItemList alloc] init] autorelease];
+        [self.placeItemDic setObject:restaurantItemList forKey:[NSNumber numberWithInt:PlaceCategoryTypePlaceRestraurant]];
+        
+        PlaceItemList *shoppingItemList = [[[PlaceItemList alloc] init] autorelease];
+        [self.placeItemDic setObject:shoppingItemList forKey:[NSNumber numberWithInt:PlaceCategoryTypePlaceShopping]];
+        
+        PlaceItemList *entertainmentItemList = [[[PlaceItemList alloc] init] autorelease];
+        [self.placeItemDic setObject:entertainmentItemList forKey:[NSNumber numberWithInt:PlaceCategoryTypePlaceEntertainment]];
+    }
+    
+    return self;
 }
 
 - (NSArray *)allCities
@@ -82,6 +109,7 @@ static AppManager* _defaultAppManager = nil;
 {
     [_app release];
     [_allCities release];
+    [_placeItemDic release];
     [super dealloc];
 }
 
@@ -146,6 +174,8 @@ static AppManager* _defaultAppManager = nil;
     
    [[appData data] writeToFile:[AppUtils getAppFilePath] atomically:YES];
 }
+
+
 
 - (City*)getCity:(int)cityId
 {
@@ -335,19 +365,6 @@ static AppManager* _defaultAppManager = nil;
     return subCategoryNameList;
 }
 
-//- (NSArray*)getProvidedServiceNameList:(int)categoryId
-//{
-//    NSMutableArray *providedServiceNameList = [[[NSMutableArray alloc] init] autorelease];
-//    PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
-//    if (placeMeta !=nil) {
-//        for (NameIdPair *providedServiceName in placeMeta.subCategoryListList) {
-//            [providedServiceNameList addObject:providedServiceName.name];
-//        }
-//    }
-//    
-//    return providedServiceNameList;
-//}
-
 - (NSArray*)getProvidedServiceIconList:(int)categoryId
 {
     NSMutableArray *providedServiceIconList = [[[NSMutableArray alloc] init] autorelease];
@@ -375,21 +392,6 @@ static AppManager* _defaultAppManager = nil;
     
     return subCategoryName;
 }
-
-//- (NSString*)getProvidedServiceName:(int)categoryId providedServiceId:(int)providedServiceId;
-//{
-//    NSString *providedServiceName = NSLS(@"");
-//    PlaceMeta *placeMeta = [self getPlaceMeta:categoryId];
-//    if (placeMeta !=nil) {
-//        for (NameIdPair *providedService in placeMeta.providedServiceListList) {
-//            if (providedService.id == providedServiceId) {
-//                providedServiceName = providedService.name;
-//            }
-//        }
-//    }
-//    
-//    return providedServiceName;
-//}
 
 - (NSString*)getProvidedServiceIcon:(int)categoryId providedServiceId:(int)providedServiceId;
 {
@@ -444,12 +446,25 @@ static AppManager* _defaultAppManager = nil;
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults]; 
     [userDefault setObject:[NSNumber numberWithInt:newCityId] forKey:KEY_CURRENT_CITY];
     [userDefault synchronize];
-//    [[SelectedItemIdsManager defaultManager] resetAllSelectedItems];
 }
 
+- (NSArray*)getSubCategoryItemList:(int)categoryId
+{   
+    return [[_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]] subCategoryItems];
+}
 
-- (NSArray*)getSubCategoryItemList:(int)categoryId placeList:(NSArray*)placeList
+- (NSArray *)getServiceItemList:(int)categoryId
 {
+    return [[_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]] serviceItems];
+}
+
+- (NSArray *)getAreaItemList:(int)categoryId
+{
+    return [[_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]] areaItems];
+}
+
+- (void)updateSubCategoryItemList:(int)categoryId placeList:(NSArray*)placeList
+{    
     NSMutableArray *subCategoryItemList = [[[NSMutableArray alloc] init] autorelease];    
     
     [subCategoryItemList addObject:[Item itemWithId:ALL_CATEGORY
@@ -466,10 +481,18 @@ static AppManager* _defaultAppManager = nil;
         }
     }
     
-    return subCategoryItemList;
+    PlaceItemList *itemList = [_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]];
+    itemList.subCategoryItems = subCategoryItemList;
 }
 
-- (NSArray*)getServiceItemList:(int)categoryId placeList:(NSArray *)placeList
+- (void)updateSubCategoryItemList:(int)categoryId staticticsList:(NSArray *)staticticsList
+{        
+    PlaceItemList *itemList = [_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]];
+    itemList.subCategoryItems = [self statisticsList2ItemList:staticticsList];
+}
+
+
+- (void)updateServiceItemList:(int)categoryId placeList:(NSArray *)placeList
 {
     NSMutableArray *serviceItemList = [[[NSMutableArray alloc] init] autorelease];
     
@@ -486,10 +509,17 @@ static AppManager* _defaultAppManager = nil;
         }
     }    
     
-    return serviceItemList;
+    PlaceItemList *itemList = [_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]];
+    itemList.serviceItems = serviceItemList;
 }
 
-- (NSArray *)getAreaItemList:(int)cityId placeList:(NSArray *)placeList
+- (void)updateServiceItemList:(int)categoryId staticticsList:(NSArray *)staticticsList
+{
+    PlaceItemList *itemList = [_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]];
+    itemList.serviceItems = [self statisticsList2ItemList:staticticsList];
+}
+
+- (void)updateAreaItemList:(int)categoryId cityId:(int)cityId placeList:(NSArray *)placeList
 {
     NSMutableArray *areaList = [[[NSMutableArray alloc] init] autorelease];
     
@@ -505,7 +535,14 @@ static AppManager* _defaultAppManager = nil;
         }
     }
     
-    return areaList;
+    PlaceItemList *itemList = [_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]];
+    itemList.areaItems = areaList; 
+}
+
+- (void)updateAreaItemList:(int)categoryId cityId:(int)cityId staticticsList:(NSArray *)staticticsList
+{
+    PlaceItemList *itemList = [_placeItemDic objectForKey:[NSNumber numberWithInt:categoryId]];
+    itemList.areaItems = [self statisticsList2ItemList:staticticsList];
 }
 
 - (NSArray *)getPriceRankItemList:(int)cityId
@@ -697,13 +734,8 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSArray *)getDepartCityItemList:(NSArray *)staticticsList
 {
-    NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
-    
-    for (Statistics *statistics in staticticsList) {
-        [retArray addObject:[Item itemWithStatistics:statistics]];
-    }
-    
-    return retArray;
+    return [self statisticsList2ItemList:staticticsList];
+
 }
 
 - (NSArray *)getDestinationCityItemList
@@ -762,14 +794,21 @@ static AppManager* _defaultAppManager = nil;
 
 - (NSArray *)getAgencyItemList:(NSArray *)staticticsList
 {
+    return [self statisticsList2ItemList:staticticsList];
+}
+
+- (NSArray *)statisticsList2ItemList:(NSArray *)staticticsList
+{
     NSMutableArray *retArray = [[[NSMutableArray alloc] init] autorelease];
     
     for (Statistics *statistics in staticticsList) {
         [retArray addObject:[Item itemWithStatistics:statistics]];
+        PPDebug(@"name = %@ count = %d",statistics.name, statistics.count);
     }
-
+    
     return retArray;
 }
+
 
 
 - (NSString*)getDepartCityName:(int)routeCityId

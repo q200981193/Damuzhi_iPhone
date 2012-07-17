@@ -115,7 +115,7 @@
     [[RouteService defaultService] findRoutesWithType:[self getRouteType] 
                                                 start:start 
                                                 count:count 
-                                 routeSelectedItemIds:routeSelectedItemIds 
+                                      selectedItemIds:routeSelectedItemIds 
                                        needStatistics:needStatistics 
                                        viewController:viewController];
     

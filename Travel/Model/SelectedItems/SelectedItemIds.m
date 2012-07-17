@@ -17,7 +17,7 @@
 @synthesize areaItemIds = _areaItemIds;
 @synthesize priceRankItemIds = _priceRankItemIds;
 @synthesize serviceItemIds = _serviceItemIds;
-@synthesize cuisineItemIds = _cuisineItemIds;
+//@synthesize cuisineItemIds = _cuisineItemIds;
 
 - (void)dealloc {
     [_subCategoryItemIds release];
@@ -25,7 +25,7 @@
     [_areaItemIds release];
     [_priceRankItemIds release];
     [_serviceItemIds release];
-    [_cuisineItemIds release];
+//    [_cuisineItemIds release];
 
     [super dealloc];
 }
@@ -39,13 +39,13 @@
         self.priceRankItemIds = [[[NSMutableArray alloc] init] autorelease];
         self.areaItemIds = [[[NSMutableArray alloc] init] autorelease];
         self.serviceItemIds = [[[NSMutableArray alloc] init] autorelease];
-        self.cuisineItemIds = [[[NSMutableArray alloc] init] autorelease];
+//        self.cuisineItemIds = [[[NSMutableArray alloc] init] autorelease];
                 
         [self.subCategoryItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.priceRankItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.areaItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.serviceItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-        [self.cuisineItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+//        [self.cuisineItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
         [self.sortItemIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
     }
     
@@ -64,7 +64,7 @@
     [self.priceRankItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.areaItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.serviceItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
-    [self.cuisineItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
+//    [self.cuisineItemIds addObject:[NSNumber numberWithInt:ALL_CATEGORY]];
     [self.sortItemIds addObject:[NSNumber numberWithInt:SORT_BY_RECOMMEND]];
 }
 

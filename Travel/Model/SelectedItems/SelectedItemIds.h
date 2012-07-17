@@ -15,7 +15,7 @@
 @property (retain, nonatomic) NSMutableArray *areaItemIds;
 @property (retain, nonatomic) NSMutableArray *priceRankItemIds;
 @property (retain, nonatomic) NSMutableArray *serviceItemIds;
-@property (retain, nonatomic) NSMutableArray *cuisineItemIds;
+//@property (retain, nonatomic) NSMutableArray *cuisineItemIds;
 
 - (void)reset;
 

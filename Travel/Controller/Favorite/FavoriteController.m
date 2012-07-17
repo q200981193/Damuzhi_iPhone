@@ -108,12 +108,12 @@
     
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 
-    PlaceListController *myController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDownDelegate:nil];
+    PlaceListController *myController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDelegate:nil];
     self.myFavPlaceListController = myController;
     [myController release];
     [myFavPlaceListController showInView:myFavPlaceListView];    
     
-    PlaceListController *topController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDownDelegate:nil];
+    PlaceListController *topController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDelegate:nil];
     
     self.topFavPlaceListController = topController;
     [topController release];

@@ -24,6 +24,19 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                            cityId:(int)cityId 
                              lang:(int)lang;
 
+
++ (CommonNetworkOutput*)queryList:(int)type 
+                           cityId:(int)cityId 
+                            start:(int)start
+                            count:(int)count
+                   subCategoryIds:(NSArray *)subCategoryIds
+                          areaIds:(NSArray *)areaIds
+                       serviceIds:(NSArray *)serviceIds
+                     priceRankIds:(NSArray *)priceRankIds
+                      sortTypeIds:(NSArray *)sortTypeIds
+                   needStatistics:(BOOL)needStatistics
+                             lang:(int)lang;
+
 + (CommonNetworkOutput*)queryList:(int)type 
                            cityId:(int)cityId
                             start:(int)start
@@ -67,7 +80,6 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
 + (CommonNetworkOutput*)queryList:(int)type 
                             start:(int)start
                             count:(int)count
-                             lang:(int)lang 
                  departCityIdList:(NSArray *)departCityIdList 
             destinationCityIdList:(NSArray *)destinationCityIdList 
                      agencyIdList:(NSArray *)agencyIdList 
@@ -76,6 +88,7 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                       themeIdList:(NSArray *)themeIdList 
                      sortTypeList:(NSArray *)sortTypeList 
                    needStatistics:(BOOL)needStatistics
+                             lang:(int)lang 
                              test:(BOOL)test;
 
 + (CommonNetworkOutput*)login:(NSString *)loginId 

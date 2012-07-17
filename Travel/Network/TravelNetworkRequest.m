@@ -190,6 +190,66 @@
 }
 
 + (CommonNetworkOutput*)queryList:(int)type 
+                           cityId:(int)cityId 
+                            start:(int)start
+                            count:(int)count
+                   subCategoryIds:(NSArray *)subCategoryIds
+                          areaIds:(NSArray *)areaIds
+                       serviceIds:(NSArray *)serviceIds
+                     priceRankIds:(NSArray *)priceRankIds
+                      sortTypeIds:(NSArray *)sortTypeIds
+                   needStatistics:(BOOL)needStatistics
+                             lang:(int)lang
+{
+    CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];
+    
+    ConstructURLBlock constructURLHandler = ^NSString *(NSString *baseURL)  {
+        
+        //set input parameters
+        NSString* str = [NSString stringWithString:baseURL];        
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_TYPE intValue:type];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_CITY_ID intValue:cityId];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_START intValue:start];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_COUNT intValue:count];
+
+        
+        NSString *valueString;
+        
+        valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:subCategoryIds];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_SUBCATEGORY_ID value:valueString];
+        
+        valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:areaIds];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_AREA_ID value:valueString];
+        
+        valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:serviceIds];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_SERVICE_ID value:valueString];
+        
+        valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:priceRankIds];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_PRICE_RANK_ID value:valueString];
+        
+        valueString = [TravelNetworkRequest addSeparator:STRING_SEPARATOR list:sortTypeIds];
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_SORT_TYPE value:valueString];
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_NEED_STATISTICS boolValue:needStatistics];
+        
+        str = [str stringByAddQueryParameter:PARA_TRAVEL_LANG intValue:lang];
+        
+        return str;
+    };
+    
+    TravelNetworkResponseBlock responseHandler = ^(NSDictionary* jsonDictionary, NSData* data, int resultCode) {  
+        return;
+    };
+    
+    return [TravelNetworkRequest sendRequest:URL_TRAVEL_QUERY_LIST
+                         constructURLHandler:constructURLHandler                         
+                             responseHandler:responseHandler         
+                                outputFormat:FORMAT_TRAVEL_PB
+                                      output:output];
+}
+
++ (CommonNetworkOutput*)queryList:(int)type 
                            cityId:(int)cityId
                             start:(int)start
                             count:(int)count
@@ -522,7 +582,6 @@
 + (CommonNetworkOutput*)queryList:(int)type 
                             start:(int)start
                             count:(int)count
-                             lang:(int)lang 
                  departCityIdList:(NSArray *)departCityIdList 
             destinationCityIdList:(NSArray *)destinationCityIdList 
                      agencyIdList:(NSArray *)agencyIdList 
@@ -531,6 +590,7 @@
                       themeIdList:(NSArray *)themeIdList 
                      sortTypeList:(NSArray *)sortTypeList 
                    needStatistics:(BOOL)needStatistics
+                             lang:(int)lang 
                              test:(BOOL)test
 {
     CommonNetworkOutput* output = [[[CommonNetworkOutput alloc] init] autorelease];

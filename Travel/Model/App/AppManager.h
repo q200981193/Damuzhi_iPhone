@@ -50,11 +50,23 @@
 - (void)setCurrentCityId:(int)newCity;
 
 // Get item list for select controller.
-- (NSArray *)getSubCategoryItemList:(int)categoryId placeList:(NSArray *)placeList;
-- (NSArray *)getServiceItemList:(int)categoryId placeList:(NSArray *)placeList;
-- (NSArray *)getAreaItemList:(int)cityId placeList:(NSArray *)placeList;
+//- (NSArray *)getSubCategoryItemList:(int)categoryId placeList:(NSArray *)placeList;
+//- (NSArray *)getServiceItemList:(int)categoryId placeList:(NSArray *)placeList;
+//- (NSArray *)getAreaItemList:(int)cityId placeList:(NSArray *)placeList;
 - (NSArray *)getPriceRankItemList:(int)cityId;
 - (NSArray *)getSortItemList:(int)categoryId;
+
+- (NSArray *)getSubCategoryItemList:(int)categoryId;
+- (NSArray *)getServiceItemList:(int)categoryId;
+- (NSArray *)getAreaItemList:(int)categoryId;
+
+- (void)updateSubCategoryItemList:(int)categoryId placeList:(NSArray*)placeList;
+- (void)updateSubCategoryItemList:(int)categoryId staticticsList:(NSArray *)staticticsList;
+- (void)updateServiceItemList:(int)categoryId placeList:(NSArray *)placeList;
+- (void)updateServiceItemList:(int)categoryId staticticsList:(NSArray *)staticticsList;
+- (void)updateAreaItemList:(int)categoryId cityId:(int)cityId placeList:(NSArray *)placeList;
+- (void)updateAreaItemList:(int)categoryId cityId:(int)cityId staticticsList:(NSArray *)staticticsList;
+
 
 // Get angency list 
 - (NSArray *)getRegions;

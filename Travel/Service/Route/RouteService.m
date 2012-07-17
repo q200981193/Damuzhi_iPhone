@@ -48,7 +48,7 @@ static RouteService *_defaultRouteService = nil;
 - (void)findRoutesWithType:(int)routeType
                      start:(int)start
                      count:(int)count 
-      routeSelectedItemIds:(RouteSelectedItemIds *)routeSelectedItemIds
+           selectedItemIds:(RouteSelectedItemIds *)selectedItemIds
             needStatistics:(BOOL)needStatistics 
             viewController:(PPViewController<RouteServiceDelegate>*)viewController
 {
@@ -58,15 +58,15 @@ static RouteService *_defaultRouteService = nil;
         CommonNetworkOutput* output = [TravelNetworkRequest queryList:routeType 
                                                                 start:start 
                                                                 count:count 
-                                                                 lang:LanguageTypeZhHans 
-                                                     departCityIdList:routeSelectedItemIds.departCityIds 
-                                                destinationCityIdList:routeSelectedItemIds.destinationCityIds 
-                                                         agencyIdList:routeSelectedItemIds.agencyIds 
-                                                      priceRankIdList:routeSelectedItemIds.priceRankItemIds
-                                                      daysRangeIdList:routeSelectedItemIds.daysRangeItemIds 
-                                                          themeIdList:routeSelectedItemIds.themeIds 
-                                                         sortTypeList:routeSelectedItemIds.sortIds 
+                                                     departCityIdList:selectedItemIds.departCityIds 
+                                                destinationCityIdList:selectedItemIds.destinationCityIds 
+                                                         agencyIdList:selectedItemIds.agencyIds 
+                                                      priceRankIdList:selectedItemIds.priceRankItemIds
+                                                      daysRangeIdList:selectedItemIds.daysRangeItemIds 
+                                                          themeIdList:selectedItemIds.themeIds 
+                                                         sortTypeList:selectedItemIds.sortIds 
                                                        needStatistics:needStatistics 
+                                                                 lang:LanguageTypeZhHans 
                                                                  test:NO];
         
         int totalCount;

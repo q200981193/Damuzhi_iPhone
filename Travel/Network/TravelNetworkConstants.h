@@ -85,6 +85,10 @@
 #define PARA_TRAVEL_LANG            @"lang"
 #define PARA_TRAVEL_OS              @"os"
 
+#define PARA_TRAVEL_SUBCATEGORY_ID  @"subcategoryId"
+#define PARA_TRAVEL_AREA_ID         @"areaId"
+#define PARA_TRAVEL_SERVICE_ID      @"serviceId"
+
 #define PARA_TRAVEL_PLACE_ID        @"placeId"
 #define PARA_TRAVEL_LONGITUDE       @"longitude"
 #define PARA_TRAVEL_LATITUDE        @"latitude"

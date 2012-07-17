@@ -21,12 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Travel/Model/App/AppManager.m"
-         timestampString = "363673498.519805"
+         timestampString = "364188621.787245"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "245"
-         endingLineNumber = "245"
-         landmarkName = "-getCityDownloadUrl:"
+         startingLineNumber = "273"
+         endingLineNumber = "273"
+         landmarkName = "-getCityDataSize:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -52,8 +52,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "108"
          endingLineNumber = "108"
-         landmarkName = "-clickFinish:"
-         landmarkType = "5">
+         landmarkName = "@implementation VerificationController"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

@@ -46,7 +46,7 @@
 @synthesize canDelete = _canDelete;
 @synthesize mapView = _mapView;
 @synthesize aDelegate = _aDelegate;
-@synthesize pullDownDelegate = _pullDownDelegate;
+@synthesize pullDelegate = _pullDelegate;
 @synthesize locateButton = _locateButton;
 @synthesize alertViewType = _alertViewType;
 @synthesize isNearby = _isNearby;
@@ -82,8 +82,8 @@
 - (void) reloadTableViewDataSource
 {
 	NSLog(@"Please override reloadTableViewDataSource"); 
-    if (_pullDownDelegate && [_pullDownDelegate respondsToSelector:@selector(didPullDown)]) {
-        [_pullDownDelegate didPullDown];
+    if (_pullDelegate && [_pullDelegate respondsToSelector:@selector(didPullDownToRefresh)]) {
+        [_pullDelegate didPullDownToRefresh];
     }
 }
 
@@ -103,14 +103,14 @@
 
 - (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
                   wantPullDownToRefresh:(BOOL)wantPullDownToRefresh
-                       pullDownDelegate:(id<PullToRefrshDelegate>)pullDownDelegate;
+                           pullDelegate:(id<PullDelegate>)pullDelegate;
 {
     self = [super init];
     if (self) {
         self.superNavigationController = superNavigationController;
         self.supportRefreshHeader = wantPullDownToRefresh;
-//        self.supportRefreshFooter = YES;
-        self.pullDownDelegate = pullDownDelegate;
+        self.supportRefreshFooter = YES;
+        self.pullDelegate = pullDelegate;
         _firstIn = YES;
     }
     
@@ -497,6 +497,13 @@
             
         default:
             break;
+    }
+}
+
+- (void)loadMoreTableViewDataSource
+{
+    if ([_pullDelegate respondsToSelector:@selector(didPullUpToLoadMore)]) {
+        [_pullDelegate didPullUpToLoadMore];
     }
 }
 

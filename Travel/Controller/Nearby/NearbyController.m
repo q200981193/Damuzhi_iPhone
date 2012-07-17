@@ -140,7 +140,7 @@
     
     [self setSelectedBtn:_categoryId];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDownDelegate:self] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDelegate:self] autorelease];
     _placeListController.aDelegate = self;
     
     [_placeListController showInView:placeListHolderView];
@@ -461,7 +461,7 @@ UITextField * alertTextField;
     [_placeListController setPlaceList:_placeList];
 }
 
-- (void)didPullDown
+- (void)didPullDownToRefresh
 {
     [[PlaceService defaultService] findPlaces:_categoryId viewController:self]; 
 }
