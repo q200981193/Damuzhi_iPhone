@@ -19,6 +19,16 @@ static PBExtensionRegistry* extensionRegistry = nil;
 }
 @end
 
+BOOL BookingStatusIsValidValue(BookingStatus value) {
+  switch (value) {
+    case BookingStatusNotInSale:
+    case BookingStatusInSale:
+    case BookingStatusSoldOut:
+      return YES;
+    default:
+      return NO;
+  }
+}
 @interface TouristRouteList ()
 @property (retain) NSMutableArray* mutableRoutesList;
 @end

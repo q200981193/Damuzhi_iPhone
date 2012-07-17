@@ -63,6 +63,12 @@ message TravelPackage {
   repeated Accommodation accommodations = 15;	// 入住
 }
 
+enum BookingStatus{
+  NOT_IN_SALE = 1;
+  IN_SALE = 2;
+  SOLD_OUT = 3;
+}
+
 message Booking {
   required int32 date = 1;              // 日期，从1970年1月1日0时0分0秒算起，经过的秒数。
   optional int32 status = 2;            // 状态

@@ -794,7 +794,9 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 @interface App : PBGeneratedMessage {
 @private
   BOOL hasDataVersion_:1;
+  BOOL hasServiceTelephone_:1;
   NSString* dataVersion;
+  NSString* serviceTelephone;
   NSMutableArray* mutableCitiesList;
   NSMutableArray* mutableTestCitiesList;
   NSMutableArray* mutablePlaceMetaDataListList;
@@ -807,7 +809,9 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
   NSMutableArray* mutableAgenciesList;
 }
 - (BOOL) hasDataVersion;
+- (BOOL) hasServiceTelephone;
 @property (readonly, retain) NSString* dataVersion;
+@property (readonly, retain) NSString* serviceTelephone;
 - (NSArray*) citiesList;
 - (City*) citiesAtIndex:(int32_t) index;
 - (NSArray*) testCitiesList;
@@ -937,5 +941,10 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (App_Builder*) addAgencies:(Agency*) value;
 - (App_Builder*) addAllAgencies:(NSArray*) values;
 - (App_Builder*) clearAgenciesList;
+
+- (BOOL) hasServiceTelephone;
+- (NSString*) serviceTelephone;
+- (App_Builder*) setServiceTelephone:(NSString*) value;
+- (App_Builder*) clearServiceTelephone;
 @end
 

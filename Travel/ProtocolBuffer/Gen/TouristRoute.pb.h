@@ -22,6 +22,14 @@
 @class TouristRoute_Builder;
 @class TravelPackage;
 @class TravelPackage_Builder;
+typedef enum {
+  BookingStatusNotInSale = 1,
+  BookingStatusInSale = 2,
+  BookingStatusSoldOut = 3,
+} BookingStatus;
+
+BOOL BookingStatusIsValidValue(BookingStatus value);
+
 
 @interface TouristRouteRoot : NSObject {
 }

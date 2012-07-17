@@ -3024,6 +3024,7 @@ static Region* defaultRegionInstance = nil;
 @property (retain) NSMutableArray* mutableRouteThemesList;
 @property (retain) NSMutableArray* mutableRouteCategorysList;
 @property (retain) NSMutableArray* mutableAgenciesList;
+@property (retain) NSString* serviceTelephone;
 @end
 
 @implementation App
@@ -3045,6 +3046,13 @@ static Region* defaultRegionInstance = nil;
 @synthesize mutableRouteThemesList;
 @synthesize mutableRouteCategorysList;
 @synthesize mutableAgenciesList;
+- (BOOL) hasServiceTelephone {
+  return !!hasServiceTelephone_;
+}
+- (void) setHasServiceTelephone:(BOOL) value {
+  hasServiceTelephone_ = !!value;
+}
+@synthesize serviceTelephone;
 - (void) dealloc {
   self.dataVersion = nil;
   self.mutableCitiesList = nil;
@@ -3057,11 +3065,13 @@ static Region* defaultRegionInstance = nil;
   self.mutableRouteThemesList = nil;
   self.mutableRouteCategorysList = nil;
   self.mutableAgenciesList = nil;
+  self.serviceTelephone = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
     self.dataVersion = @"";
+    self.serviceTelephone = @"";
   }
   return self;
 }
@@ -3237,6 +3247,9 @@ static App* defaultAppInstance = nil;
   for (Agency* element in self.agenciesList) {
     [output writeMessage:30 value:element];
   }
+  if (self.hasServiceTelephone) {
+    [output writeString:100 value:self.serviceTelephone];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -3278,6 +3291,9 @@ static App* defaultAppInstance = nil;
   }
   for (Agency* element in self.agenciesList) {
     size += computeMessageSize(30, element);
+  }
+  if (self.hasServiceTelephone) {
+    size += computeStringSize(100, self.serviceTelephone);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -3417,6 +3433,9 @@ static App* defaultAppInstance = nil;
     }
     [result.mutableAgenciesList addObjectsFromArray:other.mutableAgenciesList];
   }
+  if (other.hasServiceTelephone) {
+    [self setServiceTelephone:other.serviceTelephone];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -3500,6 +3519,10 @@ static App* defaultAppInstance = nil;
         Agency_Builder* subBuilder = [Agency builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addAgencies:[subBuilder buildPartial]];
+        break;
+      }
+      case 802: {
+        [self setServiceTelephone:[input readString]];
         break;
       }
     }
@@ -3809,6 +3832,22 @@ static App* defaultAppInstance = nil;
     result.mutableAgenciesList = [NSMutableArray array];
   }
   [result.mutableAgenciesList addObject:value];
+  return self;
+}
+- (BOOL) hasServiceTelephone {
+  return result.hasServiceTelephone;
+}
+- (NSString*) serviceTelephone {
+  return result.serviceTelephone;
+}
+- (App_Builder*) setServiceTelephone:(NSString*) value {
+  result.hasServiceTelephone = YES;
+  result.serviceTelephone = value;
+  return self;
+}
+- (App_Builder*) clearServiceTelephone {
+  result.hasServiceTelephone = NO;
+  result.serviceTelephone = @"";
   return self;
 }
 @end

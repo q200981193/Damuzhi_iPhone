@@ -103,6 +103,8 @@ message App {
   repeated NameIdPair routeThemes = 25;             // 路线主题
   repeated NameIdPair routeCategorys = 26;          // 路线分类
   
-  repeated Agency agencies = 30;                   // 旅行社
+  repeated Agency agencies = 30;                    // 旅行社
+  
+  optional string serviceTelephone = 100;               // 客服电话
 }
 
