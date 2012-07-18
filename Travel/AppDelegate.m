@@ -43,6 +43,11 @@
     [super dealloc];
 }
 
+- (void)hideTabBar:(BOOL)isHide
+{
+    [self.tabBarController hide:isHide];
+}
+
 - (void)initTabViewControllers
 {
     PPTabBarController *tabBarController = [[PPTabBarController alloc] init];
@@ -79,7 +84,7 @@
                  hideNavigationBar:NO 
                    viewControllers:controllers];
     
-    [UIUtils addViewController:[UIViewController alloc] 
+    [UIUtils addViewController:[MoreController alloc] 
                          viewTitle:nil
                          viewImage:@"menu_btn4_off.png" 
                   hasNavController:YES 

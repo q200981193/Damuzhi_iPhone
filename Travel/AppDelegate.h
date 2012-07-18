@@ -23,4 +23,6 @@
 
 @property (retain, nonatomic) PPTabBarController *tabBarController;
 
+- (void)hideTabBar:(BOOL)isHide;
+
 @end

@@ -85,9 +85,22 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    self.hidesBottomBarWhenPushed = YES;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideTabBar:NO];
+    
     [self updateDataSource];
     [super viewDidAppear:animated];
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.hidesBottomBarWhenPushed = NO;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideTabBar:YES];
+    [super viewDidDisappear:animated];
+}
+
 
 - (void)updateDataSource
 {
