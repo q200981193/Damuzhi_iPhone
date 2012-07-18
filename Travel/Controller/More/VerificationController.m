@@ -153,5 +153,9 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+-(IBAction)textFieldDoneEditing:(id)sender
+{
+    [sender resignFirstResponder];
+}
 
 @end

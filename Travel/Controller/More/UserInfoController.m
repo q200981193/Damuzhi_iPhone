@@ -316,11 +316,13 @@ enum{
     [self popupMessage:NSLS(@"修改成功") title:nil];
 }
 
-- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer {
+- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer 
+{
     CGPoint point = [recognizer locationInView:self.dataTableView];
     NSIndexPath *index = [self.dataTableView indexPathForRowAtPoint:point];
     NSString *title = [[_titleDic objectForKey:[NSNumber numberWithInt:index.section]] objectForKey:[NSNumber numberWithInt:index.row]];
-    if ([title isEqualToString:TITLE_MODIFY_PASSWORD]) {
+    if ([title isEqualToString:TITLE_MODIFY_PASSWORD]) 
+    {
         ChangePasswordController *contrller = [[ChangePasswordController alloc] init];
         [self.navigationController pushViewController:contrller animated:YES];
         [contrller release];

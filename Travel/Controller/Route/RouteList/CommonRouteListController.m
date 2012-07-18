@@ -132,6 +132,8 @@
     self.buttonsHolderView = [[[UIView alloc] initWithFrame:CGRectMake(0, _statisticsView.frame.size.height, self.view.frame.size.width, HEIGHT_FILTER_HOLDER_VIEW)] autorelease];
     _buttonsHolderView.backgroundColor = [UIColor whiteColor];
     
+    
+    
     _buttonsHolderView.backgroundColor = [UIColor colorWithPatternImage:[[ImageManager defaultManager] filterBtnsHolderViewBgImage]];
     
     [self.view addSubview:_buttonsHolderView];
@@ -228,12 +230,6 @@
     cell = [tableView dequeueReusableCellWithIdentifier:[RouteListCell getCellIdentifier]];
     if (cell == nil) {
         cell = [RouteListCell createCell:self];		
-        
-        UIImageView *view = [[UIImageView alloc] init];
-        [view setImage:[[ImageManager defaultManager] listBgImage]];
-        [cell setBackgroundView:view];
-        [view release];
-        // Customize the appearance of table view cells at first time
     }
     
     int row = [indexPath row];	

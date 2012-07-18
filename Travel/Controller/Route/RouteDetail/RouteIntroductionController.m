@@ -201,7 +201,7 @@
         case OBJECT_LIST_ROUTE_PACKAGE_TOUR:
             origin_x = 140;
             origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_LABEL/2; 
-            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 80, HEIGHT_PRICE_LABEL)];
+            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x + 10, origin_y, 80, HEIGHT_PRICE_LABEL)];
             [agencyInfoHolderView addSubview:priceLabel];
             
             origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
@@ -211,7 +211,7 @@
             
             origin_x = priceSuffixLabel.frame.origin.x + priceSuffixLabel.frame.size.width + 10;
             origin_y = agencyNameLabel.frame.size.height/2 - 22/2; 
-            bookButton = [self genBookBttonWithFrame:CGRectMake(origin_x, origin_y, 70, 22)];
+            bookButton = [self genBookBttonWithFrame:CGRectMake(origin_x - 12, origin_y, 70, 22)];
             [agencyInfoHolderView addSubview:bookButton];
             
             break;
@@ -227,7 +227,7 @@
             
             origin_x = 220;
             origin_y = agencyNameLabel.frame.size.height/2 - HEIGHT_PRICE_LABEL/2; 
-            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x, origin_y, 70, HEIGHT_PRICE_LABEL)];
+            priceLabel = [self genPriceLabelWithFrame:CGRectMake(origin_x + 10, origin_y, 70, HEIGHT_PRICE_LABEL)];
             [agencyInfoHolderView addSubview:priceLabel];
             
             origin_x = priceLabel.frame.origin.x + priceLabel.frame.size.width + 1;
@@ -256,7 +256,7 @@
 - (UILabel *)genPriceSuffixLabelWithFrame:(CGRect)frame
 {
     UILabel *suffixLabel = [[[UILabel alloc] initWithFrame:frame] autorelease];
-    [suffixLabel setFont:[UIFont systemFontOfSize:12]];
+    [suffixLabel setFont:[UIFont systemFontOfSize:9]];
     suffixLabel.textColor = COLOR_CONTENT;
     [suffixLabel setText:NSLS(@"起")];
     [suffixLabel setBackgroundColor:[UIColor clearColor]];
@@ -678,7 +678,7 @@
     [headerView setBackgroundImage:[[ImageManager defaultManager] lineListBgImage] forState:UIControlStateNormal];
     [headerView addTarget:self action:@selector(clickSectionHeaderView:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(280, HEIGHT_HEADER_VIEW/2-22/2, 22, 22)];
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(280 + 8, HEIGHT_HEADER_VIEW/2-22/2 + 1, 22 - 2, 22)];
     arrowImageView.image = [[ImageManager defaultManager] arrowImage];
     [headerView addSubview:arrowImageView];
     [arrowImageView release];

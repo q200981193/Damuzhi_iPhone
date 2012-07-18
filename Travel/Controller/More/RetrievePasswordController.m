@@ -19,6 +19,7 @@
 
 @implementation RetrievePasswordController
 @synthesize loginIdTextField;
+@synthesize backgroundScrollView;
 @synthesize loginId = _loginId;
 
 
@@ -53,12 +54,16 @@
     [self setNavigationRightButton:NSLS(@"确定")
                          imageName:@"topmenu_btn_right.png"  
                             action:@selector(clickOk:)];
+    
+    backgroundScrollView.contentSize = CGSizeMake(backgroundScrollView.frame.size.width, backgroundScrollView.frame.size.height + 1);
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
 
 }
 
 - (void)viewDidUnload
 {
     [self setLoginIdTextField:nil];
+    [self setBackgroundScrollView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -72,6 +77,7 @@
 
 - (void)dealloc {
     [loginIdTextField release];
+    [backgroundScrollView release];
     [super dealloc];
 }
 - (IBAction)hideKeyboard:(id)sender {
@@ -109,6 +115,7 @@
         return;
     }
     [self popupMessage:@"密码已发送到您的手机，请查收" title:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
  
 

@@ -53,6 +53,7 @@
     PPRelease(_signUpId);
     PPRelease(_signUpPassword);
     PPRelease(_signUpPasswordAgain);
+    PPRelease(_currentInputTextField);
     [super dealloc];
 }
 
@@ -86,6 +87,14 @@
     [self.titleDic setObject:TITLE_SIGN_UP_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_SIGN_UP_PASSWORD_AGAIN]];
     [self.placeHolderDic setObject:PLACEHOLDER_SIGN_UP_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_SIGN_UP_PASSWORD_AGAIN]];
     
+    // Add a single tap Recognizer
+    UITapGestureRecognizer* singleTapRecognizer;
+    singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapFrom:)];
+    singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
+    [self.dataTableView addGestureRecognizer:singleTapRecognizer];
+    [singleTapRecognizer release];
+
+    
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -104,12 +113,29 @@
     NSString *cellIdentifier = [UserInfoCell getCellIdentifier];
     UserInfoCell *cell = (UserInfoCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
-    if (cell == nil) {
+    if (cell == nil) 
+    {
         cell = [UserInfoCell createCell:self];
         cell.titleLabel.frame = CGRectOffset(cell.titleLabel.frame, -5, 0);
         cell.inputTextField.frame = CGRectOffset(cell.inputTextField.frame, 5, 0);
-        cell.inputTextField.returnKeyType = (indexPath.row == CELL_ROW_SIGN_UP_PASSWORD_AGAIN) ? UIReturnKeyDone : UIReturnKeyNext;
         [cell.inputTextField setSecureTextEntry:YES];
+        
+        switch (indexPath.row) 
+        {
+            case CELL_ROW_SIGN_UP_ID:
+                 cell.inputTextField.keyboardType = UIKeyboardTypeNumberPad;
+                break;
+            case CELL_ROW_SIGN_UP_PASSWORD:
+                cell.inputTextField.returnKeyType = UIReturnKeyNext;
+                break;
+            case CELL_ROW_SIGN_UP_PASSWORD_AGAIN:
+                cell.inputTextField.returnKeyType = UIReturnKeyDone;
+                break;
+            default:
+                break;
+        }
+        
+    
     }
     
     cell.aDelegate = self;
@@ -168,6 +194,13 @@
     
 }
 
+- (IBAction)clickHideKeyboardButton:(id)sender {
+    [self popupMessage:@"button clicked" title:nil];
+}
+
+
+
+
 - (void)signUpDidFinish:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
 {
     
@@ -216,5 +249,13 @@
         [nextCell.inputTextField becomeFirstResponder];
     }
 }
+
+- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer 
+{
+
+    [_currentInputTextField resignFirstResponder];
+
+}
+
 
 @end

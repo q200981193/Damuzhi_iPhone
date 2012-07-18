@@ -11,5 +11,6 @@
 
 @interface RetrievePasswordController : PPTableViewController <UserServiceDelegate>
 @property (retain, nonatomic) IBOutlet UITextField *loginIdTextField;
+@property (retain, nonatomic) IBOutlet UIScrollView *backgroundScrollView;
 
 @end

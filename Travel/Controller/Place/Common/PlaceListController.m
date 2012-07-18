@@ -179,11 +179,6 @@
 
 	if (cell == nil) { 
 		cell = [placeClass createCell:self];
-
-        UIImageView *view = [[UIImageView alloc] init];
-        [view setImage:[[ImageManager defaultManager] listBgImage]];
-        [cell setBackgroundView:view];
-        [view release];
 	}
 	
     PlaceCell *placeCell = (PlaceCell*)cell;
