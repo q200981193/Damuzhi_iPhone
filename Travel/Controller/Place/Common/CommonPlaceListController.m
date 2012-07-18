@@ -22,7 +22,7 @@
 #import "AppService.h"
 
 #define TAG_PLACE_COUNT_LABEL 1
-#define EACH_FETCH 15
+#define EACH_FETCH 20
 
 @implementation PlaceListFilter
 
@@ -150,7 +150,7 @@
 
     self.selectedItemIds = [[SelectedItemIdsManager defaultManager] getPlaceSelectedItems:[_filterHandler getCategoryId]];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDelegate:self] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController supportPullDownToRefresh:YES supportPullUpToLoadMore:YES pullDelegate:self] autorelease];
         
     [_placeListController showInView:_placeListHolderView];
 
@@ -218,24 +218,6 @@
     // e.g. self.myOutlet = nil;
 }
 
-//- (void)findRequestDone:(int)result placeList:(NSArray *)placeList
-//{
-//    [_placeListController dataSourceDidFinishLoadingNewData];
-//    
-//    if (result != ERROR_SUCCESS) {
-//        [self popupMessage:@"网络弱，数据加载失败" title:nil];
-//    }
-//
-//    self.allPlaceList = placeList;
-//    self.placeList = [self filterAndSort:_allPlaceList];
-//
-//    // Update place count in navigation bar.
-//    [self updateNavigationBarTitle:_placeList.count];
-//    
-//    // Reload place list.
-//    [_placeListController setPlaceList:_placeList];
-//}
-
 - (void)findRequestDone:(int)resultCode
                  result:(int)result
              resultInfo:(NSString *)resultInfo
@@ -250,7 +232,7 @@
     }
     
     if (_start == 0) {
-        self.noMoreData = NO;
+        _placeListController.noMoreData = NO;
         self.placeList = [NSArray array];
     }
     

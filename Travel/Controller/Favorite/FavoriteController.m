@@ -108,12 +108,12 @@
     
     [buttonHolderView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage strectchableImageName:@"options_bg2.png"]]];
 
-    PlaceListController *myController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDelegate:nil];
+    PlaceListController *myController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController supportPullDownToRefresh:NO supportPullUpToLoadMore:NO pullDelegate:nil];
     self.myFavPlaceListController = myController;
     [myController release];
     [myFavPlaceListController showInView:myFavPlaceListView];    
     
-    PlaceListController *topController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDelegate:nil];
+    PlaceListController *topController =[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController supportPullDownToRefresh:NO supportPullUpToLoadMore:NO pullDelegate:nil];
     
     self.topFavPlaceListController = topController;
     [topController release];
@@ -259,7 +259,7 @@
 }
 
 - (void)finishFindTopFavoritePlaces:(NSArray *)list type:(int)type result:(int)result
-{
+{    
     if (result != ERROR_SUCCESS ) {
         [self popupMessage:@"网络弱，数据加载失败" title:nil];
     }

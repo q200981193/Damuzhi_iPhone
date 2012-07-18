@@ -27,7 +27,7 @@
 #define HEIGHT_STATISTICS_VIEW 20
 #define HEIGHT_FILTER_HOLDER_VIEW 40
 
-#define COUNT_EACH_FETCH 5
+#define COUNT_EACH_FETCH 20
 
 @interface CommonRouteListController ()
 
