@@ -122,6 +122,12 @@
     backgroundImageButton3.selected = YES;
 }
 
+- (IBAction)clickLeftCornerButton:(id)sender {
+    backgroundImageButton1.selected = NO;
+    backgroundImageButton2.selected = NO;
+    backgroundImageButton3.selected = NO;
+}
+
 - (IBAction)hideKeyboardButton:(id)sender {
     [feekbackTextView resignFirstResponder];
 }

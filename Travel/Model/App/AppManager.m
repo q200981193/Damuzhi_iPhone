@@ -989,4 +989,10 @@ static AppManager* _defaultAppManager = nil;
     return routeSortItems;
 }
 
+- (NSArray *)getServicePhoneList
+{
+    return [NSArray arrayWithObjects:_app.serviceTelephone, nil];
+}
+
+
 @end

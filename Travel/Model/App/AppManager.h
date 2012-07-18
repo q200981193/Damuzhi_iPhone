@@ -87,6 +87,8 @@
 - (NSArray *)buildDaysRangeItemList;
 - (NSArray *)buildRouteSortItemList;
 
+- (NSArray *)getServicePhoneList;
+
 
 
 @end
