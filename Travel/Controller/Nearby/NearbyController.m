@@ -140,7 +140,7 @@
     
     [self setSelectedBtn:_categoryId];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDelegate:self] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController supportPullDownToRefresh:YES supportPullUpToLoadMore:NO pullDelegate:self] autorelease];
     _placeListController.aDelegate = self;
     
     [_placeListController showInView:placeListHolderView];

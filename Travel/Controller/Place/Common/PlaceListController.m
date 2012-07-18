@@ -101,14 +101,15 @@
 }
 
 - (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
-                  wantPullDownToRefresh:(BOOL)wantPullDownToRefresh
-                           pullDelegate:(id<PullDelegate>)pullDelegate;
+               supportPullDownToRefresh:(BOOL)supportPullDownToRefresh
+                supportPullUpToLoadMore:(BOOL)supportPullUpToLoadMore
+                           pullDelegate:(id<PullDelegate>)pullDelegate
 {
     self = [super init];
     if (self) {
         self.superNavigationController = superNavigationController;
-        self.supportRefreshHeader = wantPullDownToRefresh;
-        self.supportRefreshFooter = YES;
+        self.supportRefreshHeader = supportPullDownToRefresh;
+        self.supportRefreshFooter = supportPullUpToLoadMore;
         self.pullDelegate = pullDelegate;
         _firstIn = YES;
     }

@@ -22,7 +22,7 @@
 #import "AppService.h"
 
 #define TAG_PLACE_COUNT_LABEL 1
-#define EACH_FETCH 15
+#define EACH_FETCH 20
 
 @implementation PlaceListFilter
 
@@ -150,7 +150,7 @@
 
     self.selectedItemIds = [[SelectedItemIdsManager defaultManager] getPlaceSelectedItems:[_filterHandler getCategoryId]];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:YES pullDelegate:self] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController supportPullDownToRefresh:YES supportPullUpToLoadMore:YES pullDelegate:self] autorelease];
         
     [_placeListController showInView:_placeListHolderView];
 
@@ -201,10 +201,10 @@
     [view release];
 }
 
-- (void)updateNavigationBarTitle:(int)count
+- (void)updateNavigationBarTitle
 {
     UILabel *placeCountLabel = (UILabel*)[self.navigationItem.titleView viewWithTag:TAG_PLACE_COUNT_LABEL];
-    [placeCountLabel setText:[NSString stringWithFormat:NSLS(@"(%d)"), count]];
+    [placeCountLabel setText:[NSString stringWithFormat:NSLS(@"(%d)"), _totalCount]];
 }
 
 - (void)viewDidUnload
@@ -217,24 +217,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-
-//- (void)findRequestDone:(int)result placeList:(NSArray *)placeList
-//{
-//    [_placeListController dataSourceDidFinishLoadingNewData];
-//    
-//    if (result != ERROR_SUCCESS) {
-//        [self popupMessage:@"网络弱，数据加载失败" title:nil];
-//    }
-//
-//    self.allPlaceList = placeList;
-//    self.placeList = [self filterAndSort:_allPlaceList];
-//
-//    // Update place count in navigation bar.
-//    [self updateNavigationBarTitle:_placeList.count];
-//    
-//    // Reload place list.
-//    [_placeListController setPlaceList:_placeList];
-//}
 
 - (void)findRequestDone:(int)resultCode
                  result:(int)result
@@ -250,7 +232,7 @@
     }
     
     if (_start == 0) {
-        self.noMoreData = NO;
+        _placeListController.noMoreData = NO;
         self.placeList = [NSArray array];
     }
     
@@ -266,7 +248,7 @@
     self.placeList = [_placeList arrayByAddingObjectsFromArray:placeList];
     
     // Update place count in navigation bar.
-    [self updateNavigationBarTitle:_placeList.count];
+    [self updateNavigationBarTitle];
     
     // Reload place list.
     [_placeListController setPlaceList:_placeList];
