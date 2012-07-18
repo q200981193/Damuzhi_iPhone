@@ -150,9 +150,8 @@
         return;
     }
     
-    if (delegate && [delegate respondsToSelector:@selector(didclickSubmit:telephone:)]) {
+    if ([delegate respondsToSelector:@selector(didclickSubmit:telephone:)]) {
         [delegate didclickSubmit:contactPerson telephone:telephone];
-        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

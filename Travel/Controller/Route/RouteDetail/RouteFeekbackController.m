@@ -14,7 +14,18 @@
 
 #define MAX_LENGTH_OF_FEEKBACK 160
 
+@interface RouteFeekbackController ()
+{
+    int _rank;
+}
+
+@property (retain, nonatomic) Order *order;
+
+@end
+
 @implementation RouteFeekbackController
+
+@synthesize order = _order;
 @synthesize backgroundImageButton1;
 @synthesize backgroundImageButton2;
 @synthesize backgroundImageButton3;
@@ -32,7 +43,17 @@
     
     [feekbackTextView release];
     [feekbackImageView release];
+    [_order release];
     [super dealloc];
+}
+
+- (id)initWithOrder:(Order *)order
+{
+    if (self = [super init]) {
+        self.order = order;
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad
@@ -59,7 +80,8 @@
 }
 -(void) clickSubmit: (id) sender
 {
-    NSString *feekback = [self.feekbackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];    
+    NSString *feekback = [self.feekbackTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];   
+    
     if ([feekback compare:@""] == 0) {
         [self popupMessage:NSLS(@"请输入意见或建议") title:nil];
         return;
@@ -69,21 +91,9 @@
         [self popupMessage:NSLS(@"反馈意见字数太长") title:nil];
         return;
     }
-    
   
     [feekbackTextView resignFirstResponder];
-     [[UserService defaultService] submitFeekback:self feekback:feekback contact:nil];
-}
-
-
-- (void)submitFeekbackDidFinish:(int)resultCode
-{
-    if (resultCode == ERROR_SUCCESS) {
-        [self popupMessage:NSLS(@"发送成功") title:nil];
-    }
-    else {
-        [self popupMessage:NSLS(@"网络不稳定，发送失败") title:nil];
-    }
+    [[RouteService defaultService] routeFeedbackWithRouteId:_order.routeId rank:_rank content:feekback];
 }
 
 - (void)viewDidUnload
@@ -108,18 +118,23 @@
     backgroundImageButton1.selected = YES;
     backgroundImageButton2.selected = NO;
     backgroundImageButton3.selected = NO;
+    _rank = 1;
 }
 
 - (IBAction)clickChangeBackgroundButton2:(id)sender {
     backgroundImageButton1.selected = YES;
     backgroundImageButton2.selected = YES;
     backgroundImageButton3.selected = NO;
+    _rank = 2;
+
 }
 
 - (IBAction)clickChangeBackgroundButton3:(id)sender {
     backgroundImageButton1.selected = YES;
     backgroundImageButton2.selected = YES;
     backgroundImageButton3.selected = YES;
+    _rank = 3;
+
 }
 
 - (IBAction)clickLeftCornerButton:(id)sender {

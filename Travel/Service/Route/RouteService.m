@@ -216,5 +216,35 @@ static RouteService *_defaultRouteService = nil;
     });
 }
 
+- (void)routeFeedbackWithRouteId:(int)routeId 
+                            rank:(int)rank
+                         content:(NSString *)content   
+                  viewController:(PPViewController<RouteServiceDelegate>*)viewController
+
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *loginId = [[UserManager defaultManager] loginId];
+        NSString *token = [[UserManager defaultManager] token];
+        CommonNetworkOutput *output = [TravelNetworkRequest routeFeedback:loginId 
+                                                                    token:token 
+                                                                  routeId:routeId
+                                                                     rank:rank 
+                                                                  content:content];
+        int result;
+        NSString *resultInfo;
+        if (output.resultCode == ERROR_SUCCESS) {
+            NSDictionary* jsonDict = [output.textData JSONValue];
+            result = [[jsonDict objectForKey:PARA_TRAVEL_RESULT] intValue];
+            resultInfo = [jsonDict objectForKey:PARA_TRAVEL_RESULT_INFO];
+        }
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([viewController respondsToSelector:@selector(routeFeekBackDidSend:result:resultInfo:)]) {
+                [viewController routeFeekBackDidSend:output.resultCode result:result resultInfo:resultInfo];
+            }
+        });                        
+    });
+}
+
 
 @end
