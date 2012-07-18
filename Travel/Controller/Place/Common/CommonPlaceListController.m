@@ -201,10 +201,10 @@
     [view release];
 }
 
-- (void)updateNavigationBarTitle:(int)count
+- (void)updateNavigationBarTitle
 {
     UILabel *placeCountLabel = (UILabel*)[self.navigationItem.titleView viewWithTag:TAG_PLACE_COUNT_LABEL];
-    [placeCountLabel setText:[NSString stringWithFormat:NSLS(@"(%d)"), count]];
+    [placeCountLabel setText:[NSString stringWithFormat:NSLS(@"(%d)"), _totalCount]];
 }
 
 - (void)viewDidUnload
@@ -248,7 +248,7 @@
     self.placeList = [_placeList arrayByAddingObjectsFromArray:placeList];
     
     // Update place count in navigation bar.
-    [self updateNavigationBarTitle:_placeList.count];
+    [self updateNavigationBarTitle];
     
     // Reload place list.
     [_placeListController setPlaceList:_placeList];
