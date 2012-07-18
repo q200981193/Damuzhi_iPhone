@@ -94,8 +94,6 @@ static UserService* _defaultUserService = nil;
     });
 }
 
-
-
 - (void)autoLogin:(id<UserServiceDelegate>)delegate
 {
     if ([[UserManager defaultManager] isAutoLogin]) {

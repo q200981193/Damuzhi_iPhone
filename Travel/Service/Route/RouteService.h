@@ -39,6 +39,10 @@
                    result:(int)result 
                resultInfo:(NSString *)resultInfo;
 
+- (void)routeFeekBackDidSend:(int)resultCode 
+                      result:(int)result 
+                  resultInfo:(NSString *)resultInfo;
+
 @end
 
 
@@ -68,5 +72,8 @@
 - (void)unfollowRoute:(TouristRoute *)route 
           routeType:(int)routeType 
      viewController:(PPViewController<RouteServiceDelegate>*)viewController;
+
+- (void)routeFeedbackWithRouteId:(int)routeId rank:(int)rank content:(NSString *)content;
+
 
 @end
