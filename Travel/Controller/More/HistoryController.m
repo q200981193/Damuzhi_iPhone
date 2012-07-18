@@ -45,7 +45,7 @@
     
     self.placeList = [[PlaceStorage historyManager] allPlacesSortByLatest];
     
-    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController wantPullDownToRefresh:NO pullDelegate:nil] autorelease];
+    self.placeListController = [[[PlaceListController alloc] initWithSuperNavigationController:self.navigationController supportPullDownToRefresh:NO supportPullUpToLoadMore:NO pullDelegate:nil] autorelease];
     
     [_placeListController showInView:placeListHolderView];
     

@@ -29,6 +29,7 @@
 @property (retain, nonatomic) MonthViewController *monthViewController;
 @property (retain, nonatomic) NSDate *departDate;
 @property (retain, nonatomic) NonMemberOrderController *nonMemberOrderController;
+@property (retain, nonatomic) NSArray *phoneList;
 
 - (void)setDirectionsCell:(PlaceOrderCell *)cell;
 - (void)clickDepartDateButton;
@@ -61,6 +62,7 @@
 @synthesize monthViewController = _monthViewController;
 @synthesize departDate = _departDate;
 @synthesize nonMemberOrderController = _nonMemberOrderController;
+@synthesize phoneList = _phoneList;
 
 - (void)dealloc
 {
@@ -69,6 +71,7 @@
     PPRelease(_selectedChildrenIdList);
     PPRelease(_monthViewController);
     PPRelease(_departDate);
+    PPRelease(_phoneList);
     [super dealloc];
 }
 
@@ -99,8 +102,13 @@
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
     
+    [self setNavigationRightButton:NSLS(@"咨询") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickConsult:)];
+    
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"all_page_bg2.jpg"]]];
     
+    self.phoneList = [NSArray arrayWithObjects:_route.contactPhone, nil];
     [_selectedAdultIdList addObject:[NSNumber numberWithInt:_adult]];
     [_selectedChildrenIdList addObject:[NSNumber numberWithInt:_children]];
     
@@ -110,6 +118,32 @@
     }
     self.dataList = mutableArray;
 }
+
+
+
+-(void)clickConsult:(id)sender
+{
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    
+    for(NSString* title in self.phoneList){
+        [actionSheet addButtonWithTitle:title];
+    }
+    [actionSheet addButtonWithTitle:NSLS(@"返回")];
+    [actionSheet setCancelButtonIndex:[self.phoneList count]];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        return;
+    }
+    
+    [UIUtils makeCall:[self.phoneList objectAtIndex:buttonIndex]];
+}
+
+
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -24,17 +24,22 @@
 
 @property (assign, nonatomic) int orderType;
 @property (retain, nonatomic) NSMutableArray *sectionStat;
-
+@property (retain, nonatomic) NSArray *phoneList;
+@property (retain, nonatomic) App *app;
 @end
 
 @implementation OrderListController
 
 @synthesize orderType = _orderType;
 @synthesize sectionStat = _sectionStat;
+@synthesize phoneList = _phoneList;
+@synthesize app = _app;
 
 - (void)dealloc
 {
     [_sectionStat release];
+    [_phoneList release];
+    [_app release];
     [super dealloc];
 }
 
@@ -58,6 +63,12 @@
     [self setNavigationLeftButton:NSLS(@" 返回") 
                         imageName:@"back.png"
                            action:@selector(clickBack:)];
+    [self setNavigationRightButton:NSLS(@"咨询") 
+                         imageName:@"topmenu_btn_right.png" 
+                            action:@selector(clickConsult:)];
+    
+//    self.phoneList = [NSArray arrayWithObjects:_app.serviceTelephone, nil];
+    self.phoneList = [NSArray arrayWithObjects:@"颂涛，此处代码有一点问题", nil];
     
     if ([[UserManager defaultManager] isLogin]) {
         [[OrderService defaultService] findOrderUsingLoginId:[[UserManager defaultManager] loginId] 
@@ -69,6 +80,27 @@
                                                   orderType:_orderType
                                                    delegate:self];
     }
+}
+-(void)clickConsult:(id)sender
+{
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    
+    for(NSString* title in self.phoneList){
+        [actionSheet addButtonWithTitle:title];
+    }
+    [actionSheet addButtonWithTitle:NSLS(@"返回")];
+    [actionSheet setCancelButtonIndex:[self.phoneList count]];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        return;
+    }
+    
+    [UIUtils makeCall:[self.phoneList objectAtIndex:buttonIndex]];
 }
 
 - (void)viewDidUnload

@@ -20,9 +20,9 @@
 
 //#define URL_SERVICE                 @"http://61.143.225.198:8012/Service/"
 
-
 // URL
 #define URL_TRAVEL_REGISTER_USER    (URL_SERVICE@"RegisterUser.aspx?")
+#define URL_TRAVEL_ROUTE_FEEDBACK    (URL_SERVICE@"routeFeekback.aspx?")
 
 //query place list
 #define URL_TRAVEL_QUERY_LIST       (URL_SERVICE@"queryList.aspx?")
@@ -95,6 +95,7 @@
 
 #define PARA_TRAVEL_NUM             @"num"
 #define PARA_TRAVEL_DISTANCE        @"distance"
+#define PARA_TRAVEL_RANK            @"rank"
 
 #define PARA_TRAVEL_DEPART_CITY_ID          @"departCityId"
 #define PARA_TRAVEL_DESTINATION_CITY_ID     @"destinationCityId"

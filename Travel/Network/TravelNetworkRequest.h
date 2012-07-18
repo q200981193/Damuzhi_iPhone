@@ -164,4 +164,10 @@ typedef void (^TravelNetworkResponseBlock)(NSDictionary* jsonDictionary, NSData*
                               token:(NSString *)token 
                             routeId:(int)routeId;
 
++ (CommonNetworkOutput*)routeFeedback:(NSString *)loginId 
+                                token:(NSString *)token 
+                              routeId:(int)routeId
+                                 rank:(int)rank 
+                            content:(NSString *)content;
+
 @end

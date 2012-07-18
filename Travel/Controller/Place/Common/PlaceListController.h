@@ -40,7 +40,8 @@
 @property (assign, nonatomic) int isNearby;
 
 - (id)initWithSuperNavigationController:(UINavigationController*)superNavigationController 
-                  wantPullDownToRefresh:(BOOL)wantPullDownToRefresh
+               supportPullDownToRefresh:(BOOL)supportPullDownToRefresh
+                supportPullUpToLoadMore:(BOOL)supportPullUpToLoadMore
                            pullDelegate:(id<PullDelegate>)pullDelegate;
 
 

@@ -87,7 +87,6 @@
         passwordTextField.text = [[UserManager defaultManager] password];
     }
     
-//    all_page_bg2@2x.jpg
 }
 
 - (void)viewDidUnload

@@ -92,6 +92,14 @@
     [self.titleDic setObject:TITLE_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
     [self.placeHolderDic setObject:PLACEHOLDER_NEW_PASSWORD_AGAIN forKey:[NSNumber numberWithInt:CELL_ROW_NEW_PASSWORD_AGAIN]];
     
+    // Add a single tap Recognizer
+    UITapGestureRecognizer* singleTapRecognizer;
+    singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTapFrom:)];
+    singleTapRecognizer.numberOfTapsRequired = 1; // For single tap
+    [self.dataTableView addGestureRecognizer:singleTapRecognizer];
+    [singleTapRecognizer release];
+
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -200,5 +208,11 @@
         [nextCell.inputTextField becomeFirstResponder];
     }
 }
+
+- (void)handleSingleTapFrom:(UITapGestureRecognizer*)recognizer 
+{
+    [_currentInputTextField resignFirstResponder];
+}
+
 
 @end
