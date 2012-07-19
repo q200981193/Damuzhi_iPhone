@@ -2269,6 +2269,7 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
 @interface Agency ()
 @property int32_t agencyId;
 @property (retain) NSString* name;
+@property (retain) NSString* shortName;
 @end
 
 @implementation Agency
@@ -2287,14 +2288,23 @@ static RecommendedApp* defaultRecommendedAppInstance = nil;
   hasName_ = !!value;
 }
 @synthesize name;
+- (BOOL) hasShortName {
+  return !!hasShortName_;
+}
+- (void) setHasShortName:(BOOL) value {
+  hasShortName_ = !!value;
+}
+@synthesize shortName;
 - (void) dealloc {
   self.name = nil;
+  self.shortName = nil;
   [super dealloc];
 }
 - (id) init {
   if ((self = [super init])) {
     self.agencyId = 0;
     self.name = @"";
+    self.shortName = @"";
   }
   return self;
 }
@@ -2326,6 +2336,9 @@ static Agency* defaultAgencyInstance = nil;
   if (self.hasName) {
     [output writeString:2 value:self.name];
   }
+  if (self.hasShortName) {
+    [output writeString:5 value:self.shortName];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (int32_t) serializedSize {
@@ -2340,6 +2353,9 @@ static Agency* defaultAgencyInstance = nil;
   }
   if (self.hasName) {
     size += computeStringSize(2, self.name);
+  }
+  if (self.hasShortName) {
+    size += computeStringSize(5, self.shortName);
   }
   size += self.unknownFields.serializedSize;
   memoizedSerializedSize = size;
@@ -2422,6 +2438,9 @@ static Agency* defaultAgencyInstance = nil;
   if (other.hasName) {
     [self setName:other.name];
   }
+  if (other.hasShortName) {
+    [self setShortName:other.shortName];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -2449,6 +2468,10 @@ static Agency* defaultAgencyInstance = nil;
       }
       case 18: {
         [self setName:[input readString]];
+        break;
+      }
+      case 42: {
+        [self setShortName:[input readString]];
         break;
       }
     }
@@ -2484,6 +2507,22 @@ static Agency* defaultAgencyInstance = nil;
 - (Agency_Builder*) clearName {
   result.hasName = NO;
   result.name = @"";
+  return self;
+}
+- (BOOL) hasShortName {
+  return result.hasShortName;
+}
+- (NSString*) shortName {
+  return result.shortName;
+}
+- (Agency_Builder*) setShortName:(NSString*) value {
+  result.hasShortName = YES;
+  result.shortName = value;
+  return self;
+}
+- (Agency_Builder*) clearShortName {
+  result.hasShortName = NO;
+  result.shortName = @"";
   return self;
 }
 @end

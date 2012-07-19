@@ -19,6 +19,7 @@
 #import "SelectCityController.h"
 #import "Item.h"
 #import "FollowRouteController.h"
+#import "AppDelegate.h"
 
 #define TAG_DEPART_CITY_LABEL 18
 #define TAG_AGENCY_LABEL 19
@@ -107,6 +108,23 @@
     return self;
 }
 
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.hidesBottomBarWhenPushed = YES;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideTabBar:NO];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideTabBar:YES];
+    [super viewDidDisappear:animated];
+}
+
+
 - (void)viewDidLoad
 {
 
@@ -117,9 +135,6 @@
 
     
     // Init UI Interface
-    [self setNavigationLeftButton:NSLS(@" 返回") 
-                        imageName:@"back.png" 
-                           action:@selector(clickBack:)];
     
     [self setNavigationRightButton:NSLS(@"我的关注") 
                          imageName:@"topmenu_btn2.png"
@@ -207,6 +222,12 @@
     
     if (_hasStatisticsView) {
         [self updateStatisticsData];
+    }
+    
+    if ([self.dataList count] == 0) {
+        [self showTipsOnTableView:NSLS(@"未找到相关信息")];
+    }else {
+        [self hideTipsOnTableView];
     }
     
     [dataTableView reloadData];

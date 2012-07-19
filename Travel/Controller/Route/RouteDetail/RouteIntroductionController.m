@@ -184,7 +184,7 @@
 
 - (void)setAgencyInfoHolderViewAppearance
 {
-    [agencyNameLabel setText:[[AppManager defaultManager] getAgencyName:_route.agencyId]];
+    [agencyNameLabel setText:[[AppManager defaultManager] getAgencyShortName:_route.agencyId]];
     
     CGSize agencyNameSize = [agencyNameLabel.text sizeWithFont:agencyNameLabel.font forWidth:160 lineBreakMode:UILineBreakModeWordWrap];
     

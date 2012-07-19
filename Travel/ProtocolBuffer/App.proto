@@ -71,8 +71,9 @@ message RecommendedApp {
 
 // 旅行社
 message Agency {
-  required int32 agencyId = 1;	// 旅行社id
-  required string name = 2;		// 旅行社名称
+  required int32 agencyId = 1;      // 旅行社id
+  required string name = 2;         // 旅行社名称
+  optional string shortName = 5;    // 旅行社简称
 }
 
 // 线路出发/目的城市
