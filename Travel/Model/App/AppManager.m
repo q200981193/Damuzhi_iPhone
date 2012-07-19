@@ -42,6 +42,7 @@ static AppManager* _defaultAppManager = nil;
 @synthesize allCities = _allCities;
 @synthesize placeItemDic = _placeItemDic;
 
+
 + (id)defaultManager
 {
     if (_defaultAppManager == nil){
@@ -999,5 +1000,11 @@ static AppManager* _defaultAppManager = nil;
     
     return routeSortItems;
 }
+
+- (NSArray *)getServicePhoneList
+{
+    return [NSArray arrayWithObjects:_app.serviceTelephone, nil];
+}
+
 
 @end

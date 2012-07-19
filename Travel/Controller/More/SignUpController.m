@@ -123,6 +123,7 @@
         {
             case CELL_ROW_SIGN_UP_ID:
                  cell.inputTextField.keyboardType = UIKeyboardTypeNumberPad;
+                [cell.inputTextField setSecureTextEntry:NO];
                 break;
             case CELL_ROW_SIGN_UP_PASSWORD:
                 cell.inputTextField.returnKeyType = UIReturnKeyNext;

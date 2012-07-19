@@ -13,6 +13,7 @@
 #import "TimeUtils.h"
 #import "CommonRouteDetailController.h"
 #import "TravelNetworkConstants.h"
+#import "AppManager.h"
 
 #import "RouteFeekbackController.h"
 
@@ -24,22 +25,16 @@
 
 @property (assign, nonatomic) int orderType;
 @property (retain, nonatomic) NSMutableArray *sectionStat;
-@property (retain, nonatomic) NSArray *phoneList;
-@property (retain, nonatomic) App *app;
 @end
 
 @implementation OrderListController
 
 @synthesize orderType = _orderType;
 @synthesize sectionStat = _sectionStat;
-@synthesize phoneList = _phoneList;
-@synthesize app = _app;
 
 - (void)dealloc
 {
     [_sectionStat release];
-    [_phoneList release];
-    [_app release];
     [super dealloc];
 }
 
@@ -67,8 +62,6 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickConsult:)];
     
-//    self.phoneList = [NSArray arrayWithObjects:_app.serviceTelephone, nil];
-    self.phoneList = [NSArray arrayWithObjects:@"颂涛，此处代码有一点问题", nil];
     
     if ([[UserManager defaultManager] isLogin]) {
         [[OrderService defaultService] findOrderUsingLoginId:[[UserManager defaultManager] loginId] 
@@ -85,11 +78,11 @@
 {
     UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     
-    for(NSString* title in self.phoneList){
+    for(NSString* title in [[AppManager defaultManager] getServicePhoneList]){
         [actionSheet addButtonWithTitle:title];
     }
     [actionSheet addButtonWithTitle:NSLS(@"返回")];
-    [actionSheet setCancelButtonIndex:[self.phoneList count]];
+    [actionSheet setCancelButtonIndex:[[[AppManager defaultManager] getServicePhoneList] count]];
     [actionSheet showInView:self.view];
     [actionSheet release];
 }
@@ -100,7 +93,7 @@
         return;
     }
     
-    [UIUtils makeCall:[self.phoneList objectAtIndex:buttonIndex]];
+    [UIUtils makeCall:[[[AppManager defaultManager] getServicePhoneList] objectAtIndex:buttonIndex]];
 }
 
 - (void)viewDidUnload
@@ -266,9 +259,9 @@
 }
 
 
-- (void)didClickRouteDetail:(int)routeId
+- (void)didClickRouteDetail:(Order *)order
 {
-    CommonRouteDetailController *controller = [[CommonRouteDetailController alloc] initWithRouteId:routeId routeType:[self routeType]];
+    CommonRouteDetailController *controller = [[CommonRouteDetailController alloc] initWithRouteId:order.routeId routeType:[self routeType]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -299,9 +292,9 @@
 
 
 
-- (void)didClickRouteFeekback:(int)routeId
+- (void)didClickRouteFeekback:(Order *)order
 {
-    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] initWithOrder:order];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

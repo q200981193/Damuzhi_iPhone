@@ -73,7 +73,8 @@
           routeType:(int)routeType 
      viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 
-- (void)routeFeedbackWithRouteId:(int)routeId rank:(int)rank content:(NSString *)content;
-
-
+- (void)routeFeedbackWithRouteId:(int)routeId 
+                            rank:(int)rank
+                         content:(NSString *)content   
+                  viewController:(PPViewController<RouteServiceDelegate>*)viewController;
 @end

@@ -11,6 +11,7 @@
 #import "AppManager.h"
 #import "TimeUtils.h"
 #import "LocaleUtils.h"
+#import "UserManager.h"
 
 
 @interface OrderCell ()
@@ -23,6 +24,10 @@
 
 @synthesize order = _order;
 @synthesize delegate = _delegate;
+@synthesize orderPayButton;
+@synthesize routeFeedback;
+@synthesize routeDetail;
+
 
 @synthesize routeNameLabel;
 @synthesize routeIdLabel;
@@ -48,6 +53,10 @@
     [orderStatusLabel release];
     [packageIdLabel release];
     [packageIdTitleLabel release];
+ 
+    [orderPayButton release];
+    [routeFeedback release];
+    [routeDetail release];
     [super dealloc];
 }
 
@@ -89,18 +98,35 @@
         packageIdTitleLabel.hidden = NO;
         packageIdLabel.text = [NSString stringWithFormat:@"%d",  order.packageId];
     }
+    
+    orderPayButton.hidden = YES;
+ 
+    
+    if ([[UserManager defaultManager] isLogin])
+    {
+        routeDetail.center = CGPointMake(103, routeDetail.center.y);
+        routeFeedback.center = CGPointMake(206, routeFeedback.center.y);
+        
+    }
+    else
+    {
+        routeFeedback.hidden = YES;
+        routeDetail.center = CGPointMake(160 - 3, orderPayButton.center.y);
+    }
+  
+    
 }
 
 - (IBAction)clickRouteFeekbackButton:(id)sender {
     if ([_delegate respondsToSelector:@selector(didClickRouteFeekback:)]){
-        [_delegate didClickRouteFeekback:_order.routeId];
+        [_delegate didClickRouteFeekback:_order];
     }
     
 }
 
 - (IBAction)clickRouteDetailButton:(id)sender {
     if ([_delegate respondsToSelector:@selector(didClickRouteDetail:)]){
-        [_delegate didClickRouteDetail:_order.routeId];
+        [_delegate didClickRouteDetail:_order];
     }
 }
 
