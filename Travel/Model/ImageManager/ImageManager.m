@@ -219,8 +219,8 @@ static ImageManager *_defaultManager = nil;
 {
     return [UIImage imageNamed:@"go_btn.png"];
 }
-
-- (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount
+ 
+- (UIImage *)orderListHeaderView:(int)rowNum rowCount:(int)rowCount open:(BOOL)open
 {
     int position = [self getPositionWithRowNum:rowNum rowCount:rowCount];
     
@@ -233,7 +233,23 @@ static ImageManager *_defaultManager = nil;
     }
     
     if (position == POSITION_BOTTOM) {
-        return [UIImage strectchableImageName:@"order_list_3.png" leftCapWidth:50]; 
+        return (open ? [UIImage strectchableImageName:@"order_list_2.png" leftCapWidth:50] : 
+                [UIImage strectchableImageName:@"order_list_3.png" leftCapWidth:50]); 
+    }
+    
+    return nil;
+}
+
+- (UIImage *)orderListCellBgImage:(int)rowNum rowCount:(int)rowCount
+{
+    int position = [self getPositionWithRowNum:rowNum rowCount:rowCount];
+    
+    if (position == POSITION_TOP || position == POSITION_MIDDLE) {
+        return [UIImage strectchableImageName:@"order_list_4.png" topCapHeight:10]; 
+    }
+    
+    if (position == POSITION_BOTTOM || position == POSITION_ONLY_ONE) {
+        return ([UIImage strectchableImageName:@"order_list_5.png" topCapHeight:5]); 
     }
     
     return nil;

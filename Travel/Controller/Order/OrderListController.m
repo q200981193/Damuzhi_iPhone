@@ -127,6 +127,7 @@
     orderCell.delegate = self;
 
 	[orderCell setCellData:[dataList objectAtIndex:indexPath.row]];
+    orderCell.cellBgImageView.image = [[ImageManager defaultManager] orderListCellBgImage:indexPath.section rowCount:[dataList count]];
     
     return cell;
 }
@@ -156,15 +157,11 @@
     [view addTarget:self action:@selector(clickSectionHeaderView:) forControlEvents:UIControlEventTouchUpInside];
     view.tag = section;
     
-    
     UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:view.bounds];
     bgImageView.tag = TAG_HEADER_VIEW_BG_IMAGE_VIEW;
     
-    if (section >=1 && section == [dataList count] -1 && [[_sectionStat objectAtIndex:section] boolValue] == YES) {
-        bgImageView.image = [[ImageManager defaultManager] orderListHeaderView:(section-1) rowCount:[dataList count]];
-    }else {
-        bgImageView.image = [[ImageManager defaultManager] orderListHeaderView:section rowCount:[dataList count]];
-    }
+    bgImageView.image = [[ImageManager defaultManager] orderListHeaderView:section rowCount:[dataList count] open:[[_sectionStat objectAtIndex:section] boolValue]];
+    
     [view addSubview:bgImageView];
     [bgImageView release];
     
