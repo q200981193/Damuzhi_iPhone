@@ -833,6 +833,17 @@ static AppManager* _defaultAppManager = nil;
     return nil;
 }
 
+- (NSString*)getAgencyShortName:(int)agencyId
+{
+    for (Agency *agency in _app.agenciesList) {
+        if (agency.agencyId == agencyId) {
+            return agency.shortName;
+        }
+    }
+    
+    return nil;
+}
+
 - (NSArray*)buildAdultItemList
 {
     NSMutableArray *adultItems = [[[NSMutableArray alloc] init] autorelease];    

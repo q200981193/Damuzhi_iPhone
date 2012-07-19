@@ -606,13 +606,17 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 @private
   BOOL hasAgencyId_:1;
   BOOL hasName_:1;
+  BOOL hasShortName_:1;
   int32_t agencyId;
   NSString* name;
+  NSString* shortName;
 }
 - (BOOL) hasAgencyId;
 - (BOOL) hasName;
+- (BOOL) hasShortName;
 @property (readonly) int32_t agencyId;
 @property (readonly, retain) NSString* name;
+@property (readonly, retain) NSString* shortName;
 
 + (Agency*) defaultInstance;
 - (Agency*) defaultInstance;
@@ -657,6 +661,11 @@ BOOL PlaceCategoryTypeIsValidValue(PlaceCategoryType value);
 - (NSString*) name;
 - (Agency_Builder*) setName:(NSString*) value;
 - (Agency_Builder*) clearName;
+
+- (BOOL) hasShortName;
+- (NSString*) shortName;
+- (Agency_Builder*) setShortName:(NSString*) value;
+- (Agency_Builder*) clearShortName;
 @end
 
 @interface RouteCity : PBGeneratedMessage {

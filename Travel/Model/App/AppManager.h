@@ -79,6 +79,7 @@
 
 - (NSString*)getDepartCityName:(int)routeCityId;
 - (NSString*)getAgencyName:(int)agencyId;
+- (NSString*)getAgencyShortName:(int)agencyId;
 
 - (NSArray*)buildAdultItemList;
 - (NSArray*)buildChildrenItemList;
