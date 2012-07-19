@@ -14,8 +14,7 @@
 #import "NonMemberOrderController.h"
 #import "PlaceOrderCell.h"
 
-@interface PlaceOrderController : PPTableViewController <PlaceOrderCellDelegate, MonthViewControllerDelegate, SelectControllerDelegate, OrderServiceDelegate, NonMemberOrderDelegate>
-
+@interface PlaceOrderController : PPTableViewController <PlaceOrderCellDelegate, MonthViewControllerDelegate, SelectControllerDelegate, OrderServiceDelegate, NonMemberOrderDelegate, UIActionSheetDelegate>
 
 - (id)initWithRoute:(TouristRoute *)route 
           routeType:(int)routeType
