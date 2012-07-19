@@ -65,9 +65,6 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view from its nib.
-    [self setNavigationLeftButton:NSLS(@" 返回") 
-                        imageName:@"back.png"
-                           action:@selector(clickBack:)];
     self.navigationItem.title = NSLS(@"更多");
     
     //[self.view setBackgroundColor:[UIColor colorWithRed:218.0/255.0 green:226.0/255.0 blue:228.0/255.0 alpha:1]];
@@ -195,6 +192,7 @@
 }
 
 #define TAG_CITY_LABEL 70 
+#define TAG_SHOW_IMAGE_SWITCH 71
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -237,7 +235,11 @@
     
     if ([SHOW_IMAGE isEqualToString:[dataDictionary objectForKey:[NSNumber numberWithInt:row]]]) {
         cell.accessoryType = UITableViewCellAccessoryNone;
+        showImageSwitch.tag = TAG_SHOW_IMAGE_SWITCH;
         [cell.contentView addSubview:showImageSwitch];
+    }else {
+        UISwitch *switchView = (UISwitch *)[cell.contentView viewWithTag:TAG_SHOW_IMAGE_SWITCH];
+        [switchView removeFromSuperview];
     }
     
     cell.textLabel.text = [dataDictionary objectForKey:[NSNumber numberWithInt:row]];
