@@ -19,6 +19,7 @@
 #import "SelectCityController.h"
 #import "Item.h"
 #import "FollowRouteController.h"
+#import "AppDelegate.h"
 
 #define TAG_DEPART_CITY_LABEL 18
 #define TAG_AGENCY_LABEL 19
@@ -106,6 +107,24 @@
     
     return self;
 }
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.hidesBottomBarWhenPushed = YES;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideTabBar:NO];
+    [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.hidesBottomBarWhenPushed = NO;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate hideTabBar:YES];
+    [super viewDidDisappear:animated];
+}
+
 
 - (void)viewDidLoad
 {
