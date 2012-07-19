@@ -93,7 +93,27 @@
     }
   
     [feekbackTextView resignFirstResponder];
-    [[RouteService defaultService] routeFeedbackWithRouteId:_order.routeId rank:_rank content:feekback];
+    [[RouteService defaultService] routeFeedbackWithRouteId:_order.routeId 
+                                                       rank:_rank 
+                                                    content:feekback 
+                                             viewController:self];
+}
+
+-(void) routeFeekBackDidSend:(int)resultCode result:(int)result resultInfo:(NSString *)resultInfo
+{
+    if (resultCode != ERROR_SUCCESS) {
+        [self popupMessage:NSLS(@"您的网络不稳定，发送失败") title:nil];
+        return;
+    }
+    
+    if (result != 0) {
+        NSString *str = [NSString stringWithFormat:NSLS(@"发送失败：%@"), resultInfo];
+        [self popupMessage:str title:nil];
+        return;
+    }
+    
+    [self popupMessage:NSLS(@"发送成功") title:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload
@@ -141,6 +161,7 @@
     backgroundImageButton1.selected = NO;
     backgroundImageButton2.selected = NO;
     backgroundImageButton3.selected = NO;
+    _rank = 0;
 }
 
 - (IBAction)hideKeyboardButton:(id)sender {

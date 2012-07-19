@@ -259,9 +259,9 @@
 }
 
 
-- (void)didClickRouteDetail:(int)routeId
+- (void)didClickRouteDetail:(Order *)order
 {
-    CommonRouteDetailController *controller = [[CommonRouteDetailController alloc] initWithRouteId:routeId routeType:[self routeType]];
+    CommonRouteDetailController *controller = [[CommonRouteDetailController alloc] initWithRouteId:order.routeId routeType:[self routeType]];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }
@@ -292,9 +292,9 @@
 
 
 
-- (void)didClickRouteFeekback:(int)routeId
+- (void)didClickRouteFeekback:(Order *)order
 {
-    RouteFeekbackController *controller = [[RouteFeekbackController alloc] init];
+    RouteFeekbackController *controller = [[RouteFeekbackController alloc] initWithOrder:order];
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
 }

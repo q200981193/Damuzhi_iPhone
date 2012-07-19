@@ -220,7 +220,6 @@ static RouteService *_defaultRouteService = nil;
                             rank:(int)rank
                          content:(NSString *)content   
                   viewController:(PPViewController<RouteServiceDelegate>*)viewController
-
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *loginId = [[UserManager defaultManager] loginId];

@@ -42,6 +42,7 @@ static AppManager* _defaultAppManager = nil;
 @synthesize allCities = _allCities;
 @synthesize placeItemDic = _placeItemDic;
 
+
 + (id)defaultManager
 {
     if (_defaultAppManager == nil){

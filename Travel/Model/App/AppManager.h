@@ -18,6 +18,7 @@
 
 @property (retain, nonatomic) App *app;
 
+
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;
 
