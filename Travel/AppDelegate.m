@@ -110,6 +110,8 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_arrow.png"]];
     [_tabBarController setTopImageView:imageView down:1.0 animated:YES];
     [imageView release];
+    
+    PPDebug(@"tabBarController y:%f h:%f",self.tabBarController.tabBar.frame.origin.y ,self.tabBarController.tabBar.frame.size.height);
 	
 	[controllers release];
 }
