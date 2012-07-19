@@ -97,7 +97,8 @@
                          imageName:@"topmenu_btn_right.png" 
                             action:@selector(clickConsult:)];
     
-    self.phoneList = [NSArray arrayWithObjects:@"10086", nil];
+
+//    self.phoneList = [NSArray arrayWithObjects:@"toBeFinished", nil];
     
     self.buttonsHolderView.backgroundColor = [UIColor colorWithPatternImage:[[ImageManager defaultManager] lineNavBgImage]];
     
@@ -107,11 +108,29 @@
     [[RouteService defaultService] findRouteWithRouteId:_routeId viewController:self];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)clickConsult:(id)sender
 {
-    self.hidesBottomBarWhenPushed = YES;
-    [super viewDidAppear:animated];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    
+    for(NSString* title in self.phoneList){
+        [actionSheet addButtonWithTitle:title];
+    }
+    [actionSheet addButtonWithTitle:NSLS(@"返回")];
+    [actionSheet setCancelButtonIndex:[self.phoneList count]];
+    [actionSheet showInView:self.view];
+    [actionSheet release];
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex]) {
+        return;
+    }
+    
+    [UIUtils makeCall:[self.phoneList objectAtIndex:buttonIndex]];
+}
+
+
 
 - (void)viewDidUnload
 {
@@ -196,6 +215,9 @@
     
     self.route = route;
     
+    self.phoneList = [NSArray arrayWithObjects:_route.contactPhone, nil];
+//    NSLog(@"contact phone is %@", _route.contactPhone);
+    
     [self clickIntroductionButton:_introductionButton];
 }
 
@@ -205,18 +227,6 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void)clickConsult:(id)sender
-{
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:NSLS(@"是否拨打以下电话") delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    
-    for(NSString* title in self.phoneList){
-        [actionSheet addButtonWithTitle:title];
-    }
-    [actionSheet addButtonWithTitle:NSLS(@"返回")];
-    [actionSheet setCancelButtonIndex:[self.phoneList count]];
-    [actionSheet showInView:self.view];
-    [actionSheet release];
-}
 
 - (void)didSelectedPlace:(int)placeId
 {
@@ -254,17 +264,6 @@
     
     [self.navigationController pushViewController:controller animated:YES];
     [controller release];
-}
-
-
-#pragma mark - UIActionSheetDelegate method
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == [actionSheet cancelButtonIndex]) {
-        return;
-    }
-    
-    [UIUtils makeCall:[self.phoneList objectAtIndex:buttonIndex]];
 }
 
 @end

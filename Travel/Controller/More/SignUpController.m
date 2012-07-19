@@ -118,18 +118,20 @@
         cell = [UserInfoCell createCell:self];
         cell.titleLabel.frame = CGRectOffset(cell.titleLabel.frame, -5, 0);
         cell.inputTextField.frame = CGRectOffset(cell.inputTextField.frame, 5, 0);
-        [cell.inputTextField setSecureTextEntry:YES];
         
         switch (indexPath.row) 
         {
             case CELL_ROW_SIGN_UP_ID:
                  cell.inputTextField.keyboardType = UIKeyboardTypeNumberPad;
+                [cell.inputTextField setSecureTextEntry:NO];
                 break;
             case CELL_ROW_SIGN_UP_PASSWORD:
                 cell.inputTextField.returnKeyType = UIReturnKeyNext;
+                [cell.inputTextField setSecureTextEntry:YES];
                 break;
             case CELL_ROW_SIGN_UP_PASSWORD_AGAIN:
                 cell.inputTextField.returnKeyType = UIReturnKeyDone;
+                [cell.inputTextField setSecureTextEntry:YES];
                 break;
             default:
                 break;

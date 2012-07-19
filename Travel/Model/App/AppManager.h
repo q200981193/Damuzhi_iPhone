@@ -18,6 +18,7 @@
 
 @property (retain, nonatomic) App *app;
 
+
 - (void)loadAppData;
 - (void)updateAppData:(App*)appData;
 
@@ -87,6 +88,8 @@
 - (NSArray *)buildRoutePriceRankItemList;
 - (NSArray *)buildDaysRangeItemList;
 - (NSArray *)buildRouteSortItemList;
+
+- (NSArray *)getServicePhoneList;
 
 
 
