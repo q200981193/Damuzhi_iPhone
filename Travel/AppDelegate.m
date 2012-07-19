@@ -45,7 +45,7 @@
 
 - (void)hideTabBar:(BOOL)isHide
 {
-    [self.tabBarController hide:isHide];
+    [self.tabBarController hideCustomTabBarView:isHide];
 }
 
 - (void)initTabViewControllers
@@ -107,7 +107,9 @@
                                                   @"menu_btn5_on.png", nil]];
     _tabBarController.selectedIndex = 0;
     
-    PPDebug(@"tabBar height:%f",_tabBarController.tabBar.frame.size.height);
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_arrow.png"]];
+    [_tabBarController setTopImageView:imageView down:1.0 animated:YES];
+    [imageView release];
 	
 	[controllers release];
 }
