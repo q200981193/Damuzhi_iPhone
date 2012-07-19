@@ -26,7 +26,6 @@
 		A313DE5E152F02EB004E0964 /* ShareToSinaController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A313DE5B152F02EB004E0964 /* ShareToSinaController.xib */; };
 		A327DEEE15231A31003DEE8C /* FavoriteController.m in Sources */ = {isa = PBXBuildFile; fileRef = A327DEEC15231A31003DEE8C /* FavoriteController.m */; };
 		A327DEEF15231A31003DEE8C /* FavoriteController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A327DEED15231A31003DEE8C /* FavoriteController.xib */; };
-		A38E5B8715B7BA160042F73E /* menu_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A38E5B8615B7BA160042F73E /* menu_arrow@2x.png */; };
 		A3A9796F15A5A3CA0071B282 /* ChangePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3A9796D15A5A3CA0071B282 /* ChangePasswordController.m */; };
 		A3A9797015A5A3CA0071B282 /* ChangePasswordController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3A9796E15A5A3CA0071B282 /* ChangePasswordController.xib */; };
 		A3ACE1121524459F00C9B3DD /* HistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = A3ACE1101524459F00C9B3DD /* HistoryController.m */; };
@@ -739,7 +738,6 @@
 		A327DEEB15231A31003DEE8C /* FavoriteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteController.h; sourceTree = "<group>"; };
 		A327DEEC15231A31003DEE8C /* FavoriteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteController.m; sourceTree = "<group>"; };
 		A327DEED15231A31003DEE8C /* FavoriteController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteController.xib; sourceTree = "<group>"; };
-		A38E5B8615B7BA160042F73E /* menu_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_arrow@2x.png"; sourceTree = "<group>"; };
 		A3A9796C15A5A3CA0071B282 /* ChangePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordController.h; sourceTree = "<group>"; };
 		A3A9796D15A5A3CA0071B282 /* ChangePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordController.m; sourceTree = "<group>"; };
 		A3A9796E15A5A3CA0071B282 /* ChangePasswordController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePasswordController.xib; sourceTree = "<group>"; };
@@ -2428,7 +2426,6 @@
 		A48E04A81534058800B2695E /* home */ = {
 			isa = PBXGroup;
 			children = (
-				A38E5B8615B7BA160042F73E /* menu_arrow@2x.png */,
 				A48A540D15A1959B0012C782 /* menu_btn1_off@2x.png */,
 				A48A540E15A1959B0012C782 /* menu_btn1_on@2x.png */,
 				A48A540F15A1959B0012C782 /* menu_btn2_off@2x.png */,
@@ -4443,7 +4440,6 @@
 				A484A67815AEC97F009D780C /* yd_t3@2x.png in Resources */,
 				A3F195D715AED96000756702 /* PlaceOrderCell.xib in Resources */,
 				A3E456B315B136A200430D2A /* FollowRouteController.xib in Resources */,
-				A38E5B8715B7BA160042F73E /* menu_arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
