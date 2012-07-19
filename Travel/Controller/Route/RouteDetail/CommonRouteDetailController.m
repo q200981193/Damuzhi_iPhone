@@ -107,6 +107,12 @@
     [[RouteService defaultService] findRouteWithRouteId:_routeId viewController:self];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.hidesBottomBarWhenPushed = YES;
+    [super viewDidAppear:animated];
+}
+
 - (void)viewDidUnload
 {
     [self setIntroductionButton:nil];
