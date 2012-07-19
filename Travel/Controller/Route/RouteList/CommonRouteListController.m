@@ -135,9 +135,6 @@
 
     
     // Init UI Interface
-    [self setNavigationLeftButton:NSLS(@" 返回") 
-                        imageName:@"back.png" 
-                           action:@selector(clickBack:)];
     
     [self setNavigationRightButton:NSLS(@"我的关注") 
                          imageName:@"topmenu_btn2.png"
