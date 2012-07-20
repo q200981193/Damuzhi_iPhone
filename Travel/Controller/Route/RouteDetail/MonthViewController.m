@@ -219,6 +219,8 @@
         }else if (booking.status == 3) {
             [self popupMessage:NSLS(@"该日期已满") title:nil];
         }
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

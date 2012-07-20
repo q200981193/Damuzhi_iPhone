@@ -463,7 +463,7 @@
     }
     
     BookingCell *bookingCell = (BookingCell *)cell;
-    bookingCell.bookingBgImageView.image = [[ImageManager defaultManager] bookingBgImage];
+//    bookingCell.bookingBgImageView.image = [[ImageManager defaultManager] bookingBgImage];
     
     [bookingCell setCellData:NO bookings:_route.bookingsList routeType:_routeType];
     
